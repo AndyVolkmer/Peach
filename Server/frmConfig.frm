@@ -3,7 +3,7 @@ Begin VB.Form frmConfig
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
    Caption         =   "Server Configuration"
-   ClientHeight    =   3705
+   ClientHeight    =   4350
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   7560
@@ -20,31 +20,31 @@ Begin VB.Form frmConfig
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   3705
+   ScaleHeight     =   4350
    ScaleWidth      =   7560
    ShowInTaskbar   =   0   'False
    Begin VB.CommandButton Command2 
       Caption         =   "&Disconnect"
       Enabled         =   0   'False
       Height          =   375
-      Left            =   6120
+      Left            =   6000
       TabIndex        =   5
-      Top             =   2280
+      Top             =   2400
       Width           =   1215
    End
    Begin VB.CommandButton Command1 
       Caption         =   "&Connect"
       Height          =   375
-      Left            =   4800
+      Left            =   4680
       TabIndex        =   6
-      Top             =   2280
+      Top             =   2400
       Width           =   1215
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H8000000C&
       Caption         =   "Configuration"
       ForeColor       =   &H8000000E&
-      Height          =   1935
+      Height          =   2175
       Left            =   120
       TabIndex        =   0
       Top             =   120
@@ -108,6 +108,26 @@ Begin VB.Form frmConfig
          Top             =   1080
          Width           =   975
       End
+   End
+   Begin VB.Label Label7 
+      BackColor       =   &H8000000C&
+      Caption         =   "Author : Notron"
+      ForeColor       =   &H8000000E&
+      Height          =   255
+      Left            =   120
+      TabIndex        =   10
+      Top             =   3480
+      Width           =   1215
+   End
+   Begin VB.Label Label8 
+      BackColor       =   &H8000000C&
+      Caption         =   "Version : 1.0.0.2"
+      ForeColor       =   &H8000000E&
+      Height          =   255
+      Left            =   120
+      TabIndex        =   9
+      Top             =   3720
+      Width           =   1335
    End
 End
 Attribute VB_Name = "frmConfig"

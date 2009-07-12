@@ -11,7 +11,6 @@ Begin VB.MDIForm frmMain
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "MDIForm1"
    ScrollBars      =   0   'False
-   StartUpPosition =   2  'CenterScreen
    Begin MSComctlLib.StatusBar StatusBar1 
       Align           =   2  'Align Bottom
       Height          =   345
@@ -158,17 +157,17 @@ Private Const MIIM_ID As Long = &H2&
 Private Const MFS_GRAYED As Long = &H3&
 Private Const WM_NCACTIVATE As Long = &H86
 Private Type MENUITEMINFO
-    cbSize As Long
-    fMask As Long
-    fType As Long
-    fState As Long
-    wID As Long
-    hSubMenu As Long
-    hbmpChecked As Long
-    hbmpUnchecked As Long
-    dwItemData As Long
-    dwTypeData As String
-    cch As Long
+    cbSize          As Long
+    fMask           As Long
+    fType           As Long
+    fState          As Long
+    wID             As Long
+    hSubMenu        As Long
+    hbmpChecked     As Long
+    hbmpUnchecked   As Long
+    dwItemData      As Long
+    dwTypeData      As String
+    cch             As Long
 End Type
 
 
@@ -204,6 +203,8 @@ Private Sub Command3_Click()
 End Sub
 
 Private Sub MDIForm_Load()
+Dim TSSO As TypeSSO
+TSSO = ReadConfigFile(App.Path & "\bin.conf")
 ':::::::::::::::::::::::::::::::::::
 DisableFormResize Me
 ':::::::::::::::::::::::::::::::::::
@@ -213,6 +214,12 @@ Dim L As Long
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
 ':::::::::::::::::::::::::::::::::::
+With TSSO
+    Me.Top = Trim(.TopPos)
+    Me.Left = Trim(.LeftPos)
+End With
+':::::::::::::::::::::::::::::::::::
+StatusBar1.Panels(1).Text = "Status : Disconnected"
 frmConfig.Show
 End Sub
 

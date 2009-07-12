@@ -113,7 +113,6 @@ Begin VB.Form frmConfig
          Left            =   3600
          MaxLength       =   5
          TabIndex        =   2
-         Text            =   "4728"
          Top             =   1680
          Width           =   855
       End
@@ -122,7 +121,6 @@ Begin VB.Form frmConfig
          Height          =   285
          Left            =   1920
          TabIndex        =   1
-         Text            =   "84.232.50.58"
          Top             =   1680
          Width           =   1575
       End
@@ -165,6 +163,26 @@ Begin VB.Form frmConfig
          Top             =   1440
          Width           =   975
       End
+   End
+   Begin VB.Label Label8 
+      BackColor       =   &H8000000C&
+      Caption         =   "Version : 1.0.0.2"
+      ForeColor       =   &H8000000E&
+      Height          =   255
+      Left            =   120
+      TabIndex        =   16
+      Top             =   3720
+      Width           =   1335
+   End
+   Begin VB.Label Label7 
+      BackColor       =   &H8000000C&
+      Caption         =   "Author : Notron"
+      ForeColor       =   &H8000000E&
+      Height          =   255
+      Left            =   120
+      TabIndex        =   15
+      Top             =   3480
+      Width           =   1215
    End
 End
 Attribute VB_Name = "frmConfig"
@@ -257,8 +275,20 @@ Me.Left = 0
 ':::
 Label3.Caption = "IP : " & frmMain.Winsock1(0).LocalIP
 Label4.Caption = "Name : " & frmMain.Winsock1(0).LocalHostName
+
+Dim TSSO As TypeSSO
+TSSO = ReadConfigFile(App.Path & "\bin.conf")
+With TSSO
+    txtNick.Text = Trim(TSSO.Nickname)
+    txtIP.Text = Trim(TSSO.ConnectIP)
+    txtPort.Text = Trim(TSSO.Port)
+End With
 End Sub
 
+
+Private Sub Form_Unload(Cancel As Integer)
+WriteConfigFile (App.Path & "\bin.conf")
+End Sub
 
 Private Sub txtIP_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then Command1_Click
