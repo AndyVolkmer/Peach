@@ -203,24 +203,55 @@ Private Sub Command3_Click()
 End Sub
 
 Private Sub MDIForm_Load()
+
+':::::::::::::::::::::::::::::::::::
 Dim TSSO As TypeSSO
 TSSO = ReadConfigFile(App.Path & "\bin.conf")
+
 ':::::::::::::::::::::::::::::::::::
 DisableFormResize Me
+
 ':::::::::::::::::::::::::::::::::::
 Dim L As Long
     L = GetWindowLong(Me.hwnd, GWL_STYLE)
     'L = L And Not (WS_MINIMIZEBOX)
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
+
 ':::::::::::::::::::::::::::::::::::
+StatusBar1.Panels(1).Text = "Status : Disconnected"
+
+':::::::::::::::::::::::::::::::::::
+On Error GoTo HandleErrorFile
 With TSSO
     Me.Top = Trim(.TopPos)
     Me.Left = Trim(.LeftPos)
 End With
-':::::::::::::::::::::::::::::::::::
-StatusBar1.Panels(1).Text = "Status : Disconnected"
+
 frmConfig.Show
+
+Exit Sub
+':::::::::::::::::::::::::::::::::::
+'Error Handler
+':::::::::::::::::::::::::::::::::::
+HandleErrorFile:
+Select Case Err.Number
+Case 1
+    MsgBox "Error : " & Err.Number & vbCrLf & "Description : " & Err.Description, vbCritical
+    Exit Sub
+Case 13
+    MsgBox "Some configuration files are outdated or got damaged, Peach found the problem and will fix it on next program launch.", vbInformation
+    Me.Top = 1200
+    Me.Left = 1200
+    frmConfig.txtIP = "0.0.0.0"
+    frmConfig.txtPort = "4728"
+    frmConfig.txtNick = "DefaultNick"
+    
+    frmConfig.Show
+Case Else
+    MsgBox "Error : " & Err.Number & vbCrLf & "Description : " & Err.Description, vbCritical
+    Exit Sub
+End Select
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
