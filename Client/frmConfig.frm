@@ -166,7 +166,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.0.5"
+      Caption         =   "Version : 1.0.0.6"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -217,12 +217,15 @@ Case Else
                 Exit Sub
             End If
             
-'            We save the name variable in a string for now with #
-'            frmMain.NameText = txtNick.Text
-'            Dim i As Integer
-'            For i = Len(txtNick.Text) To 15
-'                SavedNick = SavedNick & "#"
-'            Next i
+            ' Connect winsocks
+            With frmMain.Winsock1(0)
+                .RemotePort = txtPort.Text
+                .RemoteHost = txtIP.Text
+                .Connect
+            
+                Label5.Caption = "IP: " & .RemoteHost
+                Label6.Caption = "Port : " & .RemotePort
+            End With
             
             ' Do the enable stuff
             Command2.Enabled = True
@@ -237,16 +240,6 @@ Case Else
                 .txtToSend.Enabled = True
             End With
             
-            ' Connect winsocks
-            With frmMain.Winsock1(0)
-                .RemotePort = txtPort.Text
-                .RemoteHost = txtIP.Text
-                .Connect
-            
-                Label5.Caption = "IP: " & .RemoteHost
-                Label6.Caption = "Port : " & .RemotePort
-            End With
-            
             frmMain.StatusBar1.Panels(1).Text = "Status: Connecting to '" & txtIP.Text & ":" & txtPort.Text & "'"
             frmConfig.Hide
             frmChat.Show
@@ -257,7 +250,7 @@ Case Else
 End Select
 End Sub
 
-Private Sub Command2_Click()
+Public Sub Command2_Click()
 ' Do the buttons
     Command1.Enabled = True
     Command2.Enabled = False

@@ -1,4 +1,5 @@
 VERSION 5.00
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmPanel 
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
@@ -23,46 +24,59 @@ Begin VB.Form frmPanel
    ScaleHeight     =   3540
    ScaleWidth      =   7515
    ShowInTaskbar   =   0   'False
-   Begin VB.ListBox List2 
-      Appearance      =   0  'Flat
-      Height          =   810
-      Left            =   240
-      TabIndex        =   4
-      Top             =   1560
-      Visible         =   0   'False
-      Width           =   6855
-   End
-   Begin VB.CommandButton Command2 
-      Caption         =   "Get all Connections"
-      Height          =   375
-      Left            =   240
-      TabIndex        =   3
-      Top             =   2400
-      Width           =   6855
-   End
-   Begin VB.ListBox List1 
-      Appearance      =   0  'Flat
-      Height          =   1590
+   Begin MSComctlLib.ListView ListView1 
+      Height          =   2295
       Left            =   240
       TabIndex        =   2
       Top             =   720
-      Width           =   6855
+      Width           =   6945
+      _ExtentX        =   12250
+      _ExtentY        =   4048
+      View            =   3
+      LabelEdit       =   1
+      LabelWrap       =   -1  'True
+      HideSelection   =   -1  'True
+      _Version        =   393217
+      ForeColor       =   -2147483640
+      BackColor       =   -2147483643
+      BorderStyle     =   1
+      Appearance      =   1
+      NumItems        =   4
+      BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Text            =   "Name"
+         Object.Width           =   2540
+      EndProperty
+      BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   1
+         Text            =   "IP"
+         Object.Width           =   2540
+      EndProperty
+      BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   2
+         Text            =   "Winsock ID"
+         Object.Width           =   2540
+      EndProperty
+      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   3
+         Text            =   "Login Time"
+         Object.Width           =   2540
+      EndProperty
    End
    Begin VB.CommandButton Command1 
       Caption         =   "&Kick"
-      Height          =   405
+      Height          =   285
       Left            =   1200
       TabIndex        =   1
-      Top             =   240
+      Top             =   360
       Width           =   1215
    End
    Begin VB.TextBox Text1 
       Alignment       =   2  'Center
-      Height          =   405
+      Height          =   285
       Left            =   240
       TabIndex        =   0
       Text            =   "0"
-      Top             =   240
+      Top             =   360
       Width           =   855
    End
 End
@@ -79,38 +93,29 @@ Private Sub Command1_Click()
     frmMain.Winsock1(Text1.Text).Close
     Unload frmMain.Winsock1(Text1.Text)
     
+    ListView1.ListItems.Remove (ListView1.SelectedItem.Index)
     ' Clear entry
     Text1.Text = "0"
     
     ' Update Statusbar
     frmMain.StatusBar1.Panels(1).Text = "Status: Connected with  " & frmMain.Winsock1.Count - 1 & " Client(s)."
-    Command2_Click
 End Sub
 
 Private Sub Command2_Click()
-Dim Wsk As Winsock
-
-List1.Clear
-List2.Clear
-
-For Each Wsk In frmMain.Winsock1
-    If Wsk.State = sckConnected Then
-        List1.AddItem "IP : " & Wsk.RemoteHostIP & " | " & "Number : " & Wsk.Index
-        List2.AddItem Wsk.Index
-    End If
-Next
 
 End Sub
 
 Private Sub Form_Load()
 Me.Top = "0"
 Me.Left = "0"
-End Sub
-
-Private Sub List1_Click()
-    List2.ListIndex = List1.ListIndex
+Text1.SelStart = Len(Text1.Text)
 End Sub
 
 Private Sub List2_Click()
-    Text1.Text = List2.List(List2.ListIndex)
+
 End Sub
+
+Private Sub ListView1_ItemClick(ByVal Item As MSComctlLib.ListItem)
+Text1.Text = ListView1.SelectedItem.ListSubItems(2).Text
+End Sub
+

@@ -12,12 +12,8 @@ Next
 
 End Sub
 
-'// Old way
-'Dim i As Integer
-'' Send to clients
-'    For i = 1 To frmMain.Winsock1.ubound - 1
-'        ' Check if connected
-'        If frmMain.Winsock1(i).State = sckConnected Then
-'            frmMain.Winsock1(i).SendData Message
-'        End If
-'    Next i
+Public Sub SendRequest(Message As String, Wsk As Winsock)
+If Wsk.State = 7 Then
+    Wsk.SendData Message
+End If
+End Sub

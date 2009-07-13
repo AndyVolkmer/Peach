@@ -186,6 +186,7 @@ Public intCounter   As Integer
 Public NameText     As String
 Public ConverText   As String
 Public Message      As String
+Dim RR As Integer
 
 
 Private Sub Command1_Click()
@@ -212,6 +213,7 @@ Private Sub Command4_Click()
 End Sub
 
 Private Sub Command5_Click()
+
 End Sub
 
 Private Sub MDIForm_Load()
@@ -225,17 +227,30 @@ Dim L As Long
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
 ':::::::::::::::::::::::::::::::::::
 StatusBar1.Panels(1).Text = "Status : Disconnected"
-frmConfig.Show
-    
+frmPanel.Text1 = "0"
+    SetupForms frmConfig
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
+    Dim x As Integer
+    Dim NameOfUser As String
     Unload Winsock1(Index)
+    For x = 1 To frmPanel.ListView1.ListItems.Count + 1
+        If frmPanel.ListView1.ListItems.Item(x).SubItems(2) = Index Then
+            ' Pick the user
+            NameOfUser = frmPanel.ListView1.ListItems.Item(x)
+            frmPanel.ListView1.ListItems.Remove (x)
+            Exit For
+        Else
+            '
+        End If
+    Next x
+    SendMessage " " & NameOfUser & " has disconnected!"
     StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
-    'Load Winsock1(Index)
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
+RR = frmPanel.ListView1.ListItems.Count + 1
 Dim Wsk As Winsock
 intCounter = Winsock1.Count
     For Each Wsk In Winsock1
@@ -246,10 +261,19 @@ intCounter = Winsock1.Count
     Load Winsock1(intCounter)
     Winsock1(intCounter).LocalPort = frmConfig.txtPort.Text
     Winsock1(intCounter).Accept requestID
+    ' New user should be listed in the panel
+    With frmPanel.ListView1
+        .ListItems.Add RR, , "N/A"
+        .ListItems.Item(RR).SubItems(1) = Winsock1(intCounter).RemoteHostIP
+        .ListItems.Item(RR).SubItems(2) = intCounter
+        .ListItems.Item(RR).SubItems(3) = Time
+    End With
+    
     StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
+RR = frmPanel.ListView1.ListItems.Count
 Dim strMessage As String
 Dim onlineCount As String
 Dim c1, c2 As String
@@ -270,10 +294,10 @@ c2 = Mid(strMessage, Len(c1) + 2, difC - 1)
 
 frmMain.NameText = c1
 frmMain.ConverText = c2
-'' If message is to long then give warn message .. >_>
-'If Len(strMessage) > 200 Then
-'    strMessage = "[" & Winsock1(Index).RemoteHostIP & "] - You cannot spam here with older version!"
-'End If
+' If message is to long then give warn message .. >_>
+If Len(frmMain.ConverText) > 200 Then
+    strMessage = "[" & frmMain.NameText & "] - You cannot spam here with older version!"
+End If
 
 Select Case Trim(frmMain.ConverText)
 Case "!online"
@@ -287,6 +311,19 @@ Case "!online"
     End Select
 Case "!connected"
     SendMessage " " & frmMain.NameText & " has connected."
+    frmPanel.ListView1.ListItems.Item(RR).Text = frmMain.NameText ' 1, , frmMain.NameText
+Case "!namerequest"
+    Dim u As Variant
+    For u = 1 To frmPanel.ListView1.ListItems.Count + 1
+        If frmPanel.ListView1.ListItems.Item(u) = frmMain.NameText Then
+            SendRequest "!decilineD", frmMain.Winsock1(Index)
+            Exit For
+        Else
+            SendRequest "!accepteD", frmMain.Winsock1(Index)
+            Exit For
+        End If
+        Exit For
+    Next u
 Case Else
     SendMessage " [" & frmMain.NameText & "] : " & frmMain.ConverText
 End Select

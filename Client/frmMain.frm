@@ -67,6 +67,7 @@ Begin VB.MDIForm frmMain
       Width           =   7545
       Begin VB.CommandButton Command4 
          Caption         =   "&Online List"
+         Enabled         =   0   'False
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -295,14 +296,28 @@ frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System] :
 End Sub
 
 Private Sub Winsock1_Connect(Index As Integer)
+' Check if name is avaible
+SendMessage frmConfig.txtNick.Text & "#" & "!namerequest" & "#"
+End Sub
 
+Private Sub ConnectIsTrue()
 StatusBar1.Panels(1).Text = "Status: Connected to " & frmConfig.txtIP.Text & ":" & frmConfig.txtPort.Text
 
 frmMain.NameText = frmConfig.txtNick
 frmMain.Message = frmMain.NameText & "#" & "!connected" & "#"
 SendMessage frmMain.Message
-
 End Sub
+
+Private Sub ConnectIsFalse()
+MsgBox "This name is already taken!", vbInformation
+With frmConfig
+    .Command2_Click
+    .txtNick = ""
+    .txtNick.SetFocus
+End With
+SetupForms frmConfig
+End Sub
+
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
@@ -310,7 +325,14 @@ Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
     
     Winsock1(Index).GetData Message
     
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
+    Select Case Message
+    Case "!decilineD"
+        ConnectIsFalse
+    Case "!accepteD"
+        ConnectIsTrue
+    Case Else
+        frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
+    End Select
     
 End Sub
 
