@@ -154,7 +154,7 @@ Begin VB.Form frmSendFile
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000E&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Left            =   120
       TabIndex        =   11
@@ -175,7 +175,7 @@ Begin VB.Form frmSendFile
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000E&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Left            =   2280
       TabIndex        =   10
@@ -196,7 +196,7 @@ Begin VB.Form frmSendFile
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000E&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Left            =   120
       TabIndex        =   9
@@ -204,7 +204,7 @@ Begin VB.Form frmSendFile
       Width           =   750
    End
    Begin VB.Line Line2 
-      BorderColor     =   &H8000000E&
+      BorderColor     =   &H00FFFFFF&
       X1              =   120
       X2              =   7440
       Y1              =   2160
@@ -223,7 +223,7 @@ Begin VB.Form frmSendFile
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000E&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Left            =   120
       TabIndex        =   5
@@ -243,7 +243,7 @@ Begin VB.Form frmSendFile
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000E&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Left            =   1080
       TabIndex        =   4
@@ -264,7 +264,7 @@ Begin VB.Form frmSendFile
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000E&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Left            =   6525
       TabIndex        =   3

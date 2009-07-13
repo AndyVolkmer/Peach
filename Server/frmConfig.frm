@@ -43,7 +43,7 @@ Begin VB.Form frmConfig
    Begin VB.Frame Frame1 
       BackColor       =   &H8000000C&
       Caption         =   "Configuration"
-      ForeColor       =   &H8000000E&
+      ForeColor       =   &H00FFFFFF&
       Height          =   2175
       Left            =   120
       TabIndex        =   0
@@ -71,7 +71,7 @@ Begin VB.Form frmConfig
       Begin VB.Label Label5 
          BackColor       =   &H8000000C&
          Caption         =   "IP : "
-         ForeColor       =   &H8000000E&
+         ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   240
          TabIndex        =   8
@@ -81,7 +81,7 @@ Begin VB.Form frmConfig
       Begin VB.Label Label6 
          BackColor       =   &H8000000C&
          Caption         =   "Name : "
-         ForeColor       =   &H8000000E&
+         ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   240
          TabIndex        =   7
@@ -91,7 +91,7 @@ Begin VB.Form frmConfig
       Begin VB.Label Label1 
          BackColor       =   &H8000000C&
          Caption         =   "Port :"
-         ForeColor       =   &H8000000E&
+         ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   1920
          TabIndex        =   3
@@ -101,7 +101,7 @@ Begin VB.Form frmConfig
       Begin VB.Label lblNick 
          BackColor       =   &H8000000C&
          Caption         =   "Nickname :"
-         ForeColor       =   &H8000000E&
+         ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   240
          TabIndex        =   1
@@ -112,7 +112,7 @@ Begin VB.Form frmConfig
    Begin VB.Label Label7 
       BackColor       =   &H8000000C&
       Caption         =   "Author : Notron"
-      ForeColor       =   &H8000000E&
+      ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
       TabIndex        =   10
@@ -121,8 +121,8 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.0.3"
-      ForeColor       =   &H8000000E&
+      Caption         =   "Version : 1.0.0.4"
+      ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
       TabIndex        =   9

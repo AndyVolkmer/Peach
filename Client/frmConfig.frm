@@ -41,7 +41,7 @@ Begin VB.Form frmConfig
    Begin VB.Frame Frame1 
       BackColor       =   &H8000000C&
       Caption         =   "Configuration"
-      ForeColor       =   &H8000000E&
+      ForeColor       =   &H00FFFFFF&
       Height          =   2175
       Left            =   120
       TabIndex        =   5
@@ -50,7 +50,7 @@ Begin VB.Form frmConfig
       Begin VB.Frame Frame3 
          BackColor       =   &H8000000C&
          Caption         =   "Server Information :"
-         ForeColor       =   &H8000000E&
+         ForeColor       =   &H00FFFFFF&
          Height          =   975
          Left            =   3600
          TabIndex        =   10
@@ -59,7 +59,7 @@ Begin VB.Form frmConfig
          Begin VB.Label Label6 
             BackColor       =   &H8000000C&
             Caption         =   "Port : "
-            ForeColor       =   &H8000000E&
+            ForeColor       =   &H00FFFFFF&
             Height          =   255
             Left            =   120
             TabIndex        =   14
@@ -69,7 +69,7 @@ Begin VB.Form frmConfig
          Begin VB.Label Label5 
             BackColor       =   &H8000000C&
             Caption         =   "IP : "
-            ForeColor       =   &H8000000E&
+            ForeColor       =   &H00FFFFFF&
             Height          =   255
             Left            =   120
             TabIndex        =   13
@@ -80,7 +80,7 @@ Begin VB.Form frmConfig
       Begin VB.Frame Frame2 
          BackColor       =   &H8000000C&
          Caption         =   "Client Information :"
-         ForeColor       =   &H8000000E&
+         ForeColor       =   &H00FFFFFF&
          Height          =   975
          Left            =   240
          TabIndex        =   9
@@ -89,7 +89,7 @@ Begin VB.Form frmConfig
          Begin VB.Label Label4 
             BackColor       =   &H8000000C&
             Caption         =   "Name : "
-            ForeColor       =   &H8000000E&
+            ForeColor       =   &H00FFFFFF&
             Height          =   255
             Left            =   120
             TabIndex        =   12
@@ -99,7 +99,7 @@ Begin VB.Form frmConfig
          Begin VB.Label Label3 
             BackColor       =   &H8000000C&
             Caption         =   "IP : "
-            ForeColor       =   &H8000000E&
+            ForeColor       =   &H00FFFFFF&
             Height          =   255
             Left            =   120
             TabIndex        =   11
@@ -136,7 +136,7 @@ Begin VB.Form frmConfig
       Begin VB.Label Label1 
          BackColor       =   &H8000000C&
          Caption         =   "Port :"
-         ForeColor       =   &H8000000E&
+         ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   3600
          TabIndex        =   8
@@ -146,7 +146,7 @@ Begin VB.Form frmConfig
       Begin VB.Label Label2 
          BackColor       =   &H8000000C&
          Caption         =   "IP :"
-         ForeColor       =   &H8000000E&
+         ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   1920
          TabIndex        =   7
@@ -156,7 +156,7 @@ Begin VB.Form frmConfig
       Begin VB.Label lblNick 
          BackColor       =   &H8000000C&
          Caption         =   "Nickname :"
-         ForeColor       =   &H8000000E&
+         ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   240
          TabIndex        =   6
@@ -166,8 +166,8 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.0.3"
-      ForeColor       =   &H8000000E&
+      Caption         =   "Version : 1.0.0.4"
+      ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
       TabIndex        =   16
@@ -177,7 +177,7 @@ Begin VB.Form frmConfig
    Begin VB.Label Label7 
       BackColor       =   &H8000000C&
       Caption         =   "Author : Notron"
-      ForeColor       =   &H8000000E&
+      ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
       TabIndex        =   15
@@ -255,6 +255,7 @@ Private Sub Command2_Click()
     txtIP.Enabled = True
     txtPort.Enabled = True
     Label5.Caption = "IP : "
+    Label6.Caption = "Port : "
     With frmChat
         .cmdSend.Enabled = False
         .cmdClear.Enabled = False

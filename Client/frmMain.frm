@@ -66,7 +66,7 @@ Begin VB.MDIForm frmMain
       Top             =   0
       Width           =   7545
       Begin VB.CommandButton Command4 
-         Caption         =   "UNKOWN"
+         Caption         =   "&Online List"
          Enabled         =   0   'False
          BeginProperty Font 
             Name            =   "Tahoma"
@@ -202,6 +202,16 @@ Private Sub Command3_Click()
     SetupForms frmSendFile
 End Sub
 
+
+Private Sub Command4_Click()
+With frmList
+    .Left = frmMain.Left + .Width * 2 + 50
+    .Top = frmMain.Top
+    .Height = frmMain.Height
+    .Show
+End With
+End Sub
+
 Private Sub MDIForm_Load()
 
 ':::::::::::::::::::::::::::::::::::
@@ -254,6 +264,7 @@ Case Else
 End Select
 End Sub
 
+
 Private Sub Winsock1_Close(Index As Integer)
 Winsock1(0).Close
 Prefix = "[" & Time & "]"
@@ -291,11 +302,11 @@ End Sub
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
 Prefix = "[" & Time & "]"
     Dim Message As String
-    
+        
     Winsock1(Index).GetData Message
     
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf _
-        & Prefix & Message
+    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
+        
 End Sub
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
