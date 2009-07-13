@@ -4,10 +4,10 @@ Begin VB.Form frmChat
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
    Caption         =   "frmChat"
-   ClientHeight    =   4380
+   ClientHeight    =   4200
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   7890
+   ClientWidth     =   7485
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -19,8 +19,8 @@ Begin VB.Form frmChat
    EndProperty
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
-   ScaleHeight     =   4380
-   ScaleWidth      =   7890
+   ScaleHeight     =   4200
+   ScaleWidth      =   7485
    ShowInTaskbar   =   0   'False
    Begin VB.CommandButton cmdClear 
       Caption         =   "&Clear"
@@ -72,7 +72,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B

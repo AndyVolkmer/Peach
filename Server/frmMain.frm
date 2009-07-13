@@ -345,7 +345,6 @@ Else
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & "[System]: Disconnected due connection problem."
     StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
 End If
-Debug.Print "Number : " & Number & vbCrLf & "Description : " & Description & " Winsock State : " & Winsock1(Index).State
 End Sub
 
 Public Sub DisableFormResize(frm As Form)
