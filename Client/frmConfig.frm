@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmConfig 
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
-   Caption         =   "Form1"
+   Caption         =   "frmConfig"
    ClientHeight    =   4155
    ClientLeft      =   0
    ClientTop       =   0
@@ -135,7 +135,7 @@ Begin VB.Form frmConfig
       End
       Begin VB.Label Label1 
          BackColor       =   &H8000000C&
-         Caption         =   "Port :"
+         Caption         =   " Port :"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   3600
@@ -145,7 +145,7 @@ Begin VB.Form frmConfig
       End
       Begin VB.Label Label2 
          BackColor       =   &H8000000C&
-         Caption         =   "IP :"
+         Caption         =   " IP :"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   1920
@@ -155,7 +155,7 @@ Begin VB.Form frmConfig
       End
       Begin VB.Label lblNick 
          BackColor       =   &H8000000C&
-         Caption         =   "Nickname :"
+         Caption         =   " Nickname :"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   240
@@ -166,7 +166,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.0.4"
+      Caption         =   "Version : 1.0.0.5"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -208,12 +208,22 @@ Case Else
         Case ""
             MsgBox "Port cant be empty.", vbCritical
             txtPort.SetFocus
-        Case Else
+        Case Else ' <---------- Here we enter ---------->
             ' If the nick is to short then no xP
             If Len(txtNick.Text) < 4 Then
-                MsgBox "Your nickname is to short!    ", vbExclamation, " Error - Nickname"
+                MsgBox "Your nickname is to short!    ", vbInformation, " Error - Nickname"
+                txtNick.SelStart = Len(txtNick.Text)
+                txtNick.SetFocus
                 Exit Sub
             End If
+            
+'            We save the name variable in a string for now with #
+'            frmMain.NameText = txtNick.Text
+'            Dim i As Integer
+'            For i = Len(txtNick.Text) To 15
+'                SavedNick = SavedNick & "#"
+'            Next i
+            
             ' Do the enable stuff
             Command2.Enabled = True
             Command1.Enabled = False
@@ -226,22 +236,22 @@ Case Else
                 .cmdClear.Enabled = True
                 .txtToSend.Enabled = True
             End With
-                        
+            
             ' Connect winsocks
-          With frmMain.Winsock1(0)
+            With frmMain.Winsock1(0)
                 .RemotePort = txtPort.Text
                 .RemoteHost = txtIP.Text
                 .Connect
             
-            Label5.Caption = "IP: " & .RemoteHost
-            Label6.Caption = "Port : " & .RemotePort
-          End With
+                Label5.Caption = "IP: " & .RemoteHost
+                Label6.Caption = "Port : " & .RemotePort
+            End With
             
             frmMain.StatusBar1.Panels(1).Text = "Status: Connecting to '" & txtIP.Text & ":" & txtPort.Text & "'"
             frmConfig.Hide
             frmChat.Show
             frmChat.txtToSend.SetFocus
-                   
+            
         End Select
     End Select
 End Select
@@ -261,7 +271,7 @@ Private Sub Command2_Click()
         .cmdClear.Enabled = False
         .txtToSend.Enabled = False
     End With
-        
+
 ' Close connection
 frmMain.Winsock1(0).Close
 
@@ -273,7 +283,6 @@ Private Sub Form_Load()
 Me.Top = 0
 Me.Left = 0
 
-':::
 Label3.Caption = "IP : " & frmMain.Winsock1(0).LocalIP
 Label4.Caption = "Name : " & frmMain.Winsock1(0).LocalHostName
 
@@ -300,7 +309,14 @@ If KeyAscii = vbKeyReturn Then Command1_Click
 End Sub
 
 Private Sub txtNick_LostFocus()
-txtNick.Text = StrConv(txtNick.Text, vbProperCase)
+If IsNumeric(txtNick) = True Then
+    txtNick.Text = ""
+    MsgBox "You cant take numbers as name.", vbInformation
+    txtNick.SetFocus
+    Exit Sub
+Else
+    txtNick.Text = StrConv(txtNick.Text, vbProperCase)
+End If
 End Sub
 
 Private Sub txtPort_KeyPress(KeyAscii As Integer)

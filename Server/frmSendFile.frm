@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "mswinsck.ocx"
 Begin VB.Form frmSendFile 
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
@@ -229,6 +229,7 @@ Private Sub SckReceiveFile_DataArrival(Index As Integer, ByVal bytesTotal As Lon
         Clients(Index).FileName = Mid(sData, Pos + 1, (Pos2 - Pos) - 1)
         
         Clients(Index).FileNum = FreeFile
+        On Error GoTo handleErrorSendFile:
         Open App.Path & "\" & Clients(Index).FileName For Binary Access Write Lock Write As Clients(Index).FileNum
         
         sData = Mid(sData, Pos2 + 1)
@@ -248,6 +249,16 @@ Private Sub SckReceiveFile_DataArrival(Index As Integer, ByVal bytesTotal As Lon
             SckReceiveFile_Close Index
         End If
     End If
+Exit Sub
+handleErrorSendFile:
+Select Case Err.Number
+Case 75
+    MsgBox "The file you are trying to get already exists in this location and is ReadOnly. Rename it and try to send again." & vbCrLf & "Current action aborted due to ReadOnly file.", vbInformation
+    Exit Sub
+Case Else
+    MsgBox "Error : " & Err.Number & vbCrLf & "Description : " & Err.Description & vbCrLf & "Current action aborted because of an unkown error!", vbCritical
+    Exit Sub
+End Select
 End Sub
 
 Private Sub tmrStatus_Timer()

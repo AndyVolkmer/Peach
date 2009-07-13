@@ -3,7 +3,7 @@ Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.OCX"
 Begin VB.Form frmChat 
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
-   Caption         =   "Form1"
+   Caption         =   "frmChat"
    ClientHeight    =   4380
    ClientLeft      =   0
    ClientTop       =   0
@@ -93,10 +93,9 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Dim Message As String
 
 Private Sub cmdSend_Click()
-frmMain.Prefix = "[" & Time & "]"
+frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Select Case txtToSend.Text
 Case ""
     MsgBox "Nothing inserted!", vbInformation
@@ -114,22 +113,32 @@ Case "  "
     txtToSend.SetFocus
     Exit Sub
 Case "!time"
-    txtConver.Text = txtConver.Text & vbCrLf & frmMain.Prefix & " [" & frmConfig.txtNick.Text & "] : " & txtToSend.Text & vbCrLf & frmMain.Prefix & " [System] : The time is " & Time
+    txtConver.Text = txtConver.Text & vbCrLf & frmMain.Prefix & " [" & frmConfig.txtNick.Text & "] : " & txtToSend.Text & vbCrLf & frmMain.Prefix & " [System] : The time is " & Format(Time, "hh:nn:ss")
     txtToSend.Text = ""
 Case "!online"
     txtConver.Text = txtConver.Text & vbCrLf & frmMain.Prefix & " [" & frmConfig.txtNick.Text & "] : " & txtToSend.Text
     
-    Message = "!online"
-    
-    SendMessage Message
+    With frmMain
+        .ConverText = txtToSend.Text
+        .NameText = frmConfig.txtNick.Text
+        .Message = .NameText & "#" & .ConverText & "#"
+        
+    SendMessage .Message
+    End With
     
     txtToSend.Text = ""
 Case Else
-
-    Message = " [" & frmConfig.txtNick.Text & "] : " & txtToSend.Text
-
-    SendMessage Message
+    
+    'Message = " [" & frmConfig.txtNick.Text & "] : " & txtToSend.Text
+    
+    With frmMain
+        .ConverText = txtToSend.Text
+        .NameText = frmConfig.txtNick.Text
+        .Message = .NameText & "#" & .ConverText & "#"
         
+    SendMessage .Message
+    End With
+            
     txtToSend.Text = ""
 End Select
 End Sub
@@ -143,7 +152,6 @@ Private Sub cmdClear_Click()
 txtConver.Text = ""
 txtToSend.Text = ""
 End Sub
-
 
 Private Sub txtConver_Change()
 txtConver.SelStart = Len(txtConver)

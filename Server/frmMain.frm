@@ -181,8 +181,11 @@ Private Declare Function GetMenuItemCount Lib "user32" (ByVal hMenu As Long) As 
 Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPosition As Long, ByVal wFlags As Long) As Long
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
 
-Public Prefix As String
-Public intCounter As Integer
+Public Prefix       As String
+Public intCounter   As Integer
+Public NameText     As String
+Public ConverText   As String
+Public Message      As String
 
 
 Private Sub Command1_Click()
@@ -235,11 +238,11 @@ End Sub
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
 Dim Wsk As Winsock
 intCounter = Winsock1.Count
-For Each Wsk In Winsock1
-    If Wsk.State = sckConnected Then
-        intCounter = Wsk.Index + 1
-    End If
-Next
+    For Each Wsk In Winsock1
+        If Wsk.State = sckConnected Then
+            intCounter = Wsk.Index + 1
+        End If
+    Next
     Load Winsock1(intCounter)
     Winsock1(intCounter).LocalPort = frmConfig.txtPort.Text
     Winsock1(intCounter).Accept requestID
@@ -249,16 +252,30 @@ End Sub
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
 Dim strMessage As String
 Dim onlineCount As String
+Dim c1, c2 As String
+Dim v As Variant
+Dim difC As Integer
 
 ' Get Message
 frmMain.Winsock1(Index).GetData strMessage
 
-' If message is to long then give warn message .. >_>
-If Len(strMessage) > 200 Then
-    strMessage = "[" & Winsock1(Index).RemoteHostIP & "] - You cannot spam here with older version!"
-End If
+' Encode Message
+v = InStr(1, strMessage, "#")
 
-Select Case Trim(strMessage)
+c1 = Mid(strMessage, 1, v - 1)
+
+difC = Len(strMessage) - Len(c1) - 1
+
+c2 = Mid(strMessage, Len(c1) + 2, difC - 1)
+
+frmMain.NameText = c1
+frmMain.ConverText = c2
+'' If message is to long then give warn message .. >_>
+'If Len(strMessage) > 200 Then
+'    strMessage = "[" & Winsock1(Index).RemoteHostIP & "] - You cannot spam here with older version!"
+'End If
+
+Select Case Trim(frmMain.ConverText)
 Case "!online"
     Select Case Winsock1.UBound
     Case 0
@@ -268,17 +285,19 @@ Case "!online"
     Case Else
         SendMessage " [System] : " & Winsock1.Count - 1 & " users are online."
     End Select
+Case "!connected"
+    SendMessage " " & frmMain.NameText & " has connected."
 Case Else
-    SendMessage strMessage
+    SendMessage " [" & frmMain.NameText & "] : " & frmMain.ConverText
 End Select
 
 ' Read Message
-frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "[" & Time & "]" & strMessage
+frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & strMessage
 End Sub
 
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-frmMain.Prefix = "[" & Time & "]"
+frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 If Index < 0 Then
     Winsock1(Index).Close
     Unload Winsock1(Index)

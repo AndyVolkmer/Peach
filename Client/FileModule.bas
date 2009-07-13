@@ -11,7 +11,7 @@ Public Type TypeSSO
 End Type
 
 Public Function WriteConfigFile(PathToFile As String) As Boolean
-    
+
 Dim lnManip As Integer
 Dim theOath As TypeSSO
 
@@ -37,7 +37,7 @@ Put #lnManip, 1, theOath
 Close #lnManip
 
 WriteConfigFile = True
-Debug.Print "Succesfully Saved!" & " " & Time & " - " & Date
+Debug.Print "Succesfully Saved!" & " " & Format(Time, "hh:nn:ss") & " - " & Date
 
 End Function
 

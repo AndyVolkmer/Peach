@@ -67,7 +67,6 @@ Begin VB.MDIForm frmMain
       Width           =   7545
       Begin VB.CommandButton Command4 
          Caption         =   "&Online List"
-         Enabled         =   0   'False
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -170,7 +169,6 @@ Private Type MENUITEMINFO
     cch             As Long
 End Type
 
-
 Private Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Long, ByVal bRevert As Long) As Long
 Private Declare Function GetMenuItemInfo Lib "user32" Alias "GetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal b As Boolean, lpMenuItemInfo As MENUITEMINFO) As Long
 Private Declare Function SetMenuItemInfo Lib "user32" Alias "SetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal bool As Boolean, lpcMenuItemInfo As MENUITEMINFO) As Long
@@ -180,7 +178,11 @@ Private Declare Function SendMessage2 Lib "user32" Alias "SendMessageA" (ByVal h
 Private Declare Function GetMenuItemCount Lib "user32" (ByVal hMenu As Long) As Long
 Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPosition As Long, ByVal wFlags As Long) As Long
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
-Public Prefix As String
+
+Public Prefix       As String
+Public NameText     As String
+Public ConverText   As String
+Public Message      As String
 
 
 Private Sub Command1_Click()
@@ -207,13 +209,12 @@ Private Sub Command4_Click()
 With frmList
     .Left = frmMain.Left + .Width * 2 + 50
     .Top = frmMain.Top
-    .Height = frmMain.Height
+    .Height = frmMain.Height - 400
     .Show
 End With
 End Sub
 
 Private Sub MDIForm_Load()
-
 ':::::::::::::::::::::::::::::::::::
 Dim TSSO As TypeSSO
 TSSO = ReadConfigFile(App.Path & "\bin.conf")
@@ -265,9 +266,13 @@ End Select
 End Sub
 
 
+Private Sub MDIForm_Unload(Cancel As Integer)
+    Unload frmList
+End Sub
+
 Private Sub Winsock1_Close(Index As Integer)
 Winsock1(0).Close
-Prefix = "[" & Time & "]"
+Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 StatusBar1.Panels(1).Text = "Status: Disconnected from Server."
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System] : You got disconnected from Server"
 
@@ -290,27 +295,27 @@ frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System] :
 End Sub
 
 Private Sub Winsock1_Connect(Index As Integer)
-Dim tMessage As String
 
 StatusBar1.Panels(1).Text = "Status: Connected to " & frmConfig.txtIP.Text & ":" & frmConfig.txtPort.Text
 
-tMessage = " [" & frmConfig.txtNick.Text & "] has connected!"
-SendMessage tMessage
+frmMain.NameText = frmConfig.txtNick
+frmMain.Message = frmMain.NameText & "#" & "!connected" & "#"
+SendMessage frmMain.Message
 
 End Sub
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-Prefix = "[" & Time & "]"
+Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
     Dim Message As String
-        
+    
     Winsock1(Index).GetData Message
     
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
-        
+    
 End Sub
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-Prefix = "[" & Time & "]"
+Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
     If Index < 0 Then
         Winsock1(Index).Close
         Unload Winsock1(Index)
@@ -385,4 +390,3 @@ Public Sub DisableFormResize(frm As Form)
     frm.Width = frm.Width - 1
     frm.Width = frm.Width + 1
 End Sub
-
