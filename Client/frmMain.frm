@@ -313,9 +313,10 @@ MsgBox "This name is already taken!", vbInformation
 With frmConfig
     .Command2_Click
     .txtNick = ""
+SetupForms frmConfig
     .txtNick.SetFocus
 End With
-SetupForms frmConfig
+
 End Sub
 
 
