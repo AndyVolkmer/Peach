@@ -94,15 +94,14 @@ Private Sub Command1_Click()
     Unload frmMain.Winsock1(Text1.Text)
     
     ListView1.ListItems.Remove (ListView1.SelectedItem.Index)
+    ' Update clients user online list
+    UpdateUsersList
+    
     ' Clear entry
     Text1.Text = "0"
     
     ' Update Statusbar
     frmMain.StatusBar1.Panels(1).Text = "Status: Connected with  " & frmMain.Winsock1.Count - 1 & " Client(s)."
-End Sub
-
-Private Sub Command2_Click()
-
 End Sub
 
 Private Sub Form_Load()
@@ -116,6 +115,6 @@ Private Sub List2_Click()
 End Sub
 
 Private Sub ListView1_ItemClick(ByVal Item As MSComctlLib.ListItem)
-Text1.Text = ListView1.SelectedItem.ListSubItems(2).Text
+    Text1.Text = ListView1.SelectedItem.ListSubItems(2).Text
 End Sub
 

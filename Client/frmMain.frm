@@ -67,7 +67,6 @@ Begin VB.MDIForm frmMain
       Width           =   7545
       Begin VB.CommandButton Command4 
          Caption         =   "&Online List"
-         Enabled         =   0   'False
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -216,24 +215,19 @@ End With
 End Sub
 
 Private Sub MDIForm_Load()
-':::::::::::::::::::::::::::::::::::
 Dim TSSO As TypeSSO
 TSSO = ReadConfigFile(App.Path & "\bin.conf")
 
-':::::::::::::::::::::::::::::::::::
 DisableFormResize Me
 
-':::::::::::::::::::::::::::::::::::
 Dim L As Long
     L = GetWindowLong(Me.hwnd, GWL_STYLE)
-    'L = L And Not (WS_MINIMIZEBOX)
+'   L = L And Not (WS_MINIMIZEBOX)
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
 
-':::::::::::::::::::::::::::::::::::
 StatusBar1.Panels(1).Text = "Status : Disconnected"
 
-':::::::::::::::::::::::::::::::::::
 On Error GoTo HandleErrorFile
 With TSSO
     Me.Top = Trim(.TopPos)
@@ -253,13 +247,16 @@ Case 1
     Exit Sub
 Case 13
     MsgBox "Some configuration files are outdated or got damaged, Peach found the problem and will fix it on next program launch.", vbInformation
-    Me.Top = 1200
-    Me.Left = 1200
-    frmConfig.txtIP = "0.0.0.0"
-    frmConfig.txtPort = "4728"
-    frmConfig.txtNick = "DefaultNick"
-    
-    frmConfig.Show
+    With Me
+        .Top = 1200
+        .Left = 1200
+    End With
+    With frmConfig
+        .txtIP = "0.0.0.0"
+        .txtPort = "4728"
+        .txtNick = "DefaultNick"
+        .Show
+    End With
 Case Else
     MsgBox "Error : " & Err.Number & vbCrLf & "Description : " & Err.Description, vbCritical
     Exit Sub
@@ -272,8 +269,9 @@ Private Sub MDIForm_Unload(Cancel As Integer)
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
-Winsock1(0).Close
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+
+Winsock1(0).Close
 StatusBar1.Panels(1).Text = "Status: Disconnected from Server."
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System] : You got disconnected from Server"
 
@@ -296,16 +294,17 @@ frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System] :
 End Sub
 
 Private Sub Winsock1_Connect(Index As Integer)
-' Check if name is avaible
-SendMessage frmConfig.txtNick.Text & "#" & "!namerequest" & "#"
+' Send request to check if name is avaible
+SendMessage "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
 End Sub
 
 Private Sub ConnectIsTrue()
 StatusBar1.Panels(1).Text = "Status: Connected to " & frmConfig.txtIP.Text & ":" & frmConfig.txtPort.Text
-
-frmMain.NameText = frmConfig.txtNick
-frmMain.Message = frmMain.NameText & "#" & "!connected" & "#"
-SendMessage frmMain.Message
+With frmMain
+    .NameText = frmConfig.txtNick
+    .Message = "!connected" & "#" & .NameText & "#"
+SendMessage .Message
+End With
 End Sub
 
 Private Sub ConnectIsFalse()
@@ -316,25 +315,37 @@ With frmConfig
 SetupForms frmConfig
     .txtNick.SetFocus
 End With
-
 End Sub
 
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
-    Dim Message As String
-    
+Dim Command         As String
+Dim arr()           As String
+Dim i               As Integer
+Dim Message         As String
+    'We get the message
     Winsock1(Index).GetData Message
     
-    Select Case Message
-    Case "!decilineD"
+    'We decode (split) the message into an array
+    arr = Split(Message, "#")
+        
+    'Assign the variables to the array
+    Command = arr(0)
+    
+    Select Case Command
+    Case "!decilineD" ' We cannot login ( choose other name )
         ConnectIsFalse
-    Case "!accepteD"
+    Case "!accepteD" ' We can login
         ConnectIsTrue
-    Case Else
+    Case "!listupdate" ' Update the list
+        frmList.List1.Clear
+        For i = LBound(arr) + 1 To UBound(arr)
+                frmList.List1.AddItem arr(i)
+        Next i
+    Case Else ' Normal message
         frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
     End Select
-    
 End Sub
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
@@ -364,11 +375,9 @@ Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
         End With
         frmConfig.Show
     End If
-
 End Sub
 
 Public Sub DisableFormResize(frm As Form)
-
     Dim style As Long
     Dim hMenu As Long
     Dim MII As MENUITEMINFO

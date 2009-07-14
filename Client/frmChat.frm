@@ -72,6 +72,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -111,33 +112,24 @@ Case "  "
     txtToSend.Text = ""
     txtToSend.SetFocus
     Exit Sub
-Case "!time"
+Case Trim("!time")
     txtConver.Text = txtConver.Text & vbCrLf & frmMain.Prefix & " [" & frmConfig.txtNick.Text & "] : " & txtToSend.Text & vbCrLf & frmMain.Prefix & " [System] : The time is " & Format(Time, "hh:nn:ss")
     txtToSend.Text = ""
-Case "!online"
-    txtConver.Text = txtConver.Text & vbCrLf & frmMain.Prefix & " [" & frmConfig.txtNick.Text & "] : " & txtToSend.Text
-    
+Case Trim("!online")
     With frmMain
-        .ConverText = txtToSend.Text
         .NameText = frmConfig.txtNick.Text
-        .Message = .NameText & "#" & .ConverText & "#"
-        
+        .Message = "!online" & "#" & .NameText & "#"
     SendMessage .Message
     End With
-    
     txtToSend.Text = ""
 Case Else
-    
-    'Message = " [" & frmConfig.txtNick.Text & "] : " & txtToSend.Text
-    
     With frmMain
         .ConverText = txtToSend.Text
         .NameText = frmConfig.txtNick.Text
-        .Message = .NameText & "#" & .ConverText & "#"
+        .Message = "!msg" & "#" & .NameText & "#" & .ConverText & "#"
         
     SendMessage .Message
     End With
-            
     txtToSend.Text = ""
 End Select
 End Sub

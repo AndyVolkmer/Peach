@@ -6,6 +6,15 @@ Begin VB.Form frmList
    ClientLeft      =   45
    ClientTop       =   405
    ClientWidth     =   3765
+   BeginProperty Font 
+      Name            =   "Tahoma"
+      Size            =   8.25
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    Icon            =   "frmList.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
@@ -18,6 +27,23 @@ Begin VB.Form frmList
       TabIndex        =   0
       Top             =   360
       Width           =   3495
+   End
+   Begin VB.Label Label1 
+      Caption         =   "Online Users : "
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   120
+      TabIndex        =   1
+      Top             =   120
+      Width           =   1095
    End
 End
 Attribute VB_Name = "frmList"
@@ -34,3 +60,4 @@ End Sub
 Private Sub Form_Resize()
 List1.Height = Me.Height - 1000
 End Sub
+

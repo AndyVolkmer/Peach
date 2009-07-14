@@ -12,6 +12,12 @@ Begin VB.MDIForm frmMain
    LinkTopic       =   "MDIForm1"
    ScrollBars      =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.Timer listTimer 
+      Enabled         =   0   'False
+      Interval        =   1500
+      Left            =   0
+      Top             =   1080
+   End
    Begin MSComctlLib.StatusBar StatusBar1 
       Align           =   2  'Align Bottom
       Height          =   345
@@ -183,10 +189,20 @@ Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
 
 Public Prefix       As String
 Public intCounter   As Integer
+Public Command      As String
 Public NameText     As String
 Public ConverText   As String
 Public Message      As String
-Dim RR As Integer
+Dim arr()           As String
+Dim strMessage      As String
+Dim onlineCount     As String
+Dim NameOfUser      As String
+Dim RR              As Integer
+Dim x               As Integer
+Dim i               As Integer
+Dim bMatch          As Boolean
+Public iMatch          As Boolean
+Dim u               As Variant
 
 
 Private Sub Command1_Click()
@@ -212,53 +228,51 @@ Private Sub Command4_Click()
     SetupForms frmPanel
 End Sub
 
-Private Sub Command5_Click()
-
+Private Sub listTimer_Timer()
+    UpdateUsersList
+    listTimer.Enabled = False
 End Sub
 
 Private Sub MDIForm_Load()
-':::::::::::::::::::::::::::::::::::
 DisableFormResize Me
-':::::::::::::::::::::::::::::::::::
 Dim L As Long
     L = GetWindowLong(Me.hwnd, GWL_STYLE)
-    'L = L And Not (WS_MINIMIZEBOX)
+'   L = L And Not (WS_MINIMIZEBOX)
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
-':::::::::::::::::::::::::::::::::::
 StatusBar1.Panels(1).Text = "Status : Disconnected"
 frmPanel.Text1 = "0"
     SetupForms frmConfig
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
-    Dim x As Integer
-    Dim NameOfUser As String
     Unload Winsock1(Index)
+    
     For x = 1 To frmPanel.ListView1.ListItems.Count + 1
+        ' Give the message to disconnect and reload user list for all clients
         If frmPanel.ListView1.ListItems.Item(x).SubItems(2) = Index Then
+            
             ' Pick the user
             NameOfUser = frmPanel.ListView1.ListItems.Item(x)
             frmPanel.ListView1.ListItems.Remove (x)
+            
+            ' Update Users List
+            UpdateUsersList
+            
             Exit For
-        Else
-            '
         End If
     Next x
-    SendMessage " " & NameOfUser & " has disconnected!"
+    If iMatch = False Then
+        If UCase(NameOfUser) <> "N/A" Then
+            SendMessage " " & NameOfUser & " has disconnected!"
+        End If
+    End If
     StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
 RR = frmPanel.ListView1.ListItems.Count + 1
-Dim Wsk As Winsock
-intCounter = Winsock1.Count
-    For Each Wsk In Winsock1
-        If Wsk.State = sckConnected Then
-            intCounter = Wsk.Index + 1
-        End If
-    Next
-    Load Winsock1(intCounter)
+    intCounter = loadSocket
     Winsock1(intCounter).LocalPort = frmConfig.txtPort.Text
     Winsock1(intCounter).Accept requestID
     ' New user should be listed in the panel
@@ -266,41 +280,56 @@ intCounter = Winsock1.Count
         .ListItems.Add RR, , "N/A"
         .ListItems.Item(RR).SubItems(1) = Winsock1(intCounter).RemoteHostIP
         .ListItems.Item(RR).SubItems(2) = intCounter
-        .ListItems.Item(RR).SubItems(3) = Time
+        .ListItems.Item(RR).SubItems(3) = Format(Time, "hh:nn:ss")
     End With
-    
     StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
+'On error means its free so we take free socket
+Private Function socketFree() As Integer
+On Error GoTo HandleErrorFreeSocket
+    Dim theIP As Variant
+    Dim i As Integer
+    For i = Winsock1.LBound + 1 To Winsock1.UBound
+        theIP = Winsock1(i).LocalIP
+    Next
+    socketFree = Winsock1.UBound + 1
+Exit Function
+HandleErrorFreeSocket:
+socketFree = i
+End Function
+
+'Load next free socket
+Private Function loadSocket() As Integer
+Dim theFreeSocket As Integer: theFreeSocket = 0
+    theFreeSocket = socketFree
+    Load Winsock1(theFreeSocket)
+    loadSocket = theFreeSocket
+End Function
+'
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
 RR = frmPanel.ListView1.ListItems.Count
-Dim strMessage As String
-Dim onlineCount As String
-Dim c1, c2 As String
-Dim v As Variant
-Dim difC As Integer
 
 ' Get Message
 frmMain.Winsock1(Index).GetData strMessage
 
-' Encode Message
-v = InStr(1, strMessage, "#")
+' We decode (split) the message into an array
+arr = Split(strMessage, "#")
 
-c1 = Mid(strMessage, 1, v - 1)
+' Assign the variables to the array
+With frmMain
+    .Command = arr(0)
+    .NameText = arr(1)
+    .ConverText = arr(2)
+End With
 
-difC = Len(strMessage) - Len(c1) - 1
-
-c2 = Mid(strMessage, Len(c1) + 2, difC - 1)
-
-frmMain.NameText = c1
-frmMain.ConverText = c2
-' If message is to long then give warn message .. >_>
+' Validate: If message is to long then give warn message .. >_>
 If Len(frmMain.ConverText) > 200 Then
     strMessage = "[" & frmMain.NameText & "] - You cannot spam here with older version!"
 End If
 
-Select Case Trim(frmMain.ConverText)
-Case "!online"
+Select Case frmMain.Command
+Case "!online" ' Announce how many people are connected
     Select Case Winsock1.UBound
     Case 0
         SendMessage " [System] : " & " No users are online."
@@ -309,27 +338,32 @@ Case "!online"
     Case Else
         SendMessage " [System] : " & Winsock1.Count - 1 & " users are online."
     End Select
-Case "!connected"
+Case "!connected" ' Announce connected player and send to user online list
     SendMessage " " & frmMain.NameText & " has connected."
-    frmPanel.ListView1.ListItems.Item(RR).Text = frmMain.NameText ' 1, , frmMain.NameText
-Case "!namerequest"
-    Dim u As Variant
-    For u = 1 To frmPanel.ListView1.ListItems.Count + 1
-        If frmPanel.ListView1.ListItems.Item(u) = frmMain.NameText Then
-            SendRequest "!decilineD", frmMain.Winsock1(Index)
-            Exit For
-        Else
-            SendRequest "!accepteD", frmMain.Winsock1(Index)
+    frmPanel.ListView1.ListItems.Item(RR).Text = frmMain.NameText
+    listTimer.Enabled = True
+Case "!namerequest" ' Check if the name is avaible or not
+    For u = 1 To frmPanel.ListView1.ListItems.Count
+        If UCase(frmPanel.ListView1.ListItems.Item(u)) = UCase(frmMain.NameText) Then
+            bMatch = True
             Exit For
         End If
-        Exit For
     Next u
+    
+    If bMatch = True Then ' Return yes or no to client
+        bMatch = False
+        SendRequest "!decilineD", frmMain.Winsock1(Index)
+    Else
+        SendRequest "!accepteD", frmMain.Winsock1(Index)
+    End If
+    
 Case Else
     SendMessage " [" & frmMain.NameText & "] : " & frmMain.ConverText
 End Select
 
-' Read Message
-frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & strMessage
+' We want to read the message also , different then others tho
+'frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & strMessage
+frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & " [" & frmMain.Command & "] [" & frmMain.NameText & "] : " & frmMain.ConverText
 End Sub
 
 
@@ -339,11 +373,18 @@ If Index < 0 Then
     Winsock1(Index).Close
     Unload Winsock1(Index)
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & " [System]: Disconnected with a host."
+    'frmPanel.ListView1.ListItems.Item
+    For i = 1 To frmPanel.ListView1.ListItems.Count
+        frmPanel.ListView1.ListItems.Remove (i)
+    Next i
 Else
     Winsock1(Index).Close
     Unload Winsock1(Index)
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & "[System]: Disconnected due connection problem."
     StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
+    For i = 1 To frmPanel.ListView1.ListItems.Count
+        frmPanel.ListView1.ListItems.Remove (i)
+    Next i
 End If
 End Sub
 

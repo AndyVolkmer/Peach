@@ -17,3 +17,18 @@ If Wsk.State = 7 Then
     Wsk.SendData Message
 End If
 End Sub
+
+Public Function UpdateUsersList() As Integer
+Dim i As Integer
+Dim tMsg As String
+    frmMain.iMatch = True
+    With frmPanel.ListView1.ListItems
+        tMsg = "!listupdate#"
+        For i = 1 To .Count
+            tMsg = tMsg & .Item(i) & "#"
+        Next i
+    End With
+    If tMsg <> "!listupdate#" Then
+        SendMessage tMsg
+    End If
+End Function
