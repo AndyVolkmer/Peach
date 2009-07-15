@@ -22,6 +22,7 @@ Begin VB.Form frmList
    MinButton       =   0   'False
    ScaleHeight     =   3780
    ScaleWidth      =   3765
+   ShowInTaskbar   =   0   'False
    Begin VB.CommandButton Command1 
       Caption         =   "&Close"
       Height          =   375
@@ -72,7 +73,9 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub Form_Resize()
-List1.Height = Me.Height - 1300
-Command1.Top = List1.Height + 400
+If Not frmMain.WindowState = vbMinimized Then
+    List1.Height = Me.Height - 1300
+    Command1.Top = List1.Height + 400
+End If
 End Sub
 
