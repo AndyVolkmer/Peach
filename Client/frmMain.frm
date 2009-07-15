@@ -366,31 +366,26 @@ End Sub
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
-    If Index < 0 Then
-        Winsock1(Index).Close
-        Unload Winsock1(Index)
-        frmChat.txtConver = frmChat.txtConver & vbCrLf & Prefix & " [System] : Connection canceled."
-    Else
-        Winsock1(Index).Close
-        frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System] : Disconnected due connection problem."
-        StatusBar1.Panels(1).Text = "Status: Disconnected due connection problem."
-        With frmConfig
-            .Command1.Enabled = True
-            .Command2.Enabled = False
-            .txtNick.Enabled = True
-            .txtIP.Enabled = True
-            .txtPort.Enabled = True
-            .Label5.Caption = "IP : "
-            .Label6.Caption = "Port : "
-        End With
-        With frmChat
-            .Hide
-            .cmdClear.Enabled = False
-            .cmdSend.Enabled = False
-            .txtToSend.Enabled = False
-        End With
-        frmConfig.Show
-    End If
+Winsock1(Index).Close
+frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System] : Disconnected due connection problem."
+StatusBar1.Panels(1).Text = "Status: Disconnected due connection problem."
+frmList.List1.Clear
+With frmConfig
+    .Command1.Enabled = True
+    .Command2.Enabled = False
+    .txtNick.Enabled = True
+    .txtIP.Enabled = True
+    .txtPort.Enabled = True
+    .Label5.Caption = "IP : "
+    .Label6.Caption = "Port : "
+End With
+With frmChat
+    .Hide
+    .cmdClear.Enabled = False
+    .cmdSend.Enabled = False
+    .txtToSend.Enabled = False
+End With
+frmConfig.Show
 End Sub
 
 Public Sub DisableFormResize(frm As Form)
