@@ -166,7 +166,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.0.9"
+      Caption         =   "Version : 1.0.1.0"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120

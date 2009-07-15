@@ -3,7 +3,7 @@ Begin VB.Form frmConfig
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
    Caption         =   "frmConfig"
-   ClientHeight    =   4350
+   ClientHeight    =   4140
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   7560
@@ -20,7 +20,7 @@ Begin VB.Form frmConfig
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   4350
+   ScaleHeight     =   4140
    ScaleWidth      =   7560
    ShowInTaskbar   =   0   'False
    Begin VB.CommandButton Command2 
@@ -121,7 +121,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.0.9"
+      Caption         =   "Version : 1.0.1.0"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -135,6 +135,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Option Explicit
 
 Private Sub Command1_Click()

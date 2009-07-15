@@ -37,7 +37,7 @@ Put #lnManip, 1, theOath
 Close #lnManip
 
 WriteConfigFile = True
-Debug.Print "Succesfully Saved!" & " " & Format(Time, "hh:nn:ss") & " - " & Date
+'Debug.Print "Succesfully Saved!" & " " & Format(Time, "hh:nn:ss") & " - " & Date
 
 End Function
 

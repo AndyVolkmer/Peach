@@ -5,10 +5,10 @@ Begin VB.Form frmSendFile
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
    Caption         =   "frmSendFile"
-   ClientHeight    =   4680
+   ClientHeight    =   4065
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   8820
+   ClientWidth     =   7470
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -20,8 +20,8 @@ Begin VB.Form frmSendFile
    EndProperty
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
-   ScaleHeight     =   4680
-   ScaleWidth      =   8820
+   ScaleHeight     =   4065
+   ScaleWidth      =   7470
    ShowInTaskbar   =   0   'False
    Begin VB.TextBox txtListenPort 
       Height          =   285
@@ -36,7 +36,7 @@ Begin VB.Form frmSendFile
       Top             =   240
    End
    Begin VB.CommandButton cmdConnect 
-      Caption         =   "Start Listening for Connections"
+      Caption         =   "&Start Listening for Connections"
       Height          =   375
       Left            =   4320
       TabIndex        =   1

@@ -356,7 +356,7 @@ Dim Message         As String
         ConnectIsTrue
     Case "!listupdate" ' Update the list
         frmList.List1.Clear
-        For i = LBound(arr) + 1 To UBound(arr)
+        For i = LBound(arr) + 1 To UBound(arr) - 1
                 frmList.List1.AddItem arr(i)
         Next i
     Case Else ' Normal message

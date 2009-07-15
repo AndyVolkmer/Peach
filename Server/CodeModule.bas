@@ -32,3 +32,7 @@ Dim tMsg As String
         SendMessage tMsg
     End If
 End Function
+
+Public Sub VisualizeMessage(Command As String, Name As String, Message As String)
+frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & " [" & Command & "] [" & Name & "] [" & Message & "]"
+End Sub

@@ -326,19 +326,12 @@ End With
 
 ' Validate: If message is to long then give warn message .. >_>
 If Len(frmMain.ConverText) > 200 Then
-    strMessage = "[" & frmMain.NameText & "] - You cannot spam here with older version!"
+    SendRequest " You cannot spam here with older version!", Winsock1(Index)
+    VisualizeMessage "!spam", frmMain.NameText, "Spamming"
+    Exit Sub
 End If
 
 Select Case frmMain.Command
-Case "!online" ' Announce how many people are connected
-    Select Case Winsock1.UBound
-    Case 0
-        SendMessage " [System] : " & " No users are online."
-    Case 1
-        SendMessage " [System] : 1 user is online. (You)"
-    Case Else
-        SendMessage " [System] : " & Winsock1.Count - 1 & " users are online."
-    End Select
 Case "!connected" ' Announce connected player and send to user online list
     SendMessage " " & frmMain.NameText & " has connected."
     frmPanel.ListView1.ListItems.Item(RR).Text = frmMain.NameText
@@ -363,8 +356,8 @@ Case Else
 End Select
 
 ' We want to read the message also , different then others tho
-'frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & strMessage
-frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & " [" & frmMain.Command & "] [" & frmMain.NameText & "] : " & frmMain.ConverText
+VisualizeMessage frmMain.Command, frmMain.NameText, frmMain.ConverText
+'frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & " [" & frmMain.Command & "] [" & frmMain.NameText & "] [" & frmMain.ConverText & "]"
 End Sub
 
 
@@ -374,7 +367,6 @@ If Index < 0 Then
     Winsock1(Index).Close
     Unload Winsock1(Index)
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & " [System]: Disconnected with a host."
-    'frmPanel.ListView1.ListItems.Item
     For i = 1 To frmPanel.ListView1.ListItems.Count
         frmPanel.ListView1.ListItems.Remove (i)
     Next i

@@ -4,7 +4,7 @@ Begin VB.Form frmPanel
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
    Caption         =   "frmPanel"
-   ClientHeight    =   3540
+   ClientHeight    =   3330
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   7515
@@ -21,9 +21,25 @@ Begin VB.Form frmPanel
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   3540
+   ScaleHeight     =   3330
    ScaleWidth      =   7515
    ShowInTaskbar   =   0   'False
+   Begin VB.TextBox Text2 
+      Alignment       =   2  'Center
+      Height          =   285
+      Left            =   4560
+      TabIndex        =   4
+      Top             =   360
+      Width           =   1215
+   End
+   Begin VB.CommandButton Command2 
+      Caption         =   "&Search"
+      Height          =   285
+      Left            =   5880
+      TabIndex        =   3
+      Top             =   360
+      Width           =   1215
+   End
    Begin MSComctlLib.ListView ListView1 
       Height          =   2295
       Left            =   240
@@ -65,7 +81,7 @@ Begin VB.Form frmPanel
    Begin VB.CommandButton Command1 
       Caption         =   "&Kick"
       Height          =   285
-      Left            =   1200
+      Left            =   240
       TabIndex        =   1
       Top             =   360
       Width           =   1215
@@ -77,6 +93,7 @@ Begin VB.Form frmPanel
       TabIndex        =   0
       Text            =   "0"
       Top             =   360
+      Visible         =   0   'False
       Width           =   855
    End
 End
@@ -104,6 +121,16 @@ Private Sub Command1_Click()
     frmMain.StatusBar1.Panels(1).Text = "Status: Connected with  " & frmMain.Winsock1.Count - 1 & " Client(s)."
 End Sub
 
+Private Sub Command2_Click()
+Dim i As Integer
+For i = 1 To ListView1.ListItems.Count
+    If ListView1.ListItems.Item(i) = Text2.Text Then
+        ListView1.SelectedItem = ListView1.ListItems.Item(i)
+        ListView1.SetFocus
+    End If
+Next i
+End Sub
+
 Private Sub Form_Load()
 Me.Top = "0"
 Me.Left = "0"
@@ -118,3 +145,6 @@ Private Sub ListView1_ItemClick(ByVal Item As MSComctlLib.ListItem)
     Text1.Text = ListView1.SelectedItem.ListSubItems(2).Text
 End Sub
 
+Private Sub Text2_KeyPress(KeyAscii As Integer)
+If KeyAscii = vbKeyReturn Then Command2_Click
+End Sub
