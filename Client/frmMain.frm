@@ -273,7 +273,8 @@ Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 
 Winsock1(0).Close
 StatusBar1.Panels(1).Text = "Status: Disconnected from Server."
-frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System] : You got disconnected from Server"
+frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System] : You got disconnected from Server."
+frmList.List1.Clear
 
 ' Do the buttons
     With frmConfig

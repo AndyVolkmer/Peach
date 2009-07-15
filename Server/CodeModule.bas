@@ -1,4 +1,4 @@
-Attribute VB_Name = "Module1"
+Attribute VB_Name = "CodeModule"
 Option Explicit
 
 Public Sub SendMessage(Message As String)
@@ -9,6 +9,7 @@ For Each WinSk In frmMain.Winsock1
         WinSk.SendData Message
     End If
 Next
+
 
 End Sub
 
@@ -21,7 +22,6 @@ End Sub
 Public Function UpdateUsersList() As Integer
 Dim i As Integer
 Dim tMsg As String
-    frmMain.iMatch = True
     With frmPanel.ListView1.ListItems
         tMsg = "!listupdate#"
         For i = 1 To .Count

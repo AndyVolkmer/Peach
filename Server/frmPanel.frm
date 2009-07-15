@@ -3,7 +3,7 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmPanel 
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
-   Caption         =   "Form1"
+   Caption         =   "frmPanel"
    ClientHeight    =   3540
    ClientLeft      =   0
    ClientTop       =   0

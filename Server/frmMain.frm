@@ -14,7 +14,7 @@ Begin VB.MDIForm frmMain
    StartUpPosition =   2  'CenterScreen
    Begin VB.Timer listTimer 
       Enabled         =   0   'False
-      Interval        =   1500
+      Interval        =   500
       Left            =   0
       Top             =   1080
    End
@@ -193,7 +193,6 @@ Public Command      As String
 Public NameText     As String
 Public ConverText   As String
 Public Message      As String
-Public iMatch       As Boolean
 Dim array1()        As String
 Dim strMessage      As String
 Dim onlineCount     As String
@@ -262,11 +261,13 @@ Private Sub Winsock1_Close(Index As Integer)
             Exit For
         End If
     Next x
-    If iMatch = False Then
-        If UCase(NameOfUser) <> "N/A" Then
-            SendMessage " " & NameOfUser & " has disconnected!"
-        End If
-    End If
+' We dont need this but i gotta save this for later maybe
+' -------------------------------------------------------
+'    If ListOrAnn = False Then
+'        If UCase(NameOfUser) <> "N/A" Then
+'            SendMessage " " & NameOfUser & " has disconnected!"
+'        End If
+'    End If
     StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 

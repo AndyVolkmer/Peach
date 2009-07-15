@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmConfig 
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
-   Caption         =   "Server Configuration"
+   Caption         =   "frmConfig"
    ClientHeight    =   4350
    ClientLeft      =   0
    ClientTop       =   0
@@ -121,7 +121,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.0.7"
+      Caption         =   "Version : 1.0.0.8"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -177,10 +177,9 @@ Dim i As Integer
         .Winsock1(0).Close
         
         .StatusBar1.Panels(1).Text = "Status: Disconnected"
-        
     End With
 
-' stop the listen of sendfile form
+' Stop the listen of sendfile form
     frmSendFile.cmdConnect_Click
     
 ' Do the buttons
@@ -202,3 +201,10 @@ End With
 
 End Sub
 
+Private Sub txtNick_KeyPress(KeyAscii As Integer)
+If KeyAscii = vbKeyReturn Then Command1_Click
+End Sub
+
+Private Sub txtPort_KeyPress(KeyAscii As Integer)
+If KeyAscii = vbKeyReturn Then Command1_Click
+End Sub
