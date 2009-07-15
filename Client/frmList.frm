@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmList 
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Online List"
-   ClientHeight    =   5115
+   ClientHeight    =   3780
    ClientLeft      =   45
    ClientTop       =   405
    ClientWidth     =   3765
@@ -20,17 +20,26 @@ Begin VB.Form frmList
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   5115
+   ScaleHeight     =   3780
    ScaleWidth      =   3765
    Begin VB.CommandButton Command1 
       Caption         =   "&Close"
       Height          =   375
       Left            =   2520
       TabIndex        =   2
-      Top             =   4680
+      Top             =   3240
       Width           =   1095
    End
    Begin VB.ListBox List1 
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   2790
       Left            =   120
       TabIndex        =   0
@@ -52,6 +61,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Command1_Click()
+frmMain.UpdateListPosition.Enabled = False
 frmList.Hide
 End Sub
 
@@ -62,7 +72,7 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub Form_Resize()
-List1.Height = Me.Height - 1400
-Command1.Top = List1.Height + 500
+List1.Height = Me.Height - 1300
+Command1.Top = List1.Height + 400
 End Sub
 

@@ -11,6 +11,12 @@ Begin VB.MDIForm frmMain
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "MDIForm1"
    ScrollBars      =   0   'False
+   Begin VB.Timer UpdateListPosition 
+      Enabled         =   0   'False
+      Interval        =   1
+      Left            =   0
+      Top             =   1080
+   End
    Begin MSComctlLib.StatusBar StatusBar1 
       Align           =   2  'Align Bottom
       Height          =   345
@@ -206,8 +212,9 @@ End Sub
 
 
 Private Sub Command4_Click()
+frmMain.UpdateListPosition.Enabled = True
 With frmList
-    .Left = frmMain.Left + .Width * 2 + 50
+    .Left = frmMain.Left + .Width * 2 + 20
     .Top = frmMain.Top
     .Height = frmMain.Height - 400
     .Show
@@ -266,6 +273,14 @@ End Sub
 
 Private Sub MDIForm_Unload(Cancel As Integer)
     Unload frmList
+End Sub
+
+Private Sub UpdateListPosition_Timer()
+With frmList
+    .Left = frmMain.Left + .Width * 2 + 20
+    .Top = frmMain.Top
+    .Height = frmMain.Height - 400
+End With
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)

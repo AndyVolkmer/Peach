@@ -107,6 +107,7 @@ Begin VB.Form frmSendFile
       Height          =   375
       Left            =   5760
       TabIndex        =   1
+      ToolTipText     =   "( Dont click if you are not going to send something, this will make the application use more memory )"
       Top             =   600
       Width           =   1680
    End
