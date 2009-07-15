@@ -193,16 +193,17 @@ Public Command      As String
 Public NameText     As String
 Public ConverText   As String
 Public Message      As String
-Dim arr()           As String
+Public iMatch       As Boolean
+Dim array1()        As String
 Dim strMessage      As String
 Dim onlineCount     As String
 Dim NameOfUser      As String
 Dim RR              As Integer
 Dim x               As Integer
 Dim i               As Integer
+Dim u               As Integer
 Dim bMatch          As Boolean
-Public iMatch          As Boolean
-Dim u               As Variant
+
 
 
 Private Sub Command1_Click()
@@ -242,12 +243,11 @@ Dim L As Long
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
 StatusBar1.Panels(1).Text = "Status : Disconnected"
 frmPanel.Text1 = "0"
-    SetupForms frmConfig
+SetupForms frmConfig
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
     Unload Winsock1(Index)
-    
     For x = 1 To frmPanel.ListView1.ListItems.Count + 1
         ' Give the message to disconnect and reload user list for all clients
         If frmPanel.ListView1.ListItems.Item(x).SubItems(2) = Index Then
@@ -314,13 +314,13 @@ RR = frmPanel.ListView1.ListItems.Count
 frmMain.Winsock1(Index).GetData strMessage
 
 ' We decode (split) the message into an array
-arr = Split(strMessage, "#")
+array1 = Split(strMessage, "#")
 
 ' Assign the variables to the array
 With frmMain
-    .Command = arr(0)
-    .NameText = arr(1)
-    .ConverText = arr(2)
+    .Command = array1(0)
+    .NameText = array1(1)
+    .ConverText = array1(2)
 End With
 
 ' Validate: If message is to long then give warn message .. >_>
