@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "mswinsck.ocx"
 Begin VB.MDIForm frmMain 
    BackColor       =   &H8000000C&
    Caption         =   " Peach (Client)"
@@ -249,11 +249,8 @@ Exit Sub
 ':::::::::::::::::::::::::::::::::::
 HandleErrorFile:
 Select Case Err.Number
-Case 1
-    MsgBox "Error : " & Err.Number & vbCrLf & "Description : " & Err.Description, vbCritical
-    Exit Sub
 Case 13
-    MsgBox "Some configuration files are outdated or got damaged, Peach found the problem and will fix it on next program launch.", vbInformation
+    msgbox "Some configuration files are outdated or got damaged, Peach found the problem and will fix it on next program launch.", vbInformation
     With Me
         .Top = 1200
         .Left = 1200
@@ -265,7 +262,7 @@ Case 13
         .Show
     End With
 Case Else
-    MsgBox "Error : " & Err.Number & vbCrLf & "Description : " & Err.Description, vbCritical
+    msgbox "Error : " & Err.Number & vbCrLf & "Description : " & Err.Description, vbCritical
     Exit Sub
 End Select
 End Sub
@@ -324,7 +321,7 @@ End With
 End Sub
 
 Private Sub ConnectIsFalse()
-MsgBox "This name is already taken!", vbInformation
+msgbox "This name is already taken!", vbInformation
 With frmConfig
     .Command2_Click
     .txtNick = ""

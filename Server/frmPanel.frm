@@ -28,7 +28,7 @@ Begin VB.Form frmPanel
       Alignment       =   2  'Center
       Height          =   285
       Left            =   4560
-      TabIndex        =   4
+      TabIndex        =   3
       Top             =   360
       Width           =   1215
    End
@@ -36,47 +36,9 @@ Begin VB.Form frmPanel
       Caption         =   "&Search"
       Height          =   285
       Left            =   5880
-      TabIndex        =   3
+      TabIndex        =   2
       Top             =   360
       Width           =   1215
-   End
-   Begin MSComctlLib.ListView ListView1 
-      Height          =   2295
-      Left            =   240
-      TabIndex        =   2
-      Top             =   720
-      Width           =   6945
-      _ExtentX        =   12250
-      _ExtentY        =   4048
-      View            =   3
-      LabelEdit       =   1
-      LabelWrap       =   -1  'True
-      HideSelection   =   -1  'True
-      _Version        =   393217
-      ForeColor       =   -2147483640
-      BackColor       =   -2147483643
-      BorderStyle     =   1
-      Appearance      =   1
-      NumItems        =   4
-      BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Text            =   "Name"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   1
-         Text            =   "IP"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   2
-         Text            =   "Winsock ID"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   3
-         Text            =   "Login Time"
-         Object.Width           =   2540
-      EndProperty
    End
    Begin VB.CommandButton Command1 
       Caption         =   "&Kick"
@@ -89,12 +51,51 @@ Begin VB.Form frmPanel
    Begin VB.TextBox Text1 
       Alignment       =   2  'Center
       Height          =   285
-      Left            =   240
+      Left            =   1560
       TabIndex        =   0
       Text            =   "0"
       Top             =   360
       Visible         =   0   'False
       Width           =   855
+   End
+   Begin MSComctlLib.ListView ListView1 
+      Height          =   2295
+      Left            =   240
+      TabIndex        =   4
+      Top             =   720
+      Width           =   6945
+      _ExtentX        =   12250
+      _ExtentY        =   4048
+      View            =   3
+      LabelEdit       =   1
+      MultiSelect     =   -1  'True
+      LabelWrap       =   -1  'True
+      HideSelection   =   -1  'True
+      _Version        =   393217
+      ForeColor       =   -2147483640
+      BackColor       =   -2147483643
+      BorderStyle     =   1
+      Appearance      =   1
+      NumItems        =   4
+      BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Text            =   "Name"
+         Object.Width           =   3069
+      EndProperty
+      BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   1
+         Text            =   "IP"
+         Object.Width           =   3069
+      EndProperty
+      BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   2
+         Text            =   "Winsock ID"
+         Object.Width           =   3069
+      EndProperty
+      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   3
+         Text            =   "Login Time"
+         Object.Width           =   2893
+      EndProperty
    End
 End
 Attribute VB_Name = "frmPanel"
@@ -122,13 +123,20 @@ Private Sub Command1_Click()
 End Sub
 
 Private Sub Command2_Click()
-Dim i As Integer
+Dim i, pos  As Integer
 For i = 1 To ListView1.ListItems.Count
-    If ListView1.ListItems.Item(i) = Text2.Text Then
-        ListView1.SelectedItem = ListView1.ListItems.Item(i)
-        ListView1.SetFocus
+    ListView1.ListItems.Item(i).Selected = False
+Next
+For i = 1 To ListView1.ListItems.Count
+    pos = InStr(1, ListView1.ListItems.Item(i), Text2, vbTextCompare)
+    If pos > 0 Then
+'        If ListView1.ListItems.Item(i) = Text2.Text Then
+            ListView1.SelectedItem = ListView1.ListItems.Item(i)
+
+'        End If
     End If
 Next i
+ListView1.SetFocus
 End Sub
 
 Private Sub Form_Load()

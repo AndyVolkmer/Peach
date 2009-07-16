@@ -166,7 +166,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.1.0"
+      Caption         =   "Version : 1.0.1.1"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -268,6 +268,7 @@ Public Sub Command2_Click()
 ' Close connection
 frmMain.Winsock1(0).Close
 
+frmList.List1.Clear
 frmMain.StatusBar1.Panels(1).Text = "Status: Disconnected"
 End Sub
 

@@ -121,7 +121,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.1.0"
+      Caption         =   "Version : 1.0.1.1"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -179,6 +179,9 @@ Dim i As Integer
         
         .StatusBar1.Panels(1).Text = "Status: Disconnected"
     End With
+    
+' Clear panel list
+frmPanel.ListView1.ListItems.Clear
 
 ' Stop the listen of sendfile form
     frmSendFile.cmdConnect_Click

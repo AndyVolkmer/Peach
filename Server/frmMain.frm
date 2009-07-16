@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "mswinsck.ocx"
 Begin VB.MDIForm frmMain 
    BackColor       =   &H8000000C&
    Caption         =   " Peach (Server)"
@@ -261,13 +261,7 @@ Private Sub Winsock1_Close(Index As Integer)
             Exit For
         End If
     Next x
-' We dont need this but i gotta save this for later maybe
-' -------------------------------------------------------
-'    If ListOrAnn = False Then
-'        If UCase(NameOfUser) <> "N/A" Then
-'            SendMessage " " & NameOfUser & " has disconnected!"
-'        End If
-'    End If
+    VisualizeMessage "!disconnect", NameOfUser, "logout"
     StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
