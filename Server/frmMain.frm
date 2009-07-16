@@ -256,6 +256,7 @@ Dim x               As Integer
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
+Dim RR As Integer
 RR = frmPanel.ListView1.ListItems.Count + 1
     intCounter = loadSocket
     Winsock1(intCounter).LocalPort = frmConfig.txtPort.Text
@@ -272,7 +273,6 @@ End Sub
 
 'On error means its free so we take free socket
 Private Function socketFree() As Integer
-Dim p As Integer
 On Error GoTo HandleErrorFreeSocket
     Dim theIP As Variant
     Dim p As Integer
