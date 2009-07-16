@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "mswinsck.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.MDIForm frmMain 
    BackColor       =   &H8000000C&
    Caption         =   " Peach (Client)"
@@ -221,9 +221,54 @@ With frmList
 End With
 End Sub
 
+Private Sub SetupLanguage()
+' MDI form ..
+Command1.Caption = MDIcommand_config
+Command2.Caption = MDIcommand_chat
+Command3.Caption = MDIcommand_sendfile
+Command4.Caption = MDIcommand_onlinelist
+
+' frmConfig form ..
+With frmConfig
+    .Command1.Caption = CONFIGcommand_connect
+    .Command2.Caption = CONFIGcommand_disconnect
+    .Label4.Caption = CONFIGlabel_CI_name & frmMain.Winsock1(0).LocalHostName
+    .Frame1.Caption = CONFIGframe_config
+    .Frame2.Caption = CONFIGframe_client
+    .Frame3.Caption = CONFIGframe_server
+End With
+
+' Chat form ..
+With frmChat
+    .cmdSend.Caption = CHATcommand_send
+    .cmdClear.Caption = CHATcommand_clear
+End With
+
+' List form ..
+frmList.Command1.Caption = LISTcommand_close
+
+' Send File
+With frmSendFile
+    .Label1.Caption = SFlabel_filename
+    .lblFileToSend.Caption = SFlabel_sendingfile
+    .lblProgress.Caption = SFlabel_sent
+    .cmdBrowse.Caption = SFcommand_browse
+    .cmdSendFile.Caption = SFcommand_sendfile
+End With
+
+End Sub
+
 Private Sub MDIForm_Load()
+On Error GoTo HandleErrorFile
 Dim TSSO As TypeSSO
 TSSO = ReadConfigFile(App.Path & "\bin.conf")
+
+With TSSO
+    Me.Top = Trim(.TopPos)
+    Me.Left = Trim(.LeftPos)
+End With
+
+SetupLanguage
 
 DisableFormResize Me
 
@@ -233,15 +278,9 @@ Dim L As Long
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
 
-StatusBar1.Panels(1).Text = "Status : Disconnected"
+StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
 
-On Error GoTo HandleErrorFile
-With TSSO
-    Me.Top = Trim(.TopPos)
-    Me.Left = Trim(.LeftPos)
-End With
-
-frmConfig.Show
+SetupForms frmConfig
 
 Exit Sub
 ':::::::::::::::::::::::::::::::::::
@@ -250,7 +289,7 @@ Exit Sub
 HandleErrorFile:
 Select Case Err.Number
 Case 13
-    msgbox "Some configuration files are outdated or got damaged, Peach found the problem and will fix it on next program launch.", vbInformation
+    MsgBox MDImsgbox_config_notify, vbInformation
     With Me
         .Top = 1200
         .Left = 1200
@@ -262,7 +301,7 @@ Case 13
         .Show
     End With
 Case Else
-    msgbox "Error : " & Err.Number & vbCrLf & "Description : " & Err.Description, vbCritical
+    MsgBox "Error: " & Err.Number & vbCrLf & "Description: " & Err.Description, vbCritical
     Exit Sub
 End Select
 End Sub
@@ -270,6 +309,7 @@ End Sub
 
 Private Sub MDIForm_Unload(Cancel As Integer)
     Unload frmList
+    Unload frmLanguage
 End Sub
 
 Private Sub UpdateListPosition_Timer()
@@ -284,8 +324,8 @@ Private Sub Winsock1_Close(Index As Integer)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 
 Winsock1(0).Close
-StatusBar1.Panels(1).Text = "Status: Disconnected from Server."
-frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System] : You got disconnected from Server."
+StatusBar1.Panels(1).Text = MDIstatusbar_dcfromserver
+frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: You got disconnected from Server."
 frmList.List1.Clear
 
 ' Do the buttons
@@ -295,8 +335,8 @@ frmList.List1.Clear
         .txtNick.Enabled = True
         .txtIP.Enabled = True
         .txtPort.Enabled = True
-        .Label5.Caption = "IP : "
-        .Label6.Caption = "Port : "
+        .Label5.Caption = "IP: "
+        .Label6.Caption = "Port: "
     End With
     With frmChat
         .cmdSend.Enabled = False
@@ -312,7 +352,7 @@ SendMessage "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
 End Sub
 
 Private Sub ConnectIsTrue()
-StatusBar1.Panels(1).Text = "Status: Connected to " & frmConfig.txtIP.Text & ":" & frmConfig.txtPort.Text
+StatusBar1.Panels(1).Text = MDIstatusbar_connected & frmConfig.txtIP.Text & ":" & frmConfig.txtPort.Text
 With frmMain
     .NameText = frmConfig.txtNick
     .Message = "!connected" & "#" & .NameText & "#"
@@ -321,7 +361,7 @@ End With
 End Sub
 
 Private Sub ConnectIsFalse()
-msgbox "This name is already taken!", vbInformation
+MsgBox MDImsgbox_nametaken, vbInformation
 With frmConfig
     .Command2_Click
     .txtNick = ""
@@ -364,8 +404,8 @@ End Sub
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Winsock1(Index).Close
-frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System] : Disconnected due connection problem."
-StatusBar1.Panels(1).Text = "Status: Disconnected due connection problem."
+frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: Disconnected due connection problem."
+StatusBar1.Panels(1).Text = MDIstatusbar_connectionproblem
 frmList.List1.Clear
 With frmConfig
     .Command1.Enabled = True
@@ -373,8 +413,8 @@ With frmConfig
     .txtNick.Enabled = True
     .txtIP.Enabled = True
     .txtPort.Enabled = True
-    .Label5.Caption = "IP : "
-    .Label6.Caption = "Port : "
+    .Label5.Caption = "IP: "
+    .Label6.Caption = "Port: "
 End With
 With frmChat
     .Hide

@@ -117,11 +117,11 @@ Begin VB.Form frmConfig
       Left            =   120
       TabIndex        =   10
       Top             =   3480
-      Width           =   1215
+      Width           =   1335
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.1.1"
+      Caption         =   "Version : 1.0.1.2"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -170,7 +170,7 @@ Dim i As Integer
 
 ' Disconnect all sockets
     With frmMain
-        For i = 1 To .Winsock1.Count - 1
+        For i = 1 To .Winsock1.UBound
             .Winsock1(i).Close
             Unload .Winsock1(i)
         Next i

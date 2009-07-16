@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "mswinsck.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.MDIForm frmMain 
    BackColor       =   &H8000000C&
    Caption         =   " Peach (Server)"
@@ -176,7 +176,6 @@ Private Type MENUITEMINFO
     cch As Long
 End Type
 
-
 Private Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Long, ByVal bRevert As Long) As Long
 Private Declare Function GetMenuItemInfo Lib "user32" Alias "GetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal b As Boolean, lpMenuItemInfo As MENUITEMINFO) As Long
 Private Declare Function SetMenuItemInfo Lib "user32" Alias "SetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal bool As Boolean, lpcMenuItemInfo As MENUITEMINFO) As Long
@@ -188,22 +187,11 @@ Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPo
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
 
 Public Prefix       As String
-Public intCounter   As Integer
 Public Command      As String
 Public NameText     As String
 Public ConverText   As String
 Public Message      As String
-Dim array1()        As String
-Dim strMessage      As String
-Dim onlineCount     As String
-Dim NameOfUser      As String
-Dim RR              As Integer
-Dim x               As Integer
-Dim i               As Integer
-Dim u               As Integer
-Dim bMatch          As Boolean
-
-
+Public intCounter   As Integer
 
 Private Sub Command1_Click()
     SetupForms frmConfig
@@ -246,6 +234,8 @@ SetupForms frmConfig
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
+Dim NameOfUser      As String
+Dim x               As Integer
     Unload Winsock1(Index)
     For x = 1 To frmPanel.ListView1.ListItems.Count + 1
         ' Give the message to disconnect and reload user list for all clients
@@ -282,16 +272,17 @@ End Sub
 
 'On error means its free so we take free socket
 Private Function socketFree() As Integer
+Dim p As Integer
 On Error GoTo HandleErrorFreeSocket
     Dim theIP As Variant
-    Dim i As Integer
-    For i = Winsock1.LBound + 1 To Winsock1.UBound
-        theIP = Winsock1(i).LocalIP
+    Dim p As Integer
+    For p = Winsock1.LBound + 1 To Winsock1.UBound
+        theIP = Winsock1(p).LocalIP
     Next
     socketFree = Winsock1.UBound + 1
 Exit Function
 HandleErrorFreeSocket:
-socketFree = i
+socketFree = p
 End Function
 
 'Load next free socket
@@ -303,6 +294,10 @@ Dim theFreeSocket As Integer: theFreeSocket = 0
 End Function
 '
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
+Dim array1()        As String
+Dim strMessage      As String
+Dim RR              As Integer
+Dim bMatch          As Boolean
 RR = frmPanel.ListView1.ListItems.Count
 
 ' Get Message
@@ -326,10 +321,12 @@ If Len(frmMain.ConverText) > 200 Then
 End If
 
 Select Case frmMain.Command
+Dim u As Integer
 Case "!connected" ' Announce connected player and send to user online list
     SendMessage " " & frmMain.NameText & " has connected."
     frmPanel.ListView1.ListItems.Item(RR).Text = frmMain.NameText
     listTimer.Enabled = True
+    
 Case "!namerequest" ' Check if the name is avaible or not
     For u = 1 To frmPanel.ListView1.ListItems.Count
         If UCase(frmPanel.ListView1.ListItems.Item(u)) = UCase(frmMain.NameText) Then
@@ -351,11 +348,10 @@ End Select
 
 ' We want to read the message also , different then others tho
 VisualizeMessage frmMain.Command, frmMain.NameText, frmMain.ConverText
-'frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & " [" & frmMain.Command & "] [" & frmMain.NameText & "] [" & frmMain.ConverText & "]"
 End Sub
 
-
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
+Dim i As Integer
 frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 If Index < 0 Then
     Winsock1(Index).Close
@@ -371,17 +367,16 @@ Else
     StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
     For i = 1 To frmPanel.ListView1.ListItems.Count
         frmPanel.ListView1.ListItems.Remove (i)
-    Next i
+    Next
 End If
 End Sub
 
 Public Sub DisableFormResize(frm As Form)
-
-    Dim style As Long
-    Dim hMenu As Long
-    Dim MII As MENUITEMINFO
-    Dim lngMenuID As Long
-    Const xSC_MAXIMIZE As Long = -11
+Dim style As Long
+Dim hMenu As Long
+Dim MII As MENUITEMINFO
+Dim lngMenuID As Long
+Const xSC_MAXIMIZE As Long = -11
 
     style = GetWindowLong(frm.hwnd, GWL_STYLE)
     

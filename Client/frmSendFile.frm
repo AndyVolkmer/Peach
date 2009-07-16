@@ -6,8 +6,8 @@ Begin VB.Form frmSendFile
    BorderStyle     =   0  'None
    Caption         =   "frmSendFile"
    ClientHeight    =   3735
-   ClientLeft      =   0
-   ClientTop       =   0
+   ClientLeft      =   690
+   ClientTop       =   1365
    ClientWidth     =   9360
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
@@ -200,7 +200,7 @@ Begin VB.Form frmSendFile
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   195
-      Left            =   120
+      Left            =   240
       TabIndex        =   9
       Top             =   285
       Width           =   750

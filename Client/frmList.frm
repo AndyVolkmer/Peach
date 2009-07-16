@@ -1,5 +1,6 @@
 VERSION 5.00
 Begin VB.Form frmList 
+   BackColor       =   &H8000000C&
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Online List"
    ClientHeight    =   3780
@@ -32,6 +33,7 @@ Begin VB.Form frmList
       Width           =   1095
    End
    Begin VB.ListBox List1 
+      BackColor       =   &H00FFFFFF&
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   9
@@ -41,6 +43,7 @@ Begin VB.Form frmList
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00000000&
       Height          =   2790
       Left            =   120
       TabIndex        =   0
@@ -48,7 +51,9 @@ Begin VB.Form frmList
       Width           =   3495
    End
    Begin VB.Label Label1 
+      BackColor       =   &H8000000C&
       Caption         =   "Online Users : "
+      ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
       TabIndex        =   1

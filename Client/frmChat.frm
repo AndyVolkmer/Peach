@@ -72,6 +72,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -103,7 +104,7 @@ Case " "
 Case "  "
     MsgBox "Nothing inserted!", vbInformation
 Case Trim("!time")
-    txtConver.Text = txtConver.Text & vbCrLf & frmMain.Prefix & " [" & frmConfig.txtNick.Text & "] : " & txtToSend.Text & vbCrLf & frmMain.Prefix & " [System] : The time is " & Format(Time, "hh:nn:ss")
+    txtConver.Text = txtConver.Text & vbCrLf & frmMain.Prefix & " [System]: The time is " & Format(Time, "hh:nn:ss")
 Case Trim("!online")
     frmMain.UpdateListPosition.Enabled = True
     With frmList

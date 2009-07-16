@@ -145,14 +145,10 @@ Me.Left = "0"
 Text1.SelStart = Len(Text1.Text)
 End Sub
 
-Private Sub List2_Click()
-
-End Sub
-
 Private Sub ListView1_ItemClick(ByVal Item As MSComctlLib.ListItem)
     Text1.Text = ListView1.SelectedItem.ListSubItems(2).Text
 End Sub
 
 Private Sub Text2_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then Command2_Click
+    If KeyAscii = vbKeyReturn Then Command2_Click
 End Sub

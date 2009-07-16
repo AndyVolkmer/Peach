@@ -21,22 +21,30 @@ Begin VB.Form frmConfig
    ScaleHeight     =   4155
    ScaleWidth      =   7575
    ShowInTaskbar   =   0   'False
+   Begin VB.CommandButton Command3 
+      Caption         =   "&Language"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   17
+      Top             =   2400
+      Width           =   1335
+   End
    Begin VB.CommandButton Command2 
       Caption         =   "&Disconnect"
       Enabled         =   0   'False
       Height          =   375
-      Left            =   6000
+      Left            =   5760
       TabIndex        =   4
       Top             =   2400
-      Width           =   1215
+      Width           =   1575
    End
    Begin VB.CommandButton Command1 
       Caption         =   "&Connect"
       Height          =   375
-      Left            =   4680
+      Left            =   4200
       TabIndex        =   3
       Top             =   2400
-      Width           =   1215
+      Width           =   1575
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H8000000C&
@@ -49,7 +57,7 @@ Begin VB.Form frmConfig
       Width           =   7215
       Begin VB.Frame Frame3 
          BackColor       =   &H8000000C&
-         Caption         =   "Server Information :"
+         Caption         =   "Server Information:"
          ForeColor       =   &H00FFFFFF&
          Height          =   975
          Left            =   3600
@@ -58,7 +66,7 @@ Begin VB.Form frmConfig
          Width           =   3015
          Begin VB.Label Label6 
             BackColor       =   &H8000000C&
-            Caption         =   "Port : "
+            Caption         =   "Port: "
             ForeColor       =   &H00FFFFFF&
             Height          =   255
             Left            =   120
@@ -68,7 +76,7 @@ Begin VB.Form frmConfig
          End
          Begin VB.Label Label5 
             BackColor       =   &H8000000C&
-            Caption         =   "IP : "
+            Caption         =   "IP: "
             ForeColor       =   &H00FFFFFF&
             Height          =   255
             Left            =   120
@@ -79,7 +87,7 @@ Begin VB.Form frmConfig
       End
       Begin VB.Frame Frame2 
          BackColor       =   &H8000000C&
-         Caption         =   "Client Information :"
+         Caption         =   "Client Information:"
          ForeColor       =   &H00FFFFFF&
          Height          =   975
          Left            =   240
@@ -88,7 +96,7 @@ Begin VB.Form frmConfig
          Width           =   3015
          Begin VB.Label Label4 
             BackColor       =   &H8000000C&
-            Caption         =   "Name : "
+            Caption         =   "Name: "
             ForeColor       =   &H00FFFFFF&
             Height          =   255
             Left            =   120
@@ -98,7 +106,7 @@ Begin VB.Form frmConfig
          End
          Begin VB.Label Label3 
             BackColor       =   &H8000000C&
-            Caption         =   "IP : "
+            Caption         =   "IP: "
             ForeColor       =   &H00FFFFFF&
             Height          =   255
             Left            =   120
@@ -135,7 +143,7 @@ Begin VB.Form frmConfig
       End
       Begin VB.Label Label1 
          BackColor       =   &H8000000C&
-         Caption         =   " Port :"
+         Caption         =   " Port:"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   3600
@@ -145,7 +153,7 @@ Begin VB.Form frmConfig
       End
       Begin VB.Label Label2 
          BackColor       =   &H8000000C&
-         Caption         =   " IP :"
+         Caption         =   " IP:"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   1920
@@ -155,7 +163,7 @@ Begin VB.Form frmConfig
       End
       Begin VB.Label lblNick 
          BackColor       =   &H8000000C&
-         Caption         =   " Nickname :"
+         Caption         =   " Nickname:"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   240
@@ -166,7 +174,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.1.1"
+      Caption         =   "Version : 1.0.1.2"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -209,7 +217,18 @@ Case Else
             MsgBox "Port cant be empty.", vbCritical
             txtPort.SetFocus
         Case Else ' <---------- Here we enter ---------->
-            ' If the nick is to short then no xP
+            ' Make it proper case?
+            txtNick.Text = StrConv(txtNick.Text, vbProperCase)
+            
+            ' If the nick is numeric then no
+            If IsNumeric(txtNick) = True Then
+                txtNick.Text = ""
+                MsgBox CONFIGmsgbox_nonumeric, vbInformation
+                txtNick.SetFocus
+                Exit Sub
+            End If
+            
+            ' If the nick is to short then no
             If Len(txtNick.Text) < 4 Then
                 MsgBox "Your nickname is to short!    ", vbInformation, " Error - Nickname"
                 txtNick.SelStart = Len(txtNick.Text)
@@ -224,7 +243,7 @@ Case Else
                 .Connect
             
                 Label5.Caption = "IP: " & .RemoteHost
-                Label6.Caption = "Port : " & .RemotePort
+                Label6.Caption = "Port: " & .RemotePort
             End With
             
             ' Do the enable stuff
@@ -240,7 +259,7 @@ Case Else
                 .txtToSend.Enabled = True
             End With
             
-            frmMain.StatusBar1.Panels(1).Text = "Status: Connecting to '" & txtIP.Text & ":" & txtPort.Text & "'"
+            frmMain.StatusBar1.Panels(1).Text = MDIstatusbar_connecting & txtIP.Text & ":" & txtPort.Text & "'"
             frmConfig.Hide
             frmChat.Show
             frmChat.txtToSend.SetFocus
@@ -257,8 +276,8 @@ Public Sub Command2_Click()
     txtNick.Enabled = True
     txtIP.Enabled = True
     txtPort.Enabled = True
-    Label5.Caption = "IP : "
-    Label6.Caption = "Port : "
+    Label5.Caption = "IP: "
+    Label6.Caption = "Port: "
     With frmChat
         .cmdSend.Enabled = False
         .cmdClear.Enabled = False
@@ -269,7 +288,23 @@ Public Sub Command2_Click()
 frmMain.Winsock1(0).Close
 
 frmList.List1.Clear
-frmMain.StatusBar1.Panels(1).Text = "Status: Disconnected"
+frmMain.StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
+End Sub
+
+Private Sub Command3_Click()
+Unload frmChat
+Unload frmConfig
+Unload frmList
+Unload frmSendFile
+Unload frmMain
+With frmLanguage.Combo1
+    .AddItem "German"
+    .AddItem "English"
+    .AddItem "Spanish"
+    .ListIndex = 1
+End With
+frmMain.Hide
+frmLanguage.Show
 End Sub
 
 Private Sub Form_Load()
@@ -277,8 +312,8 @@ Private Sub Form_Load()
 Me.Top = 0
 Me.Left = 0
 
-Label3.Caption = "IP : " & frmMain.Winsock1(0).LocalIP
-Label4.Caption = "Name : " & frmMain.Winsock1(0).LocalHostName
+Label3.Caption = "IP: " & frmMain.Winsock1(0).LocalIP
+Label4.Caption = "Name: " & frmMain.Winsock1(0).LocalHostName
 
 Dim TSSO As TypeSSO
 TSSO = ReadConfigFile(App.Path & "\bin.conf")
@@ -304,14 +339,7 @@ If KeyAscii = vbKeyReturn Then Command1_Click
 End Sub
 
 Private Sub txtNick_LostFocus()
-If IsNumeric(txtNick) = True Then
-    txtNick.Text = ""
-    MsgBox "You cant take numbers as name.", vbInformation
-    txtNick.SetFocus
-    Exit Sub
-Else
-    txtNick.Text = StrConv(txtNick.Text, vbProperCase)
-End If
+txtNick.Text = StrConv(txtNick.Text, vbProperCase)
 End Sub
 
 Private Sub txtPort_KeyPress(KeyAscii As Integer)
