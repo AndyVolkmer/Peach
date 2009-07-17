@@ -143,9 +143,9 @@ CONFIGcombo_english = "English"
 CONFIGcombo_spanish = "Spanish"
 
 CONFIGmsgbox_nonumeric = "You cant take numeric names."
-CONFIGmsgbox_portnoempty = "You didnt introduced a port."
-CONFIGmsgbox_namenoempty = "You didnt introduced a name."
-CONFIGmsgbox_ipnoempty = "You didnt introduced a IP."
+CONFIGmsgbox_portnoempty = "You didnt introduce a port."
+CONFIGmsgbox_namenoempty = "You didnt introduce a name."
+CONFIGmsgbox_ipnoempty = "You didnt introduce a IP."
 
 ' Chat form ..
 CHATcommand_send = "&Send"
