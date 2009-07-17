@@ -13,6 +13,7 @@ Module=FileModule; FileModule.bas
 Form=frmList.frm
 Module=LangModule; LangModule.bas
 Form=frmLanguage.frm
+Object={342261DD-4D19-481B-8BF9-F24E643D0C20}#2.0#0; Hyperlink.ocx
 IconForm="frmMain"
 Startup="frmLanguage"
 HelpFile=""

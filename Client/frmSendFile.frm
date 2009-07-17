@@ -11,6 +11,7 @@ Begin VB.Form frmSendFile
    ClientTop       =   1365
    ClientWidth     =   7815
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MDIChild        =   -1  'True
    ScaleHeight     =   3735
    ScaleWidth      =   7815
@@ -26,11 +27,11 @@ Begin VB.Form frmSendFile
          Strikethrough   =   0   'False
       EndProperty
       Height          =   285
-      Left            =   975
+      Left            =   120
       Locked          =   -1  'True
       TabIndex        =   8
-      Top             =   240
-      Width           =   6330
+      Top             =   405
+      Width           =   7185
    End
    Begin VB.Timer tmrSendFile 
       Enabled         =   0   'False
@@ -109,7 +110,7 @@ Begin VB.Form frmSendFile
       Left            =   5640
       TabIndex        =   1
       ToolTipText     =   "( Dont click if you are not going to send something, this will make the application use more memory )"
-      Top             =   600
+      Top             =   780
       Width           =   1680
    End
    Begin VB.CommandButton cmdSendFile 
@@ -201,10 +202,10 @@ Begin VB.Form frmSendFile
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   195
-      Left            =   240
+      Left            =   120
       TabIndex        =   9
-      Top             =   285
-      Width           =   750
+      Top             =   165
+      Width           =   1455
    End
    Begin VB.Line Line2 
       BorderColor     =   &H00FFFFFF&

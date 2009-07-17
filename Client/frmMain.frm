@@ -1,6 +1,7 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{342261DD-4D19-481B-8BF9-F24E643D0C20}#2.0#0"; "Hyperlink.ocx"
 Begin VB.MDIForm frmMain 
    BackColor       =   &H8000000C&
    Caption         =   " Peach (Client)"
@@ -10,7 +11,14 @@ Begin VB.MDIForm frmMain
    ClientWidth     =   7470
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "MDIForm1"
+   LockControls    =   -1  'True
    ScrollBars      =   0   'False
+   Begin proHyp.Hyperlink Hyperlink1 
+      Left            =   0
+      Top             =   1560
+      _ExtentX        =   2328
+      _ExtentY        =   2514
+   End
    Begin VB.Timer UpdateListPosition 
       Enabled         =   0   'False
       Interval        =   1
@@ -178,7 +186,6 @@ Private Type MENUITEMINFO
     dwTypeData      As String
     cch             As Long
 End Type
-
 Private Declare Function GetSystemMenu Lib "user32" (ByVal hWnd As Long, ByVal bRevert As Long) As Long
 Private Declare Function GetMenuItemInfo Lib "user32" Alias "GetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal b As Boolean, lpMenuItemInfo As MENUITEMINFO) As Long
 Private Declare Function SetMenuItemInfo Lib "user32" Alias "SetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal bool As Boolean, lpcMenuItemInfo As MENUITEMINFO) As Long
@@ -335,7 +342,7 @@ MsgBox MDImsgbox_nametaken, vbInformation
 With frmConfig
     .Command2_Click
     .txtNick = ""
-SetupForms frmConfig
+    SetupForms frmConfig
     .txtNick.SetFocus
 End With
 End Sub

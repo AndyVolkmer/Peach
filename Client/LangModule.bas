@@ -34,6 +34,9 @@ Public CONFIGcombo_english              As String
 Public CONFIGcombo_spanish              As String
 
 Public CONFIGmsgbox_nonumeric           As String
+Public CONFIGmsgbox_portnoempty         As String
+Public CONFIGmsgbox_namenoempty         As String
+Public CONFIGmsgbox_ipnoempty           As String
 
 ' Chat form ..
 Public CHATcommand_send                 As String
@@ -85,6 +88,9 @@ CONFIGcombo_english = "Englisch"
 CONFIGcombo_spanish = "Spanisch"
 
 CONFIGmsgbox_nonumeric = "Dein Name kann nicht aus Nummern bestehen."
+CONFIGmsgbox_portnoempty = "Sie haben keinen Port angegeben."
+CONFIGmsgbox_namenoempty = "Sie haben keinen Namen angegeben."
+CONFIGmsgbox_ipnoempty = "Sie haben keine IP angegeben."
 
 ' Chat form ..
 CHATcommand_send = "&Senden"
@@ -95,11 +101,11 @@ LISTcaption = "Online Liste"
 LISTcommand_close = "&Schliessen"
 
 ' Send File form ..
-SFlabel_filename = "Datei: "
+SFlabel_filename = " Datei Name:"
 SFlabel_sendingfile = "Sende:"
 SFlabel_sent = "Gesendet"
 
-SFcommand_browse = "Suchen .."
+SFcommand_browse = "&Suchen .."
 SFcommand_sendfile = "Senden"
 End Sub
 
@@ -137,6 +143,9 @@ CONFIGcombo_english = "English"
 CONFIGcombo_spanish = "Spanish"
 
 CONFIGmsgbox_nonumeric = "You cant take numeric names."
+CONFIGmsgbox_portnoempty = "You didnt introduced a port."
+CONFIGmsgbox_namenoempty = "You didnt introduced a name."
+CONFIGmsgbox_ipnoempty = "You didnt introduced a IP."
 
 ' Chat form ..
 CHATcommand_send = "&Send"
@@ -147,11 +156,11 @@ LISTcaption = "Online List"
 LISTcommand_close = "&Close"
 
 ' Send File form ..
-SFlabel_filename = "File: "
+SFlabel_filename = " File Name:"
 SFlabel_sendingfile = "Sending:"
 SFlabel_sent = "Sent"
 
-SFcommand_browse = "Search .."
+SFcommand_browse = "&Search .."
 SFcommand_sendfile = "Send"
 End Sub
 
@@ -189,6 +198,9 @@ CONFIGcombo_english = "Inglés"
 CONFIGcombo_spanish = "Español"
 
 CONFIGmsgbox_nonumeric = "No puedes cojer numeros como nombre."
+CONFIGmsgbox_portnoempty = "No ha introducido ningun puerto."
+CONFIGmsgbox_namenoempty = "No ha introducido ningun nombre."
+CONFIGmsgbox_ipnoempty = "No ha introducido ninguna IP."
 
 ' Chat form ..
 CHATcommand_send = "&Enviar"
@@ -199,10 +211,10 @@ LISTcaption = "Lista de conectados"
 LISTcommand_close = "&Cerrar"
 
 ' Send File form ..
-SFlabel_filename = "Archivo: "
+SFlabel_filename = " Nombre del Archivo:"
 SFlabel_sendingfile = "Enviando:"
 SFlabel_sent = "Enviado"
 
-SFcommand_browse = "Buscar .."
+SFcommand_browse = "&Buscar .."
 SFcommand_sendfile = "Enviar"
 End Sub

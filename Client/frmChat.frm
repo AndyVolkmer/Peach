@@ -19,6 +19,7 @@ Begin VB.Form frmChat
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MDIChild        =   -1  'True
    ScaleHeight     =   3810
    ScaleWidth      =   7485
@@ -141,7 +142,6 @@ End Sub
 
 Private Sub txtConver_Change()
 Dim hWnd1 As Long
-txtConver.SelStart = Len(txtConver)
 hWnd1 = GetActiveWindow
 If frmMain.WindowState = vbMinimized Then
     Call FlashTitle(frmMain.hWnd, True)
@@ -151,6 +151,16 @@ Else
         Call FlashTitle(frmMain.hWnd, True)
     End If
 End If
+frmMain.Hyperlink1.URLFormat txtConver
+txtConver.SelStart = Len(txtConver)
+End Sub
+
+Private Sub txtConver_Click()
+frmMain.Hyperlink1.URLLaunch
+End Sub
+
+Private Sub txtConver_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+frmMain.Hyperlink1.RichWordOver Me, txtConver, x, y
 End Sub
 
 Private Sub txtToSend_KeyPress(KeyAscii As Integer)

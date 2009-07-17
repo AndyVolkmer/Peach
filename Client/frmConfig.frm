@@ -4,7 +4,7 @@ Begin VB.Form frmConfig
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
    Caption         =   "frmConfig"
-   ClientHeight    =   4155
+   ClientHeight    =   4185
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   7500
@@ -18,18 +18,11 @@ Begin VB.Form frmConfig
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MDIChild        =   -1  'True
-   ScaleHeight     =   4155
+   ScaleHeight     =   4185
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
-   Begin VB.CommandButton Command3 
-      Caption         =   "&Language"
-      Height          =   375
-      Left            =   120
-      TabIndex        =   17
-      Top             =   2400
-      Width           =   1335
-   End
    Begin VB.CommandButton Command2 
       Caption         =   "&Disconnect"
       Enabled         =   0   'False
@@ -38,6 +31,14 @@ Begin VB.Form frmConfig
       TabIndex        =   4
       Top             =   2400
       Width           =   1575
+   End
+   Begin VB.CommandButton Command3 
+      Caption         =   "&Language"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   17
+      Top             =   2400
+      Width           =   1335
    End
    Begin VB.CommandButton Command1 
       Caption         =   "&Connect"
@@ -175,7 +176,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.1.4"
+      Caption         =   "Version : 1.0.1.5"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -203,26 +204,27 @@ Option Explicit
 
 Private Sub Command1_Click()
 ' Check if text's are empty
+
 Select Case txtNick.Text
 Case ""
-    MsgBox "Nickname cant be empty.", vbCritical
+    MsgBox CONFIGmsgbox_namenoempty, vbInformation
     txtNick.SetFocus
 Case Else
     Select Case txtIP.Text
     Case ""
-        MsgBox "IP cant be empty.", vbCritical
+        MsgBox CONFIGmsgbox_ipnoempty, vbInformation
         txtIP.SetFocus
     Case Else
         Select Case txtPort.Text
         Case ""
-            MsgBox "Port cant be empty.", vbCritical
+            MsgBox CONFIGmsgbox_portnoempty, vbInformation
             txtPort.SetFocus
-        Case Else ' <---------- Here we enter ---------->
+        Case Else ' <---- Here we enter ---->
             ' Make it proper case?
             txtNick.Text = StrConv(txtNick.Text, vbProperCase)
             
             ' If the nick is numeric then no
-            If IsNumeric(txtNick) = True Then
+            If IsNumeric(txtNick.Text) = True Then
                 txtNick.Text = ""
                 MsgBox CONFIGmsgbox_nonumeric, vbInformation
                 txtNick.SetFocus
@@ -272,24 +274,28 @@ End Sub
 
 Public Sub Command2_Click()
 ' Do the buttons
-    Command1.Enabled = True
-    Command2.Enabled = False
-    txtNick.Enabled = True
-    txtIP.Enabled = True
-    txtPort.Enabled = True
-    Label5.Caption = "IP: "
-    Label6.Caption = "Port: "
-    With frmChat
-        .cmdSend.Enabled = False
-        .cmdClear.Enabled = False
-        .txtToSend.Enabled = False
-    End With
+Command1.Enabled = True
+Command2.Enabled = False
+txtNick.Enabled = True
+txtIP.Enabled = True
+txtPort.Enabled = True
+Label5.Caption = "IP: "
+Label6.Caption = "Port: "
+
+With frmChat
+    .cmdSend.Enabled = False
+    .cmdClear.Enabled = False
+    .txtToSend.Enabled = False
+End With
+
+' Clear the list
+frmList.List1.Clear
 
 ' Close connection
-frmMain.Winsock1(0).Close
-
-frmList.List1.Clear
-frmMain.StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
+With frmMain
+    .Winsock1(0).Close
+    .StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
+End With
 End Sub
 
 Private Sub Command3_Click()
@@ -316,7 +322,6 @@ Label4.Caption = CONFIGlabel_CI_name & frmMain.Winsock1(0).LocalHostName
 Frame1.Caption = CONFIGframe_config
 Frame2.Caption = CONFIGframe_client
 Frame3.Caption = CONFIGframe_server
-
 Label3.Caption = "IP: " & frmMain.Winsock1(0).LocalIP
 Label4.Caption = "Name: " & frmMain.Winsock1(0).LocalHostName
 
@@ -329,7 +334,6 @@ With TSSO
 End With
 
 End Sub
-
 
 Private Sub Form_Unload(Cancel As Integer)
 WriteConfigFile (App.Path & "\bin.conf")
