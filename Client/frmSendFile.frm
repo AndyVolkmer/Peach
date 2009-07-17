@@ -340,11 +340,18 @@ Private Sub SendFile(ByVal FileName As String)
     sFileName = FileName
 End Sub
 
-Private Sub Form_Load()
-    Me.Top = 0
-    Me.Left = 0
-    txtRemotePort.Text = frmConfig.txtPort.Text + 1
-    txtRemoteCon.Text = frmConfig.txtIP.Text
+Public Sub Form_Load()
+Me.Top = 0
+Me.Left = 0
+txtRemotePort.Text = frmConfig.txtPort.Text + 1
+txtRemoteCon.Text = frmConfig.txtIP.Text
+
+Label1.Caption = SFlabel_filename
+lblFileToSend.Caption = SFlabel_sendingfile
+lblProgress.Caption = SFlabel_sent
+cmdBrowse.Caption = SFcommand_browse
+cmdSendFile.Caption = SFcommand_sendfile
+
 End Sub
 
 Private Sub SckSendFile_Close()

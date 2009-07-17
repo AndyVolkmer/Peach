@@ -1,6 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
-Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long
+Declare Function FlashWindow Lib "user32" (ByVal hWnd As Long, ByVal binvert As Long) As Long
+Declare Function GetActiveWindow Lib "user32" () As Long
 
 Public Sub SendMessage(iMessage As String)
 

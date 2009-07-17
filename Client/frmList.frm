@@ -71,10 +71,8 @@ frmMain.UpdateListPosition.Enabled = False
 frmList.Hide
 End Sub
 
-Private Sub Form_Load()
-'::::::::::::::::::
-' Add item into list from an variable where we saved the getdata value from server..
-
+Public Sub Form_Load()
+Command1.Caption = LISTcommand_close
 End Sub
 
 Private Sub Form_Resize()

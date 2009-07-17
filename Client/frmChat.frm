@@ -125,9 +125,13 @@ txtToSend.Text = ""
 txtToSend.SetFocus
 End Sub
 
-Private Sub Form_Load()
+Public Sub Form_Load()
 Me.Top = 0
 Me.Left = 0
+
+cmdSend.Caption = CHATcommand_send
+cmdClear.Caption = CHATcommand_clear
+
 End Sub
 
 Private Sub cmdClear_Click()
@@ -136,10 +140,16 @@ txtToSend.Text = ""
 End Sub
 
 Private Sub txtConver_Change()
+Dim hWnd1 As Long
 txtConver.SelStart = Len(txtConver)
+hWnd1 = GetActiveWindow
 If frmMain.WindowState = vbMinimized Then
-    Call FlashTitle(frmMain.hwnd, True)
+    Call FlashTitle(frmMain.hWnd, True)
 Else
+    If hWnd1 = frmMain.hWnd Then
+    Else
+        Call FlashTitle(frmMain.hWnd, True)
+    End If
 End If
 End Sub
 

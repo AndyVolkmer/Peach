@@ -174,7 +174,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.1.2"
+      Caption         =   "Version : 1.0.1.3"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -292,25 +292,28 @@ frmMain.StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
 End Sub
 
 Private Sub Command3_Click()
-Unload frmChat
-Unload frmConfig
-Unload frmList
-Unload frmSendFile
-Unload frmMain
+frmMain.Hide
+frmList.Hide
 With frmLanguage.Combo1
+    .Clear
     .AddItem "German"
     .AddItem "English"
     .AddItem "Spanish"
-    .ListIndex = 1
 End With
-frmMain.Hide
 frmLanguage.Show
 End Sub
 
-Private Sub Form_Load()
+Public Sub Form_Load()
 
 Me.Top = 0
 Me.Left = 0
+
+Command1.Caption = CONFIGcommand_connect
+Command2.Caption = CONFIGcommand_disconnect
+Label4.Caption = CONFIGlabel_CI_name & frmMain.Winsock1(0).LocalHostName
+Frame1.Caption = CONFIGframe_config
+Frame2.Caption = CONFIGframe_client
+Frame3.Caption = CONFIGframe_server
 
 Label3.Caption = "IP: " & frmMain.Winsock1(0).LocalIP
 Label4.Caption = "Name: " & frmMain.Winsock1(0).LocalHostName

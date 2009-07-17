@@ -67,11 +67,38 @@ Case 2
     SetLangSpanish
 End Select
 frmLanguage.Hide
-frmMain.Show
+frmMain.MDIForm_Load
+frmList.Form_Load
+frmConfig.Form_Load
+frmSendFile.Form_Load
+frmChat.Form_Load
 WriteConfigFile2 (App.Path & "\validaten.conf")
 End Sub
 
-Private Sub Form_Load()
+Private Sub Combo1_Click()
+Select Case Combo1.ListIndex
+Case 0
+    Label1.Caption = "Wähle deine Sprache aus:"
+    cmdEnter.Caption = "&Öffnen"
+    Combo1.List(0) = "Deutsch"
+    Combo1.List(1) = "Englisch"
+    Combo1.List(2) = "Spanisch"
+Case 1
+    Label1.Caption = "Select your language:"
+    cmdEnter.Caption = "&Open"
+    Combo1.List(0) = "German"
+    Combo1.List(1) = "English"
+    Combo1.List(2) = "Spanish"
+Case 2
+    Label1.Caption = "Elige tu idioma:"
+    cmdEnter.Caption = "&Abrir"
+    Combo1.List(0) = "Aleman"
+    Combo1.List(1) = "Inglés"
+    Combo1.List(2) = "Español"
+End Select
+End Sub
+
+Public Sub Form_Load()
 Dim TSSO2 As TypeSSO2
 TSSO2 = ReadConfigFile2(App.Path & "\validaten.conf")
 
@@ -89,19 +116,16 @@ If N = "0" Then
     frmLanguage.Hide
     frmMain.Show
 Else
+    Combo1.Clear
     With Combo1
         .AddItem "German"
         .AddItem "English"
         .AddItem "Spanish"
-        .ListIndex = 1
     End With
 End If
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-Unload frmChat
-Unload frmConfig
-Unload frmLanguage
-Unload frmList
 Unload frmMain
+Unload frmList
 End Sub
