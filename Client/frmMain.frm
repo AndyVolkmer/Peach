@@ -7,7 +7,7 @@ Begin VB.MDIForm frmMain
    ClientHeight    =   5085
    ClientLeft      =   60
    ClientTop       =   420
-   ClientWidth     =   7545
+   ClientWidth     =   7470
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "MDIForm1"
    ScrollBars      =   0   'False
@@ -23,8 +23,8 @@ Begin VB.MDIForm frmMain
       Left            =   0
       TabIndex        =   5
       Top             =   4740
-      Width           =   7545
-      _ExtentX        =   13309
+      Width           =   7470
+      _ExtentX        =   13176
       _ExtentY        =   609
       _Version        =   393216
       BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
@@ -55,7 +55,9 @@ Begin VB.MDIForm frmMain
    End
    Begin VB.PictureBox Picture1 
       Align           =   1  'Align Top
+      Appearance      =   0  'Flat
       BackColor       =   &H8000000C&
+      BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -65,13 +67,14 @@ Begin VB.MDIForm frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H80000008&
       Height          =   615
       Left            =   0
-      ScaleHeight     =   555
-      ScaleWidth      =   7485
+      ScaleHeight     =   615
+      ScaleWidth      =   7470
       TabIndex        =   0
       Top             =   0
-      Width           =   7545
+      Width           =   7470
       Begin VB.CommandButton Command4 
          Caption         =   "&Online List"
          BeginProperty Font 
@@ -296,20 +299,20 @@ frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: 
 frmList.List1.Clear
 
 ' Do the buttons
-    With frmConfig
-        .Command1.Enabled = True
-        .Command2.Enabled = False
-        .txtNick.Enabled = True
-        .txtIP.Enabled = True
-        .txtPort.Enabled = True
-        .Label5.Caption = "IP: "
-        .Label6.Caption = "Port: "
-    End With
-    With frmChat
-        .cmdSend.Enabled = False
-        .cmdClear.Enabled = False
-        .txtToSend.Enabled = False
-    End With
+With frmConfig
+    .Command1.Enabled = True
+    .Command2.Enabled = False
+    .txtNick.Enabled = True
+    .txtIP.Enabled = True
+    .txtPort.Enabled = True
+    .Label5.Caption = "IP: "
+    .Label6.Caption = "Port: "
+End With
+With frmChat
+    .cmdSend.Enabled = False
+    .cmdClear.Enabled = False
+    .txtToSend.Enabled = False
+End With
 
 End Sub
 

@@ -121,7 +121,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.1.3"
+      Caption         =   "Version : 1.0.1.4"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -166,19 +166,18 @@ Private Sub Command1_Click()
 End Sub
 
 Private Sub Command2_Click()
-Dim i As Integer
+Dim WiSk As Winsock
 
-' Disconnect all sockets
-    With frmMain
-        For i = 1 To .Winsock1.UBound
-            .Winsock1(i).Close
-            Unload .Winsock1(i)
-        Next i
-        
-        .Winsock1(0).Close
-        
-        .StatusBar1.Panels(1).Text = "Status: Disconnected"
-    End With
+With frmMain
+    For Each WiSk In .Winsock1
+        If WiSk.State = sckConnected Then
+            WiSk.Close
+            Unload WiSk
+        End If
+    Next
+    .Winsock1(0).Close
+    .StatusBar1.Panels(1).Text = "Status: Disconnected"
+End With
     
 ' Clear panel list
 frmPanel.ListView1.ListItems.Clear

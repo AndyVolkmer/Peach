@@ -1,12 +1,13 @@
 VERSION 5.00
 Begin VB.Form frmConfig 
+   Appearance      =   0  'Flat
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
    Caption         =   "frmConfig"
    ClientHeight    =   4155
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   7575
+   ClientWidth     =   7500
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -19,7 +20,7 @@ Begin VB.Form frmConfig
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    ScaleHeight     =   4155
-   ScaleWidth      =   7575
+   ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
    Begin VB.CommandButton Command3 
       Caption         =   "&Language"
@@ -174,7 +175,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.1.3"
+      Caption         =   "Version : 1.0.1.4"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -310,6 +311,7 @@ Me.Left = 0
 
 Command1.Caption = CONFIGcommand_connect
 Command2.Caption = CONFIGcommand_disconnect
+Command3.Caption = CONFIGcommand_language
 Label4.Caption = CONFIGlabel_CI_name & frmMain.Winsock1(0).LocalHostName
 Frame1.Caption = CONFIGframe_config
 Frame2.Caption = CONFIGframe_client

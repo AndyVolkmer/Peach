@@ -72,6 +72,7 @@ frmList.Hide
 End Sub
 
 Public Sub Form_Load()
+Me.Caption = LISTcaption
 Command1.Caption = LISTcommand_close
 End Sub
 

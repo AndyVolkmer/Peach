@@ -2,17 +2,18 @@ VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.OCX"
 Begin VB.Form frmSendFile 
+   Appearance      =   0  'Flat
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
    Caption         =   "frmSendFile"
    ClientHeight    =   3735
    ClientLeft      =   690
    ClientTop       =   1365
-   ClientWidth     =   9360
+   ClientWidth     =   7815
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    ScaleHeight     =   3735
-   ScaleWidth      =   9360
+   ScaleWidth      =   7815
    ShowInTaskbar   =   0   'False
    Begin VB.TextBox txtFileName 
       BeginProperty Font 
@@ -29,7 +30,7 @@ Begin VB.Form frmSendFile
       Locked          =   -1  'True
       TabIndex        =   8
       Top             =   240
-      Width           =   6450
+      Width           =   6330
    End
    Begin VB.Timer tmrSendFile 
       Enabled         =   0   'False
@@ -87,11 +88,11 @@ Begin VB.Form frmSendFile
       Height          =   285
       Left            =   120
       ScaleHeight     =   225
-      ScaleWidth      =   7215
+      ScaleWidth      =   7095
       TabIndex        =   2
       TabStop         =   0   'False
       Top             =   2520
-      Width           =   7275
+      Width           =   7155
    End
    Begin VB.CommandButton cmdBrowse 
       Caption         =   "&Browse"
@@ -105,7 +106,7 @@ Begin VB.Form frmSendFile
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   5760
+      Left            =   5640
       TabIndex        =   1
       ToolTipText     =   "( Dont click if you are not going to send something, this will make the application use more memory )"
       Top             =   600
@@ -123,7 +124,7 @@ Begin VB.Form frmSendFile
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   5760
+      Left            =   5640
       TabIndex        =   0
       Top             =   1680
       Width           =   1680
@@ -208,7 +209,7 @@ Begin VB.Form frmSendFile
    Begin VB.Line Line2 
       BorderColor     =   &H00FFFFFF&
       X1              =   120
-      X2              =   7440
+      X2              =   7320
       Y1              =   2160
       Y2              =   2160
    End
@@ -268,7 +269,7 @@ Begin VB.Form frmSendFile
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   195
-      Left            =   6525
+      Left            =   6405
       TabIndex        =   3
       Top             =   2280
       Width           =   870

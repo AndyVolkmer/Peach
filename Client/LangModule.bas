@@ -3,57 +3,59 @@ Option Explicit
 
 'Start variable support for languages
 ' MDI form ..
-Public MDIcommand_config               As String
-Public MDIcommand_chat                 As String
-Public MDIcommand_sendfile             As String
-Public MDIcommand_onlinelist           As String
+Public MDIcommand_config                As String
+Public MDIcommand_chat                  As String
+Public MDIcommand_sendfile              As String
+Public MDIcommand_onlinelist            As String
 
-Public MDIstatusbar_disconnected       As String
-Public MDIstatusbar_dcfromserver       As String
-Public MDIstatusbar_connected          As String
-Public MDIstatusbar_connectionproblem  As String
-Public MDIstatusbar_connecting         As String
+Public MDIstatusbar_disconnected        As String
+Public MDIstatusbar_dcfromserver        As String
+Public MDIstatusbar_connected           As String
+Public MDIstatusbar_connectionproblem   As String
+Public MDIstatusbar_connecting          As String
 
-Public MDImsgbox_errorHandlerFormLoad  As String
-Public MDImsgbox_config_notify         As String
-Public MDImsgbox_nametaken             As String
+Public MDImsgbox_errorHandlerFormLoad   As String
+Public MDImsgbox_config_notify          As String
+Public MDImsgbox_nametaken              As String
 
 ' Configuration form ..
-Public CONFIGcommand_connect           As String
-Public CONFIGcommand_disconnect        As String
+Public CONFIGcommand_connect            As String
+Public CONFIGcommand_disconnect         As String
+Public CONFIGcommand_language           As String
 
-Public CONFIGlabel_CI_name             As String
+Public CONFIGlabel_CI_name              As String
 
-Public CONFIGframe_config              As String
-Public CONFIGframe_client              As String
-Public CONFIGframe_server              As String
+Public CONFIGframe_config               As String
+Public CONFIGframe_client               As String
+Public CONFIGframe_server               As String
 
-Public CONFIGcombo_german              As String
-Public CONFIGcombo_english             As String
-Public CONFIGcombo_spanish             As String
+Public CONFIGcombo_german               As String
+Public CONFIGcombo_english              As String
+Public CONFIGcombo_spanish              As String
 
-Public CONFIGmsgbox_nonumeric          As String
+Public CONFIGmsgbox_nonumeric           As String
 
 ' Chat form ..
-Public CHATcommand_send                As String
-Public CHATcommand_clear               As String
+Public CHATcommand_send                 As String
+Public CHATcommand_clear                As String
 
 ' List form ..
-Public LISTcommand_close               As String
+Public LISTcaption                      As String
+Public LISTcommand_close                As String
 
 ' Send File form ..
-Public SFlabel_filename                As String
-Public SFlabel_sendingfile             As String
-Public SFlabel_sent                    As String
+Public SFlabel_filename                 As String
+Public SFlabel_sendingfile              As String
+Public SFlabel_sent                     As String
 
-Public SFcommand_browse                As String
-Public SFcommand_sendfile              As String
+Public SFcommand_browse                 As String
+Public SFcommand_sendfile               As String
 
 Public Sub SetLangGerman()
 
 ' MDI form ..
 MDIcommand_config = "&Einstellungen"
-MDIcommand_chat = "&Chat"
+MDIcommand_chat = "Ch&at"
 MDIcommand_sendfile = "&Datei senden"
 MDIcommand_onlinelist = "&Online Liste"
 
@@ -70,6 +72,7 @@ MDImsgbox_nametaken = "Der Name wird bereits genutzt."
 ' Configuration form ..
 CONFIGcommand_connect = "&Verbinden"
 CONFIGcommand_disconnect = "&Verbindung trenn."
+CONFIGcommand_language = "&Sprache"
 
 CONFIGlabel_CI_name = "Name: "
 
@@ -88,6 +91,7 @@ CHATcommand_send = "&Senden"
 CHATcommand_clear = "&Löschen"
 
 ' List form ..
+LISTcaption = "Online Liste"
 LISTcommand_close = "&Schliessen"
 
 ' Send File form ..
@@ -103,7 +107,7 @@ Public Sub SetLangEnglish()
 
 ' MDI form ..
 MDIcommand_config = "&Configuration"
-MDIcommand_chat = "&Chat"
+MDIcommand_chat = "Ch&at"
 MDIcommand_sendfile = "&Send File"
 MDIcommand_onlinelist = "&Online List"
 
@@ -120,6 +124,7 @@ MDImsgbox_nametaken = "This name is already taken."
 ' Configuration form ..
 CONFIGcommand_connect = "&Connect"
 CONFIGcommand_disconnect = "&Disconnect"
+CONFIGcommand_language = "&Language"
 
 CONFIGlabel_CI_name = "Name: "
 
@@ -138,6 +143,7 @@ CHATcommand_send = "&Send"
 CHATcommand_clear = "&Clear"
 
 ' List form ..
+LISTcaption = "Online List"
 LISTcommand_close = "&Close"
 
 ' Send File form ..
@@ -153,7 +159,7 @@ Public Sub SetLangSpanish()
 
 ' MDI form ..
 MDIcommand_config = "&Configuración"
-MDIcommand_chat = "&Chat"
+MDIcommand_chat = "Ch&at"
 MDIcommand_sendfile = "&Enviar archivo"
 MDIcommand_onlinelist = "&Lista de conectados"
 
@@ -170,6 +176,7 @@ MDImsgbox_nametaken = "Este nombre ya esta cogido."
 ' Configuration form ..
 CONFIGcommand_connect = "&Conectar"
 CONFIGcommand_disconnect = "&Desconectar"
+CONFIGcommand_language = "&Idioma"
 
 CONFIGlabel_CI_name = "Nombre: "
 
@@ -188,6 +195,7 @@ CHATcommand_send = "&Enviar"
 CHATcommand_clear = "&Borrar"
 
 ' List form ..
+LISTcaption = "Lista de conectados"
 LISTcommand_close = "&Cerrar"
 
 ' Send File form ..
