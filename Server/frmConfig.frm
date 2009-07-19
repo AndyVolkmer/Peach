@@ -121,7 +121,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.1.6"
+      Caption         =   "Version : 1.0.1.7"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -140,28 +140,29 @@ Option Explicit
 
 Private Sub Command1_Click()
 ' Do the buttons
-    txtNick.Enabled = False
-    txtPort.Enabled = False
-    Command1.Enabled = False
-    Command2.Enabled = True
-        
+txtNick.Enabled = False
+txtPort.Enabled = False
+Command1.Enabled = False
+Command2.Enabled = True
+    
 ' Activate the listen of sendfile form
-    frmSendFile.cmdConnect_Click
-    
+frmSendFile.cmdConnect_Click
+
 ' Connect sockets and start listening
-    With frmMain
-        .Winsock1(0).LocalPort = txtPort.Text
-        .Winsock1(0).Listen
+With frmMain
+    .Winsock1(0).LocalPort = txtPort.Text
+    .Winsock1(0).Listen
 ' frmMain.StatusBar1.Panels(1).Text = "Status: Waiting for connections .. "
-        .StatusBar1.Panels(1).Text = "Status: Connected with  " & .Winsock1.Count - 1 & " Client(s)."
-    End With
-    
-    frmConfig.Hide
-    
-    With frmChat
-        .Show
-        .txtToSend.SetFocus
-    End With
+    .StatusBar1.Panels(1).Text = "Status: Connected with  " & .Winsock1.Count - 1 & " Client(s)."
+End With
+
+frmConfig.Hide
+
+With frmChat
+    .txtConver = vbCrLf & vbTab & vbTab & ":::::::::::::: Welcome to the Peach Server ::::::::::::::" & vbCrLf
+    .Show
+    .txtToSend.SetFocus
+End With
     
 End Sub
 

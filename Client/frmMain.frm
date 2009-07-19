@@ -186,15 +186,15 @@ Private Type MENUITEMINFO
     dwTypeData      As String
     cch             As Long
 End Type
-Private Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Long, ByVal bRevert As Long) As Long
+Private Declare Function GetSystemMenu Lib "user32" (ByVal hWnd As Long, ByVal bRevert As Long) As Long
 Private Declare Function GetMenuItemInfo Lib "user32" Alias "GetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal b As Boolean, lpMenuItemInfo As MENUITEMINFO) As Long
 Private Declare Function SetMenuItemInfo Lib "user32" Alias "SetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal bool As Boolean, lpcMenuItemInfo As MENUITEMINFO) As Long
-Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long) As Long
-Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
-Private Declare Function SendMessage2 Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long) As Long
+Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+Private Declare Function SendMessage2 Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Private Declare Function GetMenuItemCount Lib "user32" (ByVal hMenu As Long) As Long
 Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPosition As Long, ByVal wFlags As Long) As Long
-Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
+Private Declare Function DrawMenuBar Lib "user32" (ByVal hWnd As Long) As Long
 
 Public Prefix       As String
 Public NameText     As String
@@ -250,10 +250,10 @@ Command4.Caption = MDIcommand_onlinelist
 DisableFormResize Me
 
 Dim L As Long
-    L = GetWindowLong(Me.hwnd, GWL_STYLE)
+    L = GetWindowLong(Me.hWnd, GWL_STYLE)
 '   L = L And Not (WS_MINIMIZEBOX)
     L = L And Not (WS_MAXIMIZEBOX)
-    L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
+    L = SetWindowLong(Me.hWnd, GWL_STYLE, L)
 
 StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
 
@@ -357,6 +357,8 @@ End Sub
 Private Sub Winsock1_Connect(Index As Integer)
 ' Send request to check if name is avaible
 SendMessage "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
+frmDESP.Show
+frmDESP.YouAreOnline
 End Sub
 
 Private Sub ConnectIsTrue()
@@ -440,16 +442,16 @@ Public Sub DisableFormResize(frm As Form)
     Dim lngMenuID As Long
     Const xSC_MAXIMIZE As Long = -11
 
-    style = GetWindowLong(frm.hwnd, GWL_STYLE)
+    style = GetWindowLong(frm.hWnd, GWL_STYLE)
     
     style = style And Not WS_THICKFRAME
     style = style And Not WS_MAXIMIZEBOX
     
-    style = SetWindowLong(frm.hwnd, GWL_STYLE, style)
+    style = SetWindowLong(frm.hWnd, GWL_STYLE, style)
     
     On Error Resume Next
     
-    hMenu = GetSystemMenu(frm.hwnd, 0)
+    hMenu = GetSystemMenu(frm.hWnd, 0)
     
     With MII
         .cbSize = Len(MII)
@@ -473,7 +475,7 @@ Public Sub DisableFormResize(frm As Form)
     End With
     If SetMenuItemInfo(hMenu, MII.wID, False, MII) = 0 Then Exit Sub
     
-    SendMessage2 hwnd, WM_NCACTIVATE, True, 0
+    SendMessage2 hWnd, WM_NCACTIVATE, True, 0
     
     frm.Width = frm.Width - 1
     frm.Width = frm.Width + 1
