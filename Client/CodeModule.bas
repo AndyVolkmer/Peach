@@ -53,6 +53,6 @@ Public Sub minimize_to_tray()
     nid.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
     nid.uCallBackMessage = WM_MOUSEMOVE
     nid.hIcon = frmMain.Icon ' the icon will be your Form1 project icon
-    nid.szTip = "Logged in as " & frmConfig.txtNick & vbNullChar
+    nid.szTip = "Peach -  " & frmConfig.txtNick & vbNullChar
     Shell_NotifyIcon NIM_ADD, nid
 End Sub

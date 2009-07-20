@@ -285,12 +285,14 @@ HandleErrorFreeSocket:
 socketFree = p
 End Function
 
-'Load next free socket
 Private Function loadSocket() As Integer
+' Load next free socket
 Dim theFreeSocket As Integer: theFreeSocket = 0
-    theFreeSocket = socketFree
-    Load Winsock1(theFreeSocket)
-    loadSocket = theFreeSocket
+theFreeSocket = socketFree
+
+Load Winsock1(theFreeSocket)
+
+loadSocket = theFreeSocket
 End Function
 '
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)

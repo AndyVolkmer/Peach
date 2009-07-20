@@ -24,21 +24,6 @@ Begin VB.Form frmDESP
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   185
    ShowInTaskbar   =   0   'False
-   Begin VB.ListBox List1 
-      Height          =   645
-      Left            =   600
-      TabIndex        =   2
-      Top             =   240
-      Width           =   1215
-   End
-   Begin VB.CommandButton Command1 
-      Caption         =   "Command1"
-      Height          =   615
-      Left            =   960
-      TabIndex        =   1
-      Top             =   480
-      Width           =   1215
-   End
    Begin VB.Timer stopTimer 
       Enabled         =   0   'False
       Left            =   120
