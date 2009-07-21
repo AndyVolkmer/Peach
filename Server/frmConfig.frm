@@ -151,11 +151,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
 Option Explicit
 Dim x As Integer
-Dim Y As Integer
-Dim Z As Integer
 
 Private Sub Command1_Click()
 connCounter.Enabled = True
