@@ -176,7 +176,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.1.8"
+      Caption         =   "Version : 1.0.1.9"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -203,73 +203,76 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-' Check if text's are empty
-
-Select Case txtNick.Text
-Case ""
+' Nick cant be empty
+If txtNick.Text = "" Then
     MsgBox CONFIGmsgbox_namenoempty, vbInformation
     txtNick.SetFocus
-Case Else
-    Select Case txtIP.Text
-    Case ""
-        MsgBox CONFIGmsgbox_ipnoempty, vbInformation
-        txtIP.SetFocus
-    Case Else
-        Select Case txtPort.Text
-        Case ""
-            MsgBox CONFIGmsgbox_portnoempty, vbInformation
-            txtPort.SetFocus
-        Case Else ' <---- Here we enter ---->
-            ' Make it proper case?
-            txtNick.Text = StrConv(txtNick.Text, vbProperCase)
-            
-            ' If the nick is numeric then no
-            If IsNumeric(txtNick.Text) = True Then
-                txtNick.Text = ""
-                MsgBox CONFIGmsgbox_nonumeric, vbInformation
-                txtNick.SetFocus
-                Exit Sub
-            End If
-            
-            ' If the nick is to short then no
-            If Len(txtNick.Text) < 4 Then
-                MsgBox "Your nickname is to short!    ", vbInformation, " Error - Nickname"
-                txtNick.SelStart = Len(txtNick.Text)
-                txtNick.SetFocus
-                Exit Sub
-            End If
-            
-            ' Connect winsocks
-            With frmMain.Winsock1(0)
-                .RemotePort = txtPort.Text
-                .RemoteHost = txtIP.Text
-                .Connect
-            
-                Label5.Caption = "IP: " & .RemoteHost
-                Label6.Caption = "Port: " & .RemotePort
-            End With
-            
-            ' Do the enable stuff
-            Command2.Enabled = True
-            Command1.Enabled = False
-            txtNick.Enabled = False
-            txtIP.Enabled = False
-            txtPort.Enabled = False
-            
-            With frmChat
-                .cmdSend.Enabled = True
-                .cmdClear.Enabled = True
-                .txtToSend.Enabled = True
-            End With
-            
-            frmMain.StatusBar1.Panels(1).Text = MDIstatusbar_connecting & txtIP.Text & ":" & txtPort.Text & "'"
-            frmConfig.Hide
-            frmChat.Show
-            frmChat.txtToSend.SetFocus
-            
-        End Select
-    End Select
-End Select
+    Exit Sub
+End If
+
+' IP cant be empty
+If txtIP.Text = "" Then
+    MsgBox CONFIGmsgbox_ipnoempty, vbInformation
+    txtIP.SetFocus
+    Exit Sub
+End If
+
+' Port cant be empty
+If txtPort.Text = "" Then
+    MsgBox CONFIGmsgbox_portnoempty, vbInformation
+    txtPort.SetFocus
+    Exit Sub
+End If
+
+' If the nick is numeric then no
+If IsNumeric(txtNick.Text) = True Then
+    txtNick.Text = ""
+    MsgBox CONFIGmsgbox_nonumeric, vbInformation
+    txtNick.SetFocus
+    Exit Sub
+End If
+
+' If the nick is to short then no
+If Len(txtNick.Text) < 4 Then
+    MsgBox "Your nickname is to short!    ", vbInformation, " Error - Nickname"
+    txtNick.SelStart = Len(txtNick.Text)
+    txtNick.SetFocus
+    Exit Sub
+End If
+
+' Make it proper case
+txtNick.Text = StrConv(txtNick.Text, vbProperCase)
+
+' Connect winsocks
+With frmMain.Winsock1(0)
+    .RemotePort = txtPort.Text
+    .RemoteHost = txtIP.Text
+    .Connect
+    
+    Label5.Caption = "IP: " & .RemoteHost
+    Label6.Caption = "Port: " & .RemotePort
+End With
+
+' Do the enable stuff
+With Me
+    .Command2.Enabled = True
+    .Command1.Enabled = False
+    .txtNick.Enabled = False
+    .txtIP.Enabled = False
+    .txtPort.Enabled = False
+End With
+
+With frmChat
+    .cmdSend.Enabled = True
+    .cmdClear.Enabled = True
+    .txtToSend.Enabled = True
+End With
+
+frmMain.StatusBar1.Panels(1).Text = MDIstatusbar_connecting & txtIP.Text & ":" & txtPort.Text & "'"
+frmConfig.Hide
+frmChat.Show
+frmChat.txtToSend.SetFocus
+
 End Sub
 
 Public Sub Command2_Click()
@@ -311,22 +314,24 @@ frmLanguage.Show
 End Sub
 
 Public Sub Form_Load()
-
-Me.Top = 0
-Me.Left = 0
-
-Command1.Caption = CONFIGcommand_connect
-Command2.Caption = CONFIGcommand_disconnect
-Command3.Caption = CONFIGcommand_language
-Label4.Caption = CONFIGlabel_CI_name & frmMain.Winsock1(0).LocalHostName
-Frame1.Caption = CONFIGframe_config
-Frame2.Caption = CONFIGframe_client
-Frame3.Caption = CONFIGframe_server
-Label3.Caption = "IP: " & frmMain.Winsock1(0).LocalIP
-Label4.Caption = "Name: " & frmMain.Winsock1(0).LocalHostName
-
 Dim TSSO As TypeSSO
 TSSO = ReadConfigFile(App.Path & "\bin.conf")
+
+With Me
+    .Top = 0
+    .Left = 0
+
+    .Command1.Caption = CONFIGcommand_connect
+    .Command2.Caption = CONFIGcommand_disconnect
+    .Command3.Caption = CONFIGcommand_language
+    .Label4.Caption = CONFIGlabel_CI_name & frmMain.Winsock1(0).LocalHostName
+    .Frame1.Caption = CONFIGframe_config
+    .Frame2.Caption = CONFIGframe_client
+    .Frame3.Caption = CONFIGframe_server
+    .Label3.Caption = "IP: " & frmMain.Winsock1(0).LocalIP
+    .Label4.Caption = "Name: " & frmMain.Winsock1(0).LocalHostName
+End With
+
 With TSSO
     txtNick.Text = Trim(TSSO.Nickname)
     txtIP.Text = Trim(TSSO.ConnectIP)

@@ -12,12 +12,6 @@ Begin VB.MDIForm frmMain
    LinkTopic       =   "MDIForm1"
    ScrollBars      =   0   'False
    StartUpPosition =   2  'CenterScreen
-   Begin VB.Timer listTimer 
-      Enabled         =   0   'False
-      Interval        =   500
-      Left            =   0
-      Top             =   1080
-   End
    Begin MSComctlLib.StatusBar StatusBar1 
       Align           =   2  'Align Bottom
       Height          =   345
@@ -216,10 +210,6 @@ Private Sub Command4_Click()
     SetupForms frmPanel
 End Sub
 
-Private Sub listTimer_Timer()
-    UpdateUsersList
-    listTimer.Enabled = False
-End Sub
 
 Private Sub MDIForm_Load()
 DisableFormResize Me
@@ -325,9 +315,8 @@ End If
 Select Case frmMain.Command
 Dim u As Integer
 Case "!connected" ' Announce connected player and send to user online list
-    SendMessage " " & frmMain.NameText & " has connected."
     frmPanel.ListView1.ListItems.Item(RR).Text = frmMain.NameText
-    listTimer.Enabled = True
+    UpdateUsersList
     
 Case "!namerequest" ' Check if the name is avaible or not
     For u = 1 To frmPanel.ListView1.ListItems.Count

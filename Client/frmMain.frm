@@ -353,27 +353,29 @@ End Sub
 Private Sub Winsock1_Connect(Index As Integer)
 ' Send request to check if name is avaible
 SendMessage "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
-frmDESP.Show
-frmDESP.YouAreOnline
 End Sub
 
 Private Sub ConnectIsTrue()
 StatusBar1.Panels(1).Text = MDIstatusbar_connected & frmConfig.txtIP.Text & ":" & frmConfig.txtPort.Text
-With frmMain
-    .NameText = frmConfig.txtNick
-    .Message = "!connected" & "#" & .NameText & "#"
-SendMessage .Message
+
+NameText = frmConfig.txtNick
+Message = "!connected" & "#" & NameText & "#"
+SendMessage Message
+
+With frmDESP
+    .Show
+    .YouAreOnline
 End With
 End Sub
 
 Private Sub ConnectIsFalse()
-MsgBox MDImsgbox_nametaken, vbInformation
 With frmConfig
     .Command2_Click
     .txtNick = ""
     SetupForms frmConfig
     .txtNick.SetFocus
 End With
+MsgBox MDImsgbox_nametaken, vbInformation
 End Sub
 
 
@@ -409,6 +411,7 @@ End Sub
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+
 Winsock1(Index).Close
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: Disconnected due connection problem."
 StatusBar1.Panels(1).Text = MDIstatusbar_connectionproblem

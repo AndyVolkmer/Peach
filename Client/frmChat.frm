@@ -74,6 +74,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -97,15 +98,12 @@ Option Explicit
 
 Private Sub cmdSend_Click()
 frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+
 Select Case txtToSend.Text
-Case ""
+Case "", " ", "  ", "    "
     MsgBox "Nothing inserted!", vbInformation
-Case " "
-    MsgBox "Nothing inserted!", vbInformation
-Case "  "
-    MsgBox "Nothing inserted!", vbInformation
-Case Trim("!time"), Trim("!Time"), Trim("!TIme"), Trim("!TIMe"), Trim("!TIME"), Trim("!tIME"), Trim("!tiME"), Trim("!timE"), Trim("!TiMe"), Trim("tImE")
-    txtConver.Text = txtConver.Text & vbCrLf & frmMain.Prefix & " [System]: The time is " & Format(Time, "hh:nn:ss")
+Case Trim("!time"), Trim("!Time"), Trim("!TIME")
+    txtConver.Text = txtConver.Text & vbCrLf & frmMain.Prefix & CHATtimetext & Format(Time, "hh:nn")
 Case Trim("!online"), Trim("!Online"), Trim("!ONLINE")
     frmMain.UpdateListPosition.Enabled = True
     With frmList
@@ -144,11 +142,11 @@ Private Sub txtConver_Change()
 Dim hWnd1 As Long
 hWnd1 = GetActiveWindow
 If frmMain.WindowState = vbMinimized Then
-    Call FlashTitle(frmMain.hWnd, True)
+    Call FlashTitle(frmMain.hwnd, True)
 Else
-    If hWnd1 = frmMain.hWnd Then
+    If hWnd1 = frmMain.hwnd Then
     Else
-        Call FlashTitle(frmMain.hWnd, True)
+        Call FlashTitle(frmMain.hwnd, True)
     End If
 End If
 frmMain.Hyperlink1.URLFormat txtConver

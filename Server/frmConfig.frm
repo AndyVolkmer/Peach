@@ -23,6 +23,12 @@ Begin VB.Form frmConfig
    ScaleHeight     =   4140
    ScaleWidth      =   7560
    ShowInTaskbar   =   0   'False
+   Begin VB.Timer connCounter 
+      Enabled         =   0   'False
+      Interval        =   1000
+      Left            =   120
+      Top             =   2400
+   End
    Begin VB.CommandButton Command2 
       Caption         =   "&Disconnect"
       Enabled         =   0   'False
@@ -67,6 +73,16 @@ Begin VB.Form frmConfig
          Text            =   "Server"
          Top             =   1320
          Width           =   1575
+      End
+      Begin VB.Label Label2 
+         BackColor       =   &H8000000C&
+         Caption         =   "Offline"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   3840
+         TabIndex        =   11
+         Top             =   1440
+         Width           =   3015
       End
       Begin VB.Label Label5 
          BackColor       =   &H8000000C&
@@ -121,7 +137,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H8000000C&
-      Caption         =   "Version : 1.0.1.8"
+      Caption         =   "Version : 1.0.1.9"
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   120
@@ -137,8 +153,12 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Option Explicit
+Dim x As Integer
+Dim Y As Integer
+Dim Z As Integer
 
 Private Sub Command1_Click()
+connCounter.Enabled = True
 ' Do the buttons
 txtNick.Enabled = False
 txtPort.Enabled = False
@@ -167,8 +187,9 @@ End With
 End Sub
 
 Private Sub Command2_Click()
+connCounter.Enabled = False
+Label2.Caption = "Offline"
 Dim WiSk As Winsock
-
 With frmMain
     For Each WiSk In .Winsock1
         If WiSk.State = sckConnected Then
@@ -193,8 +214,29 @@ frmPanel.ListView1.ListItems.Clear
     Command2.Enabled = False
 End Sub
 
-Private Sub Form_Load()
+Private Sub connCounter_Timer()
+x = x + 1
+Label2.Caption = SetTimeFormat(x)
+End Sub
 
+Public Function SetTimeFormat(ByVal TimeValue As Double)
+On Error GoTo errorhandler
+Dim seconds As Integer
+Dim mins As Integer
+Dim secs As Integer
+
+    seconds = Fix(TimeValue)
+    mins = Fix(TimeValue / 60)
+    secs = TimeValue - (mins * 60)
+    If secs < 10 Then secs = "0" & secs
+    SetTimeFormat = "Online : " & mins & " minutes " & secs & " seconds"
+    Exit Function
+errorhandler:
+SetTimeFormat = "0:00"
+End Function
+
+Private Sub Form_Load()
+x = 0
 Me.Top = 0
 Me.Left = 0
 
@@ -212,3 +254,79 @@ End Sub
 Private Sub txtPort_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then Command1_Click
 End Sub
+Public Function TimeString(seconds As Long, Optional Verbose _
+As Boolean = False) As String
+
+'if verbose = false, returns
+'something like
+'02:22.08
+'if true, returns
+'2 hours, 22 minutes, and 8 seconds
+
+Dim lHrs As Long
+Dim lMinutes As Long
+Dim lSeconds As Long
+
+lSeconds = seconds
+
+lHrs = Int(lSeconds / 3600)
+lMinutes = (Int(lSeconds / 60)) - (lHrs * 60)
+lSeconds = Int(lSeconds Mod 60)
+
+Dim sAns As String
+
+
+If lSeconds = 60 Then
+    lMinutes = lMinutes + 1
+    lSeconds = 0
+End If
+
+If lMinutes = 60 Then
+    lMinutes = 0
+    lHrs = lHrs + 1
+End If
+
+sAns = Format(CStr(lHrs), "#####0") & ":" & _
+  Format(CStr(lMinutes), "00") & "." & _
+  Format(CStr(lSeconds), "00")
+
+If Verbose Then sAns = TimeStringtoEnglish(sAns)
+TimeString = sAns
+
+End Function
+
+Private Function TimeStringtoEnglish(sTimeString As String) As String
+
+Dim sAns As String
+Dim sHour, sMin As String, sSec As String
+Dim iTemp As Integer, sTemp As String
+Dim iPos As Integer
+iPos = InStr(sTimeString, ":") - 1
+
+sHour = Left$(sTimeString, iPos)
+If CLng(sHour) <> 0 Then
+    sAns = CLng(sHour) & " hour"
+    If CLng(sHour) > 1 Then sAns = sAns & "s"
+    sAns = sAns & ", "
+End If
+
+sMin = Mid$(sTimeString, iPos + 2, 2)
+
+iTemp = sMin
+
+If sMin = "00" Then
+   sAns = IIf(Len(sAns), sAns & "0 minutes, and ", "")
+Else
+   sTemp = IIf(iTemp = 1, " minute", " minutes")
+   sTemp = IIf(Len(sAns), sTemp & ", and ", sTemp & " and ")
+   sAns = sAns & Format$(iTemp, "##") & sTemp
+End If
+
+iTemp = Val(Right$(sTimeString, 2))
+sSec = Format$(iTemp, "#0")
+sAns = sAns & sSec & " second"
+If iTemp <> 1 Then sAns = sAns & "s"
+
+TimeStringtoEnglish = sAns
+
+End Function

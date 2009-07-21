@@ -42,6 +42,8 @@ Public CONFIGmsgbox_ipnoempty           As String
 Public CHATcommand_send                 As String
 Public CHATcommand_clear                As String
 
+Public CHATtimetext                     As String
+
 ' List form ..
 Public LISTcaption                      As String
 Public LISTcommand_close                As String
@@ -95,6 +97,8 @@ CONFIGmsgbox_ipnoempty = "Sie haben keine IP angegeben."
 ' Chat form ..
 CHATcommand_send = "&Senden"
 CHATcommand_clear = "&Löschen"
+
+CHATtimetext = " Es ist "
 
 ' List form ..
 LISTcaption = "Online Liste"
@@ -151,6 +155,8 @@ CONFIGmsgbox_ipnoempty = "You didnt introduce a IP."
 CHATcommand_send = "&Send"
 CHATcommand_clear = "&Clear"
 
+CHATtimetext = " The time is "
+
 ' List form ..
 LISTcaption = "Online List"
 LISTcommand_close = "&Close"
@@ -205,6 +211,8 @@ CONFIGmsgbox_ipnoempty = "No ha introducido ninguna IP."
 ' Chat form ..
 CHATcommand_send = "&Enviar"
 CHATcommand_clear = "&Borrar"
+
+CHATtimetext = " Son las "
 
 ' List form ..
 LISTcaption = "Lista de conectados"

@@ -71,6 +71,7 @@ Begin VB.Form frmPanel
       MultiSelect     =   -1  'True
       LabelWrap       =   -1  'True
       HideSelection   =   -1  'True
+      FullRowSelect   =   -1  'True
       _Version        =   393217
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
