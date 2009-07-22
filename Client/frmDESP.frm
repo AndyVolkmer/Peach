@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{E9260B1F-3B85-11D8-8579-000C7641C3F2}#40.0#0"; "menudesp.ocx"
 Begin VB.Form frmDESP 
-   BackColor       =   &H00808080&
+   BackColor       =   &H80000004&
    BorderStyle     =   0  'None
    Caption         =   "frmDESP"
    ClientHeight    =   1650
@@ -46,28 +46,54 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private WithEvents fEvents As Form
+Attribute fEvents.VB_VarHelpID = -1
+Private bNoResize As Boolean, bNoActivate As Boolean
 
 Private Sub Form_Load()
 Me.Top = Screen.Height - 2100
 Me.Left = Screen.Width - 2882
+Set fEvents = frmBlank
+
+' ShowInTaskBar
+SetWindowLong Me.hwnd, GWL_STYLE, GetWindowLong(Me.hwnd, GWL_STYLE) Or WS_SYSMENU Or WS_MINIMIZEBOX
+
+' Set Transparency
+Me.BackColor = vbCyan
+'Text2.BackColor = Me.BackColor
+SetTrans Me, , Me.BackColor
+SetTrans fEvents, 1
+
+Me.Show
+fEvents.Show
 End Sub
 
-Private Sub UserIsOnline(uzer As String)
-menudes1.Activate uzer & " is online!", 3, 2, True
+Private Sub UserIsOnline(User As String)
+menudes1.Activate User & " is online!", 3, 2, True
 With stopTimer
     .Interval = 2500
     .Enabled = True
 End With
 End Sub
 
-Private Sub stopTimer_Timer()
-Unload Me
+Private Sub Form_Unload(Cancel As Integer)
+Unload fEvents
+Set fEvents = Nothing
 End Sub
 
 Public Sub YouAreOnline()
-menudes1.Activate "Hello, " & frmConfig.txtNick.Text, 1, 4, True
-With stopTimer
-    .Interval = 3000
-    .Enabled = True
-End With
+menudes1.Activate "Hello " & frmConfig.txtNick.Text, 5, 2, False
 End Sub
+
+Private Sub fEvents_Activate()
+    If Not GetNextWindow(fEvents.hwnd) = Me.hwnd Then Me.ZOrder
+End Sub
+
+Private Sub Form_Activate()
+    If Not GetNextWindow(Me.hwnd) = fEvents.hwnd Then fEvents.ZOrder
+End Sub
+
+Private Sub fEvents_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If IsOverCtl(Me, X \ Screen.TwipsPerPixelX, Y \ Screen.TwipsPerPixelY) Then Me.SetFocus
+End Sub
+

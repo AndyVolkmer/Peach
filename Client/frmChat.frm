@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.OCX"
 Begin VB.Form frmChat 
    Appearance      =   0  'Flat
-   BackColor       =   &H8000000C&
+   BackColor       =   &H80000004&
    BorderStyle     =   0  'None
    Caption         =   "frmChat"
    ClientHeight    =   3810
@@ -74,7 +74,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B

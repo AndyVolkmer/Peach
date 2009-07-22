@@ -176,7 +176,6 @@ End With
 frmConfig.Hide
 
 With frmChat
-    .txtConver = vbCrLf & vbTab & vbTab & ":::::::::::::: Welcome to the Peach Server ::::::::::::::" & vbCrLf
     .Show
     .txtToSend.SetFocus
 End With
@@ -251,79 +250,3 @@ End Sub
 Private Sub txtPort_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then Command1_Click
 End Sub
-Public Function TimeString(seconds As Long, Optional Verbose _
-As Boolean = False) As String
-
-'if verbose = false, returns
-'something like
-'02:22.08
-'if true, returns
-'2 hours, 22 minutes, and 8 seconds
-
-Dim lHrs As Long
-Dim lMinutes As Long
-Dim lSeconds As Long
-
-lSeconds = seconds
-
-lHrs = Int(lSeconds / 3600)
-lMinutes = (Int(lSeconds / 60)) - (lHrs * 60)
-lSeconds = Int(lSeconds Mod 60)
-
-Dim sAns As String
-
-
-If lSeconds = 60 Then
-    lMinutes = lMinutes + 1
-    lSeconds = 0
-End If
-
-If lMinutes = 60 Then
-    lMinutes = 0
-    lHrs = lHrs + 1
-End If
-
-sAns = Format(CStr(lHrs), "#####0") & ":" & _
-  Format(CStr(lMinutes), "00") & "." & _
-  Format(CStr(lSeconds), "00")
-
-If Verbose Then sAns = TimeStringtoEnglish(sAns)
-TimeString = sAns
-
-End Function
-
-Private Function TimeStringtoEnglish(sTimeString As String) As String
-
-Dim sAns As String
-Dim sHour, sMin As String, sSec As String
-Dim iTemp As Integer, sTemp As String
-Dim iPos As Integer
-iPos = InStr(sTimeString, ":") - 1
-
-sHour = Left$(sTimeString, iPos)
-If CLng(sHour) <> 0 Then
-    sAns = CLng(sHour) & " hour"
-    If CLng(sHour) > 1 Then sAns = sAns & "s"
-    sAns = sAns & ", "
-End If
-
-sMin = Mid$(sTimeString, iPos + 2, 2)
-
-iTemp = sMin
-
-If sMin = "00" Then
-   sAns = IIf(Len(sAns), sAns & "0 minutes, and ", "")
-Else
-   sTemp = IIf(iTemp = 1, " minute", " minutes")
-   sTemp = IIf(Len(sAns), sTemp & ", and ", sTemp & " and ")
-   sAns = sAns & Format$(iTemp, "##") & sTemp
-End If
-
-iTemp = Val(Right$(sTimeString, 2))
-sSec = Format$(iTemp, "#0")
-sAns = sAns & sSec & " second"
-If iTemp <> 1 Then sAns = sAns & "s"
-
-TimeStringtoEnglish = sAns
-
-End Function

@@ -24,6 +24,7 @@ Public CONFIGcommand_disconnect         As String
 Public CONFIGcommand_language           As String
 
 Public CONFIGlabel_CI_name              As String
+Public CONFIGlabel_selectlanguage       As String
 
 Public CONFIGframe_config               As String
 Public CONFIGframe_client               As String
@@ -32,6 +33,13 @@ Public CONFIGframe_server               As String
 Public CONFIGcombo_german               As String
 Public CONFIGcombo_english              As String
 Public CONFIGcombo_spanish              As String
+Public CONFIGcombo_swedish              As String
+Public CONFIGcombo_italian              As String
+Public CONFIGcombo_greek                As String
+Public CONFIGcombo_serbian              As String
+Public CONFIGcombo_russian              As String
+Public CONFIGcombo_dutch                As String
+Public CONFIGcombo_french               As String
 
 Public CONFIGmsgbox_nonumeric           As String
 Public CONFIGmsgbox_portnoempty         As String
@@ -55,31 +63,32 @@ Public SFlabel_sent                     As String
 
 Public SFcommand_browse                 As String
 Public SFcommand_sendfile               As String
+Public SFcommand_cancelsending          As String
 
 Public Sub SetLangGerman()
 
 ' MDI form ..
 MDIcommand_config = "&Einstellungen"
 MDIcommand_chat = "Ch&at"
-MDIcommand_sendfile = "&Datei senden"
+MDIcommand_sendfile = "&Sende Datei"
 MDIcommand_onlinelist = "&Online Liste"
 
-MDIstatusbar_disconnected = "Status: Nicht verbunden"
-MDIstatusbar_dcfromserver = "Status: Verbindung mit Server unterbrochen"
+MDIstatusbar_disconnected = "Status: Getrennt"
+MDIstatusbar_dcfromserver = "Status: Getrennt vom Server"
 MDIstatusbar_connected = "Status: Verbunden mit "
-MDIstatusbar_connectionproblem = "Status: Verbindungs Problem"
+MDIstatusbar_connectionproblem = "Status: Getrennt aufgrund eines Verbindungsfehlers"
 MDIstatusbar_connecting = "Status: Verbinden mit "
 
-'MDImsgbox_errorHandlerFormLoad = ""
-MDImsgbox_config_notify = "Einige konfigurations Dateien sind beschädigt oder wurden gelöscht, einige Werte wurden auf einen Standard wert gesetzt."
-MDImsgbox_nametaken = "Der Name wird bereits genutzt."
+'MDImsgbox_errorHandlerFormLoad
+MDImsgbox_config_notify = "Einige Konfigurationsdateien sind veraltet oder wurden beschädigt, Peach fand den Fehler und wird es mit dem nächsten Neustart korrigieren."
+MDImsgbox_nametaken = "Der Name ist bereits vergeben."
 
-' Configuration form ..
 CONFIGcommand_connect = "&Verbinden"
 CONFIGcommand_disconnect = "&Verbindung trenn."
 CONFIGcommand_language = "&Sprache"
 
 CONFIGlabel_CI_name = "Name: "
+CONFIGlabel_selectlanguage = "Wähle deine Sprache aus:"
 
 CONFIGframe_config = "Einstellungen"
 CONFIGframe_client = "Client Informationen: "
@@ -88,29 +97,34 @@ CONFIGframe_server = "Server Informationen: "
 CONFIGcombo_german = "Deutsch"
 CONFIGcombo_english = "Englisch"
 CONFIGcombo_spanish = "Spanisch"
+CONFIGcombo_swedish = "Schwedisch"
+CONFIGcombo_italian = "Italienisch"
+CONFIGcombo_greek = "Griechisch"
+CONFIGcombo_serbian = "Serbisch"
+CONFIGcombo_russian = "Russisch"
+CONFIGcombo_dutch = "Niederländisch"
+CONFIGcombo_french = "Französisch"
 
-CONFIGmsgbox_nonumeric = "Dein Name kann nicht aus Nummern bestehen."
-CONFIGmsgbox_portnoempty = "Sie haben keinen Port angegeben."
-CONFIGmsgbox_namenoempty = "Sie haben keinen Namen angegeben."
-CONFIGmsgbox_ipnoempty = "Sie haben keine IP angegeben."
+CONFIGmsgbox_nonumeric = "Du kannst keine Ziffern in deinem Namen haben."
+CONFIGmsgbox_portnoempty = "Du hast keinen Port eingeben."
+CONFIGmsgbox_namenoempty = "Du hast keinen Namen eingeben."
+CONFIGmsgbox_ipnoempty = "Du hast keine IP eingeben."
 
-' Chat form ..
 CHATcommand_send = "&Senden"
 CHATcommand_clear = "&Löschen"
 
-CHATtimetext = " Es ist "
+CHATtimetext = " Die Zeit beträgt "
 
-' List form ..
 LISTcaption = "Online Liste"
 LISTcommand_close = "&Schliessen"
 
-' Send File form ..
 SFlabel_filename = " Datei Name:"
 SFlabel_sendingfile = "Sende:"
 SFlabel_sent = "Gesendet"
 
 SFcommand_browse = "&Suchen .."
 SFcommand_sendfile = "Senden"
+SFcommand_cancelsending = "Abbrechen .."
 End Sub
 
 Public Sub SetLangEnglish()
@@ -137,6 +151,7 @@ CONFIGcommand_disconnect = "&Disconnect"
 CONFIGcommand_language = "&Language"
 
 CONFIGlabel_CI_name = "Name: "
+CONFIGlabel_selectlanguage = "Select your language:"
 
 CONFIGframe_config = "Configuration"
 CONFIGframe_client = "Client Information: "
@@ -145,6 +160,13 @@ CONFIGframe_server = "Server Information: "
 CONFIGcombo_german = "German"
 CONFIGcombo_english = "English"
 CONFIGcombo_spanish = "Spanish"
+CONFIGcombo_swedish = "Swedish"
+CONFIGcombo_italian = "Italian"
+CONFIGcombo_greek = "Greek"
+CONFIGcombo_serbian = "Serbian"
+CONFIGcombo_russian = "Russian"
+CONFIGcombo_dutch = "Dutch"
+CONFIGcombo_french = "French"
 
 CONFIGmsgbox_nonumeric = "You cant take numeric names."
 CONFIGmsgbox_portnoempty = "You didnt introduce a port."
@@ -168,6 +190,7 @@ SFlabel_sent = "Sent"
 
 SFcommand_browse = "&Search .."
 SFcommand_sendfile = "Send"
+SFcommand_cancelsending = "Cancel .."
 End Sub
 
 Public Sub SetLangSpanish()
@@ -194,6 +217,7 @@ CONFIGcommand_disconnect = "&Desconectar"
 CONFIGcommand_language = "&Idioma"
 
 CONFIGlabel_CI_name = "Nombre: "
+CONFIGlabel_selectlanguage = "Elige tu idioma:"
 
 CONFIGframe_config = "Configuración"
 CONFIGframe_client = "Informción del cliente: "
@@ -202,6 +226,13 @@ CONFIGframe_server = "Informción del servidor: "
 CONFIGcombo_german = "Aleman"
 CONFIGcombo_english = "Inglés"
 CONFIGcombo_spanish = "Español"
+CONFIGcombo_swedish = "Sueco"
+CONFIGcombo_italian = "Italiano"
+CONFIGcombo_greek = "Griego"
+CONFIGcombo_serbian = "Serbio"
+CONFIGcombo_russian = "Ruso"
+CONFIGcombo_dutch = "Holandés"
+CONFIGcombo_french = "Francés"
 
 CONFIGmsgbox_nonumeric = "No puedes cojer numeros como nombre."
 CONFIGmsgbox_portnoempty = "No ha introducido ningun puerto."
@@ -225,4 +256,319 @@ SFlabel_sent = "Enviado"
 
 SFcommand_browse = "&Buscar .."
 SFcommand_sendfile = "Enviar"
+SFcommand_cancelsending = "Abortar .."
+End Sub
+
+Public Sub SetLangSwedish()
+' MDI form ..
+MDIcommand_config = "&Inställningar"
+MDIcommand_chat = "Ch&att"
+MDIcommand_sendfile = "&Sänd fil"
+MDIcommand_onlinelist = "&Online Lista"
+
+MDIstatusbar_disconnected = "Status: Frånkopplad"
+MDIstatusbar_dcfromserver = "Status: Koppla ifrån servern"
+MDIstatusbar_connected = "Status: Anslut till "
+MDIstatusbar_connectionproblem = "Status: Avkopplad på grund av anslutningsproblem"
+MDIstatusbar_connecting = "Status: Ansluter till "
+
+'MDImsgbox_errorHandlerFormLoad
+MDImsgbox_config_notify = "Några Konfiguration filer är gamla eller skadade, Peach hittade problemet och det kommer bli reparerat nästa gång du kör programmet."
+MDImsgbox_nametaken = "Namnet är upptaget."
+
+' Config form
+CONFIGcommand_connect = "&Anslut"
+CONFIGcommand_disconnect = "&Frånkoppla"
+CONFIGcommand_language = "&Språk"
+
+CONFIGlabel_CI_name = "Namn: "
+CONFIGlabel_selectlanguage = "Välj språk:"
+
+CONFIGframe_config = "Inställningar"
+CONFIGframe_client = "Användar Information: "
+CONFIGframe_server = "Server Information: "
+
+CONFIGcombo_german = "Tyska"
+CONFIGcombo_english = "Engelska"
+CONFIGcombo_spanish = "Spanska"
+CONFIGcombo_swedish = "Svenska"
+CONFIGcombo_italian = "Italienska"
+CONFIGcombo_greek = "Grekiska"
+CONFIGcombo_serbian = "Serbiska"
+CONFIGcombo_russian = "Ryska"
+CONFIGcombo_dutch = "Holländska"
+CONFIGcombo_french = "Franska"
+
+CONFIGmsgbox_nonumeric = "Du kan inte använda siffror i namnet."
+CONFIGmsgbox_portnoempty = "Du angav inget portnummer."
+CONFIGmsgbox_namenoempty = "Du angav inte ett namn."
+CONFIGmsgbox_ipnoempty = "Du angav inte ett IP."
+
+' Chat form ..
+CHATcommand_send = "&Sänd"
+CHATcommand_clear = "&Rensa"
+
+CHATtimetext = " Tiden är "
+
+' List form ..
+LISTcaption = "Online Lista"
+LISTcommand_close = "&Stäng"
+
+' Send file form ..
+SFlabel_filename = " Fil Namn:"
+SFlabel_sendingfile = "Sänder:"
+SFlabel_sent = "Sänt"
+
+SFcommand_browse = "&Sök .."
+SFcommand_sendfile = "Sänd"
+End Sub
+
+Public Sub SetLangItalian()
+' Mdi form
+MDIcommand_config = "&Configurazione"
+MDIcommand_chat = "Ch&at"
+MDIcommand_sendfile = "&Invia File"
+MDIcommand_onlinelist = "&Lista contatti Online"
+
+MDIstatusbar_disconnected = "Stato: Disconnesso"
+MDIstatusbar_dcfromserver = "Stato: Disconnesso dal Server"
+MDIstatusbar_connected = "Stato: Connesso a "
+MDIstatusbar_connectionproblem = "Stato: Disconnesso a causa di problemi di connessione"
+MDIstatusbar_connecting = "Stato: Connessione a "
+
+'MDImsgbox_errorHandlerFormLoad
+MDImsgbox_config_notify = "Alcuni file della configurazione potrebbero essere obsoleti o danneggiati, Peach ha riscontrato il problema e lo corregera' al prossimo avvio."
+MDImsgbox_nametaken = "Il nome immesso e' gia' in uso."
+
+' Config form ..
+CONFIGcommand_connect = "&Connesso"
+CONFIGcommand_disconnect = "&Disconnesso"
+CONFIGcommand_language = "&Lingua"
+
+CONFIGlabel_CI_name = "Nome: "
+CONFIGlabel_selectlanguage = "Seleziona la tua lingua:"
+
+CONFIGframe_config = "Configurazione"
+CONFIGframe_client = "Informazioni sul Client: "
+CONFIGframe_server = "Informazioni sul Server: "
+
+CONFIGcombo_german = "Tedesco"
+CONFIGcombo_english = "Inglese"
+CONFIGcombo_spanish = "Spagnolo"
+CONFIGcombo_swedish = "Svedese"
+CONFIGcombo_italian = "Italiano"
+CONFIGcombo_greek = "Greco"
+CONFIGcombo_serbian = "Serbo"
+CONFIGcombo_russian = "Russo"
+CONFIGcombo_dutch = "Olandese"
+CONFIGcombo_french = "Francese"
+
+CONFIGmsgbox_nonumeric = "Non puoi immettere nomi composti da numeri."
+CONFIGmsgbox_portnoempty = "Non hai selezionato una porta valida."
+CONFIGmsgbox_namenoempty = "Non hai immesso un Nome utente."
+CONFIGmsgbox_ipnoempty = "Non hai immesso un IP."
+
+' Chat form ..
+CHATcommand_send = "&Invia"
+CHATcommand_clear = "&Clear"
+
+CHATtimetext = " L'ora e' "
+
+' List form ..
+LISTcaption = "Lista Online"
+LISTcommand_close = "&Chiudi"
+
+' Send file form ..
+SFlabel_filename = " Nome file:"
+SFlabel_sendingfile = "Inviando:"
+SFlabel_sent = "Inviato"
+
+SFcommand_browse = "&Cerca .."
+SFcommand_sendfile = "Invia"
+SFcommand_cancelsending = "Annulla .."
+End Sub
+
+Public Sub SetLangSerbian()
+' Mdi form ..
+MDIcommand_config = "&Konfiguracija"
+MDIcommand_chat = "Ch&at"
+MDIcommand_sendfile = "&Slanje fajla"
+MDIcommand_onlinelist = "&Onlajn lista"
+
+MDIstatusbar_disconnected = "Status: Veza je prekinuta"
+MDIstatusbar_dcfromserver = "Status: veza sa serverom je prekinuta"
+MDIstatusbar_connected = "Status: Povezi se "
+MDIstatusbar_connectionproblem = "Status: Problem sa konekcijom veza je prekinuta "
+MDIstatusbar_connecting = "Status: Povezi se "
+
+'MDImsgbox_errorHandlerFormLoad
+MDImsgbox_config_notify = "Datoteka konfigurac. Je zastarela ili ostecena, problem ce biti pronadjen i popravljen sledecim pokretanjem programa."
+MDImsgbox_nametaken = "Ime je vec zauzeto."
+
+' Config form ..
+CONFIGcommand_connect = "&Povezi se"
+CONFIGcommand_disconnect = "&Veza je prekinuta"
+CONFIGcommand_language = "&Jezik"
+
+CONFIGlabel_CI_name = "Ime :"
+CONFIGlabel_selectlanguage = "Dodaj svoj jezik:"
+
+CONFIGframe_config = "Konfiguracija"
+CONFIGframe_client = "Client informacije: "
+CONFIGframe_server = "Server informacije: "
+
+CONFIGcombo_german = "Nemacki"
+CONFIGcombo_english = "Engleski"
+CONFIGcombo_spanish = "Spanski"
+CONFIGcombo_swedish = "Svedski"
+CONFIGcombo_italian = "Italijanski"
+CONFIGcombo_greek = "Crcki"
+CONFIGcombo_serbian = "Srpski"
+CONFIGcombo_russian = "Ruski"
+CONFIGcombo_dutch = "Holandski"
+CONFIGcombo_french = "Francuski"
+
+CONFIGmsgbox_nonumeric = "Ne mozete uzeti numericka imena."
+CONFIGmsgbox_portnoempty = "Niste uneli port."
+CONFIGmsgbox_namenoempty = "Niste uneli ime"
+CONFIGmsgbox_ipnoempty = "Niste uneli IP"
+
+' Chat form ..
+CHATcommand_send = "&Posalji"
+CHATcommand_clear = "&Obrisi"
+
+CHATtimetext = " Vreme je "
+
+' List form ..
+LISTcaption = "Onlajn lista"
+LISTcommand_close = "&Zatvori"
+
+' Send file form ..
+SFlabel_filename = " Ime  arhive:"
+SFlabel_sendingfile = "Slanje:"
+SFlabel_sent = "Poslato "
+
+SFcommand_browse = "Trazi .."
+SFcommand_sendfile = "Posalji"
+SFcommand_cancelsending = "Otkazhi .."
+End Sub
+
+Public Sub SetLangDutch()
+MDIcommand_config = "&Configuratie"
+MDIcommand_chat = "Ch&at"
+MDIcommand_sendfile = "&Bestand Verzenden"
+MDIcommand_onlinelist = "&Online List"
+
+MDIstatusbar_disconnected = "Status: Verbinding verbroken"
+MDIstatusbar_dcfromserver = "Status: verbinding verbroken met de server"
+MDIstatusbar_connected = "Status: verbonden met "
+MDIstatusbar_connectionproblem = "Status: verbinding verbroken wegens connectie problemen"
+MDIstatusbar_connecting = "Status: verbinden met "
+
+'MDImsgbox_errorHandlerFormLoad
+MDImsgbox_config_notify = "Enkele bestanden zijn oud of beschadigd, Peach heeft het probleem gevonden en zal het herstellen bij de volgende herstart."
+MDImsgbox_nametaken = "Deze naam is niet beschikbaar."
+
+CONFIGcommand_connect = "&Verbind"
+CONFIGcommand_disconnect = "&Verbreek de verbinding"
+CONFIGcommand_language = "&Taal"
+
+CONFIGlabel_CI_name = "Naam: "
+CONFIGlabel_selectlanguage = "Selecteer jou taal:"
+
+CONFIGframe_config = "Configuratie"
+CONFIGframe_client = "Client Informatie: "
+CONFIGframe_server = "Server Informatie: "
+
+CONFIGcombo_german = "Duits"
+CONFIGcombo_english = "Engels"
+CONFIGcombo_spanish = "Spaans"
+CONFIGcombo_swedish = "Zweeds"
+CONFIGcombo_italian = "Italiaans"
+CONFIGcombo_greek = "Grieks"
+CONFIGcombo_serbian = "Serbisch"
+CONFIGcombo_russian = "Russisch"
+CONFIGcombo_dutch = "Nederlands"
+CONFIGcombo_french = "Frans"
+
+CONFIGmsgbox_nonumeric = "U kan geen naam nemen dat nummers bevat."
+CONFIGmsgbox_portnoempty = "U hebt geen poort ingesteld."
+CONFIGmsgbox_namenoempty = "U hebt geen naam gegoven."
+CONFIGmsgbox_ipnoempty = "U hebt geen IP gegoven."
+
+CHATcommand_send = "&Zend"
+CHATcommand_clear = "&Leegmaken"
+
+CHATtimetext = " De Tijd is: "
+
+LISTcaption = "Online List"
+LISTcommand_close = "&Sluiten"
+
+SFlabel_filename = " Bestandsnaam:"
+SFlabel_sendingfile = "verZenden:"
+SFlabel_sent = "verzonden"
+
+SFcommand_browse = "&Zoeken .."
+SFcommand_sendfile = "Stuur"
+SFcommand_cancelsending = "Annuleren .."
+End Sub
+
+Public Sub SetLangFrench()
+MDIcommand_config = "&Configuration"
+MDIcommand_chat = "Ch&at"
+MDIcommand_sendfile = "&Envoi File"
+MDIcommand_onlinelist = "&Liste contact Online"
+
+MDIstatusbar_disconnected = "Etat: Deconnecté"
+MDIstatusbar_dcfromserver = "Etat: Deconnecté du Server"
+MDIstatusbar_connected = "Etat: Connecté à "
+MDIstatusbar_connectionproblem = "Etat: Deconnecté à cause de problèmes do connection"
+MDIstatusbar_connecting = "Etat: Connection à "
+
+'MDImsgbox_errorHandlerFormLoad
+MDImsgbox_config_notify = "Quelques files de la configuration pourrait etre daumagés ou obsolète , Peach a trouvé le problème et le corrigerà au prochain envoi."
+MDImsgbox_nametaken = "Le nom inséré est déjà utilizé."
+
+CONFIGcommand_connect = "&Connecté"
+CONFIGcommand_disconnect = "&Deconnecté"
+CONFIGcommand_language = "&Langue"
+
+CONFIGlabel_CI_name = "Nome: "
+CONFIGlabel_selectlanguage = "Choisissez votre langue:"
+
+CONFIGframe_config = "Configuration"
+CONFIGframe_client = "Informations sur Client: "
+CONFIGframe_server = "Informations sur Server: "
+
+CONFIGcombo_german = "Alleman"
+CONFIGcombo_english = "Anglais"
+CONFIGcombo_spanish = "Espagnol"
+CONFIGcombo_swedish = "Suédois"
+CONFIGcombo_italian = "Italien"
+CONFIGcombo_greek = "Grèque"
+CONFIGcombo_serbian = "Serbois"
+CONFIGcombo_russian = "Russe"
+CONFIGcombo_dutch = "Hollandais"
+CONFIGcombo_french = "Français"
+
+CONFIGmsgbox_nonumeric = "Tu ne peut pas insérer noms composé de numeros."
+CONFIGmsgbox_portnoempty = "Tu n'as pas selectionner une porte valide."
+CONFIGmsgbox_namenoempty = "Tu n'as pas innecté un Nom utilizateur."
+CONFIGmsgbox_ipnoempty = "Tu n'as pas innecté un IP."
+
+CHATcommand_send = "&Envoi"
+CHATcommand_clear = "&Clear"
+
+CHATtimetext = " L'heure est "
+
+LISTcaption = "Liste Online"
+LISTcommand_close = "&Ferme"
+
+SFlabel_filename = " Nom file:"
+SFlabel_sendingfile = "Envoyant:"
+SFlabel_sent = "Envoyé"
+
+SFcommand_browse = "&Cherche .."
+SFcommand_sendfile = "Envoi"
+SFcommand_cancelsending = "Annuler .."
 End Sub

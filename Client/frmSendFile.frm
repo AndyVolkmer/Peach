@@ -3,7 +3,7 @@ Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.OCX"
 Begin VB.Form frmSendFile 
    Appearance      =   0  'Flat
-   BackColor       =   &H8000000C&
+   BackColor       =   &H80000004&
    BorderStyle     =   0  'None
    Caption         =   "frmSendFile"
    ClientHeight    =   3735
@@ -147,7 +147,7 @@ Begin VB.Form frmSendFile
    End
    Begin VB.Label Label2 
       AutoSize        =   -1  'True
-      BackColor       =   &H8000000C&
+      BackColor       =   &H80000004&
       Caption         =   "Remote Connection:"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -158,7 +158,7 @@ Begin VB.Form frmSendFile
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H00000000&
       Height          =   195
       Left            =   120
       TabIndex        =   11
@@ -168,7 +168,7 @@ Begin VB.Form frmSendFile
    End
    Begin VB.Label Label3 
       AutoSize        =   -1  'True
-      BackColor       =   &H8000000C&
+      BackColor       =   &H80000004&
       Caption         =   "Remote Port:"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -179,7 +179,7 @@ Begin VB.Form frmSendFile
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H00000000&
       Height          =   195
       Left            =   2280
       TabIndex        =   10
@@ -189,7 +189,7 @@ Begin VB.Form frmSendFile
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
-      BackColor       =   &H8000000C&
+      BackColor       =   &H80000004&
       Caption         =   "File Name:"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -200,7 +200,7 @@ Begin VB.Form frmSendFile
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H00000000&
       Height          =   195
       Left            =   120
       TabIndex        =   9
@@ -216,7 +216,7 @@ Begin VB.Form frmSendFile
    End
    Begin VB.Label lblFileToSend 
       AutoSize        =   -1  'True
-      BackColor       =   &H8000000C&
+      BackColor       =   &H80000004&
       Caption         =   "Sending File:"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -227,7 +227,7 @@ Begin VB.Form frmSendFile
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H00000000&
       Height          =   195
       Left            =   120
       TabIndex        =   5
@@ -236,7 +236,7 @@ Begin VB.Form frmSendFile
    End
    Begin VB.Label lblProgress 
       AutoSize        =   -1  'True
-      BackColor       =   &H8000000C&
+      BackColor       =   &H80000004&
       Caption         =   "0.0% Sent"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -247,7 +247,7 @@ Begin VB.Form frmSendFile
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H00000000&
       Height          =   195
       Left            =   1080
       TabIndex        =   4
@@ -257,7 +257,7 @@ Begin VB.Form frmSendFile
    Begin VB.Label lblSendSpeed 
       Alignment       =   1  'Right Justify
       AutoSize        =   -1  'True
-      BackColor       =   &H8000000C&
+      BackColor       =   &H80000004&
       Caption         =   "0.00 Kb/Sec"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -268,7 +268,7 @@ Begin VB.Form frmSendFile
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H00000000&
       Height          =   195
       Left            =   6405
       TabIndex        =   3
@@ -315,17 +315,17 @@ Private Sub PicShowPercentage(pic As PictureBox, ByVal Percentage As Single, Opt
 End Sub
 
 Private Sub cmdSendFile_Click()
-    If cmdSendFile.Caption = "&Send File" Then
+    If cmdSendFile.Caption = SFcommand_sendfile Then
         If Len(txtFileName.Text) > 0 Then
             If Len(Dir(txtFileName.Text, vbNormal + vbArchive)) > 0 Then
-                cmdSendFile.Caption = "&Cancel Sending..."
+                cmdSendFile.Caption = SFcommand_cancelsending
                 
                 SendFile txtFileName.Text
             End If
         End If
     Else
         SckSendFile_Close
-        cmdSendFile.Caption = "&Send File"
+        cmdSendFile.Caption = SFcommand_sendfile
     End If
 End Sub
 
@@ -365,9 +365,9 @@ Private Sub SckSendFile_Close()
     
     SckSendFile.Close
     
-    cmdSendFile.Caption = "&Send File"
+    cmdSendFile.Caption = SFcommand_sendfile
     PicShowPercentage Me.picProgress, 0
-    lblProgress.Caption = "0.00% Done"
+    lblProgress.Caption = "0.00% " & SFlabel_sent
 End Sub
 
 Private Sub SckSendFile_Connect()

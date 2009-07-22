@@ -3,7 +3,7 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Object = "{342261DD-4D19-481B-8BF9-F24E643D0C20}#2.0#0"; "Hyperlink.ocx"
 Begin VB.MDIForm frmMain 
-   BackColor       =   &H8000000C&
+   BackColor       =   &H80000004&
    Caption         =   " Peach (Client)"
    ClientHeight    =   5085
    ClientLeft      =   60
@@ -64,7 +64,7 @@ Begin VB.MDIForm frmMain
    Begin VB.PictureBox Picture1 
       Align           =   1  'Align Top
       Appearance      =   0  'Flat
-      BackColor       =   &H8000000C&
+      BackColor       =   &H80000004&
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -195,6 +195,8 @@ Private Declare Function SendMessage2 Lib "user32" Alias "SendMessageA" (ByVal h
 Private Declare Function GetMenuItemCount Lib "user32" (ByVal hMenu As Long) As Long
 Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPosition As Long, ByVal wFlags As Long) As Long
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
+' XP STYLE
+Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Public Prefix       As String
 Public NameText     As String
@@ -232,8 +234,14 @@ With frmList
 End With
 End Sub
 
+Private Sub MDIForm_Initialize()
+' Do XP style :D
+Call InitCommonControls
+End Sub
+
 Public Sub MDIForm_Load()
 On Error GoTo HandleErrorFile
+
 Dim TSSO As TypeSSO
 TSSO = ReadConfigFile(App.Path & "\bin.conf")
 
@@ -284,10 +292,10 @@ End Select
 End Sub
 
 
-Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim msg As Long
 Dim sFilter As String
-msg = x / Screen.TwipsPerPixelX
+msg = X / Screen.TwipsPerPixelX
 Select Case msg
 Case WM_LBUTTONDOWN
 Case WM_LBUTTONUP
@@ -313,6 +321,8 @@ End Sub
 Private Sub MDIForm_Unload(Cancel As Integer)
     Unload frmList
     Unload frmLanguage
+    Unload frmBlank
+    Unload frmDESP
 Shell_NotifyIcon NIM_DELETE, nid ' del tray icon
 End Sub
 
