@@ -74,6 +74,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -99,8 +100,8 @@ Private Sub cmdSend_Click()
 frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 
 Select Case txtToSend.Text
-Case "", " ", "  ", "    "
-    MsgBox "Nothing inserted!", vbInformation
+Case "", " ", "  ", "   ", "    ", "      ", "       "
+    Exit Sub
 Case Trim("!time"), Trim("!Time"), Trim("!TIME")
     txtConver.Text = txtConver.Text & vbCrLf & frmMain.Prefix & CHATtimetext & Format(Time, "hh:nn")
 Case Trim("!online"), Trim("!Online"), Trim("!ONLINE")
@@ -156,8 +157,8 @@ Private Sub txtConver_Click()
 frmMain.Hyperlink1.URLLaunch
 End Sub
 
-Private Sub txtConver_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
-frmMain.Hyperlink1.RichWordOver Me, txtConver, x, y
+Private Sub txtConver_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+frmMain.Hyperlink1.RichWordOver Me, txtConver, X, Y
 End Sub
 
 Private Sub txtToSend_KeyPress(KeyAscii As Integer)

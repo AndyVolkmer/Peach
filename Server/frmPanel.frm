@@ -24,6 +24,14 @@ Begin VB.Form frmPanel
    ScaleHeight     =   3330
    ScaleWidth      =   7515
    ShowInTaskbar   =   0   'False
+   Begin VB.ListBox List1 
+      Height          =   1425
+      Left            =   4800
+      TabIndex        =   5
+      Top             =   1200
+      Visible         =   0   'False
+      Width           =   2055
+   End
    Begin VB.TextBox Text2 
       Alignment       =   2  'Center
       Height          =   285
@@ -144,6 +152,7 @@ Private Sub Form_Load()
 Me.Top = "0"
 Me.Left = "0"
 Text1.SelStart = Len(Text1.Text)
+AddBadWordsToList
 End Sub
 
 Private Sub ListView1_ItemClick(ByVal Item As MSComctlLib.ListItem)
@@ -152,4 +161,24 @@ End Sub
 
 Private Sub Text2_KeyPress(KeyAscii As Integer)
     If KeyAscii = vbKeyReturn Then Command2_Click
+End Sub
+
+Private Sub AddBadWordsToList()
+With List1
+    .AddItem "Cunt"
+    .AddItem "Penis"
+    .AddItem "Defaultnick"
+    .AddItem "God"
+    .AddItem "Retard"
+    .AddItem "Nickname"
+    .AddItem "Vagina"
+    .AddItem "Schwanz"
+    .AddItem "Kurac"
+    .AddItem "Noob"
+    .AddItem "Pizda"
+    .AddItem "Fjortis"
+    .AddItem "Dick"
+    .AddItem "Porno"
+    .AddItem "Porn"
+End With
 End Sub

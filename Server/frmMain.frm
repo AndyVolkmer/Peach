@@ -319,6 +319,14 @@ Case "!connected" ' Announce connected player and send to user online list
     UpdateUsersList
     
 Case "!namerequest" ' Check if the name is avaible or not
+    ' Check badname list ..
+    For u = 0 To frmPanel.List1.ListCount
+        If UCase(frmPanel.List1.List(u)) = UCase(frmMain.NameText) Then
+            bMatch = True
+            Exit For
+        End If
+    Next u
+    ' Check current online list
     For u = 1 To frmPanel.ListView1.ListItems.Count
         If UCase(frmPanel.ListView1.ListItems.Item(u)) = UCase(frmMain.NameText) Then
             bMatch = True

@@ -4,10 +4,10 @@ Begin VB.Form frmDESP
    BackColor       =   &H80000004&
    BorderStyle     =   0  'None
    Caption         =   "frmDESP"
-   ClientHeight    =   1650
+   ClientHeight    =   2040
    ClientLeft      =   4140
    ClientTop       =   5130
-   ClientWidth     =   2775
+   ClientWidth     =   3360
    FillColor       =   &H00FFFFFF&
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -20,23 +20,23 @@ Begin VB.Form frmDESP
    EndProperty
    LinkTopic       =   "frmDESP"
    PaletteMode     =   1  'UseZOrder
-   ScaleHeight     =   110
+   ScaleHeight     =   136
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   185
+   ScaleWidth      =   224
    ShowInTaskbar   =   0   'False
+   Begin menudesp.menudes menudes1 
+      Height          =   1695
+      Left            =   0
+      TabIndex        =   0
+      Top             =   0
+      Width           =   2850
+      _ExtentX        =   5027
+      _ExtentY        =   2990
+   End
    Begin VB.Timer stopTimer 
       Enabled         =   0   'False
       Left            =   120
       Top             =   1200
-   End
-   Begin menudesp.menudes menudes1 
-      Height          =   2055
-      Left            =   -10
-      TabIndex        =   0
-      Top             =   -40
-      Width           =   2790
-      _ExtentX        =   4921
-      _ExtentY        =   3625
    End
 End
 Attribute VB_Name = "frmDESP"

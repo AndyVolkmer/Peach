@@ -59,7 +59,7 @@ Attribute VB_Exposed = False
 Dim N       As String
 Dim M       As String
 Dim TSSO2   As TypeSSO2
-' XP STYLE
+
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Private Sub cmdEnter_Click()
@@ -328,6 +328,7 @@ Else
         .AddItem "Serbian"
         .AddItem "French"
         .ListIndex = 1
+        SetLangEnglish
         M = .ListIndex
     End With
 End If
