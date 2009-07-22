@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmPanel 
-   BackColor       =   &H8000000C&
+   BackColor       =   &H80000004&
    BorderStyle     =   0  'None
    Caption         =   "frmPanel"
    ClientHeight    =   3330
@@ -132,13 +132,13 @@ Private Sub Command1_Click()
 End Sub
 
 Private Sub Command2_Click()
-Dim i, pos  As Integer
+Dim i, Pos  As Integer
 For i = 1 To ListView1.ListItems.Count
     ListView1.ListItems.Item(i).Selected = False
 Next
 For i = 1 To ListView1.ListItems.Count
-    pos = InStr(1, ListView1.ListItems.Item(i), Text2, vbTextCompare)
-    If pos > 0 Then
+    Pos = InStr(1, ListView1.ListItems.Item(i), Text2, vbTextCompare)
+    If Pos > 0 Then
 '        If ListView1.ListItems.Item(i) = Text2.Text Then
             ListView1.SelectedItem = ListView1.ListItems.Item(i)
 

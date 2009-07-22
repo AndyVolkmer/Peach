@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmSendFile 
-   BackColor       =   &H8000000C&
+   BackColor       =   &H80000004&
    BorderStyle     =   0  'None
    Caption         =   "frmSendFile"
    ClientHeight    =   4065

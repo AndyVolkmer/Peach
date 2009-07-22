@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.MDIForm frmMain 
-   BackColor       =   &H8000000C&
+   BackColor       =   &H80000004&
    Caption         =   " Peach (Server)"
    ClientHeight    =   5085
    ClientLeft      =   60
@@ -49,7 +49,7 @@ Begin VB.MDIForm frmMain
    End
    Begin VB.PictureBox Picture1 
       Align           =   1  'Align Top
-      BackColor       =   &H8000000C&
+      BackColor       =   &H80000004&
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -179,6 +179,7 @@ Private Declare Function SendMessage2 Lib "user32" Alias "SendMessageA" (ByVal h
 Private Declare Function GetMenuItemCount Lib "user32" (ByVal hMenu As Long) As Long
 Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPosition As Long, ByVal wFlags As Long) As Long
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
+Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Public Prefix       As String
 Public Command      As String
@@ -210,6 +211,10 @@ Private Sub Command4_Click()
     SetupForms frmPanel
 End Sub
 
+
+Private Sub MDIForm_Initialize()
+Call InitCommonControls
+End Sub
 
 Private Sub MDIForm_Load()
 DisableFormResize Me
