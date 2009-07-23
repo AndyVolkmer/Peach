@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{E9260B1F-3B85-11D8-8579-000C7641C3F2}#40.0#0"; "menudesp.ocx"
 Begin VB.Form frmDESP 
-   BackColor       =   &H80000004&
+   BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    Caption         =   "frmDESP"
    ClientHeight    =   2040

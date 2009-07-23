@@ -3,7 +3,7 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Object = "{342261DD-4D19-481B-8BF9-F24E643D0C20}#2.0#0"; "Hyperlink.ocx"
 Begin VB.MDIForm frmMain 
-   BackColor       =   &H80000004&
+   BackColor       =   &H00F4F4F4&
    Caption         =   " Peach (Client)"
    ClientHeight    =   5085
    ClientLeft      =   60
@@ -54,7 +54,6 @@ Begin VB.MDIForm frmMain
       EndProperty
    End
    Begin MSWinsockLib.Winsock Winsock1 
-      Index           =   0
       Left            =   0
       Top             =   600
       _ExtentX        =   741
@@ -64,7 +63,7 @@ Begin VB.MDIForm frmMain
    Begin VB.PictureBox Picture1 
       Align           =   1  'Align Top
       Appearance      =   0  'Flat
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -334,10 +333,10 @@ With frmList
 End With
 End Sub
 
-Private Sub Winsock1_Close(Index As Integer)
+Private Sub Winsock1_Close()
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 
-Winsock1(0).Close
+Winsock1.Close
 StatusBar1.Panels(1).Text = MDIstatusbar_dcfromserver
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: You got disconnected from Server."
 frmList.List1.Clear
@@ -357,10 +356,9 @@ With frmChat
     .cmdClear.Enabled = False
     .txtToSend.Enabled = False
 End With
-
 End Sub
 
-Private Sub Winsock1_Connect(Index As Integer)
+Private Sub Winsock1_Connect()
 ' Send request to check if name is avaible
 SendMessage "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
 End Sub
@@ -389,40 +387,40 @@ MsgBox MDImsgbox_nametaken, vbInformation
 End Sub
 
 
-Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
+Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Dim Command         As String
 Dim arr()           As String
 Dim i               As Integer
 Dim Message         As String
-    'We get the message
-    Winsock1(Index).GetData Message
+'We get the message
+Winsock1.GetData Message
+
+'We decode (split) the message into an array
+arr = Split(Message, "#")
     
-    'We decode (split) the message into an array
-    arr = Split(Message, "#")
-        
-    'Assign the variables to the array
-    Command = arr(0)
-    
-    Select Case Command
-    Case "!decilineD" ' We cannot login ( choose other name )
-        ConnectIsFalse
-    Case "!accepteD" ' We can login
-        ConnectIsTrue
-    Case "!listupdate" ' Update the list
-        frmList.List1.Clear
-        For i = LBound(arr) + 1 To UBound(arr) - 1
-                frmList.List1.AddItem arr(i)
-        Next i
-    Case Else ' Normal message
-        frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
-    End Select
+'Assign the variables to the array
+Command = arr(0)
+
+Select Case Command
+Case "!decilineD" ' We cannot login ( choose other name )
+    ConnectIsFalse
+Case "!accepteD" ' We can login
+    ConnectIsTrue
+Case "!listupdate" ' Update the list
+    frmList.List1.Clear
+    For i = LBound(arr) + 1 To UBound(arr) - 1
+            frmList.List1.AddItem arr(i)
+    Next i
+Case Else ' Normal message
+    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
+End Select
 End Sub
 
-Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
+Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 
-Winsock1(Index).Close
+Winsock1.Close
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: Disconnected due connection problem."
 StatusBar1.Panels(1).Text = MDIstatusbar_connectionproblem
 frmList.List1.Clear

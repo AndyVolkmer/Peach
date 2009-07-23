@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form frmList 
-   BackColor       =   &H80000004&
+   BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Online List"
    ClientHeight    =   3780
@@ -52,7 +52,7 @@ Begin VB.Form frmList
       Width           =   3495
    End
    Begin VB.Label Label1 
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "Online Users : "
       ForeColor       =   &H00000000&
       Height          =   255

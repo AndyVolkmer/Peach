@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin VB.Form frmConfig 
    Appearance      =   0  'Flat
-   BackColor       =   &H80000004&
+   BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    Caption         =   "frmConfig"
    ClientHeight    =   4185
@@ -23,7 +23,7 @@ Begin VB.Form frmConfig
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
    Begin VB.Frame Frame3 
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "Server Information:"
       ForeColor       =   &H00000000&
       Height          =   975
@@ -32,7 +32,7 @@ Begin VB.Form frmConfig
       Top             =   360
       Width           =   3015
       Begin VB.Label Label5 
-         BackColor       =   &H80000004&
+         BackColor       =   &H00F4F4F4&
          Caption         =   "IP: "
          ForeColor       =   &H00000000&
          Height          =   255
@@ -42,7 +42,7 @@ Begin VB.Form frmConfig
          Width           =   2175
       End
       Begin VB.Label Label6 
-         BackColor       =   &H80000004&
+         BackColor       =   &H00F4F4F4&
          Caption         =   "Port: "
          ForeColor       =   &H00000000&
          Height          =   255
@@ -53,7 +53,7 @@ Begin VB.Form frmConfig
       End
    End
    Begin VB.Frame Frame2 
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "Client Information:"
       ForeColor       =   &H00000000&
       Height          =   975
@@ -62,7 +62,7 @@ Begin VB.Form frmConfig
       Top             =   360
       Width           =   3015
       Begin VB.Label Label3 
-         BackColor       =   &H80000004&
+         BackColor       =   &H00F4F4F4&
          Caption         =   "IP: "
          ForeColor       =   &H00000000&
          Height          =   255
@@ -72,7 +72,7 @@ Begin VB.Form frmConfig
          Width           =   2175
       End
       Begin VB.Label Label4 
-         BackColor       =   &H80000004&
+         BackColor       =   &H00F4F4F4&
          Caption         =   "Name: "
          ForeColor       =   &H00000000&
          Height          =   255
@@ -83,6 +83,7 @@ Begin VB.Form frmConfig
       End
    End
    Begin VB.CommandButton Command2 
+      BackColor       =   &H00F4F4F4&
       Caption         =   "&Disconnect"
       Enabled         =   0   'False
       Height          =   375
@@ -92,6 +93,7 @@ Begin VB.Form frmConfig
       Width           =   1575
    End
    Begin VB.CommandButton Command3 
+      BackColor       =   &H00F4F4F4&
       Caption         =   "&Language"
       Height          =   375
       Left            =   120
@@ -100,6 +102,7 @@ Begin VB.Form frmConfig
       Width           =   1335
    End
    Begin VB.CommandButton Command1 
+      BackColor       =   &H00F4F4F4&
       Caption         =   "&Connect"
       Height          =   375
       Left            =   4200
@@ -108,7 +111,7 @@ Begin VB.Form frmConfig
       Width           =   1575
    End
    Begin VB.Frame Frame1 
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "Configuration"
       ForeColor       =   &H00000000&
       Height          =   2175
@@ -143,7 +146,7 @@ Begin VB.Form frmConfig
          Width           =   1575
       End
       Begin VB.Label Label1 
-         BackColor       =   &H80000004&
+         BackColor       =   &H00F4F4F4&
          Caption         =   " Port:"
          ForeColor       =   &H00000000&
          Height          =   255
@@ -153,7 +156,7 @@ Begin VB.Form frmConfig
          Width           =   975
       End
       Begin VB.Label Label2 
-         BackColor       =   &H80000004&
+         BackColor       =   &H00F4F4F4&
          Caption         =   " IP:"
          ForeColor       =   &H00000000&
          Height          =   255
@@ -163,7 +166,7 @@ Begin VB.Form frmConfig
          Width           =   975
       End
       Begin VB.Label lblNick 
-         BackColor       =   &H80000004&
+         BackColor       =   &H00F4F4F4&
          Caption         =   " Nickname:"
          ForeColor       =   &H00000000&
          Height          =   255
@@ -174,8 +177,8 @@ Begin VB.Form frmConfig
       End
    End
    Begin VB.Label Label8 
-      BackColor       =   &H80000004&
-      Caption         =   "Version : 1.0.2.1"
+      BackColor       =   &H00F4F4F4&
+      Caption         =   "Version : 1.0.2.2"
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
@@ -184,7 +187,7 @@ Begin VB.Form frmConfig
       Width           =   1335
    End
    Begin VB.Label Label7 
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "Author : Notron"
       ForeColor       =   &H8000000C&
       Height          =   255
@@ -243,7 +246,7 @@ End If
 txtNick.Text = StrConv(txtNick.Text, vbProperCase)
 
 ' Connect winsocks
-With frmMain.Winsock1(0)
+With frmMain.Winsock1
     .RemotePort = txtPort.Text
     .RemoteHost = txtIP.Text
     .Connect
@@ -295,7 +298,7 @@ frmList.List1.Clear
 
 ' Close connection
 With frmMain
-    .Winsock1(0).Close
+    .Winsock1.Close
     .StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
 End With
 End Sub
@@ -329,13 +332,13 @@ With Me
     .Command1.Caption = CONFIGcommand_connect
     .Command2.Caption = CONFIGcommand_disconnect
     .Command3.Caption = CONFIGcommand_language
-    .Label4.Caption = CONFIGlabel_CI_name & frmMain.Winsock1(0).LocalHostName
+    .Label4.Caption = CONFIGlabel_CI_name & frmMain.Winsock1.LocalHostName
     .Frame1.Caption = CONFIGframe_config
     .Frame2.Caption = CONFIGframe_client
     .Frame3.Caption = CONFIGframe_server
     .lblNick = CONFIGlabel_CI_name
-    .Label3.Caption = "IP: " & frmMain.Winsock1(0).LocalIP
-    .Label4.Caption = "Name: " & frmMain.Winsock1(0).LocalHostName
+    .Label3.Caption = "IP: " & frmMain.Winsock1.LocalIP
+    .Label4.Caption = "Name: " & frmMain.Winsock1.LocalHostName
 End With
 
 With TSSO
@@ -343,7 +346,6 @@ With TSSO
     txtIP.Text = Trim(TSSO.ConnectIP)
     txtPort.Text = Trim(TSSO.Port)
 End With
-
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

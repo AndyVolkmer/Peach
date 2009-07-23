@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.OCX"
 Begin VB.Form frmChat 
    Appearance      =   0  'Flat
-   BackColor       =   &H80000004&
+   BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    Caption         =   "frmChat"
    ClientHeight    =   3810
@@ -74,7 +74,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -141,16 +140,14 @@ End Sub
 Private Sub txtConver_Change()
 Dim hWnd1 As Long
 hWnd1 = GetActiveWindow
-If frmMain.WindowState = vbMinimized Then
-    Call FlashTitle(frmMain.hwnd, True)
-Else
-    If hWnd1 = frmMain.hwnd Then
+With frmMain
+    If hWnd1 = .hwnd Then
     Else
-        Call FlashTitle(frmMain.hwnd, True)
+        Call FlashTitle(.hwnd, True)
     End If
-End If
-frmMain.Hyperlink1.URLFormat txtConver
-txtConver.SelStart = Len(txtConver)
+    .Hyperlink1.URLFormat txtConver
+End With
+txtConver.SelStart = Len(txtConver.Text)
 End Sub
 
 Private Sub txtConver_Click()

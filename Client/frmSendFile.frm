@@ -3,7 +3,7 @@ Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.OCX"
 Begin VB.Form frmSendFile 
    Appearance      =   0  'Flat
-   BackColor       =   &H80000004&
+   BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    Caption         =   "frmSendFile"
    ClientHeight    =   3735
@@ -147,7 +147,7 @@ Begin VB.Form frmSendFile
    End
    Begin VB.Label Label2 
       AutoSize        =   -1  'True
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "Remote Connection:"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -168,7 +168,7 @@ Begin VB.Form frmSendFile
    End
    Begin VB.Label Label3 
       AutoSize        =   -1  'True
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "Remote Port:"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -189,7 +189,7 @@ Begin VB.Form frmSendFile
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "File Name:"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -216,7 +216,7 @@ Begin VB.Form frmSendFile
    End
    Begin VB.Label lblFileToSend 
       AutoSize        =   -1  'True
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "Sending File:"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -236,7 +236,7 @@ Begin VB.Form frmSendFile
    End
    Begin VB.Label lblProgress 
       AutoSize        =   -1  'True
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "0.0% Sent"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -257,7 +257,7 @@ Begin VB.Form frmSendFile
    Begin VB.Label lblSendSpeed 
       Alignment       =   1  'Right Justify
       AutoSize        =   -1  'True
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "0.00 Kb/Sec"
       BeginProperty Font 
          Name            =   "Tahoma"

@@ -115,6 +115,10 @@ Attribute VB_Exposed = False
 Private Sub Command1_Click()
     If Text1.Text = "" Then Exit Sub
     If Text1.Text = "0" Then Exit Sub
+    If ListView1.ListItems.Count <= 0 Then
+        Text1.Text = "0"
+        Exit Sub
+    End If
     
     ' Disconnect the socket
     frmMain.Winsock1(Text1.Text).Close

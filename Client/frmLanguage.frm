@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form frmLanguage 
-   BackColor       =   &H80000004&
+   BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Peach (Client)"
    ClientHeight    =   1365
@@ -42,6 +42,7 @@ Begin VB.Form frmLanguage
       Width           =   2415
    End
    Begin VB.Label Label1 
+      BackColor       =   &H00F4F4F4&
       Caption         =   "Select your language :"
       ForeColor       =   &H00000000&
       Height          =   255

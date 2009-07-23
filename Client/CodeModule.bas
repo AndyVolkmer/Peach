@@ -66,12 +66,9 @@ Declare Function GetActiveWindow Lib "user32" () As Long
 Public nid As NOTIFYICONDATA ' trayicon variable
 
 Public Sub SendMessage(iMessage As String)
+If frmMain.Winsock1.State <> 7 Then Exit Sub
 
-If frmMain.Winsock1(0).State = 7 Then
-    frmMain.Winsock1(0).SendData iMessage
-Else
-    MsgBox "Not connected!", vbInformation
-End If
+frmMain.Winsock1.SendData iMessage
 
 End Sub
 
@@ -90,7 +87,6 @@ Public Sub minimize_to_tray()
     nid.szTip = "Peach -  " & frmConfig.txtNick & vbNullChar
     Shell_NotifyIcon NIM_ADD, nid
 End Sub
-'************
 
 Public Sub SetTrans(oForm As Form, Optional bytAlpha As Byte = 255, Optional lColor As Long = 0)
     Dim lStyle As Long
@@ -125,4 +121,3 @@ End Function
 Public Function GetNextWindow(ByVal lhWnd As Long) As Long
     GetNextWindow = GetWindow(lhWnd, GW_HWNDNEXT)
 End Function
-
