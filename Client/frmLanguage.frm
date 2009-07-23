@@ -25,7 +25,7 @@ Begin VB.Form frmLanguage
    ScaleWidth      =   2895
    StartUpPosition =   1  'CenterOwner
    Begin VB.CommandButton cmdEnter 
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "&Enter"
       Height          =   350
       Left            =   1440

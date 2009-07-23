@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form frmConfig 
-   BackColor       =   &H80000004&
+   BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    Caption         =   "frmConfig"
    ClientHeight    =   4140
@@ -47,7 +47,7 @@ Begin VB.Form frmConfig
       Width           =   1215
    End
    Begin VB.Frame Frame1 
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "Configuration"
       ForeColor       =   &H00000000&
       Height          =   2175
@@ -75,7 +75,7 @@ Begin VB.Form frmConfig
          Width           =   1575
       End
       Begin VB.Label Label2 
-         BackColor       =   &H80000004&
+         BackColor       =   &H00F4F4F4&
          Caption         =   "Offline"
          ForeColor       =   &H00000040&
          Height          =   255
@@ -85,7 +85,7 @@ Begin VB.Form frmConfig
          Width           =   3015
       End
       Begin VB.Label Label5 
-         BackColor       =   &H80000004&
+         BackColor       =   &H00F4F4F4&
          Caption         =   "IP : "
          ForeColor       =   &H00000040&
          Height          =   255
@@ -95,7 +95,7 @@ Begin VB.Form frmConfig
          Width           =   2175
       End
       Begin VB.Label Label6 
-         BackColor       =   &H80000004&
+         BackColor       =   &H00F4F4F4&
          Caption         =   "Name : "
          ForeColor       =   &H00000040&
          Height          =   255
@@ -105,7 +105,7 @@ Begin VB.Form frmConfig
          Width           =   2175
       End
       Begin VB.Label Label1 
-         BackColor       =   &H80000004&
+         BackColor       =   &H00F4F4F4&
          Caption         =   "Port :"
          ForeColor       =   &H00000040&
          Height          =   255
@@ -115,7 +115,7 @@ Begin VB.Form frmConfig
          Width           =   975
       End
       Begin VB.Label lblNick 
-         BackColor       =   &H80000004&
+         BackColor       =   &H00F4F4F4&
          Caption         =   "Nickname :"
          ForeColor       =   &H00000040&
          Height          =   255
@@ -126,7 +126,7 @@ Begin VB.Form frmConfig
       End
    End
    Begin VB.Label Label7 
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "Author : Notron"
       ForeColor       =   &H8000000C&
       Height          =   255
@@ -136,8 +136,8 @@ Begin VB.Form frmConfig
       Width           =   1335
    End
    Begin VB.Label Label8 
-      BackColor       =   &H80000004&
-      Caption         =   "Version : 1.0.2.2"
+      BackColor       =   &H00F4F4F4&
+      Caption         =   "Version : 1.0.2.3"
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120

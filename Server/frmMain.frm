@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.MDIForm frmMain 
-   BackColor       =   &H80000004&
+   BackColor       =   &H00F4F4F4&
    Caption         =   " Peach (Server)"
    ClientHeight    =   5085
    ClientLeft      =   60
@@ -49,7 +49,7 @@ Begin VB.MDIForm frmMain
    End
    Begin VB.PictureBox Picture1 
       Align           =   1  'Align Top
-      BackColor       =   &H80000004&
+      BackColor       =   &H00F4F4F4&
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25

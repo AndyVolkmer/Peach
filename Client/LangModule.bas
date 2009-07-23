@@ -195,23 +195,21 @@ End Sub
 
 Public Sub SetLangSpanish()
 
-' MDI form ..
 MDIcommand_config = "&Configuración"
 MDIcommand_chat = "Ch&at"
-MDIcommand_sendfile = "&Enviar archivo"
-MDIcommand_onlinelist = "&Lista de conectados"
+MDIcommand_sendfile = "&Enviar Archivo"
+MDIcommand_onlinelist = "&Lista Online"
 
-MDIstatusbar_disconnected = "Status: Desconectado"
-MDIstatusbar_dcfromserver = "Status: Desconectado del Servidor"
-MDIstatusbar_connected = "Status: Conectado con "
-MDIstatusbar_connectionproblem = "Status: Desconectado por problemas de conexión"
-MDIstatusbar_connecting = "Status: Conectando con "
+MDIstatusbar_disconnected = "Estado: Desconectado"
+MDIstatusbar_dcfromserver = "Estado: Desconectado del servidor"
+MDIstatusbar_connected = "Estado: Disponible "
+MDIstatusbar_connectionproblem = "Estado: Desconectado por problemas de conexión"
+MDIstatusbar_connecting = "Estado: Conectando "
 
 'MDImsgbox_errorHandlerFormLoad
-MDImsgbox_config_notify = "Algunos archivos estaban dañados o borrados, Peach iniciara con datos por defecto."
+MDImsgbox_config_notify = "Alguna configuración de archivos estan caducados o dañados, Peach busca el problema y lo arreglará en el siguiente lanzamiento del programa."
 MDImsgbox_nametaken = "Este nombre ya esta cogido."
 
-' Configuration form ..
 CONFIGcommand_connect = "&Conectar"
 CONFIGcommand_disconnect = "&Desconectar"
 CONFIGcommand_language = "&Idioma"
@@ -220,43 +218,38 @@ CONFIGlabel_CI_name = "Nombre: "
 CONFIGlabel_selectlanguage = "Elige tu idioma:"
 
 CONFIGframe_config = "Configuración"
-CONFIGframe_client = "Informción del cliente: "
-CONFIGframe_server = "Informción del servidor: "
+CONFIGframe_client = "Informacion cliente: "
+CONFIGframe_server = "Informacion servidor: "
 
 CONFIGcombo_german = "Aleman"
 CONFIGcombo_english = "Inglés"
 CONFIGcombo_spanish = "Español"
 CONFIGcombo_swedish = "Sueco"
 CONFIGcombo_italian = "Italiano"
-CONFIGcombo_greek = "Griego"
-CONFIGcombo_serbian = "Serbio"
-CONFIGcombo_russian = "Ruso"
 CONFIGcombo_dutch = "Holandés"
-CONFIGcombo_french = "Francés"
+CONFIGcombo_serbian = "Serbio"
+CONFIGcombo_french = "Frances"
 
-CONFIGmsgbox_nonumeric = "No puedes cojer numeros como nombre."
-CONFIGmsgbox_portnoempty = "No ha introducido ningun puerto."
-CONFIGmsgbox_namenoempty = "No ha introducido ningun nombre."
-CONFIGmsgbox_ipnoempty = "No ha introducido ninguna IP."
+CONFIGmsgbox_nonumeric = "No puedes coger nombres con numeros."
+CONFIGmsgbox_portnoempty = "No has introducido un puerto."
+CONFIGmsgbox_namenoempty = "No has introducido un nombre."
+CONFIGmsgbox_ipnoempty = "No has introducido una direccion."
 
-' Chat form ..
 CHATcommand_send = "&Enviar"
-CHATcommand_clear = "&Borrar"
+CHATcommand_clear = "&Limpiar"
 
-CHATtimetext = " Son las "
+CHATtimetext = " El tiempo es "
 
-' List form ..
-LISTcaption = "Lista de conectados"
+LISTcaption = "Lista Online"
 LISTcommand_close = "&Cerrar"
 
-' Send File form ..
-SFlabel_filename = " Nombre del Archivo:"
+SFlabel_filename = " Nombre del archivo:"
 SFlabel_sendingfile = "Enviando:"
 SFlabel_sent = "Enviado"
 
 SFcommand_browse = "&Buscar .."
 SFcommand_sendfile = "Enviar"
-SFcommand_cancelsending = "Abortar .."
+SFcommand_cancelsending = "Cancelar .."
 End Sub
 
 Public Sub SetLangSwedish()

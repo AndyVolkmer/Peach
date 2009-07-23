@@ -25,13 +25,13 @@ Begin VB.Form frmDESP
    ScaleWidth      =   224
    ShowInTaskbar   =   0   'False
    Begin menudesp.menudes menudes1 
-      Height          =   1935
+      Height          =   2055
       Left            =   0
       TabIndex        =   0
       Top             =   0
-      Width           =   3255
-      _ExtentX        =   5741
-      _ExtentY        =   3413
+      Width           =   3375
+      _ExtentX        =   5953
+      _ExtentY        =   3625
    End
    Begin VB.Timer stopTimer 
       Enabled         =   0   'False
