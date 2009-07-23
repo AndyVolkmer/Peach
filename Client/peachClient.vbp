@@ -17,6 +17,7 @@ Object={342261DD-4D19-481B-8BF9-F24E643D0C20}#2.0#0; Hyperlink.ocx
 Object={E9260B1F-3B85-11D8-8579-000C7641C3F2}#40.0#0; menudesp.ocx
 Form=frmDESP.frm
 Form=frmBlank.frm
+Form=frmAbout.frm
 IconForm="frmMain"
 Startup="frmLanguage"
 HelpFile=""

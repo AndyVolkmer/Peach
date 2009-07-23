@@ -4,7 +4,7 @@ Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Object = "{342261DD-4D19-481B-8BF9-F24E643D0C20}#2.0#0"; "Hyperlink.ocx"
 Begin VB.MDIForm frmMain 
    BackColor       =   &H00F4F4F4&
-   Caption         =   " Peach (Client)"
+   Caption         =   " Peach"
    ClientHeight    =   5085
    ClientLeft      =   60
    ClientTop       =   420
@@ -322,6 +322,7 @@ Private Sub MDIForm_Unload(Cancel As Integer)
     Unload frmLanguage
     Unload frmBlank
     Unload frmDESP
+    Unload frmAbout
 Shell_NotifyIcon NIM_DELETE, nid ' del tray icon
 End Sub
 

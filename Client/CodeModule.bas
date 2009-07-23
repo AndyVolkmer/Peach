@@ -1,15 +1,17 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
+Public Const Rev = "1.0.2.4"
+
 ' Create an Icon in System Tray Needs
 Public Type NOTIFYICONDATA
-cbSize As Long
-hwnd As Long
-uId As Long
-uFlags As Long
-uCallBackMessage As Long
-hIcon As Long
-szTip As String * 64
+cbSize              As Long
+hwnd                As Long
+uId                 As Long
+uFlags              As Long
+uCallBackMessage    As Long
+hIcon               As Long
+szTip               As String * 64
 End Type
 Public Const NIM_ADD = &H0
 Public Const NIM_MODIFY = &H1

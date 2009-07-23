@@ -36,7 +36,7 @@ Begin VB.Form frmDESP
    Begin VB.Timer stopTimer 
       Enabled         =   0   'False
       Left            =   120
-      Top             =   1200
+      Top             =   240
    End
 End
 Attribute VB_Name = "frmDESP"
@@ -68,14 +68,6 @@ Me.Show
 fEvents.Show
 End Sub
 
-Private Sub UserIsOnline(User As String)
-menudes1.Activate User & " is online!", 3, 2, True
-With stopTimer
-    .Interval = 2500
-    .Enabled = True
-End With
-End Sub
-
 Private Sub Form_Unload(Cancel As Integer)
 Unload fEvents
 Set fEvents = Nothing
@@ -83,6 +75,10 @@ End Sub
 
 Public Sub YouAreOnline()
 menudes1.Activate "Hello " & frmConfig.txtNick.Text, 5, 2, False
+With stopTimer
+    .Interval = 3000
+    .Enabled = True
+End With
 End Sub
 
 Private Sub fEvents_Activate()
@@ -97,3 +93,6 @@ Private Sub fEvents_MouseMove(Button As Integer, Shift As Integer, X As Single, 
     If IsOverCtl(Me, X \ Screen.TwipsPerPixelX, Y \ Screen.TwipsPerPixelY) Then Me.SetFocus
 End Sub
 
+Private Sub stopTimer_Timer()
+Unload Me
+End Sub

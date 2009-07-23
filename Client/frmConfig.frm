@@ -178,13 +178,12 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H00F4F4F4&
-      Caption         =   "Version : 1.0.2.3"
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
       TabIndex        =   10
       Top             =   3720
-      Width           =   1335
+      Width           =   1455
    End
    Begin VB.Label Label7 
       BackColor       =   &H00F4F4F4&
@@ -339,6 +338,7 @@ With Me
     .lblNick = CONFIGlabel_CI_name
     .Label3.Caption = "IP: " & frmMain.Winsock1.LocalIP
     .Label4.Caption = "Name: " & frmMain.Winsock1.LocalHostName
+    .Label8.Caption = "Version : " & Rev
 End With
 
 With TSSO
@@ -350,6 +350,14 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
 WriteConfigFile (App.Path & "\bin.conf")
+End Sub
+
+Private Sub Label7_Click()
+frmAbout.Show 1
+End Sub
+
+Private Sub Label8_Click()
+frmAbout.Show 1
 End Sub
 
 Private Sub txtIP_KeyPress(KeyAscii As Integer)

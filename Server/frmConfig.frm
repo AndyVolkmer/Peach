@@ -137,7 +137,6 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label8 
       BackColor       =   &H00F4F4F4&
-      Caption         =   "Version : 1.0.2.3"
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
@@ -239,6 +238,7 @@ Me.Left = 0
 With frmMain
     Label5.Caption = "IP : " & .Winsock1(0).LocalIP
     Label6.Caption = "Name : " & .Winsock1(0).LocalHostName
+    Label8.Caption = "Version : " & Rev
 End With
 
 End Sub

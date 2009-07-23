@@ -1,6 +1,8 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
+Public Const Rev = "1.0.2.4"
+
 Public Sub SendMessage(Message As String)
 Dim WinSk As Winsock
 
@@ -9,7 +11,6 @@ For Each WinSk In frmMain.Winsock1
         WinSk.SendData Message
     End If
 Next
-
 
 End Sub
 
