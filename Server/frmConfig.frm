@@ -168,7 +168,6 @@ frmSendFile.cmdConnect_Click
 With frmMain
     .Winsock1(0).LocalPort = txtPort.Text
     .Winsock1(0).Listen
-' frmMain.StatusBar1.Panels(1).Text = "Status: Waiting for connections .. "
     .StatusBar1.Panels(1).Text = "Status: Connected with  " & .Winsock1.Count - 1 & " Client(s)."
 End With
 
@@ -215,19 +214,15 @@ Label2.Caption = SetTimeFormat(x)
 End Sub
 
 Public Function SetTimeFormat(ByVal TimeValue As Double)
-On Error GoTo errorhandler
-Dim seconds As Integer
+Dim hours As Integer
 Dim mins As Integer
 Dim secs As Integer
 
-    seconds = Fix(TimeValue)
-    mins = Fix(TimeValue / 60)
-    secs = TimeValue - (mins * 60)
-    If secs < 10 Then secs = "0" & secs
-    SetTimeFormat = "Online : " & mins & " minutes " & secs & " seconds"
-    Exit Function
-errorhandler:
-SetTimeFormat = "0:00"
+hours = Fix(TimeValue / 60 / 60)
+mins = Fix(TimeValue / 60)
+secs = TimeValue - (mins * 60)
+
+SetTimeFormat = "Online : " & hours & " hours " & mins & " minutes " & secs & " seconds"
 End Function
 
 Private Sub Form_Load()

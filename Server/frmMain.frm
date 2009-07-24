@@ -256,6 +256,7 @@ RR = frmPanel.ListView1.ListItems.Count + 1
     intCounter = loadSocket
     Winsock1(intCounter).LocalPort = frmConfig.txtPort.Text
     Winsock1(intCounter).Accept requestID
+    
     ' New user should be listed in the panel
     With frmPanel.ListView1
         .ListItems.Add RR, , "N/A"
@@ -310,11 +311,14 @@ With frmMain
     .ConverText = array1(2)
 End With
 
-' Validate: If message is to long then give warn message .. >_>
+' Validate: If message is to long then kick
 If Len(frmMain.ConverText) > 200 Then
-    SendRequest " You cannot spam here with older version!", Winsock1(Index)
-    VisualizeMessage "!spam", frmMain.NameText, "Spamming"
-    Exit Sub
+    VisualizeMessage "!Spam", frmMain.NameText, "Kicked"
+    frmPanel.ListView1.ListItems.Remove (Index) ' Remove from list
+    Winsock1(Index).Close ' Close connection
+    Unload Winsock1(Index) ' Remove socket
+    StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
+    UpdateUsersList
 End If
 
 Select Case frmMain.Command

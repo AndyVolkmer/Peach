@@ -113,26 +113,26 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Command1_Click()
-    If Text1.Text = "" Then Exit Sub
-    If Text1.Text = "0" Then Exit Sub
-    If ListView1.ListItems.Count <= 0 Then
-        Text1.Text = "0"
-        Exit Sub
-    End If
-    
-    ' Disconnect the socket
-    frmMain.Winsock1(Text1.Text).Close
-    Unload frmMain.Winsock1(Text1.Text)
-    
-    ListView1.ListItems.Remove (ListView1.SelectedItem.Index)
-    ' Update clients user online list
-    UpdateUsersList
-    
-    ' Clear entry
+If Text1.Text = "" Then Exit Sub
+If Text1.Text = "0" Then Exit Sub
+If ListView1.ListItems.Count <= 0 Then
     Text1.Text = "0"
-    
-    ' Update Statusbar
-    frmMain.StatusBar1.Panels(1).Text = "Status: Connected with  " & frmMain.Winsock1.Count - 1 & " Client(s)."
+    Exit Sub
+End If
+
+' Disconnect the socket
+frmMain.Winsock1(Text1.Text).Close
+Unload frmMain.Winsock1(Text1.Text)
+
+ListView1.ListItems.Remove (ListView1.SelectedItem.Index)
+' Update clients user online list
+UpdateUsersList
+
+' Clear entry
+Text1.Text = "0"
+
+' Update Statusbar
+frmMain.StatusBar1.Panels(1).Text = "Status: Connected with  " & frmMain.Winsock1.Count - 1 & " Client(s)."
 End Sub
 
 Private Sub Command2_Click()
@@ -143,10 +143,7 @@ Next
 For i = 1 To ListView1.ListItems.Count
     Pos = InStr(1, ListView1.ListItems.Item(i), Text2, vbTextCompare)
     If Pos > 0 Then
-'        If ListView1.ListItems.Item(i) = Text2.Text Then
             ListView1.SelectedItem = ListView1.ListItems.Item(i)
-
-'        End If
     End If
 Next i
 ListView1.SetFocus
@@ -172,6 +169,7 @@ With List1
     .AddItem "Cunt"
     .AddItem "Penis"
     .AddItem "Defaultnick"
+    .AddItem "Nickname"
     .AddItem "God"
     .AddItem "Retard"
     .AddItem "Nickname"

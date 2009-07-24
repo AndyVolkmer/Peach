@@ -24,6 +24,11 @@ Begin VB.Form frmDESP
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   224
    ShowInTaskbar   =   0   'False
+   Begin VB.Timer stopTimer 
+      Enabled         =   0   'False
+      Left            =   1440
+      Top             =   720
+   End
    Begin menudesp.menudes menudes1 
       Height          =   2055
       Left            =   0
@@ -32,11 +37,6 @@ Begin VB.Form frmDESP
       Width           =   3375
       _ExtentX        =   5953
       _ExtentY        =   3625
-   End
-   Begin VB.Timer stopTimer 
-      Enabled         =   0   'False
-      Left            =   120
-      Top             =   240
    End
 End
 Attribute VB_Name = "frmDESP"
@@ -73,8 +73,8 @@ Unload fEvents
 Set fEvents = Nothing
 End Sub
 
-Public Sub YouAreOnline()
-menudes1.Activate "Hello " & frmConfig.txtNick.Text, 5, 2, False
+Public Sub DisplayMessage(Message As String)
+menudes1.Activate Message, 5, 2, False
 With stopTimer
     .Interval = 3000
     .Enabled = True
@@ -91,6 +91,10 @@ End Sub
 
 Private Sub fEvents_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If IsOverCtl(Me, X \ Screen.TwipsPerPixelX, Y \ Screen.TwipsPerPixelY) Then Me.SetFocus
+End Sub
+
+Private Sub menudes1_linkClick()
+If frmMain.WindowState = 1 Then frmMain.Show
 End Sub
 
 Private Sub stopTimer_Timer()

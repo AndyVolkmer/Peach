@@ -279,7 +279,7 @@ Case 13
     With frmConfig
         .txtIP = "0.0.0.0"
         .txtPort = "4728"
-        .txtNick = "DefaultNick"
+        .txtNick = "Nickname"
         .Show
     End With
     With Me
@@ -343,6 +343,7 @@ Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Winsock1.Close
 StatusBar1.Panels(1).Text = MDIstatusbar_dcfromserver
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: You got disconnected from Server."
+frmDESP.DisplayMessage DESPtext_dcserver
 frmList.List1.Clear
 
 ' Do the buttons
@@ -374,10 +375,7 @@ NameText = frmConfig.txtNick
 Message = "!connected" & "#" & NameText & "#"
 SendMessage Message
 
-With frmDESP
-    .Show
-    .YouAreOnline
-End With
+frmDESP.DisplayMessage "Hello " & NameText
 End Sub
 
 Private Sub ConnectIsFalse()
@@ -418,12 +416,12 @@ Case "!listupdate" ' Update the list
     Next i
 Case Else ' Normal message
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
+    If frmMain.WindowState = 1 Then frmDESP.DisplayMessage DESPtext_newmsg
 End Select
 End Sub
 
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
-
 Winsock1.Close
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: Disconnected due connection problem."
 StatusBar1.Panels(1).Text = MDIstatusbar_connectionproblem

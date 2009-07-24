@@ -65,6 +65,10 @@ Public SFcommand_browse                 As String
 Public SFcommand_sendfile               As String
 Public SFcommand_cancelsending          As String
 
+' Desp form ..
+Public DESPtext_newmsg                  As String
+Public DESPtext_dcserver                As String
+
 Public Sub SetLangGerman()
 
 ' MDI form ..
@@ -125,6 +129,9 @@ SFlabel_sent = "Gesendet"
 SFcommand_browse = "&Suchen .."
 SFcommand_sendfile = "Senden"
 SFcommand_cancelsending = "Abbrechen .."
+
+DESPtext_newmsg = "Neue Nachricht!"
+DESPtext_dcserver = "Verbindung unterbrochen!"
 End Sub
 
 Public Sub SetLangEnglish()
@@ -191,6 +198,9 @@ SFlabel_sent = "Sent"
 SFcommand_browse = "&Search .."
 SFcommand_sendfile = "Send"
 SFcommand_cancelsending = "Cancel .."
+
+DESPtext_newmsg = "New Message!"
+DESPtext_dcserver = "Disconnected from Server!"
 End Sub
 
 Public Sub SetLangSpanish()
@@ -250,6 +260,9 @@ SFlabel_sent = "Enviado"
 SFcommand_browse = "&Buscar .."
 SFcommand_sendfile = "Enviar"
 SFcommand_cancelsending = "Cancelar .."
+
+DESPtext_newmsg = "Nuevo mensaje!"
+DESPtext_dcserver = "Desconectado del servidor!"
 End Sub
 
 Public Sub SetLangSwedish()
@@ -314,6 +327,9 @@ SFlabel_sent = "Sänt"
 
 SFcommand_browse = "&Sök .."
 SFcommand_sendfile = "Sänd"
+
+DESPtext_newmsg = "New Message!"
+DESPtext_dcserver = "Koppla ifrån servern!"
 End Sub
 
 Public Sub SetLangItalian()
@@ -379,6 +395,9 @@ SFlabel_sent = "Inviato"
 SFcommand_browse = "&Cerca .."
 SFcommand_sendfile = "Invia"
 SFcommand_cancelsending = "Annulla .."
+
+DESPtext_newmsg = "New Message!"
+DESPtext_dcserver = "Disconnesso dal Server!"
 End Sub
 
 Public Sub SetLangSerbian()
@@ -389,7 +408,7 @@ MDIcommand_sendfile = "&Slanje fajla"
 MDIcommand_onlinelist = "&Onlajn lista"
 
 MDIstatusbar_disconnected = "Status: Veza je prekinuta"
-MDIstatusbar_dcfromserver = "Status: veza sa serverom je prekinuta"
+MDIstatusbar_dcfromserver = "Status: Veza sa serverom je prekinuta"
 MDIstatusbar_connected = "Status: Povezi se "
 MDIstatusbar_connectionproblem = "Status: Problem sa konekcijom veza je prekinuta "
 MDIstatusbar_connecting = "Status: Povezi se "
@@ -444,6 +463,9 @@ SFlabel_sent = "Poslato "
 SFcommand_browse = "Trazi .."
 SFcommand_sendfile = "Posalji"
 SFcommand_cancelsending = "Otkazhi .."
+
+DESPtext_newmsg = "New Message!"
+DESPtext_dcserver = "Veza sa serverom je prekinuta!"
 End Sub
 
 Public Sub SetLangDutch()
@@ -504,6 +526,10 @@ SFlabel_sent = "verzonden"
 SFcommand_browse = "&Zoeken .."
 SFcommand_sendfile = "Stuur"
 SFcommand_cancelsending = "Annuleren .."
+
+DESPtext_newmsg = "New Message!"
+DESPtext_dcserver = "Status: verbinding verbroken met de server"
+DESPtext_dcserver = "Disconnected from Server!"
 End Sub
 
 Public Sub SetLangFrench()
@@ -564,4 +590,7 @@ SFlabel_sent = "Envoyé"
 SFcommand_browse = "&Cherche .."
 SFcommand_sendfile = "Envoi"
 SFcommand_cancelsending = "Annuler .."
+
+DESPtext_newmsg = "New Message!"
+DESPtext_dcserver = "Deconnecté du Server"
 End Sub
