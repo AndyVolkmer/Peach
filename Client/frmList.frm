@@ -72,9 +72,8 @@ frmMain.UpdateListPosition.Enabled = False
 frmList.Hide
 End Sub
 
-Public Sub Form_Load()
-Me.Caption = LISTcaption
-Command1.Caption = LISTcommand_close
+Private Sub Form_Load()
+LoadListForm
 End Sub
 
 Private Sub Form_Resize()
@@ -84,3 +83,7 @@ If Not frmMain.WindowState = vbMinimized Then
 End If
 End Sub
 
+Public Sub LoadListForm()
+Me.Caption = LISTcaption
+Command1.Caption = LISTcommand_close
+End Sub

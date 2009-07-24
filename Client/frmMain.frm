@@ -222,7 +222,6 @@ Private Sub Command3_Click()
     SetupForms frmSendFile
 End Sub
 
-
 Private Sub Command4_Click()
 frmMain.UpdateListPosition.Enabled = True
 With frmList
@@ -233,26 +232,23 @@ With frmList
 End With
 End Sub
 
+Public Sub LoadMDIForm()
+Command1.Caption = MDIcommand_config
+Command2.Caption = MDIcommand_chat
+Command3.Caption = MDIcommand_sendfile
+Command4.Caption = MDIcommand_onlinelist
+End Sub
+
 Private Sub MDIForm_Initialize()
 ' Do XP style :D
 Call InitCommonControls
 End Sub
 
-Public Sub MDIForm_Load()
+Private Sub MDIForm_Load()
 On Error GoTo HandleErrorFile
-
 Dim TSSO As TypeSSO
-TSSO = ReadConfigFile(App.Path & "\bin.conf")
 
-With TSSO
-    Me.Top = Trim(.TopPos)
-    Me.Left = Trim(.LeftPos)
-End With
-
-Command1.Caption = MDIcommand_config
-Command2.Caption = MDIcommand_chat
-Command3.Caption = MDIcommand_sendfile
-Command4.Caption = MDIcommand_onlinelist
+LoadMDIForm
 
 DisableFormResize Me
 
@@ -264,6 +260,12 @@ Dim L As Long
 
 StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
 
+TSSO = ReadConfigFile(App.Path & "\bin.conf")
+With TSSO
+    Me.Top = Trim(.TopPos)
+    Me.Left = Trim(.LeftPos)
+End With
+Next1:
 SetupForms frmConfig
 
 Exit Sub
@@ -274,16 +276,17 @@ HandleErrorFile:
 Select Case Err.Number
 Case 13
     MsgBox MDImsgbox_config_notify, vbInformation
-    With Me
-        .Top = 1200
-        .Left = 1200
-    End With
     With frmConfig
         .txtIP = "0.0.0.0"
         .txtPort = "4728"
         .txtNick = "DefaultNick"
         .Show
     End With
+    With Me
+        .Top = 1200
+        .Left = 1200
+    End With
+    GoTo Next1
 Case Else
     MsgBox "Error: " & Err.Number & vbCrLf & "Description: " & Err.Description, vbCritical
     Exit Sub

@@ -322,30 +322,31 @@ End Sub
 
 Public Sub Form_Load()
 Dim TSSO As TypeSSO
-TSSO = ReadConfigFile(App.Path & "\bin.conf")
-
 With Me
     .Top = 0
     .Left = 0
-
-    .Command1.Caption = CONFIGcommand_connect
-    .Command2.Caption = CONFIGcommand_disconnect
-    .Command3.Caption = CONFIGcommand_language
-    .Label4.Caption = CONFIGlabel_CI_name & frmMain.Winsock1.LocalHostName
-    .Frame1.Caption = CONFIGframe_config
-    .Frame2.Caption = CONFIGframe_client
-    .Frame3.Caption = CONFIGframe_server
-    .lblNick = CONFIGlabel_CI_name
     .Label3.Caption = "IP: " & frmMain.Winsock1.LocalIP
     .Label4.Caption = "Name: " & frmMain.Winsock1.LocalHostName
     .Label8.Caption = "Version : " & Rev
 End With
-
+LoadConfigForm
+TSSO = ReadConfigFile(App.Path & "\bin.conf")
 With TSSO
     txtNick.Text = Trim(TSSO.Nickname)
     txtIP.Text = Trim(TSSO.ConnectIP)
     txtPort.Text = Trim(TSSO.Port)
 End With
+End Sub
+
+Public Sub LoadConfigForm()
+Command1.Caption = CONFIGcommand_connect
+Command2.Caption = CONFIGcommand_disconnect
+Command3.Caption = CONFIGcommand_language
+Label4.Caption = CONFIGlabel_CI_name & frmMain.Winsock1.LocalHostName
+Frame1.Caption = CONFIGframe_config
+Frame2.Caption = CONFIGframe_client
+Frame3.Caption = CONFIGframe_server
+lblNick = CONFIGlabel_CI_name
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

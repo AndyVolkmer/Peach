@@ -74,6 +74,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -126,10 +127,12 @@ End Sub
 Public Sub Form_Load()
 Me.Top = 0
 Me.Left = 0
+LoadChatForm
+End Sub
 
+Public Sub LoadChatForm()
 cmdSend.Caption = CHATcommand_send
 cmdClear.Caption = CHATcommand_clear
-
 End Sub
 
 Private Sub cmdClear_Click()

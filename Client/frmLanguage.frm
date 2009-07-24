@@ -90,14 +90,12 @@ Case 7
     SetLangFrench
     M = "7"
 End Select
-
 frmLanguage.Hide
-frmMain.MDIForm_Load
-frmList.Form_Load
-frmConfig.Form_Load
-frmSendFile.Form_Load
-frmChat.Form_Load
-
+frmMain.LoadMDIForm
+frmList.LoadListForm
+frmSendFile.LoadSendFileForm
+frmChat.LoadChatForm
+frmConfig.LoadConfigForm
 WriteConfigFile2 (App.Path & "\validaten.conf")
 End Sub
 
