@@ -94,9 +94,9 @@ Private Sub fEvents_MouseMove(Button As Integer, Shift As Integer, X As Single, 
 End Sub
 
 Private Sub menudes1_linkClick()
-If frmMain.WindowState = 1 Then frmMain.Show
+    If frmMain.WindowState = 1 Then frmMain.Show
 End Sub
 
 Private Sub stopTimer_Timer()
-Unload Me
+    Unload Me
 End Sub

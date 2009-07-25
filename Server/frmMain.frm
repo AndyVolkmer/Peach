@@ -186,6 +186,7 @@ Public Command      As String
 Public NameText     As String
 Public ConverText   As String
 Public Message      As String
+Public ForWho       As String
 Public intCounter   As Integer
 
 Private Sub Command1_Click()
@@ -229,15 +230,12 @@ SetupForms frmConfig
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
-Dim NameOfUser      As String
-Dim x               As Integer
+Dim x As Integer
     Unload Winsock1(Index)
     For x = 1 To frmPanel.ListView1.ListItems.Count + 1
-        ' Give the message to disconnect and reload user list for all clients
+        ' Update user lists ( server and client )
         If frmPanel.ListView1.ListItems.Item(x).SubItems(2) = Index Then
-            
             ' Pick the user
-            NameOfUser = frmPanel.ListView1.ListItems.Item(x)
             frmPanel.ListView1.ListItems.Remove (x)
             
             ' Update Users List
@@ -246,7 +244,6 @@ Dim x               As Integer
             Exit For
         End If
     Next x
-    VisualizeMessage "!disconnect", NameOfUser, "logout"
     StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
@@ -293,6 +290,7 @@ End Function
 '
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
 Dim array1()        As String
+Dim array2()        As String
 Dim strMessage      As String
 Dim RR              As Integer
 Dim bMatch          As Boolean
@@ -313,7 +311,6 @@ End With
 
 ' Validate: If message is to long then kick
 If Len(frmMain.ConverText) > 200 Then
-    VisualizeMessage "!Spam", frmMain.NameText, "Kicked"
     frmPanel.ListView1.ListItems.Remove (Index) ' Remove from list
     Winsock1(Index).Close ' Close connection
     Unload Winsock1(Index) ' Remove socket
@@ -326,7 +323,6 @@ Dim u As Integer
 Case "!connected" ' Announce connected player and send to user online list
     frmPanel.ListView1.ListItems.Item(RR).Text = frmMain.NameText
     UpdateUsersList
-    
 Case "!namerequest" ' Check if the name is avaible or not
     ' Check badname list ..
     For u = 0 To frmPanel.List1.ListCount
@@ -349,7 +345,20 @@ Case "!namerequest" ' Check if the name is avaible or not
     Else
         SendRequest "!accepteD", frmMain.Winsock1(Index)
     End If
+Case "!w"
+    Dim th As Integer
     
+    ' Split name into user name and normal name
+    array2 = Split(frmMain.NameText, "|")
+    frmMain.NameText = array2(0)
+    frmMain.ForWho = array2(1)
+    
+    ' Check in listitems if forwho name is in the list and get the socket id
+    For th = 1 To frmPanel.ListView1.ListItems.Count
+        If frmMain.ForWho = frmPanel.ListView1.ListItems.Item(th) Then
+            SendRequest " [" & frmMain.NameText & "] whispers: " & frmMain.ConverText, frmMain.Winsock1(frmPanel.ListView1.ListItems.Item(th).SubItems(2))
+        End If
+    Next th
 Case Else
     SendMessage " [" & frmMain.NameText & "] : " & frmMain.ConverText
 End Select
@@ -361,22 +370,14 @@ End Sub
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Dim i As Integer
 frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
-If Index < 0 Then
-    Winsock1(Index).Close
-    Unload Winsock1(Index)
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & " [System]: Disconnected with a host."
-    For i = 1 To frmPanel.ListView1.ListItems.Count
-        frmPanel.ListView1.ListItems.Remove (i)
-    Next i
-Else
-    Winsock1(Index).Close
-    Unload Winsock1(Index)
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & "[System]: Disconnected due connection problem."
-    StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
-    For i = 1 To frmPanel.ListView1.ListItems.Count
-        frmPanel.ListView1.ListItems.Remove (i)
-    Next
-End If
+
+Winsock1(Index).Close
+Unload Winsock1(Index)
+frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & "[System]: Disconnected due connection problem."
+StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
+For i = 1 To frmPanel.ListView1.ListItems.Count
+    frmPanel.ListView1.ListItems.Remove (i)
+Next i
 End Sub
 
 Public Sub DisableFormResize(frm As Form)

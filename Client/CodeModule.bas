@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.2.5"
+Public Const Rev = "1.0.2.6"
 
 ' Create an Icon in System Tray Needs
 Public Type NOTIFYICONDATA
@@ -69,13 +69,15 @@ Public nid As NOTIFYICONDATA ' trayicon variable
 
 Public Sub SendMessage(iMessage As String)
 If frmMain.Winsock1.State <> 7 Then Exit Sub
-
 frmMain.Winsock1.SendData iMessage
+End Sub
 
+Public Sub VisualizeMessage(Name As String, Conver As String)
+frmChat.txtConver = frmChat.txtConver & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] [" & Name & "]: " & Conver
 End Sub
 
 Public Sub FlashTitle(Handle As Long, ReturnOrig As Boolean)
-    Call FlashWindow(Handle, ReturnOrig)
+Call FlashWindow(Handle, ReturnOrig)
 End Sub
 
 Public Sub minimize_to_tray()

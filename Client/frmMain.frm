@@ -201,6 +201,7 @@ Public Prefix       As String
 Public NameText     As String
 Public ConverText   As String
 Public Message      As String
+Public ForWho       As String
 Dim Vali            As Boolean
 
 Private Sub Command1_Click()
@@ -344,7 +345,8 @@ Winsock1.Close
 StatusBar1.Panels(1).Text = MDIstatusbar_dcfromserver
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: You got disconnected from Server."
 frmDESP.DisplayMessage DESPtext_dcserver
-frmList.List1.Clear
+'frmList.List1.Clear
+frmList.ListView1.ListItems.Clear
 
 ' Do the buttons
 With frmConfig
@@ -410,9 +412,9 @@ Case "!decilineD" ' We cannot login ( choose other name )
 Case "!accepteD" ' We can login
     ConnectIsTrue
 Case "!listupdate" ' Update the list
-    frmList.List1.Clear
+    frmList.ListView1.ListItems.Clear
     For i = LBound(arr) + 1 To UBound(arr) - 1
-            frmList.List1.AddItem arr(i)
+            frmList.ListView1.ListItems.Add , , arr(i)
     Next i
 Case Else ' Normal message
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
@@ -425,7 +427,7 @@ Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Winsock1.Close
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: Disconnected due connection problem."
 StatusBar1.Panels(1).Text = MDIstatusbar_connectionproblem
-frmList.List1.Clear
+frmList.ListView1.ListItems.Clear
 With frmConfig
     .Command1.Enabled = True
     .Command2.Enabled = False

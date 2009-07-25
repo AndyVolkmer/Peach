@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.2.5"
+Public Const Rev = "1.0.2.6"
 
 Public Sub SendMessage(Message As String)
 Dim WinSk As Winsock

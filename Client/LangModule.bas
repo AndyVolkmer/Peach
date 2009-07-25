@@ -124,7 +124,7 @@ LISTcommand_close = "&Schliessen"
 
 SFlabel_filename = " Datei Name:"
 SFlabel_sendingfile = "Sende:"
-SFlabel_sent = "Gesendet"
+SFlabel_sent = "0.0% Gesendet"
 
 SFcommand_browse = "&Suchen .."
 SFcommand_sendfile = "Senden"
@@ -193,7 +193,7 @@ LISTcommand_close = "&Close"
 ' Send File form ..
 SFlabel_filename = " File Name:"
 SFlabel_sendingfile = "Sending:"
-SFlabel_sent = "Sent"
+SFlabel_sent = "0.0% Sent"
 
 SFcommand_browse = "&Search .."
 SFcommand_sendfile = "Send"
@@ -255,7 +255,7 @@ LISTcommand_close = "&Cerrar"
 
 SFlabel_filename = " Nombre del archivo:"
 SFlabel_sendingfile = "Enviando:"
-SFlabel_sent = "Enviado"
+SFlabel_sent = "0.0% Enviado"
 
 SFcommand_browse = "&Buscar .."
 SFcommand_sendfile = "Enviar"
@@ -323,7 +323,7 @@ LISTcommand_close = "&Stäng"
 ' Send file form ..
 SFlabel_filename = " Fil Namn:"
 SFlabel_sendingfile = "Sänder:"
-SFlabel_sent = "Sänt"
+SFlabel_sent = "0.0% Sänt"
 
 SFcommand_browse = "&Sök .."
 SFcommand_sendfile = "Sänd"
@@ -390,7 +390,7 @@ LISTcommand_close = "&Chiudi"
 ' Send file form ..
 SFlabel_filename = " Nome file:"
 SFlabel_sendingfile = "Inviando:"
-SFlabel_sent = "Inviato"
+SFlabel_sent = "0.0% Inviato"
 
 SFcommand_browse = "&Cerca .."
 SFcommand_sendfile = "Invia"
@@ -458,7 +458,7 @@ LISTcommand_close = "&Zatvori"
 ' Send file form ..
 SFlabel_filename = " Ime  arhive:"
 SFlabel_sendingfile = "Slanje:"
-SFlabel_sent = "Poslato "
+SFlabel_sent = "0.0% Poslato"
 
 SFcommand_browse = "Trazi .."
 SFcommand_sendfile = "Posalji"
@@ -521,15 +521,14 @@ LISTcommand_close = "&Sluiten"
 
 SFlabel_filename = " Bestandsnaam:"
 SFlabel_sendingfile = "verZenden:"
-SFlabel_sent = "verzonden"
+SFlabel_sent = "0.0% verzonden"
 
 SFcommand_browse = "&Zoeken .."
-SFcommand_sendfile = "Stuur"
-SFcommand_cancelsending = "Annuleren .."
+SFcommand_sendfile = "&Stuur"
+SFcommand_cancelsending = "&Annuleren .."
 
 DESPtext_newmsg = "New Message!"
-DESPtext_dcserver = "Status: verbinding verbroken met de server"
-DESPtext_dcserver = "Disconnected from Server!"
+DESPtext_dcserver = "Verbinding verbroken met de server"
 End Sub
 
 Public Sub SetLangFrench()
@@ -585,7 +584,7 @@ LISTcommand_close = "&Ferme"
 
 SFlabel_filename = " Nom file:"
 SFlabel_sendingfile = "Envoyant:"
-SFlabel_sent = "Envoyé"
+SFlabel_sent = "0.0% Envoyé"
 
 SFcommand_browse = "&Cherche .."
 SFcommand_sendfile = "Envoi"

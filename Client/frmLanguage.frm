@@ -96,6 +96,7 @@ frmList.LoadListForm
 frmSendFile.LoadSendFileForm
 frmChat.LoadChatForm
 frmConfig.LoadConfigForm
+frmMain.Show
 WriteConfigFile2 (App.Path & "\validaten.conf")
 End Sub
 

@@ -74,7 +74,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -97,14 +96,15 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdSend_Click()
+Dim i As Integer
 frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 
 Select Case txtToSend.Text
-Case "", " ", "  ", "   ", "    ", "      ", "       "
+Case "", " ", "  ", "   ", "    ", "      ", "       " ' No white spaces 0-6
     Exit Sub
-Case Trim("!time"), Trim("!Time"), Trim("!TIME")
+Case Trim("!time"), Trim("!Time"), Trim("!TIME") 'Time
     txtConver.Text = txtConver.Text & vbCrLf & frmMain.Prefix & CHATtimetext & Format(Time, "hh:nn")
-Case Trim("!online"), Trim("!Online"), Trim("!ONLINE")
+Case Trim("!online"), Trim("!Online"), Trim("!ONLINE") ' Open online user list
     frmMain.UpdateListPosition.Enabled = True
     With frmList
         .Left = frmMain.Left + .Width * 2 + 20
@@ -113,11 +113,23 @@ Case Trim("!online"), Trim("!Online"), Trim("!ONLINE")
         .Show
     End With
 Case Else
-    With frmMain
+    For i = 1 To frmList.ListView1.ListItems.Count
+        If frmList.ListView1.ListItems.Item(i).Checked = True Then
+            With frmMain
+                .ConverText = txtToSend.Text
+                .NameText = frmConfig.txtNick
+                .ForWho = frmList.ListView1.ListItems.Item(i)
+                .Message = "!w" & "#" & .NameText & "|" & .ForWho & "#" & .ConverText & "#"
+            SendMessage .Message
+            End With
+        End If
+    Next i
+    With frmMain ' Send public message
         .ConverText = txtToSend.Text
         .NameText = frmConfig.txtNick.Text
         .Message = "!msg" & "#" & .NameText & "#" & .ConverText & "#"
     SendMessage .Message
+    VisualizeMessage .NameText, .ConverText
     End With
 End Select
 txtToSend.Text = ""

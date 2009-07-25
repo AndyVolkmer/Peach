@@ -293,7 +293,8 @@ With frmChat
 End With
 
 ' Clear the list
-frmList.List1.Clear
+'frmList.List1.Clear
+frmList.ListView1.ListItems.Clear
 
 ' Close connection
 With frmMain
