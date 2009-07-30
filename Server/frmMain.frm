@@ -169,7 +169,6 @@ Private Type MENUITEMINFO
     dwTypeData As String
     cch As Long
 End Type
-
 Private Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Long, ByVal bRevert As Long) As Long
 Private Declare Function GetMenuItemInfo Lib "user32" Alias "GetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal b As Boolean, lpMenuItemInfo As MENUITEMINFO) As Long
 Private Declare Function SetMenuItemInfo Lib "user32" Alias "SetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal bool As Boolean, lpcMenuItemInfo As MENUITEMINFO) As Long
@@ -188,6 +187,7 @@ Public ConverText   As String
 Public Message      As String
 Public ForWho       As String
 Public intCounter   As Integer
+Dim Vali            As Boolean
 
 Private Sub Command1_Click()
     SetupForms frmConfig
@@ -229,6 +229,31 @@ frmPanel.Text1 = "0"
 SetupForms frmConfig
 End Sub
 
+Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Dim msg As Long
+Dim sFilter As String
+msg = x / Screen.TwipsPerPixelX
+Select Case msg
+Case WM_LBUTTONDOWN
+Case WM_LBUTTONUP
+Case WM_LBUTTONDBLCLK
+    Vali = True
+    frmMain.Show ' show form
+Case WM_RBUTTONDOWN
+Case WM_RBUTTONUP
+Case WM_RBUTTONDBLCLK
+End Select
+End Sub
+
+Private Sub MDIForm_Resize()
+If Me.WindowState = 1 Then
+    If Vali = False Then
+        minimize_to_tray
+    End If
+    Vali = False
+End If
+End Sub
+
 Private Sub Winsock1_Close(Index As Integer)
 Dim x As Integer
     Unload Winsock1(Index)
@@ -240,7 +265,6 @@ Dim x As Integer
             
             ' Update Users List
             UpdateUsersList
-            
             Exit For
         End If
     Next x
@@ -355,12 +379,15 @@ Case "!w"
     
     ' Check in listitems if forwho name is in the list and get the socket id
     For th = 1 To frmPanel.ListView1.ListItems.Count
-        If frmMain.ForWho = frmPanel.ListView1.ListItems.Item(th) Then
-            SendRequest " [" & frmMain.NameText & "] whispers: " & frmMain.ConverText, frmMain.Winsock1(frmPanel.ListView1.ListItems.Item(th).SubItems(2))
-        End If
+        With frmMain
+            If .ForWho = frmPanel.ListView1.ListItems.Item(th) Then
+                SendRequest " [" & .NameText & "] whispers: " & .ConverText, .Winsock1(frmPanel.ListView1.ListItems.Item(th).SubItems(2))
+                VisualizeMessage .Command, .NameText, .ConverText, .ForWho
+            End If
+        End With
     Next th
 Case Else
-    SendMessage " [" & frmMain.NameText & "] : " & frmMain.ConverText
+    SendMessage " [" & frmMain.NameText & "]: " & frmMain.ConverText
 End Select
 
 ' We want to read the message also , different then others tho
@@ -370,16 +397,23 @@ End Sub
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Dim i As Integer
 frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
-
-Winsock1(Index).Close
-Unload Winsock1(Index)
-frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & "[System]: Disconnected due connection problem."
-StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
-For i = 1 To frmPanel.ListView1.ListItems.Count
-    frmPanel.ListView1.ListItems.Remove (i)
-Next i
+If Index < 0 Then
+    Winsock1(Index).Close
+    Unload Winsock1(Index)
+    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & " [System]: Disconnected with a host."
+    For i = 1 To frmPanel.ListView1.ListItems.Count
+        frmPanel.ListView1.ListItems.Remove (i)
+    Next i
+Else
+    Winsock1(Index).Close
+    Unload Winsock1(Index)
+    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & "[System]: Disconnected due connection problem."
+    StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
+    For i = 1 To frmPanel.ListView1.ListItems.Count
+        frmPanel.ListView1.ListItems.Remove (i)
+    Next
+End If
 End Sub
-
 Public Sub DisableFormResize(frm As Form)
 Dim style As Long
 Dim hMenu As Long

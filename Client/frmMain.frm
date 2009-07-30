@@ -151,6 +151,16 @@ Begin VB.MDIForm frmMain
          Width           =   1815
       End
    End
+   Begin VB.Menu myPOP 
+      Caption         =   "myPOP"
+      Visible         =   0   'False
+      Begin VB.Menu Show 
+         Caption         =   "&Show"
+      End
+      Begin VB.Menu Close 
+         Caption         =   "&Exit"
+      End
+   End
 End
 Attribute VB_Name = "frmMain"
 Attribute VB_GlobalNameSpace = False
@@ -194,7 +204,6 @@ Private Declare Function SendMessage2 Lib "user32" Alias "SendMessageA" (ByVal h
 Private Declare Function GetMenuItemCount Lib "user32" (ByVal hMenu As Long) As Long
 Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPosition As Long, ByVal wFlags As Long) As Long
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
-' XP STYLE
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Public Prefix       As String
@@ -203,6 +212,14 @@ Public ConverText   As String
 Public Message      As String
 Public ForWho       As String
 Dim Vali            As Boolean
+
+Private Sub Close_Click()
+    Unload frmList
+    Unload frmLanguage
+    Unload frmBlank
+    Unload frmDESP
+    Unload frmAbout
+End Sub
 
 Private Sub Command1_Click()
     SetupForms frmConfig
@@ -248,11 +265,8 @@ End Sub
 Private Sub MDIForm_Load()
 On Error GoTo HandleErrorFile
 Dim TSSO As TypeSSO
-
 LoadMDIForm
-
 DisableFormResize Me
-
 Dim L As Long
     L = GetWindowLong(Me.hwnd, GWL_STYLE)
 '   L = L And Not (WS_MINIMIZEBOX)
@@ -260,7 +274,6 @@ Dim L As Long
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
 
 StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
-
 TSSO = ReadConfigFile(App.Path & "\bin.conf")
 With TSSO
     Me.Top = Trim(.TopPos)
@@ -268,7 +281,6 @@ With TSSO
 End With
 Next1:
 SetupForms frmConfig
-
 Exit Sub
 ':::::::::::::::::::::::::::::::::::
 'Error Handler
@@ -305,15 +317,15 @@ Case WM_LBUTTONUP
 Case WM_LBUTTONDBLCLK
     Vali = True
     frmMain.Show ' show form
-    'Shell_NotifyIcon NIM_DELETE, nid ' del tray icon
 Case WM_RBUTTONDOWN
+    frmMain.PopupMenu myPOP
 Case WM_RBUTTONUP
 Case WM_RBUTTONDBLCLK
 End Select
 End Sub
 
 Private Sub MDIForm_Resize()
-If Me.WindowState = vbMinimized Then
+If Me.WindowState = 1 Then
     If Vali = False Then
         minimize_to_tray
     End If
@@ -328,6 +340,11 @@ Private Sub MDIForm_Unload(Cancel As Integer)
     Unload frmDESP
     Unload frmAbout
 Shell_NotifyIcon NIM_DELETE, nid ' del tray icon
+End Sub
+
+Private Sub Show_Click()
+Vali = True
+frmMain.Show
 End Sub
 
 Private Sub UpdateListPosition_Timer()
@@ -345,8 +362,9 @@ Winsock1.Close
 StatusBar1.Panels(1).Text = MDIstatusbar_dcfromserver
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: You got disconnected from Server."
 frmDESP.DisplayMessage DESPtext_dcserver
-'frmList.List1.Clear
-frmList.ListView1.ListItems.Clear
+
+frmList.ListView1.ListItems.Clear 'Clear list
+frmSendFile.Combo1.Clear 'Clear sendfile combo
 
 ' Do the buttons
 With frmConfig
@@ -411,10 +429,12 @@ Case "!decilineD" ' We cannot login ( choose other name )
     ConnectIsFalse
 Case "!accepteD" ' We can login
     ConnectIsTrue
-Case "!listupdate" ' Update the list
+Case "!listupdate" ' Wipe out current list and insert new values
     frmList.ListView1.ListItems.Clear
+    frmSendFile.Combo1.Clear
     For i = LBound(arr) + 1 To UBound(arr) - 1
             frmList.ListView1.ListItems.Add , , arr(i)
+            frmSendFile.Combo1.AddItem arr(i)
     Next i
 Case Else ' Normal message
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
@@ -427,7 +447,8 @@ Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Winsock1.Close
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: Disconnected due connection problem."
 StatusBar1.Panels(1).Text = MDIstatusbar_connectionproblem
-frmList.ListView1.ListItems.Clear
+frmList.ListView1.ListItems.Clear 'Clear the list
+frmSendFile.Combo1.Clear 'Clear the combo in sendfile
 With frmConfig
     .Command1.Enabled = True
     .Command2.Enabled = False

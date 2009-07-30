@@ -10,22 +10,29 @@ Begin VB.Form frmSendFile
    ClientLeft      =   690
    ClientTop       =   1365
    ClientWidth     =   7815
+   BeginProperty Font 
+      Name            =   "Tahoma"
+      Size            =   8.25
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MDIChild        =   -1  'True
    ScaleHeight     =   3735
    ScaleWidth      =   7815
    ShowInTaskbar   =   0   'False
+   Begin VB.ComboBox Combo1 
+      Height          =   315
+      Left            =   120
+      Style           =   2  'Dropdown List
+      TabIndex        =   13
+      Top             =   1080
+      Width           =   1935
+   End
    Begin VB.TextBox txtFileName 
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   285
       Left            =   120
       Locked          =   -1  'True
@@ -45,15 +52,6 @@ Begin VB.Form frmSendFile
    End
    Begin VB.TextBox txtRemoteCon 
       Alignment       =   2  'Center
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   285
       Left            =   120
       MaxLength       =   128
@@ -65,15 +63,6 @@ Begin VB.Form frmSendFile
    End
    Begin VB.TextBox txtRemotePort 
       Alignment       =   2  'Center
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   285
       Left            =   2280
       MaxLength       =   5
@@ -86,6 +75,15 @@ Begin VB.Form frmSendFile
    Begin VB.PictureBox picProgress 
       AutoRedraw      =   -1  'True
       FillColor       =   &H00C00000&
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   285
       Left            =   120
       ScaleHeight     =   225
@@ -97,15 +95,6 @@ Begin VB.Form frmSendFile
    End
    Begin VB.CommandButton cmdBrowse 
       Caption         =   "&Browse"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   375
       Left            =   5640
       TabIndex        =   1
@@ -115,15 +104,6 @@ Begin VB.Form frmSendFile
    End
    Begin VB.CommandButton cmdSendFile 
       Caption         =   "&Send File"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   375
       Left            =   5640
       TabIndex        =   0
@@ -145,19 +125,19 @@ Begin VB.Form frmSendFile
       _Version        =   393216
       CancelError     =   -1  'True
    End
+   Begin VB.Label Label4 
+      BackColor       =   &H00F4F4F4&
+      Caption         =   "Send to :"
+      Height          =   255
+      Left            =   120
+      TabIndex        =   12
+      Top             =   840
+      Width           =   1335
+   End
    Begin VB.Label Label2 
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "Remote Connection:"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   120
@@ -170,15 +150,6 @@ Begin VB.Form frmSendFile
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "Remote Port:"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   2280
@@ -191,15 +162,6 @@ Begin VB.Form frmSendFile
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "File Name:"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   120
@@ -218,15 +180,6 @@ Begin VB.Form frmSendFile
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "Sending File:"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   120
@@ -238,15 +191,6 @@ Begin VB.Form frmSendFile
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "0.0% Sent"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   1080
@@ -259,15 +203,6 @@ Begin VB.Form frmSendFile
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "0.00 Kb/Sec"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   6405
@@ -319,7 +254,6 @@ Private Sub cmdSendFile_Click()
         If Len(txtFileName.Text) > 0 Then
             If Len(Dir(txtFileName.Text, vbNormal + vbArchive)) > 0 Then
                 cmdSendFile.Caption = SFcommand_cancelsending
-                
                 SendFile txtFileName.Text
             End If
         End If

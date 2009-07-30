@@ -59,5 +59,7 @@ End Sub
 Private Sub Form_Load()
 Label1.Caption = "Author : Notron" & vbCrLf _
                     & "Version : " & Rev & vbCrLf & vbCrLf _
-                    & "Peach is beeing developed by Notron. Do not publish this anywhere without permissions of the author."
+                    & "Peach is beeing developed by Notron. " & _
+                    "Do not publish this anywhere without " & _
+                    "permissions of the author."
 End Sub

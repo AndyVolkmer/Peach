@@ -292,9 +292,8 @@ With frmChat
     .txtToSend.Enabled = False
 End With
 
-' Clear the list
-'frmList.List1.Clear
-frmList.ListView1.ListItems.Clear
+frmList.ListView1.ListItems.Clear ' Clear the list
+frmSendFile.Combo1.Clear 'Clear sendfile combo
 
 ' Close connection
 With frmMain

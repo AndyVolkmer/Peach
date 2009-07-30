@@ -164,6 +164,7 @@ Command2.Enabled = True
 ' Activate the listen of sendfile form
 frmSendFile.cmdConnect_Click
 
+On Error GoTo ErrListen
 ' Connect sockets and start listening
 With frmMain
     .Winsock1(0).LocalPort = txtPort.Text
@@ -177,7 +178,22 @@ With frmChat
     .Show
     .txtToSend.SetFocus
 End With
-    
+Exit Sub
+ErrListen:
+Select Case Err.Number
+Case 10048
+    MsgBox "This adress is already in use, please select another port.", vbInformation
+    txtNick.Enabled = True
+    txtPort.Enabled = True
+    Command1.Enabled = True
+    Command2.Enabled = False
+    txtPort.SetFocus
+    txtPort.SelStart = Len(txtPort.Text)
+    connCounter.Enabled = False
+Case Else ' Random
+    MsgBox Err.Number & " :  ""An error occured application has to close."
+    Unload Me
+End Select
 End Sub
 
 Private Sub Command2_Click()

@@ -24,11 +24,6 @@ Begin VB.Form frmDESP
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   224
    ShowInTaskbar   =   0   'False
-   Begin VB.Timer stopTimer 
-      Enabled         =   0   'False
-      Left            =   1440
-      Top             =   720
-   End
    Begin menudesp.menudes menudes1 
       Height          =   2055
       Left            =   0
@@ -37,6 +32,11 @@ Begin VB.Form frmDESP
       Width           =   3375
       _ExtentX        =   5953
       _ExtentY        =   3625
+   End
+   Begin VB.Timer stopTimer 
+      Enabled         =   0   'False
+      Left            =   1440
+      Top             =   720
    End
 End
 Attribute VB_Name = "frmDESP"
