@@ -1,9 +1,8 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.2.7"
+Public Const Rev = "1.0.2.8"
 
-' Create an Icon in System Tray Needs
 Public Type NOTIFYICONDATA
 cbSize              As Long
 hwnd                As Long
@@ -27,7 +26,6 @@ Public Const WM_RBUTTONDBLCLK = &H206 'Double-click
 Public Const WM_RBUTTONDOWN = &H204 'Button down
 Public Const WM_RBUTTONUP = &H205 'Button up
 
-'**** Glass Form Stuff ****'
 Private Type RECT
     Left As Long
     Top As Long
@@ -59,11 +57,11 @@ Private Declare Function SetLayeredWindowAttributes Lib "user32" (ByVal hwnd As 
 Private Declare Function GetWindowRect Lib "user32" (ByVal hwnd As Long, lpRect As RECT) As Long
 Private Declare Function ClientToScreen Lib "user32" (ByVal hwnd As Long, lpPoint As POINTAPI) As Long
 Private Declare Function GetWindow Lib "user32" (ByVal hwnd As Long, ByVal wCmd As Long) As Long
-'**** Glass Form Stuff End ****'
 
 Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal dwMessage As Long, pnid As NOTIFYICONDATA) As Boolean
 Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long
 Declare Function GetActiveWindow Lib "user32" () As Long
+Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
 Public nid As NOTIFYICONDATA ' trayicon variable
 

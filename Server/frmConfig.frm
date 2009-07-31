@@ -161,9 +161,6 @@ txtPort.Enabled = False
 Command1.Enabled = False
 Command2.Enabled = True
     
-' Activate the listen of sendfile form
-frmSendFile.cmdConnect_Click
-
 On Error GoTo ErrListen
 ' Connect sockets and start listening
 With frmMain
@@ -211,12 +208,9 @@ With frmMain
     .StatusBar1.Panels(1).Text = "Status: Disconnected"
 End With
     
-' Clear panel list
+' Clear frmPanel ListView
 frmPanel.ListView1.ListItems.Clear
 
-' Stop the listen of sendfile form
-    frmSendFile.cmdConnect_Click
-    
 ' Do the buttons
     txtNick.Enabled = True
     txtPort.Enabled = True

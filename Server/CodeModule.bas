@@ -1,9 +1,8 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.2.6"
+Public Const Rev = "1.0.2.8"
 
-' Create an Icon in System Tray Needs
 Public Type NOTIFYICONDATA
 cbSize              As Long
 hwnd                As Long

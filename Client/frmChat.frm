@@ -74,7 +74,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -113,20 +112,30 @@ Case Trim("!online"), Trim("!Online"), Trim("!ONLINE") ' Open online user list
         .Height = frmMain.Height - 400
         .Show
     End With
-Case Else
+Case Else 'Message
+    'If any checkbox is checked then send it private to that client
     For i = 1 To frmList.ListView1.ListItems.Count
         If frmList.ListView1.ListItems.Item(i).Checked = True Then
+            'If the the selected name is yours then no
+            If frmList.ListView1.ListItems.Item(i).Text = UCase(frmConfig.txtNick) Then
+                MsgBox "You cant whisper yourself.", vbInformation
+                txtToSend.Text = ""
+                txtToSend.SetFocus
+                Exit Sub
+            End If
+            
             With frmMain
                 .ConverText = txtToSend.Text
-                .NameText = frmConfig.txtNick
-                .ForWho = frmList.ListView1.ListItems.Item(i)
+                .NameText = UCase(frmConfig.txtNick)
+                .ForWho = UCase(frmList.ListView1.ListItems.Item(i))
                 .Message = "!w" & "#" & .NameText & "|" & .ForWho & "#" & .ConverText & "#"
             SendMessage .Message
             VisualizeMessage True, .ForWho, .ConverText
             End With
         End If
     Next i
-    With frmMain ' Send public message
+    'Send public message
+    With frmMain
         .ConverText = txtToSend.Text
         .NameText = frmConfig.txtNick.Text
         .Message = "!msg" & "#" & .NameText & "#" & .ConverText & "#"

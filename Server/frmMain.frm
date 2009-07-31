@@ -311,12 +311,13 @@ Load Winsock1(theFreeSocket)
 
 loadSocket = theFreeSocket
 End Function
-'
+
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
 Dim array1()        As String
 Dim array2()        As String
 Dim strMessage      As String
 Dim RR              As Integer
+Dim i               As Integer ' Global "FOR" variable
 Dim bMatch          As Boolean
 RR = frmPanel.ListView1.ListItems.Count
 
@@ -349,19 +350,20 @@ Case "!connected" ' Announce connected player and send to user online list
     UpdateUsersList
 Case "!namerequest" ' Check if the name is avaible or not
     ' Check badname list ..
-    For u = 0 To frmPanel.List1.ListCount
-        If UCase(frmPanel.List1.List(u)) = UCase(frmMain.NameText) Then
+    For i = 0 To frmPanel.List1.ListCount
+        If UCase(frmPanel.List1.List(i)) = UCase(frmMain.NameText) Then
             bMatch = True
             Exit For
         End If
-    Next u
+    Next i
+    
     ' Check current online list
-    For u = 1 To frmPanel.ListView1.ListItems.Count
-        If UCase(frmPanel.ListView1.ListItems.Item(u)) = UCase(frmMain.NameText) Then
+    For i = 1 To frmPanel.ListView1.ListItems.Count
+        If UCase(frmPanel.ListView1.ListItems.Item(i)) = UCase(frmMain.NameText) Then
             bMatch = True
             Exit For
         End If
-    Next u
+    Next i
     
     If bMatch = True Then ' Return yes or no to client
         bMatch = False
@@ -370,26 +372,23 @@ Case "!namerequest" ' Check if the name is avaible or not
         SendRequest "!accepteD", frmMain.Winsock1(Index)
     End If
 Case "!w"
-    Dim th As Integer
-    
     ' Split name into user name and normal name
     array2 = Split(frmMain.NameText, "|")
     frmMain.NameText = array2(0)
     frmMain.ForWho = array2(1)
     
     ' Check in listitems if forwho name is in the list and get the socket id
-    For th = 1 To frmPanel.ListView1.ListItems.Count
+    For i = 1 To frmPanel.ListView1.ListItems.Count
         With frmMain
-            If .ForWho = frmPanel.ListView1.ListItems.Item(th) Then
-                SendRequest " [" & .NameText & "] whispers: " & .ConverText, .Winsock1(frmPanel.ListView1.ListItems.Item(th).SubItems(2))
+            If .ForWho = frmPanel.ListView1.ListItems.Item(i) Then
+                SendRequest " [" & .NameText & "] whispers: " & .ConverText, .Winsock1(frmPanel.ListView1.ListItems.Item(i).SubItems(2))
                 VisualizeMessage .Command, .NameText, .ConverText, .ForWho
             End If
         End With
-    Next th
+    Next i
 Case Else
     SendMessage " [" & frmMain.NameText & "]: " & frmMain.ConverText
 End Select
-
 ' We want to read the message also , different then others tho
 VisualizeMessage frmMain.Command, frmMain.NameText, frmMain.ConverText
 End Sub

@@ -112,8 +112,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-' Made By Michael Ciurescu (CVMichael from vbforums.com)
-
 Private Type tClient
     FileName As String
     FileSize As Long
@@ -124,11 +122,10 @@ End Type
 
 Private Clients() As tClient
 
-Public Sub cmdConnect_Click()
+Private Sub cmdConnect_Click()
     If cmdConnect.Caption = "Start Listening for Connections" Then
         SckReceiveFile(0).LocalPort = Val(Me.txtListenPort.Text)
         SckReceiveFile(0).Listen
-        
         cmdConnect.Caption = "Stop Listening for Connections"
     Else
         SckReceiveFile(0).Close

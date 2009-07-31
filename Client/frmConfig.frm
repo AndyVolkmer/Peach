@@ -204,28 +204,28 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-' Nick cant be empty
+'Nick cant be empty
 If txtNick.Text = "" Then
     MsgBox CONFIGmsgbox_namenoempty, vbInformation
     txtNick.SetFocus
     Exit Sub
 End If
 
-' IP cant be empty
+'IP cant be empty
 If txtIP.Text = "" Then
     MsgBox CONFIGmsgbox_ipnoempty, vbInformation
     txtIP.SetFocus
     Exit Sub
 End If
 
-' Port cant be empty
+'Port cant be empty
 If txtPort.Text = "" Then
     MsgBox CONFIGmsgbox_portnoempty, vbInformation
     txtPort.SetFocus
     Exit Sub
 End If
 
-' If the nick is numeric then no
+'If the nick is numeric then no
 If IsNumeric(txtNick.Text) = True Then
     txtNick.Text = ""
     MsgBox CONFIGmsgbox_nonumeric, vbInformation
@@ -233,7 +233,7 @@ If IsNumeric(txtNick.Text) = True Then
     Exit Sub
 End If
 
-' If the nick is to short then no
+'If the nick is to short then no
 If Len(txtNick.Text) < 4 Then
     MsgBox "Your nickname is to short!    ", vbInformation, " Error - Nickname"
     txtNick.SelStart = Len(txtNick.Text)
@@ -241,20 +241,10 @@ If Len(txtNick.Text) < 4 Then
     Exit Sub
 End If
 
-' Make it proper case
+'Make it proper case
 txtNick.Text = StrConv(txtNick.Text, vbProperCase)
 
-' Connect winsocks
-With frmMain.Winsock1
-    .RemotePort = txtPort.Text
-    .RemoteHost = txtIP.Text
-    .Connect
-    
-    Label5.Caption = "IP: " & .RemoteHost
-    Label6.Caption = "Port: " & .RemotePort
-End With
-
-' Do the enable stuff
+'Do the enable stuff
 With Me
     .Command2.Enabled = True
     .Command1.Enabled = False
@@ -269,11 +259,20 @@ With frmChat
     .txtToSend.Enabled = True
 End With
 
+'Connect winsocks
+With frmMain.Winsock1
+    .RemotePort = txtPort.Text
+    .RemoteHost = txtIP.Text
+    .Connect
+    Label5.Caption = "IP: " & .RemoteHost
+    Label6.Caption = "Port: " & .RemotePort
+End With
+
 frmMain.StatusBar1.Panels(1).Text = MDIstatusbar_connecting & txtIP.Text & ":" & txtPort.Text
 frmConfig.Hide
 frmChat.Show
 frmChat.txtToSend.SetFocus
-
+Exit Sub
 End Sub
 
 Public Sub Command2_Click()
@@ -292,10 +291,11 @@ With frmChat
     .txtToSend.Enabled = False
 End With
 
-frmList.ListView1.ListItems.Clear ' Clear the list
-frmSendFile.Combo1.Clear 'Clear sendfile combo
+'Clear the online user list
+frmList.ListView1.ListItems.Clear
+frmSendFile.Combo1.Clear
 
-' Close connection
+'Close connection
 With frmMain
     .Winsock1.Close
     .StatusBar1.Panels(1).Text = MDIstatusbar_disconnected

@@ -9,7 +9,7 @@ Begin VB.Form frmSendFile
    ClientHeight    =   3735
    ClientLeft      =   690
    ClientTop       =   1365
-   ClientWidth     =   7815
+   ClientWidth     =   7500
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -22,7 +22,7 @@ Begin VB.Form frmSendFile
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    ScaleHeight     =   3735
-   ScaleWidth      =   7815
+   ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
    Begin VB.ComboBox Combo1 
       Height          =   315
@@ -98,12 +98,13 @@ Begin VB.Form frmSendFile
       Height          =   375
       Left            =   5640
       TabIndex        =   1
-      ToolTipText     =   "( Dont click if you are not going to send something, this will make the application use more memory )"
+      ToolTipText     =   "Dont click if you are not going to send something, this will make the application use more memory."
       Top             =   780
       Width           =   1680
    End
    Begin VB.CommandButton cmdSendFile 
       Caption         =   "&Send File"
+      Enabled         =   0   'False
       Height          =   375
       Left            =   5640
       TabIndex        =   0
@@ -218,10 +219,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-' Made By Michael Ciurescu (CVMichael from vbforums.com)
-
 Private Const PacketSize As Long = 1024 * 4
-
 Private sFileName As String
 Private iFileNum As Integer
 
@@ -250,17 +248,17 @@ Private Sub PicShowPercentage(pic As PictureBox, ByVal Percentage As Single, Opt
 End Sub
 
 Private Sub cmdSendFile_Click()
-    If cmdSendFile.Caption = SFcommand_sendfile Then
-        If Len(txtFileName.Text) > 0 Then
-            If Len(Dir(txtFileName.Text, vbNormal + vbArchive)) > 0 Then
-                cmdSendFile.Caption = SFcommand_cancelsending
-                SendFile txtFileName.Text
-            End If
+If cmdSendFile.Caption = SFcommand_sendfile Then
+    If Len(txtFileName.Text) > 0 Then
+        If Len(Dir(txtFileName.Text, vbNormal + vbArchive)) > 0 Then
+            cmdSendFile.Caption = SFcommand_cancelsending
+            SendFile txtFileName.Text
         End If
-    Else
-        SckSendFile_Close
-        cmdSendFile.Caption = SFcommand_sendfile
     End If
+Else
+    SckSendFile_Close
+    cmdSendFile.Caption = SFcommand_sendfile
+End If
 End Sub
 
 Private Sub SendFile(ByVal FileName As String)
@@ -396,5 +394,3 @@ Public Function lngMIN(ByVal L1 As Long, ByVal L2 As Long) As Long
         lngMIN = L2
     End If
 End Function
-
-

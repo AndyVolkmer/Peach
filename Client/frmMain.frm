@@ -38,8 +38,8 @@ Begin VB.MDIForm frmMain
       BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
          NumPanels       =   1
          BeginProperty Panel1 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
-            Object.Width           =   7938
-            MinWidth        =   7938
+            Object.Width           =   11466
+            MinWidth        =   11466
          EndProperty
       EndProperty
       Enabled         =   0   'False
@@ -101,6 +101,7 @@ Begin VB.MDIForm frmMain
       End
       Begin VB.CommandButton Command3 
          Caption         =   "&Send File"
+         Enabled         =   0   'False
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -113,6 +114,7 @@ Begin VB.MDIForm frmMain
          Height          =   375
          Left            =   3720
          TabIndex        =   3
+         ToolTipText     =   "Work in progess .."
          Top             =   120
          Width           =   1815
       End
@@ -211,6 +213,7 @@ Public NameText     As String
 Public ConverText   As String
 Public Message      As String
 Public ForWho       As String
+Public SFIP         As String
 Dim Vali            As Boolean
 
 Private Sub Close_Click()
@@ -258,15 +261,16 @@ Command4.Caption = MDIcommand_onlinelist
 End Sub
 
 Private Sub MDIForm_Initialize()
-' Do XP style :D
 Call InitCommonControls
 End Sub
 
 Private Sub MDIForm_Load()
 On Error GoTo HandleErrorFile
 Dim TSSO As TypeSSO
+
 LoadMDIForm
 DisableFormResize Me
+
 Dim L As Long
     L = GetWindowLong(Me.hwnd, GWL_STYLE)
 '   L = L And Not (WS_MINIMIZEBOX)
@@ -275,12 +279,15 @@ Dim L As Long
 
 StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
 TSSO = ReadConfigFile(App.Path & "\bin.conf")
+
 With TSSO
     Me.Top = Trim(.TopPos)
     Me.Left = Trim(.LeftPos)
 End With
+
 Next1:
 SetupForms frmConfig
+
 Exit Sub
 ':::::::::::::::::::::::::::::::::::
 'Error Handler
@@ -308,10 +315,10 @@ End Sub
 
 
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Dim msg As Long
+Dim Msg As Long
 Dim sFilter As String
-msg = X / Screen.TwipsPerPixelX
-Select Case msg
+Msg = X / Screen.TwipsPerPixelX
+Select Case Msg
 Case WM_LBUTTONDOWN
 Case WM_LBUTTONUP
 Case WM_LBUTTONDBLCLK
@@ -384,7 +391,6 @@ End With
 End Sub
 
 Private Sub Winsock1_Connect()
-' Send request to check if name is avaible
 SendMessage "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
 End Sub
 
@@ -402,7 +408,8 @@ Private Sub ConnectIsFalse()
 With frmConfig
     .Command2_Click
     .txtNick = ""
-    SetupForms frmConfig
+frmChat.Hide
+    .Show
     .txtNick.SetFocus
 End With
 MsgBox MDImsgbox_nametaken, vbInformation
@@ -425,30 +432,49 @@ arr = Split(Message, "#")
 Command = arr(0)
 
 Select Case Command
-Case "!decilineD" ' We cannot login ( choose other name )
+
+' We cannot login ( choose other name )
+Case "!decilineD"
     ConnectIsFalse
-Case "!accepteD" ' We can login
+
+' We can login
+Case "!accepteD"
     ConnectIsTrue
-Case "!listupdate" ' Wipe out current list and insert new values
+    
+' Wipe out current list and insert new values
+Case "!listupdate"
     frmList.ListView1.ListItems.Clear
     frmSendFile.Combo1.Clear
     For i = LBound(arr) + 1 To UBound(arr) - 1
             frmList.ListView1.ListItems.Add , , arr(i)
             frmSendFile.Combo1.AddItem arr(i)
     Next i
-Case Else ' Normal message
+
+' Normal message
+Case Else
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
     If frmMain.WindowState = 1 Then frmDESP.DisplayMessage DESPtext_newmsg
 End Select
 End Sub
 
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
+Dim WiSk As Winsock
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+
+'Close connecting winsock ( state = 0 )
 Winsock1.Close
-frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: Disconnected due connection problem."
+
+'Write message
+VisualizeMessage False, "System", "Disconnected due connection problem."
+
+'Change status to connection problem
 StatusBar1.Panels(1).Text = MDIstatusbar_connectionproblem
-frmList.ListView1.ListItems.Clear 'Clear the list
-frmSendFile.Combo1.Clear 'Clear the combo in sendfile
+
+'Clear the Lists with online users
+frmList.ListView1.ListItems.Clear
+frmSendFile.Combo1.Clear
+
+'Do the buttons
 With frmConfig
     .Command1.Enabled = True
     .Command2.Enabled = False
