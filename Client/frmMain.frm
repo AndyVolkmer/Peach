@@ -13,6 +13,18 @@ Begin VB.MDIForm frmMain
    LinkTopic       =   "MDIForm1"
    LockControls    =   -1  'True
    ScrollBars      =   0   'False
+   Begin VB.Timer STimer 
+      Enabled         =   0   'False
+      Left            =   480
+      Top             =   1080
+   End
+   Begin MSWinsockLib.Winsock FSocket 
+      Left            =   480
+      Top             =   600
+      _ExtentX        =   741
+      _ExtentY        =   741
+      _Version        =   393216
+   End
    Begin proHyp.Hyperlink Hyperlink1 
       Left            =   0
       Top             =   1560
@@ -101,7 +113,6 @@ Begin VB.MDIForm frmMain
       End
       Begin VB.CommandButton Command3 
          Caption         =   "&Send File"
-         Enabled         =   0   'False
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -213,7 +224,6 @@ Public NameText     As String
 Public ConverText   As String
 Public Message      As String
 Public ForWho       As String
-Public SFIP         As String
 Dim Vali            As Boolean
 
 Private Sub Close_Click()
@@ -354,6 +364,17 @@ Vali = True
 frmMain.Show
 End Sub
 
+Private Sub STimer_Timer()
+With FSocket
+    If .State <> 7 Then
+        'Do Nothing
+    Else
+        STimer.Enabled = False
+        .SendData "!filerequest" & "#"
+    End If
+End With
+End Sub
+
 Private Sub UpdateListPosition_Timer()
 With frmList
     .Left = frmMain.Left + .Width * 2 + 20
@@ -433,15 +454,15 @@ Command = arr(0)
 
 Select Case Command
 
-' We cannot login ( choose other name )
+'We cant login ( choose other name )
 Case "!decilineD"
     ConnectIsFalse
 
-' We can login
+'We can login
 Case "!accepteD"
     ConnectIsTrue
     
-' Wipe out current list and insert new values
+'Wipe out current list and insert new values
 Case "!listupdate"
     frmList.ListView1.ListItems.Clear
     frmSendFile.Combo1.Clear
@@ -449,8 +470,24 @@ Case "!listupdate"
             frmList.ListView1.ListItems.Add , , arr(i)
             frmSendFile.Combo1.AddItem arr(i)
     Next i
-
-' Normal message
+    
+'We get ip here
+Case "!iprequest"
+    
+    'Connect new winsock to client
+    With FSocket
+        .RemoteHost = arr(1)
+        .RemotePort = aPort
+        .Connect
+    End With
+    
+    'Start timer to send file
+    With STimer
+        .Interval = 5
+        .Enabled = True
+    End With
+    
+'Normal message
 Case Else
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
     If frmMain.WindowState = 1 Then frmDESP.DisplayMessage DESPtext_newmsg

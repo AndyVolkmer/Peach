@@ -104,7 +104,6 @@ Begin VB.Form frmSendFile
    End
    Begin VB.CommandButton cmdSendFile 
       Caption         =   "&Send File"
-      Enabled         =   0   'False
       Height          =   375
       Left            =   5640
       TabIndex        =   0
@@ -248,11 +247,24 @@ Private Sub PicShowPercentage(pic As PictureBox, ByVal Percentage As Single, Opt
 End Sub
 
 Private Sub cmdSendFile_Click()
+'If no user selected then exit
+If Combo1.ListIndex < 0 Then
+    MsgBox "No user selected.", vbInformation
+    Combo1.SetFocus
+    Exit Sub
+End If
+
+'Request IP
+SendMessage "!iprequest" & "#" & Combo1.Text & "#"
+
+End Sub
+
+Public Sub SendF(IP As String)
 If cmdSendFile.Caption = SFcommand_sendfile Then
     If Len(txtFileName.Text) > 0 Then
         If Len(Dir(txtFileName.Text, vbNormal + vbArchive)) > 0 Then
             cmdSendFile.Caption = SFcommand_cancelsending
-            SendFile txtFileName.Text
+            SendFile txtFileName.Text, IP
         End If
     End If
 Else
@@ -261,14 +273,14 @@ Else
 End If
 End Sub
 
-Private Sub SendFile(ByVal FileName As String)
+Public Sub SendFile(ByVal FileName As String, Host As String)
     tmrSendFile.Enabled = False
     
     SckSendFile.Close
     DoEvents
     
-    SckSendFile.RemoteHost = Me.txtRemoteCon.Text
-    SckSendFile.RemotePort = Val(Me.txtRemotePort.Text)
+    SckSendFile.RemoteHost = Host
+    SckSendFile.RemotePort = aPort
     SckSendFile.Connect
     
     sFileName = FileName

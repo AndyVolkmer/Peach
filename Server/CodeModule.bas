@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.2.8"
+Public Const Rev = "1.0.2.9"
 
 Public Type NOTIFYICONDATA
 cbSize              As Long
