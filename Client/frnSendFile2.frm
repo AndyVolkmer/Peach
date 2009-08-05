@@ -5,42 +5,51 @@ Begin VB.Form frmSendFile2
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Peach - File Transfer"
-   ClientHeight    =   4005
+   ClientHeight    =   3870
    ClientLeft      =   45
    ClientTop       =   435
-   ClientWidth     =   7485
+   ClientWidth     =   7425
+   BeginProperty Font 
+      Name            =   "Tahoma"
+      Size            =   8.25
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    Icon            =   "frnSendFile2.frx":0000
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MaxButton       =   0   'False
-   ScaleHeight     =   4005
-   ScaleWidth      =   7485
+   ScaleHeight     =   3870
+   ScaleWidth      =   7425
    StartUpPosition =   1  'CenterOwner
-   Begin VB.CommandButton cmdConnect 
-      Caption         =   "&Start Listening for Connections"
+   Begin VB.CommandButton Command1 
+      Caption         =   "&Open File Folder"
       Height          =   375
-      Left            =   4320
+      Left            =   5520
       TabIndex        =   1
-      Top             =   120
-      Width           =   2940
+      Top             =   3360
+      Width           =   1695
+   End
+   Begin MSWinsockLib.Winsock SckReceiveFile 
+      Index           =   0
+      Left            =   6480
+      Top             =   2880
+      _ExtentX        =   741
+      _ExtentY        =   741
+      _Version        =   393216
    End
    Begin VB.Timer tmrStatus 
       Interval        =   10
-      Left            =   2775
-      Top             =   120
-   End
-   Begin VB.TextBox txtListenPort 
-      Height          =   285
-      Left            =   240
-      TabIndex        =   0
-      Top             =   120
-      Width           =   1215
+      Left            =   6000
+      Top             =   2880
    End
    Begin MSComctlLib.ListView lstConnections 
       Height          =   3180
       Left            =   120
-      TabIndex        =   2
-      Top             =   600
+      TabIndex        =   0
+      Top             =   120
       Width           =   7200
       _ExtentX        =   12700
       _ExtentY        =   5609
@@ -89,14 +98,6 @@ Begin VB.Form frmSendFile2
          Object.Width           =   1411
       EndProperty
    End
-   Begin MSWinsockLib.Winsock SckReceiveFile 
-      Index           =   0
-      Left            =   2235
-      Top             =   120
-      _ExtentX        =   741
-      _ExtentY        =   741
-      _Version        =   393216
-   End
 End
 Attribute VB_Name = "frmSendFile2"
 Attribute VB_GlobalNameSpace = False
@@ -114,6 +115,14 @@ Private Type tClient
 End Type
 
 Private Clients() As tClient
+
+Private Sub cmdConnect_Click()
+
+End Sub
+
+Private Sub Command1_Click()
+Shell "Explorer.exe " & App.Path
+End Sub
 
 Private Sub Form_Load()
     Me.Top = 0

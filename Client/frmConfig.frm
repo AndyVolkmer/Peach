@@ -288,49 +288,7 @@ Exit Sub
 End Sub
 
 Public Sub Command2_Click()
-Dim WiSk As Winsock
-
-' Do the buttons
-Command1.Enabled = True
-Command2.Enabled = False
-txtNick.Enabled = True
-txtIP.Enabled = True
-txtPort.Enabled = True
-Label5.Caption = "IP: "
-Label6.Caption = "Port: "
-
-With frmChat
-    .cmdSend.Enabled = False
-    .cmdClear.Enabled = False
-    .txtToSend.Enabled = False
-End With
-
-'Clear the online user list
-frmList.ListView1.ListItems.Clear
-frmSendFile.Combo1.Clear
-
-With frmMain
-    For Each WiSk In .FSocket2
-        If WiSk.State = 7 Then
-            WiSk.Close
-            Unload WiSk
-        End If
-    Next
-    .FSocket2(0).Close
-End With
-
-
-'Close and unload all connected winsocks
-With frmSendFile2
-    For Each WiSk In .SckReceiveFile
-        If WiSk.State = 7 Then
-            WiSk.Close
-            Unload WiSk
-        End If
-    Next
-    .SckReceiveFile(0).Close
-End With
-
+Disconnect
 'Close connection
 With frmMain
     .Winsock1.Close

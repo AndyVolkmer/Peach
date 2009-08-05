@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.3.0"
+Public Const Rev = "1.0.3.1"
 Public Const aPort = 6123
 Public Const bPort = 6124
 
@@ -129,3 +129,50 @@ End Function
 Public Function GetNextWindow(ByVal lhWnd As Long) As Long
     GetNextWindow = GetWindow(lhWnd, GW_HWNDNEXT)
 End Function
+
+Public Sub Disconnect()
+Dim WiSk As Winsock
+
+' Do the buttons
+With frmConfig
+    .Command1.Enabled = True
+    .Command2.Enabled = False
+    .txtNick.Enabled = True
+    .txtIP.Enabled = True
+    .txtPort.Enabled = True
+    .Label5.Caption = "IP: "
+    .Label6.Caption = "Port: "
+End With
+
+With frmChat
+    .cmdSend.Enabled = False
+    .cmdClear.Enabled = False
+    .txtToSend.Enabled = False
+End With
+
+'Clear the online user list
+frmList.ListView1.ListItems.Clear
+frmSendFile.Combo1.Clear
+
+'Close and unload this sockets also
+With frmMain
+    For Each WiSk In .FSocket2
+        If WiSk.State = 7 Then
+            WiSk.Close
+            Unload WiSk
+        End If
+    Next
+    .FSocket2(0).Close
+End With
+
+'Close and unload all connected winsocks
+With frmSendFile2
+    For Each WiSk In .SckReceiveFile
+        If WiSk.State = 7 Then
+            WiSk.Close
+            Unload WiSk
+        End If
+    Next
+    .SckReceiveFile(0).Close
+End With
+End Sub

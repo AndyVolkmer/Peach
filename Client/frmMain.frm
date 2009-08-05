@@ -278,6 +278,10 @@ Command3.Caption = MDIcommand_sendfile
 Command4.Caption = MDIcommand_onlinelist
 End Sub
 
+Private Sub FSocket_Close()
+Disconnect
+End Sub
+
 Private Sub FSocket_DataArrival(ByVal bytesTotal As Long)
 Dim strMsg As String
 Dim strArr() As String
@@ -435,6 +439,7 @@ Private Sub MDIForm_Unload(Cancel As Integer)
     Unload frmBlank
     Unload frmDESP
     Unload frmAbout
+    Unload frmSendFile2
 Shell_NotifyIcon NIM_DELETE, nid ' del tray icon
 End Sub
 
@@ -466,28 +471,15 @@ Private Sub Winsock1_Close()
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 
 Winsock1.Close
+
+Disconnect
+
 StatusBar1.Panels(1).Text = MDIstatusbar_dcfromserver
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: You got disconnected from Server."
 frmDESP.DisplayMessage DESPtext_dcserver
 
-frmList.ListView1.ListItems.Clear 'Clear list
-frmSendFile.Combo1.Clear 'Clear sendfile combo
+SetupForms frmConfig
 
-' Do the buttons
-With frmConfig
-    .Command1.Enabled = True
-    .Command2.Enabled = False
-    .txtNick.Enabled = True
-    .txtIP.Enabled = True
-    .txtPort.Enabled = True
-    .Label5.Caption = "IP: "
-    .Label6.Caption = "Port: "
-End With
-With frmChat
-    .cmdSend.Enabled = False
-    .cmdClear.Enabled = False
-    .txtToSend.Enabled = False
-End With
 End Sub
 
 Private Sub Winsock1_Connect()
@@ -554,6 +546,7 @@ Case "!listupdate"
 Case "!iprequest"
     
     'Connect new winsock to client
+    FSocket.Close
     With FSocket
         .RemoteHost = arr(1)
         .RemotePort = aPort
@@ -577,60 +570,15 @@ Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal
 Dim WiSk As Winsock
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 
-'Close connecting winsock ( state = 0 )
-Winsock1.Close
-
-With frmMain
-    For Each WiSk In .FSocket2
-        If WiSk.State = 7 Then
-            WiSk.Close
-            Unload WiSk
-        End If
-    Next
-    .FSocket2(0).Close
-End With
-
-'Close and unload all connected winsocks
-With frmSendFile2
-    For Each WiSk In .SckReceiveFile
-        If WiSk.State = sckConnected Then
-            WiSk.Close
-            Unload WiSk
-        End If
-    Next
-End With
-
-'Close Listening
-With frmSendFile2
-    .SckReceiveFile(0).Close
-End With
+'Call Disconnect function to DC all sockets and do buttons
+Disconnect
 
 'Write message
-VisualizeMessage False, "System", "Disconnected due connection problem."
+'VisualizeMessage False, "System", "Disconnected due connection problem."
 
 'Change status to connection problem
 StatusBar1.Panels(1).Text = MDIstatusbar_connectionproblem
 
-'Clear the Lists with online users
-frmList.ListView1.ListItems.Clear
-frmSendFile.Combo1.Clear
-
-'Do the buttons
-With frmConfig
-    .Command1.Enabled = True
-    .Command2.Enabled = False
-    .txtNick.Enabled = True
-    .txtIP.Enabled = True
-    .txtPort.Enabled = True
-    .Label5.Caption = "IP: "
-    .Label6.Caption = "Port: "
-End With
-With frmChat
-    .Hide
-    .cmdClear.Enabled = False
-    .cmdSend.Enabled = False
-    .txtToSend.Enabled = False
-End With
 frmConfig.Show
 End Sub
 
