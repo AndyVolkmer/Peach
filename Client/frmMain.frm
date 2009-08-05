@@ -296,7 +296,7 @@ Select Case CommX
 Case "!acceptfile"
     frmSendFile.SendF FSocket.RemoteHost
 Case "!denyfile"
-    MsgBox "File transfer was decilined.", vbInformation
+    MsgBox SFmsgbox_filedecilined, vbInformation
 End Select
 End Sub
 
@@ -344,7 +344,7 @@ Comm = ArrX(0)
 
 Select Case Comm
 Case "!filerequest"
-    If MsgBox("You are getting an incomming file, do you want to accept?", vbYesNo + vbQuestion) = vbYes Then
+    If MsgBox(SFmsgbox_incfile, vbYesNo + vbQuestion) = vbYes Then
         FSocket2(Index).SendData "!acceptfile" & "#"
         frmSendFile2.Show
     Else
@@ -570,11 +570,11 @@ Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal
 Dim WiSk As Winsock
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 
+'Close connecting winsock ( state = 0 )
+Winsock1.Close
+
 'Call Disconnect function to DC all sockets and do buttons
 Disconnect
-
-'Write message
-'VisualizeMessage False, "System", "Disconnected due connection problem."
 
 'Change status to connection problem
 StatusBar1.Panels(1).Text = MDIstatusbar_connectionproblem

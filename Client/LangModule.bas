@@ -60,10 +60,16 @@ Public LISTcommand_close                As String
 Public SFlabel_filename                 As String
 Public SFlabel_sendingfile              As String
 Public SFlabel_sent                     As String
+Public SFlabel_sendto                   As String
 
 Public SFcommand_browse                 As String
 Public SFcommand_sendfile               As String
 Public SFcommand_cancelsending          As String
+
+Public SFmsgbox_nousersel               As String
+Public SFmsgbox_nofilesel               As String
+Public SFmsgbox_incfile                 As String
+Public SFmsgbox_filedecilined           As String
 
 ' Desp form ..
 Public DESPtext_newmsg                  As String
@@ -125,6 +131,12 @@ LISTcommand_close = "&Schliessen"
 SFlabel_filename = " Datei Name:"
 SFlabel_sendingfile = "Sende:"
 SFlabel_sent = "0.0% Gesendet"
+SFlabel_sendto = "Sende an:"
+
+SFmsgbox_nousersel = "Kein Benutzer ausgewählt."
+SFmsgbox_nofilesel = "Keine Datei ausgewählt."
+SFmsgbox_incfile = "Sie empfangen eine Datei, möchsten sie annehmen?"
+SFmsgbox_filedecilined = "Der Benutzer hat die Datei abgelehnt."
 
 SFcommand_browse = "&Suchen .."
 SFcommand_sendfile = "Senden"
@@ -194,6 +206,12 @@ LISTcommand_close = "&Close"
 SFlabel_filename = " File Name:"
 SFlabel_sendingfile = "Sending:"
 SFlabel_sent = "0.0% Sent"
+SFlabel_sendto = "Send to:"
+
+SFmsgbox_nousersel = "No user selected."
+SFmsgbox_nofilesel = "No file selected."
+SFmsgbox_incfile = "You are getting an incomming file, do you want to accept?"
+SFmsgbox_filedecilined = "File transfer was decilined."
 
 SFcommand_browse = "&Search .."
 SFcommand_sendfile = "Send"
@@ -256,6 +274,12 @@ LISTcommand_close = "&Cerrar"
 SFlabel_filename = " Nombre del archivo:"
 SFlabel_sendingfile = "Enviando:"
 SFlabel_sent = "0.0% Enviado"
+SFlabel_sendto = "Enviar a:"
+
+SFmsgbox_nousersel = "No has seleccionado a una persona."
+SFmsgbox_nofilesel = "No has seleccionado a un archivo."
+SFmsgbox_incfile = "Estas recibiendo un archivo, quieres aceptar?"
+SFmsgbox_filedecilined = "El envio ha sido rechazado."
 
 SFcommand_browse = "&Buscar .."
 SFcommand_sendfile = "Enviar"
@@ -324,6 +348,12 @@ LISTcommand_close = "&Stäng"
 SFlabel_filename = " Fil Namn:"
 SFlabel_sendingfile = "Sänder:"
 SFlabel_sent = "0.0% Sänt"
+SFlabel_sendto = "Send to:"
+
+SFmsgbox_nousersel = "No user selected."
+SFmsgbox_nofilesel = "No file selected."
+SFmsgbox_incfile = "You are getting an incomming file, do you want to accept?"
+SFmsgbox_filedecilined = "File transfer was decilined."
 
 SFcommand_browse = "&Sök .."
 SFcommand_sendfile = "Sänd"
@@ -391,6 +421,12 @@ LISTcommand_close = "&Chiudi"
 SFlabel_filename = " Nome file:"
 SFlabel_sendingfile = "Inviando:"
 SFlabel_sent = "0.0% Inviato"
+SFlabel_sendto = "Send to:"
+
+SFmsgbox_nousersel = "No user selected."
+SFmsgbox_nofilesel = "No file selected."
+SFmsgbox_incfile = "You are getting an incomming file, do you want to accept?"
+SFmsgbox_filedecilined = "File transfer was decilined."
 
 SFcommand_browse = "&Cerca .."
 SFcommand_sendfile = "Invia"
@@ -459,6 +495,12 @@ LISTcommand_close = "&Zatvori"
 SFlabel_filename = " Ime  arhive:"
 SFlabel_sendingfile = "Slanje:"
 SFlabel_sent = "0.0% Poslato"
+SFlabel_sendto = "Send to:"
+
+SFmsgbox_nousersel = "No user selected."
+SFmsgbox_nofilesel = "No file selected."
+SFmsgbox_incfile = "You are getting an incomming file, do you want to accept?"
+SFmsgbox_filedecilined = "File transfer was decilined."
 
 SFcommand_browse = "Trazi .."
 SFcommand_sendfile = "Posalji"
@@ -522,6 +564,12 @@ LISTcommand_close = "&Sluiten"
 SFlabel_filename = " Bestandsnaam:"
 SFlabel_sendingfile = "verZenden:"
 SFlabel_sent = "0.0% verzonden"
+SFlabel_sendto = "Send to:"
+
+SFmsgbox_nousersel = "No user selected."
+SFmsgbox_nofilesel = "No file selected."
+SFmsgbox_incfile = "You are getting an incomming file, do you want to accept?"
+SFmsgbox_filedecilined = "File transfer was decilined."
 
 SFcommand_browse = "&Zoeken .."
 SFcommand_sendfile = "&Stuur"
@@ -585,6 +633,12 @@ LISTcommand_close = "&Ferme"
 SFlabel_filename = " Nom file:"
 SFlabel_sendingfile = "Envoyant:"
 SFlabel_sent = "0.0% Envoyé"
+SFlabel_sendto = "Send to:"
+
+SFmsgbox_nousersel = "No user selected."
+SFmsgbox_nofilesel = "No file selected."
+SFmsgbox_incfile = "You are getting an incomming file, do you want to accept?"
+SFmsgbox_filedecilined = "File transfer was decilined."
 
 SFcommand_browse = "&Cherche .."
 SFcommand_sendfile = "Envoi"

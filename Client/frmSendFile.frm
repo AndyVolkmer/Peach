@@ -249,13 +249,13 @@ End Sub
 Private Sub cmdSendFile_Click()
 'If no user selected then exit
 If Combo1.ListIndex < 0 Then
-    MsgBox "No user selected.", vbInformation
+    MsgBox SFmsgbox_nousersel, vbInformation
     Combo1.SetFocus
     Exit Sub
 End If
 
 If txtFileName.Text = "" Then
-    MsgBox "No file selected.", vbInformation
+    MsgBox SFmsgbox_nofilesel, vbInformation
     txtFileName.SetFocus
     Exit Sub
 End If
@@ -312,6 +312,7 @@ lblFileToSend.Caption = SFlabel_sendingfile
 lblProgress.Caption = SFlabel_sent
 cmdBrowse.Caption = SFcommand_browse
 cmdSendFile.Caption = SFcommand_sendfile
+Label4.Caption = SFlabel_sendto
 End Sub
 
 Private Sub SckSendFile_Close()
