@@ -18,12 +18,21 @@ Begin VB.Form frmPanel
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
    ScaleHeight     =   3330
    ScaleWidth      =   7515
    ShowInTaskbar   =   0   'False
+   Begin VB.CommandButton Command3 
+      Caption         =   "&Mute"
+      Height          =   405
+      Left            =   1440
+      TabIndex        =   6
+      Top             =   240
+      Width           =   1215
+   End
    Begin VB.ListBox List1 
       Height          =   1425
       Left            =   4800
@@ -50,19 +59,19 @@ Begin VB.Form frmPanel
    End
    Begin VB.CommandButton Command1 
       Caption         =   "&Kick"
-      Height          =   285
+      Height          =   405
       Left            =   240
       TabIndex        =   1
-      Top             =   360
+      Top             =   240
       Width           =   1215
    End
    Begin VB.TextBox Text1 
       Alignment       =   2  'Center
       Height          =   285
-      Left            =   1560
+      Left            =   240
       TabIndex        =   0
       Text            =   "0"
-      Top             =   360
+      Top             =   120
       Visible         =   0   'False
       Width           =   855
    End
@@ -85,25 +94,30 @@ Begin VB.Form frmPanel
       BackColor       =   -2147483643
       BorderStyle     =   1
       Appearance      =   1
-      NumItems        =   4
+      NumItems        =   5
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "Name"
-         Object.Width           =   3069
+         Object.Width           =   2469
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
          Text            =   "IP"
-         Object.Width           =   3069
+         Object.Width           =   2469
       EndProperty
       BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   2
          Text            =   "Winsock ID"
-         Object.Width           =   3069
+         Object.Width           =   2469
       EndProperty
       BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   3
          Text            =   "Login Time"
-         Object.Width           =   2893
+         Object.Width           =   2469
+      EndProperty
+      BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   4
+         Text            =   "Muted"
+         Object.Width           =   2295
       EndProperty
    End
 End
@@ -149,6 +163,20 @@ Next i
 ListView1.SetFocus
 End Sub
 
+Private Sub Command3_Click()
+If Command3.Caption = "&Mute" Then
+    If ListView1.ListItems.Count <= 0 Then Exit Sub
+    ListView1.ListItems.Item(ListView1.SelectedItem.Index).SubItems(4) = "Yes"
+    Command3.Caption = "&Unmute"
+    SendMessage " " & ListView1.ListItems.Item(ListView1.SelectedItem.Index) & " got muted."
+Else
+    If ListView1.ListItems.Count <= 0 Then Exit Sub
+    ListView1.ListItems.Item(ListView1.SelectedItem.Index).SubItems(4) = "No"
+    Command3.Caption = "Mute"
+    SendMessage " " & ListView1.ListItems.Item(ListView1.SelectedItem.Index) & " got unmuted."
+End If
+End Sub
+
 Private Sub Form_Load()
 Me.Top = "0"
 Me.Left = "0"
@@ -158,6 +186,11 @@ End Sub
 
 Private Sub ListView1_ItemClick(ByVal Item As MSComctlLib.ListItem)
     Text1.Text = ListView1.SelectedItem.ListSubItems(2).Text
+    If ListView1.ListItems.Item(ListView1.SelectedItem.Index).SubItems(4) = "Yes" Then
+        Command3.Caption = "&Unmute"
+    Else
+        Command3.Caption = "&Mute"
+    End If
 End Sub
 
 Private Sub Text2_KeyPress(KeyAscii As Integer)

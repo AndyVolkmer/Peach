@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.3.2"
+Public Const Rev = "1.0.3.3"
 
 Public Type NOTIFYICONDATA
 cbSize              As Long
@@ -40,7 +40,6 @@ For Each WinSk In frmMain.Winsock1
         WinSk.SendData Message
     End If
 Next
-
 End Sub
 
 Public Sub SendRequest(Message As String, Wsk As Winsock)

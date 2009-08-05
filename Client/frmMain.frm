@@ -558,7 +558,10 @@ Case "!iprequest"
         .Interval = 5
         .Enabled = True
     End With
-    
+
+'We got muted
+Case "!muted"
+    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & " You are muted!"
 'Normal message
 Case Else
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message

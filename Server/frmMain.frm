@@ -41,7 +41,7 @@ Begin VB.MDIForm frmMain
    End
    Begin MSWinsockLib.Winsock Winsock1 
       Index           =   0
-      Left            =   0
+      Left            =   120
       Top             =   600
       _ExtentX        =   741
       _ExtentY        =   741
@@ -284,6 +284,7 @@ RR = frmPanel.ListView1.ListItems.Count + 1
         .ListItems.Item(RR).SubItems(1) = Winsock1(intCounter).RemoteHostIP
         .ListItems.Item(RR).SubItems(2) = intCounter
         .ListItems.Item(RR).SubItems(3) = Format(Time, "hh:nn:ss")
+        .ListItems.Item(RR).SubItems(4) = "No"
     End With
     StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
 End Sub
@@ -334,6 +335,16 @@ With frmMain
     .ConverText = array1(2)
 End With
 
+' Check if user is muted
+For i = 1 To frmPanel.ListView1.ListItems.Count
+    If frmPanel.ListView1.ListItems.Item(i) = frmMain.NameText Then
+        If frmPanel.ListView1.ListItems.Item(i).SubItems(4) = "Yes" Then
+            SendRequest "!muted" & "#", frmMain.Winsock1(Index)
+            Exit Sub
+        End If
+    End If
+Next i
+
 ' Validate: If message is to long then kick
 If Len(frmMain.ConverText) > 200 Then
     frmPanel.ListView1.ListItems.Remove (Index) ' Remove from list
@@ -351,7 +362,7 @@ Case "!connected" ' Announce connected player and send to user online list
 Case "!namerequest" ' Check if the name is avaible or not
     ' Check badname list ..
     For i = 0 To frmPanel.List1.ListCount
-        If UCase(frmPanel.List1.List(i)) = UCase(frmMain.NameText) Then
+        If StrConv(frmPanel.List1.List(i), vbProperCase) = StrConv(frmMain.NameText, vbProperCase) Then
             bMatch = True
             Exit For
         End If
@@ -359,7 +370,7 @@ Case "!namerequest" ' Check if the name is avaible or not
     
     ' Check current online list
     For i = 1 To frmPanel.ListView1.ListItems.Count
-        If UCase(frmPanel.ListView1.ListItems.Item(i)) = UCase(frmMain.NameText) Then
+        If UCase(frmPanel.ListView1.ListItems.Item(i)) = StrConv(frmMain.NameText, vbProperCase) Then
             bMatch = True
             Exit For
         End If
