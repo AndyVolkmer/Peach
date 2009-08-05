@@ -164,15 +164,14 @@ ListView1.SetFocus
 End Sub
 
 Private Sub Command3_Click()
+If ListView1.ListItems.Count <= 0 Then Exit Sub
 If Command3.Caption = "&Mute" Then
-    If ListView1.ListItems.Count <= 0 Then Exit Sub
     ListView1.ListItems.Item(ListView1.SelectedItem.Index).SubItems(4) = "Yes"
     Command3.Caption = "&Unmute"
     SendMessage " " & ListView1.ListItems.Item(ListView1.SelectedItem.Index) & " got muted."
 Else
-    If ListView1.ListItems.Count <= 0 Then Exit Sub
     ListView1.ListItems.Item(ListView1.SelectedItem.Index).SubItems(4) = "No"
-    Command3.Caption = "Mute"
+    Command3.Caption = "&Mute"
     SendMessage " " & ListView1.ListItems.Item(ListView1.SelectedItem.Index) & " got unmuted."
 End If
 End Sub
