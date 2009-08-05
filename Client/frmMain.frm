@@ -13,6 +13,14 @@ Begin VB.MDIForm frmMain
    LinkTopic       =   "MDIForm1"
    LockControls    =   -1  'True
    ScrollBars      =   0   'False
+   Begin MSWinsockLib.Winsock FSocket2 
+      Index           =   0
+      Left            =   960
+      Top             =   600
+      _ExtentX        =   741
+      _ExtentY        =   741
+      _Version        =   393216
+   End
    Begin VB.Timer STimer 
       Enabled         =   0   'False
       Left            =   480
@@ -270,6 +278,77 @@ Command3.Caption = MDIcommand_sendfile
 Command4.Caption = MDIcommand_onlinelist
 End Sub
 
+Private Sub FSocket_DataArrival(ByVal bytesTotal As Long)
+Dim strMsg As String
+Dim strArr() As String
+Dim CommX As String
+
+FSocket.GetData strMsg
+
+strArr = Split(strMsg, "#")
+CommX = strArr(0)
+
+Select Case CommX
+Case "!acceptfile"
+    frmSendFile.SendF FSocket.RemoteHost
+Case "!denyfile"
+    MsgBox "File transfer was decilined.", vbInformation
+End Select
+End Sub
+
+Private Sub FSocket2_ConnectionRequest(Index As Integer, ByVal requestID As Long)
+Dim intCounter As Integer
+intCounter = loadSocket
+With FSocket2(intCounter)
+    .LocalPort = aPort
+    .Accept requestID
+End With
+End Sub
+
+Private Function socketFree() As Integer
+On Error GoTo HandleErrorFreeSocket
+    Dim theIP As Variant
+    Dim p As Integer
+    For p = FSocket2.LBound + 1 To FSocket2.UBound
+        theIP = FSocket2(p).LocalIP
+    Next
+    socketFree = FSocket2.UBound + 1
+Exit Function
+HandleErrorFreeSocket:
+socketFree = p
+End Function
+
+Private Function loadSocket() As Integer
+Dim theFreeSocket As Integer
+theFreeSocket = 0
+theFreeSocket = socketFree
+
+Load FSocket2(theFreeSocket)
+
+loadSocket = theFreeSocket
+End Function
+
+Private Sub FSocket2_DataArrival(Index As Integer, ByVal bytesTotal As Long)
+Dim ArrD As String
+Dim ArrX() As String
+Dim Comm As String
+
+FSocket2(Index).GetData ArrD
+
+ArrX = Split(ArrD, "#")
+Comm = ArrX(0)
+
+Select Case Comm
+Case "!filerequest"
+    If MsgBox("You are getting an incomming file, do you want to accept?", vbYesNo + vbQuestion) = vbYes Then
+        FSocket2(Index).SendData "!acceptfile" & "#"
+        frmSendFile2.Show
+    Else
+        FSocket2(Index).SendData "!denyfile" & "#"
+    End If
+End Select
+End Sub
+
 Private Sub MDIForm_Initialize()
 Call InitCommonControls
 End Sub
@@ -500,6 +579,31 @@ Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 
 'Close connecting winsock ( state = 0 )
 Winsock1.Close
+
+With frmMain
+    For Each WiSk In .FSocket2
+        If WiSk.State = 7 Then
+            WiSk.Close
+            Unload WiSk
+        End If
+    Next
+    .FSocket2(0).Close
+End With
+
+'Close and unload all connected winsocks
+With frmSendFile2
+    For Each WiSk In .SckReceiveFile
+        If WiSk.State = sckConnected Then
+            WiSk.Close
+            Unload WiSk
+        End If
+    Next
+End With
+
+'Close Listening
+With frmSendFile2
+    .SckReceiveFile(0).Close
+End With
 
 'Write message
 VisualizeMessage False, "System", "Disconnected due connection problem."

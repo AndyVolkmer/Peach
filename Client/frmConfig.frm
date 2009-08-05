@@ -268,6 +268,18 @@ With frmMain.Winsock1
     Label6.Caption = "Port: " & .RemotePort
 End With
 
+'Set Recieve-Request-Winsock to listen
+With frmMain
+    .FSocket2(0).LocalPort = aPort
+    .FSocket2(0).Listen
+End With
+
+'Set Recieve-File-Winsock to listen
+With frmSendFile2
+    .SckReceiveFile(0).LocalPort = bPort
+    .SckReceiveFile(0).Listen
+End With
+
 frmMain.StatusBar1.Panels(1).Text = MDIstatusbar_connecting & txtIP.Text & ":" & txtPort.Text
 frmConfig.Hide
 frmChat.Show
@@ -276,6 +288,8 @@ Exit Sub
 End Sub
 
 Public Sub Command2_Click()
+Dim WiSk As Winsock
+
 ' Do the buttons
 Command1.Enabled = True
 Command2.Enabled = False
@@ -294,6 +308,28 @@ End With
 'Clear the online user list
 frmList.ListView1.ListItems.Clear
 frmSendFile.Combo1.Clear
+
+With frmMain
+    For Each WiSk In .FSocket2
+        If WiSk.State = 7 Then
+            WiSk.Close
+            Unload WiSk
+        End If
+    Next
+    .FSocket2(0).Close
+End With
+
+
+'Close and unload all connected winsocks
+With frmSendFile2
+    For Each WiSk In .SckReceiveFile
+        If WiSk.State = 7 Then
+            WiSk.Close
+            Unload WiSk
+        End If
+    Next
+    .SckReceiveFile(0).Close
+End With
 
 'Close connection
 With frmMain

@@ -391,7 +391,6 @@ Case "!iprequest"
         With frmMain
             If .NameText = frmPanel.ListView1.ListItems.Item(i) Then
                 SendRequest "!iprequest" & "#" & frmPanel.ListView1.ListItems.Item(i).SubItems(1), .Winsock1(Index)
-                VisualizeMessage .Command, .Name, frmPanel.ListView1.ListItems.Item(i).SubItems(1)
             End If
         End With
     Next i

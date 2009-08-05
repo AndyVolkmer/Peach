@@ -100,7 +100,7 @@ Dim i As Integer
 frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 
 Select Case txtToSend.Text
-Case "", " ", "  ", "   ", "    ", "      ", "       " ' No white spaces 0-6
+Case "", " ", "  ", "   ", "    ", "     ", "      "  ' No white spaces 0-6
     Exit Sub
 Case Trim("!time"), Trim("!Time"), Trim("!TIME") 'Time
     txtConver.Text = txtConver.Text & vbCrLf & frmMain.Prefix & CHATtimetext & Format(Time, "hh:nn")
@@ -117,7 +117,7 @@ Case Else 'Message
     For i = 1 To frmList.ListView1.ListItems.Count
         If frmList.ListView1.ListItems.Item(i).Checked = True Then
             'If the the selected name is yours then no
-            If frmList.ListView1.ListItems.Item(i).Text = UCase(frmConfig.txtNick) Then
+            If frmList.ListView1.ListItems.Item(i).Text = StrConv(frmConfig.txtNick, vbProperCase) Then
                 MsgBox "You cant whisper yourself.", vbInformation
                 txtToSend.Text = ""
                 txtToSend.SetFocus

@@ -18,6 +18,7 @@ Object={E9260B1F-3B85-11D8-8579-000C7641C3F2}#40.0#0; menudesp.ocx
 Form=frmDESP.frm
 Form=frmBlank.frm
 Form=frmAbout.frm
+Form=frnSendFile2.frm
 IconForm="frmMain"
 Startup="frmLanguage"
 HelpFile=""

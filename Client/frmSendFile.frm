@@ -254,6 +254,12 @@ If Combo1.ListIndex < 0 Then
     Exit Sub
 End If
 
+If txtFileName.Text = "" Then
+    MsgBox "No file selected.", vbInformation
+    txtFileName.SetFocus
+    Exit Sub
+End If
+
 'Request IP
 SendMessage "!iprequest" & "#" & Combo1.Text & "#"
 
@@ -280,7 +286,7 @@ Public Sub SendFile(ByVal FileName As String, Host As String)
     DoEvents
     
     SckSendFile.RemoteHost = Host
-    SckSendFile.RemotePort = aPort
+    SckSendFile.RemotePort = bPort
     SckSendFile.Connect
     
     sFileName = FileName
@@ -323,7 +329,7 @@ Private Sub SckSendFile_Close()
 End Sub
 
 Private Sub SckSendFile_Connect()
-    Dim Buffer() As Byte, P As Long
+    Dim Buffer() As Byte, p As Long
     
     iFileNum = FreeFile
     Open sFileName For Binary Access Read Lock Write As iFileNum
@@ -332,8 +338,8 @@ Private Sub SckSendFile_Connect()
     Get iFileNum, , Buffer ' read data
     
     SckSendFile.SendData CStr(LOF(iFileNum)) & ","   ' send the file size
-    P = InStrRev(sFileName, "\")
-    SckSendFile.SendData Mid(sFileName, P + 1) & ":" ' send the file name
+    p = InStrRev(sFileName, "\")
+    SckSendFile.SendData Mid(sFileName, p + 1) & ":" ' send the file name
     SckSendFile.SendData Buffer                      ' send first packet
 End Sub
 
