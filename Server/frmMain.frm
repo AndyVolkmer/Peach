@@ -370,7 +370,7 @@ Case "!namerequest" ' Check if the name is avaible or not
     
     ' Check current online list
     For i = 1 To frmPanel.ListView1.ListItems.Count
-        If UCase(frmPanel.ListView1.ListItems.Item(i)) = StrConv(frmMain.NameText, vbProperCase) Then
+        If StrConv(frmPanel.ListView1.ListItems.Item(i), vbProperCase) = StrConv(frmMain.NameText, vbProperCase) Then
             bMatch = True
             Exit For
         End If

@@ -74,6 +74,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -126,8 +127,8 @@ Case Else 'Message
             
             With frmMain
                 .ConverText = txtToSend.Text
-                .NameText = UCase(frmConfig.txtNick)
-                .ForWho = UCase(frmList.ListView1.ListItems.Item(i))
+                .NameText = StrConv(frmConfig.txtNick, vbProperCase)
+                .ForWho = StrConv(frmList.ListView1.ListItems.Item(i), vbProperCase)
                 .Message = "!w" & "#" & .NameText & "|" & .ForWho & "#" & .ConverText & "#"
             SendMessage .Message
             VisualizeMessage True, .ForWho, .ConverText
