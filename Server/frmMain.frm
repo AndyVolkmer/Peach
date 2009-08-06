@@ -198,10 +198,11 @@ Private Sub Command2_Click()
     SetupForms frmChat
 End Sub
 
-Private Sub SetupForms(Nix As Form)
+Public Sub SetupForms(Nix As Form)
     frmChat.Hide
     frmConfig.Hide
     frmSendFile.Hide
+    frmPanel.Hide
     Nix.Show
 End Sub
 

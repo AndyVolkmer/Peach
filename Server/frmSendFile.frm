@@ -19,6 +19,7 @@ Begin VB.Form frmSendFile
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MDIChild        =   -1  'True
    ScaleHeight     =   4065
    ScaleWidth      =   7470

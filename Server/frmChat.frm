@@ -18,6 +18,7 @@ Begin VB.Form frmChat
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MDIChild        =   -1  'True
    ScaleHeight     =   3840
    ScaleWidth      =   7515
@@ -47,7 +48,6 @@ Begin VB.Form frmChat
       _ExtentX        =   9763
       _ExtentY        =   1508
       _Version        =   393217
-      Enabled         =   -1  'True
       MultiLine       =   0   'False
       TextRTF         =   $"frmChat.frx":0000
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -69,7 +69,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B

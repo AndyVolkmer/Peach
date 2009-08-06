@@ -17,6 +17,7 @@ Begin VB.Form frmConfig
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
@@ -162,19 +163,17 @@ Command1.Enabled = False
 Command2.Enabled = True
     
 On Error GoTo ErrListen
-' Connect sockets and start listening
+'Connect sockets and start listening
 With frmMain
     .Winsock1(0).LocalPort = txtPort.Text
     .Winsock1(0).Listen
     .StatusBar1.Panels(1).Text = "Status: Connected with  " & .Winsock1.Count - 1 & " Client(s)."
 End With
 
-frmConfig.Hide
+frmMain.SetupForms frmChat
 
-With frmChat
-    .Show
-    .txtToSend.SetFocus
-End With
+frmChat.txtToSend.SetFocus
+
 Exit Sub
 ErrListen:
 Select Case Err.Number
