@@ -224,7 +224,6 @@ Dim L As Long
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
 StatusBar1.Panels(1).Text = "Status : Disconnected"
-frmPanel.Text1 = "0"
 SetupForms frmConfig
 End Sub
 

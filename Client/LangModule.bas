@@ -51,6 +51,7 @@ Public CHATcommand_send                 As String
 Public CHATcommand_clear                As String
 
 Public CHATtimetext                     As String
+Public CHATflood_protection             As String
 
 ' List form ..
 Public LISTcaption                      As String
@@ -124,6 +125,7 @@ CHATcommand_send = "&Senden"
 CHATcommand_clear = "&Löschen"
 
 CHATtimetext = " Die Zeit beträgt "
+CHATflood_protection = "Sie haben den clientseitigen Spamschutz aktiviert. Bitte wiederholen sie sich nicht."
 
 LISTcaption = "Online Liste"
 LISTcommand_close = "&Schliessen"
@@ -148,7 +150,7 @@ End Sub
 
 Public Sub SetLangEnglish()
 
-' MDI form ..
+'MDI form
 MDIcommand_config = "&Configuration"
 MDIcommand_chat = "Ch&at"
 MDIcommand_sendfile = "&Send File"
@@ -197,6 +199,7 @@ CHATcommand_send = "&Send"
 CHATcommand_clear = "&Clear"
 
 CHATtimetext = " The time is "
+CHATflood_protection = "Your message has triggered clientside flood protection. Please don't repeat yourself."
 
 ' List form ..
 LISTcaption = "Online List"
@@ -267,6 +270,7 @@ CHATcommand_send = "&Enviar"
 CHATcommand_clear = "&Limpiar"
 
 CHATtimetext = " El tiempo es "
+CHATflood_protection = "Your message has triggered clientside flood protection. Please don't repeat yourself."
 
 LISTcaption = "Lista Online"
 LISTcommand_close = "&Cerrar"
@@ -339,6 +343,7 @@ CHATcommand_send = "&Sänd"
 CHATcommand_clear = "&Rensa"
 
 CHATtimetext = " Tiden är "
+CHATflood_protection = "Your message has triggered clientside flood protection. Please don't repeat yourself."
 
 ' List form ..
 LISTcaption = "Online Lista"
@@ -412,6 +417,7 @@ CHATcommand_send = "&Invia"
 CHATcommand_clear = "&Clear"
 
 CHATtimetext = " L'ora e' "
+CHATflood_protection = "Your message has triggered clientside flood protection. Please don't repeat yourself."
 
 ' List form ..
 LISTcaption = "Lista Online"
@@ -486,6 +492,7 @@ CHATcommand_send = "&Posalji"
 CHATcommand_clear = "&Obrisi"
 
 CHATtimetext = " Vreme je "
+CHATflood_protection = "Your message has triggered clientside flood protection. Please don't repeat yourself."
 
 ' List form ..
 LISTcaption = "Onlajn lista"
@@ -557,6 +564,7 @@ CHATcommand_send = "&Zend"
 CHATcommand_clear = "&Leegmaken"
 
 CHATtimetext = " De Tijd is: "
+CHATflood_protection = "Your message has triggered clientside flood protection. Please don't repeat yourself."
 
 LISTcaption = "Online List"
 LISTcommand_close = "&Sluiten"
@@ -626,6 +634,7 @@ CHATcommand_send = "&Envoi"
 CHATcommand_clear = "&Clear"
 
 CHATtimetext = " L'heure est "
+CHATflood_protection = "Your message has triggered clientside flood protection. Please don't repeat yourself."
 
 LISTcaption = "Liste Online"
 LISTcommand_close = "&Ferme"

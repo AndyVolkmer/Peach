@@ -288,8 +288,6 @@ End Sub
 
 Private Sub Form_Initialize()
 If App.PrevInstance = True Then
-    MsgBox "Peach is already running!", vbInformation
-     'you can add code to maximize already open instance
     Exit Sub
 End If
 Call InitCommonControls

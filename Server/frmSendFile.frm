@@ -23,13 +23,6 @@ Begin VB.Form frmSendFile
    ScaleHeight     =   4065
    ScaleWidth      =   7470
    ShowInTaskbar   =   0   'False
-   Begin VB.TextBox txtListenPort 
-      Height          =   285
-      Left            =   240
-      TabIndex        =   2
-      Top             =   240
-      Width           =   1215
-   End
    Begin VB.Timer tmrStatus 
       Interval        =   10
       Left            =   2775
@@ -124,7 +117,7 @@ Private Clients() As tClient
 
 Private Sub cmdConnect_Click()
     If cmdConnect.Caption = "Start Listening for Connections" Then
-        SckReceiveFile(0).LocalPort = Val(Me.txtListenPort.Text)
+        SckReceiveFile(0).LocalPort = iPort
         SckReceiveFile(0).Listen
         cmdConnect.Caption = "Stop Listening for Connections"
     Else
@@ -136,7 +129,6 @@ End Sub
 Private Sub Form_Load()
     Me.Top = 0
     Me.Left = 0
-    txtListenPort.Text = frmConfig.txtPort + 1
     lstConnections.ListItems.Add , , "0"
 End Sub
 
@@ -270,8 +262,4 @@ Private Sub tmrStatus_Timer()
             FitTextInListView Me.lstConnections, 1, , K + 1
         End If
     Next K
-End Sub
-
-Private Sub txtListenPort_Validate(Cancel As Boolean)
-    txtListenPort.Text = Val(txtListenPort.Text)
 End Sub

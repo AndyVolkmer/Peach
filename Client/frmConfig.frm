@@ -204,21 +204,21 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-'Nick cant be empty
+'Nick can't be empty
 If txtNick.Text = "" Then
     MsgBox CONFIGmsgbox_namenoempty, vbInformation
     txtNick.SetFocus
     Exit Sub
 End If
 
-'IP cant be empty
+'IP can't be empty
 If txtIP.Text = "" Then
     MsgBox CONFIGmsgbox_ipnoempty, vbInformation
     txtIP.SetFocus
     Exit Sub
 End If
 
-'Port cant be empty
+'Port can't be empty
 If txtPort.Text = "" Then
     MsgBox CONFIGmsgbox_portnoempty, vbInformation
     txtPort.SetFocus

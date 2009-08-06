@@ -254,6 +254,12 @@ If Combo1.ListIndex < 0 Then
     Exit Sub
 End If
 
+If Combo1.Text = frmConfig.txtNick.Text Then
+    MsgBox "You cant send yourself a file.", vbInformation
+    Combo1.SetFocus
+    Exit Sub
+End If
+
 If txtFileName.Text = "" Then
     MsgBox SFmsgbox_nofilesel, vbInformation
     txtFileName.SetFocus

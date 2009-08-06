@@ -98,19 +98,17 @@ Option Explicit
 
 Private Sub cmdSend_Click()
 Dim i As Integer
-With frmMain
-    .Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
-    If txtToSend.Text = .LastMsg Then
-        VisualizeMessage False, "System", "You cant write the same message again."
-        txtToSend.Text = ""
-        Exit Sub
-    End If
-    .LastMsg = txtToSend.Text
-End With
+frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 
 'No white spaces 0-5
 Select Case txtToSend.Text
 Case "", " ", "  ", "   ", "    ", "     ", "      "
+    Exit Sub
+    
+'Check if its the same Message as before
+Case frmMain.LastMsg
+    VisualizeMessage False, "System", CHATflood_protection
+    txtToSend.Text = ""
     Exit Sub
     
 'Display the time
@@ -157,6 +155,7 @@ Case Else
     SendMessage .Message
     End With
 End Select
+frmMain.LastMsg = txtToSend.Text
 txtToSend.Text = ""
 txtToSend.SetFocus
 End Sub
