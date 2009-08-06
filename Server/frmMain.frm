@@ -29,6 +29,7 @@ Begin VB.MDIForm frmMain
             MinWidth        =   7938
          EndProperty
       EndProperty
+      Enabled         =   0   'False
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25

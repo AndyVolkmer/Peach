@@ -233,6 +233,7 @@ Public ConverText   As String
 Public Message      As String
 Public ForWho       As String
 Public LastMsg      As String
+Public Mute         As Boolean
 Dim Vali            As Boolean
 
 Private Sub Close_Click()
@@ -475,6 +476,8 @@ Winsock1.Close
 
 Disconnect
 
+frmMain.LastMsg = ""
+
 StatusBar1.Panels(1).Text = MDIstatusbar_dcfromserver
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: You got disconnected from Server."
 frmDESP.DisplayMessage DESPtext_dcserver
@@ -529,10 +532,12 @@ Select Case Command
 'We cant login ( choose other name )
 Case "!decilineD"
     ConnectIsFalse
-
+    Mute = False
+    
 'We can login
 Case "!accepteD"
     ConnectIsTrue
+    Mute = False
     
 'Wipe out current list and insert new values
 Case "!listupdate"
@@ -542,6 +547,7 @@ Case "!listupdate"
             frmList.ListView1.ListItems.Add , , arr(i)
             frmSendFile.Combo1.AddItem arr(i)
     Next i
+    Mute = False
     
 'We get ip here
 Case "!iprequest"
@@ -559,15 +565,19 @@ Case "!iprequest"
         .Interval = 5
         .Enabled = True
     End With
+    Mute = False
 
 'We got muted
 Case "!muted"
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & " You are muted!"
+    Mute = True
 
 'Normal message
 Case Else
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
     If frmMain.WindowState = 1 Then frmDESP.DisplayMessage DESPtext_newmsg
+    Mute = False
+    
 End Select
 End Sub
 
@@ -580,6 +590,9 @@ Winsock1.Close
 
 'Call Disconnect function to DC all sockets and do buttons
 Disconnect
+
+'Last Message is empty
+frmMain.LastMsg = ""
 
 'Change status to connection problem
 StatusBar1.Panels(1).Text = MDIstatusbar_connectionproblem

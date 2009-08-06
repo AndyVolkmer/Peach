@@ -74,7 +74,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -100,11 +99,21 @@ Private Sub cmdSend_Click()
 Dim i As Integer
 frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 
-'No white spaces 0-5
+'No whitespaces 0-5
 Select Case txtToSend.Text
 Case "", " ", "  ", "   ", "    ", "     ", "      "
     Exit Sub
-    
+End Select
+
+'Check if we are muted
+If frmMain.Mute = True Then
+    txtConver.Text = txtConver.Text & vbCrLf & " You are muted!"
+    txtToSend.Text = ""
+    Exit Sub
+End If
+
+Select Case txtToSend.Text
+        
 'Check if its the same Message as before
 Case frmMain.LastMsg
     VisualizeMessage False, "System", CHATflood_protection
