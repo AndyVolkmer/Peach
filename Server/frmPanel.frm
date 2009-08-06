@@ -50,6 +50,7 @@ Begin VB.Form frmPanel
       _ExtentX        =   12726
       _ExtentY        =   1296
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -193,14 +194,6 @@ Private Sub Form_Load()
 Me.Top = "0"
 Me.Left = "0"
 AddBadWordsToList
-End Sub
-
-Private Sub ListView1_ItemClick(ByVal Item As MSComctlLib.ListItem)
-If ListView1.ListItems.Item(ListView1.SelectedItem.Index).SubItems(4) = "Yes" Then
-    Command3.Caption = "&Unmute"
-Else
-    Command3.Caption = "&Mute"
-End If
 End Sub
 
 Private Sub AddBadWordsToList()
