@@ -212,7 +212,6 @@ Private Sub Command4_Click()
     SetupForms frmPanel
 End Sub
 
-
 Private Sub MDIForm_Initialize()
 Call InitCommonControls
 End Sub
@@ -289,7 +288,6 @@ RR = frmPanel.ListView1.ListItems.Count + 1
     StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
-'On error means its free so we take free socket
 Private Function socketFree() As Integer
 On Error GoTo HandleErrorFreeSocket
     Dim theIP As Variant
@@ -304,8 +302,8 @@ socketFree = p
 End Function
 
 Private Function loadSocket() As Integer
-' Load next free socket
-Dim theFreeSocket As Integer: theFreeSocket = 0
+Dim theFreeSocket As Integer
+theFreeSocket = 0
 theFreeSocket = socketFree
 
 Load Winsock1(theFreeSocket)
@@ -318,24 +316,24 @@ Dim array1()        As String
 Dim array2()        As String
 Dim strMessage      As String
 Dim RR              As Integer
-Dim i               As Integer ' Global "FOR" variable
+Dim i               As Integer 'Global "FOR" variable
 Dim bMatch          As Boolean
 RR = frmPanel.ListView1.ListItems.Count
 
-' Get Message
+'Get Message
 frmMain.Winsock1(Index).GetData strMessage
 
-' We decode (split) the message into an array
+'We decode (split) the message into an array
 array1 = Split(strMessage, "#")
 
-' Assign the variables to the array
+'Assign the variables to the array
 With frmMain
     .Command = array1(0)
     .NameText = array1(1)
     .ConverText = array1(2)
 End With
 
-' Check if user is muted
+'Check if user is muted
 For i = 1 To frmPanel.ListView1.ListItems.Count
     If frmPanel.ListView1.ListItems.Item(i) = frmMain.NameText Then
         If frmPanel.ListView1.ListItems.Item(i).SubItems(4) = "Yes" Then
@@ -345,7 +343,7 @@ For i = 1 To frmPanel.ListView1.ListItems.Count
     End If
 Next i
 
-' Validate: If message is to long then kick
+'Validate: If message is to long then kick
 If Len(frmMain.ConverText) > 200 Then
     frmPanel.ListView1.ListItems.Remove (Index) ' Remove from list
     Winsock1(Index).Close ' Close connection
@@ -356,11 +354,12 @@ End If
 
 Select Case frmMain.Command
 Dim u As Integer
-Case "!connected" ' Announce connected player and send to user online list
+'Announce connected player and send to user online list
+Case "!connected"
     frmPanel.ListView1.ListItems.Item(RR).Text = frmMain.NameText
     UpdateUsersList
-Case "!namerequest" ' Check if the name is avaible or not
-    ' Check badname list ..
+Case "!namerequest"
+    'Check badname-list
     For i = 0 To frmPanel.List1.ListCount
         If StrConv(frmPanel.List1.List(i), vbProperCase) = StrConv(frmMain.NameText, vbProperCase) Then
             bMatch = True
@@ -368,7 +367,7 @@ Case "!namerequest" ' Check if the name is avaible or not
         End If
     Next i
     
-    ' Check current online list
+    'Check current online list
     For i = 1 To frmPanel.ListView1.ListItems.Count
         If StrConv(frmPanel.ListView1.ListItems.Item(i), vbProperCase) = StrConv(frmMain.NameText, vbProperCase) Then
             bMatch = True
@@ -376,7 +375,8 @@ Case "!namerequest" ' Check if the name is avaible or not
         End If
     Next i
     
-    If bMatch = True Then ' Return yes or no to client
+    'Return yes or no to client
+    If bMatch = True Then
         bMatch = False
         SendRequest "!decilineD", frmMain.Winsock1(Index)
     Else
@@ -415,16 +415,14 @@ End Sub
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Dim i As Integer
 frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+Winsock1(Index).Close
+Unload Winsock1(Index)
 If Index < 0 Then
-    Winsock1(Index).Close
-    Unload Winsock1(Index)
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & " [System]: Disconnected with a host."
     For i = 1 To frmPanel.ListView1.ListItems.Count
         frmPanel.ListView1.ListItems.Remove (i)
     Next i
 Else
-    Winsock1(Index).Close
-    Unload Winsock1(Index)
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & "[System]: Disconnected due connection problem."
     StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
     For i = 1 To frmPanel.ListView1.ListItems.Count

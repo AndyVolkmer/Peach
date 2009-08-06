@@ -26,13 +26,14 @@ Begin VB.Form frmAbout
    Begin VB.CommandButton Command1 
       Caption         =   "&Accept"
       Height          =   375
-      Left            =   7080
+      Left            =   6840
       TabIndex        =   0
       Top             =   4440
-      Width           =   1335
+      Width           =   1575
    End
    Begin VB.Label Label1 
       BackColor       =   &H00F4F4F4&
+      ForeColor       =   &H8000000C&
       Height          =   975
       Left            =   240
       TabIndex        =   1

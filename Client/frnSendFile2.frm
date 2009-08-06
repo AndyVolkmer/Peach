@@ -4,7 +4,7 @@ Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmSendFile2 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
-   Caption         =   "Peach - File Transfer"
+   Caption         =   " Peach - File Transfer"
    ClientHeight    =   3870
    ClientLeft      =   45
    ClientTop       =   435

@@ -98,14 +98,27 @@ Option Explicit
 
 Private Sub cmdSend_Click()
 Dim i As Integer
-frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+With frmMain
+    .Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+    If txtToSend.Text = .LastMsg Then
+        VisualizeMessage False, "System", "You cant write the same message again."
+        txtToSend.Text = ""
+        Exit Sub
+    End If
+    .LastMsg = txtToSend.Text
+End With
 
+'No white spaces 0-5
 Select Case txtToSend.Text
-Case "", " ", "  ", "   ", "    ", "     ", "      "  ' No white spaces 0-6
+Case "", " ", "  ", "   ", "    ", "     ", "      "
     Exit Sub
-Case Trim("!time"), Trim("!Time"), Trim("!TIME") 'Time
+    
+'Display the time
+Case Trim("!time"), Trim("!Time"), Trim("!TIME")
     txtConver.Text = txtConver.Text & vbCrLf & frmMain.Prefix & CHATtimetext & Format(Time, "hh:nn")
-Case Trim("!online"), Trim("!Online"), Trim("!ONLINE") ' Open online user list
+    
+'Open online user list
+Case Trim("!online"), Trim("!Online"), Trim("!ONLINE")
     frmMain.UpdateListPosition.Enabled = True
     With frmList
         .Left = frmMain.Left + .Width * 2 + 20
@@ -113,7 +126,9 @@ Case Trim("!online"), Trim("!Online"), Trim("!ONLINE") ' Open online user list
         .Height = frmMain.Height - 400
         .Show
     End With
-Case Else 'Message
+    
+'Send Message
+Case Else
     'If any checkbox is checked then send it private to that client
     For i = 1 To frmList.ListView1.ListItems.Count
         If frmList.ListView1.ListItems.Item(i).Checked = True Then
@@ -124,7 +139,6 @@ Case Else 'Message
                 txtToSend.SetFocus
                 Exit Sub
             End If
-            
             With frmMain
                 .ConverText = txtToSend.Text
                 .NameText = StrConv(frmConfig.txtNick, vbProperCase)

@@ -289,7 +289,6 @@ End Sub
 
 Public Sub Command2_Click()
 Disconnect
-'Close connection
 With frmMain
     .Winsock1.Close
     .StatusBar1.Panels(1).Text = MDIstatusbar_disconnected

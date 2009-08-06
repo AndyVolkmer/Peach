@@ -232,6 +232,7 @@ Public NameText     As String
 Public ConverText   As String
 Public Message      As String
 Public ForWho       As String
+Public LastMsg      As String
 Dim Vali            As Boolean
 
 Private Sub Close_Click()
@@ -562,6 +563,7 @@ Case "!iprequest"
 'We got muted
 Case "!muted"
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & " You are muted!"
+
 'Normal message
 Case Else
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message

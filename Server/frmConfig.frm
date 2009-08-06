@@ -187,8 +187,8 @@ Case 10048
     txtPort.SetFocus
     txtPort.SelStart = Len(txtPort.Text)
     connCounter.Enabled = False
-Case Else ' Random
-    MsgBox Err.Number & " :  ""An error occured application has to close."
+Case Else
+    MsgBox Err.Number & " :  An error occured application has to close." & "Report the number above to developer."
     Unload Me
 End Select
 End Sub
@@ -208,14 +208,14 @@ With frmMain
     .StatusBar1.Panels(1).Text = "Status: Disconnected"
 End With
     
-' Clear frmPanel ListView
+'Clear frmPanel ListView
 frmPanel.ListView1.ListItems.Clear
 
-' Do the buttons
-    txtNick.Enabled = True
-    txtPort.Enabled = True
-    Command1.Enabled = True
-    Command2.Enabled = False
+'Do the buttons
+txtNick.Enabled = True
+txtPort.Enabled = True
+Command1.Enabled = True
+Command2.Enabled = False
 End Sub
 
 Private Sub connCounter_Timer()
@@ -245,7 +245,6 @@ With frmMain
     Label6.Caption = "Name : " & .Winsock1(0).LocalHostName
     Label8.Caption = "Version : " & Rev
 End With
-
 End Sub
 
 Private Sub txtNick_KeyPress(KeyAscii As Integer)
