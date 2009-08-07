@@ -295,7 +295,6 @@ End Sub
 
 Public Sub Form_Load()
 TSSO2 = ReadConfigFile2(App.Path & "\validaten.conf")
-
 N = Trim(TSSO2.ValidateN)
 M = Trim(TSSO2.Language)
 If N = "0" Then
@@ -335,6 +334,15 @@ Else
         M = .ListIndex
     End With
 End If
+'Write revision into revision.conf
+Dim sFileText As String
+Dim iFileNo As Integer
+ iFileNo = FreeFile
+
+ Open App.Path & "\revision.conf" For Output As #iFileNo
+ Print #iFileNo, Rev
+
+ Close #iFileNo
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

@@ -22,6 +22,15 @@ Begin VB.Form frmConfig
    ScaleHeight     =   4185
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
+   Begin VB.CommandButton Command4 
+      BackColor       =   &H00F4F4F4&
+      Caption         =   "&Update"
+      Height          =   375
+      Left            =   1440
+      TabIndex        =   18
+      Top             =   2400
+      Width           =   1335
+   End
    Begin VB.Frame Frame3 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Server Information:"
@@ -252,7 +261,6 @@ With Me
     .txtIP.Enabled = False
     .txtPort.Enabled = False
 End With
-
 With frmChat
     .cmdSend.Enabled = True
     .cmdClear.Enabled = True
@@ -311,6 +319,11 @@ With frmLanguage.Combo1
     .AddItem CONFIGcombo_french
 End With
 frmLanguage.Show
+End Sub
+
+Private Sub Command4_Click()
+On Error Resume Next
+Shell App.Path & "\peachUpdater.exe"
 End Sub
 
 Public Sub Form_Load()
