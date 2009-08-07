@@ -4,7 +4,7 @@ Begin VB.Form frmChat
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    Caption         =   "frmChat"
-   ClientHeight    =   3840
+   ClientHeight    =   4155
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   7515
@@ -18,11 +18,26 @@ Begin VB.Form frmChat
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MDIChild        =   -1  'True
-   ScaleHeight     =   3840
+   ScaleHeight     =   4155
    ScaleWidth      =   7515
    ShowInTaskbar   =   0   'False
+   Begin VB.CommandButton Command1 
+      Caption         =   "&Change Name"
+      Height          =   255
+      Left            =   2040
+      TabIndex        =   5
+      Top             =   3720
+      Width           =   1455
+   End
+   Begin VB.TextBox Text1 
+      Alignment       =   2  'Center
+      Height          =   285
+      Left            =   120
+      TabIndex        =   4
+      Top             =   3720
+      Width           =   1815
+   End
    Begin VB.CommandButton txtClear 
       Caption         =   "&Clear"
       Height          =   375
@@ -91,17 +106,23 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdSend_Click()
-Dim strMessage As String
-
-strMessage = " [" & frmConfig.txtNick.Text & "]: " & txtToSend.Text
-SendMessage strMessage
-txtConver.Text = txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & strMessage
+SendMessage " [Admin] " & "[" & frmConfig.txtNick & "]: " & txtToSend.Text
+txtConver.Text = txtConver.Text & vbCrLf & " [Admin] " & "[" & frmConfig.txtNick & "]: " & txtToSend.Text
 txtToSend.Text = ""
+End Sub
+
+Private Sub Command1_Click()
+frmConfig.txtNick = Text1.Text
+Text1.Text = ""
 End Sub
 
 Private Sub Form_Load()
 Me.Top = 0
 Me.Left = 0
+End Sub
+
+Private Sub Text1_KeyPress(KeyAscii As Integer)
+If KeyAscii = vbKeyReturn Then Command1_Click
 End Sub
 
 Private Sub txtClear_Click()

@@ -421,10 +421,11 @@ Case "!emote"
     Case "/facepalm", "/Facepalm"
         SendMessage " " & frmMain.NameText & " covers his face with his palm."
     Case "/violin"
-        SendMessage " " & frmMain.NameText & " players the world smallest violin."
+        SendMessage " " & frmMain.NameText & " plays the world smallest violin."
     End Select
 Case Else
     SendMessage " [" & frmMain.NameText & "]: " & frmMain.ConverText
+    VisualizeMessage "!else", frmMain.NameText, frmMain.ConverText
 End Select
 ' We want to read the message also , different then others tho
 VisualizeMessage frmMain.Command, frmMain.NameText, frmMain.ConverText

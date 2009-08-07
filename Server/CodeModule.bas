@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.4.2"
+Public Const Rev = "1.0.4.3"
 Public Const iPort = 6125
 
 Public Type NOTIFYICONDATA
@@ -75,7 +75,7 @@ With frmChat
     Case "!connected"
         .txtConver.Text = .txtConver.Text & vbCrLf & " [" & Name & "] connected succesfully"
     Case Else
-        .txtConver.Text = "[" & Command & "] [" & Name & "] [" & ForWho & "] [" & Message & "]"
+        .txtConver.Text = .txtConver.Text & vbCrLf & "[" & Command & "] [" & Name & "] [" & ForWho & "] [" & Message & "]"
     End Select
 End With
 End Sub
