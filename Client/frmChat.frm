@@ -74,7 +74,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -118,7 +117,7 @@ End If
 
 'Check if there is an emote used
 Select Case ArrI(0)
-Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh", "/rofl", "/ROFL", "/Rofl", "/beer", "/Beer", "/fart", "/Fart", "/lmao", "/LMAO", "/insult"
+Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh", "/rofl", "/ROFL", "/Rofl", "/beer", "/Beer", "/fart", "/Fart", "/lmao", "/LMAO", "/insult", "/facepalm", "/Facepalm", "/violin"
     SendMessage "!emote" & "#" & frmMain.NameText & "#" & ArrI(0) & "#"
     GoTo NextI
 End Select

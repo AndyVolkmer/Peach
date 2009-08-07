@@ -418,6 +418,10 @@ Case "!emote"
         SendMessage " " & frmMain.NameText & " farts loudly."
     Case "/lmao", "/LMAO"
         SendMessage " " & frmMain.NameText & " is laughing his / her ass off."
+    Case "/facepalm", "/Facepalm"
+        SendMessage " " & frmMain.NameText & " covers his face with his palm."
+    Case "/violin"
+        SendMessage " " & frmMain.NameText & " players the world smallest violin."
     End Select
 Case Else
     SendMessage " [" & frmMain.NameText & "]: " & frmMain.ConverText
