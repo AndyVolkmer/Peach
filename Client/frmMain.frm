@@ -530,12 +530,12 @@ Command = arr(0)
 Select Case Command
 
 'We cant login ( choose other name )
-Case "!decilineD"
+Case "!decilined"
     ConnectIsFalse
     Mute = False
     
 'We can login
-Case "!accepteD"
+Case "!accepted"
     ConnectIsTrue
     Mute = False
     
@@ -569,7 +569,7 @@ Case "!iprequest"
 
 'We got muted
 Case "!muted"
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & " You are muted!"
+    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "You are muted!"
     Mute = True
 
 'Normal message

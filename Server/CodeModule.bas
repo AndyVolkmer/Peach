@@ -1,8 +1,14 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.4.3"
+Public Const Rev = "1.0.4.4"
 Public Const iPort = 6125
+Public GetUser      As String
+Public Prefix       As String
+Public Command      As String
+Public ConverText   As String
+Public Message      As String
+Public ForWho       As String
 
 Public Type NOTIFYICONDATA
 cbSize              As Long
@@ -13,6 +19,7 @@ uCallBackMessage    As Long
 hIcon               As Long
 szTip               As String * 64
 End Type
+
 Public Const NIM_ADD = &H0
 Public Const NIM_MODIFY = &H1
 Public Const NIM_DELETE = &H2
@@ -43,7 +50,7 @@ For Each WinSk In frmMain.Winsock1
 Next
 End Sub
 
-Public Sub SendRequest(Message As String, Wsk As Winsock)
+Public Sub SendSingle(Message As String, Wsk As Winsock)
 If Wsk.State = 7 Then
     Wsk.SendData Message
 End If

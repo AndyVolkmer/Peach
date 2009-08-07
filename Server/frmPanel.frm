@@ -25,6 +25,14 @@ Begin VB.Form frmPanel
    ScaleHeight     =   4080
    ScaleWidth      =   7515
    ShowInTaskbar   =   0   'False
+   Begin VB.CommandButton Command2 
+      Caption         =   "&Uncheck All"
+      Height          =   350
+      Left            =   6000
+      TabIndex        =   6
+      Top             =   2760
+      Width           =   1335
+   End
    Begin VB.CommandButton Command4 
       Caption         =   "&Unmute"
       Height          =   350
@@ -50,7 +58,6 @@ Begin VB.Form frmPanel
       _ExtentX        =   12726
       _ExtentY        =   1296
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -86,7 +93,6 @@ Begin VB.Form frmPanel
       HideSelection   =   -1  'True
       Checkboxes      =   -1  'True
       FullRowSelect   =   -1  'True
-      HoverSelection  =   -1  'True
       _Version        =   393217
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
@@ -147,6 +153,14 @@ UpdateUsersList
 
 'Update Statusbar
 frmMain.StatusBar1.Panels(1).Text = "Status: Connected with  " & frmMain.Winsock1.Count - 1 & " Client(s)."
+End Sub
+
+Private Sub Command2_Click()
+For i = 1 To ListView1.ListItems.Count
+    If ListView1.ListItems.Item(i).Checked = True Then
+        ListView1.ListItems.Item(i).Checked = False
+    End If
+Next i
 End Sub
 
 Private Sub Command3_Click()
@@ -215,6 +229,7 @@ With List1
     .AddItem "Dick"
     .AddItem "Porno"
     .AddItem "Porn"
+    .AddItem "Unknown"
 End With
 End Sub
 

@@ -181,12 +181,6 @@ Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPo
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
-Public Prefix       As String
-Public Command      As String
-Public NameText     As String
-Public ConverText   As String
-Public Message      As String
-Public ForWho       As String
 Public intCounter   As Integer
 Dim Vali            As Boolean
 
@@ -280,7 +274,7 @@ RR = frmPanel.ListView1.ListItems.Count + 1
     
     ' New user should be listed in the panel
     With frmPanel.ListView1
-        .ListItems.Add RR, , "N/A"
+        .ListItems.Add RR, , "Unknown"
         .ListItems.Item(RR).SubItems(1) = Winsock1(intCounter).RemoteHostIP
         .ListItems.Item(RR).SubItems(2) = intCounter
         .ListItems.Item(RR).SubItems(3) = Format(Time, "hh:nn:ss")
@@ -313,8 +307,8 @@ loadSocket = theFreeSocket
 End Function
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-Dim array1()        As String
-Dim array2()        As String
+Dim array1()        As String 'Message array
+Dim array2()        As String 'Whisper array
 Dim strMessage      As String
 Dim RR              As Integer
 Dim i               As Integer 'Global "FOR" variable
@@ -328,24 +322,22 @@ frmMain.Winsock1(Index).GetData strMessage
 array1 = Split(strMessage, "#")
 
 'Assign the variables to the array
-With frmMain
-    .Command = array1(0)
-    .NameText = array1(1)
-    .ConverText = array1(2)
-End With
+Command = array1(0)
+GetUser = array1(1)
+ConverText = array1(2)
 
 'Check if user is muted
 For i = 1 To frmPanel.ListView1.ListItems.Count
-    If frmPanel.ListView1.ListItems.Item(i) = frmMain.NameText Then
+    If frmPanel.ListView1.ListItems.Item(i) = GetUser Then
         If frmPanel.ListView1.ListItems.Item(i).SubItems(4) = "Yes" Then
-            SendRequest "!muted" & "#", frmMain.Winsock1(Index)
+            SendSingle "!muted" & "#", frmMain.Winsock1(Index)
             Exit Sub
         End If
     End If
 Next i
 
 'Validate: If message is to long then kick
-If Len(frmMain.ConverText) > 200 Then
+If Len(ConverText) > 200 Then
     frmPanel.ListView1.ListItems.Remove (Index) ' Remove from list
     Winsock1(Index).Close ' Close connection
     Unload Winsock1(Index) ' Remove socket
@@ -353,16 +345,17 @@ If Len(frmMain.ConverText) > 200 Then
     UpdateUsersList
 End If
 
-Select Case frmMain.Command
+Select Case Command
 Dim u As Integer
 'Announce connected player and send to user online list
 Case "!connected"
-    frmPanel.ListView1.ListItems.Item(RR).Text = frmMain.NameText
+    frmPanel.ListView1.ListItems.Item(RR).Text = GetUser
     UpdateUsersList
 Case "!namerequest"
-    'Check badname-list
+
+    'Check badname list
     For i = 0 To frmPanel.List1.ListCount
-        If StrConv(frmPanel.List1.List(i), vbProperCase) = StrConv(frmMain.NameText, vbProperCase) Then
+        If StrConv(frmPanel.List1.List(i), vbProperCase) = StrConv(GetUser, vbProperCase) Then
             bMatch = True
             Exit For
         End If
@@ -370,7 +363,7 @@ Case "!namerequest"
     
     'Check current online list
     For i = 1 To frmPanel.ListView1.ListItems.Count
-        If StrConv(frmPanel.ListView1.ListItems.Item(i), vbProperCase) = StrConv(frmMain.NameText, vbProperCase) Then
+        If StrConv(frmPanel.ListView1.ListItems.Item(i), vbProperCase) = StrConv(GetUser, vbProperCase) Then
             bMatch = True
             Exit For
         End If
@@ -379,74 +372,70 @@ Case "!namerequest"
     'Return yes or no to client
     If bMatch = True Then
         bMatch = False
-        SendRequest "!decilineD", frmMain.Winsock1(Index)
+        SendSingle "!decilined", frmMain.Winsock1(Index)
     Else
-        SendRequest "!accepteD", frmMain.Winsock1(Index)
+        SendSingle "!accepted", frmMain.Winsock1(Index)
     End If
 Case "!w"
-    ' Split name into user name and normal name
-    array2 = Split(frmMain.NameText, "|")
-    frmMain.NameText = array2(0)
-    frmMain.ForWho = array2(1)
+    'Split name into user name and normal name
+    array2 = Split(GetUser, "|")
+    GetUser = array2(0)
+    ForWho = array2(1)
     
-    ' Check in listitems if forwho name is in the list and get the socket id
+    'Check in listitems if forwho name is in the list and get the socket id
     For i = 1 To frmPanel.ListView1.ListItems.Count
-        With frmMain
-            If .ForWho = frmPanel.ListView1.ListItems.Item(i) Then
-                SendRequest " [" & .NameText & "] whispers: " & .ConverText, .Winsock1(frmPanel.ListView1.ListItems.Item(i).SubItems(2))
-                VisualizeMessage .Command, .NameText, .ConverText, .ForWho
-            End If
-        End With
+        If ForWho = frmPanel.ListView1.ListItems.Item(i) Then
+            SendSingle " [" & GetUser & "] whispers: " & ConverText, frmMain.Winsock1(frmPanel.ListView1.ListItems.Item(i).SubItems(2))
+            VisualizeMessage Command, GetUser, ConverText, ForWho
+            Exit For
+        End If
     Next i
 Case "!iprequest"
     For i = 1 To frmPanel.ListView1.ListItems.Count
-        With frmMain
-            If .NameText = frmPanel.ListView1.ListItems.Item(i) Then
-                SendRequest "!iprequest" & "#" & frmPanel.ListView1.ListItems.Item(i).SubItems(1), .Winsock1(Index)
-            End If
-        End With
+        If GetUser = frmPanel.ListView1.ListItems.Item(i) Then
+            SendSingle "!iprequest" & "#" & frmPanel.ListView1.ListItems.Item(i).SubItems(1), frmMain.Winsock1(Index)
+        End If
     Next i
 Case "!emote"
-    Select Case frmMain.ConverText
+    Select Case ConverText
     Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh"
-        SendMessage " " & frmMain.NameText & " laughs."
+        SendMessage " " & GetUser & " laughs."
     Case "/Rofl", "/rofl", "/ROFL"
-        SendMessage " " & frmMain.NameText & " rolls on the floor laughing."
+        SendMessage " " & GetUser & " rolls on the floor laughing."
     Case "/Beer", "/beer"
-        SendMessage " " & frmMain.NameText & " takes a beer from the fridge."
+        SendMessage " " & GetUser & " takes a beer from the fridge."
     Case "/fart", "/Fart"
-        SendMessage " " & frmMain.NameText & " farts loudly."
+        SendMessage " " & GetUser & " farts loudly."
     Case "/lmao", "/LMAO"
-        SendMessage " " & frmMain.NameText & " is laughing his / her ass off."
+        SendMessage " " & GetUser & " is laughing his / her ass off."
     Case "/facepalm", "/Facepalm"
-        SendMessage " " & frmMain.NameText & " covers his face with his palm."
+        SendMessage " " & GetUser & " covers his face with his palm."
     Case "/violin"
-        SendMessage " " & frmMain.NameText & " plays the world smallest violin."
+        SendMessage " " & GetUser & " plays the world smallest violin."
     End Select
 Case Else
-    SendMessage " [" & frmMain.NameText & "]: " & frmMain.ConverText
-    VisualizeMessage "!else", frmMain.NameText, frmMain.ConverText
+    SendMessage " [" & GetUser & "]: " & ConverText
 End Select
 ' We want to read the message also , different then others tho
-VisualizeMessage frmMain.Command, frmMain.NameText, frmMain.ConverText
+VisualizeMessage Command, GetUser, ConverText
 End Sub
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Dim i As Integer
-frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Winsock1(Index).Close
 Unload Winsock1(Index)
 If Index < 0 Then
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & " [System]: Disconnected with a host."
+    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: Disconnected with a host."
     For i = 1 To frmPanel.ListView1.ListItems.Count
         frmPanel.ListView1.ListItems.Remove (i)
     Next i
 Else
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & frmMain.Prefix & "[System]: Disconnected due connection problem."
+    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & "[System]: Disconnected due connection problem."
     StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
     For i = 1 To frmPanel.ListView1.ListItems.Count
         frmPanel.ListView1.ListItems.Remove (i)
-    Next
+    Next i
 End If
 End Sub
 Public Sub DisableFormResize(frm As Form)
