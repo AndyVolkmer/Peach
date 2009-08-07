@@ -74,6 +74,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -97,7 +98,10 @@ Option Explicit
 
 Private Sub cmdSend_Click()
 Dim i As Integer
+Dim ArrI() As String
 frmMain.Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+
+ArrI = Split(txtToSend.Text, " ")
 
 'No whitespaces 0-5
 Select Case txtToSend.Text
@@ -111,6 +115,13 @@ If frmMain.Mute = True Then
     txtToSend.Text = ""
     Exit Sub
 End If
+
+'Check if there is an emote used
+Select Case ArrI(0)
+Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh", "/rofl", "/ROFL", "/Rofl", "/beer", "/Beer", "/fart", "/Fart", "/lmao", "/LMAO", "/insult"
+    SendMessage "!emote" & "#" & frmMain.NameText & "#" & ArrI(0) & "#"
+    GoTo NextI
+End Select
 
 Select Case txtToSend.Text
         
@@ -133,7 +144,7 @@ Case Trim("!online"), Trim("!Online"), Trim("!ONLINE")
         .Height = frmMain.Height - 400
         .Show
     End With
-    
+
 'Send Message
 Case Else
     'If any checkbox is checked then send it private to that client
@@ -164,6 +175,7 @@ Case Else
     SendMessage .Message
     End With
 End Select
+NextI:
 frmMain.LastMsg = txtToSend.Text
 txtToSend.Text = ""
 txtToSend.SetFocus

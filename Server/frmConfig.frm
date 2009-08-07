@@ -219,20 +219,8 @@ End Sub
 
 Private Sub connCounter_Timer()
 x = x + 1
-Label2.Caption = SetTimeFormat(x)
+Label2.Caption = "Online Time : " & TimeSerial(0, 0, x)
 End Sub
-
-Public Function SetTimeFormat(ByVal TimeValue As Double)
-Dim hours As Integer
-Dim mins As Integer
-Dim secs As Integer
-
-hours = Fix(TimeValue / 60 / 60)
-mins = Fix(TimeValue / 60)
-secs = TimeValue - (mins * 60)
-
-SetTimeFormat = "Online : " & hours & " hours " & mins & " minutes " & secs & " seconds"
-End Function
 
 Private Sub Form_Load()
 x = 0

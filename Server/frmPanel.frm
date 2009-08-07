@@ -86,6 +86,7 @@ Begin VB.Form frmPanel
       HideSelection   =   -1  'True
       Checkboxes      =   -1  'True
       FullRowSelect   =   -1  'True
+      HoverSelection  =   -1  'True
       _Version        =   393217
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
@@ -191,8 +192,8 @@ Next i
 End Sub
 
 Private Sub Form_Load()
-Me.Top = "0"
-Me.Left = "0"
+Me.Top = 0
+Me.Left = 0
 AddBadWordsToList
 End Sub
 

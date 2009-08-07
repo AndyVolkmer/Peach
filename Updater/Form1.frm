@@ -32,7 +32,6 @@ Begin VB.Form Form1
       _ExtentX        =   11668
       _ExtentY        =   4683
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"Form1.frx":08CA
@@ -75,6 +74,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Dim CurRev As String
@@ -146,6 +146,9 @@ End If
 'Close Peach if open.
 Killapp "peachClient.exe"
 
+'Sleep it here
+Sleep 1000
+
 'Download the new version *.exe
 StartDownload "http://riplegion.ri.funpic.de/Peach/peachClient.exe", App.Path & "\peachClient.exe"
 
@@ -156,7 +159,7 @@ Kill App.Path & "\revision.conf"
 Name App.Path & "\update.conf" As App.Path & "\revision.conf"
 
 'Update label
-Label2.Caption = "Your Peach has updated from " & CurRev & " to " & NewRev
+Label2.Caption = "Your Peach has updated from [" & CurRev & "] to [" & NewRev & "]"
 
 '************************************************
 Exit Sub

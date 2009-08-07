@@ -406,6 +406,19 @@ Case "!iprequest"
             End If
         End With
     Next i
+Case "!emote"
+    Select Case frmMain.ConverText
+    Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh"
+        SendMessage " " & frmMain.NameText & " laughs."
+    Case "/Rofl", "/rofl", "/ROFL"
+        SendMessage " " & frmMain.NameText & " rolls on the floor laughing."
+    Case "/Beer", "/beer"
+        SendMessage " " & frmMain.NameText & " takes a beer from the fridge."
+    Case "/fart", "/Fart"
+        SendMessage " " & frmMain.NameText & " farts loudly."
+    Case "/lmao", "/LMAO"
+        SendMessage " " & frmMain.NameText & " is laughing his / her ass off."
+    End Select
 Case Else
     SendMessage " [" & frmMain.NameText & "]: " & frmMain.ConverText
 End Select
