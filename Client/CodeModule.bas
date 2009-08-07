@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.4.1"
+Public Const Rev = "1.0.4.2"
 Public Const aPort = 6123
 Public Const bPort = 6124
 
