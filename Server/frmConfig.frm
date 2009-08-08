@@ -17,7 +17,6 @@ Begin VB.Form frmConfig
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
@@ -34,18 +33,18 @@ Begin VB.Form frmConfig
       Caption         =   "&Disconnect"
       Enabled         =   0   'False
       Height          =   375
-      Left            =   6000
+      Left            =   5760
       TabIndex        =   5
       Top             =   2400
-      Width           =   1215
+      Width           =   1575
    End
    Begin VB.CommandButton Command1 
       Caption         =   "&Connect"
       Height          =   375
-      Left            =   4680
+      Left            =   4200
       TabIndex        =   6
       Top             =   2400
-      Width           =   1215
+      Width           =   1575
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00F4F4F4&

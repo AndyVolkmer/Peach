@@ -28,7 +28,7 @@ Begin VB.Form frmSendFile
       Height          =   315
       Left            =   120
       Style           =   2  'Dropdown List
-      TabIndex        =   13
+      TabIndex        =   9
       Top             =   1080
       Width           =   1935
    End
@@ -36,7 +36,7 @@ Begin VB.Form frmSendFile
       Height          =   285
       Left            =   120
       Locked          =   -1  'True
-      TabIndex        =   8
+      TabIndex        =   6
       Top             =   405
       Width           =   7185
    End
@@ -49,28 +49,6 @@ Begin VB.Form frmSendFile
       Interval        =   1000
       Left            =   2295
       Top             =   0
-   End
-   Begin VB.TextBox txtRemoteCon 
-      Alignment       =   2  'Center
-      Height          =   285
-      Left            =   120
-      MaxLength       =   128
-      TabIndex        =   7
-      Text            =   "localhost"
-      Top             =   1680
-      Visible         =   0   'False
-      Width           =   1935
-   End
-   Begin VB.TextBox txtRemotePort 
-      Alignment       =   2  'Center
-      Height          =   285
-      Left            =   2280
-      MaxLength       =   5
-      TabIndex        =   6
-      Text            =   "8866"
-      Top             =   1680
-      Visible         =   0   'False
-      Width           =   1095
    End
    Begin VB.PictureBox picProgress 
       AutoRedraw      =   -1  'True
@@ -130,33 +108,9 @@ Begin VB.Form frmSendFile
       Caption         =   "Send to :"
       Height          =   255
       Left            =   120
-      TabIndex        =   12
+      TabIndex        =   8
       Top             =   840
       Width           =   1335
-   End
-   Begin VB.Label Label2 
-      AutoSize        =   -1  'True
-      BackColor       =   &H00F4F4F4&
-      Caption         =   "Remote Connection:"
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Left            =   120
-      TabIndex        =   11
-      Top             =   1440
-      Visible         =   0   'False
-      Width           =   1470
-   End
-   Begin VB.Label Label3 
-      AutoSize        =   -1  'True
-      BackColor       =   &H00F4F4F4&
-      Caption         =   "Remote Port:"
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Left            =   2280
-      TabIndex        =   10
-      Top             =   1440
-      Visible         =   0   'False
-      Width           =   960
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
@@ -165,7 +119,7 @@ Begin VB.Form frmSendFile
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   120
-      TabIndex        =   9
+      TabIndex        =   7
       Top             =   165
       Width           =   1455
    End
@@ -223,13 +177,13 @@ Private sFileName As String
 Private iFileNum As Integer
 
 Private Sub cmdBrowse_Click()
-    On Error GoTo ErrCancel
-    CDialog.ShowOpen
-    
-    txtFileName.Text = CDialog.FileName
-    txtFileName.SelStart = Len(txtFileName.Text)
-    
-    Exit Sub
+On Error GoTo ErrCancel
+CDialog.ShowOpen
+
+txtFileName.Text = CDialog.FileName
+txtFileName.SelStart = Len(txtFileName.Text)
+
+Exit Sub
 ErrCancel:
     If Err.Number = 32755 Then
         Exit Sub
@@ -239,11 +193,11 @@ ErrCancel:
 End Sub
 
 Private Sub PicShowPercentage(pic As PictureBox, ByVal Percentage As Single, Optional ByVal ForeColor As Long = -2, Optional ByVal BackColor As Long = -2)
-    If ForeColor = -2 Then ForeColor = pic.ForeColor
-    If BackColor = -2 Then BackColor = pic.BackColor
-    
-    pic.Line (0, 0)-(pic.ScaleWidth * Percentage, pic.ScaleHeight), ForeColor, BF
-    pic.Line (pic.ScaleWidth * Percentage, pic.ScaleHeight)-(pic.ScaleWidth, 0), BackColor, BF
+If ForeColor = -2 Then ForeColor = pic.ForeColor
+If BackColor = -2 Then BackColor = pic.BackColor
+
+pic.Line (0, 0)-(pic.ScaleWidth * Percentage, pic.ScaleHeight), ForeColor, BF
+pic.Line (pic.ScaleWidth * Percentage, pic.ScaleHeight)-(pic.ScaleWidth, 0), BackColor, BF
 End Sub
 
 Private Sub cmdSendFile_Click()
@@ -267,7 +221,7 @@ If txtFileName.Text = "" Then
 End If
 
 'Request IP
-SendMessage "!iprequest" & "#" & Combo1.Text & "#"
+SendMsg "!iprequest" & "#" & Combo1.Text & "#"
 
 End Sub
 
@@ -286,29 +240,21 @@ End If
 End Sub
 
 Public Sub SendFile(ByVal FileName As String, Host As String)
-    tmrSendFile.Enabled = False
-    
-    SckSendFile.Close
-    DoEvents
-    
-    SckSendFile.RemoteHost = Host
-    SckSendFile.RemotePort = bPort
-    SckSendFile.Connect
-    
-    sFileName = FileName
+tmrSendFile.Enabled = False
+
+SckSendFile.Close
+DoEvents
+
+SckSendFile.RemoteHost = Host
+SckSendFile.RemotePort = bPort
+SckSendFile.Connect
+
+sFileName = FileName
 End Sub
 
 Private Sub Form_Load()
 Me.Top = 0
 Me.Left = 0
-If frmConfig.txtPort = "" Then
-    frmConfig.txtPort = "4728"
-End If
-If frmConfig.txtIP = "" Then
-    frmConfig.txtIP = "0.0.0.0"
-End If
-txtRemotePort.Text = frmConfig.txtPort.Text + 1
-txtRemoteCon.Text = frmConfig.txtIP.Text
 LoadSendFileForm
 End Sub
 
@@ -322,100 +268,96 @@ Label4.Caption = SFlabel_sendto
 End Sub
 
 Private Sub SckSendFile_Close()
-    tmrSendFile.Enabled = False
-    tmrSendFile.Interval = 0
-    
-    Close iFileNum ' close file
-    iFileNum = 0 ' set file number to 0, timer will exit if another timer event
-    
-    SckSendFile.Close
-    
-    cmdSendFile.Caption = SFcommand_sendfile
-    PicShowPercentage Me.picProgress, 0
-    lblProgress.Caption = "0.00% " & SFlabel_sent
+tmrSendFile.Enabled = False
+tmrSendFile.Interval = 0
+
+Close iFileNum 'Close file
+iFileNum = 0 'Set file number to 0, timer will exit if another timer event
+
+SckSendFile.Close
+
+cmdSendFile.Caption = SFcommand_sendfile
+PicShowPercentage Me.picProgress, 0
+lblProgress.Caption = "0.00% " & SFlabel_sent
 End Sub
 
 Private Sub SckSendFile_Connect()
-    Dim Buffer() As Byte, p As Long
-    
-    iFileNum = FreeFile
-    Open sFileName For Binary Access Read Lock Write As iFileNum
-    
-    ReDim Buffer(lngMIN(LOF(iFileNum), PacketSize) - 1)
-    Get iFileNum, , Buffer ' read data
-    
-    SckSendFile.SendData CStr(LOF(iFileNum)) & ","   ' send the file size
-    p = InStrRev(sFileName, "\")
-    SckSendFile.SendData Mid(sFileName, p + 1) & ":" ' send the file name
-    SckSendFile.SendData Buffer                      ' send first packet
+Dim Buffer() As Byte, p As Long
+
+iFileNum = FreeFile
+Open sFileName For Binary Access Read Lock Write As iFileNum
+
+ReDim Buffer(lngMIN(LOF(iFileNum), PacketSize) - 1)
+Get iFileNum, , Buffer ' read data
+
+SckSendFile.SendData CStr(LOF(iFileNum)) & ","   ' send the file size
+p = InStrRev(sFileName, "\")
+SckSendFile.SendData Mid(sFileName, p + 1) & ":" ' send the file name
+SckSendFile.SendData Buffer                      ' send first packet
 End Sub
 
 Private Sub SckSendFile_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-    SckSendFile_Close
+SckSendFile_Close
 End Sub
 
 Private Sub SckSendFile_SendComplete()
-    ' can't call SendData here, so enable timer to do it...
-    tmrSendFile.Enabled = False
-    tmrSendFile.Interval = 1
-    tmrSendFile.Enabled = True
+'Can't call SendData here, so enable timer to do it...
+tmrSendFile.Enabled = False
+tmrSendFile.Interval = 1
+tmrSendFile.Enabled = True
 End Sub
 
 Private Sub tmrCalcSpeed_Timer()
-    Static PrevSent As Long
-    Dim BSentPerSec As Long, DataSent As Long, DataLen As Long
-    Dim SecondsLeft As Single
+Static PrevSent As Long
+Dim BSentPerSec As Long, DataSent As Long, DataLen As Long
+Dim SecondsLeft As Single
+
+If iFileNum > 0 Then
+    DataSent = Loc(iFileNum)
+    DataLen = LOF(iFileNum)
     
-    If iFileNum > 0 Then
-        DataSent = Loc(iFileNum)
-        DataLen = LOF(iFileNum)
-        
-        BSentPerSec = DataSent - PrevSent
-        PrevSent = DataSent
-        
-        SecondsLeft = (CSng(DataLen) - CSng(DataSent)) / CSng(BSentPerSec)
-    Else
-        PrevSent = 0
-    End If
+    BSentPerSec = DataSent - PrevSent
+    PrevSent = DataSent
     
-    lblSendSpeed.Caption = Format(DataSent / 1024#, "###,###,##0.00") & " KBytes Sent, " & _
-        Format(CDbl(BSentPerSec) / 1024#, "#0.00") & " Kb/Sec, " & _
-        "Time left: " & Format(SecondsLeft \ 3600, "00") & ":" & Format(SecondsLeft \ 60, "00") & ":" & Format(SecondsLeft Mod 60, "00")
+    SecondsLeft = (CSng(DataLen) - CSng(DataSent)) / CSng(BSentPerSec)
+Else
+    PrevSent = 0
+End If
+
+lblSendSpeed.Caption = Format(DataSent / 1024#, "###,###,##0.00") & " KBytes Sent, " & _
+    Format(CDbl(BSentPerSec) / 1024#, "#0.00") & " Kb/Sec, " & _
+    "Time left: " & Format(SecondsLeft \ 3600, "00") & ":" & Format(SecondsLeft \ 60, "00") & ":" & Format(SecondsLeft Mod 60, "00")
 End Sub
 
 Private Sub tmrSendFile_Timer()
-    Dim Buffer() As Byte, BuffSize As Long
-    
-    tmrSendFile.Enabled = False
-    If iFileNum <= 0 Or SckSendFile.State <> sckConnected Then Exit Sub
-    
-    If Loc(iFileNum) >= LOF(iFileNum) Then ' FILE COMPLETE
-        Close iFileNum ' close file
-        iFileNum = 0 ' set file number to 0, timer will exit if another timer event
-        
-        Exit Sub
-    End If
-    
-    'if the remaining size in the file is smaller then PacketSize, the read only whatever is left
-    BuffSize = lngMIN(LOF(iFileNum) - Loc(iFileNum), PacketSize)
-    
-    ReDim Buffer(BuffSize - 1) ' resize buffer
-    Get iFileNum, , Buffer ' read data
-    SckSendFile.SendData Buffer ' send data
-    
-    ' Show progress
-    lblProgress.Caption = Format(Loc(iFileNum) / CDbl(LOF(iFileNum)), "Percent") & " Done"
-    PicShowPercentage picProgress, Loc(iFileNum) / CDbl(LOF(iFileNum))
-End Sub
+Dim Buffer() As Byte, BuffSize As Long
 
-Private Sub txtRemotePort_Validate(Cancel As Boolean)
-    txtRemotePort.Text = Val(txtRemotePort.Text)
+tmrSendFile.Enabled = False
+If iFileNum <= 0 Or SckSendFile.State <> sckConnected Then Exit Sub
+
+If Loc(iFileNum) >= LOF(iFileNum) Then ' FILE COMPLETE
+    Close iFileNum ' close file
+    iFileNum = 0 ' set file number to 0, timer will exit if another timer event
+    
+    Exit Sub
+End If
+
+'if the remaining size in the file is smaller then PacketSize, the read only whatever is left
+BuffSize = lngMIN(LOF(iFileNum) - Loc(iFileNum), PacketSize)
+
+ReDim Buffer(BuffSize - 1) ' resize buffer
+Get iFileNum, , Buffer ' read data
+SckSendFile.SendData Buffer ' send data
+
+' Show progress
+lblProgress.Caption = Format(Loc(iFileNum) / CDbl(LOF(iFileNum)), "Percent") & " Done"
+PicShowPercentage picProgress, Loc(iFileNum) / CDbl(LOF(iFileNum))
 End Sub
 
 Public Function lngMIN(ByVal L1 As Long, ByVal L2 As Long) As Long
-    If L1 < L2 Then
-        lngMIN = L1
-    Else
-        lngMIN = L2
-    End If
+If L1 < L2 Then
+    lngMIN = L1
+Else
+    lngMIN = L2
+End If
 End Function

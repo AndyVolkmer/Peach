@@ -24,6 +24,16 @@ Begin VB.Form frmChat
    ScaleHeight     =   3810
    ScaleWidth      =   7485
    ShowInTaskbar   =   0   'False
+   Begin VB.PictureBox Picture1 
+      Height          =   375
+      Left            =   6840
+      ScaleHeight     =   315
+      ScaleWidth      =   315
+      TabIndex        =   4
+      Top             =   2160
+      Visible         =   0   'False
+      Width           =   375
+   End
    Begin VB.CommandButton cmdClear 
       Caption         =   "&Clear"
       Enabled         =   0   'False
@@ -74,6 +84,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -95,6 +106,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Const WM_PASTE = &H302
+
 Private Sub cmdSend_Click()
 Dim i As Integer
 Dim ArrI() As String
@@ -105,6 +118,7 @@ ArrI = Split(txtToSend.Text, " ")
 'No whitespaces 0-5
 Select Case txtToSend.Text
 Case "", " ", "  ", "   ", "    ", "     ", "      "
+    txtToSend.Text = ""
     Exit Sub
 End Select
 
@@ -118,7 +132,7 @@ End If
 'Check if there is an emote used
 Select Case ArrI(0)
 Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh", "/rofl", "/ROFL", "/Rofl", "/beer", "/Beer", "/fart", "/Fart", "/lmao", "/LMAO", "/insult", "/facepalm", "/Facepalm", "/violin"
-    SendMessage "!emote" & "#" & frmMain.NameText & "#" & ArrI(0) & "#"
+    SendMsg "!emote" & "#" & frmMain.NameText & "#" & ArrI(0) & "#"
     GoTo NextI
 End Select
 
@@ -161,7 +175,7 @@ Case Else
                 .NameText = StrConv(frmConfig.txtNick, vbProperCase)
                 .ForWho = StrConv(frmList.ListView1.ListItems.Item(i), vbProperCase)
                 .Message = "!w" & "#" & .NameText & "|" & .ForWho & "#" & .ConverText & "#"
-            SendMessage .Message
+            SendMsg .Message
             VisualizeMessage True, .ForWho, .ConverText
             End With
         End If
@@ -171,14 +185,16 @@ Case Else
         .ConverText = txtToSend.Text
         .NameText = frmConfig.txtNick.Text
         .Message = "!msg" & "#" & .NameText & "#" & .ConverText & "#"
-    SendMessage .Message
+    SendMsg .Message
     End With
+    
 End Select
 NextI:
 frmMain.LastMsg = txtToSend.Text
 txtToSend.Text = ""
 txtToSend.SetFocus
 End Sub
+
 
 Public Sub Form_Load()
 Me.Top = 0
@@ -198,6 +214,7 @@ End Sub
 
 Private Sub txtConver_Change()
 Dim hWnd1 As Long
+'txtConver.Locked = False
 hWnd1 = GetActiveWindow
 With frmMain
     If hWnd1 = .hwnd Then
@@ -206,7 +223,9 @@ With frmMain
     End If
     .Hyperlink1.URLFormat txtConver
 End With
+'Create_Smileys txtConver
 txtConver.SelStart = Len(txtConver.Text)
+'txtConver.Locked = True
 End Sub
 
 Private Sub txtConver_Click()
@@ -220,3 +239,85 @@ End Sub
 Private Sub txtToSend_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then cmdSend_Click
 End Sub
+
+Public Sub Create_Smileys(RTF As Control)
+  Dim Smileys() As String
+  Dim SmileysFile() As String
+  Dim Smilestring As String
+  Dim SmileFileString As String
+  Dim i As Integer
+  Dim Pos As Long, Start As Long
+  Dim IconPath As String
+ 
+  Screen.MousePointer = vbHourglass
+ 
+  Pos = RTF.SelStart
+ 
+  Start = 1
+ 
+  IconPath = App.Path & "\smileys\"
+ 
+  Smilestring = ":) :-) :( :-( ;) ;-) " & _
+    ":o :D :p :cool: :rolleyes: :mad:"
+ 
+  SmileFileString = "smiley1.gif,smiley1.gif," & _
+    "smiley2.gif,smiley2.gif," & _
+    "smiley3.gif,smiley3.gif," & _
+    "smiley4.gif,smiley5.gif," & _
+    "smiley6.gif,smiley7.gif," & _
+    "smiley8.gif,smiley9.gif"
+ 
+  Smileys = Split(Smilestring, " ")
+  SmileysFile = Split(SmileFileString, ",")
+ 
+  If UBound(Smileys) <> UBound(SmileysFile) Then
+    Debug.Print "Arrays are not same!"
+    Exit Sub
+  End If
+ 
+  For i = LBound(Smileys) To UBound(Smileys)
+    While RTF.Find(Smileys(i), Start - 1) >= 0
+      Picture1.Picture = LoadPicture(Trim$(IconPath & SmileysFile(i)))
+      RTF.SelStart = RTF.Find(Smileys(i), Start - 1)
+      RTF.SelLength = Len(Smileys(i))
+      Start = RTF.SelStart + RTF.SelLength + 1
+      RTF.SelText = ""
+      CopyPictureToRTF RTF, Picture1.Picture
+    Wend
+ 
+    Start = 1
+  Next i
+ 
+  RTF.SelStart = Pos
+ 
+  Screen.MousePointer = vbNormal
+End Sub
+Private Sub CopyPictureToRTF(RTF As Control, Bild As Picture)
+  Dim Buf As Variant
+  Dim Text As String
+ 
+  If Clipboard.GetFormat(vbCFText) = True Then
+    Text = Clipboard.GetText
+  Else
+    Buf = Clipboard.GetData
+  End If
+ 
+  Clipboard.Clear
+  Clipboard.SetData Picture1.Picture
+  DoEvents
+ 
+  SendMessage RTF.hwnd, WM_PASTE, 0, 0
+  DoEvents
+  Sleep 30
+ 
+  Clipboard.Clear
+ 
+  If Text <> "" Then
+    Clipboard.SetText Text
+  Else
+    If Buf <> 0 Then
+      Clipboard.SetData Buf
+    End If
+  End If
+End Sub
+

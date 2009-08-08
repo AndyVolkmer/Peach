@@ -4,7 +4,7 @@ Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.OCX"
 Begin VB.Form Form1 
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Peach Updater"
-   ClientHeight    =   3780
+   ClientHeight    =   2955
    ClientLeft      =   45
    ClientTop       =   435
    ClientWidth     =   6855
@@ -20,25 +20,26 @@ Begin VB.Form Form1
    Icon            =   "Form1.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   3780
+   ScaleHeight     =   2955
    ScaleWidth      =   6855
    StartUpPosition =   2  'CenterScreen
    Begin RichTextLib.RichTextBox Text1 
-      Height          =   2655
+      Height          =   1815
       Left            =   120
       TabIndex        =   3
       Top             =   480
       Width           =   6615
       _ExtentX        =   11668
-      _ExtentY        =   4683
+      _ExtentY        =   3201
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"Form1.frx":08CA
    End
    Begin InetCtlsObjects.Inet inetftp 
       Left            =   4440
-      Top             =   3120
+      Top             =   2160
       _ExtentX        =   1005
       _ExtentY        =   1005
       _Version        =   393216
@@ -48,14 +49,14 @@ Begin VB.Form Form1
       Height          =   375
       Left            =   5160
       TabIndex        =   1
-      Top             =   3240
+      Top             =   2400
       Width           =   1575
    End
    Begin VB.Label Label2 
       Height          =   375
       Left            =   120
       TabIndex        =   2
-      Top             =   3240
+      Top             =   2400
       Width           =   4935
    End
    Begin VB.Label Label1 
@@ -63,7 +64,7 @@ Begin VB.Form Form1
       Height          =   255
       Left            =   120
       TabIndex        =   0
-      Top             =   240
+      Top             =   120
       Width           =   2655
    End
 End
@@ -131,7 +132,7 @@ Text1.Text = Trim(t)
 
 'Compare and check if there is an newer version or not.
 If CurRev = NewRev Then
-    Label2.Caption = "Your peach is up to date."
+    Label2.Caption = "Your Peach is up to date."
     Exit Sub
     
 ElseIf CurRev > NewRev Then
@@ -147,6 +148,7 @@ End If
 Killapp "peachClient.exe"
 
 'Sleep it here
+Label2.Caption = "Updating .."
 Sleep 1000
 
 'Download the new version *.exe

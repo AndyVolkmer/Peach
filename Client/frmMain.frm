@@ -221,7 +221,6 @@ Private Declare Function GetMenuItemInfo Lib "user32" Alias "GetMenuItemInfoA" (
 Private Declare Function SetMenuItemInfo Lib "user32" Alias "SetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal bool As Boolean, lpcMenuItemInfo As MENUITEMINFO) As Long
 Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long) As Long
 Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
-Private Declare Function SendMessage2 Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Private Declare Function GetMenuItemCount Lib "user32" (ByVal hMenu As Long) As Long
 Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPosition As Long, ByVal wFlags As Long) As Long
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
@@ -487,7 +486,7 @@ SetupForms frmConfig
 End Sub
 
 Private Sub Winsock1_Connect()
-SendMessage "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
+SendMsg "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
 End Sub
 
 Private Sub ConnectIsTrue()
@@ -495,7 +494,7 @@ StatusBar1.Panels(1).Text = MDIstatusbar_connected & frmConfig.txtIP.Text & ":" 
 
 NameText = frmConfig.txtNick
 Message = "!connected" & "#" & NameText & "#"
-SendMessage Message
+SendMsg Message
 
 frmDESP.DisplayMessage "Hello " & NameText
 End Sub
@@ -640,7 +639,7 @@ Public Sub DisableFormResize(frm As Form)
     End With
     If SetMenuItemInfo(hMenu, MII.wID, False, MII) = 0 Then Exit Sub
     
-    SendMessage2 hwnd, WM_NCACTIVATE, True, 0
+    SendMessage hwnd, WM_NCACTIVATE, True, 0
     
     frm.Width = frm.Width - 1
     frm.Width = frm.Width + 1

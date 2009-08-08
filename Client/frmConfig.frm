@@ -213,26 +213,15 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
+
 'Nick can't be empty
-If txtNick.Text = "" Then
-    MsgBox CONFIGmsgbox_namenoempty, vbInformation
-    txtNick.SetFocus
-    Exit Sub
-End If
+If CheckTx(txtNick, CONFIGmsgbox_namenoempty) = True Then Exit Sub
 
 'IP can't be empty
-If txtIP.Text = "" Then
-    MsgBox CONFIGmsgbox_ipnoempty, vbInformation
-    txtIP.SetFocus
-    Exit Sub
-End If
+If CheckTx(txtIP, CONFIGmsgbox_ipnoempty) = True Then Exit Sub
 
 'Port can't be empty
-If txtPort.Text = "" Then
-    MsgBox CONFIGmsgbox_portnoempty, vbInformation
-    txtPort.SetFocus
-    Exit Sub
-End If
+If CheckTx(txtPort, CONFIGmsgbox_portnoempty) = True Then Exit Sub
 
 'If the nick is numeric then no
 If IsNumeric(txtNick.Text) = True Then
@@ -354,6 +343,16 @@ Frame2.Caption = CONFIGframe_client
 Frame3.Caption = CONFIGframe_server
 lblNick = CONFIGlabel_CI_name
 End Sub
+
+Private Function CheckTx(txtBox As TextBox, mBox As String) As Boolean
+If txtBox.Text = "" Then
+    MsgBox mBox, vbInformation
+    txtBox.SetFocus
+    CheckTx = True
+Else
+    CheckTx = False
+End If
+End Function
 
 Private Sub Form_Unload(Cancel As Integer)
 WriteConfigFile (App.Path & "\bin.conf")
