@@ -223,7 +223,7 @@ If CheckTx(txtIP, CONFIGmsgbox_ipnoempty) = True Then Exit Sub
 'Port can't be empty
 If CheckTx(txtPort, CONFIGmsgbox_portnoempty) = True Then Exit Sub
 
-'If the nick is numeric then no
+'Nick can't be numeric
 If IsNumeric(txtNick.Text) = True Then
     txtNick.Text = ""
     MsgBox CONFIGmsgbox_nonumeric, vbInformation
@@ -231,7 +231,7 @@ If IsNumeric(txtNick.Text) = True Then
     Exit Sub
 End If
 
-'If the nick is to short then no
+'Nick can't be shorter then 4 characters
 If Len(txtNick.Text) < 4 Then
     MsgBox "Your nickname is to short!    ", vbInformation, " Error - Nickname"
     txtNick.SelStart = Len(txtNick.Text)
@@ -281,7 +281,6 @@ frmMain.StatusBar1.Panels(1).Text = MDIstatusbar_connecting & txtIP.Text & ":" &
 frmConfig.Hide
 frmChat.Show
 frmChat.txtToSend.SetFocus
-Exit Sub
 End Sub
 
 Public Sub Command2_Click()
@@ -349,8 +348,6 @@ If txtBox.Text = "" Then
     MsgBox mBox, vbInformation
     txtBox.SetFocus
     CheckTx = True
-Else
-    CheckTx = False
 End If
 End Function
 

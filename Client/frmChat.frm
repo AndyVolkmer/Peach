@@ -195,7 +195,6 @@ txtToSend.Text = ""
 txtToSend.SetFocus
 End Sub
 
-
 Public Sub Form_Load()
 Me.Top = 0
 Me.Left = 0
@@ -320,4 +319,3 @@ Private Sub CopyPictureToRTF(RTF As Control, Bild As Picture)
     End If
   End If
 End Sub
-

@@ -33,6 +33,14 @@ Begin VB.Form frmPanel
       Top             =   2760
       Width           =   1335
    End
+   Begin VB.CommandButton Command5 
+      Caption         =   "&Check All"
+      Height          =   350
+      Left            =   4680
+      TabIndex        =   7
+      Top             =   2760
+      Width           =   1335
+   End
    Begin VB.CommandButton Command4 
       Caption         =   "&Unmute"
       Height          =   350
@@ -58,6 +66,7 @@ Begin VB.Form frmPanel
       _ExtentX        =   12726
       _ExtentY        =   1296
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -202,6 +211,14 @@ For i = 1 To ListView1.ListItems.Count
         txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] No user checked."
     End If
     ListView1.ListItems.Item(i).Checked = False
+Next i
+End Sub
+
+Private Sub Command5_Click()
+For i = 1 To ListView1.ListItems.Count
+    If ListView1.ListItems.Item(i).Checked = False Then
+        ListView1.ListItems.Item(i).Checked = True
+    End If
 Next i
 End Sub
 

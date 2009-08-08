@@ -1,12 +1,13 @@
 Type=Exe
-Form=frmConfig.frm
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
-Form=frmMain.frm
-Form=frmChat.frm
-Form=frmSendFile.frm
+Reference=*\G{2A75196C-D9EB-4129-B803-931327F72D5C}#2.8#0#..\..\..\..\..\Archivos de programa\Archivos comunes\System\ado\msado15.dll#Microsoft ActiveX Data Objects 2.8 Library
 Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0; MSCOMCTL.OCX
 Object={248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0; MSWINSCK.OCX
 Object={3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0; richtx32.OCX
+Form=frmConfig.frm
+Form=frmMain.frm
+Form=frmChat.frm
+Form=frmSendFile.frm
 Form=frmPanel.frm
 Module=CodeModule; CodeModule.bas
 IconForm="frmMain"

@@ -68,7 +68,7 @@ Begin VB.MDIForm frmMain
       Top             =   0
       Width           =   7545
       Begin VB.CommandButton Command4 
-         Caption         =   "&Panel"
+         Caption         =   "&User Panel"
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -85,7 +85,7 @@ Begin VB.MDIForm frmMain
          Width           =   1815
       End
       Begin VB.CommandButton Command3 
-         Caption         =   "&Send File"
+         Caption         =   "Acco&unt Panel"
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -181,6 +181,10 @@ Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPo
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
+Public xConnection     As ADODB.Connection
+Public xCommand        As ADODB.Command
+Public xRecordSet      As ADODB.Recordset
+
 Public intCounter   As Integer
 Dim Vali            As Boolean
 
@@ -195,13 +199,13 @@ End Sub
 Public Sub SetupForms(Nix As Form)
     frmChat.Hide
     frmConfig.Hide
-    frmSendFile.Hide
+    frmAccountPanel.Hide
     frmPanel.Hide
     Nix.Show
 End Sub
 
 Private Sub Command3_Click()
-    SetupForms frmSendFile
+    SetupForms frmAccountPanel
 End Sub
 
 Private Sub Command4_Click()
@@ -219,14 +223,63 @@ Dim L As Long
 '   L = L And Not (WS_MINIMIZEBOX)
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
+    
+ConnectToDB
+LoadCustomerListView
+
 StatusBar1.Panels(1).Text = "Status : Disconnected"
 SetupForms frmConfig
 End Sub
 
-Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub ConnectToDB()
+    
+Set xConnection = New ADODB.Connection
+xConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" & "Data Source=" & App.Path & "\Accounts.mdb"
+xConnection.Open
+
+Set xCommand = New ADODB.Command
+Set xCommand.ActiveConnection = xConnection
+xCommand.CommandType = adCmdText
+
+End Sub
+
+Private Sub LoadCustomerListView()
+                                 
+Dim strSQL      As String
+Dim xListItem   As ListItem
+                                 
+strSQL = "SELECT * FROM accounts"
+
+xCommand.CommandText = strSQL
+Set xRecordSet = xCommand.Execute
+
+With frmAccountPanel
+    .ListView1.ListItems.Clear
+    .cmbBanned.AddItem "Yes"
+    .cmbBanned.AddItem "No"
+End With
+
+With xRecordSet
+    Do Until .EOF
+        Set xListItem = frmAccountPanel.ListView1.ListItems.Add(, , !id)
+        xListItem.SubItems(1) = !Name1
+        xListItem.SubItems(2) = !password1
+        xListItem.SubItems(3) = !time1
+        xListItem.SubItems(4) = !date1
+        xListItem.SubItems(5) = !banned1
+        .MoveNext
+    Loop
+End With
+
+Set xListItem = Nothing
+Set xRecordSet = Nothing
+
+End Sub
+
+Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim msg As Long
 Dim sFilter As String
-msg = x / Screen.TwipsPerPixelX
+msg = X / Screen.TwipsPerPixelX
 Select Case msg
 Case WM_LBUTTONDOWN
 Case WM_LBUTTONUP
@@ -249,19 +302,19 @@ End If
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
-Dim x As Integer
+Dim X As Integer
     Unload Winsock1(Index)
-    For x = 1 To frmPanel.ListView1.ListItems.Count + 1
+    For X = 1 To frmPanel.ListView1.ListItems.Count + 1
         ' Update user lists ( server and client )
-        If frmPanel.ListView1.ListItems.Item(x).SubItems(2) = Index Then
+        If frmPanel.ListView1.ListItems.Item(X).SubItems(2) = Index Then
             ' Pick the user
-            frmPanel.ListView1.ListItems.Remove (x)
+            frmPanel.ListView1.ListItems.Remove (X)
             
             ' Update Users List
             UpdateUsersList
             Exit For
         End If
-    Next x
+    Next X
     StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
