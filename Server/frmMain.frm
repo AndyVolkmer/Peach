@@ -187,6 +187,7 @@ Public xRecordSet      As ADODB.Recordset
 
 Public intCounter   As Integer
 Dim Vali            As Boolean
+Dim Acc             As Boolean
 
 Private Sub Command1_Click()
     SetupForms frmConfig
@@ -450,16 +451,16 @@ Case "!login"
                 SendSingle "!login" & "#" & "Banned" & "#", frmMain.Winsock1(Index)
                 Exit For
             End If
-            
             If ConverText = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(2) Then
                 SendSingle "!login" & "#" & "Yes" & "#", frmMain.Winsock1(Index)
             Else
                 SendSingle "!login" & "#" & "Password" & "#", frmMain.Winsock1(Index)
             End If
         Else
-            SendSingle "!login" & "#" & "Account" & "#", frmMain.Winsock1(Index)
+            Acc = False
         End If
     Next i
+    If Acc = False Then SendSingle "!login" & "#" & "Account" & "#", frmMain.Winsock1(Index)
         
 Case "!iprequest"
     For i = 1 To frmPanel.ListView1.ListItems.Count
