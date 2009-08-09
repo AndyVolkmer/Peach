@@ -17,6 +17,8 @@ Public MDIstatusbar_connecting          As String
 Public MDImsgbox_errorHandlerFormLoad   As String
 Public MDImsgbox_config_notify          As String
 Public MDImsgbox_nametaken              As String
+Public MDImsgbox_wrong_account          As String
+Public MDImsgbox_wrong_password         As String
 
 ' Configuration form ..
 Public CONFIGcommand_connect            As String
@@ -26,9 +28,8 @@ Public CONFIGcommand_language           As String
 Public CONFIGlabel_CI_name              As String
 Public CONFIGlabel_selectlanguage       As String
 
-Public CONFIGframe_config               As String
-Public CONFIGframe_client               As String
-Public CONFIGframe_server               As String
+Public CONFIGframe_personal             As String
+Public CONFIGframe_connection           As String
 
 Public CONFIGcombo_german               As String
 Public CONFIGcombo_english              As String
@@ -90,9 +91,10 @@ MDIstatusbar_connected = "Status: Verbunden mit "
 MDIstatusbar_connectionproblem = "Status: Getrennt aufgrund eines Verbindungsfehlers"
 MDIstatusbar_connecting = "Status: Verbinden mit "
 
-'MDImsgbox_errorHandlerFormLoad
 MDImsgbox_config_notify = "Einige Konfigurationsdateien sind veraltet oder wurden beschädigt, Peach fand den Fehler und wird es mit dem nächsten Neustart korrigieren."
 MDImsgbox_nametaken = "Der Name ist bereits vergeben."
+MDImsgbox_wrong_account = "Der Account ist nicht vorhanden oder falsch."
+MDImsgbox_wrong_password = "Das Passwort ist falsch."
 
 CONFIGcommand_connect = "&Verbinden"
 CONFIGcommand_disconnect = "&Verbindung trenn."
@@ -101,9 +103,8 @@ CONFIGcommand_language = "&Sprache"
 CONFIGlabel_CI_name = "Name: "
 CONFIGlabel_selectlanguage = "Wähle deine Sprache aus:"
 
-CONFIGframe_config = "Einstellungen"
-CONFIGframe_client = "Client Informationen: "
-CONFIGframe_server = "Server Informationen: "
+CONFIGframe_personal = "Personelle Informationen"
+CONFIGframe_connection = "Verbindungs Informationen"
 
 CONFIGcombo_german = "Deutsch"
 CONFIGcombo_english = "Englisch"
@@ -165,6 +166,8 @@ MDIstatusbar_connecting = "Status: Connecting to "
 'MDImsgbox_errorHandlerFormLoad
 MDImsgbox_config_notify = "Some configuration files are outdated or got damaged, Peach found the problem and will fix it on next program launch."
 MDImsgbox_nametaken = "This name is already taken."
+MDImsgbox_wrong_account = "The account does not exist or is wrong."
+MDImsgbox_wrong_password = "The password is wrong."
 
 ' Configuration form ..
 CONFIGcommand_connect = "&Connect"
@@ -174,9 +177,8 @@ CONFIGcommand_language = "&Language"
 CONFIGlabel_CI_name = "Name: "
 CONFIGlabel_selectlanguage = "Select your language:"
 
-CONFIGframe_config = "Configuration"
-CONFIGframe_client = "Client Information: "
-CONFIGframe_server = "Server Information: "
+CONFIGframe_personal = "Personal Information"
+CONFIGframe_connection = "Connection Information"
 
 CONFIGcombo_german = "German"
 CONFIGcombo_english = "English"
@@ -237,9 +239,10 @@ MDIstatusbar_connected = "Estado: Disponible "
 MDIstatusbar_connectionproblem = "Estado: Desconectado por problemas de conexión"
 MDIstatusbar_connecting = "Estado: Conectando "
 
-'MDImsgbox_errorHandlerFormLoad
 MDImsgbox_config_notify = "Alguna configuración de archivos estan caducados o dañados, Peach busca el problema y lo arreglará en el siguiente lanzamiento del programa."
 MDImsgbox_nametaken = "Este nombre ya esta cogido."
+MDImsgbox_wrong_account = "La cuenta no existe o es incorrecta."
+MDImsgbox_wrong_password = "La contraseña es incorrecta."
 
 CONFIGcommand_connect = "&Conectar"
 CONFIGcommand_disconnect = "&Desconectar"
@@ -248,9 +251,8 @@ CONFIGcommand_language = "&Idioma"
 CONFIGlabel_CI_name = "Nombre: "
 CONFIGlabel_selectlanguage = "Elige tu idioma:"
 
-CONFIGframe_config = "Configuración"
-CONFIGframe_client = "Informacion cliente: "
-CONFIGframe_server = "Informacion servidor: "
+CONFIGframe_personal = "Informaciónes personales"
+CONFIGframe_connection = "Informaciónes de conexión"
 
 CONFIGcombo_german = "Aleman"
 CONFIGcombo_english = "Inglés"
@@ -309,6 +311,8 @@ MDIstatusbar_connecting = "Status: Ansluter till "
 'MDImsgbox_errorHandlerFormLoad
 MDImsgbox_config_notify = "Några Konfiguration filer är gamla eller skadade, Peach hittade problemet och det kommer bli reparerat nästa gång du kör programmet."
 MDImsgbox_nametaken = "Namnet är upptaget."
+MDImsgbox_wrong_account = "The account does not exist or is wrong."
+MDImsgbox_wrong_password = "The password is wrong."
 
 ' Config form
 CONFIGcommand_connect = "&Anslut"
@@ -318,9 +322,8 @@ CONFIGcommand_language = "&Språk"
 CONFIGlabel_CI_name = "Namn: "
 CONFIGlabel_selectlanguage = "Välj språk:"
 
-CONFIGframe_config = "Inställningar"
-CONFIGframe_client = "Användar Information: "
-CONFIGframe_server = "Server Information: "
+CONFIGframe_personal = "Personal Information"
+CONFIGframe_connection = "Connection Information"
 
 CONFIGcombo_german = "Tyska"
 CONFIGcombo_english = "Engelska"
@@ -383,6 +386,9 @@ MDIstatusbar_connecting = "Stato: Connessione a "
 'MDImsgbox_errorHandlerFormLoad
 MDImsgbox_config_notify = "Alcuni file della configurazione potrebbero essere obsoleti o danneggiati, Peach ha riscontrato il problema e lo corregera' al prossimo avvio."
 MDImsgbox_nametaken = "Il nome immesso e' gia' in uso."
+MDImsgbox_wrong_account = "The account does not exist or is wrong."
+MDImsgbox_wrong_password = "The password is wrong."
+
 
 ' Config form ..
 CONFIGcommand_connect = "&Connesso"
@@ -392,9 +398,8 @@ CONFIGcommand_language = "&Lingua"
 CONFIGlabel_CI_name = "Nome: "
 CONFIGlabel_selectlanguage = "Seleziona la tua lingua:"
 
-CONFIGframe_config = "Configurazione"
-CONFIGframe_client = "Informazioni sul Client: "
-CONFIGframe_server = "Informazioni sul Server: "
+CONFIGframe_personal = "Personal Information"
+CONFIGframe_connection = "Connection Information"
 
 CONFIGcombo_german = "Tedesco"
 CONFIGcombo_english = "Inglese"
@@ -458,6 +463,8 @@ MDIstatusbar_connecting = "Status: Povezi se "
 'MDImsgbox_errorHandlerFormLoad
 MDImsgbox_config_notify = "Datoteka konfigurac. Je zastarela ili ostecena, problem ce biti pronadjen i popravljen sledecim pokretanjem programa."
 MDImsgbox_nametaken = "Ime je vec zauzeto."
+MDImsgbox_wrong_account = "The account does not exist or is wrong."
+MDImsgbox_wrong_password = "The password is wrong."
 
 ' Config form ..
 CONFIGcommand_connect = "&Povezi se"
@@ -467,9 +474,8 @@ CONFIGcommand_language = "&Jezik"
 CONFIGlabel_CI_name = "Ime :"
 CONFIGlabel_selectlanguage = "Dodaj svoj jezik:"
 
-CONFIGframe_config = "Konfiguracija"
-CONFIGframe_client = "Client informacije: "
-CONFIGframe_server = "Server informacije: "
+CONFIGframe_personal = "Personal Information"
+CONFIGframe_connection = "Connection Information"
 
 CONFIGcombo_german = "Nemacki"
 CONFIGcombo_english = "Engleski"
@@ -532,6 +538,8 @@ MDIstatusbar_connecting = "Status: verbinden met "
 'MDImsgbox_errorHandlerFormLoad
 MDImsgbox_config_notify = "Enkele bestanden zijn oud of beschadigd, Peach heeft het probleem gevonden en zal het herstellen bij de volgende herstart."
 MDImsgbox_nametaken = "Deze naam is niet beschikbaar."
+MDImsgbox_wrong_account = "The account does not exist or is wrong."
+MDImsgbox_wrong_password = "The password is wrong."
 
 CONFIGcommand_connect = "&Verbind"
 CONFIGcommand_disconnect = "&Verbreek de verbinding"
@@ -540,9 +548,8 @@ CONFIGcommand_language = "&Taal"
 CONFIGlabel_CI_name = "Naam: "
 CONFIGlabel_selectlanguage = "Selecteer jou taal:"
 
-CONFIGframe_config = "Configuratie"
-CONFIGframe_client = "Client Informatie: "
-CONFIGframe_server = "Server Informatie: "
+CONFIGframe_personal = "Personal Information"
+CONFIGframe_connection = "Connection Information"
 
 CONFIGcombo_german = "Duits"
 CONFIGcombo_english = "Engels"
@@ -599,9 +606,10 @@ MDIstatusbar_connected = "Etat: Connecté à "
 MDIstatusbar_connectionproblem = "Etat: Deconnecté à cause de problèmes do connection"
 MDIstatusbar_connecting = "Etat: Connection à "
 
-'MDImsgbox_errorHandlerFormLoad
 MDImsgbox_config_notify = "Quelques files de la configuration pourrait etre daumagés ou obsolète , Peach a trouvé le problème et le corrigerà au prochain envoi."
 MDImsgbox_nametaken = "Le nom inséré est déjà utilizé."
+MDImsgbox_wrong_account = "The account does not exist or is wrong."
+MDImsgbox_wrong_password = "The password is wrong."
 
 CONFIGcommand_connect = "&Connecté"
 CONFIGcommand_disconnect = "&Deconnecté"
@@ -610,9 +618,8 @@ CONFIGcommand_language = "&Langue"
 CONFIGlabel_CI_name = "Nome: "
 CONFIGlabel_selectlanguage = "Choisissez votre langue:"
 
-CONFIGframe_config = "Configuration"
-CONFIGframe_client = "Informations sur Client: "
-CONFIGframe_server = "Informations sur Server: "
+CONFIGframe_personal = "Personal Information"
+CONFIGframe_connection = "Connection Information"
 
 CONFIGcombo_german = "Alleman"
 CONFIGcombo_english = "Anglais"

@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.4.6"
+Public Const Rev = "1.0.4.7"
 Public Const aPort = 6123
 Public Const bPort = 6124
 
@@ -141,8 +141,6 @@ With frmConfig
     .txtNick.Enabled = True
     .txtIP.Enabled = True
     .txtPort.Enabled = True
-    .Label5.Caption = "IP: "
-    .Label6.Caption = "Port: "
 End With
 
 With frmChat

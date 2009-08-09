@@ -8,6 +8,8 @@ Public Type TypeSSO
     Nickname        As String * 15
     ConnectIP       As String * 20
     Port            As String * 5
+    Account         As String * 15
+    Password        As String * 15
 End Type
 
 Public Type TypeSSO2
@@ -35,6 +37,8 @@ With theOath
     .Nickname = frmConfig.txtNick.Text
     .ConnectIP = frmConfig.txtIP.Text
     .Port = frmConfig.txtPort.Text
+    .Account = frmConfig.txtAccount.Text
+    .Password = frmConfig.txtPassword.Text
 End With
 
 Put #lnManip, 1, theOath

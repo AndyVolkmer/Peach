@@ -66,7 +66,6 @@ Begin VB.Form frmPanel
       _ExtentX        =   12726
       _ExtentY        =   1296
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -150,8 +149,8 @@ For i = 1 To ListView1.ListItems.Count
     If ListView1.ListItems.Item(i).Checked = True Then
         frmMain.Winsock1(i).Close
         Unload frmMain.Winsock1(i)
-        txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & ListView1.ListItems.Item(i) & " got kicked."
         ListView1.ListItems.Remove (i)
+        txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & ListView1.ListItems.Item(i) & " got kicked."
     Else
         txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] No user checked."
     End If

@@ -486,17 +486,15 @@ SetupForms frmConfig
 End Sub
 
 Private Sub Winsock1_Connect()
-SendMsg "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
+SendMsg "!login" & "#" & frmConfig.txtAccount & "#" & frmConfig.txtPassword & "#"
 End Sub
 
 Private Sub ConnectIsTrue()
 StatusBar1.Panels(1).Text = MDIstatusbar_connected & frmConfig.txtIP.Text & ":" & frmConfig.txtPort.Text
 
-NameText = frmConfig.txtNick
-Message = "!connected" & "#" & NameText & "#"
-SendMsg Message
+SendMsg "!connected" & "#" & frmConfig.txtNick & "#"
 
-frmDESP.DisplayMessage "Hello " & NameText
+frmDESP.DisplayMessage "Hello " & frmConfig.txtNick
 End Sub
 
 Private Sub ConnectIsFalse()
@@ -547,7 +545,33 @@ Case "!listupdate"
             frmSendFile.Combo1.AddItem arr(i)
     Next i
     Mute = False
-    
+
+'We get login answer here
+Case "!login"
+    Select Case arr(1)
+    Case "Yes"
+        SendMsg "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
+    Case "Password"
+        With frmConfig
+            .Command2_Click
+            .txtPassword = ""
+        frmChat.Hide
+            .Show
+            .txtPassword.SetFocus
+        End With
+        MsgBox MDImsgbox_wrong_password, vbInformation
+    Case "Account"
+        With frmConfig
+            .Command2_Click
+            .txtAccount = ""
+        frmChat.Hide
+            .Show
+            .txtAccount.SetFocus
+        End With
+        MsgBox MDImsgbox_wrong_account, vbInformation
+    End Select
+    Mute = False
+
 'We get ip here
 Case "!iprequest"
     

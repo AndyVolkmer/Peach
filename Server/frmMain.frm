@@ -276,10 +276,10 @@ Set xRecordSet = Nothing
 
 End Sub
 
-Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
 Dim msg As Long
 Dim sFilter As String
-msg = X / Screen.TwipsPerPixelX
+msg = x / Screen.TwipsPerPixelX
 Select Case msg
 Case WM_LBUTTONDOWN
 Case WM_LBUTTONUP
@@ -302,19 +302,19 @@ End If
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
-Dim X As Integer
+Dim x As Integer
     Unload Winsock1(Index)
-    For X = 1 To frmPanel.ListView1.ListItems.Count + 1
+    For x = 1 To frmPanel.ListView1.ListItems.Count + 1
         ' Update user lists ( server and client )
-        If frmPanel.ListView1.ListItems.Item(X).SubItems(2) = Index Then
+        If frmPanel.ListView1.ListItems.Item(x).SubItems(2) = Index Then
             ' Pick the user
-            frmPanel.ListView1.ListItems.Remove (X)
+            frmPanel.ListView1.ListItems.Remove (x)
             
             ' Update Users List
             UpdateUsersList
             Exit For
         End If
-    Next X
+    Next x
     StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
@@ -325,7 +325,7 @@ RR = frmPanel.ListView1.ListItems.Count + 1
     Winsock1(intCounter).LocalPort = frmConfig.txtPort.Text
     Winsock1(intCounter).Accept requestID
     
-    ' New user should be listed in the panel
+    'New user should be listed in the panel
     With frmPanel.ListView1
         .ListItems.Add RR, , "Unknown"
         .ListItems.Item(RR).SubItems(1) = Winsock1(intCounter).RemoteHostIP
@@ -443,6 +443,19 @@ Case "!w"
             Exit For
         End If
     Next i
+Case "!login"
+    For i = 1 To frmAccountPanel.ListView1.ListItems.Count
+        If GetUser = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(1) Then
+            If ConverText = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(2) Then
+                SendSingle "!login" & "#" & "Yes" & "#", frmMain.Winsock1(Index)
+            Else
+                SendSingle "!login" & "#" & "Password" & "#", frmMain.Winsock1(Index)
+            End If
+        Else
+            SendSingle "!login" & "#" & "Account" & "#", frmMain.Winsock1(Index)
+        End If
+    Next i
+        
 Case "!iprequest"
     For i = 1 To frmPanel.ListView1.ListItems.Count
         If GetUser = frmPanel.ListView1.ListItems.Item(i) Then
@@ -469,7 +482,7 @@ Case "!emote"
 Case Else
     SendMessage " [" & GetUser & "]: " & ConverText
 End Select
-' We want to read the message also , different then others tho
+'We want to read the message also , different then others tho
 VisualizeMessage Command, GetUser, ConverText
 End Sub
 

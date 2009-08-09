@@ -22,74 +22,22 @@ Begin VB.Form frmConfig
    ScaleHeight     =   4185
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
+   Begin VB.CommandButton Command5 
+      Caption         =   "&Register Account"
+      Height          =   255
+      Left            =   5280
+      TabIndex        =   18
+      Top             =   3720
+      Width           =   2055
+   End
    Begin VB.CommandButton Command4 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Update"
       Height          =   375
       Left            =   1440
-      TabIndex        =   18
-      Top             =   2400
+      TabIndex        =   6
+      Top             =   2760
       Width           =   1335
-   End
-   Begin VB.Frame Frame3 
-      BackColor       =   &H00F4F4F4&
-      Caption         =   "Server Information:"
-      ForeColor       =   &H00000000&
-      Height          =   975
-      Left            =   3720
-      TabIndex        =   13
-      Top             =   360
-      Width           =   3015
-      Begin VB.Label Label5 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   "IP: "
-         ForeColor       =   &H00000000&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   15
-         Top             =   240
-         Width           =   2175
-      End
-      Begin VB.Label Label6 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   "Port: "
-         ForeColor       =   &H00000000&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   14
-         Top             =   600
-         Width           =   2175
-      End
-   End
-   Begin VB.Frame Frame2 
-      BackColor       =   &H00F4F4F4&
-      Caption         =   "Client Information:"
-      ForeColor       =   &H00000000&
-      Height          =   975
-      Left            =   360
-      TabIndex        =   12
-      Top             =   360
-      Width           =   3015
-      Begin VB.Label Label3 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   "IP: "
-         ForeColor       =   &H00000000&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   17
-         Top             =   240
-         Width           =   2175
-      End
-      Begin VB.Label Label4 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   "Name: "
-         ForeColor       =   &H00000000&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   16
-         Top             =   600
-         Width           =   2175
-      End
    End
    Begin VB.CommandButton Command2 
       BackColor       =   &H00F4F4F4&
@@ -97,8 +45,8 @@ Begin VB.Form frmConfig
       Enabled         =   0   'False
       Height          =   375
       Left            =   5760
-      TabIndex        =   4
-      Top             =   2400
+      TabIndex        =   8
+      Top             =   2760
       Width           =   1575
    End
    Begin VB.CommandButton Command3 
@@ -106,8 +54,8 @@ Begin VB.Form frmConfig
       Caption         =   "&Language"
       Height          =   375
       Left            =   120
-      TabIndex        =   11
-      Top             =   2400
+      TabIndex        =   5
+      Top             =   2760
       Width           =   1335
    End
    Begin VB.CommandButton Command1 
@@ -115,63 +63,66 @@ Begin VB.Form frmConfig
       Caption         =   "&Connect"
       Height          =   375
       Left            =   4200
-      TabIndex        =   3
-      Top             =   2400
+      TabIndex        =   7
+      Top             =   2760
       Width           =   1575
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00F4F4F4&
-      Caption         =   "Configuration"
+      Caption         =   "Personal Settings"
       ForeColor       =   &H00000000&
-      Height          =   2175
+      Height          =   1215
       Left            =   120
-      TabIndex        =   5
+      TabIndex        =   9
       Top             =   120
       Width           =   7215
-      Begin VB.TextBox txtPort 
+      Begin VB.TextBox txtPassword 
          Alignment       =   2  'Center
          Height          =   285
-         Left            =   3600
-         MaxLength       =   5
-         TabIndex        =   2
-         Top             =   1680
-         Width           =   855
-      End
-      Begin VB.TextBox txtIP 
-         Alignment       =   2  'Center
-         Height          =   285
+         IMEMode         =   3  'DISABLE
          Left            =   1920
+         MaxLength       =   15
+         PasswordChar    =   "*"
          TabIndex        =   1
-         Top             =   1680
+         Top             =   600
          Width           =   1575
       End
-      Begin VB.TextBox txtNick 
+      Begin VB.TextBox txtAccount 
          Alignment       =   2  'Center
          Height          =   285
          Left            =   240
          MaxLength       =   15
          TabIndex        =   0
-         Top             =   1680
+         Top             =   600
          Width           =   1575
       End
-      Begin VB.Label Label1 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   " Port:"
-         ForeColor       =   &H00000000&
-         Height          =   255
+      Begin VB.TextBox txtNick 
+         Alignment       =   2  'Center
+         Height          =   285
          Left            =   3600
-         TabIndex        =   8
-         Top             =   1440
-         Width           =   975
+         MaxLength       =   15
+         TabIndex        =   2
+         Top             =   600
+         Width           =   1575
       End
-      Begin VB.Label Label2 
+      Begin VB.Label Label6 
          BackColor       =   &H00F4F4F4&
-         Caption         =   " IP:"
+         Caption         =   " Password:"
          ForeColor       =   &H00000000&
          Height          =   255
          Left            =   1920
-         TabIndex        =   7
-         Top             =   1440
+         TabIndex        =   14
+         Top             =   360
+         Width           =   975
+      End
+      Begin VB.Label Label5 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   " Account:"
+         ForeColor       =   &H00000000&
+         Height          =   255
+         Left            =   240
+         TabIndex        =   13
+         Top             =   360
          Width           =   975
       End
       Begin VB.Label lblNick 
@@ -179,9 +130,55 @@ Begin VB.Form frmConfig
          Caption         =   " Nickname:"
          ForeColor       =   &H00000000&
          Height          =   255
+         Left            =   3600
+         TabIndex        =   10
+         Top             =   360
+         Width           =   975
+      End
+   End
+   Begin VB.Frame Frame2 
+      BackColor       =   &H00F4F4F4&
+      Caption         =   "Connection Settings"
+      Height          =   1215
+      Left            =   120
+      TabIndex        =   15
+      Top             =   1440
+      Width           =   7215
+      Begin VB.TextBox txtPort 
+         Alignment       =   2  'Center
+         Height          =   285
+         Left            =   1920
+         MaxLength       =   5
+         TabIndex        =   4
+         Top             =   600
+         Width           =   855
+      End
+      Begin VB.TextBox txtIP 
+         Alignment       =   2  'Center
+         Height          =   285
          Left            =   240
-         TabIndex        =   6
-         Top             =   1440
+         TabIndex        =   3
+         Top             =   600
+         Width           =   1575
+      End
+      Begin VB.Label Label1 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   " Port:"
+         ForeColor       =   &H00000000&
+         Height          =   255
+         Left            =   1920
+         TabIndex        =   17
+         Top             =   360
+         Width           =   975
+      End
+      Begin VB.Label Label2 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   " IP:"
+         ForeColor       =   &H00000000&
+         Height          =   255
+         Left            =   240
+         TabIndex        =   16
+         Top             =   360
          Width           =   975
       End
    End
@@ -190,7 +187,7 @@ Begin VB.Form frmConfig
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
-      TabIndex        =   10
+      TabIndex        =   12
       Top             =   3720
       Width           =   1455
    End
@@ -200,7 +197,7 @@ Begin VB.Form frmConfig
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
-      TabIndex        =   9
+      TabIndex        =   11
       Top             =   3480
       Width           =   1335
    End
@@ -261,8 +258,6 @@ With frmMain.Winsock1
     .RemotePort = txtPort.Text
     .RemoteHost = txtIP.Text
     .Connect
-    Label5.Caption = "IP: " & .RemoteHost
-    Label6.Caption = "Port: " & .RemotePort
 End With
 
 'Set Recieve-Request-Winsock to listen
@@ -319,8 +314,6 @@ Dim TSSO As TypeSSO
 With Me
     .Top = 0
     .Left = 0
-    .Label3.Caption = "IP: " & frmMain.Winsock1.LocalIP
-    .Label4.Caption = "Name: " & frmMain.Winsock1.LocalHostName
     .Label8.Caption = "Version : " & Rev
 End With
 LoadConfigForm
@@ -329,6 +322,8 @@ With TSSO
     txtNick.Text = Trim(TSSO.Nickname)
     txtIP.Text = Trim(TSSO.ConnectIP)
     txtPort.Text = Trim(TSSO.Port)
+    txtAccount.Text = Trim(TSSO.Account)
+    txtPassword.Text = Trim(TSSO.Password)
 End With
 End Sub
 
@@ -336,10 +331,8 @@ Public Sub LoadConfigForm()
 Command1.Caption = CONFIGcommand_connect
 Command2.Caption = CONFIGcommand_disconnect
 Command3.Caption = CONFIGcommand_language
-Label4.Caption = CONFIGlabel_CI_name & frmMain.Winsock1.LocalHostName
-Frame1.Caption = CONFIGframe_config
-Frame2.Caption = CONFIGframe_client
-Frame3.Caption = CONFIGframe_server
+Frame1.Caption = CONFIGframe_personal
+Frame2.Caption = CONFIGframe_connection
 lblNick = CONFIGlabel_CI_name
 End Sub
 
@@ -363,6 +356,10 @@ Private Sub Label8_Click()
 frmAbout.Show 1
 End Sub
 
+Private Sub txtAccount_KeyPress(KeyAscii As Integer)
+If KeyAscii = vbKeyReturn Then Command1_Click
+End Sub
+
 Private Sub txtIP_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then Command1_Click
 End Sub
@@ -373,6 +370,10 @@ End Sub
 
 Private Sub txtNick_LostFocus()
 txtNick.Text = StrConv(txtNick.Text, vbProperCase)
+End Sub
+
+Private Sub txtPassword_KeyPress(KeyAscii As Integer)
+If KeyAscii = vbKeyReturn Then Command1_Click
 End Sub
 
 Private Sub txtPort_KeyPress(KeyAscii As Integer)
