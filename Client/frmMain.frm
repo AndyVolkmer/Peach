@@ -569,6 +569,13 @@ Case "!login"
             .txtAccount.SetFocus
         End With
         MsgBox MDImsgbox_wrong_account, vbInformation
+    Case "Banned"
+        With frmConfig
+            .Command2_Click
+        frmChat.Hide
+            .Show
+        End With
+        MsgBox MDImsgbox_banned, vbInformation
     End Select
     Mute = False
 

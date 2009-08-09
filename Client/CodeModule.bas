@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.4.7"
+Public Const Rev = "1.0.4.8"
 Public Const aPort = 6123
 Public Const bPort = 6124
 
@@ -134,13 +134,15 @@ End Function
 Public Sub Disconnect()
 Dim WiSk As Winsock
 
-' Do the buttons
+'Do the buttons
 With frmConfig
     .Command1.Enabled = True
     .Command2.Enabled = False
     .txtNick.Enabled = True
     .txtIP.Enabled = True
     .txtPort.Enabled = True
+    .txtAccount.Enabled = True
+    .txtPassword.Enabled = True
 End With
 
 With frmChat

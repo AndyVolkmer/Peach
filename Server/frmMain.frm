@@ -446,6 +446,11 @@ Case "!w"
 Case "!login"
     For i = 1 To frmAccountPanel.ListView1.ListItems.Count
         If GetUser = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(1) Then
+            If frmAccountPanel.ListView1.ListItems.Item(i).SubItems(5) = "Yes" Then
+                SendSingle "!login" & "#" & "Banned" & "#", frmMain.Winsock1(Index)
+                Exit For
+            End If
+            
             If ConverText = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(2) Then
                 SendSingle "!login" & "#" & "Yes" & "#", frmMain.Winsock1(Index)
             Else

@@ -24,7 +24,7 @@ Begin VB.Form frmConfig
    ShowInTaskbar   =   0   'False
    Begin VB.CommandButton Command5 
       Caption         =   "&Register Account"
-      Height          =   255
+      Height          =   290
       Left            =   5280
       TabIndex        =   18
       Top             =   3720
@@ -236,8 +236,9 @@ If Len(txtNick.Text) < 4 Then
     Exit Sub
 End If
 
-'Make it proper case
+'Make the names proper case
 txtNick.Text = StrConv(txtNick.Text, vbProperCase)
+txtAccount.Text = StrConv(txtAccount.Text, vbProperCase)
 
 'Do the enable stuff
 With Me
@@ -246,6 +247,8 @@ With Me
     .txtNick.Enabled = False
     .txtIP.Enabled = False
     .txtPort.Enabled = False
+    .txtAccount.Enabled = False
+    .txtPassword.Enabled = False
 End With
 With frmChat
     .cmdSend.Enabled = True
@@ -358,6 +361,10 @@ End Sub
 
 Private Sub txtAccount_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then Command1_Click
+End Sub
+
+Private Sub txtAccount_LostFocus()
+txtAccount.Text = StrConv(txtAccount.Text, vbProperCase)
 End Sub
 
 Private Sub txtIP_KeyPress(KeyAscii As Integer)
