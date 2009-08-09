@@ -1,5 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmAccountPanel 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
@@ -22,6 +23,14 @@ Begin VB.Form frmAccountPanel
    ScaleHeight     =   4065
    ScaleWidth      =   7470
    ShowInTaskbar   =   0   'False
+   Begin MSWinsockLib.Winsock RegSock 
+      Index           =   0
+      Left            =   6480
+      Top             =   3600
+      _ExtentX        =   741
+      _ExtentY        =   741
+      _Version        =   393216
+   End
    Begin VB.CommandButton cmdCancel 
       Caption         =   "&Cancel"
       Enabled         =   0   'False
@@ -278,31 +287,7 @@ End Sub
 Private Sub cmdSave_Click()
 Select Case Switch
 Case "Add"
-    i = 1
-    
-    'Check list if the ID is already given
-    For ii = 1 To ListView1.ListItems.Count
-        If ListView1.ListItems.Item(ii) = i Then
-            i = i + 1
-        End If
-    Next ii
-    
-    'Add new account to database
-    frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time1, Date1, Banned1) VALUES(" & i & ", '" & txtName.Text & "', '" & txtPassword.Text & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "dd.mm.yyyy") & "', '" & cmbBanned.Text & "')"
-    frmMain.xCommand.Execute
-    
-    'Save index in variable
-    i = ListView1.ListItems.Count + 1
-    
-    'Add account to the listview
-    With ListView1.ListItems
-        .Add , , ii
-        .Item(i).SubItems(1) = txtName.Text
-        .Item(i).SubItems(2) = txtPassword.Text
-        .Item(i).SubItems(3) = Format(Time, "hh:nn:ss")
-        .Item(i).SubItems(4) = Format(Date, "dd.mm.yyyy")
-        .Item(i).SubItems(5) = cmbBanned.Text
-    End With
+    RegisterAccount txtName.Text, txtPassword.Text, cmbBanned.Text
 Case "Modify"
     'Name can't be modified to nothing
     If txtName.Text = "" Then
@@ -362,3 +347,102 @@ With Item
     End If
 End With
 End Sub
+
+Private Sub RegisterAccount(dName As String, dPassword As String, dBanned As String)
+    i = 1
+    
+    'Check list if the ID is already given
+    For ii = 1 To ListView1.ListItems.Count
+        If ListView1.ListItems.Item(ii) = i Then
+            i = i + 1
+        End If
+    Next ii
+    
+    'Add new account to database
+    frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time1, Date1, Banned1) VALUES(" & i & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "dd.mm.yyyy") & "', '" & dBanned & "')"
+    frmMain.xCommand.Execute
+    
+    'Save index in variable
+    i = ListView1.ListItems.Count + 1
+    
+    'Add account to the listview
+    With ListView1.ListItems
+        .Add , , ii
+        .Item(i).SubItems(1) = dName
+        .Item(i).SubItems(2) = dPassword
+        .Item(i).SubItems(3) = Format(Time, "hh:nn:ss")
+        .Item(i).SubItems(4) = Format(Date, "dd.mm.yyyy")
+        .Item(i).SubItems(5) = dBanned
+    End With
+End Sub
+
+Private Sub RegSock_Close(Index As Integer)
+RegSock(Index).Close
+Unload RegSock(Index)
+End Sub
+
+Private Sub RegSock_ConnectionRequest(Index As Integer, ByVal requestID As Long)
+Dim intCounter1 As Integer
+    intCounter1 = loadSocket
+    RegSock(intCounter1).LocalPort = RegPort
+    RegSock(intCounter1).Accept requestID
+End Sub
+
+Private Function socketFree() As Integer
+On Error GoTo HandleErrorFreeSocket
+    Dim theIP As Variant
+    Dim p As Integer
+    For p = RegSock.LBound + 1 To RegSock.UBound
+        theIP = RegSock(p).LocalIP
+    Next
+    socketFree = RegSock.UBound + 1
+Exit Function
+HandleErrorFreeSocket:
+socketFree = p
+End Function
+
+Private Function loadSocket() As Integer
+Dim theFreeSocket As Integer
+theFreeSocket = 0
+theFreeSocket = socketFree
+
+Load RegSock(theFreeSocket)
+
+loadSocket = theFreeSocket
+End Function
+
+Private Sub RegSock_DataArrival(Index As Integer, ByVal bytesTotal As Long)
+Dim Array1()    As String
+Dim GetMessage  As String
+Dim GetCommand  As String
+Dim GetName     As String
+Dim GetPassword As String
+
+RegSock(Index).GetData GetMessage
+
+Array1 = Split(GetMessage, "#")
+
+GetCommand = Array1(0)
+GetName = Array1(1)
+GetPassword = Array1(2)
+
+Select Case GetCommand
+Case "!register"
+    For i = 1 To ListView1.ListItems.Count
+        If GetName = ListView1.ListItems.Item(i).SubItems(1) Then
+            If RegSock(Index).State = 7 Then
+                RegSock(Index).SendData "!nameexist" & "#"
+                Exit Sub
+            End If
+        End If
+    Next i
+    
+    RegisterAccount GetName, GetPassword, "No"
+    RegSock(Index).SendData "!done" & "#"
+End Select
+End Sub
+
+
+
+
+

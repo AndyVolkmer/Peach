@@ -169,6 +169,11 @@ With frmMain
     .StatusBar1.Panels(1).Text = "Status: Connected with  " & .Winsock1.Count - 1 & " Client(s)."
 End With
 
+With frmAccountPanel
+    .RegSock(0).LocalPort = RegPort
+    .RegSock(0).Listen
+End With
+
 frmMain.SetupForms frmChat
 
 frmChat.txtToSend.SetFocus
@@ -192,12 +197,14 @@ End Select
 End Sub
 
 Private Sub Command2_Click()
+Dim WiSk As Winsock
+
 connCounter.Enabled = False
 Label2.Caption = "Offline"
-Dim WiSk As Winsock
+
 With frmMain
     For Each WiSk In .Winsock1
-        If WiSk.State = sckConnected Then
+        If WiSk.State = 7 Then
             WiSk.Close
             Unload WiSk
         End If
@@ -205,7 +212,17 @@ With frmMain
     .Winsock1(0).Close
     .StatusBar1.Panels(1).Text = "Status: Disconnected"
 End With
-    
+
+With frmAccountPanel
+    For Each WiSk In .RegSock
+        If WiSk.State = 7 Then
+            WiSk.Close
+            Unload WiSk
+        End If
+    Next
+    .RegSock(0).Close
+End With
+        
 'Clear frmPanel ListView
 frmPanel.ListView1.ListItems.Clear
 

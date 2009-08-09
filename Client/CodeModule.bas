@@ -1,9 +1,10 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.5.0"
+Public Const Rev = "1.0.5.1"
 Public Const aPort = 6123
 Public Const bPort = 6124
+Public Const RegPort = 6222
 
 Public Type NOTIFYICONDATA
 cbSize              As Long

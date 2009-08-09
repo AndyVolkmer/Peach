@@ -238,7 +238,6 @@ End If
 
 'Make the names proper case
 txtNick.Text = StrConv(txtNick.Text, vbProperCase)
-txtAccount.Text = StrConv(txtAccount.Text, vbProperCase)
 
 'Do the enable stuff
 With Me
@@ -312,6 +311,10 @@ On Error Resume Next
 Shell App.Path & "\peachUpdater.exe"
 End Sub
 
+Private Sub Command5_Click()
+frmRegistration.Show 1
+End Sub
+
 Public Sub Form_Load()
 Dim TSSO As TypeSSO
 With Me
@@ -361,10 +364,6 @@ End Sub
 
 Private Sub txtAccount_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then Command1_Click
-End Sub
-
-Private Sub txtAccount_LostFocus()
-txtAccount.Text = StrConv(txtAccount.Text, vbProperCase)
 End Sub
 
 Private Sub txtIP_KeyPress(KeyAscii As Integer)

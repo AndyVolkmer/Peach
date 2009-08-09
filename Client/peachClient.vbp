@@ -19,6 +19,7 @@ Form=frmDESP.frm
 Form=frmBlank.frm
 Form=frmAbout.frm
 Form=frnSendFile2.frm
+Form=frmRegistration.frm
 IconForm="frmMain"
 Startup="frmLanguage"
 HelpFile=""
