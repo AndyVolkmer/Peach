@@ -155,7 +155,7 @@ Dim x As Integer
 
 Private Sub Command1_Click()
 connCounter.Enabled = True
-' Do the buttons
+'Do the buttons
 txtNick.Enabled = False
 txtPort.Enabled = False
 Command1.Enabled = False

@@ -119,7 +119,7 @@ If txtAccount.Text = "" Then
 End If
 
 'Can't register if account is shorter then 5 chars.
-If Len(txtAccount.Text) <= 5 Then
+If Len(txtAccount.Text) < 5 Then
     MsgBox "Your Account needs at least 5 characters.", vbInformation
     txtAccount.SetFocus
     Exit Sub
@@ -140,7 +140,7 @@ If txtPassword1.Text = "" Then
 End If
 
 'Can't register if password is shorter then 4 chars.
-If Len(txtPassword1.Text) <= 4 Then
+If Len(txtPassword1.Text) < 4 Then
     MsgBox "Your Password needs at least 4 characters."
     txtPassword1.SetFocus
     Exit Sub
@@ -212,4 +212,16 @@ End Sub
 Private Sub RegSock_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Me.Caption = "Error has occured ..."
 Label4.Caption = "An error has occured please try later again."
+End Sub
+
+Private Sub txtAccount_KeyPress(KeyAscii As Integer)
+If KeyAscii = vbKeyReturn Then Command1_Click
+End Sub
+
+Private Sub txtPassword1_KeyPress(KeyAscii As Integer)
+If KeyAscii = vbKeyReturn Then Command1_Click
+End Sub
+
+Private Sub txtPassword2_KeyPress(KeyAscii As Integer)
+If KeyAscii = vbKeyReturn Then Command1_Click
 End Sub
