@@ -51,6 +51,7 @@ Begin VB.Form frmList
       EndProperty
    End
    Begin VB.CommandButton Command1 
+      BackColor       =   &H00F4F4F4&
       Caption         =   "&Close"
       Height          =   375
       Left            =   2520

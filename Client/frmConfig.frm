@@ -23,6 +23,7 @@ Begin VB.Form frmConfig
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
    Begin VB.CommandButton Command5 
+      BackColor       =   &H00F4F4F4&
       Caption         =   "&Register Account"
       Height          =   290
       Left            =   5280

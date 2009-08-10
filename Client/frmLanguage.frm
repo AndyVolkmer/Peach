@@ -34,6 +34,7 @@ Begin VB.Form frmLanguage
       Width           =   1215
    End
    Begin VB.ComboBox Combo1 
+      BackColor       =   &H00FFFFFF&
       Height          =   315
       Left            =   240
       Style           =   2  'Dropdown List

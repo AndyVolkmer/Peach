@@ -72,6 +72,7 @@ Begin VB.Form frmSendFile
       Width           =   7155
    End
    Begin VB.CommandButton cmdBrowse 
+      BackColor       =   &H00F4F4F4&
       Caption         =   "&Browse"
       Height          =   375
       Left            =   5640
@@ -81,6 +82,7 @@ Begin VB.Form frmSendFile
       Width           =   1680
    End
    Begin VB.CommandButton cmdSendFile 
+      BackColor       =   &H00F4F4F4&
       Caption         =   "&Send File"
       Height          =   375
       Left            =   5640

@@ -24,6 +24,7 @@ Begin VB.Form frmAbout
    ScaleWidth      =   8760
    StartUpPosition =   1  'CenterOwner
    Begin VB.CommandButton Command1 
+      BackColor       =   &H00F4F4F4&
       Caption         =   "&Accept"
       Height          =   375
       Left            =   6840
@@ -64,3 +65,4 @@ Label1.Caption = "Author : Notron" & vbCrLf _
             "Do not publish this anywhere without " & _
             "permissions of the author."
 End Sub
+

@@ -1,6 +1,7 @@
 VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmRegistration 
+   BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Peach - Registration"
    ClientHeight    =   3165
@@ -22,6 +23,16 @@ Begin VB.Form frmRegistration
    ScaleHeight     =   3165
    ScaleWidth      =   3885
    StartUpPosition =   1  'CenterOwner
+   Begin VB.CheckBox Check1 
+      BackColor       =   &H00F4F4F4&
+      Caption         =   "&Show Password"
+      Height          =   255
+      Left            =   120
+      TabIndex        =   11
+      Top             =   2640
+      Visible         =   0   'False
+      Width           =   1815
+   End
    Begin MSWinsockLib.Winsock RegSock 
       Left            =   120
       Top             =   2640
@@ -30,6 +41,7 @@ Begin VB.Form frmRegistration
       _Version        =   393216
    End
    Begin VB.CommandButton Command1 
+      BackColor       =   &H00F4F4F4&
       Caption         =   "&Submit"
       Height          =   375
       Left            =   2040
@@ -39,17 +51,40 @@ Begin VB.Form frmRegistration
       Width           =   1695
    End
    Begin VB.Frame Frame1 
-      Caption         =   "Enter your details."
+      BackColor       =   &H00F4F4F4&
+      Caption         =   "Enter your details"
       Height          =   2415
       Left            =   120
       TabIndex        =   0
       Top             =   120
       Visible         =   0   'False
       Width           =   3615
+      Begin VB.PictureBox Picture1 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00F4F4F4&
+         BorderStyle     =   0  'None
+         ForeColor       =   &H80000008&
+         Height          =   855
+         Left            =   2160
+         ScaleHeight     =   855
+         ScaleWidth      =   1215
+         TabIndex        =   9
+         Top             =   1200
+         Width           =   1215
+         Begin VB.Label Label5 
+            BackColor       =   &H00F4F4F4&
+            Height          =   615
+            Left            =   120
+            TabIndex        =   10
+            Top             =   120
+            Width           =   975
+         End
+      End
       Begin VB.TextBox txtPassword2 
          Height          =   285
          IMEMode         =   3  'DISABLE
          Left            =   120
+         MaxLength       =   15
          PasswordChar    =   "*"
          TabIndex        =   6
          Top             =   1800
@@ -59,6 +94,7 @@ Begin VB.Form frmRegistration
          Height          =   285
          IMEMode         =   3  'DISABLE
          Left            =   120
+         MaxLength       =   15
          PasswordChar    =   "*"
          TabIndex        =   4
          Top             =   1200
@@ -73,6 +109,7 @@ Begin VB.Form frmRegistration
          Width           =   3255
       End
       Begin VB.Label Label3 
+         BackColor       =   &H00F4F4F4&
          Caption         =   " Confirm the Password:"
          Height          =   255
          Left            =   120
@@ -81,6 +118,7 @@ Begin VB.Form frmRegistration
          Width           =   1935
       End
       Begin VB.Label Label2 
+         BackColor       =   &H00F4F4F4&
          Caption         =   " Password: "
          Height          =   255
          Left            =   120
@@ -89,6 +127,7 @@ Begin VB.Form frmRegistration
          Width           =   1335
       End
       Begin VB.Label Label1 
+         BackColor       =   &H00F4F4F4&
          Caption         =   " Account Name: "
          Height          =   255
          Left            =   120
@@ -98,6 +137,7 @@ Begin VB.Form frmRegistration
       End
    End
    Begin VB.Label Label4 
+      BackColor       =   &H00F4F4F4&
       Height          =   255
       Left            =   240
       TabIndex        =   8
@@ -110,7 +150,23 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Sub Check1_Click()
+If Check1 = vbChecked Then
+    txtPassword1.PasswordChar = ""
+    txtPassword2.PasswordChar = ""
+Else
+    txtPassword1.PasswordChar = "*"
+    txtPassword2.PasswordChar = "*"
+End If
+End Sub
+
 Private Sub Command1_Click()
+'Close form
+If Command1.Caption = "&Close" Then
+    Unload Me
+    Exit Sub
+End If
+
 'Can't register if there is no Account
 If txtAccount.Text = "" Then
     MsgBox "You have to enter an Account Name.", vbInformation
@@ -180,13 +236,16 @@ End Sub
 Private Sub RegSock_Close()
 Me.Caption = "Error has occured ..."
 Label4.Caption = "An error has occured please try later again."
-Frame1.Visible = False
+Command1.Caption = "&Close"
 Command1.Visible = False
+Frame1.Visible = False
+Check1.Visible = False
 End Sub
 
 Private Sub RegSock_Connect()
 Me.Caption = " Peach - Registration"
 Frame1.Visible = True
+Check1.Visible = True
 Command1.Visible = True
 End Sub
 
@@ -212,10 +271,35 @@ End Sub
 Private Sub RegSock_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Me.Caption = "Error has occured ..."
 Label4.Caption = "An error has occured please try later again."
+Command1.Caption = "&Close"
+Command1.Visible = True
 End Sub
 
 Private Sub txtAccount_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then Command1_Click
+End Sub
+
+Private Sub txtPassword1_Change()
+Select Case Len(txtPassword1.Text)
+Case Is < 6
+    Picture1.BackColor = vbRed
+    Picture1.BorderStyle = 1
+    Label5.BackColor = vbRed
+    Label5.ForeColor = vbWhite
+    Label5.Caption = "The password is weak."
+Case Is = 6, 7, 8
+    Picture1.BackColor = vbYellow
+    Picture1.BorderStyle = 1
+    Label5.BackColor = vbYellow
+    Label5.ForeColor = vbBlack
+    Label5.Caption = "The password is normal."
+Case Is > 9
+    Picture1.BackColor = vbGreen
+    Picture1.BorderStyle = 1
+    Label5.BackColor = vbGreen
+    Label5.ForeColor = vbBlack
+    Label5.Caption = "The password is strong."
+End Select
 End Sub
 
 Private Sub txtPassword1_KeyPress(KeyAscii As Integer)

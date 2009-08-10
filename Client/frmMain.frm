@@ -103,6 +103,7 @@ Begin VB.MDIForm frmMain
       Top             =   0
       Width           =   7470
       Begin VB.CommandButton Command4 
+         BackColor       =   &H00F4F4F4&
          Caption         =   "&Online List"
          BeginProperty Font 
             Name            =   "Tahoma"
@@ -120,6 +121,7 @@ Begin VB.MDIForm frmMain
          Width           =   1815
       End
       Begin VB.CommandButton Command3 
+         BackColor       =   &H00F4F4F4&
          Caption         =   "&Send File"
          BeginProperty Font 
             Name            =   "Tahoma"
@@ -138,6 +140,7 @@ Begin VB.MDIForm frmMain
          Width           =   1815
       End
       Begin VB.CommandButton Command2 
+         BackColor       =   &H00F4F4F4&
          Caption         =   "Ch&at"
          BeginProperty Font 
             Name            =   "Tahoma"
@@ -155,6 +158,7 @@ Begin VB.MDIForm frmMain
          Width           =   1815
       End
       Begin VB.CommandButton Command1 
+         BackColor       =   &H00F4F4F4&
          Caption         =   "&Configuration"
          BeginProperty Font 
             Name            =   "Tahoma"
@@ -226,13 +230,6 @@ Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPo
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
-Public Prefix       As String
-Public NameText     As String
-Public ConverText   As String
-Public Message      As String
-Public ForWho       As String
-Public LastMsg      As String
-Public Mute         As Boolean
 Dim Vali            As Boolean
 
 Private Sub Close_Click()
@@ -285,13 +282,13 @@ End Sub
 
 Private Sub FSocket_DataArrival(ByVal bytesTotal As Long)
 Dim strMsg As String
-Dim strArr() As String
+Dim StrArr() As String
 Dim CommX As String
 
 FSocket.GetData strMsg
 
-strArr = Split(strMsg, "#")
-CommX = strArr(0)
+StrArr = Split(strMsg, "#")
+CommX = StrArr(0)
 
 Select Case CommX
 Case "!acceptfile"
@@ -475,7 +472,7 @@ Winsock1.Close
 
 Disconnect
 
-frmMain.LastMsg = ""
+LastMsg = ""
 
 StatusBar1.Panels(1).Text = MDIstatusbar_dcfromserver
 frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: You got disconnected from Server."
@@ -511,45 +508,46 @@ End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
-Dim Command         As String
-Dim arr()           As String
-Dim i               As Integer
-Dim Message         As String
+Dim GetCommand         As String
+Dim StrArr()           As String
+Dim i                  As Integer
+Dim GetMessage         As String
 'We get the message
-Winsock1.GetData Message
+Winsock1.GetData GetMessage
 
 'We decode (split) the message into an array
-arr = Split(Message, "#")
+StrArr = Split(GetMessage, "#")
     
 'Assign the variables to the array
-Command = arr(0)
+GetCommand = StrArr(0)
 
-Select Case Command
+Select Case GetCommand
 
 'We cant login ( choose other name )
 Case "!decilined"
     ConnectIsFalse
-    Mute = False
+    IsMuted = False
     
 'We can login
 Case "!accepted"
     ConnectIsTrue
-    Mute = False
+    IsMuted = False
     
 'Wipe out current list and insert new values
 Case "!listupdate"
     frmList.ListView1.ListItems.Clear
     frmSendFile.Combo1.Clear
-    For i = LBound(arr) + 1 To UBound(arr) - 1
-            frmList.ListView1.ListItems.Add , , arr(i)
-            frmSendFile.Combo1.AddItem arr(i)
+    For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
+            frmList.ListView1.ListItems.Add , , StrArr(i)
+            frmSendFile.Combo1.AddItem StrArr(i)
     Next i
-    Mute = False
+    IsMuted = False
 
 'We get login answer here
 Case "!login"
-    Select Case arr(1)
+    Select Case StrArr(1)
     Case "Yes"
+        GetLevel = StrArr(2)
         SendMsg "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
     Case "Password"
         With frmConfig
@@ -577,7 +575,7 @@ Case "!login"
         End With
         MsgBox MDImsgbox_banned, vbInformation
     End Select
-    Mute = False
+    IsMuted = False
 
 'We get ip here
 Case "!iprequest"
@@ -585,7 +583,7 @@ Case "!iprequest"
     'Connect new winsock to client
     FSocket.Close
     With FSocket
-        .RemoteHost = arr(1)
+        .RemoteHost = StrArr(1)
         .RemotePort = aPort
         .Connect
     End With
@@ -595,18 +593,18 @@ Case "!iprequest"
         .Interval = 5
         .Enabled = True
     End With
-    Mute = False
+    IsMuted = False
 
 'We got muted
 Case "!muted"
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "You are muted!"
-    Mute = True
+    IsMuted = True
 
 'Normal message
 Case Else
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & Message
+    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & GetMessage
     If frmMain.WindowState = 1 Then frmDESP.DisplayMessage DESPtext_newmsg
-    Mute = False
+    IsMuted = False
     
 End Select
 End Sub
@@ -622,7 +620,7 @@ Winsock1.Close
 Disconnect
 
 'Last Message is empty
-frmMain.LastMsg = ""
+LastMsg = ""
 
 'Change status to connection problem
 StatusBar1.Panels(1).Text = MDIstatusbar_connectionproblem

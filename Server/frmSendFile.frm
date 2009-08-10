@@ -52,11 +52,21 @@ Begin VB.Form frmAccountPanel
    Begin VB.Frame Frame1 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Configuration :"
+      Enabled         =   0   'False
       Height          =   1095
       Left            =   120
       TabIndex        =   4
       Top             =   2400
       Width           =   7215
+      Begin VB.ComboBox cmbLevel 
+         Enabled         =   0   'False
+         Height          =   315
+         Left            =   4560
+         Style           =   2  'Dropdown List
+         TabIndex        =   13
+         Top             =   480
+         Width           =   1335
+      End
       Begin VB.ComboBox cmbBanned 
          Enabled         =   0   'False
          Height          =   315
@@ -84,27 +94,40 @@ Begin VB.Form frmAccountPanel
          Top             =   480
          Width           =   1215
       End
-      Begin VB.Label Label4 
+      Begin VB.Label lblLevel 
          BackColor       =   &H00F4F4F4&
-         Caption         =   "Banned:"
+         Caption         =   " Level:"
+         Enabled         =   0   'False
+         Height          =   255
+         Left            =   4560
+         TabIndex        =   14
+         Top             =   240
+         Width           =   1215
+      End
+      Begin VB.Label lblBanned 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   " Banned:"
+         Enabled         =   0   'False
          Height          =   255
          Left            =   3000
          TabIndex        =   9
          Top             =   240
          Width           =   1215
       End
-      Begin VB.Label Label3 
+      Begin VB.Label lblPassword 
          BackColor       =   &H00F4F4F4&
-         Caption         =   "Password:"
+         Caption         =   " Password:"
+         Enabled         =   0   'False
          Height          =   255
          Left            =   1560
          TabIndex        =   8
          Top             =   240
          Width           =   1215
       End
-      Begin VB.Label Label2 
+      Begin VB.Label lblName 
          BackColor       =   &H00F4F4F4&
-         Caption         =   "Name:"
+         Caption         =   " Name:"
+         Enabled         =   0   'False
          Height          =   255
          Left            =   120
          TabIndex        =   5
@@ -148,41 +171,48 @@ Begin VB.Form frmAccountPanel
       LabelEdit       =   1
       LabelWrap       =   -1  'True
       HideSelection   =   -1  'True
-      Checkboxes      =   -1  'True
       FullRowSelect   =   -1  'True
       _Version        =   393217
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
       BorderStyle     =   1
       Appearance      =   1
-      NumItems        =   6
+      NumItems        =   7
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID"
-         Object.Width           =   1235
+         Object.Width           =   882
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
          Text            =   "Name"
-         Object.Width           =   2540
+         Object.Width           =   2187
       EndProperty
       BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   2
          Text            =   "Password"
-         Object.Width           =   2540
+         Object.Width           =   2187
       EndProperty
       BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   3
          Text            =   "Time"
-         Object.Width           =   2117
+         Object.Width           =   1941
       EndProperty
       BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   2
          SubItemIndex    =   4
          Text            =   "Date"
-         Object.Width           =   2540
+         Object.Width           =   2187
       EndProperty
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   2
          SubItemIndex    =   5
          Text            =   "Banned"
+         Object.Width           =   1587
+      EndProperty
+      BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   2
+         SubItemIndex    =   6
+         Text            =   "Level"
          Object.Width           =   1587
       EndProperty
    End
@@ -255,6 +285,12 @@ cmdCancel.Enabled = True
 txtName.Enabled = True
 txtPassword.Enabled = True
 cmbBanned.Enabled = True
+cmbLevel.Enabled = True
+lblName.Enabled = True
+lblPassword.Enabled = True
+lblBanned.Enabled = True
+lblLevel.Enabled = True
+Frame1.Enabled = True
 End Sub
 
 Private Sub DoButtons2()
@@ -266,6 +302,12 @@ cmdCancel.Enabled = False
 txtName.Enabled = False
 txtPassword.Enabled = False
 cmbBanned.Enabled = False
+cmbLevel.Enabled = False
+lblName.Enabled = False
+lblPassword.Enabled = False
+lblBanned.Enabled = False
+lblLevel.Enabled = False
+Frame1.Enabled = False
 End Sub
 
 Private Sub ClearTxBoxes()
@@ -307,7 +349,8 @@ Case "Modify"
     i = ListView1.SelectedItem.Index
     
     'Update the database
-    frmMain.xCommand.CommandText = "UPDATE accounts SET Name1 = '" & txtName.Text & "', Password1 = '" & txtPassword.Text & "', Banned1 = '" & cmbBanned.Text & "' WHERE ID = " & ListView1.ListItems.Item(i)
+    frmMain.xCommand.CommandText = "UPDATE accounts SET Name1 = '" & txtName.Text & "', Password1 = '" & txtPassword.Text & "', Banned1 = '" & cmbBanned.Text & "', Level1 = '" & cmbLevel.Text & "' WHERE ID = " & ListView1.ListItems.Item(i)
+        
     frmMain.xCommand.Execute
     
     'Update the listview
@@ -315,6 +358,7 @@ Case "Modify"
         .Item(i).SubItems(1) = txtName.Text
         .Item(i).SubItems(2) = txtPassword.Text
         .Item(i).SubItems(5) = cmbBanned.Text
+        .Item(i).SubItems(6) = cmbLevel.Text
     End With
 End Select
 DoButtons2
@@ -345,6 +389,14 @@ With Item
     Else
         cmbBanned.ListIndex = 1
     End If
+    Select Case .SubItems(6)
+    Case 0
+        cmbLevel.ListIndex = 0
+    Case 1
+        cmbLevel.ListIndex = 1
+    Case 2
+        cmbLevel.ListIndex = 2
+    End Select
 End With
 End Sub
 
@@ -359,7 +411,7 @@ Private Sub RegisterAccount(dName As String, dPassword As String, dBanned As Str
     Next ii
     
     'Add new account to database
-    frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time1, Date1, Banned1) VALUES(" & i & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "dd.mm.yyyy") & "', '" & dBanned & "')"
+    frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & i & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "dd.mm.yyyy") & "', '" & dBanned & "', '" & "0" & "')"
     frmMain.xCommand.Execute
     
     'Save index in variable
@@ -373,6 +425,7 @@ Private Sub RegisterAccount(dName As String, dPassword As String, dBanned As Str
         .Item(i).SubItems(3) = Format(Time, "hh:nn:ss")
         .Item(i).SubItems(4) = Format(Date, "dd.mm.yyyy")
         .Item(i).SubItems(5) = dBanned
+        .Item(i).SubItems(6) = "0"
     End With
 End Sub
 
@@ -412,7 +465,7 @@ loadSocket = theFreeSocket
 End Function
 
 Private Sub RegSock_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-Dim Array1()    As String
+Dim array1()    As String
 Dim GetMessage  As String
 Dim GetCommand  As String
 Dim GetName     As String
@@ -420,11 +473,11 @@ Dim GetPassword As String
 
 RegSock(Index).GetData GetMessage
 
-Array1 = Split(GetMessage, "#")
+array1 = Split(GetMessage, "#")
 
-GetCommand = Array1(0)
-GetName = Array1(1)
-GetPassword = Array1(2)
+GetCommand = array1(0)
+GetName = array1(1)
+GetPassword = array1(2)
 
 Select Case GetCommand
 Case "!register"
@@ -441,8 +494,3 @@ Case "!register"
     RegSock(Index).SendData "!done" & "#"
 End Select
 End Sub
-
-
-
-
-

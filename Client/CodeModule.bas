@@ -1,10 +1,19 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.5.1"
+Public Const Rev = "1.0.5.3"
 Public Const aPort = 6123
 Public Const bPort = 6124
 Public Const RegPort = 6222
+
+Public Prefix       As String
+Public GetName      As String
+Public GetConver    As String
+Public Message      As String
+Public ForWho       As String
+Public LastMsg      As String
+Public GetLevel     As String
+Public IsMuted      As Boolean
 
 Public Type NOTIFYICONDATA
 cbSize              As Long

@@ -25,6 +25,7 @@ Begin VB.Form frmSendFile2
    ScaleWidth      =   7425
    StartUpPosition =   1  'CenterOwner
    Begin VB.CommandButton Command1 
+      BackColor       =   &H00F4F4F4&
       Caption         =   "&Open File Folder"
       Height          =   375
       Left            =   5520

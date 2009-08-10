@@ -256,8 +256,13 @@ Set xRecordSet = xCommand.Execute
 
 With frmAccountPanel
     .ListView1.ListItems.Clear
+    .cmbBanned.Clear
     .cmbBanned.AddItem "Yes"
     .cmbBanned.AddItem "No"
+    .cmbLevel.Clear
+    .cmbLevel.AddItem "0"
+    .cmbLevel.AddItem "1"
+    .cmbLevel.AddItem "2"
 End With
 
 With xRecordSet
@@ -268,6 +273,7 @@ With xRecordSet
         xListItem.SubItems(3) = !time1
         xListItem.SubItems(4) = !date1
         xListItem.SubItems(5) = !banned1
+        xListItem.SubItems(6) = !level1
         .MoveNext
     Loop
 End With
@@ -452,7 +458,7 @@ Case "!login"
                 Exit For
             End If
             If ConverText = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(2) Then
-                SendSingle "!login" & "#" & "Yes" & "#", frmMain.Winsock1(Index)
+                SendSingle "!login" & "#" & "Yes" & "#" & frmAccountPanel.ListView1.ListItems.Item(i).SubItems(6) & "#", frmMain.Winsock1(Index)
             Else
                 SendSingle "!login" & "#" & "Password" & "#", frmMain.Winsock1(Index)
             End If
