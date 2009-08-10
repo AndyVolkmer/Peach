@@ -1,12 +1,12 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.5.3"
+Public Const Rev = "1.0.5.4"
 Public Const RegPort = 6222
 Public GetUser      As String
+Public GetConver    As String
 Public Prefix       As String
 Public Command      As String
-Public ConverText   As String
 Public Message      As String
 Public ForWho       As String
 
@@ -44,7 +44,7 @@ Public Sub SendMessage(Message As String)
 Dim WinSk As Winsock
 
 For Each WinSk In frmMain.Winsock1
-    If WinSk.State = sckConnected Then
+    If WinSk.State = 7 Then
         WinSk.SendData Message
     End If
 Next
@@ -78,9 +78,11 @@ With frmChat
     Case "!w"
         .txtConver.Text = .txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & " [" & Command & "] [" & Name & " - " & ForWho & "]: " & Message
     Case "!namerequest"
-        .txtConver.Text = .txtConver.Text & vbCrLf & " [" & Name & "] is requesting Name."
+        .txtConver.Text = .txtConver.Text & vbCrLf & " '" & Name & "' is requesting Name."
     Case "!connected"
-        .txtConver.Text = .txtConver.Text & vbCrLf & " [" & Name & "] connected succesfully"
+        .txtConver.Text = .txtConver.Text & vbCrLf & " '" & Name & "' connected succesfully."
+    Case "!login"
+        .txtConver.Text = .txtConver.Text & vbCrLf & " Account '" & Name & "' - '" & Message & "' is logging in."
     Case Else
         .txtConver.Text = .txtConver.Text & vbCrLf & "[" & Command & "] [" & Name & "] [" & ForWho & "] [" & Message & "]"
     End Select

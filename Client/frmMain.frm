@@ -489,7 +489,7 @@ End Sub
 Private Sub ConnectIsTrue()
 StatusBar1.Panels(1).Text = MDIstatusbar_connected & frmConfig.txtIP.Text & ":" & frmConfig.txtPort.Text
 
-SendMsg "!connected" & "#" & frmConfig.txtNick & "#"
+SendMsg "!connected" & "#" & frmConfig.txtNick.Text & "#" & frmConfig.txtAccount.Text & "#"
 
 frmDESP.DisplayMessage "Hello " & frmConfig.txtNick
 End Sub
@@ -508,14 +508,15 @@ End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
-Dim GetCommand         As String
-Dim StrArr()           As String
-Dim i                  As Integer
-Dim GetMessage         As String
+Dim GetCommand  As String
+Dim StrArr()    As String
+Dim i           As Integer
+Dim GetMessage  As String
+
 'We get the message
 Winsock1.GetData GetMessage
 
-'We decode (split) the message into an array
+'We split the message into an array
 StrArr = Split(GetMessage, "#")
     
 'Assign the variables to the array
@@ -523,7 +524,7 @@ GetCommand = StrArr(0)
 
 Select Case GetCommand
 
-'We cant login ( choose other name )
+'We can't login ( choose other name )
 Case "!decilined"
     ConnectIsFalse
     IsMuted = False
@@ -538,8 +539,8 @@ Case "!listupdate"
     frmList.ListView1.ListItems.Clear
     frmSendFile.Combo1.Clear
     For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
-            frmList.ListView1.ListItems.Add , , StrArr(i)
-            frmSendFile.Combo1.AddItem StrArr(i)
+        frmList.ListView1.ListItems.Add , , StrArr(i)
+        frmSendFile.Combo1.AddItem StrArr(i)
     Next i
     IsMuted = False
 
@@ -607,6 +608,16 @@ Case Else
     IsMuted = False
     
 End Select
+End Sub
+
+Private Sub Dc(txtBx As TextBox)
+With frmConfig
+    .Command2_Click
+    .txtPassword = ""
+    frmChat.Hide
+    .Show
+    .txtBx.SetFocus
+End With
 End Sub
 
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)

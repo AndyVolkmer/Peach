@@ -131,17 +131,15 @@ If IsMuted = True Then
 End If
 
 'Check if there is an emote used
+On Error GoTo Error1
 Select Case ArrI(0)
 Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh", "/rofl", "/ROFL", "/Rofl", "/beer", "/Beer", "/fart", "/Fart", "/lmao", "/LMAO", "/insult", "/facepalm", "/Facepalm", "/violin"
     SendMsg "!emote" & "#" & GetName & "#" & ArrI(0) & "#"
     GoTo NextI
-Case ".test"
-    Select Case GetLevel
-    Case 0
-        'Do nothing
-    Case Else
-        SendMsg "!gm" & "#" & ArrI(0) & "#"
-    End Select
+Case ".userinfo", ".accountinfo"
+    If GetLevel <> "0" Then
+        If ArrI(1) = "" Then MsgBox ""
+    End If
 End Select
 
 Select Case txtToSend.Text
@@ -200,6 +198,13 @@ NextI:
 LastMsg = txtToSend.Text
 txtToSend.Text = ""
 txtToSend.SetFocus
+Exit Sub
+Error1:
+Select Case Err.Number
+Case 9
+    VisualizeMessage False, "System", "Incorrect Syntax."
+    txtToSend.Text = ""
+End Select
 End Sub
 
 Public Sub Form_Load()

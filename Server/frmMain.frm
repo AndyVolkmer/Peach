@@ -186,6 +186,7 @@ Public xCommand        As ADODB.Command
 Public xRecordSet      As ADODB.Recordset
 
 Public intCounter   As Integer
+Dim i               As Integer 'Global "FOR" variable
 Dim Vali            As Boolean
 Dim Acc             As Boolean
 
@@ -310,37 +311,37 @@ End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
 Dim x As Integer
-    Unload Winsock1(Index)
-    For x = 1 To frmPanel.ListView1.ListItems.Count + 1
-        ' Update user lists ( server and client )
-        If frmPanel.ListView1.ListItems.Item(x).SubItems(2) = Index Then
-            ' Pick the user
-            frmPanel.ListView1.ListItems.Remove (x)
-            
-            ' Update Users List
-            UpdateUsersList
-            Exit For
-        End If
-    Next x
-    StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
+Unload Winsock1(Index)
+For x = 1 To frmPanel.ListView1.ListItems.Count + 1
+    ' Update user lists ( server and client )
+    If frmPanel.ListView1.ListItems.Item(x).SubItems(2) = Index Then
+        ' Pick the user
+        frmPanel.ListView1.ListItems.Remove (x)
+        
+        ' Update Users List
+        UpdateUsersList
+        Exit For
+    End If
+Next x
+StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
 Dim RR As Integer
 RR = frmPanel.ListView1.ListItems.Count + 1
-    intCounter = loadSocket
-    Winsock1(intCounter).LocalPort = frmConfig.txtPort.Text
-    Winsock1(intCounter).Accept requestID
-    
-    'New user should be listed in the panel
-    With frmPanel.ListView1
-        .ListItems.Add RR, , "Unknown"
-        .ListItems.Item(RR).SubItems(1) = Winsock1(intCounter).RemoteHostIP
-        .ListItems.Item(RR).SubItems(2) = intCounter
-        .ListItems.Item(RR).SubItems(3) = Format(Time, "hh:nn:ss")
-        .ListItems.Item(RR).SubItems(4) = "No"
-    End With
-    StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
+intCounter = loadSocket
+Winsock1(intCounter).LocalPort = frmConfig.txtPort.Text
+Winsock1(intCounter).Accept requestID
+
+'New user should be listed in the panel
+With frmPanel.ListView1
+    .ListItems.Add RR, , "Unknown"
+    .ListItems.Item(RR).SubItems(1) = Winsock1(intCounter).RemoteHostIP
+    .ListItems.Item(RR).SubItems(2) = intCounter
+    .ListItems.Item(RR).SubItems(3) = Format(Time, "hh:nn:ss")
+    .ListItems.Item(RR).SubItems(4) = "No"
+End With
+StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
 Private Function socketFree() As Integer
@@ -371,7 +372,6 @@ Dim array1()        As String 'Message array
 Dim array2()        As String 'Whisper array
 Dim strMessage      As String
 Dim RR              As Integer
-Dim i               As Integer 'Global "FOR" variable
 Dim bMatch          As Boolean
 RR = frmPanel.ListView1.ListItems.Count
 
@@ -384,7 +384,7 @@ array1 = Split(strMessage, "#")
 'Assign the variables to the array
 Command = array1(0)
 GetUser = array1(1)
-ConverText = array1(2)
+GetConver = array1(2)
 
 'Check if user is muted
 For i = 1 To frmPanel.ListView1.ListItems.Count
@@ -397,7 +397,7 @@ For i = 1 To frmPanel.ListView1.ListItems.Count
 Next i
 
 'Validate: If message is to long then kick
-If Len(ConverText) > 200 Then
+If Len(GetConver) > 200 Then
     frmPanel.ListView1.ListItems.Remove (Index) ' Remove from list
     Winsock1(Index).Close ' Close connection
     Unload Winsock1(Index) ' Remove socket
@@ -406,11 +406,13 @@ If Len(ConverText) > 200 Then
 End If
 
 Select Case Command
-Dim u As Integer
+
 'Announce connected player and send to user online list
 Case "!connected"
     frmPanel.ListView1.ListItems.Item(RR).Text = GetUser
+    frmPanel.ListView1.ListItems.Item(RR).SubItems(5) = GetConver
     UpdateUsersList
+    
 Case "!namerequest"
 
     'Check badname list
@@ -445,26 +447,35 @@ Case "!w"
     'Check in listitems if forwho name is in the list and get the socket id
     For i = 1 To frmPanel.ListView1.ListItems.Count
         If ForWho = frmPanel.ListView1.ListItems.Item(i) Then
-            SendSingle " [" & GetUser & "] whispers: " & ConverText, frmMain.Winsock1(frmPanel.ListView1.ListItems.Item(i).SubItems(2))
-            VisualizeMessage Command, GetUser, ConverText, ForWho
+            SendSingle " [" & GetUser & "] whispers: " & GetConver, frmMain.Winsock1(frmPanel.ListView1.ListItems.Item(i).SubItems(2))
+            VisualizeMessage Command, GetUser, GetConver, ForWho
             Exit For
         End If
     Next i
 Case "!login"
     For i = 1 To frmAccountPanel.ListView1.ListItems.Count
-        If GetUser = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(1) Then
-            If frmAccountPanel.ListView1.ListItems.Item(i).SubItems(5) = "Yes" Then
+        Select Case GetUser
+        Case frmAccountPanel.ListView1.ListItems.Item(i).SubItems(1)
+            
+            'Ban Check
+            Select Case frmAccountPanel.ListView1.ListItems.Item(i).SubItems(5)
+            Case "Yes"
                 SendSingle "!login" & "#" & "Banned" & "#", frmMain.Winsock1(Index)
                 Exit For
-            End If
-            If ConverText = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(2) Then
+            End Select
+            
+            'Password Check
+            If GetConver = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(2) Then
+                'Send back confirmation and account level
                 SendSingle "!login" & "#" & "Yes" & "#" & frmAccountPanel.ListView1.ListItems.Item(i).SubItems(6) & "#", frmMain.Winsock1(Index)
+                Acc = True
+                Exit For
             Else
                 SendSingle "!login" & "#" & "Password" & "#", frmMain.Winsock1(Index)
             End If
-        Else
+        Case Else
             Acc = False
-        End If
+        End Select
     Next i
     If Acc = False Then SendSingle "!login" & "#" & "Account" & "#", frmMain.Winsock1(Index)
         
@@ -474,8 +485,9 @@ Case "!iprequest"
             SendSingle "!iprequest" & "#" & frmPanel.ListView1.ListItems.Item(i).SubItems(1), frmMain.Winsock1(Index)
         End If
     Next i
+    
 Case "!emote"
-    Select Case ConverText
+    Select Case GetConver
     Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh"
         SendMessage " " & GetUser & " laughs."
     Case "/Rofl", "/rofl", "/ROFL"
@@ -491,15 +503,77 @@ Case "!emote"
     Case "/violin"
         SendMessage " " & GetUser & " plays the world smallest violin."
     End Select
+
+Case "!msg"
+    'Split it
+    array2 = Split(GetConver, " ")
+
+    'Check if there is any special command
+    Select Case array2(0)
+    Case ".userinfo"
+        If GetLevel(GetUser) <> "0" Then
+            SendSingle DoUserInfo(array2(1)), Winsock1(Index)
+        Else
+            SendMessage " [" & GetUser & "]: " & GetConver
+        End If
+    Case ".accountinfo"
+        If GetLevel(GetUser) <> "0" Then
+            SendSingle DoAccountInfo(array2(1)), Winsock1(Index)
+        Else
+            SendMessage " [" & GetUser & "]: " & GetConver
+        End If
+    Case Else
+        SendMessage " [" & GetUser & "]: " & GetConver
+    End Select
+       
 Case Else
-    SendMessage " [" & GetUser & "]: " & ConverText
+    SendMessage " Unknown operation."
+
 End Select
 'We want to read the message also , different then others tho
-VisualizeMessage Command, GetUser, ConverText
+VisualizeMessage Command, GetUser, GetConver
 End Sub
 
+Private Function DoAccountInfo(Account As String) As String
+For i = 1 To frmAccountPanel.ListView1.ListItems.Count
+    With frmAccountPanel.ListView1.ListItems
+        If .Item(i).SubItems(1) = Account Then
+            DoAccountInfo = vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " Name: " & .Item(i).SubItems(1) & vbCrLf & " Password: " & .Item(i).SubItems(2) & vbCrLf & " Registration Time: " & .Item(i).SubItems(3) & vbCrLf & " Registration Date: " & .Item(i).SubItems(4) & vbCrLf & " Banned: " & .Item(i).SubItems(5) & vbCrLf & " Level: " & .Item(i).SubItems(6)
+            Exit For
+        End If
+    End With
+Next i
+End Function
+
+Private Function DoUserInfo(User As String) As String
+For i = 1 To frmPanel.ListView1.ListItems.Count
+    With frmPanel.ListView1.ListItems
+        If .Item(i) = StrConv(User, vbProperCase) Then
+            DoUserInfo = vbCrLf & " User information about '" & StrConv(User, vbProperCase) & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Login Time: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5)
+            Exit For
+        End If
+    End With
+Next i
+End Function
+
+Private Function GetLevel(iName As String) As String
+Dim GetAccount As String
+For i = 1 To frmPanel.ListView1.ListItems.Count
+    If iName = frmPanel.ListView1.ListItems.Item(i) Then
+        GetAccount = frmPanel.ListView1.ListItems.Item(i).SubItems(5)
+        Exit For
+    End If
+Next i
+
+For i = 1 To frmAccountPanel.ListView1.ListItems.Count
+    If GetAccount = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(1) Then
+        GetLevel = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(6)
+        Exit For
+    End If
+Next i
+End Function
+
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-Dim i As Integer
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Winsock1(Index).Close
 Unload Winsock1(Index)
