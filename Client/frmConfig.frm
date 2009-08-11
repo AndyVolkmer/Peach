@@ -45,10 +45,10 @@ Begin VB.Form frmConfig
       Caption         =   "&Disconnect"
       Enabled         =   0   'False
       Height          =   375
-      Left            =   5760
+      Left            =   6000
       TabIndex        =   8
       Top             =   2760
-      Width           =   1575
+      Width           =   1335
    End
    Begin VB.CommandButton Command3 
       BackColor       =   &H00F4F4F4&
@@ -63,10 +63,10 @@ Begin VB.Form frmConfig
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Connect"
       Height          =   375
-      Left            =   4200
+      Left            =   4680
       TabIndex        =   7
       Top             =   2760
-      Width           =   1575
+      Width           =   1335
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00F4F4F4&
@@ -77,6 +77,15 @@ Begin VB.Form frmConfig
       TabIndex        =   9
       Top             =   120
       Width           =   7215
+      Begin VB.CheckBox SPT 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   "Save password"
+         Height          =   255
+         Left            =   5280
+         TabIndex        =   19
+         Top             =   600
+         Width           =   1575
+      End
       Begin VB.TextBox txtPassword 
          Alignment       =   2  'Center
          Height          =   285
@@ -237,7 +246,7 @@ If Len(txtNick.Text) < 4 Then
     Exit Sub
 End If
 
-'Make the names proper case
+'Make the name proper case
 txtNick.Text = StrConv(txtNick.Text, vbProperCase)
 
 'Do the enable stuff
@@ -249,6 +258,7 @@ With Me
     .txtPort.Enabled = False
     .txtAccount.Enabled = False
     .txtPassword.Enabled = False
+    .SPT.Enabled = False
 End With
 With frmChat
     .cmdSend.Enabled = True
@@ -351,8 +361,23 @@ Else
     txtAccount.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Account")
 End If
 
+'Read 'Save Password Tick'
+If ReadIniValue(App.Path & "\Config.ini", "Data", "SPT") = "" Then
+    SPT.Value = 0
+Else
+    If ReadIniValue(App.Path & "\Config.ini", "Data", "SPT") = "0" Then
+        SPT.Value = 0
+    Else
+        SPT.Value = 1
+    End If
+End If
+
 'Read 'Password' from .ini file
-txtPassword.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Password")
+If SPT.Value = 1 Then
+    txtPassword.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Password")
+Else
+    txtPassword.Text = ""
+End If
 
 End Sub
 
@@ -375,11 +400,12 @@ End Function
 
 Private Sub Form_Unload(Cancel As Integer)
 'Write data entries to .ini file
-WriteIniValue App.Path & "\Config.ini", "Data", "Nickname", txtNick.Text
-WriteIniValue App.Path & "\Config.ini", "Data", "IP", txtIP.Text
-WriteIniValue App.Path & "\Config.ini", "Data", "Port", txtPort.Text
-WriteIniValue App.Path & "\Config.ini", "Data", "Account", txtAccount.Text
+WriteIniValue App.Path & "\Config.ini", "Data", "SPT", SPT.Value
 WriteIniValue App.Path & "\Config.ini", "Data", "Password", txtPassword.Text
+WriteIniValue App.Path & "\Config.ini", "Data", "Account", txtAccount.Text
+WriteIniValue App.Path & "\Config.ini", "Data", "Port", txtPort.Text
+WriteIniValue App.Path & "\Config.ini", "Data", "IP", txtIP.Text
+WriteIniValue App.Path & "\Config.ini", "Data", "Nickname", txtNick.Text
 
 'Write position entries to .ini file
 WriteIniValue App.Path & "\Config.ini", "Position", "Top", frmMain.Top
@@ -392,6 +418,12 @@ End Sub
 
 Private Sub Label8_Click()
 frmAbout.Show 1
+End Sub
+
+Private Sub SPT_Click()
+If SPT.Value = 0 Then
+    txtPassword.Text = ""
+End If
 End Sub
 
 Private Sub txtAccount_KeyPress(KeyAscii As Integer)
