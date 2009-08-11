@@ -525,6 +525,14 @@ Case "!accountlist"
         Next i
     End With
         
+Case "!userlist"
+    StrArr2 = Split(StrArr(1), " ")
+    With frmChat
+        .txtConver.Text = .txtConver.Text & vbCrLf & " User List :"
+        For i = LBound(StrArr2) To UBound(StrArr2) - 1
+            .txtConver.Text = .txtConver.Text & vbCrLf & " - '" & StrArr2(i) & "'"
+        Next i
+    End With
     
 Case "!decilined"
     ConnectIsFalse

@@ -516,7 +516,7 @@ Case "!msg"
         Case "account"
             SendSingle "!accountlist" & "#" & GetAccountList, frmMain.Winsock1(Index)
         Case "user"
-            '
+            SendSingle "!userlist" & "#" & GetUserList, frmMain.Winsock1(Index)
         End Select
         
     Case ".userinfo"
@@ -543,6 +543,20 @@ Case "!msg"
     Case ".banaccount"
         If GetLevel(GetUser) <> "0" Then
             BanAccount array2(1), "Yes"
+        Else
+            SendMessage " [" & GetUser & "]: " & GetConver
+        End If
+        
+    Case ".banuser"
+        If GetLevel(GetUser) <> "0" Then
+            BanUser array2(1), "Yes"
+        Else
+            SendMessage " [" & GetUser & "]: " & GetConver
+        End If
+        
+    Case ".unbanuser"
+        If GetLevel(GetUser) <> "0" Then
+            BanUser array2(1), "No"
         Else
             SendMessage " [" & GetUser & "]: " & GetConver
         End If
@@ -581,6 +595,25 @@ With frmAccountPanel.ListView1.ListItems
     Next i
 End With
 End Function
+
+Private Function GetUserList() As String
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        GetUserList = GetUserList & .Item(i) & " "
+    Next i
+End With
+End Function
+
+Private Sub BanUser(User As String, Ban As String)
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i) = StrConv(User, vbProperCase) Then
+            BanAccount .Item(i).SubItems(5), Ban
+        End If
+        Exit For
+    Next i
+End With
+End Sub
 
 Private Sub BanAccount(User As String, Ban As String)
 With frmAccountPanel.ListView1.ListItems
