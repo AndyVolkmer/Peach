@@ -193,6 +193,7 @@ Begin VB.Form frmAccountPanel
          Object.Width           =   2187
       EndProperty
       BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   2
          SubItemIndex    =   3
          Text            =   "Time"
          Object.Width           =   1941
@@ -348,20 +349,53 @@ Case "Modify"
     'Save index in a variable
     i = ListView1.SelectedItem.Index
     
-    'Update the database
-    frmMain.xCommand.CommandText = "UPDATE accounts SET Name1 = '" & txtName.Text & "', Password1 = '" & txtPassword.Text & "', Banned1 = '" & cmbBanned.Text & "', Level1 = '" & cmbLevel.Text & "' WHERE ID = " & ListView1.ListItems.Item(i)
-        
-    frmMain.xCommand.Execute
-    
-    'Update the listview
-    With ListView1.ListItems
-        .Item(i).SubItems(1) = txtName.Text
-        .Item(i).SubItems(2) = txtPassword.Text
-        .Item(i).SubItems(5) = cmbBanned.Text
-        .Item(i).SubItems(6) = cmbLevel.Text
-    End With
+    ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, i
 End Select
+
 DoButtons2
+End Sub
+Public Sub ModifyAccount(dName As String, dPassword As String, dBanned As String, dLevel As String, dID As Integer)
+
+'Update the database
+frmMain.xCommand.CommandText = "UPDATE accounts SET Name1 = '" & dName & "', Password1 = '" & dPassword & "', Banned1 = '" & dBanned & "', Level1 = '" & dLevel & "' WHERE ID = " & dID
+    
+frmMain.xCommand.Execute
+
+'Update the listview
+With ListView1.ListItems
+    .Item(dID).SubItems(1) = dName
+    .Item(dID).SubItems(2) = dPassword
+    .Item(dID).SubItems(5) = dBanned
+    .Item(dID).SubItems(6) = dLevel
+End With
+End Sub
+Private Sub RegisterAccount(dName As String, dPassword As String, dBanned As String)
+i = 1
+
+'Check list if the ID is already given
+For ii = 1 To ListView1.ListItems.Count
+    If ListView1.ListItems.Item(ii) = i Then
+        i = i + 1
+    End If
+Next ii
+
+'Add new account to database
+frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & i & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "dd.mm.yyyy") & "', '" & dBanned & "', '" & "0" & "')"
+frmMain.xCommand.Execute
+
+'Save index in variable
+i = ListView1.ListItems.Count + 1
+
+'Add account to the listview
+With ListView1.ListItems
+    .Add , , ii
+    .Item(i).SubItems(1) = dName
+    .Item(i).SubItems(2) = dPassword
+    .Item(i).SubItems(3) = Format(Time, "hh:nn:ss")
+    .Item(i).SubItems(4) = Format(Date, "dd.mm.yyyy")
+    .Item(i).SubItems(5) = dBanned
+    .Item(i).SubItems(6) = "0"
+End With
 End Sub
 
 Private Sub Form_Load()
@@ -398,35 +432,6 @@ With Item
         cmbLevel.ListIndex = 2
     End Select
 End With
-End Sub
-
-Private Sub RegisterAccount(dName As String, dPassword As String, dBanned As String)
-    i = 1
-    
-    'Check list if the ID is already given
-    For ii = 1 To ListView1.ListItems.Count
-        If ListView1.ListItems.Item(ii) = i Then
-            i = i + 1
-        End If
-    Next ii
-    
-    'Add new account to database
-    frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & i & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "dd.mm.yyyy") & "', '" & dBanned & "', '" & "0" & "')"
-    frmMain.xCommand.Execute
-    
-    'Save index in variable
-    i = ListView1.ListItems.Count + 1
-    
-    'Add account to the listview
-    With ListView1.ListItems
-        .Add , , ii
-        .Item(i).SubItems(1) = dName
-        .Item(i).SubItems(2) = dPassword
-        .Item(i).SubItems(3) = Format(Time, "hh:nn:ss")
-        .Item(i).SubItems(4) = Format(Date, "dd.mm.yyyy")
-        .Item(i).SubItems(5) = dBanned
-        .Item(i).SubItems(6) = "0"
-    End With
 End Sub
 
 Private Sub RegSock_Close(Index As Integer)

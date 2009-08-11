@@ -500,6 +500,7 @@ Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Dim GetCommand  As String
 Dim StrArr()    As String
+Dim StrArr2()   As String
 Dim i           As Integer
 Dim GetMessage  As String
 
@@ -515,6 +516,16 @@ GetCommand = StrArr(0)
 Select Case GetCommand
 
 'We can't login ( choose other name )
+Case "!accountlist"
+    StrArr2 = Split(StrArr(1), " ")
+    With frmChat
+        .txtConver.Text = .txtConver.Text & vbCrLf & " Account List :"
+        For i = LBound(StrArr2) To UBound(StrArr2) - 1
+            .txtConver.Text = .txtConver.Text & vbCrLf & " - '" & StrArr2(i) & "'"
+        Next i
+    End With
+        
+    
 Case "!decilined"
     ConnectIsFalse
     IsMuted = False

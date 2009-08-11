@@ -511,6 +511,14 @@ Case "!msg"
     
     'Check if there is any special command
     Select Case array2(0)
+    Case ".list"
+        Select Case array2(1)
+        Case "account"
+            SendSingle "!accountlist" & "#" & GetAccountList, frmMain.Winsock1(Index)
+        Case "user"
+            '
+        End Select
+        
     Case ".userinfo"
         If GetLevel(GetUser) <> "0" Then
             SendSingle GetUserInfo(array2(1)), Winsock1(Index)
@@ -565,6 +573,14 @@ End Select
 'We want to read the message also , different then others tho
 VisualizeMessage Command, GetUser, GetConver
 End Sub
+
+Private Function GetAccountList() As String
+With frmAccountPanel.ListView1.ListItems
+    For i = 1 To .Count
+        GetAccountList = GetAccountList & .Item(i).SubItems(1) & " "
+    Next i
+End With
+End Function
 
 Private Sub BanAccount(User As String, Ban As String)
 With frmAccountPanel.ListView1.ListItems
