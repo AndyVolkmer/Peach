@@ -369,7 +369,7 @@ End Function
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
 Dim array1()        As String 'Message array
-Dim array2()        As String 'Whisper array
+Dim array2()        As String 'Whisper & Command array
 Dim strMessage      As String
 Dim RR              As Integer
 Dim bMatch          As Boolean
@@ -431,13 +431,14 @@ Case "!namerequest"
         End If
     Next i
     
-    'Return yes or no to client
+    'Return answer to client
     If bMatch = True Then
         bMatch = False
         SendSingle "!decilined", frmMain.Winsock1(Index)
     Else
         SendSingle "!accepted", frmMain.Winsock1(Index)
     End If
+    
 Case "!w"
     'Split name into user name and normal name
     array2 = Split(GetUser, "|")
@@ -507,23 +508,54 @@ Case "!emote"
 Case "!msg"
     'Split it
     array2 = Split(GetConver, " ")
-
+    
     'Check if there is any special command
     Select Case array2(0)
     Case ".userinfo"
         If GetLevel(GetUser) <> "0" Then
-            SendSingle DoUserInfo(array2(1)), Winsock1(Index)
+            SendSingle GetUserInfo(array2(1)), Winsock1(Index)
         Else
             SendMessage " [" & GetUser & "]: " & GetConver
         End If
+        
     Case ".accountinfo", ".accinfo"
         If GetLevel(GetUser) <> "0" Then
-            SendSingle DoAccountInfo(array2(1)), Winsock1(Index)
+            SendSingle GetAccountInfo(array2(1)), Winsock1(Index)
         Else
             SendMessage " [" & GetUser & "]: " & GetConver
         End If
+        
+    Case ".kick"
+        If GetLevel(GetUser) <> "0" Then
+            KickUser (array2(1))
+        Else
+            SendMessage " [" & GetUser & "]: " & GetConver
+        End If
+        
+    Case ".banaccount"
+        If GetLevel(GetUser) <> "0" Then
+            BanAccount array2(1), "Yes"
+        Else
+            SendMessage " [" & GetUser & "]: " & GetConver
+        End If
+        
+    Case ".unbanaccount"
+        If GetLevel(GetUser) <> "0" Then
+            BanAccount array2(1), "No"
+        Else
+            SendMessage " [" & GetUser & "]: " & GetConver
+        End If
+        
     Case Else
-        SendMessage " [" & GetUser & "]: " & GetConver
+        Select Case GetLevel(GetUser)
+        Case "0"
+            SendMessage " [" & GetUser & "]: " & GetConver
+        Case "1"
+            SendMessage " [GM][" & GetUser & "]: " & GetConver
+        Case "2"
+            SendMessage " [Admin][" & GetUser & "]: " & GetConver
+        End Select
+        
     End Select
        
 Case Else
@@ -534,22 +566,53 @@ End Select
 VisualizeMessage Command, GetUser, GetConver
 End Sub
 
-Private Function DoAccountInfo(Account As String) As String
+Private Sub BanAccount(User As String, Ban As String)
+With frmAccountPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(1) = User Then
+            frmAccountPanel.ModifyAccount User, .Item(i).SubItems(2), Ban, .Item(i).SubItems(6), .Item(i)
+            Exit For
+        End If
+    Next i
+End With
+End Sub
+
+Private Sub KickUser(User As String)
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i) = User Then
+            frmMain.Winsock1(.Item(i).SubItems(2)).Close
+            Unload frmMain.Winsock1(.Item(i).SubItems(2))
+            .Remove (i)
+        End If
+        Exit For
+    Next i
+End With
+
+'Update clients user online list
+UpdateUsersList
+
+'Update Statusbar
+frmMain.StatusBar1.Panels(1).Text = "Status: Connected with  " & frmMain.Winsock1.Count - 1 & " Client(s)."
+        
+End Sub
+
+Private Function GetAccountInfo(Account As String) As String
 For i = 1 To frmAccountPanel.ListView1.ListItems.Count
     With frmAccountPanel.ListView1.ListItems
         If .Item(i).SubItems(1) = Account Then
-            DoAccountInfo = vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " Name: " & .Item(i).SubItems(1) & vbCrLf & " Password: " & .Item(i).SubItems(2) & vbCrLf & " Registration Time: " & .Item(i).SubItems(3) & vbCrLf & " Registration Date: " & .Item(i).SubItems(4) & vbCrLf & " Banned: " & .Item(i).SubItems(5) & vbCrLf & " Level: " & .Item(i).SubItems(6)
+            GetAccountInfo = vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " Name: " & .Item(i).SubItems(1) & vbCrLf & " Password: " & .Item(i).SubItems(2) & vbCrLf & " Registration Time: " & .Item(i).SubItems(3) & vbCrLf & " Registration Date: " & .Item(i).SubItems(4) & vbCrLf & " Banned: " & .Item(i).SubItems(5) & vbCrLf & " Level: " & .Item(i).SubItems(6)
             Exit For
         End If
     End With
 Next i
 End Function
 
-Private Function DoUserInfo(User As String) As String
+Private Function GetUserInfo(User As String) As String
 For i = 1 To frmPanel.ListView1.ListItems.Count
     With frmPanel.ListView1.ListItems
         If .Item(i) = StrConv(User, vbProperCase) Then
-            DoUserInfo = vbCrLf & " User information about '" & StrConv(User, vbProperCase) & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Login Time: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5)
+            GetUserInfo = vbCrLf & " User information about '" & StrConv(User, vbProperCase) & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Login Time: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5)
             Exit For
         End If
     End With

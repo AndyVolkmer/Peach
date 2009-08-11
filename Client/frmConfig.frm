@@ -25,7 +25,7 @@ Begin VB.Form frmConfig
    Begin VB.CommandButton Command5 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Register Account"
-      Height          =   290
+      Height          =   320
       Left            =   5280
       TabIndex        =   18
       Top             =   3720
@@ -45,10 +45,10 @@ Begin VB.Form frmConfig
       Caption         =   "&Disconnect"
       Enabled         =   0   'False
       Height          =   375
-      Left            =   6000
+      Left            =   5880
       TabIndex        =   8
       Top             =   2760
-      Width           =   1335
+      Width           =   1455
    End
    Begin VB.CommandButton Command3 
       BackColor       =   &H00F4F4F4&
@@ -63,10 +63,10 @@ Begin VB.Form frmConfig
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Connect"
       Height          =   375
-      Left            =   4680
+      Left            =   4440
       TabIndex        =   7
       Top             =   2760
-      Width           =   1335
+      Width           =   1455
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00F4F4F4&

@@ -86,7 +86,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -138,7 +137,7 @@ Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh", "/rofl", "/ROFL", "/Rofl", "/be
     SendMsg "!emote" & "#" & GetName & "#" & ArrI(0) & "#"
     GoTo NextI
     
-Case ".userinfo", ".accountinfo", ".accinfo"
+Case ".userinfo", ".accountinfo", ".accinfo", ".kick", ".ban"
     If GetLevel <> "0" Then
         If ArrI(1) = "" Then MsgBox ""
     End If
