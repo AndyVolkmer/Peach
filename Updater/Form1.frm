@@ -32,6 +32,7 @@ Begin VB.Form Form1
       _ExtentX        =   11668
       _ExtentY        =   3201
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"Form1.frx":08CA
@@ -150,6 +151,9 @@ StartDownload "http://riplegion.ri.funpic.de/Peach/peachClient.exe", App.Path & 
 
 'Delete current file
 Kill App.Path & "\update.conf"
+
+'Rewrite .ini file
+WriteIniValue App.Path & "\Config.ini", "Revision", "Number", NewRev
 
 'Update label
 Label2.Caption = "Your Peach has updated from [" & CurRev & "] to [" & NewRev & "]"
