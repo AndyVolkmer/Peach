@@ -32,7 +32,6 @@ Begin VB.Form Form1
       _ExtentX        =   11668
       _ExtentY        =   3201
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"Form1.frx":08CA
@@ -98,13 +97,8 @@ Private Sub Form_Load()
 
 On Error GoTo HandleError
 
-'Read current revision from text file.
-f = App.Path & "\revision.conf"
-Open f For Input As #1
-   FileLength = LOF(1)
-   t = Input(FileLength, #1)
-Close #1
-CurRev = Trim(t)
+'Read current revision from .ini file.
+CurRev = ReadIniValue(App.Path & "\Config.ini", "Revision", "Number")
 
 CurRev = Left(CurRev, 7)
 
@@ -155,10 +149,7 @@ Sleep 1000
 StartDownload "http://riplegion.ri.funpic.de/Peach/peachClient.exe", App.Path & "\peachClient.exe"
 
 'Delete current file
-Kill App.Path & "\revision.conf"
-
-'Rename update to revision
-Name App.Path & "\update.conf" As App.Path & "\revision.conf"
+Kill App.Path & "\update.conf"
 
 'Update label
 Label2.Caption = "Your Peach has updated from [" & CurRev & "] to [" & NewRev & "]"

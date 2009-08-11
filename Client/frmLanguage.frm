@@ -58,11 +58,10 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Declare Sub InitCommonControls Lib "comctl32" ()
+
 Dim N       As String
 Dim M       As String
-Dim TSSO2   As TypeSSO2
-
-Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Private Sub cmdEnter_Click()
 Select Case Combo1.ListIndex
@@ -98,7 +97,8 @@ frmSendFile.LoadSendFileForm
 frmChat.LoadChatForm
 frmConfig.LoadConfigForm
 frmMain.Show
-WriteConfigFile2 (App.Path & "\validaten.conf")
+WriteIniValue App.Path & "\Config.ini", "Language", "Validate", "0"
+WriteIniValue App.Path & "\Config.ini", "Language", "Language", frmLanguage.Combo1.ListIndex
 End Sub
 
 Private Sub Combo1_Click()
@@ -295,9 +295,8 @@ Call InitCommonControls
 End Sub
 
 Public Sub Form_Load()
-TSSO2 = ReadConfigFile2(App.Path & "\validaten.conf")
-N = Trim(TSSO2.ValidateN)
-M = Trim(TSSO2.Language)
+N = ReadIniValue(App.Path & "\Config.ini", "Language", "Validate")
+M = ReadIniValue(App.Path & "\Config.ini", "Language", "Language")
 If N = "0" Then
     Select Case M
     Case 0
@@ -335,15 +334,7 @@ Else
         M = .ListIndex
     End With
 End If
-'Write revision into revision.conf
-Dim sFileText As String
-Dim iFileNo As Integer
- iFileNo = FreeFile
-
- Open App.Path & "\revision.conf" For Output As #iFileNo
- Print #iFileNo, Rev
-
- Close #iFileNo
+WriteIniValue App.Path & "\Config.ini", "Revision", "Number", Rev
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

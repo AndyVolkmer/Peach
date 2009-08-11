@@ -317,21 +317,43 @@ frmRegistration.Show 1
 End Sub
 
 Public Sub Form_Load()
-Dim TSSO As TypeSSO
-With Me
-    .Top = 0
-    .Left = 0
-    .Label8.Caption = "Version : " & Rev
-End With
+Top = 0
+Left = 0
+Label8.Caption = "Version : " & Rev
+
 LoadConfigForm
-TSSO = ReadConfigFile(App.Path & "\bin.conf")
-With TSSO
-    txtNick.Text = Trim(TSSO.Nickname)
-    txtIP.Text = Trim(TSSO.ConnectIP)
-    txtPort.Text = Trim(TSSO.Port)
-    txtAccount.Text = Trim(TSSO.Account)
-    txtPassword.Text = Trim(TSSO.Password)
-End With
+
+'Read 'Nickname' from .ini file
+If ReadIniValue(App.Path & "\Config.ini", "Data", "Nickname") = "" Then
+    txtNick.Text = "Nickname"
+Else
+    txtNick.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Nickname")
+End If
+
+'Read 'IP' from .ini file
+If ReadIniValue(App.Path & "\Config.ini", "Data", "IP") = "" Then
+    txtIP.Text = "0.0.0.0"
+Else
+    txtIP.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "IP")
+End If
+
+'Read 'Port' from .ini file
+If ReadIniValue(App.Path & "\Config.ini", "Data", "Port") = "" Then
+    txtPort.Text = "4728"
+Else
+    txtPort.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Port")
+End If
+
+'Read 'Account' from .ini file
+If ReadIniValue(App.Path & "\Config.ini", "Data", "Account") = "" Then
+    txtAccount.Text = "Your Account"
+Else
+    txtAccount.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Account")
+End If
+
+'Read 'Password' from .ini file
+txtPassword.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Password")
+
 End Sub
 
 Public Sub LoadConfigForm()
@@ -352,7 +374,16 @@ End If
 End Function
 
 Private Sub Form_Unload(Cancel As Integer)
-WriteConfigFile (App.Path & "\bin.conf")
+'Write data entries to .ini file
+WriteIniValue App.Path & "\Config.ini", "Data", "Nickname", txtNick.Text
+WriteIniValue App.Path & "\Config.ini", "Data", "IP", txtIP.Text
+WriteIniValue App.Path & "\Config.ini", "Data", "Port", txtPort.Text
+WriteIniValue App.Path & "\Config.ini", "Data", "Account", txtAccount.Text
+WriteIniValue App.Path & "\Config.ini", "Data", "Password", txtPassword.Text
+
+'Write position entries to .ini file
+WriteIniValue App.Path & "\Config.ini", "Position", "Top", frmMain.Top
+WriteIniValue App.Path & "\Config.ini", "Position", "Left", frmMain.Left
 End Sub
 
 Private Sub Label7_Click()

@@ -357,7 +357,6 @@ End Sub
 
 Private Sub MDIForm_Load()
 On Error GoTo HandleErrorFile
-Dim TSSO As TypeSSO
 
 LoadMDIForm
 DisableFormResize Me
@@ -369,37 +368,28 @@ Dim L As Long
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
 
 StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
-TSSO = ReadConfigFile(App.Path & "\bin.conf")
 
-With TSSO
-    Me.Top = Trim(.TopPos)
-    Me.Left = Trim(.LeftPos)
-End With
+'Load 'Top' position from ini, if there is non take default value ( 1200 )
+If ReadIniValue(App.Path & "\Config.ini", "Position", "Top") = "" Then
+    Me.Top = 1200
+Else
+    Me.Top = ReadIniValue(App.Path & "\Config.ini", "Position", "Top")
+End If
+    
+'Load 'Left' position from ini, if there is non take default value ( 1200 )
+If ReadIniValue(App.Path & "\Config.ini", "Position", "Left") = "" Then
+    Me.Left = 1200
+Else
+    Me.Left = ReadIniValue(App.Path & "\Config.ini", "Position", "Left")
+End If
 
-Next1:
 SetupForms frmConfig
 
 Exit Sub
-':::::::::::::::::::::::::::::::::::
-'Error Handler
-':::::::::::::::::::::::::::::::::::
 HandleErrorFile:
 Select Case Err.Number
-Case 13
-    MsgBox MDImsgbox_config_notify, vbInformation
-    With frmConfig
-        .txtIP = "0.0.0.0"
-        .txtPort = "4728"
-        .txtNick = "Nickname"
-        .Show
-    End With
-    With Me
-        .Top = 1200
-        .Left = 1200
-    End With
-    GoTo Next1
 Case Else
-    MsgBox "Error: " & Err.Number & vbCrLf & "Description: " & Err.Description, vbCritical
+    MsgBox "Error: " & Err.Number & vbCrLf & "Description: " & Err.Description, vbInformation
     Exit Sub
 End Select
 End Sub
@@ -608,16 +598,6 @@ Case Else
     IsMuted = False
     
 End Select
-End Sub
-
-Private Sub Dc(txtBx As TextBox)
-With frmConfig
-    .Command2_Click
-    .txtPassword = ""
-    frmChat.Hide
-    .Show
-    .txtBx.SetFocus
-End With
 End Sub
 
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)

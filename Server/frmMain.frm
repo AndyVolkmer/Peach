@@ -516,7 +516,7 @@ Case "!msg"
         Else
             SendMessage " [" & GetUser & "]: " & GetConver
         End If
-    Case ".accountinfo"
+    Case ".accountinfo", ".accinfo"
         If GetLevel(GetUser) <> "0" Then
             SendSingle DoAccountInfo(array2(1)), Winsock1(Index)
         Else
