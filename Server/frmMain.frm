@@ -454,19 +454,23 @@ Case "!namerequest"
     End If
     
 Case "!w"
-    'Split name into user name and normal name
-    array2 = Split(GetUser, "|")
-    GetUser = array2(0)
-    ForWho = array2(1)
-    
-    'Check in listitems if forwho name is in the list and get the socket id
-    For i = 1 To frmPanel.ListView1.ListItems.Count
-        If ForWho = frmPanel.ListView1.ListItems.Item(i) Then
-            SendSingle " [" & GetUser & "] whispers: " & GetConver, frmMain.Winsock1(frmPanel.ListView1.ListItems.Item(i).SubItems(2))
-            VisualizeMessage Command, GetUser, GetConver, ForWho
-            Exit For
-        End If
-    Next i
+    If Mute = True Then
+        SendSingle " You are muted.", frmMain.Winsock1(Index)
+    Else
+        'Split name into user name and normal name
+        array2 = Split(GetUser, "|")
+        GetUser = array2(0)
+        ForWho = array2(1)
+        
+        'Check in listitems if forwho name is in the list and get the socket id
+        For i = 1 To frmPanel.ListView1.ListItems.Count
+            If ForWho = frmPanel.ListView1.ListItems.Item(i) Then
+                SendSingle " [" & GetUser & "] whispers: " & GetConver, frmMain.Winsock1(frmPanel.ListView1.ListItems.Item(i).SubItems(2))
+                VisualizeMessage Command, GetUser, GetConver, ForWho
+                Exit For
+            End If
+        Next i
+    End If
 Case "!login"
     With frmAccountPanel.ListView1.ListItems
         For i = 1 To .Count
@@ -505,22 +509,26 @@ Case "!iprequest"
     Next i
     
 Case "!emote"
-    Select Case GetConver
-    Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh"
-        SendMessage " " & GetUser & " laughs."
-    Case "/Rofl", "/rofl", "/ROFL"
-        SendMessage " " & GetUser & " rolls on the floor laughing."
-    Case "/Beer", "/beer"
-        SendMessage " " & GetUser & " takes a beer from the fridge."
-    Case "/fart", "/Fart"
-        SendMessage " " & GetUser & " farts loudly."
-    Case "/lmao", "/LMAO"
-        SendMessage " " & GetUser & " is laughing his / her ass off."
-    Case "/facepalm", "/Facepalm"
-        SendMessage " " & GetUser & " covers his face with his palm."
-    Case "/violin"
-        SendMessage " " & GetUser & " plays the world smallest violin."
-    End Select
+    If Mute = True Then
+        SendSingle " You are muted.", frmMain.Winsock1(Index)
+    Else
+        Select Case GetConver
+        Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh"
+            SendMessage " " & GetUser & " laughs."
+        Case "/Rofl", "/rofl", "/ROFL"
+            SendMessage " " & GetUser & " rolls on the floor laughing."
+        Case "/Beer", "/beer"
+            SendMessage " " & GetUser & " takes a beer from the fridge."
+        Case "/fart", "/Fart"
+            SendMessage " " & GetUser & " farts loudly."
+        Case "/lmao", "/LMAO"
+            SendMessage " " & GetUser & " is laughing his / her ass off."
+        Case "/facepalm", "/Facepalm"
+            SendMessage " " & GetUser & " covers his face with his palm."
+        Case "/violin"
+            SendMessage " " & GetUser & " plays the world smallest violin."
+        End Select
+    End If
 
 Case "!msg"
     'Split it
