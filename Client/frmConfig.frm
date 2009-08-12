@@ -79,7 +79,7 @@ Begin VB.Form frmConfig
       Width           =   7215
       Begin VB.CheckBox SPT 
          BackColor       =   &H00F4F4F4&
-         Caption         =   "Save password"
+         Caption         =   "Save Password"
          Height          =   255
          Left            =   5280
          TabIndex        =   19
