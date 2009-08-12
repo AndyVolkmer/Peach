@@ -66,6 +66,7 @@ Begin VB.Form frmPanel
       _ExtentX        =   12726
       _ExtentY        =   1296
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -96,7 +97,6 @@ Begin VB.Form frmPanel
       _ExtentY        =   4471
       View            =   3
       LabelEdit       =   1
-      MultiSelect     =   -1  'True
       LabelWrap       =   -1  'True
       HideSelection   =   -1  'True
       Checkboxes      =   -1  'True
@@ -161,6 +161,7 @@ For i = 1 To ListView1.ListItems.Count
             Unload frmMain.Winsock1(.Item(i).SubItems(2))
             txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & .Item(i) & " got kicked."
             .Remove (i)
+            Exit For
         End If
     End With
 Next i
@@ -251,7 +252,24 @@ With List1
     .AddItem "Porno"
     .AddItem "Porn"
     .AddItem "Unknown"
+    .AddItem "User"
+    .AddItem "Name"
 End With
+End Sub
+
+Private Sub ListView1_ItemCheck(ByVal Item As MSComctlLib.ListItem)
+If Item.Checked = True Then
+    Dim i As Integer
+    With ListView1.ListItems
+        For i = 1 To .Count
+            .Item(i).Checked = False
+        Next i
+    End With
+    ListView1.SelectedItem = Item
+    Item.Checked = True
+Else
+    Item.Checked = False
+End If
 End Sub
 
 Private Sub txtLOG_Change()

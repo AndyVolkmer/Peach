@@ -313,12 +313,12 @@ Private Sub Winsock1_Close(Index As Integer)
 Dim x As Integer
 Unload Winsock1(Index)
 For x = 1 To frmPanel.ListView1.ListItems.Count + 1
-    ' Update user lists ( server and client )
+    'Update user lists ( server and client )
     If frmPanel.ListView1.ListItems.Item(x).SubItems(2) = Index Then
-        ' Pick the user
+        'Pick the user
         frmPanel.ListView1.ListItems.Remove (x)
         
-        ' Update Users List
+        'Update Users List
         UpdateUsersList
         Exit For
     End If
@@ -389,7 +389,6 @@ GetConver = array1(2)
 For i = 1 To frmPanel.ListView1.ListItems.Count
     If frmPanel.ListView1.ListItems.Item(i) = GetUser Then
         If frmPanel.ListView1.ListItems.Item(i).SubItems(4) = "Yes" Then
-            'SendSingle " You are muted.", frmMain.Winsock1(Index)
             Mute = True
         End If
     End If
@@ -599,14 +598,16 @@ Case "!msg"
         
     Case ".mute"
         If GetLevel(GetUser) <> "0" Then
-            MuteUser GetUser, "Yes"
+            MuteUser array2(1), "Yes"
+            SendMessage " " & StrConv(array2(1), vbProperCase) & " got muted by " & GetUser & "."
         Else
             SendMessage " [" & GetUser & "]: " & GetConver
         End If
         
     Case ".unmute"
         If GetLevel(GetUser) <> "0" Then
-            MuteUser GetUser, "No"
+            MuteUser array2(1), "No"
+            SendMessage " " & StrConv(array2(1), vbProperCase) & " got unmuted by " & GetUser & "."
         Else
             SendMessage " [" & GetUser & "]: " & GetConver
         End If
@@ -638,7 +639,7 @@ End Sub
 Private Sub MuteUser(User As String, Mute As String)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i) = User Then
+        If .Item(i) = StrConv(User, vbProperCase) Then
             .Item(i).SubItems(4) = Mute
         End If
     Next i
