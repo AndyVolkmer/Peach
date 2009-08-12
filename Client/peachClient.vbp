@@ -20,6 +20,7 @@ Form=frmAbout.frm
 Form=frnSendFile2.frm
 Form=frmRegistration.frm
 Module=IniModule; IniModule.bas
+Module=CryptModul; CryptModul.bas
 IconForm="frmMain"
 Startup="frmLanguage"
 HelpFile=""

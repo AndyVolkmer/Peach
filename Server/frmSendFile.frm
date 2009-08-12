@@ -375,7 +375,7 @@ i = 1
 'Check list if the ID is already given
 For ii = 1 To ListView1.ListItems.Count
     If ListView1.ListItems.Item(ii) = i Then
-        i = i + 1
+        i = ii + 1
     End If
 Next ii
 
@@ -384,17 +384,17 @@ frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time
 frmMain.xCommand.Execute
 
 'Save index in variable
-i = ListView1.ListItems.Count + 1
+ii = ListView1.ListItems.Count + 1
 
 'Add account to the listview
 With ListView1.ListItems
-    .Add , , ii
-    .Item(i).SubItems(1) = dName
-    .Item(i).SubItems(2) = dPassword
-    .Item(i).SubItems(3) = Format(Time, "hh:nn:ss")
-    .Item(i).SubItems(4) = Format(Date, "dd.mm.yyyy")
-    .Item(i).SubItems(5) = dBanned
-    .Item(i).SubItems(6) = "0"
+    .Add , , i
+    .Item(ii).SubItems(1) = dName
+    .Item(ii).SubItems(2) = dPassword
+    .Item(ii).SubItems(3) = Format(Time, "hh:nn:ss")
+    .Item(ii).SubItems(4) = Format(Date, "dd.mm.yyyy")
+    .Item(ii).SubItems(5) = dBanned
+    .Item(ii).SubItems(6) = "0"
 End With
 End Sub
 
@@ -404,14 +404,9 @@ Me.Left = 0
 End Sub
 
 Private Sub ListView1_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnHeader)
-Select Case ListView1.ListItems.Count
-Case 1
-    MsgBox "There is " & ListView1.ListItems.Count & " account in the list.", vbInformation
-Case 0
-    MsgBox "There is no account in the list.", vbInformation
-Case Else
-    MsgBox "There are " & ListView1.ListItems.Count & " accounts in the list.", vbInformation
-End Select
+With ListView1.SelectedItem
+    MsgBox "ID: " & .Text & vbCrLf & "Name: " & .SubItems(1) & vbCrLf & "Password: " & .SubItems(2) & vbCrLf & "Time: " & .SubItems(3) & vbCrLf & "Date: " & .SubItems(4) & vbCrLf & "Banned: " & .SubItems(5) & vbCrLf & "Level: " & .SubItems(6), vbInformation, "Information - '" & .SubItems(1) & "'"
+End With
 End Sub
 
 Private Sub ListView1_ItemClick(ByVal Item As MSComctlLib.ListItem)
@@ -476,6 +471,7 @@ Dim GetCommand  As String
 Dim GetName     As String
 Dim GetPassword As String
 
+On Error GoTo HandleError
 RegSock(Index).GetData GetMessage
 
 array1 = Split(GetMessage, "#")
@@ -498,4 +494,10 @@ Case "!register"
     RegisterAccount GetName, GetPassword, "No"
     RegSock(Index).SendData "!done" & "#"
 End Select
+
+Exit Sub
+HandleError:
+    RegSock(Index).SendData "!error" & "#"
+    Exit Sub
+
 End Sub

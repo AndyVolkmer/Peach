@@ -374,7 +374,7 @@ End If
 
 'Read 'Password' from .ini file
 If SPT.Value = 1 Then
-    txtPassword.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Password")
+    txtPassword.Text = DeCode(DeCode(ReadIniValue(App.Path & "\Config.ini", "Data", "Password")))
 Else
     txtPassword.Text = ""
 End If
@@ -401,7 +401,7 @@ End Function
 Private Sub Form_Unload(Cancel As Integer)
 'Write data entries to .ini file
 WriteIniValue App.Path & "\Config.ini", "Data", "SPT", SPT.Value
-WriteIniValue App.Path & "\Config.ini", "Data", "Password", txtPassword.Text
+WriteIniValue App.Path & "\Config.ini", "Data", "Password", Encode(Encode(txtPassword.Text))
 WriteIniValue App.Path & "\Config.ini", "Data", "Account", txtAccount.Text
 WriteIniValue App.Path & "\Config.ini", "Data", "Port", txtPort.Text
 WriteIniValue App.Path & "\Config.ini", "Data", "IP", txtIP.Text
