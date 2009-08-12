@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.6.8"
+Public Const Rev = "1.0.6.9"
 Public Const RegPort = 6222
 
 Public GetUser      As String

@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.6.8"
+Public Const Rev = "1.0.6.9"
 Public Const aPort = 6123
 Public Const bPort = 6124
 Public Const RegPort = 6222
@@ -13,7 +13,6 @@ Public Message      As String
 Public ForWho       As String
 Public LastMsg      As String
 Public GetLevel     As String
-Public IsMuted      As Boolean
 
 Public Type NOTIFYICONDATA
 cbSize              As Long

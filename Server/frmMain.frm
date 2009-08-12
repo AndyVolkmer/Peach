@@ -368,11 +368,11 @@ loadSocket = theFreeSocket
 End Function
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-Dim array1()        As String 'Message array
-Dim array2()        As String 'Whisper & Command array
+Dim array1()        As String
+Dim array2()        As String
 Dim strMessage      As String
 Dim RR              As Integer
-Dim bMatch          As Boolean
+Dim bMatch, Mute    As Boolean
 
 'Get Message
 frmMain.Winsock1(Index).GetData strMessage
@@ -389,8 +389,8 @@ GetConver = array1(2)
 For i = 1 To frmPanel.ListView1.ListItems.Count
     If frmPanel.ListView1.ListItems.Item(i) = GetUser Then
         If frmPanel.ListView1.ListItems.Item(i).SubItems(4) = "Yes" Then
-            SendSingle "!muted" & "#", frmMain.Winsock1(Index)
-            Exit Sub
+            'SendSingle " You are muted.", frmMain.Winsock1(Index)
+            Mute = True
         End If
     End If
 Next i
@@ -589,15 +589,33 @@ Case "!msg"
             SendMessage " [" & GetUser & "]: " & GetConver
         End If
         
-    Case Else
-        Select Case GetLevel(GetUser)
-        Case "0"
+    Case ".mute"
+        If GetLevel(GetUser) <> "0" Then
+            MuteUser GetUser, "Yes"
+        Else
             SendMessage " [" & GetUser & "]: " & GetConver
-        Case "1"
-            SendMessage " [GM][" & GetUser & "]: " & GetConver
-        Case "2"
-            SendMessage " [Admin][" & GetUser & "]: " & GetConver
-        End Select
+        End If
+        
+    Case ".unmute"
+        If GetLevel(GetUser) <> "0" Then
+            MuteUser GetUser, "No"
+        Else
+            SendMessage " [" & GetUser & "]: " & GetConver
+        End If
+        
+    Case Else
+        If Mute = True Then
+            SendSingle " You are muted.", frmMain.Winsock1(Index)
+        Else
+            Select Case GetLevel(GetUser)
+            Case "0"
+                SendMessage " [" & GetUser & "]: " & GetConver
+            Case "1"
+                SendMessage " [GM][" & GetUser & "]: " & GetConver
+            Case "2"
+                SendMessage " [Admin][" & GetUser & "]: " & GetConver
+            End Select
+        End If
         
     End Select
        
@@ -607,6 +625,16 @@ Case Else
 End Select
 'We want to read the message also , different then others tho
 VisualizeMessage Command, GetUser, GetConver
+End Sub
+
+Private Sub MuteUser(User As String, Mute As String)
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i) = User Then
+            .Item(i).SubItems(4) = Mute
+        End If
+    Next i
+End With
 End Sub
 
 Private Function GetAccountList() As String

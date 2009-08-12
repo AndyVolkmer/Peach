@@ -96,7 +96,7 @@ MDImsgbox_config_notify = "Einige Konfigurationsdateien sind veraltet oder wurde
 MDImsgbox_nametaken = "Der Name ist bereits vergeben."
 MDImsgbox_wrong_account = "Der Account ist nicht vorhanden oder falsch."
 MDImsgbox_wrong_password = "Das Passwort ist falsch."
-MDImsgbox_banned = "Du bist gebannt."
+MDImsgbox_banned = "Dieser Account wurde gebannt."
 
 CONFIGcommand_connect = "&Verbinden"
 CONFIGcommand_disconnect = "&Verbindung trenn."
@@ -170,7 +170,7 @@ MDImsgbox_config_notify = "Some configuration files are outdated or got damaged,
 MDImsgbox_nametaken = "This name is already taken."
 MDImsgbox_wrong_account = "The account does not exist or is wrong."
 MDImsgbox_wrong_password = "The password is wrong."
-MDImsgbox_banned = "You are banned."
+MDImsgbox_banned = "This account is banned."
 
 ' Configuration form ..
 CONFIGcommand_connect = "&Connect"
@@ -246,7 +246,7 @@ MDImsgbox_config_notify = "Alguna configuración de archivos estan caducados o da
 MDImsgbox_nametaken = "Este nombre ya esta cogido."
 MDImsgbox_wrong_account = "La cuenta no existe o es incorrecta."
 MDImsgbox_wrong_password = "La contraseña es incorrecta."
-MDImsgbox_banned = "Estas baneado."
+MDImsgbox_banned = "Esta cuenta esta baneada."
 
 CONFIGcommand_connect = "&Conectar"
 CONFIGcommand_disconnect = "&Desconectar"
@@ -317,7 +317,7 @@ MDImsgbox_config_notify = "Några Konfiguration filer är gamla eller skadade, Pea
 MDImsgbox_nametaken = "Namnet är upptaget."
 MDImsgbox_wrong_account = "The account does not exist or is wrong."
 MDImsgbox_wrong_password = "The password is wrong."
-MDImsgbox_banned = "You are banned."
+MDImsgbox_banned = "This account is banned."
 
 ' Config form
 CONFIGcommand_connect = "&Anslut"
@@ -393,7 +393,7 @@ MDImsgbox_config_notify = "Alcuni file della configurazione potrebbero essere ob
 MDImsgbox_nametaken = "Il nome immesso e' gia' in uso."
 MDImsgbox_wrong_account = "The account does not exist or is wrong."
 MDImsgbox_wrong_password = "The password is wrong."
-MDImsgbox_banned = "You are banned."
+MDImsgbox_banned = "This account is banned."
 
 ' Config form ..
 CONFIGcommand_connect = "&Connesso"
@@ -470,7 +470,7 @@ MDImsgbox_config_notify = "Datoteka konfigurac. Je zastarela ili ostecena, probl
 MDImsgbox_nametaken = "Ime je vec zauzeto."
 MDImsgbox_wrong_account = "The account does not exist or is wrong."
 MDImsgbox_wrong_password = "The password is wrong."
-MDImsgbox_banned = "You are banned."
+MDImsgbox_banned = "This account is banned."
 
 ' Config form ..
 CONFIGcommand_connect = "&Povezi se"
@@ -546,7 +546,7 @@ MDImsgbox_config_notify = "Enkele bestanden zijn oud of beschadigd, Peach heeft 
 MDImsgbox_nametaken = "Deze naam is niet beschikbaar."
 MDImsgbox_wrong_account = "The account does not exist or is wrong."
 MDImsgbox_wrong_password = "The password is wrong."
-MDImsgbox_banned = "You are banned."
+MDImsgbox_banned = "This account is banned."
 
 CONFIGcommand_connect = "&Verbind"
 CONFIGcommand_disconnect = "&Verbreek de verbinding"
@@ -617,7 +617,7 @@ MDImsgbox_config_notify = "Quelques files de la configuration pourrait etre daum
 MDImsgbox_nametaken = "Le nom inséré est déjà utilizé."
 MDImsgbox_wrong_account = "The account does not exist or is wrong."
 MDImsgbox_wrong_password = "The password is wrong."
-MDImsgbox_banned = "You are banned."
+MDImsgbox_banned = "This account is banned."
 
 CONFIGcommand_connect = "&Connecté"
 CONFIGcommand_disconnect = "&Deconnecté"

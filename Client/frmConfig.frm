@@ -249,23 +249,6 @@ End If
 'Make the name proper case
 txtNick.Text = StrConv(txtNick.Text, vbProperCase)
 
-'Do the enable stuff
-With Me
-    .Command2.Enabled = True
-    .Command1.Enabled = False
-    .txtNick.Enabled = False
-    .txtIP.Enabled = False
-    .txtPort.Enabled = False
-    .txtAccount.Enabled = False
-    .txtPassword.Enabled = False
-    .SPT.Enabled = False
-End With
-With frmChat
-    .cmdSend.Enabled = True
-    .cmdClear.Enabled = True
-    .txtToSend.Enabled = True
-End With
-
 'Connect winsocks
 With frmMain.Winsock1
     .RemotePort = txtPort.Text
@@ -285,10 +268,8 @@ With frmSendFile2
     .SckReceiveFile(0).Listen
 End With
 
+Command1.Enabled = False
 frmMain.StatusBar1.Panels(1).Text = MDIstatusbar_connecting & txtIP.Text & ":" & txtPort.Text
-frmConfig.Hide
-frmChat.Show
-frmChat.txtToSend.SetFocus
 End Sub
 
 Public Sub Command2_Click()
@@ -319,7 +300,7 @@ End Sub
 
 Private Sub Command4_Click()
 On Error Resume Next
-Shell App.Path & "\peachUpdater.exe"
+Shell App.Path & "\peachUpdater.exe", vbNormalFocus
 End Sub
 
 Private Sub Command5_Click()

@@ -473,6 +473,27 @@ SetupForms frmConfig
 End Sub
 
 Private Sub Winsock1_Connect()
+'Do the enable stuff
+With frmConfig
+    .Command2.Enabled = True
+    .Command1.Enabled = False
+    .txtNick.Enabled = False
+    .txtIP.Enabled = False
+    .txtPort.Enabled = False
+    .txtAccount.Enabled = False
+    .txtPassword.Enabled = False
+    .SPT.Enabled = False
+End With
+With frmChat
+    .cmdSend.Enabled = True
+    .cmdClear.Enabled = True
+    .txtToSend.Enabled = True
+End With
+
+frmConfig.Hide
+frmChat.Show
+frmChat.txtToSend.SetFocus
+
 SendMsg "!login" & "#" & frmConfig.txtAccount & "#" & frmConfig.txtPassword & "#"
 End Sub
 
@@ -536,12 +557,10 @@ Case "!userlist"
     
 Case "!decilined"
     ConnectIsFalse
-    IsMuted = False
     
 'We can login
 Case "!accepted"
     ConnectIsTrue
-    IsMuted = False
     
 'Wipe out current list and insert new values
 Case "!listupdate"
@@ -551,7 +570,6 @@ Case "!listupdate"
         frmList.ListView1.ListItems.Add , , StrArr(i)
         frmSendFile.Combo1.AddItem StrArr(i)
     Next i
-    IsMuted = False
 
 'We get login answer here
 Case "!login"
@@ -585,7 +603,6 @@ Case "!login"
         End With
         MsgBox MDImsgbox_banned, vbInformation
     End Select
-    IsMuted = False
 
 'We get ip here
 Case "!iprequest"
@@ -603,18 +620,10 @@ Case "!iprequest"
         .Interval = 5
         .Enabled = True
     End With
-    IsMuted = False
 
-'We got muted
-Case "!muted"
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "You are muted!"
-    IsMuted = True
-
-'Normal message
 Case Else
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & GetMessage
     If frmMain.WindowState = 1 Then frmDESP.DisplayMessage DESPtext_newmsg
-    IsMuted = False
     
 End Select
 End Sub

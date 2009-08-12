@@ -86,6 +86,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -123,13 +124,6 @@ Case "", " ", "  ", "   ", "    ", "     ", "      "
     Exit Sub
 End Select
 
-'Check if we are muted
-If IsMuted = True Then
-    txtConver.Text = txtConver.Text & vbCrLf & "You are muted!"
-    txtToSend.Text = ""
-    Exit Sub
-End If
-
 'Check if there is an emote or command used
 On Error GoTo Error1
 Select Case ArrI(0)
@@ -146,10 +140,13 @@ Case _
     ".unbanaccount", _
     ".list", _
     ".banuser", _
-    ".unbanuser"
+    ".unbanuser", _
+    ".mute", _
+    ".unmute"
 
     If GetLevel <> "0" Then
-        If ArrI(1) = "" Then MsgBox ""
+        If ArrI(1) = "" Then
+        End If
     End If
     
 End Select

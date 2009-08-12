@@ -117,12 +117,8 @@ End Type
 
 Private Clients() As tClient
 
-Private Sub cmdConnect_Click()
-
-End Sub
-
 Private Sub Command1_Click()
-Shell "Explorer.exe " & App.Path
+Shell "Explorer.exe " & App.Path, vbNormalFocus
 End Sub
 
 Private Sub Form_Load()
