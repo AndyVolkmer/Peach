@@ -268,13 +268,13 @@ End With
 
 With xRecordSet
     Do Until .EOF
-        Set xListItem = frmAccountPanel.ListView1.ListItems.Add(, , !id)
+        Set xListItem = frmAccountPanel.ListView1.ListItems.Add(, , !ID)
         xListItem.SubItems(1) = !Name1
-        xListItem.SubItems(2) = !password1
-        xListItem.SubItems(3) = !time1
-        xListItem.SubItems(4) = !date1
-        xListItem.SubItems(5) = !banned1
-        xListItem.SubItems(6) = !level1
+        xListItem.SubItems(2) = !Password1
+        xListItem.SubItems(3) = !Time1
+        xListItem.SubItems(4) = !Date1
+        xListItem.SubItems(5) = !Banned1
+        xListItem.SubItems(6) = !Level1
         .MoveNext
     Loop
 End With
@@ -409,6 +409,17 @@ Select Case Command
 
 'Announce connected player and send to user online list
 Case "!connected"
+    With frmPanel.ListView1.ListItems
+        For i = 1 To .Count
+            If .Item(i).SubItems(5) = GetConver Then
+                Winsock1(i).Close
+                Unload Winsock1(i)
+                
+                StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
+            End If
+        Next i
+    End With
+                
     frmPanel.ListView1.ListItems.Item(RR).Text = GetUser
     frmPanel.ListView1.ListItems.Item(RR).SubItems(5) = GetConver
     UpdateUsersList
@@ -454,30 +465,33 @@ Case "!w"
         End If
     Next i
 Case "!login"
-    For i = 1 To frmAccountPanel.ListView1.ListItems.Count
-        Select Case GetUser
-        Case frmAccountPanel.ListView1.ListItems.Item(i).SubItems(1)
-            
-            'Ban Check
-            Select Case frmAccountPanel.ListView1.ListItems.Item(i).SubItems(5)
-            Case "Yes"
-                SendSingle "!login" & "#" & "Banned" & "#", frmMain.Winsock1(Index)
-                Exit For
+    With frmAccountPanel.ListView1.ListItems
+        For i = 1 To .Count
+            Select Case GetUser
+            Case .Item(i).SubItems(1)
+                
+                'Ban Check
+                Select Case .Item(i).SubItems(5)
+                Case "Yes"
+                    SendSingle "!login" & "#" & "Banned" & "#", frmMain.Winsock1(Index)
+                    Exit For
+                End Select
+                
+                'Password Check
+                If GetConver = .Item(i).SubItems(2) Then
+                    'Send back confirmation and account level
+                    SendSingle "!login" & "#" & "Yes" & "#" & .Item(i).SubItems(6) & "#", frmMain.Winsock1(Index)
+                    Acc = True
+                    Exit For
+                Else
+                    SendSingle "!login" & "#" & "Password" & "#", frmMain.Winsock1(Index)
+                End If
+                
+            Case Else
+                Acc = False
             End Select
-            
-            'Password Check
-            If GetConver = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(2) Then
-                'Send back confirmation and account level
-                SendSingle "!login" & "#" & "Yes" & "#" & frmAccountPanel.ListView1.ListItems.Item(i).SubItems(6) & "#", frmMain.Winsock1(Index)
-                Acc = True
-                Exit For
-            Else
-                SendSingle "!login" & "#" & "Password" & "#", frmMain.Winsock1(Index)
-            End If
-        Case Else
-            Acc = False
-        End Select
-    Next i
+        Next i
+    End With
     If Acc = False Then SendSingle "!login" & "#" & "Account" & "#", frmMain.Winsock1(Index)
         
 Case "!iprequest"
@@ -512,12 +526,16 @@ Case "!msg"
     'Check if there is any special command
     Select Case array2(0)
     Case ".list"
-        Select Case array2(1)
-        Case "account"
-            SendSingle "!accountlist" & "#" & GetAccountList, frmMain.Winsock1(Index)
-        Case "user"
-            SendSingle "!userlist" & "#" & GetUserList, frmMain.Winsock1(Index)
-        End Select
+        If GetLevel(GetUser) <> "0" Then
+            Select Case array2(1)
+            Case "account"
+                SendSingle "!accountlist" & "#" & GetAccountList, frmMain.Winsock1(Index)
+            Case "user"
+                SendSingle "!userlist" & "#" & GetUserList, frmMain.Winsock1(Index)
+            End Select
+        Else
+            SendMessage " [" & GetUser & "]: " & GetConver
+        End If
         
     Case ".userinfo"
         If GetLevel(GetUser) <> "0" Then
