@@ -166,7 +166,7 @@ On Error GoTo ErrListen
 With frmMain
     .Winsock1(0).LocalPort = txtPort.Text
     .Winsock1(0).Listen
-    .StatusBar1.Panels(1).Text = "Status: Connected with  " & .Winsock1.Count - 1 & " Client(s)."
+    .StatusBar1.Panels(1).Text = "Status: Connected with " & .Winsock1.Count - 1 & " Client(s)."
 End With
 
 With frmAccountPanel

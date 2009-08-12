@@ -323,7 +323,7 @@ For x = 1 To frmPanel.ListView1.ListItems.Count + 1
         Exit For
     End If
 Next x
-StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
+StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
@@ -341,7 +341,7 @@ With frmPanel.ListView1
     .ListItems.Item(RR).SubItems(3) = Format(Time, "hh:nn:ss")
     .ListItems.Item(RR).SubItems(4) = "No"
 End With
-StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
+StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
 Private Function socketFree() As Integer
@@ -400,7 +400,7 @@ If Len(GetConver) > 200 Then
     frmPanel.ListView1.ListItems.Remove (Index) ' Remove from list
     Winsock1(Index).Close ' Close connection
     Unload Winsock1(Index) ' Remove socket
-    StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
+    StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
     UpdateUsersList
 End If
 
@@ -650,7 +650,7 @@ End Sub
 Private Sub KickUser(User As String)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i) = User Then
+        If .Item(i) = StrConv(User, vbProperCase) Then
             frmMain.Winsock1(.Item(i).SubItems(2)).Close
             Unload frmMain.Winsock1(.Item(i).SubItems(2))
             .Remove (i)
@@ -663,7 +663,7 @@ End With
 UpdateUsersList
 
 'Update Statusbar
-frmMain.StatusBar1.Panels(1).Text = "Status: Connected with  " & frmMain.Winsock1.Count - 1 & " Client(s)."
+frmMain.StatusBar1.Panels(1).Text = "Status: Connected with " & frmMain.Winsock1.Count - 1 & " Client(s)."
         
 End Sub
 
