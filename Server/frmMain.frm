@@ -373,7 +373,6 @@ Dim array2()        As String 'Whisper & Command array
 Dim strMessage      As String
 Dim RR              As Integer
 Dim bMatch          As Boolean
-RR = frmPanel.ListView1.ListItems.Count
 
 'Get Message
 frmMain.Winsock1(Index).GetData strMessage
@@ -412,13 +411,17 @@ Case "!connected"
     With frmPanel.ListView1.ListItems
         For i = 1 To .Count
             If .Item(i).SubItems(5) = GetConver Then
-                Winsock1(i).Close
-                Unload Winsock1(i)
+                Winsock1(.Item(i).SubItems(2)).Close
+                Unload Winsock1(.Item(i).SubItems(2))
+                .Remove (i)
                 
-                StatusBar1.Panels(1).Text = "Status: Connected with  " & Winsock1.Count - 1 & " Client(s)."
+                StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
+                Exit For
             End If
         Next i
     End With
+    
+    RR = frmPanel.ListView1.ListItems.Count
                 
     frmPanel.ListView1.ListItems.Item(RR).Text = GetUser
     frmPanel.ListView1.ListItems.Item(RR).SubItems(5) = GetConver
