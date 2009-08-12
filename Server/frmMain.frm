@@ -189,6 +189,7 @@ Public intCounter   As Integer
 Dim i               As Integer 'Global "FOR" variable
 Dim Vali            As Boolean
 Dim Acc             As Boolean
+Dim Muted           As Boolean
 
 Private Sub Command1_Click()
     SetupForms frmConfig
@@ -599,7 +600,11 @@ Case "!msg"
     Case ".mute"
         If GetLevel(GetUser) <> "0" Then
             MuteUser array2(1), "Yes"
-            SendMessage " " & StrConv(array2(1), vbProperCase) & " got muted by " & GetUser & "."
+            If Muted = True Then
+                SendMessage " " & StrConv(array2(1), vbProperCase) & " got muted by " & GetUser & "."
+            Else
+                SendSingle " User '" & array2(1) & "' does not exist.", frmMain.Winsock1(Index)
+            End If
         Else
             SendMessage " [" & GetUser & "]: " & GetConver
         End If
@@ -607,7 +612,11 @@ Case "!msg"
     Case ".unmute"
         If GetLevel(GetUser) <> "0" Then
             MuteUser array2(1), "No"
-            SendMessage " " & StrConv(array2(1), vbProperCase) & " got unmuted by " & GetUser & "."
+            If Muted = True Then
+                SendMessage " " & StrConv(array2(1), vbProperCase) & " got unmuted by " & GetUser & "."
+            Else
+                SendSingle " User '" & array2(1) & "' does not exist.", frmMain.Winsock1(Index)
+            End If
         Else
             SendMessage " [" & GetUser & "]: " & GetConver
         End If
@@ -641,6 +650,10 @@ With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(User, vbProperCase) Then
             .Item(i).SubItems(4) = Mute
+            Muted = True
+            Exit For
+        Else
+            Muted = False
         End If
     Next i
 End With
