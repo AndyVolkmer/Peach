@@ -311,19 +311,19 @@ End If
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
-Dim x As Integer
 Unload Winsock1(Index)
-For x = 1 To frmPanel.ListView1.ListItems.Count + 1
+For i = 1 To frmPanel.ListView1.ListItems.Count + 1
     'Update user lists ( server and client )
-    If frmPanel.ListView1.ListItems.Item(x).SubItems(2) = Index Then
+    If frmPanel.ListView1.ListItems.Item(i).SubItems(2) = Index Then
+    
         'Pick the user
-        frmPanel.ListView1.ListItems.Remove (x)
+        frmPanel.ListView1.ListItems.Remove (i)
         
         'Update Users List
         UpdateUsersList
         Exit For
     End If
-Next x
+Next i
 StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
@@ -621,6 +621,13 @@ Case "!msg"
             SendMessage " [" & GetUser & "]: " & GetConver
         End If
         
+    Case ".help", ".command", ".commands"
+        If GetLevel(GetUser) <> "0" Then
+            SendSingle GetCommands, frmMain.Winsock1(Index)
+        Else
+            SendMessage " [" & GetUser & "]: " & GetConver
+        End If
+        
     Case Else
         If Mute = True Then
             SendSingle " You are muted.", frmMain.Winsock1(Index)
@@ -737,6 +744,21 @@ For i = 1 To frmPanel.ListView1.ListItems.Count
         End If
     End With
 Next i
+End Function
+
+Private Function GetCommands() As String
+GetCommands = vbCrLf & _
+" *************** " & vbCrLf & _
+" * List of all avaible commands:" & vbCrLf & _
+" * .banuser 'Name' ( Bans users account )" & vbCrLf & _
+" * .banaccount 'Account' ( Bans the account )" & vbCrLf & _
+" * .kick 'Name' ( Kicks 'Name' from Server )" & vbCrLf & _
+" * .mute 'Name' ( Mutes 'Name' until unmute )" & vbCrLf & _
+" * .unmute 'Name' ( Removes mute from 'Name' )" & vbCrLf & _
+" * .userinfo 'Name' ( Shows all information about 'Name' )" & vbCrLf & _
+" * .accountinfo / .accinfo ( Shows all information about that account )" & vbCrLf & _
+" * .list account / user ( Shows a list of all accounts / user )" & vbCrLf & _
+" *************** "
 End Function
 
 Private Function GetLevel(iName As String) As String
