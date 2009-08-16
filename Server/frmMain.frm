@@ -481,7 +481,7 @@ Case "!login"
                 Select Case .Item(i).SubItems(5)
                 Case "Yes"
                     SendSingle "!login" & "#" & "Banned" & "#", frmMain.Winsock1(Index)
-                    Exit For
+                    Exit Sub
                 End Select
                 
                 'Password Check
@@ -534,6 +534,10 @@ Case "!msg"
     'Split it
     array2 = Split(GetConver, " ")
     
+    On Error GoTo TargetErrorHandler
+    GetTarget = array2(1)
+    
+Continue1:
     'Check if there is any special command
     Select Case array2(0)
     Case ".list"
@@ -650,6 +654,35 @@ Case Else
 End Select
 'We want to read the message also , different then others tho
 VisualizeMessage Command, GetUser, GetConver
+Exit Sub
+TargetErrorHandler:
+    Select Case Err.Number
+    Case 9
+        Select Case array2(0)
+        Case _
+            ".userinfo", _
+            ".accountinfo", _
+            ".accinfo", _
+            ".kick", _
+            ".banaccount", _
+            ".unbanaccount", _
+            ".list", _
+            ".banuser", _
+            ".unbanuser", _
+            ".mute", _
+            ".unmute"
+            
+            If GetLevel(GetUser) <> "0" Then
+                SendSingle " Incorrect Syntax. Use .help for more information about commands.", frmMain.Winsock1(Index)
+            Else
+                SendMessage " [" & GetUser & "]: " & GetConver
+            End If
+        Case ".help"
+            GoTo Continue1
+        Case Else
+            SendMessage " [" & GetUser & "]: " & GetConver
+        End Select
+    End Select
 End Sub
 
 Private Sub MuteUser(User As String, Mute As String)
@@ -748,17 +781,20 @@ End Function
 
 Private Function GetCommands() As String
 GetCommands = vbCrLf & _
-" *************** " & vbCrLf & _
+" ***************" & vbCrLf & _
 " * List of all avaible commands:" & vbCrLf & _
 " * .banuser 'Name' ( Bans users account )" & vbCrLf & _
 " * .banaccount 'Account' ( Bans the account )" & vbCrLf & _
+" * .unbanuser 'Name' ( Removes ban from 'Name' )" & vbCrLf & _
+" * .unbanaccount 'Account' ( Removes ban from 'Account )" & vbCrLf & _
 " * .kick 'Name' ( Kicks 'Name' from Server )" & vbCrLf & _
 " * .mute 'Name' ( Mutes 'Name' until unmute )" & vbCrLf & _
 " * .unmute 'Name' ( Removes mute from 'Name' )" & vbCrLf & _
 " * .userinfo 'Name' ( Shows all information about 'Name' )" & vbCrLf & _
 " * .accountinfo / .accinfo ( Shows all information about that account )" & vbCrLf & _
 " * .list account / user ( Shows a list of all accounts / user )" & vbCrLf & _
-" *************** "
+" * .help ( shows this list of all avaible commands )" & vbCrLf & _
+" ***************"
 End Function
 
 Private Function GetLevel(iName As String) As String
@@ -802,41 +838,41 @@ Dim MII As MENUITEMINFO
 Dim lngMenuID As Long
 Const xSC_MAXIMIZE As Long = -11
 
-    style = GetWindowLong(frm.hwnd, GWL_STYLE)
-    
-    style = style And Not WS_THICKFRAME
-    style = style And Not WS_MAXIMIZEBOX
-    
-    style = SetWindowLong(frm.hwnd, GWL_STYLE, style)
-    
-    On Error Resume Next
-    
-    hMenu = GetSystemMenu(frm.hwnd, 0)
-    
-    With MII
-        .cbSize = Len(MII)
-        .dwTypeData = String(80, 0)
-        .cch = Len(.dwTypeData)
-        .fMask = MIIM_STATE
-        .wID = SC_MAXIMIZE
-    End With
-    If GetMenuItemInfo(hMenu, MII.wID, False, MII) = 0 Then Exit Sub
-    
-    With MII
-        lngMenuID = .wID
-        .wID = xSC_MAXIMIZE
-        .fMask = MIIM_ID
-    End With
-    If SetMenuItemInfo(hMenu, lngMenuID, False, MII) = 0 Then Exit Sub
-    
-    With MII
-        .fState = (.fState Or MFS_GRAYED)
-        .fMask = MIIM_STATE
-    End With
-    If SetMenuItemInfo(hMenu, MII.wID, False, MII) = 0 Then Exit Sub
-    
-    SendMessage2 hwnd, WM_NCACTIVATE, True, 0
-    
-    frm.Width = frm.Width - 1
-    frm.Width = frm.Width + 1
+style = GetWindowLong(frm.hwnd, GWL_STYLE)
+
+style = style And Not WS_THICKFRAME
+style = style And Not WS_MAXIMIZEBOX
+
+style = SetWindowLong(frm.hwnd, GWL_STYLE, style)
+
+On Error Resume Next
+
+hMenu = GetSystemMenu(frm.hwnd, 0)
+
+With MII
+    .cbSize = Len(MII)
+    .dwTypeData = String(80, 0)
+    .cch = Len(.dwTypeData)
+    .fMask = MIIM_STATE
+    .wID = SC_MAXIMIZE
+End With
+If GetMenuItemInfo(hMenu, MII.wID, False, MII) = 0 Then Exit Sub
+
+With MII
+    lngMenuID = .wID
+    .wID = xSC_MAXIMIZE
+    .fMask = MIIM_ID
+End With
+If SetMenuItemInfo(hMenu, lngMenuID, False, MII) = 0 Then Exit Sub
+
+With MII
+    .fState = (.fState Or MFS_GRAYED)
+    .fMask = MIIM_STATE
+End With
+If SetMenuItemInfo(hMenu, MII.wID, False, MII) = 0 Then Exit Sub
+
+SendMessage2 hwnd, WM_NCACTIVATE, True, 0
+
+frm.Width = frm.Width - 1
+frm.Width = frm.Width + 1
 End Sub

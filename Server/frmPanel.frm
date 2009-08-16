@@ -66,7 +66,6 @@ Begin VB.Form frmPanel
       _ExtentX        =   12726
       _ExtentY        =   1296
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -144,7 +143,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Dim i As Integer
 Dim Varl As Boolean
 
 Private Sub Command1_Click()
@@ -259,7 +257,6 @@ End Sub
 
 Private Sub ListView1_ItemCheck(ByVal Item As MSComctlLib.ListItem)
 If Item.Checked = True Then
-    Dim i As Integer
     With ListView1.ListItems
         For i = 1 To .Count
             .Item(i).Checked = False

@@ -269,6 +269,7 @@ With frmSendFile2
 End With
 
 Command1.Enabled = False
+Command2.Enabled = True
 frmMain.StatusBar1.Panels(1).Text = MDIstatusbar_connecting & txtIP.Text & ":" & txtPort.Text
 End Sub
 

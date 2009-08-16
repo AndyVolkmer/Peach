@@ -129,25 +129,6 @@ Select Case ArrI(0)
 Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh", "/rofl", "/ROFL", "/Rofl", "/beer", "/Beer", "/fart", "/Fart", "/lmao", "/LMAO", "/insult", "/facepalm", "/Facepalm", "/violin"
     SendMsg "!emote" & "#" & GetName & "#" & ArrI(0) & "#"
     GoTo NextI
-    
-Case _
-    ".userinfo", _
-    ".accountinfo", _
-    ".accinfo", _
-    ".kick", _
-    ".banaccount", _
-    ".unbanaccount", _
-    ".list", _
-    ".banuser", _
-    ".unbanuser", _
-    ".mute", _
-    ".unmute"
-
-    If GetLevel <> "0" Then
-        If ArrI(1) = "" Then
-        End If
-    End If
-    
 End Select
 
 Select Case txtToSend.Text
@@ -159,11 +140,11 @@ Case LastMsg
     Exit Sub
     
 'Display the time
-Case Trim("!time"), Trim("!Time"), Trim("!TIME")
+Case Trim("/time"), Trim("/Time"), Trim("/TIME")
     txtConver.Text = txtConver.Text & vbCrLf & Prefix & CHATtimetext & Format(Time, "hh:nn")
     
 'Open online user list
-Case Trim("!online"), Trim("!Online"), Trim("!ONLINE")
+Case Trim("/online"), Trim("/Online"), Trim("/ONLINE")
     frmMain.UpdateListPosition.Enabled = True
     With frmList
         .Left = frmMain.Left + .Width * 2 + 20
@@ -202,17 +183,15 @@ Case Else
     SendMsg Message
     
 End Select
+
 NextI:
-LastMsg = txtToSend.Text
-txtToSend.Text = ""
-txtToSend.SetFocus
+    LastMsg = txtToSend.Text
+    txtToSend.Text = ""
+    txtToSend.SetFocus
+
 Exit Sub
 Error1:
-Select Case Err.Number
-Case 9
-    VisualizeMessage False, "System", "Incorrect Syntax."
-    txtToSend.Text = ""
-End Select
+MsgBox Err.Number & vbCrLf & Err.Description
 End Sub
 
 Public Sub Form_Load()
@@ -311,6 +290,7 @@ RTF.SelStart = Pos
 
 Screen.MousePointer = vbNormal
 End Sub
+
 Private Sub CopyPictureToRTF(RTF As Control, Bild As Picture)
 Dim Buf As Variant
 Dim Text As String

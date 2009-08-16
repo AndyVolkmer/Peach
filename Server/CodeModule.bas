@@ -1,15 +1,17 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.7.3"
+Public Const Rev = "1.0.7.4"
 Public Const RegPort = 6222
 
 Public GetUser      As String
 Public GetConver    As String
+Public GetTarget    As String
 Public Prefix       As String
 Public Command      As String
 Public Message      As String
 Public ForWho       As String
+Public i            As Integer 'Global "FOR" variable
 
 Public Type NOTIFYICONDATA
 cbSize              As Long
@@ -43,7 +45,6 @@ Public nid As NOTIFYICONDATA ' trayicon variable
 
 Public Sub SendMessage(Message As String)
 Dim WinSk As Winsock
-
 For Each WinSk In frmMain.Winsock1
     If WinSk.State = 7 Then
         WinSk.SendData Message
@@ -58,17 +59,16 @@ End If
 End Sub
 
 Public Function UpdateUsersList() As Integer
-Dim i As Integer
-Dim tMsg As String
-    With frmPanel.ListView1.ListItems
-        tMsg = "!listupdate#"
-        For i = 1 To .Count
-            tMsg = tMsg & .Item(i) & "#"
-        Next i
-    End With
-    If tMsg <> "!listupdate#" Then
-        SendMessage tMsg
-    End If
+Dim GetList As String
+With frmPanel.ListView1.ListItems
+    GetList = "!listupdate#"
+    For i = 1 To .Count
+        GetList = GetList & .Item(i) & "#"
+    Next i
+End With
+If GetList <> "!listupdate#" Then
+    SendMessage GetList
+End If
 End Function
 
 Public Sub VisualizeMessage(Command As String, Name As String, Message As String, Optional ForWho As String)
@@ -91,13 +91,13 @@ End With
 End Sub
 
 Public Sub minimize_to_tray()
-    frmMain.Hide
-    nid.cbSize = Len(nid)
-    nid.hwnd = frmMain.hwnd
-    nid.uId = vbNull
-    nid.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
-    nid.uCallBackMessage = WM_MOUSEMOVE
-    nid.hIcon = frmMain.Icon ' the icon will be your Form1 project icon
-    nid.szTip = "Peach -  " & frmConfig.txtNick & vbNullChar
-    Shell_NotifyIcon NIM_ADD, nid
+frmMain.Hide
+nid.cbSize = Len(nid)
+nid.hwnd = frmMain.hwnd
+nid.uId = vbNull
+nid.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
+nid.uCallBackMessage = WM_MOUSEMOVE
+nid.hIcon = frmMain.Icon ' the icon will be your Form1 project icon
+nid.szTip = "Peach -  " & frmConfig.txtNick & vbNullChar
+Shell_NotifyIcon NIM_ADD, nid
 End Sub
