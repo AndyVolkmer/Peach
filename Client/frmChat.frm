@@ -90,7 +90,7 @@ Begin VB.Form frmChat
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
+         Name            =   "Arial"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -111,10 +111,12 @@ Private Const WM_PASTE = &H302
 
 Private Sub cmdSend_Click()
 Dim i As Integer
-Dim ArrI() As String
-Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+Dim Array1() As String
 
-ArrI = Split(txtToSend.Text, " ")
+'Assign variables
+Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+Array1 = Split(txtToSend.Text, " ")
+GetName = StrConv(frmConfig.txtNick, vbProperCase)
 
 'No whitespaces 0-5
 Select Case txtToSend.Text
@@ -125,9 +127,19 @@ End Select
 
 'Check if there is an emote or command used
 On Error GoTo Error1
-Select Case ArrI(0)
-Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh", "/rofl", "/ROFL", "/Rofl", "/beer", "/Beer", "/fart", "/Fart", "/lmao", "/LMAO", "/insult", "/facepalm", "/Facepalm", "/violin"
-    SendMsg "!emote" & "#" & GetName & "#" & ArrI(0) & "#"
+Select Case Array1(0)
+'All avaible emotes
+Case _
+    "/lol", "/LOL", "/Lol", "/Laugh", "/laugh", _
+    "/rofl", "/ROFL", "/Rofl", _
+    "/beer", "/Beer", _
+    "/fart", "/Fart", _
+    "/lmao", "/LMAO", _
+    "/insult", "/Insult", _
+    "/facepalm", "/Facepalm", _
+    "/violin", "/Violin"
+    
+    SendMsg "!emote" & "#" & GetName & "#" & Array1(0) & "#"
     GoTo NextI
 End Select
 
@@ -167,7 +179,6 @@ Case Else
             End If
             
             GetConver = txtToSend.Text
-            GetName = StrConv(frmConfig.txtNick, vbProperCase)
             ForWho = StrConv(frmList.ListView1.ListItems.Item(i), vbProperCase)
             Message = "!w" & "#" & GetName & "|" & ForWho & "#" & GetConver & "#"
             SendMsg Message

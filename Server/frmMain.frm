@@ -525,8 +525,10 @@ Case "!emote"
             SendMessage " " & GetUser & " is laughing his / her ass off."
         Case "/facepalm", "/Facepalm"
             SendMessage " " & GetUser & " covers his face with his palm."
-        Case "/violin"
+        Case "/violin", "/Viloin"
             SendMessage " " & GetUser & " plays the world smallest violin."
+        Case "/insult", "/Insult"
+            SendMessage " " & GetUser & " insults him / her-self as bitch."
         End Select
     End If
 
@@ -539,125 +541,85 @@ Case "!msg"
     
 Continue1:
     'Check if there is any special command
-    Select Case array2(0)
-    Case ".list"
-        If GetLevel(GetUser) <> "0" Then
-            Select Case array2(1)
+    If GetLevel(GetUser) = "0" Then
+        SendMessage " [" & GetUser & "]: " & GetConver
+    Else
+        Select Case array2(0)
+        Case ".list"
+            Select Case GetTarget
             Case "account"
                 SendSingle "!accountlist" & "#" & GetAccountList, frmMain.Winsock1(Index)
             Case "user"
                 SendSingle "!userlist" & "#" & GetUserList, frmMain.Winsock1(Index)
             End Select
-        Else
-            SendMessage " [" & GetUser & "]: " & GetConver
-        End If
-        
-    Case ".userinfo"
-        If GetLevel(GetUser) <> "0" Then
-            SendSingle GetUserInfo(array2(1)), Winsock1(Index)
-        Else
-            SendMessage " [" & GetUser & "]: " & GetConver
-        End If
-        
-    Case ".accountinfo", ".accinfo"
-        If GetLevel(GetUser) <> "0" Then
-            SendSingle GetAccountInfo(array2(1)), Winsock1(Index)
-        Else
-            SendMessage " [" & GetUser & "]: " & GetConver
-        End If
-        
-    Case ".kick"
-        If GetLevel(GetUser) <> "0" Then
-            KickUser (array2(1))
-        Else
-            SendMessage " [" & GetUser & "]: " & GetConver
-        End If
-        
-    Case ".banaccount"
-        If GetLevel(GetUser) <> "0" Then
-            BanAccount array2(1), "Yes"
-        Else
-            SendMessage " [" & GetUser & "]: " & GetConver
-        End If
-        
-    Case ".banuser"
-        If GetLevel(GetUser) <> "0" Then
-            BanUser array2(1), "Yes"
-        Else
-            SendMessage " [" & GetUser & "]: " & GetConver
-        End If
-        
-    Case ".unbanuser"
-        If GetLevel(GetUser) <> "0" Then
-            BanUser array2(1), "No"
-        Else
-            SendMessage " [" & GetUser & "]: " & GetConver
-        End If
-        
-    Case ".unbanaccount"
-        If GetLevel(GetUser) <> "0" Then
-            BanAccount array2(1), "No"
-        Else
-            SendMessage " [" & GetUser & "]: " & GetConver
-        End If
-        
-    Case ".mute"
-        If GetLevel(GetUser) <> "0" Then
-            MuteUser array2(1), "Yes"
+            
+        Case ".userinfo"
+            SendSingle GetUserInfo(GetTarget), Winsock1(Index)
+                        
+        Case ".accountinfo", ".accinfo"
+            SendSingle GetAccountInfo(GetTarget), Winsock1(Index)
+                        
+        Case ".kick"
+            KickUser (GetTarget)
+                        
+        Case ".banaccount"
+            BanAccount GetTarget, "Yes"
+                        
+        Case ".banuser"
+            BanUser GetTarget, "Yes"
+                        
+        Case ".unbanuser"
+            BanUser GetTarget, "No"
+                        
+        Case ".unbanaccount"
+            BanAccount GetTarget, "No"
+                        
+        Case ".mute"
+            MuteUser GetTarget, "Yes"
             If Muted = True Then
-                SendMessage " " & StrConv(array2(1), vbProperCase) & " got muted by " & GetUser & "."
+                SendMessage " " & StrConv(GetTarget, vbProperCase) & " got muted by " & GetUser & "."
             Else
-                SendSingle " User '" & array2(1) & "' does not exist.", frmMain.Winsock1(Index)
+                SendSingle " User '" & GetTarget & "' does not exist.", frmMain.Winsock1(Index)
             End If
-        Else
-            SendMessage " [" & GetUser & "]: " & GetConver
-        End If
-        
-    Case ".unmute"
-        If GetLevel(GetUser) <> "0" Then
-            MuteUser array2(1), "No"
+            
+        Case ".unmute"
+            MuteUser GetTarget, "No"
             If Muted = True Then
-                SendMessage " " & StrConv(array2(1), vbProperCase) & " got unmuted by " & GetUser & "."
+                SendMessage " " & StrConv(GetTarget, vbProperCase) & " got unmuted by " & GetUser & "."
             Else
-                SendSingle " User '" & array2(1) & "' does not exist.", frmMain.Winsock1(Index)
+                SendSingle " User '" & GetTarget & "' does not exist.", frmMain.Winsock1(Index)
             End If
-        Else
-            SendMessage " [" & GetUser & "]: " & GetConver
-        End If
-        
-    Case ".help", ".command", ".commands"
-        If GetLevel(GetUser) <> "0" Then
+            
+        Case ".help", ".command", ".commands"
             SendSingle GetCommands, frmMain.Winsock1(Index)
-        Else
-            SendMessage " [" & GetUser & "]: " & GetConver
-        End If
-        
-    Case Else
-        If Mute = True Then
-            SendSingle " You are muted.", frmMain.Winsock1(Index)
-        Else
-            Select Case GetLevel(GetUser)
-            Case "0"
-                SendMessage " [" & GetUser & "]: " & GetConver
-            Case "1"
-                SendMessage " [GM][" & GetUser & "]: " & GetConver
-            Case "2"
-                SendMessage " [Admin][" & GetUser & "]: " & GetConver
-            End Select
-        End If
-        
-    End Select
-       
+                        
+        Case Else
+            If Mute = True Then
+                SendSingle " You are muted.", frmMain.Winsock1(Index)
+            Else
+                Select Case GetLevel(GetUser)
+                Case "1"
+                    SendMessage " [GM][" & GetUser & "]: " & GetConver
+                Case "2"
+                    SendMessage " [Admin][" & GetUser & "]: " & GetConver
+                End Select
+            End If
+            
+        End Select
+    End If
 Case Else
     SendMessage " Unknown operation."
 
 End Select
+
 'We want to read the message also , different then others tho
 VisualizeMessage Command, GetUser, GetConver
+
 Exit Sub
 TargetErrorHandler:
     Select Case Err.Number
     Case 9
+        'Commands with 2 strings
         Select Case array2(0)
         Case _
             ".userinfo", _
@@ -677,10 +639,25 @@ TargetErrorHandler:
             Else
                 SendMessage " [" & GetUser & "]: " & GetConver
             End If
-        Case ".help"
+        
+        'Commands with just 1 string
+        Case _
+            ".help", _
+            ".command", _
+            ".commands"
+                        
             GoTo Continue1
+            
         Case Else
-            SendMessage " [" & GetUser & "]: " & GetConver
+            Select Case GetLevel(GetUser)
+            Case "0"
+                SendMessage " [" & GetUser & "]: " & GetConver
+            Case "1"
+                SendMessage " [GM][" & GetUser & "]: " & GetConver
+            Case "2"
+                SendMessage " [Admin][" & GetUser & "]: " & GetConver
+            End Select
+            
         End Select
     End Select
 End Sub
