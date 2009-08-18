@@ -190,6 +190,7 @@ Dim i               As Integer 'Global "FOR" variable
 Dim Vali            As Boolean
 Dim Acc             As Boolean
 Dim Muted           As Boolean
+Dim Avaible         As Boolean
 
 Private Sub Command1_Click()
     SetupForms frmConfig
@@ -478,11 +479,10 @@ Case "!login"
             Case .Item(i).SubItems(1)
                 
                 'Ban Check
-                Select Case .Item(i).SubItems(5)
-                Case "Yes"
+                If .Item(i).SubItems(5) = "Yes" Then
                     SendSingle "!login" & "#" & "Banned" & "#", frmMain.Winsock1(Index)
                     Exit Sub
-                End Select
+                End If
                 
                 'Password Check
                 If GetConver = .Item(i).SubItems(2) Then
@@ -540,7 +540,7 @@ Case "!msg"
     GetTarget = array2(1)
     
 Continue1:
-    'Check if there is any special command
+    'Check if there is any command
     If GetLevel(GetUser) = "0" Then
         SendMessage " [" & GetUser & "]: " & GetConver
     Else
@@ -554,56 +554,46 @@ Continue1:
             End Select
             
         Case ".userinfo"
-            SendSingle GetUserInfo(GetTarget), Winsock1(Index)
+            GetUserInfo GetTarget, Index
                         
         Case ".accountinfo", ".accinfo"
-            SendSingle GetAccountInfo(GetTarget), Winsock1(Index)
+            GetAccountInfo GetTarget, Index
                         
         Case ".kick"
-            KickUser (GetTarget)
+            KickUser GetTarget, Index
                         
         Case ".banaccount"
-            BanAccount GetTarget, "Yes"
+            BanAccount GetTarget, GetUser, "Yes", Index
                         
         Case ".banuser"
-            BanUser GetTarget, "Yes"
+            BanUser GetTarget, GetUser, "Yes", Index
                         
         Case ".unbanuser"
-            BanUser GetTarget, "No"
+            BanUser GetTarget, GetUser, "No", Index
                         
         Case ".unbanaccount"
-            BanAccount GetTarget, "No"
+            BanAccount GetTarget, GetUser, "No", Index
                         
         Case ".mute"
-            MuteUser GetTarget, "Yes"
-            If Muted = True Then
-                SendMessage " " & StrConv(GetTarget, vbProperCase) & " got muted by " & GetUser & "."
-            Else
-                SendSingle " User '" & GetTarget & "' does not exist.", frmMain.Winsock1(Index)
-            End If
+            MuteUser GetTarget, GetUser, "Yes", Index
             
         Case ".unmute"
-            MuteUser GetTarget, "No"
-            If Muted = True Then
-                SendMessage " " & StrConv(GetTarget, vbProperCase) & " got unmuted by " & GetUser & "."
-            Else
-                SendSingle " User '" & GetTarget & "' does not exist.", frmMain.Winsock1(Index)
-            End If
+            MuteUser GetTarget, GetUser, "No", Index
             
         Case ".help", ".command", ".commands"
             SendSingle GetCommands, frmMain.Winsock1(Index)
                         
         Case Else
-            If Mute = True Then
-                SendSingle " You are muted.", frmMain.Winsock1(Index)
-            Else
-                Select Case GetLevel(GetUser)
-                Case "1"
+            Select Case GetLevel(GetUser)
+            Case "1"
+                If Mute = True Then
+                    SendSingle " You are muted.", frmMain.Winsock1(Index)
+                Else
                     SendMessage " [GM][" & GetUser & "]: " & GetConver
-                Case "2"
-                    SendMessage " [Admin][" & GetUser & "]: " & GetConver
-                End Select
-            End If
+                End If
+            Case "2"
+                SendMessage " [Admin][" & GetUser & "]: " & GetConver
+            End Select
             
         End Select
     End If
@@ -651,7 +641,11 @@ TargetErrorHandler:
         Case Else
             Select Case GetLevel(GetUser)
             Case "0"
-                SendMessage " [" & GetUser & "]: " & GetConver
+                If Mute = True Then
+                    SendSingle " You are muted.", Winsock1(Index)
+                Else
+                    SendMessage " [" & GetUser & "]: " & GetConver
+                End If
             Case "1"
                 SendMessage " [GM][" & GetUser & "]: " & GetConver
             Case "2"
@@ -662,18 +656,30 @@ TargetErrorHandler:
     End Select
 End Sub
 
-Private Sub MuteUser(User As String, Mute As String)
+Private Sub MuteUser(User As String, AdminName As String, Mute As String, SIndex As Integer)
+User = StrConv(User, vbProperCase)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i) = StrConv(User, vbProperCase) Then
+        If .Item(i) = User Then
             .Item(i).SubItems(4) = Mute
-            Muted = True
+            Avaible = True
             Exit For
         Else
-            Muted = False
+            Avaible = False
         End If
     Next i
 End With
+
+If Avaible = False Then
+    SendSingle " User '" & User & "' was not found.", Winsock1(SIndex)
+Else
+    If Mute = "Yes" Then
+        SendMessage " " & User & " got muted by " & AdminName & "."
+    Else
+        SendMessage " " & User & " got unmuted by " & AdminName & "."
+    End If
+End If
+
 End Sub
 
 Private Function GetAccountList() As String
@@ -692,69 +698,113 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Private Sub BanUser(User As String, Ban As String)
+Private Sub BanUser(User As String, AdminName As String, Ban As String, SIndex As Integer)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(User, vbProperCase) Then
-            BanAccount .Item(i).SubItems(5), Ban
+            BanAccount .Item(i).SubItems(5), AdminName, Ban, SIndex
+            Avaible = True
+            Exit For
+        Else
+            Avaible = False
         End If
-        Exit For
     Next i
 End With
+
+If Avaible = False Then
+    SendSingle " User '" & User & "' not found.", Winsock1(SIndex)
+End If
+
 End Sub
 
-Private Sub BanAccount(User As String, Ban As String)
+Private Sub BanAccount(User As String, AdminName As String, Ban As String, SIndex As Integer)
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = User Then
             frmAccountPanel.ModifyAccount User, .Item(i).SubItems(2), Ban, .Item(i).SubItems(6), .Item(i)
+            Avaible = True
             Exit For
+        Else
+            Avaible = False
         End If
     Next i
 End With
+
+If Avaible = False Then
+    SendSingle " Account '" & User & "' not found.", Winsock1(SIndex)
+Else
+    If Ban = "Yes" Then
+        SendMessage " Account '" & User & "' got banned by " & AdminName & "."
+    Else
+        SendMessage " Account '" & User & "' got unbanned by " & AdminName & "."
+    End If
+End If
+    
 End Sub
 
-Private Sub KickUser(User As String)
+Private Sub KickUser(User As String, SIndex As Integer)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(User, vbProperCase) Then
             frmMain.Winsock1(.Item(i).SubItems(2)).Close
             Unload frmMain.Winsock1(.Item(i).SubItems(2))
             .Remove (i)
+            Avaible = True
+            Exit For
+        Else
+            Avaible = False
         End If
-        Exit For
     Next i
 End With
 
-'Update clients user online list
-UpdateUsersList
+'If the user was found and kicked then update the users list else advice the Admin that user was not found
+If Avaible = True Then
+    UpdateUsersList
+Else
+    SendSingle " User '" & User & "' not found.", Winsock1(SIndex)
+End If
 
-'Update Statusbar
 frmMain.StatusBar1.Panels(1).Text = "Status: Connected with " & frmMain.Winsock1.Count - 1 & " Client(s)."
         
 End Sub
 
-Private Function GetAccountInfo(Account As String) As String
-For i = 1 To frmAccountPanel.ListView1.ListItems.Count
-    With frmAccountPanel.ListView1.ListItems
+Private Sub GetAccountInfo(Account As String, SIndex As Integer)
+With frmAccountPanel.ListView1.ListItems
+    For i = 1 To .Count
         If .Item(i).SubItems(1) = Account Then
-            GetAccountInfo = vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " Name: " & .Item(i).SubItems(1) & vbCrLf & " Password: " & .Item(i).SubItems(2) & vbCrLf & " Registration Time: " & .Item(i).SubItems(3) & vbCrLf & " Registration Date: " & .Item(i).SubItems(4) & vbCrLf & " Banned: " & .Item(i).SubItems(5) & vbCrLf & " Level: " & .Item(i).SubItems(6)
+            SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " Name: " & .Item(i).SubItems(1) & vbCrLf & " Password: " & .Item(i).SubItems(2) & vbCrLf & " Registration Time: " & .Item(i).SubItems(3) & vbCrLf & " Registration Date: " & .Item(i).SubItems(4) & vbCrLf & " Banned: " & .Item(i).SubItems(5) & vbCrLf & " Level: " & .Item(i).SubItems(6), Winsock1(SIndex)
+            Avaible = True
             Exit For
+        Else
+            Avaible = False
         End If
-    End With
-Next i
-End Function
+    Next i
+End With
 
-Private Function GetUserInfo(User As String) As String
-For i = 1 To frmPanel.ListView1.ListItems.Count
-    With frmPanel.ListView1.ListItems
+If Avaible = False Then
+    SendSingle " Account '" & User & "' not found.", Winsock1(SIndex)
+End If
+    
+End Sub
+
+Private Sub GetUserInfo(User As String, SIndex As Integer)
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
         If .Item(i) = StrConv(User, vbProperCase) Then
-            GetUserInfo = vbCrLf & " User information about '" & StrConv(User, vbProperCase) & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Login Time: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5)
+            SendSingle vbCrLf & " User information about '" & StrConv(User, vbProperCase) & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Login Time: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5), Winsock1(SIndex)
+            Avaible = True
             Exit For
+        Else
+            Avaible = False
         End If
-    End With
-Next i
-End Function
+    Next i
+End With
+
+If Avaible = False Then
+    SendSingle " User '" & User & " was not found.", Winsock1(SIndex)
+End If
+    
+End Sub
 
 Private Function GetCommands() As String
 GetCommands = vbCrLf & _
