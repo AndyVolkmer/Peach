@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmLanguage 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
-   Caption         =   " Peach (Client)"
+   Caption         =   " Peach"
    ClientHeight    =   1365
    ClientLeft      =   45
    ClientTop       =   405
@@ -60,8 +60,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
-Dim N       As String
-Dim M       As String
+Dim N As String
+Dim M As String
 
 Private Sub cmdEnter_Click()
 Select Case Combo1.ListIndex
@@ -90,6 +90,7 @@ Case 7
     SetLangFrench
     M = "7"
 End Select
+
 frmLanguage.Hide
 frmMain.LoadMDIForm
 frmList.LoadListForm
@@ -97,6 +98,7 @@ frmSendFile.LoadSendFileForm
 frmChat.LoadChatForm
 frmConfig.LoadConfigForm
 frmMain.Show
+
 WriteIniValue App.Path & "\Config.ini", "Language", "Validate", "0"
 WriteIniValue App.Path & "\Config.ini", "Language", "Language", frmLanguage.Combo1.ListIndex
 End Sub

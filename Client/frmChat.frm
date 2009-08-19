@@ -126,7 +126,6 @@ Case "", " ", "  ", "   ", "    ", "     ", "      "
 End Select
 
 'Check if there is an emote or command used
-On Error GoTo Error1
 Select Case Array1(0)
 'All avaible emotes
 Case _
@@ -140,7 +139,7 @@ Case _
     "/violin", "/Violin"
     
     SendMsg "!emote" & "#" & GetName & "#" & Array1(0) & "#"
-    GoTo NextI
+    GoTo Next1
 End Select
 
 Select Case txtToSend.Text
@@ -168,25 +167,26 @@ Case Trim("/online"), Trim("/Online"), Trim("/ONLINE")
 'Send Message
 Case Else
     'If any checkbox is checked then send it private to that client
-    For i = 1 To frmList.ListView1.ListItems.Count
-        If frmList.ListView1.ListItems.Item(i).Checked = True Then
-            'If the the selected name is yours then no
-            If frmList.ListView1.ListItems.Item(i).Text = StrConv(frmConfig.txtNick, vbProperCase) Then
-                MsgBox "You cant whisper yourself.", vbInformation
-                txtToSend.Text = ""
-                txtToSend.SetFocus
-                Exit Sub
-            End If
-            
-            GetConver = txtToSend.Text
-            ForWho = StrConv(frmList.ListView1.ListItems.Item(i), vbProperCase)
-            Message = "!w" & "#" & GetName & "|" & ForWho & "#" & GetConver & "#"
-            SendMsg Message
-            VisualizeMessage True, ForWho, GetConver
-
-        End If
-    Next i
+    With frmList.ListView1.ListItems
+        For i = 1 To .Count
+            If .Item(i).Checked = True Then
+                'If the the selected name is yours then no
+                If .Item(i).Text = StrConv(frmConfig.txtNick, vbProperCase) Then
+                    MsgBox "You cant whisper yourself.", vbInformation
+                    txtToSend.Text = ""
+                    txtToSend.SetFocus
+                    Exit Sub
+                End If
+                
+                GetConver = txtToSend.Text
+                ForWho = StrConv(.Item(i), vbProperCase)
+                Message = "!w" & "#" & GetName & "|" & ForWho & "#" & GetConver & "#"
+                SendMsg Message
+                VisualizeMessage True, ForWho, GetConver
     
+            End If
+        Next i
+    End With
     'Send public message
     GetConver = txtToSend.Text
     GetName = frmConfig.txtNick.Text
@@ -195,14 +195,11 @@ Case Else
     
 End Select
 
-NextI:
+Next1:
     LastMsg = txtToSend.Text
     txtToSend.Text = ""
     txtToSend.SetFocus
 
-Exit Sub
-Error1:
-MsgBox Err.Number & vbCrLf & Err.Description
 End Sub
 
 Public Sub Form_Load()
@@ -223,7 +220,7 @@ End Sub
 
 Private Sub txtConver_Change()
 Dim hWnd1 As Long
-'txtConver.Locked = False
+txtConver.Locked = False
 hWnd1 = GetActiveWindow
 With frmMain
     If hWnd1 = .hwnd Then
@@ -232,9 +229,9 @@ With frmMain
     End If
     .Hyperlink1.URLFormat txtConver
 End With
-'Create_Smileys txtConver
+Create_Smileys txtConver
 txtConver.SelStart = Len(txtConver.Text)
-'txtConver.Locked = True
+txtConver.Locked = True
 End Sub
 
 Private Sub txtConver_Click()
@@ -266,15 +263,33 @@ Start = 1
 
 IconPath = App.Path & "\smileys\"
 
-Smilestring = ":) :-) :( :-( ;) ;-) " & _
-  ":o :D :p :cool: :rolleyes: :mad:"
+Smilestring = _
+    ":) " & _
+    ":-) " & _
+    ":( " & _
+    ":-( " & _
+    ";) " & _
+    ";-) " & _
+    ":O " & _
+    ":D " & _
+    ":P " & _
+    ":cool: " & _
+    ":rolleyes: " & _
+    ">:("
 
-SmileFileString = "smiley1.gif,smiley1.gif," & _
-  "smiley2.gif,smiley2.gif," & _
-  "smiley3.gif,smiley3.gif," & _
-  "smiley4.gif,smiley5.gif," & _
-  "smiley6.gif,smiley7.gif," & _
-  "smiley8.gif,smiley9.gif"
+SmileFileString = _
+    "smiley1.gif," & _
+    "smiley1.gif," & _
+    "smiley2.gif," & _
+    "smiley2.gif," & _
+    "smiley3.gif," & _
+    "smiley3.gif," & _
+    "smiley4.gif," & _
+    "smiley5.gif," & _
+    "smiley6.gif," & _
+    "smiley7.gif," & _
+    "smiley8.gif," & _
+    "smiley9.gif"
 
 Smileys = Split(Smilestring, " ")
 SmileysFile = Split(SmileFileString, ",")

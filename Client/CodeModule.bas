@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.7.6"
+Public Const Rev = "1.0.7.7"
 Public Const aPort = 6123
 Public Const bPort = 6124
 Public Const RegPort = 6222
@@ -83,11 +83,16 @@ frmMain.Winsock1.SendData iMessage
 End Sub
 
 Public Sub VisualizeMessage(Whisper As Boolean, Name As String, Conver As String)
-If Whisper = True Then
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] [You whisper to " & Name & "]: " & Conver
-Else
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] [" & Name & "]: " & Conver
-End If
+With frmChat.txtConver
+    .SelStart = Len(.Text)
+    
+    If Whisper = True Then
+        .SelRTF = vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] [You whisper to " & Name & "]: " & Conver
+    Else
+        .SelRTF = vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] [" & Name & "]: " & Conver
+    End If
+    
+End With
 End Sub
 
 Public Sub FlashTitle(Handle As Long, ReturnOrig As Boolean)

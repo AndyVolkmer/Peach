@@ -344,7 +344,7 @@ Select Case Comm
 Case "!filerequest"
     If MsgBox(SFmsgbox_incfile, vbYesNo + vbQuestion) = vbYes Then
         FSocket2(Index).SendData "!acceptfile" & "#"
-        frmSendFile2.Show
+        frmSendFile2.Show 1
     Else
         FSocket2(Index).SendData "!denyfile" & "#"
     End If
@@ -356,8 +356,6 @@ Call InitCommonControls
 End Sub
 
 Private Sub MDIForm_Load()
-On Error GoTo HandleErrorFile
-
 LoadMDIForm
 DisableFormResize Me
 
@@ -375,7 +373,7 @@ If ReadIniValue(App.Path & "\Config.ini", "Position", "Top") = "" Then
 Else
     Me.Top = ReadIniValue(App.Path & "\Config.ini", "Position", "Top")
 End If
-    
+
 'Load 'Left' position from ini, if there is non take default value ( 1200 )
 If ReadIniValue(App.Path & "\Config.ini", "Position", "Left") = "" Then
     Me.Left = 1200
@@ -384,14 +382,6 @@ Else
 End If
 
 SetupForms frmConfig
-
-Exit Sub
-HandleErrorFile:
-Select Case Err.Number
-Case Else
-    MsgBox "Error: " & Err.Number & vbCrLf & "Description: " & Err.Description, vbInformation
-    Exit Sub
-End Select
 End Sub
 
 
@@ -422,12 +412,12 @@ End If
 End Sub
 
 Private Sub MDIForm_Unload(Cancel As Integer)
-    Unload frmList
-    Unload frmLanguage
-    Unload frmBlank
-    Unload frmDESP
-    Unload frmAbout
-    Unload frmSendFile2
+Unload frmLanguage
+Unload frmList
+Unload frmDESP
+Unload frmBlank
+Unload frmRegistration
+Unload frmSendFile2
 Shell_NotifyIcon NIM_DELETE, nid ' del tray icon
 End Sub
 
@@ -465,7 +455,11 @@ Disconnect
 LastMsg = ""
 
 StatusBar1.Panels(1).Text = MDIstatusbar_dcfromserver
-frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: You got disconnected from Server."
+With frmChat.txtConver
+    .SelStart = Len(.Text)
+    .SelRTF = vbCrLf & Prefix & " [System]: You got disconnected from Server."
+End With
+    
 frmDESP.DisplayMessage DESPtext_dcserver
 
 SetupForms frmConfig
@@ -536,7 +530,6 @@ GetCommand = StrArr(0)
 
 Select Case GetCommand
 
-'We can't login ( choose other name )
 Case "!accountlist"
     StrArr2 = Split(StrArr(1), " ")
     With frmChat
@@ -555,6 +548,7 @@ Case "!userlist"
         Next i
     End With
     
+'We can't login
 Case "!decilined"
     ConnectIsFalse
     
@@ -622,7 +616,10 @@ Case "!iprequest"
     End With
 
 Case Else
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & GetMessage
+    With frmChat.txtConver
+        .SelStart = Len(.Text)
+        .SelRTF = vbCrLf & Prefix & GetMessage
+    End With
     If frmMain.WindowState = 1 Then frmDESP.DisplayMessage DESPtext_newmsg
     
 End Select

@@ -409,6 +409,7 @@ Select Case Command
 
 'Announce connected player and send to user online list
 Case "!connected"
+    'If the account is already beeing used kick first instance
     With frmPanel.ListView1.ListItems
         For i = 1 To .Count
             If .Item(i).SubItems(5) = GetConver Then
@@ -782,7 +783,7 @@ With frmAccountPanel.ListView1.ListItems
 End With
 
 If Avaible = False Then
-    SendSingle " Account '" & User & "' not found.", Winsock1(SIndex)
+    SendSingle " Account '" & Account & "' not found.", Winsock1(SIndex)
 End If
     
 End Sub
