@@ -399,16 +399,17 @@ Next i
 'Validate: If message is to long then kick
 If Len(GetConver) > 200 Then
     frmPanel.ListView1.ListItems.Remove (Index) ' Remove from list
-    Winsock1(Index).Close ' Close connection
-    Unload Winsock1(Index) ' Remove socket
+    Winsock1(Index).Close 'Close connection
+    Unload Winsock1(Index) 'Remove socket
     StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
     UpdateUsersList
 End If
 
 Select Case Command
 
-'Announce connected player and send to user online list
+'Add 'Name' & 'Account' to frmPanel Listview
 Case "!connected"
+
     'If the account is already beeing used kick first instance
     With frmPanel.ListView1.ListItems
         For i = 1 To .Count
@@ -473,6 +474,7 @@ Case "!w"
             End If
         Next i
     End If
+    
 Case "!login"
     With frmAccountPanel.ListView1.ListItems
         For i = 1 To .Count
@@ -534,17 +536,24 @@ Case "!emote"
     End If
 
 Case "!msg"
+    Dim IsCommand As Boolean
+    
     'Split it
     array2 = Split(GetConver, " ")
+    
+    If Left(GetConver, 1) = "." Then
+        If GetLevel(GetUser) <> "0" Then
+            IsCommand = True
+        End If
+    End If
     
     On Error GoTo TargetErrorHandler
     GetTarget = array2(1)
     
 Continue1:
-    'Check if there is any command
-    If GetLevel(GetUser) = "0" Then
-        SendMessage " [" & GetUser & "]: " & GetConver
-    Else
+    
+    'If an command is used check out which
+    If IsCommand = True Then
         Select Case array2(0)
         Case ".list"
             Select Case GetTarget
@@ -552,6 +561,8 @@ Continue1:
                 SendSingle "!accountlist" & "#" & GetAccountList, frmMain.Winsock1(Index)
             Case "user"
                 SendSingle "!userlist" & "#" & GetUserList, frmMain.Winsock1(Index)
+            Case Else
+                SendSingle " You can just use .list account or user.", frmMain.Winsock1(Index)
             End Select
             
         Case ".userinfo"
@@ -583,77 +594,69 @@ Continue1:
             
         Case ".help", ".command", ".commands"
             SendSingle GetCommands, frmMain.Winsock1(Index)
-                        
-        Case Else
-            Select Case GetLevel(GetUser)
-            Case "1"
-                If Mute = True Then
-                    SendSingle " You are muted.", frmMain.Winsock1(Index)
-                Else
-                    SendMessage " [GM][" & GetUser & "]: " & GetConver
-                End If
-            Case "2"
-                SendMessage " [Admin][" & GetUser & "]: " & GetConver
-            End Select
             
+        Case Else
+            SendSingle " Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
+                        
+        End Select
+    Else
+    
+Continue2:
+    If Mute = True Then
+            SendSingle " You are muted.", frmMain.Winsock1(Index)
+            Exit Sub
+        End If
+        
+        Select Case GetLevel(GetUser)
+        Case "0"
+            SendMessage " [" & GetUser & "]: " & GetConver
+        Case "1"
+            SendMessage " [GM][" & GetUser & "]: " & GetConver
+        Case "2"
+            SendMessage " [Admin][" & GetUser & "]: " & GetConver
         End Select
     End If
+
 Case Else
     SendMessage " Unknown operation."
 
 End Select
 
-'We want to read the message also , different then others tho
-VisualizeMessage Command, GetUser, GetConver
-
 Exit Sub
+
 TargetErrorHandler:
     Select Case Err.Number
     Case 9
-        'Commands with 2 strings
-        Select Case array2(0)
-        Case _
-            ".userinfo", _
-            ".accountinfo", _
-            ".accinfo", _
-            ".kick", _
-            ".banaccount", _
-            ".unbanaccount", _
-            ".list", _
-            ".banuser", _
-            ".unbanuser", _
-            ".mute", _
-            ".unmute"
-            
-            If GetLevel(GetUser) <> "0" Then
+        If IsCommand = True Then
+            Select Case array2(0)
+            Case _
+                ".userinfo", _
+                ".accountinfo", _
+                ".accinfo", _
+                ".kick", _
+                ".banaccount", _
+                ".unbanaccount", _
+                ".list", _
+                ".banuser", _
+                ".unbanuser", _
+                ".mute", _
+                ".unmute"
+                
                 SendSingle " Incorrect Syntax. Use .help for more information about commands.", frmMain.Winsock1(Index)
-            Else
-                SendMessage " [" & GetUser & "]: " & GetConver
-            End If
         
-        'Commands with just 1 string
-        Case _
-            ".help", _
-            ".command", _
-            ".commands"
-                        
-            GoTo Continue1
-            
-        Case Else
-            Select Case GetLevel(GetUser)
-            Case "0"
-                If Mute = True Then
-                    SendSingle " You are muted.", Winsock1(Index)
-                Else
-                    SendMessage " [" & GetUser & "]: " & GetConver
-                End If
-            Case "1"
-                SendMessage " [GM][" & GetUser & "]: " & GetConver
-            Case "2"
-                SendMessage " [Admin][" & GetUser & "]: " & GetConver
+            Case _
+                ".help", _
+                ".command", _
+                ".commands"
+                            
+                GoTo Continue1
+            Case Else
+                SendSingle " Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
+                
             End Select
-            
-        End Select
+        Else
+            GoTo Continue2
+        End If
     End Select
 End Sub
 

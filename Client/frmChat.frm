@@ -116,7 +116,7 @@ Dim Array1() As String
 'Assign variables
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Array1 = Split(txtToSend.Text, " ")
-GetName = StrConv(frmConfig.txtNick, vbProperCase)
+GetName = frmConfig.txtNick
 
 'No whitespaces 0-5
 Select Case txtToSend.Text
@@ -173,7 +173,6 @@ Case Else
                 'If the the selected name is yours then no
                 If .Item(i).Text = StrConv(frmConfig.txtNick, vbProperCase) Then
                     MsgBox "You cant whisper yourself.", vbInformation
-                    txtToSend.Text = ""
                     txtToSend.SetFocus
                     Exit Sub
                 End If
@@ -187,6 +186,7 @@ Case Else
             End If
         Next i
     End With
+    
     'Send public message
     GetConver = txtToSend.Text
     GetName = frmConfig.txtNick.Text
@@ -336,7 +336,7 @@ DoEvents
 Sleep 30
 
 Clipboard.Clear
-
+On Error Resume Next
 If Text <> "" Then
   Clipboard.SetText Text
 Else

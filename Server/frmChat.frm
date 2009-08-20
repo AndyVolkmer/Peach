@@ -22,22 +22,6 @@ Begin VB.Form frmChat
    ScaleHeight     =   4155
    ScaleWidth      =   7515
    ShowInTaskbar   =   0   'False
-   Begin VB.CommandButton Command1 
-      Caption         =   "&Change Name"
-      Height          =   295
-      Left            =   2040
-      TabIndex        =   5
-      Top             =   3690
-      Width           =   1455
-   End
-   Begin VB.TextBox Text1 
-      Alignment       =   2  'Center
-      Height          =   285
-      Left            =   240
-      TabIndex        =   4
-      Top             =   3720
-      Width           =   1695
-   End
    Begin VB.CommandButton txtClear 
       Caption         =   "&Clear"
       Height          =   375
@@ -63,7 +47,6 @@ Begin VB.Form frmChat
       _ExtentX        =   9763
       _ExtentY        =   1508
       _Version        =   393217
-      Enabled         =   -1  'True
       MultiLine       =   0   'False
       TextRTF         =   $"frmChat.frx":0000
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -85,7 +68,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -108,24 +90,14 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdSend_Click()
-SendMessage " [Admin] " & "[" & frmConfig.txtNick & "]: " & txtToSend.Text
-txtConver.Text = txtConver.Text & vbCrLf & " [Admin] " & "[" & frmConfig.txtNick & "]: " & txtToSend.Text
+SendMessage " Server Notice: " & txtToSend.Text
+txtConver.Text = txtConver.Text & vbCrLf & " Server Notice: " & txtToSend.Text
 txtToSend.Text = ""
-End Sub
-
-Private Sub Command1_Click()
-If Text1.Text = "" Then Exit Sub
-frmConfig.txtNick = Text1.Text
-Text1.Text = ""
 End Sub
 
 Private Sub Form_Load()
 Me.Top = 0
 Me.Left = 0
-End Sub
-
-Private Sub Text1_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then Command1_Click
 End Sub
 
 Private Sub txtClear_Click()
