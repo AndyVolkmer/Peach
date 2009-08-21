@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.7.8"
+Public Const Rev = "1.0.7.9"
 Public Const RegPort = 6222
 
 Public GetUser      As String
@@ -71,21 +71,36 @@ If GetList <> "!listupdate#" Then
 End If
 End Function
 
-Public Sub VisualizeMessage(Command As String, Name As String, Message As String, Optional ForWho As String)
-With frmChat
+Public Sub SMSG(Command As String, Name As String, Message As String, Optional ForWho As String)
+Dim TimePrefix As String
+TimePrefix = "[" & Format(Time, "hh:nn:ss") & "] "
+With frmChat.txtConver
+    .SelStart = Len(.Text)
     Select Case Command
     Case "!msg"
-        .txtConver.Text = .txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & " [" & Command & "] [" & Name & "]: " & Message
+        .SelRTF = vbCrLf & TimePrefix & "[" & Name & "]: " & Message
     Case "!w"
-        .txtConver.Text = .txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & " [" & Command & "] [" & Name & " - " & ForWho & "]: " & Message
+        .SelRTF = vbCrLf & TimePrefix & "[" & Name & " - " & ForWho & "]: " & Message
     Case "!namerequest"
-        .txtConver.Text = .txtConver.Text & vbCrLf & " '" & Name & "' is requesting Name."
+        .SelRTF = vbCrLf & TimePrefix & "'" & Name & "' is requesting Name."
     Case "!connected"
-        .txtConver.Text = .txtConver.Text & vbCrLf & " '" & Name & "' connected succesfully."
+        .SelRTF = vbCrLf & TimePrefix & "'" & Name & "' connected succesfully."
     Case "!login"
-        .txtConver.Text = .txtConver.Text & vbCrLf & " Account '" & Name & "' - '" & Message & "' is logging in."
+        .SelRTF = vbCrLf & TimePrefix & "Account: '" & Name & "' Password: '" & Message & "' is logging in."
+    Case "!nameisfree"
+        .SelRTF = vbCrLf & TimePrefix & "Send answer that '" & Name & "' is free to take."
+    Case "!nametaken"
+        .SelRTF = vbCrLf & TimePrefix & "Access denied for '" & Name & "'. (Name already taken)."
+    Case "!account"
+        .SelRTF = vbCrLf & TimePrefix & "Account '" & Name & "' tryed to login but failed. (Account doesnt exist)."
+    Case "!password"
+        .SelRTF = vbCrLf & TimePrefix & "Account '" & Name & "' tryed to login but failed. (Wrong Password)."
+    Case "!badname"
+        .SelRTF = vbCrLf & TimePrefix & "Access denied for '" & Name & "'. (Badname)."
+    Case "!muted"
+        .SelRTF = vbCrLf & TimePrefix & "<Muted>[" & Name & "]: " & Message
     Case Else
-        .txtConver.Text = .txtConver.Text & vbCrLf & "[" & Command & "] [" & Name & "] [" & ForWho & "] [" & Message & "]"
+        .SelRTF = vbCrLf & TimePrefix & "[" & Command & "] [" & Name & "] [" & ForWho & "] [" & Message & "]"
     End Select
 End With
 End Sub

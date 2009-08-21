@@ -1,7 +1,6 @@
 VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmRegistration 
-   BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Peach - Registration"
    ClientHeight    =   3165
@@ -24,7 +23,6 @@ Begin VB.Form frmRegistration
    ScaleWidth      =   3885
    StartUpPosition =   1  'CenterOwner
    Begin VB.CheckBox Check1 
-      BackColor       =   &H00F4F4F4&
       Caption         =   "&Show Password"
       Height          =   255
       Left            =   120
@@ -51,7 +49,6 @@ Begin VB.Form frmRegistration
       Width           =   1695
    End
    Begin VB.Frame Frame1 
-      BackColor       =   &H00F4F4F4&
       Caption         =   "Enter your details"
       Height          =   2415
       Left            =   120
@@ -61,7 +58,6 @@ Begin VB.Form frmRegistration
       Width           =   3615
       Begin VB.PictureBox Picture1 
          Appearance      =   0  'Flat
-         BackColor       =   &H00F4F4F4&
          BorderStyle     =   0  'None
          ForeColor       =   &H80000008&
          Height          =   855
@@ -72,7 +68,6 @@ Begin VB.Form frmRegistration
          Top             =   1200
          Width           =   1215
          Begin VB.Label Label5 
-            BackColor       =   &H00F4F4F4&
             Height          =   615
             Left            =   120
             TabIndex        =   10
@@ -109,7 +104,6 @@ Begin VB.Form frmRegistration
          Width           =   3255
       End
       Begin VB.Label Label3 
-         BackColor       =   &H00F4F4F4&
          Caption         =   " Confirm the Password:"
          Height          =   255
          Left            =   120
@@ -118,7 +112,6 @@ Begin VB.Form frmRegistration
          Width           =   1935
       End
       Begin VB.Label Label2 
-         BackColor       =   &H00F4F4F4&
          Caption         =   " Password: "
          Height          =   255
          Left            =   120
@@ -127,7 +120,6 @@ Begin VB.Form frmRegistration
          Width           =   1335
       End
       Begin VB.Label Label1 
-         BackColor       =   &H00F4F4F4&
          Caption         =   " Account Name: "
          Height          =   255
          Left            =   120
@@ -137,7 +129,6 @@ Begin VB.Form frmRegistration
       End
    End
    Begin VB.Label Label4 
-      BackColor       =   &H00F4F4F4&
       Height          =   255
       Left            =   240
       TabIndex        =   8

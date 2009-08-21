@@ -510,7 +510,6 @@ End With
 MsgBox MDImsgbox_nametaken, vbInformation
 End Sub
 
-
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Dim GetCommand  As String

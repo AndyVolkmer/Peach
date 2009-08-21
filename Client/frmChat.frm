@@ -86,6 +86,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -146,7 +147,7 @@ Select Case txtToSend.Text
         
 'Check if its the same Message as before
 Case LastMsg
-    VisualizeMessage False, "System", CHATflood_protection
+    Call SMSG(False, "System", CHATflood_protection)
     txtToSend.Text = ""
     Exit Sub
     
@@ -181,7 +182,7 @@ Case Else
                 ForWho = StrConv(.Item(i), vbProperCase)
                 Message = "!w" & "#" & GetName & "|" & ForWho & "#" & GetConver & "#"
                 SendMsg Message
-                VisualizeMessage True, ForWho, GetConver
+                Call SMSG(True, ForWho, GetConver)
     
             End If
         Next i

@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.7.8"
+Public Const Rev = "1.0.7.9"
 Public Const aPort = 6123
 Public Const bPort = 6124
 Public Const RegPort = 6222
@@ -82,7 +82,7 @@ If frmMain.Winsock1.State <> 7 Then Exit Sub
 frmMain.Winsock1.SendData iMessage
 End Sub
 
-Public Sub VisualizeMessage(Whisper As Boolean, Name As String, Conver As String)
+Public Sub SMSG(Whisper As Boolean, Name As String, Conver As String)
 With frmChat.txtConver
     .SelStart = Len(.Text)
     
