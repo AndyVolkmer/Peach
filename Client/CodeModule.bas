@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.7.9"
+Public Const Rev = "1.0.8.0"
 Public Const aPort = 6123
 Public Const bPort = 6124
 Public Const RegPort = 6222
@@ -164,6 +164,7 @@ With frmChat
     .cmdSend.Enabled = False
     .cmdClear.Enabled = False
     .txtToSend.Enabled = False
+    .txtConver.Enabled = False
 End With
 
 'Clear the online user list

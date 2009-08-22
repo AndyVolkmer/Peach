@@ -151,7 +151,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Dim x As Integer
+Dim x As Long
 
 Private Sub Command1_Click()
 connCounter.Enabled = True
@@ -190,8 +190,9 @@ Case 10048
     txtPort.SetFocus
     txtPort.SelStart = Len(txtPort.Text)
     connCounter.Enabled = False
+    Label2.Caption = "Offline"
 Case Else
-    MsgBox Err.Number & " :  An error occured application has to close." & "Report the number above to developer."
+    MsgBox "Error: " & Err.Number & vbCrLf & Err.Description & vbCrLf & "Report the number above to developer.", vbInformation
     Unload Me
 End Select
 End Sub

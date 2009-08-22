@@ -19,17 +19,29 @@ Begin VB.Form frmChat
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MDIChild        =   -1  'True
    ScaleHeight     =   3810
    ScaleWidth      =   7485
    ShowInTaskbar   =   0   'False
+   Begin RichTextLib.RichTextBox txtToSend 
+      Height          =   855
+      Left            =   120
+      TabIndex        =   4
+      Top             =   2760
+      Width           =   5535
+      _ExtentX        =   9763
+      _ExtentY        =   1508
+      _Version        =   393217
+      Enabled         =   0   'False
+      MultiLine       =   0   'False
+      TextRTF         =   $"frmChat.frx":0000
+   End
    Begin VB.PictureBox Picture1 
       Height          =   375
       Left            =   6840
       ScaleHeight     =   315
       ScaleWidth      =   315
-      TabIndex        =   4
+      TabIndex        =   3
       Top             =   2160
       Visible         =   0   'False
       Width           =   375
@@ -40,7 +52,7 @@ Begin VB.Form frmChat
       Enabled         =   0   'False
       Height          =   375
       Left            =   5760
-      TabIndex        =   2
+      TabIndex        =   1
       Top             =   3240
       Width           =   1575
    End
@@ -50,45 +62,23 @@ Begin VB.Form frmChat
       Enabled         =   0   'False
       Height          =   375
       Left            =   5760
-      TabIndex        =   1
-      Top             =   2760
-      Width           =   1575
-   End
-   Begin RichTextLib.RichTextBox txtToSend 
-      Height          =   855
-      Left            =   120
       TabIndex        =   0
       Top             =   2760
-      Width           =   5535
-      _ExtentX        =   9763
-      _ExtentY        =   1508
-      _Version        =   393217
-      Enabled         =   0   'False
-      MultiLine       =   0   'False
-      MaxLength       =   180
-      TextRTF         =   $"frmChat.frx":0000
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      Width           =   1575
    End
    Begin RichTextLib.RichTextBox txtConver 
       Height          =   2535
       Left            =   120
-      TabIndex        =   3
+      TabIndex        =   2
       Top             =   120
       Width           =   7215
       _ExtentX        =   12726
       _ExtentY        =   4471
       _Version        =   393217
-      Enabled         =   -1  'True
+      BorderStyle     =   0
+      Enabled         =   0   'False
       ReadOnly        =   -1  'True
-      ScrollBars      =   2
+      ScrollBars      =   3
       TextRTF         =   $"frmChat.frx":007B
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Arial"
@@ -272,8 +262,10 @@ Smilestring = _
     ";) " & _
     ";-) " & _
     ":O " & _
+    ":o " & _
     ":D " & _
     ":P " & _
+    ":p " & _
     ":cool: " & _
     ":rolleyes: " & _
     ">:("
@@ -286,7 +278,9 @@ SmileFileString = _
     "smiley3.gif," & _
     "smiley3.gif," & _
     "smiley4.gif," & _
+    "smiley4.gif," & _
     "smiley5.gif," & _
+    "smiley6.gif," & _
     "smiley6.gif," & _
     "smiley7.gif," & _
     "smiley8.gif," & _

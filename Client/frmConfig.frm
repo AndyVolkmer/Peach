@@ -220,6 +220,9 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
+If Command1.Enabled = False Then
+    Exit Sub
+End If
 
 'Nick can't be empty
 If CheckTx(txtNick, CONFIGmsgbox_namenoempty) = True Then Exit Sub

@@ -65,7 +65,7 @@ Begin VB.Form frmAccountPanel
          Style           =   2  'Dropdown List
          TabIndex        =   13
          Top             =   480
-         Width           =   1335
+         Width           =   975
       End
       Begin VB.ComboBox cmbBanned 
          Enabled         =   0   'False
@@ -391,6 +391,17 @@ With ListView1.ListItems
     .Item(ii).SubItems(5) = dBanned
     .Item(ii).SubItems(6) = "0"
 End With
+End Sub
+
+Private Sub Form_Activate()
+If ListView1.ListItems.Count <> 0 Then
+    With ListView1.SelectedItem
+        txtName.Text = .SubItems(1)
+        txtPassword.Text = .SubItems(2)
+        cmbBanned.Text = .SubItems(5)
+        cmbLevel.Text = .SubItems(6)
+    End With
+End If
 End Sub
 
 Private Sub Form_Load()

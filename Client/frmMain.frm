@@ -482,6 +482,7 @@ With frmChat
     .cmdSend.Enabled = True
     .cmdClear.Enabled = True
     .txtToSend.Enabled = True
+    .txtConver.Enabled = True
 End With
 
 frmConfig.Hide

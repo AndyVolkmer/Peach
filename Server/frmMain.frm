@@ -186,7 +186,8 @@ Public xCommand        As ADODB.Command
 Public xRecordSet      As ADODB.Recordset
 
 Public intCounter   As Integer
-Dim i               As Integer 'Global "FOR" variable
+Dim MAX_CONNECTION  As Byte     'Max 255 connections allowed
+Dim i               As Integer  'Global "FOR" variable
 Dim Vali            As Boolean
 Dim Acc             As Boolean
 Dim Muted           As Boolean
@@ -325,21 +326,22 @@ For i = 1 To frmPanel.ListView1.ListItems.Count + 1
         Exit For
     End If
 Next i
-StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
+
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
 Dim RR As Integer
 RR = frmPanel.ListView1.ListItems.Count + 1
-intCounter = loadSocket
-Winsock1(intCounter).LocalPort = frmConfig.txtPort.Text
-Winsock1(intCounter).Accept requestID
+MAX_CONNECTION = loadSocket
+
+Winsock1(MAX_CONNECTION).LocalPort = frmConfig.txtPort.Text
+Winsock1(MAX_CONNECTION).Accept requestID
 
 'New user should be listed in the panel
 With frmPanel.ListView1
     .ListItems.Add RR, , "Unknown"
-    .ListItems.Item(RR).SubItems(1) = Winsock1(intCounter).RemoteHostIP
-    .ListItems.Item(RR).SubItems(2) = intCounter
+    .ListItems.Item(RR).SubItems(1) = Winsock1(MAX_CONNECTION).RemoteHostIP
+    .ListItems.Item(RR).SubItems(2) = MAX_CONNECTION
     .ListItems.Item(RR).SubItems(3) = Format(Time, "hh:nn:ss")
     .ListItems.Item(RR).SubItems(4) = "No"
 End With
@@ -348,15 +350,17 @@ End Sub
 
 Private Function socketFree() As Integer
 On Error GoTo HandleErrorFreeSocket
-    Dim theIP As Variant
-    Dim p As Integer
-    For p = Winsock1.LBound + 1 To Winsock1.UBound
-        theIP = Winsock1(p).LocalIP
-    Next
-    socketFree = Winsock1.UBound + 1
+'Dim theIP As Variant
+
+For i = Winsock1.LBound + 1 To Winsock1.UBound
+    If Winsock1(i).LocalIP Then
+    End If
+Next
+socketFree = Winsock1.UBound + 1
+
 Exit Function
 HandleErrorFreeSocket:
-socketFree = p
+socketFree = i
 End Function
 
 Private Function loadSocket() As Integer
