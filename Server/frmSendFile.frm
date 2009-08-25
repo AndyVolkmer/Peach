@@ -230,12 +230,12 @@ Dim Switch As String
 
 Private Sub cmdAdd_Click()
 Switch = "Add"
-DoButtons1
+DoButtons True
 ClearTxBoxes
 End Sub
 
 Private Sub cmdCancel_Click()
-DoButtons2
+DoButtons False
 End Sub
 
 Private Sub cmdDel_Click()
@@ -276,43 +276,27 @@ With ListView1
 End With
 End Sub
 
-Private Sub DoButtons1()
-cmdAdd.Enabled = False
-cmdDel.Enabled = False
-cmdMod.Enabled = False
-cmdSave.Enabled = True
-cmdCancel.Enabled = True
-txtName.Enabled = True
-txtPassword.Enabled = True
-cmbBanned.Enabled = True
-cmbLevel.Enabled = True
-lblName.Enabled = True
-lblPassword.Enabled = True
-lblBanned.Enabled = True
-lblLevel.Enabled = True
-Frame1.Enabled = True
-End Sub
-
-Private Sub DoButtons2()
-cmdAdd.Enabled = True
-cmdDel.Enabled = True
-cmdMod.Enabled = True
-cmdSave.Enabled = False
-cmdCancel.Enabled = False
-txtName.Enabled = False
-txtPassword.Enabled = False
-cmbBanned.Enabled = False
-cmbLevel.Enabled = False
-lblName.Enabled = False
-lblPassword.Enabled = False
-lblBanned.Enabled = False
-lblLevel.Enabled = False
-Frame1.Enabled = False
+Private Sub DoButtons(Wind As Boolean)
+cmdAdd.Enabled = Not Wind
+cmdDel.Enabled = Not Wind
+cmdMod.Enabled = Not Wind
+cmdSave.Enabled = Wind
+cmdCancel.Enabled = Wind
+txtName.Enabled = Wind
+txtPassword.Enabled = Wind
+cmbBanned.Enabled = Wind
+cmbLevel.Enabled = Wind
+lblName.Enabled = Wind
+lblPassword.Enabled = Wind
+lblLevel.Enabled = Wind
+Frame1.Enabled = Wind
 End Sub
 
 Private Sub ClearTxBoxes()
 txtName.Text = ""
 txtPassword.Text = ""
+cmbBanned.ListIndex = 0
+cmbLevel.ListIndex = 0
 End Sub
 
 Private Sub cmdMod_Click()
@@ -323,12 +307,20 @@ If ListView1.SelectedItem Is Nothing Then
 End If
 'Set switch to modify
 Switch = "Modify"
-DoButtons1
+DoButtons True
 End Sub
 
 Private Sub cmdSave_Click()
 Select Case Switch
 Case "Add"
+    For i = 1 To ListView1.ListItems.Count
+        If txtName.Text = ListView1.ListItems.Item(i).SubItems(1) Then
+            MsgBox "Name already given.", vbInformation
+            ClearTxBoxes
+            txtName.SetFocus
+            Exit Sub
+        End If
+    Next i
     RegisterAccount txtName.Text, txtPassword.Text, cmbBanned.Text
 Case "Modify"
     'Name can't be modified to nothing
@@ -348,7 +340,7 @@ Case "Modify"
     ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, ListView1.SelectedItem.Index
 End Select
 
-DoButtons2
+DoButtons False
 End Sub
 Public Sub ModifyAccount(dName As String, dPassword As String, dBanned As String, dLevel As String, dID As Integer)
 
@@ -375,7 +367,7 @@ For ii = 1 To ListView1.ListItems.Count
 Next ii
 
 'Add new account to database
-frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & i & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "dd.mm.yyyy") & "', '" & dBanned & "', '" & "0" & "')"
+frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & i & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "dd/mm/yyyy") & "', '" & dBanned & "', '" & "0" & "')"
 frmMain.xCommand.Execute
 
 'Save index in variable
@@ -387,7 +379,7 @@ With ListView1.ListItems
     .Item(ii).SubItems(1) = dName
     .Item(ii).SubItems(2) = dPassword
     .Item(ii).SubItems(3) = Format(Time, "hh:nn:ss")
-    .Item(ii).SubItems(4) = Format(Date, "dd.mm.yyyy")
+    .Item(ii).SubItems(4) = Format(Date, "dd/mm/yyyy")
     .Item(ii).SubItems(5) = dBanned
     .Item(ii).SubItems(6) = "0"
 End With
@@ -399,7 +391,14 @@ If ListView1.ListItems.Count <> 0 Then
         txtName.Text = .SubItems(1)
         txtPassword.Text = .SubItems(2)
         cmbBanned.Text = .SubItems(5)
-        cmbLevel.Text = .SubItems(6)
+        Select Case .SubItems(6)
+        Case 0
+            cmbLevel.ListIndex = 0
+        Case 1
+            cmbLevel.ListIndex = 1
+        Case 2
+            cmbLevel.ListIndex = 2
+        End Select
     End With
 End If
 End Sub
@@ -505,5 +504,4 @@ Exit Sub
 HandleError:
     RegSock(Index).SendData "!error" & "#"
     Exit Sub
-
 End Sub

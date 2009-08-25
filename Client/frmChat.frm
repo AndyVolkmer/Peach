@@ -101,7 +101,6 @@ Option Explicit
 Private Const WM_PASTE = &H302
 
 Private Sub cmdSend_Click()
-Dim i As Integer
 Dim Array1() As String
 
 'Assign variables
@@ -109,31 +108,12 @@ Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Array1 = Split(txtToSend.Text, " ")
 GetName = frmConfig.txtNick
 
-'No whitespaces 0-5
 Select Case txtToSend.Text
+        
+'No whitespaces 0-5
 Case "", " ", "  ", "   ", "    ", "     ", "      "
     txtToSend.Text = ""
     Exit Sub
-End Select
-
-'Check if there is an emote or command used
-Select Case Array1(0)
-'All avaible emotes
-Case _
-    "/lol", "/LOL", "/Lol", "/Laugh", "/laugh", _
-    "/rofl", "/ROFL", "/Rofl", _
-    "/beer", "/Beer", _
-    "/fart", "/Fart", _
-    "/lmao", "/LMAO", _
-    "/insult", "/Insult", _
-    "/facepalm", "/Facepalm", _
-    "/violin", "/Violin"
-    
-    SendMsg "!emote" & "#" & GetName & "#" & Array1(0) & "#"
-    GoTo Next1
-End Select
-
-Select Case txtToSend.Text
         
 'Check if its the same Message as before
 Case LastMsg
@@ -242,7 +222,6 @@ Dim Smileys() As String
 Dim SmileysFile() As String
 Dim Smilestring As String
 Dim SmileFileString As String
-Dim i As Integer
 Dim Pos As Long, Start As Long
 Dim IconPath As String
 

@@ -66,7 +66,7 @@ Begin VB.Form frmPanel
       _ExtentX        =   12726
       _ExtentY        =   1296
       _Version        =   393217
-      Enabled         =   -1  'True
+      BorderStyle     =   0
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -149,7 +149,7 @@ Dim Varl As Boolean
 Private Sub Command1_Click()
 'Can't kick if list is empty
 If ListView1.ListItems.Count = 0 Then
-    txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] Failed list is empty."
+    txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] List is empty."
     Exit Sub
 End If
 

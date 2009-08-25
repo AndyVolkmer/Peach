@@ -187,7 +187,6 @@ Public xRecordSet      As ADODB.Recordset
 
 Public intCounter   As Integer
 Dim MAX_CONNECTION  As Byte     'Max 255 connections allowed
-Dim i               As Integer  'Global "FOR" variable
 Dim Vali            As Boolean
 Dim Acc             As Boolean
 Dim Muted           As Boolean
@@ -229,14 +228,14 @@ Dim L As Long
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
     
-ConnectToDB
+ConnectDatabase
 LoadCustomerListView
 
 StatusBar1.Panels(1).Text = "Status : Disconnected"
 SetupForms frmConfig
 End Sub
 
-Private Sub ConnectToDB()
+Private Sub ConnectDatabase()
     
 Set xConnection = New ADODB.Connection
 xConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" & "Data Source=" & App.Path & "\Accounts.mdb"
@@ -260,13 +259,17 @@ Set xRecordSet = xCommand.Execute
 
 With frmAccountPanel
     .ListView1.ListItems.Clear
-    .cmbBanned.Clear
-    .cmbBanned.AddItem "Yes"
-    .cmbBanned.AddItem "No"
-    .cmbLevel.Clear
-    .cmbLevel.AddItem "0"
-    .cmbLevel.AddItem "1"
-    .cmbLevel.AddItem "2"
+    With .cmbBanned
+        .Clear
+        .AddItem "Yes"
+        .AddItem "No"
+    End With
+    With .cmbLevel
+        .Clear
+        .AddItem "0"
+        .AddItem "1"
+        .AddItem "2"
+    End With
 End With
 
 With xRecordSet
@@ -296,7 +299,7 @@ Case WM_LBUTTONDOWN
 Case WM_LBUTTONUP
 Case WM_LBUTTONDBLCLK
     Vali = True
-    frmMain.Show ' show form
+    frmMain.Show 'show form
 Case WM_RBUTTONDOWN
 Case WM_RBUTTONUP
 Case WM_RBUTTONDBLCLK
@@ -529,33 +532,9 @@ Case "!iprequest"
         End If
     Next i
     
-Case "!emote"
-    If Mute = True Then
-        SendSingle " You are muted.", frmMain.Winsock1(Index)
-    Else
-        Select Case GetConver
-        Case "/lol", "/LOL", "/Lol", "/Laugh", "/laugh"
-            SendMessage " " & GetUser & " laughs."
-        Case "/Rofl", "/rofl", "/ROFL"
-            SendMessage " " & GetUser & " rolls on the floor laughing."
-        Case "/Beer", "/beer"
-            SendMessage " " & GetUser & " takes a beer from the fridge."
-        Case "/fart", "/Fart"
-            SendMessage " " & GetUser & " farts loudly."
-        Case "/lmao", "/LMAO"
-            SendMessage " " & GetUser & " is laughing his / her ass off."
-        Case "/facepalm", "/Facepalm"
-            SendMessage " " & GetUser & " covers his face with his palm."
-        Case "/violin", "/Viloin"
-            SendMessage " " & GetUser & " plays the world smallest violin."
-        Case "/insult", "/Insult"
-            SendMessage " " & GetUser & " insults him / her-self as bitch."
-        End Select
-        Call SMSG("!emote", GetUser, GetConver)
-    End If
-
 Case "!msg"
-    Dim IsCommand As Boolean
+    Dim IsCommand   As Boolean
+    Dim IsEmote     As Boolean
     
     'Split it
     array2 = Split(GetConver, " ")
@@ -566,8 +545,12 @@ Case "!msg"
         End If
     End If
     
+    If Left(GetConver, 1) = "/" Then
+        IsEmote = True
+    End If
+    
     On Error GoTo TargetErrorHandler
-    GetTarget = array2(1)
+    GetTarget = StrConv(array2(1), vbProperCase)
     
 Continue1:
     
@@ -618,25 +601,97 @@ Continue1:
             SendSingle " Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
                         
         End Select
-    Else
+        Exit Sub
+    End If
     
 Continue2:
-    If Mute = True Then
-            SendSingle " You are muted.", frmMain.Winsock1(Index)
-            Call SMSG("!muted", GetUser, GetConver)
-            Exit Sub
+    If IsEmote = True Then
+        If Mute = False Then
+            Dim IsUser As Boolean
+            
+            With frmPanel.ListView1.ListItems
+                    For i = 1 To .Count
+                        If GetTarget = .Item(i) Then
+                            IsUser = True
+                            Exit For
+                        End If
+                    Next i
+            End With
+            
+            If GetTarget = "" Then
+                Select Case LCase(array2(0))
+                Case "/lol"
+                    SendMessage " " & GetUser & " laughs."
+                Case "/rofl"
+                    SendMessage " " & GetUser & " rolls on the floor laughing."
+                Case "/beer"
+                    SendMessage " " & GetUser & " takes a beer from the fridge."
+                Case "/fart"
+                    SendMessage " " & GetUser & " farts loudly."
+                Case "/lmao"
+                    SendMessage " " & GetUser & " is laughing his / her ass off."
+                Case "/facepalm"
+                    SendMessage " " & GetUser & " covers his face with his palm."
+                Case "/violin"
+                    SendMessage " " & GetUser & " plays the world smallest violin."
+                Case "/insult"
+                    SendMessage " " & GetUser & " insults him / her-self as bitch."
+                Case "/smile"
+                    SendMessage " " & GetUser & " smiles."
+                Case "/love"
+                    SendMessage " " & GetUser & " feels the love."
+                End Select
+            Else
+                If IsUser = True Then
+                    Select Case LCase(array2(0))
+                    Case "/lol"
+                        SendMessage " " & GetUser & " laughs at " & GetTarget & "."
+                    Case "/rofl"
+                        SendMessage " " & GetUser & " rolls on the floor laughing at " & GetTarget & "."
+                    Case "/beer"
+                        SendMessage " " & GetUser & " takes a beer from the fridge."
+                    Case "/fart"
+                        SendMessage " " & GetUser & " brushes up and farts loudly against " & GetTarget & "."
+                    Case "/lmao"
+                        SendMessage " " & GetUser & " is laughing his / her ass off at " & GetTarget & "."
+                    Case "/facepalm"
+                        SendMessage " " & GetUser & " takes a look on " & GetTarget & " and covers his face with a palm."
+                    Case "/violin"
+                        SendMessage " " & GetUser & " plays the world smallest violin."
+                    Case "/insult"
+                        SendMessage " " & GetUser & " insults " & GetTarget & "  as bitch."
+                    Case "/smile"
+                        SendMessage " " & GetUser & " smiles at " & GetTarget & "."
+                    Case "/love"
+                        SendMessage " " & GetUser & " loves " & GetTarget & "."
+                    End Select
+                Else
+                    SendSingle " User '" & GetTarget & "' not found.", frmMain.Winsock1(Index)
+                End If
+            End If
+            
+            Call SMSG("!emote", GetUser, GetConver)
         End If
-        
-        Select Case GetLevel(GetUser)
-        Case "0"
-            SendMessage " [" & GetUser & "]: " & GetConver
-        Case "1"
-            SendMessage " [GM][" & GetUser & "]: " & GetConver
-        Case "2"
-            SendMessage " [Admin][" & GetUser & "]: " & GetConver
-        End Select
-        Call SMSG(Command, GetUser, GetConver)
+        Exit Sub
     End If
+            
+Continue3:
+    If Mute = True Then
+        SendSingle " You are muted.", frmMain.Winsock1(Index)
+        Call SMSG("!muted", GetUser, GetConver)
+        Exit Sub
+    End If
+        
+    If GetLevel(GetUser) = 0 Then
+        SendMessage " [" & GetUser & "]: " & GetConver
+    ElseIf GetLevel(GetUser) = 1 Then
+        SendMessage " [GM][" & GetUser & "]: " & GetConver
+    ElseIf GetLevel(GetUser) = 2 Then
+        SendMessage " [Admin][" & GetUser & "]: " & GetConver
+    End If
+    
+    Call SMSG(Command, GetUser, GetConver)
+    
 
 Case Else
     SendMessage " Unknown operation."
@@ -676,7 +731,11 @@ TargetErrorHandler:
                 
             End Select
         Else
-            GoTo Continue2
+            If IsEmote = True Then
+                GoTo Continue2
+            Else
+                GoTo Continue3
+            End If
         End If
     End Select
 End Sub
@@ -704,7 +763,6 @@ Else
         SendMessage " " & User & " got unmuted by " & AdminName & "."
     End If
 End If
-
 End Sub
 
 Private Function GetAccountList() As String
@@ -878,9 +936,7 @@ If Index < 0 Then
 Else
     frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & "[System]: Disconnected due connection problem."
     StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
-    For i = 1 To frmPanel.ListView1.ListItems.Count
-        frmPanel.ListView1.ListItems.Remove (i)
-    Next i
+    frmPanel.ListView1.ListItems.Clear
 End If
 End Sub
 Public Sub DisableFormResize(frm As Form)

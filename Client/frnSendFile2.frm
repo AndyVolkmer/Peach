@@ -122,9 +122,7 @@ Shell "Explorer.exe " & App.Path, vbNormalFocus
 End Sub
 
 Private Sub Form_Load()
-    Me.Top = 0
-    Me.Left = 0
-    lstConnections.ListItems.Add , , "0"
+lstConnections.ListItems.Add , , "0"
 End Sub
 
 Private Sub lstConnections_BeforeLabelEdit(Cancel As Integer)

@@ -516,7 +516,6 @@ Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Dim GetCommand  As String
 Dim StrArr()    As String
 Dim StrArr2()   As String
-Dim i           As Integer
 Dim GetMessage  As String
 
 'We get the message

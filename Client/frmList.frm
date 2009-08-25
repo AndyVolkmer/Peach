@@ -99,7 +99,6 @@ End Sub
 
 Private Sub ListView1_ItemCheck(ByVal Item As MSComctlLib.ListItem)
 If Item.Checked = True Then
-    Dim i As Integer
     With ListView1.ListItems
         For i = 1 To .Count
             .Item(i).Checked = False
