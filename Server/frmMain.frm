@@ -558,14 +558,13 @@ Continue1:
     If IsCommand = True Then
         Select Case array2(0)
         Case ".list"
-            Select Case GetTarget
-            Case "account"
+            If GetTarget = "account" Then
                 SendSingle "!accountlist" & "#" & GetAccountList, frmMain.Winsock1(Index)
-            Case "user"
+            ElseIf GetTarget = "user" Then
                 SendSingle "!userlist" & "#" & GetUserList, frmMain.Winsock1(Index)
-            Case Else
+            Else
                 SendSingle " You can just use .list account or user.", frmMain.Winsock1(Index)
-            End Select
+            End If
             
         Case ".userinfo"
             GetUserInfo GetTarget, Index
