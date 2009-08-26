@@ -452,8 +452,6 @@ Winsock1.Close
 
 Disconnect
 
-LastMsg = ""
-
 StatusBar1.Panels(1).Text = MDIstatusbar_dcfromserver
 With frmChat.txtConver
     .SelStart = Len(.Text)
@@ -633,9 +631,6 @@ Winsock1.Close
 
 'Call Disconnect function to DC all sockets and do buttons
 Disconnect
-
-'Last Message is empty
-LastMsg = ""
 
 'Change status to connection problem
 StatusBar1.Panels(1).Text = MDIstatusbar_connectionproblem

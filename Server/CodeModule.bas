@@ -1,17 +1,18 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.8.2"
+Public Const Rev = "1.0.8.3"
 Public Const RegPort = 6222
 
-Public GetUser      As String
-Public GetConver    As String
-Public GetTarget    As String
-Public Prefix       As String
-Public Command      As String
-Public Message      As String
-Public ForWho       As String
-Public i            As Integer 'Global "FOR" variable
+Public GetLastMessage   As String
+Public GetUser          As String
+Public GetConver        As String
+Public GetTarget        As String
+Public Prefix           As String
+Public Command          As String
+Public Message          As String
+Public ForWho           As String
+Public i                As Integer 'Global "FOR" variable
 
 Public Type NOTIFYICONDATA
 cbSize              As Long
@@ -99,6 +100,8 @@ With frmChat.txtConver
         .SelRTF = vbCrLf & TimePrefix & "Access denied for '" & Name & "'. (Badname)."
     Case "!muted"
         .SelRTF = vbCrLf & TimePrefix & "<Muted>[" & Name & "]: " & Message
+    Case "!repeat"
+        .SelRTF = vbCrLf & TimePrefix & "[" & Name & "]" & " activated flood control."
     Case Else
         .SelRTF = vbCrLf & TimePrefix & "[" & Command & "] [" & Name & "] [" & ForWho & "] [" & Message & "]"
     End Select

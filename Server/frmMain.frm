@@ -345,7 +345,7 @@ With frmPanel.ListView1
     .ListItems.Add RR, , "Unknown"
     .ListItems.Item(RR).SubItems(1) = Winsock1(MAX_CONNECTION).RemoteHostIP
     .ListItems.Item(RR).SubItems(2) = MAX_CONNECTION
-    .ListItems.Item(RR).SubItems(3) = Format(Time, "hh:nn:ss")
+    .ListItems.Item(RR).SubItems(3) = "" 'Format(Time, "hh:nn:ss")
     .ListItems.Item(RR).SubItems(4) = "No"
 End With
 StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
@@ -393,6 +393,14 @@ array1 = Split(strMessage, "#")
 Command = array1(0)
 GetUser = array1(1)
 GetConver = array1(2)
+
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If GetUser = .Item(i) Then
+            GetLastMessage = .Item(i).SubItems(3)
+        End If
+    Next i
+End With
 
 'Check if user is muted
 For i = 1 To frmPanel.ListView1.ListItems.Count
@@ -680,6 +688,12 @@ Continue3:
         Call SMSG("!muted", GetUser, GetConver)
         Exit Sub
     End If
+    
+    If GetConver = GetLastMessage Then
+        SendSingle " Your message has triggered serverside flood protection. Please don't repeat yourself.", frmMain.Winsock1(Index)
+        Call SMSG("!repeat", GetUser, "")
+        Exit Sub
+    End If
         
     If GetLevel(GetUser) = 0 Then
         SendMessage " [" & GetUser & "]: " & GetConver
@@ -696,7 +710,13 @@ Case Else
     SendMessage " Unknown operation."
 
 End Select
-
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If GetUser = .Item(i) Then
+            frmPanel.ListView1.ListItems.Item(i).SubItems(3) = GetConver
+        End If
+    Next i
+End With
 Exit Sub
 
 TargetErrorHandler:

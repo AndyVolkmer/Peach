@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.8.2"
+Public Const Rev = "1.0.8.3"
 Public Const aPort = 6123
 Public Const bPort = 6124
 Public Const RegPort = 6222
@@ -11,7 +11,6 @@ Public GetName      As String
 Public GetConver    As String
 Public Message      As String
 Public ForWho       As String
-Public LastMsg      As String
 Public GetLevel     As String
 Public i            As Integer 'Global 'FOR' variable
 
@@ -86,13 +85,11 @@ End Sub
 Public Sub SMSG(Whisper As Boolean, Name As String, Conver As String)
 With frmChat.txtConver
     .SelStart = Len(.Text)
-    
     If Whisper = True Then
         .SelRTF = vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] [You whisper to " & Name & "]: " & Conver
     Else
         .SelRTF = vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] [" & Name & "]: " & Conver
     End If
-    
 End With
 End Sub
 

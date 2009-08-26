@@ -67,6 +67,7 @@ Begin VB.Form frmPanel
       _ExtentY        =   1296
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -109,12 +110,12 @@ Begin VB.Form frmPanel
       NumItems        =   6
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "Name"
-         Object.Width           =   2029
+         Object.Width           =   2205
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
          Text            =   "IP"
-         Object.Width           =   2381
+         Object.Width           =   2205
       EndProperty
       BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   2
@@ -123,19 +124,19 @@ Begin VB.Form frmPanel
       EndProperty
       BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   3
-         Text            =   "Login Time"
+         Text            =   "Last Message"
          Object.Width           =   2205
       EndProperty
       BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   4
          Text            =   "Muted"
-         Object.Width           =   1765
+         Object.Width           =   1764
       EndProperty
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   2
          SubItemIndex    =   5
          Text            =   "Account"
-         Object.Width           =   2187
+         Object.Width           =   2205
       EndProperty
    End
 End

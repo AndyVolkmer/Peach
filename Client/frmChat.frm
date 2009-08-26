@@ -115,12 +115,6 @@ Case "", " ", "  ", "   ", "    ", "     ", "      "
     txtToSend.Text = ""
     Exit Sub
         
-'Check if its the same Message as before
-Case LastMsg
-    Call SMSG(False, "System", CHATflood_protection)
-    txtToSend.Text = ""
-    Exit Sub
-    
 'Display the time
 Case Trim("/time"), Trim("/Time"), Trim("/TIME")
     txtConver.Text = txtConver.Text & vbCrLf & Prefix & CHATtimetext & Format(Time, "hh:nn")
@@ -167,7 +161,6 @@ Case Else
 End Select
 
 Next1:
-    LastMsg = txtToSend.Text
     txtToSend.Text = ""
     txtToSend.SetFocus
 
