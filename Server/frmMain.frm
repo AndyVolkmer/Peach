@@ -377,17 +377,22 @@ loadSocket = theFreeSocket
 End Function
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
+'Define Variables
 Dim array1()        As String
 Dim array2()        As String
-Dim strMessage      As String
+Dim GetUser         As String
+Dim GetMessage      As String
+Dim GetConver       As String
+Dim GetTarget       As String
+Dim GetLastMessage  As String
 Dim RR              As Integer
 Dim bMatch, Mute    As Boolean
 
 'Get Message
-frmMain.Winsock1(Index).GetData strMessage
+frmMain.Winsock1(Index).GetData GetMessage
 
 'We decode (split) the message into an array
-array1 = Split(strMessage, "#")
+array1 = Split(GetMessage, "#")
 
 'Assign the variables to the array
 Command = array1(0)
@@ -873,7 +878,7 @@ End Sub
 Private Sub GetAccountInfo(Account As String, SIndex As Integer)
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(1) = Account Then
+        If LCase(.Item(i).SubItems(1)) = LCase(Account) Then
             SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " Name: " & .Item(i).SubItems(1) & vbCrLf & " Password: " & .Item(i).SubItems(2) & vbCrLf & " Registration Time: " & .Item(i).SubItems(3) & vbCrLf & " Registration Date: " & .Item(i).SubItems(4) & vbCrLf & " Banned: " & .Item(i).SubItems(5) & vbCrLf & " Level: " & .Item(i).SubItems(6), Winsock1(SIndex)
             Avaible = True
             Exit For
