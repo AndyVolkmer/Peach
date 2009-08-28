@@ -191,19 +191,10 @@ With frmMain
     Else
         Call FlashTitle(.hwnd, True)
     End If
-    .Hyperlink1.URLFormat txtConver
 End With
 Create_Smileys txtConver
 txtConver.SelStart = Len(txtConver.Text)
 txtConver.Locked = True
-End Sub
-
-Private Sub txtConver_Click()
-frmMain.Hyperlink1.URLLaunch
-End Sub
-
-Private Sub txtConver_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-frmMain.Hyperlink1.RichWordOver Me, txtConver, X, Y
 End Sub
 
 Private Sub txtToSend_KeyPress(KeyAscii As Integer)

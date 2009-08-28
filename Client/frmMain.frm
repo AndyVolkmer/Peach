@@ -1,7 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{342261DD-4D19-481B-8BF9-F24E643D0C20}#2.0#0"; "Hyperlink1.ocx"
 Begin VB.MDIForm frmMain 
    BackColor       =   &H00F4F4F4&
    Caption         =   " Peach"
@@ -13,12 +12,6 @@ Begin VB.MDIForm frmMain
    LinkTopic       =   "MDIForm1"
    LockControls    =   -1  'True
    ScrollBars      =   0   'False
-   Begin proHyp.Hyperlink Hyperlink1 
-      Left            =   0
-      Top             =   1560
-      _ExtentX        =   2328
-      _ExtentY        =   2514
-   End
    Begin MSWinsockLib.Winsock FSocket2 
       Index           =   0
       Left            =   960

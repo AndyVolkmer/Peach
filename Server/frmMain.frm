@@ -345,7 +345,7 @@ With frmPanel.ListView1
     .ListItems.Add RR, , "Unknown"
     .ListItems.Item(RR).SubItems(1) = Winsock1(MAX_CONNECTION).RemoteHostIP
     .ListItems.Item(RR).SubItems(2) = MAX_CONNECTION
-    .ListItems.Item(RR).SubItems(3) = "" 'Format(Time, "hh:nn:ss")
+    .ListItems.Item(RR).SubItems(3) = ""
     .ListItems.Item(RR).SubItems(4) = "No"
 End With
 StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
@@ -399,10 +399,12 @@ Command = array1(0)
 GetUser = array1(1)
 GetConver = array1(2)
 
+'Get the latest message
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If GetUser = .Item(i) Then
             GetLastMessage = .Item(i).SubItems(3)
+            Exit For
         End If
     Next i
 End With
@@ -553,7 +555,7 @@ Case "!msg"
     array2 = Split(GetConver, " ")
     
     If Left(GetConver, 1) = "." Then
-        If GetLevel(GetUser) <> "0" Then
+        If GetLevel(GetUser) <> 0 Then
             IsCommand = True
         End If
     End If
@@ -570,10 +572,10 @@ Continue1:
     'If an command is used check out which
     If IsCommand = True Then
         Select Case array2(0)
-        Case ".list"
-            If GetTarget = "account" Then
+        Case ".show"
+            If LCase(GetTarget) = "accounts" Then
                 SendSingle "!accountlist" & "#" & GetAccountList, frmMain.Winsock1(Index)
-            ElseIf GetTarget = "user" Then
+            ElseIf LCase(GetTarget) = "users" Then
                 SendSingle "!userlist" & "#" & GetUserList, frmMain.Winsock1(Index)
             Else
                 SendSingle " You can just use .list account or user.", frmMain.Winsock1(Index)
@@ -652,6 +654,8 @@ Continue2:
                     SendMessage " " & GetUser & " smiles."
                 Case "/love"
                     SendMessage " " & GetUser & " feels the love."
+                Case Else
+                    GoTo Continue3
                 End Select
             Else
                 If IsUser = True Then
@@ -926,15 +930,15 @@ GetCommands = vbCrLf & _
 " * .unmute 'Name' ( Removes mute from 'Name' )" & vbCrLf & _
 " * .userinfo 'Name' ( Shows all information about 'Name' )" & vbCrLf & _
 " * .accountinfo / .accinfo ( Shows all information about that account )" & vbCrLf & _
-" * .list account / user ( Shows a list of all accounts / user )" & vbCrLf & _
+" * .show accounts / users ( Shows a list of all accounts / user )" & vbCrLf & _
 " * .help ( shows this list of all avaible commands )" & vbCrLf & _
 " ***************"
 End Function
 
-Private Function GetLevel(iName As String) As String
+Private Function GetLevel(Name As String) As Integer
 Dim GetAccount As String
 For i = 1 To frmPanel.ListView1.ListItems.Count
-    If iName = frmPanel.ListView1.ListItems.Item(i) Then
+    If Name = frmPanel.ListView1.ListItems.Item(i) Then
         GetAccount = frmPanel.ListView1.ListItems.Item(i).SubItems(5)
         Exit For
     End If

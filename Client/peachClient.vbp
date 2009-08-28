@@ -20,7 +20,6 @@ Form=frnSendFile2.frm
 Form=frmRegistration.frm
 Module=IniModule; IniModule.bas
 Module=CryptModul; CryptModul.bas
-Object={342261DD-4D19-481B-8BF9-F24E643D0C20}#2.0#0; Hyperlink1.ocx
 IconForm="frmMain"
 Startup="frmLanguage"
 HelpFile=""
