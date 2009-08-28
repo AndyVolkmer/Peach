@@ -554,12 +554,14 @@ Case "!msg"
     'Split it
     array2 = Split(GetConver, " ")
     
+    'Check first position of the text for an point indicating command
     If Left(GetConver, 1) = "." Then
         If GetLevel(GetUser) <> 0 Then
             IsCommand = True
         End If
     End If
     
+    'Check first position of the text for an slash indicating emote
     If Left(GetConver, 1) = "/" Then
         IsEmote = True
     End If
