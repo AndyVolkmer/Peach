@@ -364,7 +364,6 @@ If SPT.Value = 1 Then
 Else
     txtPassword.Text = ""
 End If
-
 End Sub
 
 Public Sub LoadConfigForm()

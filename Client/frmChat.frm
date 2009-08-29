@@ -104,23 +104,17 @@ Private Sub cmdSend_Click()
 Dim Array1() As String
 
 'Assign variables
-Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
 Array1 = Split(txtToSend.Text, " ")
 GetName = frmConfig.txtNick
 
-Select Case txtToSend.Text
-        
-'No whitespaces 0-5
-Case "", " ", "  ", "   ", "    ", "     ", "      "
-    txtToSend.Text = ""
-    Exit Sub
-        
 'Display the time
-Case Trim("/time"), Trim("/Time"), Trim("/TIME")
-    txtConver.Text = txtConver.Text & vbCrLf & Prefix & CHATtimetext & Format(Time, "hh:nn")
-    
-'Open online user list
-Case Trim("/online"), Trim("/Online"), Trim("/ONLINE")
+If LCase(txtToSend.Text) = "/time" Then
+    txtConver.Text = txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & CHATtimetext & Format(Time, "hh:nn")
+    GoTo Next1
+End If
+
+'Show online list
+If LCase(txtToSend.Text) = "/online" Then
     frmMain.UpdateListPosition.Enabled = True
     With frmList
         .Left = frmMain.Left + .Width * 2 + 20
@@ -128,37 +122,40 @@ Case Trim("/online"), Trim("/Online"), Trim("/ONLINE")
         .Height = frmMain.Height - 400
         .Show
     End With
+    GoTo Next1
+End If
 
-'Send Message
-Case Else
-    'If any checkbox is checked then send it private to that client
-    With frmList.ListView1.ListItems
-        For i = 1 To .Count
-            If .Item(i).Checked = True Then
-                'If the the selected name is yours then no
-                If .Item(i).Text = StrConv(frmConfig.txtNick, vbProperCase) Then
-                    MsgBox "You cant whisper yourself.", vbInformation
-                    txtToSend.SetFocus
-                    Exit Sub
-                End If
-                
-                GetConver = txtToSend.Text
-                ForWho = StrConv(.Item(i), vbProperCase)
-                Message = "!w" & "#" & GetName & "|" & ForWho & "#" & GetConver & "#"
-                SendMsg Message
-                Call SMSG(True, ForWho, GetConver)
-    
+'No whitespaces
+If Trim(txtToSend.Text) = "" Then
+    txtToSend.Text = ""
+    Exit Sub
+End If
+
+'If any checkbox is checked then send it private to that client
+With frmList.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).Checked = True Then
+            'If the the selected name is yours then no
+            If .Item(i).Text = StrConv(frmConfig.txtNick, vbProperCase) Then
+                MsgBox "You cant whisper yourself.", vbInformation
+                txtToSend.SetFocus
+                Exit Sub
             End If
-        Next i
-    End With
-    
-    'Send public message
-    GetConver = txtToSend.Text
-    GetName = frmConfig.txtNick.Text
-    Message = "!msg" & "#" & GetName & "#" & GetConver & "#"
-    SendMsg Message
-    
-End Select
+            
+            GetConver = txtToSend.Text
+            ForWho = StrConv(.Item(i), vbProperCase)
+            Message = "!w" & "#" & GetName & "|" & ForWho & "#" & GetConver & "#"
+            SendMsg Message
+            Call SMSG(True, ForWho, GetConver)
+        End If
+    Next i
+End With
+
+'Send public message
+GetConver = txtToSend.Text
+GetName = frmConfig.txtNick.Text
+Message = "!msg" & "#" & GetName & "#" & GetConver & "#"
+SendMsg Message
 
 Next1:
     txtToSend.Text = ""

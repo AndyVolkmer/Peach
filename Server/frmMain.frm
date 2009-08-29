@@ -329,7 +329,6 @@ For i = 1 To frmPanel.ListView1.ListItems.Count + 1
         Exit For
     End If
 Next i
-
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
@@ -432,7 +431,6 @@ Select Case Command
 
 'Add 'Name' & 'Account' to frmPanel Listview
 Case "!connected"
-
     'If the account is already beeing used kick first instance
     With frmPanel.ListView1.ListItems
         For i = 1 To .Count
@@ -827,7 +825,6 @@ End With
 If Avaible = False Then
     SendSingle " User '" & User & "' not found.", Winsock1(SIndex)
 End If
-
 End Sub
 
 Private Sub BanAccount(User As String, AdminName As String, Ban As String, SIndex As Integer)
@@ -852,7 +849,6 @@ Else
         SendMessage " Account '" & User & "' got unbanned by " & AdminName & "."
     End If
 End If
-    
 End Sub
 
 Private Sub KickUser(User As String, SIndex As Integer)
@@ -897,7 +893,6 @@ End With
 If Avaible = False Then
     SendSingle " Account '" & Account & "' not found.", Winsock1(SIndex)
 End If
-    
 End Sub
 
 Private Sub GetUserInfo(User As String, SIndex As Integer)
@@ -916,7 +911,6 @@ End With
 If Avaible = False Then
     SendSingle " User '" & User & " was not found.", Winsock1(SIndex)
 End If
-    
 End Sub
 
 Private Function GetCommands() As String
