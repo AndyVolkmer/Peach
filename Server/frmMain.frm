@@ -573,18 +573,19 @@ Continue1:
     If IsCommand = True Then
         Select Case array2(0)
         Case ".show"
-            If LCase(GetTarget) = "accounts" Then
+            Select Case LCase(GetTarget)
+            Case "accounts"
                 SendSingle "!accountlist" & "#" & GetAccountList, frmMain.Winsock1(Index)
-            ElseIf LCase(GetTarget) = "users" Then
+            Case "users"
                 SendSingle "!userlist" & "#" & GetUserList, frmMain.Winsock1(Index)
-            Else
+            Case Else
                 SendSingle " You can just use .list account or user.", frmMain.Winsock1(Index)
-            End If
+            End Select
             
-        Case ".userinfo"
+        Case ".userinfo", ".uinfo"
             GetUserInfo GetTarget, Index
                         
-        Case ".accountinfo", ".accinfo"
+        Case ".accountinfo", ".accinfo", ".ainfo"
             GetAccountInfo GetTarget, Index
                         
         Case ".kick"
@@ -673,9 +674,9 @@ Continue2:
                     Case "/facepalm"
                         SendMessage " " & GetUser & " takes a look on " & GetTarget & " and covers his face with a palm."
                     Case "/violin"
-                        SendMessage " " & GetUser & " plays the world smallest violin."
+                        SendMessage " " & GetUser & " looks at " & GetTarget & " and starts playing the world smallest violin."
                     Case "/insult"
-                        SendMessage " " & GetUser & " insults " & GetTarget & "  as bitch."
+                        SendMessage " " & GetUser & " starts insulting " & GetTarget & "  heavily."
                     Case "/smile"
                         SendMessage " " & GetUser & " smiles at " & GetTarget & "."
                     Case "/love"
@@ -704,13 +705,14 @@ Continue3:
         Exit Sub
     End If
         
-    If GetLevel(GetUser) = 0 Then
+    Select Case GetLevel(GetUser)
+    Case 0
         SendMessage " [" & GetUser & "]: " & GetConver
-    ElseIf GetLevel(GetUser) = 1 Then
+    Case 1
         SendMessage " [GM][" & GetUser & "]: " & GetConver
-    ElseIf GetLevel(GetUser) = 2 Then
+    Case 2
         SendMessage " [Admin][" & GetUser & "]: " & GetConver
-    End If
+    End Select
     
     Call SMSG(Command, GetUser, GetConver)
     
@@ -735,8 +737,10 @@ TargetErrorHandler:
             Select Case array2(0)
             Case _
                 ".userinfo", _
+                ".uinfo", _
                 ".accountinfo", _
                 ".accinfo", _
+                ".ainfo", _
                 ".kick", _
                 ".banaccount", _
                 ".unbanaccount", _
@@ -754,6 +758,7 @@ TargetErrorHandler:
                 ".commands"
                             
                 GoTo Continue1
+                
             Case Else
                 SendSingle " Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
                 
