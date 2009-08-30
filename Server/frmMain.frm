@@ -865,9 +865,9 @@ If Avaible = False Then
     SendSingle " Account '" & Account & "' not found.", Winsock1(SIndex)
 Else
     If Ban = "Yes" Then
-        SendMessage " " & User & "' was account banned by " & AdminName & "."
+        SendMessage " " & User & " was account banned by " & AdminName & "."
     Else
-        SendMessage " " & User & "' was unbanned by " & AdminName & "."
+        SendMessage " " & User & " was unbanned by " & AdminName & "."
     End If
 End If
 End Sub
