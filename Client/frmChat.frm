@@ -34,6 +34,7 @@ Begin VB.Form frmChat
       _Version        =   393217
       Enabled         =   0   'False
       MultiLine       =   0   'False
+      MaxLength       =   180
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -105,7 +106,6 @@ Dim Array1() As String
 
 'Assign variables
 Array1 = Split(txtToSend.Text, " ")
-GetName = frmConfig.txtNick
 
 'Display the time
 If LCase(txtToSend.Text) = "/time" Then
@@ -127,8 +127,7 @@ End If
 
 'No whitespaces
 If Trim(txtToSend.Text) = "" Then
-    txtToSend.Text = ""
-    Exit Sub
+    GoTo Next1
 End If
 
 'If any checkbox is checked then send it private to that client
@@ -137,25 +136,20 @@ With frmList.ListView1.ListItems
         If .Item(i).Checked = True Then
             'If the the selected name is yours then no
             If .Item(i).Text = StrConv(frmConfig.txtNick, vbProperCase) Then
-                MsgBox "You cant whisper yourself.", vbInformation
+                Call SMSG(False, "System", "You can't whisper yourself.")
                 txtToSend.SetFocus
                 Exit Sub
             End If
             
-            GetConver = txtToSend.Text
-            ForWho = StrConv(.Item(i), vbProperCase)
-            Message = "!w" & "#" & GetName & "|" & ForWho & "#" & GetConver & "#"
-            SendMsg Message
-            Call SMSG(True, ForWho, GetConver)
+            SendMsg "!w" & "#" & frmConfig.txtNick.Text & "|" & .Item(i) & "#" & txtToSend.Text & "#"
+            Call SMSG(True, .Item(i), txtToSend.Text)
+            GoTo Next1
         End If
     Next i
 End With
 
 'Send public message
-GetConver = txtToSend.Text
-GetName = frmConfig.txtNick.Text
-Message = "!msg" & "#" & GetName & "#" & GetConver & "#"
-SendMsg Message
+SendMsg "!msg" & "#" & frmConfig.txtNick.Text & "#" & txtToSend.Text & "#"
 
 Next1:
     txtToSend.Text = ""
@@ -164,8 +158,8 @@ Next1:
 End Sub
 
 Public Sub Form_Load()
-Me.Top = 0
-Me.Left = 0
+Top = 0
+Left = 0
 LoadChatForm
 End Sub
 
@@ -180,17 +174,25 @@ txtToSend.Text = ""
 End Sub
 
 Private Sub txtConver_Change()
-Dim hWnd1 As Long
+Dim hWnd1 As Long: hWnd1 = GetActiveWindow
+
+'Unlock so we can convert smiñeys
 txtConver.Locked = False
-hWnd1 = GetActiveWindow
+
+'If window doenst have focus then flash
 With frmMain
-    If hWnd1 = .hwnd Then
-    Else
+    If Not hWnd1 = .hwnd Then
         Call FlashTitle(.hwnd, True)
     End If
 End With
+
+'Create smileys
 Create_Smileys txtConver
+
+'Set cursor to last position
 txtConver.SelStart = Len(txtConver.Text)
+
+'Lock again
 txtConver.Locked = True
 End Sub
 

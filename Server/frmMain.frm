@@ -428,8 +428,7 @@ If Len(GetConver) > 200 Then
 End If
 
 Select Case Command
-
-'Add 'Name' & 'Account' to frmPanel Listview
+'Add Name & Account to frmPanel ListView
 Case "!connected"
     'If the account is already beeing used kick first instance
     With frmPanel.ListView1.ListItems
@@ -452,7 +451,7 @@ Case "!connected"
     frmPanel.ListView1.ListItems.Item(RR).Text = GetUser
     frmPanel.ListView1.ListItems.Item(RR).SubItems(5) = GetConver
     UpdateUsersList
-    
+
 Case "!namerequest"
     Call SMSG(Command, GetUser, "")
     'Check badname list
@@ -655,6 +654,8 @@ Continue2:
                     SendMessage " " & GetUser & " smiles."
                 Case "/love"
                     SendMessage " " & GetUser & " feels the love."
+                Case "/cheer"
+                    SendMessage " " & GetUser & " cheers."
                 Case Else
                     GoTo Continue3
                 End Select
@@ -681,12 +682,13 @@ Continue2:
                         SendMessage " " & GetUser & " smiles at " & GetTarget & "."
                     Case "/love"
                         SendMessage " " & GetUser & " loves " & GetTarget & "."
+                    Case "/cheer"
+                        SendMessage " " & GetUser & " cheers at " & GetTarget & "."
                     End Select
                 Else
                     SendSingle " User '" & GetTarget & "' not found.", frmMain.Winsock1(Index)
                 End If
             End If
-            
             Call SMSG("!emote", GetUser, GetConver)
         End If
         Exit Sub
@@ -832,11 +834,14 @@ If Avaible = False Then
 End If
 End Sub
 
-Private Sub BanAccount(User As String, AdminName As String, Ban As String, SIndex As Integer)
+Private Sub BanAccount(Account As String, AdminName As String, Ban As String, SIndex As Integer)
+Dim User As String
+
+'Ban account in database
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(1) = User Then
-            frmAccountPanel.ModifyAccount User, .Item(i).SubItems(2), Ban, .Item(i).SubItems(6), .Item(i)
+        If .Item(i).SubItems(1) = Account Then
+            frmAccountPanel.ModifyAccount Account, .Item(i).SubItems(2), Ban, .Item(i).SubItems(6), .Item(i)
             Avaible = True
             Exit For
         Else
@@ -845,13 +850,24 @@ With frmAccountPanel.ListView1.ListItems
     Next i
 End With
 
+'Find the user in the list by account
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(5) = Account Then
+            User = .Item(i)
+            Exit For
+        End If
+    Next i
+End With
+
+'Announce or give feedback
 If Avaible = False Then
-    SendSingle " Account '" & User & "' not found.", Winsock1(SIndex)
+    SendSingle " Account '" & Account & "' not found.", Winsock1(SIndex)
 Else
     If Ban = "Yes" Then
-        SendMessage " Account '" & User & "' got banned by " & AdminName & "."
+        SendMessage " " & User & "' was account banned by " & AdminName & "."
     Else
-        SendMessage " Account '" & User & "' got unbanned by " & AdminName & "."
+        SendMessage " " & User & "' was unbanned by " & AdminName & "."
     End If
 End If
 End Sub
@@ -894,7 +910,6 @@ With frmAccountPanel.ListView1.ListItems
         End If
     Next i
 End With
-
 If Avaible = False Then
     SendSingle " Account '" & Account & "' not found.", Winsock1(SIndex)
 End If
@@ -920,7 +935,7 @@ End Sub
 
 Private Function GetCommands() As String
 GetCommands = vbCrLf & _
-" ***************" & vbCrLf & _
+" *********************************************" & vbCrLf & _
 " * List of all avaible commands:" & vbCrLf & _
 " * .banuser 'Name' ( Bans users account )" & vbCrLf & _
 " * .banaccount 'Account' ( Bans the account )" & vbCrLf & _
@@ -933,7 +948,7 @@ GetCommands = vbCrLf & _
 " * .accountinfo / .accinfo ( Shows all information about that account )" & vbCrLf & _
 " * .show accounts / users ( Shows a list of all accounts / user )" & vbCrLf & _
 " * .help ( shows this list of all avaible commands )" & vbCrLf & _
-" ***************"
+" *********************************************"
 End Function
 
 Private Function GetLevel(Name As String) As Integer
@@ -944,7 +959,6 @@ For i = 1 To frmPanel.ListView1.ListItems.Count
         Exit For
     End If
 Next i
-
 For i = 1 To frmAccountPanel.ListView1.ListItems.Count
     If GetAccount = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(1) Then
         GetLevel = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(6)

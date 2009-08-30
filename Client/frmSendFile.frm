@@ -255,8 +255,8 @@ sFileName = FileName
 End Sub
 
 Private Sub Form_Load()
-Me.Top = 0
-Me.Left = 0
+Top = 0
+Left = 0
 LoadSendFileForm
 End Sub
 
