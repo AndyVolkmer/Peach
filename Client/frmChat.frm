@@ -33,6 +33,7 @@ Begin VB.Form frmChat
       _ExtentY        =   1508
       _Version        =   393217
       Enabled         =   0   'False
+      MultiLine       =   0   'False
       MaxLength       =   180
       TextRTF         =   $"frmChat.frx":0000
    End
