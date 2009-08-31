@@ -48,7 +48,7 @@ Begin VB.Form frmList
       NumItems        =   1
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "Name"
-         Object.Width           =   6050
+         Object.Width           =   5997
       EndProperty
    End
    Begin VB.CommandButton Command1 

@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.9.0"
+Public Const Rev = "1.0.9.1"
 Public Const aPort = 6123
 Public Const bPort = 6124
 Public Const RegPort = 6222
@@ -149,14 +149,28 @@ Dim WiSk As Winsock
 
 'Do the buttons
 With frmConfig
-    .Command1.Enabled = True
-    .Command2.Enabled = False
-    .txtNick.Enabled = True
-    .txtIP.Enabled = True
-    .txtPort.Enabled = True
+    .lblAccount.Enabled = True
     .txtAccount.Enabled = True
+        
+    .lblPassword.Enabled = True
     .txtPassword.Enabled = True
+    
+    .lblNickname.Enabled = True
+    .txtNick.Enabled = True
+    
+    .lblIP.Enabled = True
+    .txtIP.Enabled = True
+    
+    .lblPort.Enabled = True
+    .txtPort.Enabled = True
+    
     .SPT.Enabled = True
+    
+    .Frame1.Enabled = True
+    .Frame2.Enabled = True
+    
+    .Command2.Enabled = False
+    .Command1.Enabled = True
 End With
 
 With frmChat

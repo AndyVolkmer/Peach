@@ -460,14 +460,28 @@ End Sub
 Private Sub Winsock1_Connect()
 'Do the enable stuff
 With frmConfig
+    .lblAccount.Enabled = False
+    .txtAccount.Enabled = False
+        
+    .lblPassword.Enabled = False
+    .txtPassword.Enabled = False
+    
+    .lblNickname.Enabled = False
+    .txtNick.Enabled = False
+    
+    .lblIP.Enabled = False
+    .txtIP.Enabled = False
+    
+    .lblPort.Enabled = False
+    .txtPort.Enabled = False
+    
+    .SPT.Enabled = False
+    
+    .Frame1.Enabled = False
+    .Frame2.Enabled = False
+    
     .Command2.Enabled = True
     .Command1.Enabled = False
-    .txtNick.Enabled = False
-    .txtIP.Enabled = False
-    .txtPort.Enabled = False
-    .txtAccount.Enabled = False
-    .txtPassword.Enabled = False
-    .SPT.Enabled = False
 End With
 With frmChat
     .cmdSend.Enabled = True
@@ -476,14 +490,14 @@ With frmChat
     .txtConver.Enabled = True
 End With
 
-frmConfig.Hide
-frmChat.Show
-frmChat.txtToSend.SetFocus
-
 SendMsg "!login" & "#" & frmConfig.txtAccount & "#" & frmConfig.txtPassword & "#"
 End Sub
 
 Private Sub ConnectIsTrue()
+frmConfig.Hide
+frmChat.Show
+frmChat.txtToSend.SetFocus
+
 StatusBar1.Panels(1).Text = MDIstatusbar_connected & frmConfig.txtIP.Text & ":" & frmConfig.txtPort.Text
 
 SendMsg "!connected" & "#" & frmConfig.txtNick.Text & "#" & frmConfig.txtAccount.Text & "#"
@@ -632,47 +646,47 @@ frmConfig.Show
 End Sub
 
 Public Sub DisableFormResize(frm As Form)
-    Dim style As Long
-    Dim hMenu As Long
-    Dim MII As MENUITEMINFO
-    Dim lngMenuID As Long
-    Const xSC_MAXIMIZE As Long = -11
+Dim style As Long
+Dim hMenu As Long
+Dim MII As MENUITEMINFO
+Dim lngMenuID As Long
+Const xSC_MAXIMIZE As Long = -11
 
-    style = GetWindowLong(frm.hwnd, GWL_STYLE)
-    
-    style = style And Not WS_THICKFRAME
-    style = style And Not WS_MAXIMIZEBOX
-    
-    style = SetWindowLong(frm.hwnd, GWL_STYLE, style)
-    
-    On Error Resume Next
-    
-    hMenu = GetSystemMenu(frm.hwnd, 0)
-    
-    With MII
-        .cbSize = Len(MII)
-        .dwTypeData = String(80, 0)
-        .cch = Len(.dwTypeData)
-        .fMask = MIIM_STATE
-        .wID = SC_MAXIMIZE
-    End With
-    If GetMenuItemInfo(hMenu, MII.wID, False, MII) = 0 Then Exit Sub
-    
-    With MII
-        lngMenuID = .wID
-        .wID = xSC_MAXIMIZE
-        .fMask = MIIM_ID
-    End With
-    If SetMenuItemInfo(hMenu, lngMenuID, False, MII) = 0 Then Exit Sub
-    
-    With MII
-        .fState = (.fState Or MFS_GRAYED)
-        .fMask = MIIM_STATE
-    End With
-    If SetMenuItemInfo(hMenu, MII.wID, False, MII) = 0 Then Exit Sub
-    
-    SendMessage hwnd, WM_NCACTIVATE, True, 0
-    
-    frm.Width = frm.Width - 1
-    frm.Width = frm.Width + 1
+style = GetWindowLong(frm.hwnd, GWL_STYLE)
+
+style = style And Not WS_THICKFRAME
+style = style And Not WS_MAXIMIZEBOX
+
+style = SetWindowLong(frm.hwnd, GWL_STYLE, style)
+
+On Error Resume Next
+
+hMenu = GetSystemMenu(frm.hwnd, 0)
+
+With MII
+    .cbSize = Len(MII)
+    .dwTypeData = String(80, 0)
+    .cch = Len(.dwTypeData)
+    .fMask = MIIM_STATE
+    .wID = SC_MAXIMIZE
+End With
+If GetMenuItemInfo(hMenu, MII.wID, False, MII) = 0 Then Exit Sub
+
+With MII
+    lngMenuID = .wID
+    .wID = xSC_MAXIMIZE
+    .fMask = MIIM_ID
+End With
+If SetMenuItemInfo(hMenu, lngMenuID, False, MII) = 0 Then Exit Sub
+
+With MII
+    .fState = (.fState Or MFS_GRAYED)
+    .fMask = MIIM_STATE
+End With
+If SetMenuItemInfo(hMenu, MII.wID, False, MII) = 0 Then Exit Sub
+
+SendMessage hwnd, WM_NCACTIVATE, True, 0
+
+frm.Width = frm.Width - 1
+frm.Width = frm.Width + 1
 End Sub

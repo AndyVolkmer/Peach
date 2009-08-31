@@ -43,6 +43,8 @@ Public CONFIGcombo_russian              As String
 Public CONFIGcombo_dutch                As String
 Public CONFIGcombo_french               As String
 
+Public CONFIGmsgbox_account             As String
+Public CONFIGmsgbox_password            As String
 Public CONFIGmsgbox_nonumeric           As String
 Public CONFIGmsgbox_portnoempty         As String
 Public CONFIGmsgbox_namenoempty         As String
@@ -118,10 +120,12 @@ CONFIGcombo_russian = "Russisch"
 CONFIGcombo_dutch = "Niederländisch"
 CONFIGcombo_french = "Französisch"
 
+CONFIGmsgbox_account = "Du hast keinen Account eingegeben."
+CONFIGmsgbox_password = "Du hast kein Passwort eingegeben."
 CONFIGmsgbox_nonumeric = "Du kannst keine Ziffern in deinem Namen haben."
-CONFIGmsgbox_portnoempty = "Du hast keinen Port eingeben."
-CONFIGmsgbox_namenoempty = "Du hast keinen Namen eingeben."
-CONFIGmsgbox_ipnoempty = "Du hast keine IP eingeben."
+CONFIGmsgbox_portnoempty = "Du hast keinen Port eingegeben."
+CONFIGmsgbox_namenoempty = "Du hast keinen Namen eingegeben."
+CONFIGmsgbox_ipnoempty = "Du hast keine IP eingegeben."
 
 CHATcommand_send = "&Senden"
 CHATcommand_clear = "&Löschen"
@@ -192,10 +196,12 @@ CONFIGcombo_russian = "Russian"
 CONFIGcombo_dutch = "Dutch"
 CONFIGcombo_french = "French"
 
+CONFIGmsgbox_account = "You didnt introduce an account."
+CONFIGmsgbox_password = "You didnt introduce an password."
 CONFIGmsgbox_nonumeric = "You cant take numeric names."
-CONFIGmsgbox_portnoempty = "You didnt introduce a port."
-CONFIGmsgbox_namenoempty = "You didnt introduce a name."
-CONFIGmsgbox_ipnoempty = "You didnt introduce a IP."
+CONFIGmsgbox_portnoempty = "You didnt introduce an port."
+CONFIGmsgbox_namenoempty = "You didnt introduce an name."
+CONFIGmsgbox_ipnoempty = "You didnt introduce an IP."
 
 ' Chat form ..
 CHATcommand_send = "&Send"
@@ -264,6 +270,8 @@ CONFIGcombo_dutch = "Holandés"
 CONFIGcombo_serbian = "Serbio"
 CONFIGcombo_french = "Frances"
 
+CONFIGmsgbox_account = "You didnt introduce an account."
+CONFIGmsgbox_password = "You didnt introduce an password."
 CONFIGmsgbox_nonumeric = "No puedes coger nombres con numeros."
 CONFIGmsgbox_portnoempty = "No has introducido un puerto."
 CONFIGmsgbox_namenoempty = "No has introducido un nombre."
@@ -337,6 +345,8 @@ CONFIGcombo_russian = "Ryska"
 CONFIGcombo_dutch = "Holländska"
 CONFIGcombo_french = "Franska"
 
+CONFIGmsgbox_account = "You didnt introduce an account."
+CONFIGmsgbox_password = "You didnt introduce an password."
 CONFIGmsgbox_nonumeric = "Du kan inte använda siffror i namnet."
 CONFIGmsgbox_portnoempty = "Du angav inget portnummer."
 CONFIGmsgbox_namenoempty = "Du angav inte ett namn."
@@ -412,6 +422,8 @@ CONFIGcombo_russian = "Russo"
 CONFIGcombo_dutch = "Olandese"
 CONFIGcombo_french = "Francese"
 
+CONFIGmsgbox_account = "You didnt introduce an account."
+CONFIGmsgbox_password = "You didnt introduce an password."
 CONFIGmsgbox_nonumeric = "Non puoi immettere nomi composti da numeri."
 CONFIGmsgbox_portnoempty = "Non hai selezionato una porta valida."
 CONFIGmsgbox_namenoempty = "Non hai immesso un Nome utente."
@@ -488,6 +500,8 @@ CONFIGcombo_russian = "Ruski"
 CONFIGcombo_dutch = "Holandski"
 CONFIGcombo_french = "Francuski"
 
+CONFIGmsgbox_account = "You didnt introduce an account."
+CONFIGmsgbox_password = "You didnt introduce an password."
 CONFIGmsgbox_nonumeric = "Ne mozete uzeti numericka imena."
 CONFIGmsgbox_portnoempty = "Niste uneli port."
 CONFIGmsgbox_namenoempty = "Niste uneli ime"
@@ -562,6 +576,8 @@ CONFIGcombo_russian = "Russisch"
 CONFIGcombo_dutch = "Nederlands"
 CONFIGcombo_french = "Frans"
 
+CONFIGmsgbox_account = "You didnt introduce an account."
+CONFIGmsgbox_password = "You didnt introduce an password."
 CONFIGmsgbox_nonumeric = "U kan geen naam nemen dat nummers bevat."
 CONFIGmsgbox_portnoempty = "U hebt geen poort ingesteld."
 CONFIGmsgbox_namenoempty = "U hebt geen naam gegoven."
@@ -632,6 +648,8 @@ CONFIGcombo_russian = "Russe"
 CONFIGcombo_dutch = "Hollandais"
 CONFIGcombo_french = "Français"
 
+CONFIGmsgbox_account = "You didnt introduce an account."
+CONFIGmsgbox_password = "You didnt introduce an password."
 CONFIGmsgbox_nonumeric = "Tu ne peut pas insérer noms composé de numeros."
 CONFIGmsgbox_portnoempty = "Tu n'as pas selectionner une porte valide."
 CONFIGmsgbox_namenoempty = "Tu n'as pas innecté un Nom utilizateur."

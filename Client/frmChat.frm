@@ -33,7 +33,6 @@ Begin VB.Form frmChat
       _ExtentY        =   1508
       _Version        =   393217
       Enabled         =   0   'False
-      MultiLine       =   0   'False
       MaxLength       =   180
       TextRTF         =   $"frmChat.frx":0000
    End
@@ -111,7 +110,7 @@ If LCase(txtToSend.Text) = "/time" Then
 End If
 
 'Show online list
-If LCase(Trim(txtToSend.Text)) = "/online" Then
+If LCase(RTrim(txtToSend.Text)) = "/online" Then
     frmMain.UpdateListPosition.Enabled = True
     With frmList
         .Left = frmMain.Left + .Width * 2 + 20

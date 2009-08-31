@@ -116,7 +116,7 @@ Begin VB.Form frmConfig
          Top             =   600
          Width           =   1575
       End
-      Begin VB.Label Label6 
+      Begin VB.Label lblPassword 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Password:"
          ForeColor       =   &H00000000&
@@ -126,7 +126,7 @@ Begin VB.Form frmConfig
          Top             =   360
          Width           =   975
       End
-      Begin VB.Label Label5 
+      Begin VB.Label lblAccount 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Account:"
          ForeColor       =   &H00000000&
@@ -136,7 +136,7 @@ Begin VB.Form frmConfig
          Top             =   360
          Width           =   975
       End
-      Begin VB.Label lblNick 
+      Begin VB.Label lblNickname 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Nickname:"
          ForeColor       =   &H00000000&
@@ -172,7 +172,7 @@ Begin VB.Form frmConfig
          Top             =   600
          Width           =   1575
       End
-      Begin VB.Label Label1 
+      Begin VB.Label lblPort 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Port:"
          ForeColor       =   &H00000000&
@@ -182,7 +182,7 @@ Begin VB.Form frmConfig
          Top             =   360
          Width           =   975
       End
-      Begin VB.Label Label2 
+      Begin VB.Label lblIP 
          BackColor       =   &H00F4F4F4&
          Caption         =   " IP:"
          ForeColor       =   &H00000000&
@@ -193,7 +193,7 @@ Begin VB.Form frmConfig
          Width           =   975
       End
    End
-   Begin VB.Label Label8 
+   Begin VB.Label lblVersion 
       BackColor       =   &H00F4F4F4&
       ForeColor       =   &H8000000C&
       Height          =   255
@@ -202,7 +202,7 @@ Begin VB.Form frmConfig
       Top             =   3720
       Width           =   1455
    End
-   Begin VB.Label Label7 
+   Begin VB.Label lblAuthor 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Author : Notron"
       ForeColor       =   &H8000000C&
@@ -224,6 +224,12 @@ Private Sub Command1_Click()
 If Command1.Enabled = False Then
     Exit Sub
 End If
+
+'Account can't be empty
+If CheckTx(txtAccount, CONFIGmsgbox_account) = True Then Exit Sub
+
+'Password can't be empty
+If CheckTx(txtPassword, CONFIGmsgbox_password) = True Then Exit Sub
 
 'Nick can't be empty
 If CheckTx(txtNick, CONFIGmsgbox_namenoempty) = True Then Exit Sub
@@ -274,6 +280,7 @@ End With
 
 Command1.Enabled = False
 Command2.Enabled = True
+
 frmMain.StatusBar1.Panels(1).Text = MDIstatusbar_connecting & txtIP.Text & ":" & txtPort.Text
 End Sub
 
@@ -315,7 +322,7 @@ End Sub
 Public Sub Form_Load()
 Top = 0
 Left = 0
-Label8.Caption = "Version : " & Rev
+lblVersion.Caption = "Version : " & Rev
 
 LoadConfigForm
 
@@ -372,7 +379,7 @@ Command2.Caption = CONFIGcommand_disconnect
 Command3.Caption = CONFIGcommand_language
 Frame1.Caption = CONFIGframe_personal
 Frame2.Caption = CONFIGframe_connection
-lblNick = CONFIGlabel_CI_name
+lblNickname.Caption = CONFIGlabel_CI_name
 End Sub
 
 Private Function CheckTx(txtBox As TextBox, mBox As String) As Boolean

@@ -329,6 +329,7 @@ For i = 1 To frmPanel.ListView1.ListItems.Count + 1
         Exit For
     End If
 Next i
+StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
@@ -731,7 +732,6 @@ With frmPanel.ListView1.ListItems
     Next i
 End With
 Exit Sub
-
 TargetErrorHandler:
     Select Case Err.Number
     Case 9
@@ -969,18 +969,16 @@ End Function
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+
 Winsock1(Index).Close
 Unload Winsock1(Index)
-If Index < 0 Then
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & " [System]: Disconnected with a host."
-    For i = 1 To frmPanel.ListView1.ListItems.Count
-        frmPanel.ListView1.ListItems.Remove (i)
-    Next i
-Else
-    frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & "[System]: Disconnected due connection problem."
-    StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
-    frmPanel.ListView1.ListItems.Clear
-End If
+
+frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & "[System]: Disconnected due connection problem."
+StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
+
+frmPanel.ListView1.ListItems.Clear
+
+StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 Public Sub DisableFormResize(frm As Form)
 Dim style As Long
