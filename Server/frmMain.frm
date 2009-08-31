@@ -345,7 +345,7 @@ With frmPanel.ListView1
     .ListItems.Add RR, , "Unknown"
     .ListItems.Item(RR).SubItems(1) = Winsock1(MAX_CONNECTION).RemoteHostIP
     .ListItems.Item(RR).SubItems(2) = MAX_CONNECTION
-    .ListItems.Item(RR).SubItems(3) = ""
+    .ListItems.Item(RR).SubItems(3) = vbNullString
     .ListItems.Item(RR).SubItems(4) = "No"
     .ListItems.Item(RR).SubItems(6) = Time
     .ListItems.Item(RR).SubItems(7) = "No"
@@ -558,16 +558,16 @@ Case "!msg"
     
     'Split it
     array2 = Split(GetConver, " ")
-    
+        
     'Check first position of the text for an point indicating command
-    If Left(GetConver, 1) = "." Then
+    If Left$(GetConver, 1) = "." Then
         If GetLevel(GetUser) <> 0 Then
             IsCommand = True
         End If
     End If
     
     'Check first position of the text for an slash indicating emote
-    If Left(GetConver, 1) = "/" Then
+    If Left$(GetConver, 1) = "/" Then
         IsEmote = True
     End If
     
@@ -580,7 +580,7 @@ Continue1:
     If IsCommand = True Then
         Select Case array2(0)
         Case ".show"
-            Select Case LCase(GetTarget)
+            Select Case LCase$(GetTarget)
             Case "accounts"
                 SendSingle "!accountlist" & "#" & GetAccountList, frmMain.Winsock1(Index)
             Case "users"
@@ -640,7 +640,7 @@ Continue2:
                     Next i
             End With
             
-            If GetTarget = "" Then
+            If Len(GetTarget) = 0 Then
                 Select Case LCase(array2(0))
                 Case "/lol", "/laugh"
                     SendMessage " " & GetUser & " laughs."

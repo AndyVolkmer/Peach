@@ -130,25 +130,25 @@ Private Sub lstConnections_BeforeLabelEdit(Cancel As Integer)
 End Sub
 
 Private Sub SckReceiveFile_Close(Index As Integer)
-    On Error Resume Next
+On Error Resume Next
+
+SckReceiveFile(Index).Close
+
+Close Clients(Index).FileNum
+
+If Clients(Index).BytesReceived < Clients(Index).FileSize Then
+    Kill App.Path & "\" & Clients(Index).FileName
     
-    SckReceiveFile(Index).Close
-    
-    Close Clients(Index).FileNum
-    
-    If Clients(Index).BytesReceived < Clients(Index).FileSize Then
-        Kill App.Path & "\" & Clients(Index).FileName
-        
-        Me.lstConnections.ListItems(Index + 1).SubItems(4) = "Incomplete, File Deleted"
-    Else
-        Me.lstConnections.ListItems(Index + 1).SubItems(4) = "Transfer Complete"
-    End If
-    FitTextInListView Me.lstConnections, 4, , Index + 1
-    
-    Clients(Index).FileNum = 0
-    Clients(Index).BytesReceived = 0
-    Clients(Index).FileSize = 0
-    Clients(Index).FileName = ""
+    Me.lstConnections.ListItems(Index + 1).SubItems(4) = "Incomplete, File Deleted"
+Else
+    Me.lstConnections.ListItems(Index + 1).SubItems(4) = "Transfer Complete"
+End If
+FitTextInListView Me.lstConnections, 4, , Index + 1
+
+Clients(Index).FileNum = 0
+Clients(Index).BytesReceived = 0
+Clients(Index).FileSize = 0
+Clients(Index).FileName = vbNullString
 End Sub
 
 Private Sub FitTextInListView(LV As ListView, ByVal Column As Integer, Optional ByVal Text As String, Optional ByVal ItemIndex As Long = -1)
@@ -225,7 +225,7 @@ Private Sub SckReceiveFile_DataArrival(Index As Integer, ByVal bytesTotal As Lon
         Clients(Index).BytesReceived = Clients(Index).BytesReceived + Len(sData)
         Put Clients(Index).FileNum, , sData
         
-        Me.lstConnections.ListItems(Index + 1).SubItems(4) = Format(Clients(Index).BytesReceived / Clients(Index).FileSize * 100#, "#0.00") & " %"
+        Me.lstConnections.ListItems(Index + 1).SubItems(4) = Format$(Clients(Index).BytesReceived / Clients(Index).FileSize * 100#, "#0.00") & " %"
         FitTextInListView Me.lstConnections, 4, , Index + 1
         
         If Clients(Index).BytesReceived >= Clients(Index).FileSize Then

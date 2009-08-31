@@ -105,13 +105,13 @@ Private Sub cmdSend_Click()
 Dim Array1() As String: Array1 = Split(txtToSend.Text, " ")
 
 'Display the time
-If LCase(RTrim(txtToSend.Text)) = "/time" Then
-    txtConver.Text = txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & CHATtimetext & Format(Time, "hh:nn")
+If LCase$(RTrim$(txtToSend.Text)) = "/time" Then
+    txtConver.Text = txtConver.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "]" & CHATtimetext & Format$(Time, "hh:nn")
     GoTo Next1
 End If
 
 'Show online list
-If LCase(RTrim(txtToSend.Text)) = "/online" Then
+If LCase$(RTrim$(txtToSend.Text)) = "/online" Then
     frmMain.UpdateListPosition.Enabled = True
     With frmList
         .Left = frmMain.Left + .Width * 2 + 20
@@ -123,7 +123,7 @@ If LCase(RTrim(txtToSend.Text)) = "/online" Then
 End If
 
 'No whitespaces
-If Trim(txtToSend.Text) = "" Then
+If Len(Trim$(txtToSend.Text)) = 0 Then
     GoTo Next1
 End If
 
@@ -148,7 +148,7 @@ End With
 SendMsg "!msg" & "#" & frmConfig.txtNick.Text & "#" & txtToSend.Text & "#"
 
 Next1:
-txtToSend.Text = ""
+txtToSend.Text = vbNullString
 txtToSend.SetFocus
 
 End Sub
@@ -165,8 +165,8 @@ cmdClear.Caption = CHATcommand_clear
 End Sub
 
 Private Sub cmdClear_Click()
-txtConver.Text = ""
-txtToSend.Text = ""
+txtConver.Text = vbNullString
+txtToSend.Text = vbNullString
 End Sub
 
 Private Sub txtConver_Change()
@@ -258,7 +258,7 @@ For i = LBound(Smileys) To UBound(Smileys)
     RTF.SelStart = RTF.Find(Smileys(i), Start - 1)
     RTF.SelLength = Len(Smileys(i))
     Start = RTF.SelStart + RTF.SelLength + 1
-    RTF.SelText = ""
+    RTF.SelText = vbNullString
     CopyPictureToRTF RTF, Picture1.Picture
   Wend
 

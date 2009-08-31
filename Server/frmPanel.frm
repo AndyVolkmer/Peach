@@ -67,6 +67,7 @@ Begin VB.Form frmPanel
       _ExtentY        =   1296
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -158,7 +159,7 @@ Dim Varl As Boolean
 Private Sub Command1_Click()
 'Can't kick if list is empty
 If ListView1.ListItems.Count = 0 Then
-    txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] List is empty."
+    txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] List is empty."
     Exit Sub
 End If
 
@@ -167,7 +168,7 @@ For i = 1 To ListView1.ListItems.Count
         If .Item(i).Checked = True Then
             frmMain.Winsock1(.Item(i).SubItems(2)).Close
             Unload frmMain.Winsock1(.Item(i).SubItems(2))
-            txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & .Item(i) & " got kicked."
+            txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] " & .Item(i) & " got kicked."
             .Remove (i)
         End If
     End With
@@ -190,16 +191,16 @@ End Sub
 
 Private Sub Command3_Click()
 If ListView1.ListItems.Count <= 0 Then
-    txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] List is empty."
+    txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] List is empty."
     Exit Sub
 End If
 For i = 1 To ListView1.ListItems.Count
     If ListView1.ListItems(i).Checked = True Then
         If ListView1.ListItems.Item(i).SubItems(4) = "Yes" Then
-            txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & ListView1.ListItems.Item(i) & " is already muted."
+            txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] " & ListView1.ListItems.Item(i) & " is already muted."
         Else
             ListView1.ListItems.Item(i).SubItems(4) = "Yes"
-            txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & ListView1.ListItems.Item(i) & " got muted."
+            txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] " & ListView1.ListItems.Item(i) & " got muted."
             SendMessage " " & ListView1.ListItems.Item(i) & " got muted."
         End If
     End If
@@ -209,17 +210,17 @@ End Sub
 
 Private Sub Command4_Click()
 If ListView1.ListItems.Count <= 0 Then
-    txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] List is empty."
+    txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] List is empty."
     Exit Sub
 End If
 For i = 1 To ListView1.ListItems.Count
     If ListView1.ListItems(i).Checked = True Then
         If ListView1.ListItems(i).SubItems(4) = "Yes" Then
             ListView1.ListItems.Item(i).SubItems(4) = "No"
-            txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & ListView1.ListItems.Item(i) & " got unmuted."
+            txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] " & ListView1.ListItems.Item(i) & " got unmuted."
             SendMessage " " & ListView1.ListItems.Item(i) & " got unmuted."
         Else
-            txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] User " & "'" & ListView1.ListItems.Item(i) & "'" & " is not muted."
+            txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] User " & "'" & ListView1.ListItems.Item(i) & "'" & " is not muted."
         End If
     End If
     ListView1.ListItems.Item(i).Checked = False

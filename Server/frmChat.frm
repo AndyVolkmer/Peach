@@ -47,7 +47,6 @@ Begin VB.Form frmChat
       _ExtentX        =   9763
       _ExtentY        =   1508
       _Version        =   393217
-      Enabled         =   -1  'True
       MultiLine       =   0   'False
       TextRTF         =   $"frmChat.frx":0000
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -70,7 +69,6 @@ Begin VB.Form frmChat
       _ExtentY        =   4471
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmChat.frx":007B
@@ -95,7 +93,7 @@ Option Explicit
 Private Sub cmdSend_Click()
 SendMessage " Server Notice: " & txtToSend.Text
 txtConver.Text = txtConver.Text & vbCrLf & " Server Notice: " & txtToSend.Text
-txtToSend.Text = ""
+txtToSend.Text = vbNullString
 End Sub
 
 Private Sub Form_Load()
@@ -104,7 +102,7 @@ Me.Left = 0
 End Sub
 
 Private Sub txtClear_Click()
-txtConver.Text = ""
+txtConver.Text = vbNullString
 End Sub
 
 Private Sub txtConver_Change()

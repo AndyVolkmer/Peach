@@ -10,7 +10,7 @@ Dim ReadyToRead As Boolean
     
 AssignVariables:
         NF = FreeFile
-        ReadIniValue = ""
+        ReadIniValue = vbNullString
         KEY = "[" & LCase$(KEY) & "]"
         Variable = LCase$(Variable)
     

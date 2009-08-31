@@ -302,7 +302,7 @@ End Sub
 
 Private Function socketFree() As Integer
 On Error GoTo HandleErrorFreeSocket
-    Dim theIP As Variant
+    Dim theIP As String
     Dim p As Integer
     For p = FSocket2.LBound + 1 To FSocket2.UBound
         theIP = FSocket2(p).LocalIP
@@ -361,14 +361,14 @@ Dim L As Long
 StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
 
 'Load 'Top' position from ini, if there is non take default value ( 1200 )
-If ReadIniValue(App.Path & "\Config.ini", "Position", "Top") = "" Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Position", "Top")) = 0 Then
     Me.Top = 1200
 Else
     Me.Top = ReadIniValue(App.Path & "\Config.ini", "Position", "Top")
 End If
 
 'Load 'Left' position from ini, if there is non take default value ( 1200 )
-If ReadIniValue(App.Path & "\Config.ini", "Position", "Left") = "" Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Position", "Left")) = 0 Then
     Me.Left = 1200
 Else
     Me.Left = ReadIniValue(App.Path & "\Config.ini", "Position", "Left")
@@ -439,7 +439,7 @@ End With
 End Sub
 
 Private Sub Winsock1_Close()
-Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+Prefix = "[" & Format$(Time, "hh:nn:ss") & "]"
 
 Winsock1.Close
 
@@ -508,7 +508,7 @@ End Sub
 Private Sub ConnectIsFalse()
 With frmConfig
     .Command2_Click
-    .txtNick = ""
+    .txtNick = vbNullString
 frmChat.Hide
     .Show
     .txtNick.SetFocus
@@ -517,7 +517,7 @@ MsgBox MDImsgbox_nametaken, vbInformation
 End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
-Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+Prefix = "[" & Format$(Time, "hh:nn:ss") & "]"
 Dim GetCommand  As String
 Dim StrArr()    As String
 Dim StrArr2()   As String
@@ -578,7 +578,7 @@ Case "!login"
     Case "Password"
         With frmConfig
             .Command2_Click
-            .txtPassword = ""
+            .txtPassword = vbNullString
         frmChat.Hide
             .Show
             .txtPassword.SetFocus
@@ -587,7 +587,7 @@ Case "!login"
     Case "Account"
         With frmConfig
             .Command2_Click
-            .txtAccount = ""
+            .txtAccount = vbNullString
         frmChat.Hide
             .Show
             .txtAccount.SetFocus
@@ -631,7 +631,7 @@ End Sub
 
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Dim WiSk As Winsock
-Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
+Prefix = "[" & Format$(Time, "hh:nn:ss") & "]"
 
 'Close connecting winsock ( state = 0 )
 Winsock1.Close

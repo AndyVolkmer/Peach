@@ -143,8 +143,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Check1_Click()
 If Check1 = vbChecked Then
-    txtPassword1.PasswordChar = ""
-    txtPassword2.PasswordChar = ""
+    txtPassword1.PasswordChar = vbNullString
+    txtPassword2.PasswordChar = vbNullString
 Else
     txtPassword1.PasswordChar = "*"
     txtPassword2.PasswordChar = "*"
@@ -159,7 +159,7 @@ If Command1.Caption = "&Close" Then
 End If
 
 'Can't register if there is no Account
-If txtAccount.Text = "" Then
+If Len(txtAccount.Text) = 0 Then
     MsgBox "You have to enter an Account Name.", vbInformation
     txtAccount.SetFocus
     Exit Sub
@@ -180,7 +180,7 @@ If IsNumeric(txtAccount.Text) = True Then
 End If
 
 'Can't register if there is no Password
-If txtPassword1.Text = "" Then
+If Len(txtPassword1.Text) = 0 Then
     MsgBox "You have to enter a Password.", vbInformation
     txtPassword1.SetFocus
     Exit Sub
@@ -196,8 +196,8 @@ End If
 'Can't register if passwords dont match
 If txtPassword1.Text <> txtPassword2.Text Then
     MsgBox "Your Passwords don't match.", vbInformation
-    txtPassword1.Text = ""
-    txtPassword2.Text = ""
+    txtPassword1.Text = vbNullString
+    txtPassword2.Text = vbNullString
     txtPassword1.SetFocus
     Exit Sub
 End If
@@ -251,7 +251,7 @@ Array1 = Split(GetMessage, "#")
 Select Case Array1(0)
 Case "!nameexist"
     MsgBox "The account name already exists.", vbInformation
-    txtAccount.Text = ""
+    txtAccount.Text = vbNullString
     txtAccount.SetFocus
 Case "!done"
     MsgBox "The account was successfully registered.", vbInformation

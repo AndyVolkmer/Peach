@@ -216,7 +216,7 @@ If Combo1.Text = frmConfig.txtNick.Text Then
     Exit Sub
 End If
 
-If txtFileName.Text = "" Then
+If Len(txtFileName.Text) = 0 Then
     MsgBox SFmsgbox_nofilesel, vbInformation
     txtFileName.SetFocus
     Exit Sub
@@ -326,9 +326,9 @@ Else
     PrevSent = 0
 End If
 
-lblSendSpeed.Caption = Format(DataSent / 1024#, "###,###,##0.00") & " KBytes Sent, " & _
+lblSendSpeed.Caption = Format$(DataSent / 1024#, "###,###,##0.00") & " KBytes Sent, " & _
     Format(CDbl(BSentPerSec) / 1024#, "#0.00") & " Kb/Sec, " & _
-    "Time left: " & Format(SecondsLeft \ 3600, "00") & ":" & Format(SecondsLeft \ 60, "00") & ":" & Format(SecondsLeft Mod 60, "00")
+    "Time left: " & Format$(SecondsLeft \ 3600, "00") & ":" & Format$(SecondsLeft \ 60, "00") & ":" & Format$(SecondsLeft Mod 60, "00")
 End Sub
 
 Private Sub tmrSendFile_Timer()
@@ -352,7 +352,7 @@ Get iFileNum, , Buffer ' read data
 SckSendFile.SendData Buffer ' send data
 
 ' Show progress
-lblProgress.Caption = Format(Loc(iFileNum) / CDbl(LOF(iFileNum)), "Percent") & " Done"
+lblProgress.Caption = Format$(Loc(iFileNum) / CDbl(LOF(iFileNum)), "Percent") & " Done"
 PicShowPercentage picProgress, Loc(iFileNum) / CDbl(LOF(iFileNum))
 End Sub
 

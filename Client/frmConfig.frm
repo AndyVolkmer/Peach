@@ -242,7 +242,7 @@ If CheckTx(txtPort, CONFIGmsgbox_portnoempty) = True Then Exit Sub
 
 'Nick can't be numeric
 If IsNumeric(txtNick.Text) = True Then
-    txtNick.Text = ""
+    txtNick.Text = vbNullString
     MsgBox CONFIGmsgbox_nonumeric, vbInformation
     txtNick.SetFocus
     Exit Sub
@@ -327,35 +327,35 @@ lblVersion.Caption = "Version : " & Rev
 LoadConfigForm
 
 'Read 'Nickname' from .ini file
-If ReadIniValue(App.Path & "\Config.ini", "Data", "Nickname") = "" Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Data", "Nickname")) = 0 Then
     txtNick.Text = "Nickname"
 Else
     txtNick.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Nickname")
 End If
 
 'Read 'IP' from .ini file
-If ReadIniValue(App.Path & "\Config.ini", "Data", "IP") = "" Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Data", "IP")) = 0 Then
     txtIP.Text = "0.0.0.0"
 Else
     txtIP.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "IP")
 End If
 
 'Read 'Port' from .ini file
-If ReadIniValue(App.Path & "\Config.ini", "Data", "Port") = "" Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Data", "Port")) = 0 Then
     txtPort.Text = "4728"
 Else
     txtPort.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Port")
 End If
 
 'Read 'Account' from .ini file
-If ReadIniValue(App.Path & "\Config.ini", "Data", "Account") = "" Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Data", "Account")) = 0 Then
     txtAccount.Text = "Your Account"
 Else
     txtAccount.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Account")
 End If
 
 'Read 'Save Password Tick'
-If ReadIniValue(App.Path & "\Config.ini", "Data", "SPT") = "" Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Data", "SPT")) = 0 Then
     SPT.Value = 0
 Else
     If ReadIniValue(App.Path & "\Config.ini", "Data", "SPT") = "0" Then
@@ -369,7 +369,7 @@ End If
 If SPT.Value = 1 Then
     txtPassword.Text = DeCode(DeCode(ReadIniValue(App.Path & "\Config.ini", "Data", "Password")))
 Else
-    txtPassword.Text = ""
+    txtPassword.Text = vbNullString
 End If
 End Sub
 
@@ -383,7 +383,7 @@ lblNickname.Caption = CONFIGlabel_CI_name
 End Sub
 
 Private Function CheckTx(txtBox As TextBox, mBox As String) As Boolean
-If txtBox.Text = "" Then
+If Len(txtBox.Text) = 0 Then
     MsgBox mBox, vbInformation
     txtBox.SetFocus
     CheckTx = True
@@ -414,7 +414,7 @@ End Sub
 
 Private Sub SPT_Click()
 If SPT.Value = 0 Then
-    txtPassword.Text = ""
+    txtPassword.Text = vbNullString
 End If
 End Sub
 

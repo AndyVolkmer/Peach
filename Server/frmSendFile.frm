@@ -488,7 +488,7 @@ GetPassword = array1(2)
 Select Case GetCommand
 Case "!register"
     For i = 1 To ListView1.ListItems.Count
-        If UCase(GetName) = UCase(ListView1.ListItems.Item(i).SubItems(1)) Then
+        If UCase$(GetName) = UCase$(ListView1.ListItems.Item(i).SubItems(1)) Then
             If RegSock(Index).State = 7 Then
                 RegSock(Index).SendData "!nameexist" & "#"
                 Exit Sub
