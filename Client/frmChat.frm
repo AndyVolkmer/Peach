@@ -102,10 +102,7 @@ Option Explicit
 Private Const WM_PASTE = &H302
 
 Private Sub cmdSend_Click()
-Dim Array1() As String
-
-'Assign variables
-Array1 = Split(txtToSend.Text, " ")
+Dim Array1() As String: Array1 = Split(txtToSend.Text, " ")
 
 'Display the time
 If LCase(txtToSend.Text) = "/time" Then
@@ -114,7 +111,7 @@ If LCase(txtToSend.Text) = "/time" Then
 End If
 
 'Show online list
-If LCase(txtToSend.Text) = "/online" Then
+If LCase(Trim(txtToSend.Text)) = "/online" Then
     frmMain.UpdateListPosition.Enabled = True
     With frmList
         .Left = frmMain.Left + .Width * 2 + 20
@@ -137,8 +134,7 @@ With frmList.ListView1.ListItems
             'If the the selected name is yours then no
             If .Item(i).Text = StrConv(frmConfig.txtNick, vbProperCase) Then
                 Call SMSG(False, "System", "You can't whisper yourself.")
-                txtToSend.SetFocus
-                Exit Sub
+                GoTo Next1
             End If
             
             SendMsg "!w" & "#" & frmConfig.txtNick.Text & "|" & .Item(i) & "#" & txtToSend.Text & "#"
@@ -152,8 +148,8 @@ End With
 SendMsg "!msg" & "#" & frmConfig.txtNick.Text & "#" & txtToSend.Text & "#"
 
 Next1:
-    txtToSend.Text = ""
-    txtToSend.SetFocus
+txtToSend.Text = ""
+txtToSend.SetFocus
 
 End Sub
 
@@ -187,7 +183,7 @@ With frmMain
 End With
 
 'Create smileys
-Create_Smileys txtConver
+Call Create_Smileys(txtConver)
 
 'Set cursor to last position
 txtConver.SelStart = Len(txtConver.Text)

@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.8.9"
+Public Const Rev = "1.0.9.0"
 Public Const aPort = 6123
 Public Const bPort = 6124
 Public Const RegPort = 6222
@@ -15,14 +15,15 @@ Public GetLevel     As String
 Public i            As Integer 'Global 'FOR' variable
 
 Public Type NOTIFYICONDATA
-cbSize              As Long
-hwnd                As Long
-uId                 As Long
-uFlags              As Long
-uCallBackMessage    As Long
-hIcon               As Long
-szTip               As String * 64
+    cbSize              As Long
+    hwnd                As Long
+    uId                 As Long
+    uFlags              As Long
+    uCallBackMessage    As Long
+    hIcon               As Long
+    szTip               As String * 64
 End Type
+
 Public Const NIM_ADD = &H0
 Public Const NIM_MODIFY = &H1
 Public Const NIM_DELETE = &H2
@@ -98,42 +99,42 @@ Call FlashWindow(Handle, ReturnOrig)
 End Sub
 
 Public Sub minimize_to_tray()
-    frmMain.Hide
-    nid.cbSize = Len(nid)
-    nid.hwnd = frmMain.hwnd
-    nid.uId = vbNull
-    nid.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
-    nid.uCallBackMessage = WM_MOUSEMOVE
-    nid.hIcon = frmMain.Icon ' the icon will be your Form1 project icon
-    nid.szTip = "Peach -  " & frmConfig.txtNick & vbNullChar
-    Shell_NotifyIcon NIM_ADD, nid
+frmMain.Hide
+nid.cbSize = Len(nid)
+nid.hwnd = frmMain.hwnd
+nid.uId = vbNull
+nid.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
+nid.uCallBackMessage = WM_MOUSEMOVE
+nid.hIcon = frmMain.Icon ' the icon will be your Form1 project icon
+nid.szTip = "Peach -  " & frmConfig.txtNick & vbNullChar
+Shell_NotifyIcon NIM_ADD, nid
 End Sub
 
 Public Sub SetTrans(oForm As Form, Optional bytAlpha As Byte = 255, Optional lColor As Long = 0)
-    Dim lStyle As Long
-    lStyle = GetWindowLong(oForm.hwnd, GWL_EXSTYLE)
-    If Not (lStyle And WS_EX_LAYERED) = WS_EX_LAYERED Then _
-        SetWindowLong oForm.hwnd, GWL_EXSTYLE, lStyle Or WS_EX_LAYERED
-    SetLayeredWindowAttributes oForm.hwnd, lColor, bytAlpha, LWA_COLORKEY Or LWA_ALPHA
+Dim lStyle As Long
+lStyle = GetWindowLong(oForm.hwnd, GWL_EXSTYLE)
+If Not (lStyle And WS_EX_LAYERED) = WS_EX_LAYERED Then _
+    SetWindowLong oForm.hwnd, GWL_EXSTYLE, lStyle Or WS_EX_LAYERED
+SetLayeredWindowAttributes oForm.hwnd, lColor, bytAlpha, LWA_COLORKEY Or LWA_ALPHA
 End Sub
 
 Public Function IsOverCtl(oForm As Form, ByVal X As Long, ByVal Y As Long) As Boolean
-    Dim ctl As Control, lhWnd As Long, r As RECT, pt As POINTAPI
-    
-    pt.X = X: pt.Y = Y
-    ClientToScreen oForm.hwnd, pt
-    
-    For Each ctl In oForm.Controls
-        On Error GoTo ErrHandler
-        lhWnd = ctl.hwnd
-        On Error GoTo 0
-        If lhWnd Then
-            GetWindowRect ctl.hwnd, r
-            IsOverCtl = (pt.X >= r.Left And pt.X <= r.Right And pt.Y >= r.Top And pt.Y <= r.Bottom)
-            If IsOverCtl Then Exit Function
-        End If
-    Next ctl
-    Exit Function
+Dim ctl As Control, lhWnd As Long, r As RECT, pt As POINTAPI
+
+pt.X = X: pt.Y = Y
+ClientToScreen oForm.hwnd, pt
+
+For Each ctl In oForm.Controls
+    On Error GoTo ErrHandler
+    lhWnd = ctl.hwnd
+    On Error GoTo 0
+    If lhWnd Then
+        GetWindowRect ctl.hwnd, r
+        IsOverCtl = (pt.X >= r.Left And pt.X <= r.Right And pt.Y >= r.Top And pt.Y <= r.Bottom)
+        If IsOverCtl Then Exit Function
+    End If
+Next ctl
+Exit Function
 ErrHandler:
     lhWnd = 0
     Resume Next

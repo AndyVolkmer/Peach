@@ -79,10 +79,10 @@ Begin VB.Form frmConfig
          Caption         =   "Offline"
          ForeColor       =   &H00000040&
          Height          =   255
-         Left            =   3840
+         Left            =   4080
          TabIndex        =   11
          Top             =   1440
-         Width           =   3015
+         Width           =   2775
       End
       Begin VB.Label Label5 
          BackColor       =   &H00F4F4F4&
