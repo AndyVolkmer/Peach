@@ -32,7 +32,6 @@ Begin VB.Form Form1
       _ExtentX        =   11668
       _ExtentY        =   3201
       _Version        =   393217
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"Form1.frx":08CA
@@ -87,7 +86,7 @@ Dim t As String
 
 Private Sub Command1_Click()
 On Error Resume Next
-Shell App.Path & "\peachClient.exe"
+Shell App.Path & "\peachClient.exe", vbNormalFocus
 End Sub
 
 Private Sub Form_Initialize()

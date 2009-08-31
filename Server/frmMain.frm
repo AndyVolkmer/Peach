@@ -347,6 +347,8 @@ With frmPanel.ListView1
     .ListItems.Item(RR).SubItems(2) = MAX_CONNECTION
     .ListItems.Item(RR).SubItems(3) = ""
     .ListItems.Item(RR).SubItems(4) = "No"
+    .ListItems.Item(RR).SubItems(6) = Time
+    .ListItems.Item(RR).SubItems(7) = "No"
 End With
 StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
 End Sub
@@ -493,13 +495,18 @@ Case "!w"
         ForWho = array2(1)
         
         'Check in listitems if forwho name is in the list and get the socket id
-        For i = 1 To frmPanel.ListView1.ListItems.Count
-            If ForWho = frmPanel.ListView1.ListItems.Item(i) Then
-                SendSingle " [" & GetUser & "] whispers: " & GetConver, frmMain.Winsock1(frmPanel.ListView1.ListItems.Item(i).SubItems(2))
-                Call SMSG(Command, GetUser, GetConver, ForWho)
-                Exit For
-            End If
-        Next i
+        With frmPanel.ListView1.ListItems
+            For i = 1 To .Count
+                If ForWho = .Item(i) Then
+                    If .Item(i).SubItems(7) = "Yes" Then
+                        SendSingle " " & GetUser & " is away from keyboard.", frmMain.Winsock1(Index)
+                    End If
+                    SendSingle " [" & GetUser & "] whispers: " & GetConver, frmMain.Winsock1(.Item(i).SubItems(2))
+                    Call SMSG(Command, GetUser, GetConver, ForWho)
+                    Exit For
+                End If
+            Next i
+        End With
     End If
     
 Case "!login"
@@ -635,7 +642,7 @@ Continue2:
             
             If GetTarget = "" Then
                 Select Case LCase(array2(0))
-                Case "/lol"
+                Case "/lol", "/laugh"
                     SendMessage " " & GetUser & " laughs."
                 Case "/rofl"
                     SendMessage " " & GetUser & " rolls on the floor laughing."
@@ -653,10 +660,28 @@ Continue2:
                     SendMessage " " & GetUser & " insults him / her-self as bitch."
                 Case "/smile"
                     SendMessage " " & GetUser & " smiles."
-                Case "/love"
+                Case "/love", "/<3"
                     SendMessage " " & GetUser & " feels the love."
                 Case "/cheer"
                     SendMessage " " & GetUser & " cheers."
+                Case "/afk"
+                    'Set afk flag
+                    With frmPanel.ListView1.ListItems
+                        For i = 1 To .Count
+                            If Right(.Item(i), Len(GetUser)) = GetUser Then
+                                If .Item(i).SubItems(7) = "Yes" Then
+                                    .Item(i).SubItems(7) = "No"
+                                    .Item(i) = GetUser
+                                Else
+                                    .Item(i).SubItems(7) = "Yes"
+                                    .Item(i) = "<AFK>" & GetUser
+                                End If
+                                Exit For
+                            End If
+                        Next i
+                        UpdateUsersList
+                        Exit Sub
+                    End With
                 Case Else
                     GoTo Continue3
                 End Select

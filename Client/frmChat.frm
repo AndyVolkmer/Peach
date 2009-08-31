@@ -105,7 +105,7 @@ Private Sub cmdSend_Click()
 Dim Array1() As String: Array1 = Split(txtToSend.Text, " ")
 
 'Display the time
-If LCase(txtToSend.Text) = "/time" Then
+If LCase(RTrim(txtToSend.Text)) = "/time" Then
     txtConver.Text = txtConver.Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "]" & CHATtimetext & Format(Time, "hh:nn")
     GoTo Next1
 End If

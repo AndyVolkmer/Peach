@@ -67,7 +67,6 @@ Begin VB.Form frmPanel
       _ExtentY        =   1296
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -107,7 +106,7 @@ Begin VB.Form frmPanel
       BackColor       =   -2147483643
       BorderStyle     =   1
       Appearance      =   1
-      NumItems        =   6
+      NumItems        =   8
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "Name"
          Object.Width           =   2205
@@ -133,10 +132,19 @@ Begin VB.Form frmPanel
          Object.Width           =   1764
       EndProperty
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   2
          SubItemIndex    =   5
          Text            =   "Account"
          Object.Width           =   2205
+      EndProperty
+      BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   6
+         Text            =   "Login Time"
+         Object.Width           =   2540
+      EndProperty
+      BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   7
+         Text            =   "AFK"
+         Object.Width           =   1834
       EndProperty
    End
 End
