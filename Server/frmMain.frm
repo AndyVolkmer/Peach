@@ -333,23 +333,23 @@ StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " C
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
-Dim RR As Integer
-RR = frmPanel.ListView1.ListItems.Count + 1
 MAX_CONNECTION = loadSocket
 
 Winsock1(MAX_CONNECTION).LocalPort = frmConfig.txtPort.Text
 Winsock1(MAX_CONNECTION).Accept requestID
 
-'New user should be listed in the panel
-With frmPanel.ListView1
-    .ListItems.Add RR, , "Unknown"
-    .ListItems.Item(RR).SubItems(1) = Winsock1(MAX_CONNECTION).RemoteHostIP
-    .ListItems.Item(RR).SubItems(2) = MAX_CONNECTION
-    .ListItems.Item(RR).SubItems(3) = vbNullString
-    .ListItems.Item(RR).SubItems(4) = "No"
-    .ListItems.Item(RR).SubItems(6) = Time
-    .ListItems.Item(RR).SubItems(7) = "No"
+'Add new user to panel without account and name
+With frmPanel.ListView1.ListItems
+    .Add , , vbNullString '"Unknown"
+    .Item(.Count).SubItems(1) = Winsock1(MAX_CONNECTION).RemoteHostIP
+    .Item(.Count).SubItems(2) = MAX_CONNECTION
+    .Item(.Count).SubItems(3) = vbNullString
+    .Item(.Count).SubItems(4) = "No"
+    .Item(.Count).SubItems(5) = vbNullString
+    .Item(.Count).SubItems(6) = Time
+    .Item(.Count).SubItems(7) = "No"
 End With
+
 StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
@@ -360,7 +360,8 @@ On Error GoTo HandleErrorFreeSocket
 For i = Winsock1.LBound + 1 To Winsock1.UBound
     If Winsock1(i).LocalIP Then
     End If
-Next
+Next i
+
 socketFree = Winsock1.UBound + 1
 
 Exit Function
@@ -387,7 +388,6 @@ Dim GetMessage      As String
 Dim GetConver       As String
 Dim GetTarget       As String
 Dim GetLastMessage  As String
-Dim RR              As Integer
 Dim bMatch, Mute    As Boolean
 
 'Get Message
@@ -412,13 +412,15 @@ With frmPanel.ListView1.ListItems
 End With
 
 'Check if user is muted
-For i = 1 To frmPanel.ListView1.ListItems.Count
-    If frmPanel.ListView1.ListItems.Item(i) = GetUser Then
-        If frmPanel.ListView1.ListItems.Item(i).SubItems(4) = "Yes" Then
-            Mute = True
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i) = GetUser Then
+            If .Item(i).SubItems(4) = "Yes" Then
+                Mute = True
+            End If
         End If
-    End If
-Next i
+    Next i
+End With
 
 'Validate: If message is to long then kick
 If Len(GetConver) > 200 Then
@@ -449,17 +451,17 @@ Case "!connected"
     End With
         
     Call SMSG(Command, GetUser, "")
-    RR = frmPanel.ListView1.ListItems.Count
-                
-    frmPanel.ListView1.ListItems.Item(RR).Text = GetUser
-    frmPanel.ListView1.ListItems.Item(RR).SubItems(5) = GetConver
+    With frmPanel.ListView1.ListItems
+        .Item(.Count).Text = GetUser
+        .Item(.Count).SubItems(5) = GetConver
+    End With
     UpdateUsersList
 
 Case "!namerequest"
     Call SMSG(Command, GetUser, "")
     'Check badname list
     For i = 0 To frmPanel.List1.ListCount
-        If StrConv(frmPanel.List1.List(i), vbProperCase) = StrConv(GetUser, vbProperCase) Then
+        If frmPanel.List1.List(i) = GetUser Then
             bMatch = True
             Call SMSG("!badname", GetUser, "")
             Exit For
@@ -467,17 +469,18 @@ Case "!namerequest"
     Next i
     
     'Check current online list
-    For i = 1 To frmPanel.ListView1.ListItems.Count
-        If StrConv(frmPanel.ListView1.ListItems.Item(i), vbProperCase) = StrConv(GetUser, vbProperCase) Then
-            bMatch = True
-            Call SMSG("!nametaken", GetUser, "")
-            Exit For
-        End If
-    Next i
+    With frmPanel.ListView1.ListItems
+        For i = 1 To .Count
+            If .Item(i) = GetUser Then
+                bMatch = True
+                Call SMSG("!nametaken", GetUser, "")
+                Exit For
+            End If
+        Next i
+    End With
     
     'Return answer to client
     If bMatch = True Then
-        bMatch = False
         SendSingle "!decilined", frmMain.Winsock1(Index)
     Else
         SendSingle "!accepted", frmMain.Winsock1(Index)
@@ -668,13 +671,11 @@ Continue2:
                     'Set afk flag
                     With frmPanel.ListView1.ListItems
                         For i = 1 To .Count
-                            If Right(.Item(i), Len(GetUser)) = GetUser Then
+                            If .Item(i) = GetUser Then
                                 If .Item(i).SubItems(7) = "Yes" Then
                                     .Item(i).SubItems(7) = "No"
-                                    .Item(i) = GetUser
                                 Else
                                     .Item(i).SubItems(7) = "Yes"
-                                    .Item(i) = "<AFK>" & GetUser
                                 End If
                                 Exit For
                             End If

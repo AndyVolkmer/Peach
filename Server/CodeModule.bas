@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.0.9.6"
+Public Const Rev = "1.0.9.7"
 Public Const RegPort = 6222
 
 Public Prefix   As String
@@ -60,7 +60,11 @@ Dim GetList As String
 With frmPanel.ListView1.ListItems
     GetList = "!listupdate#"
     For i = 1 To .Count
-        GetList = GetList & .Item(i) & "#"
+        If .Item(i).SubItems(7) = "Yes" Then
+            GetList = GetList & "<AFK>" & .Item(i) & "#"
+        Else
+            GetList = GetList & .Item(i) & "#"
+        End If
     Next i
 End With
 If GetList <> "!listupdate#" Then

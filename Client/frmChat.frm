@@ -126,7 +126,7 @@ If LCase$(RTrim$(txtToSend.Text)) = "/online" Then
 End If
 
 'No whitespaces
-If LenB(Trim$(txtToSend.Text)) = 0 Then
+If Len(Trim$(txtToSend.Text)) = 0 Then
     GoTo Next1
 End If
 
@@ -134,12 +134,6 @@ End If
 With frmList.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).Checked = True Then
-            'If the the selected name is yours then no
-            If .Item(i).Text = StrConv(frmConfig.txtNick, vbProperCase) Then
-                Call SMSG(False, "System", "You can't whisper yourself.")
-                GoTo Next1
-            End If
-            
             SendMsg "!w" & "#" & frmConfig.txtNick.Text & "|" & .Item(i) & "#" & txtToSend.Text & "#"
             Call SMSG(True, .Item(i), txtToSend.Text)
             GoTo Next1
