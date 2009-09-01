@@ -346,7 +346,7 @@ With frmPanel.ListView1.ListItems
     .Item(.Count).SubItems(3) = vbNullString
     .Item(.Count).SubItems(4) = "No"
     .Item(.Count).SubItems(5) = vbNullString
-    .Item(.Count).SubItems(6) = Time
+    .Item(.Count).SubItems(6) = Format$(Time, "hh:mm:ss")
     .Item(.Count).SubItems(7) = "No"
 End With
 
@@ -355,15 +355,12 @@ End Sub
 
 Private Function socketFree() As Integer
 On Error GoTo HandleErrorFreeSocket
-'Dim theIP As Variant
-
 For i = Winsock1.LBound + 1 To Winsock1.UBound
     If Winsock1(i).LocalIP Then
     End If
 Next i
 
 socketFree = Winsock1.UBound + 1
-
 Exit Function
 HandleErrorFreeSocket:
 socketFree = i
@@ -677,6 +674,8 @@ Emotes:
                     SendMessage " " & GetUser & " feels the love."
                 Case "/cheer"
                     SendMessage " " & GetUser & " cheers."
+                Case "/kiss"
+                    SendMessage " " & GetUser & " blows a kiss into the wind."
                 Case "/afk"
                     'Set afk flag
                     With frmPanel.ListView1.ListItems
@@ -721,6 +720,8 @@ Emotes:
                         SendMessage " " & GetUser & " loves " & GetTarget & "."
                     Case "/cheer"
                         SendMessage " " & GetUser & " cheers at " & GetTarget & "."
+                    Case "/kiss"
+                        SendMessage " " & GetUser & " blows a kiss to " & GetTarget & "."
                     End Select
                 Else
                     SendSingle " User '" & GetTarget & "' not found.", frmMain.Winsock1(Index)
@@ -732,18 +733,21 @@ Emotes:
     End If
             
 Message:
+    'Check if user is muted
     If Mute = True Then
         SendSingle " You are muted.", frmMain.Winsock1(Index)
         Call SMSG("!muted", GetUser, GetConver)
         Exit Sub
     End If
     
+    'Check if user is repeating
     If GetConver = GetLastMessage Then
         SendSingle " Your message has triggered serverside flood protection. Please don't repeat yourself.", frmMain.Winsock1(Index)
         Call SMSG("!repeat", GetUser, "")
         Exit Sub
     End If
         
+    'Determine users level and add associated tag
     Select Case GetLevel(GetUser)
     Case 0
         SendMessage " [" & GetUser & "]: " & GetConver
@@ -755,7 +759,6 @@ Message:
     
     Call SMSG(Command, GetUser, GetConver)
     
-
 Case Else
     SendMessage " Unknown operation."
 

@@ -25,6 +25,10 @@ Public MDImsgbox_banned                 As String
 Public CONFIGcommand_connect            As String
 Public CONFIGcommand_disconnect         As String
 Public CONFIGcommand_language           As String
+Public CONFIGcommand_update             As String
+Public CONFIGcommand_register           As String
+
+Public CONFIGcheck_savepassword         As String
 
 Public CONFIGlabel_CI_name              As String
 Public CONFIGlabel_selectlanguage       As String
@@ -102,6 +106,10 @@ MDImsgbox_banned = "Dieser Account wurde gebannt."
 CONFIGcommand_connect = "&Verbinden"
 CONFIGcommand_disconnect = "&Verbindung trenn."
 CONFIGcommand_language = "&Sprache"
+CONFIGcommand_update = "&Aktualisieren"
+CONFIGcommand_register = "&Account registrieren"
+
+CONFIGcheck_savepassword = "&Password Speichern"
 
 CONFIGlabel_CI_name = "Name: "
 CONFIGlabel_selectlanguage = "Wähle deine Sprache aus:"
@@ -178,6 +186,10 @@ MDImsgbox_banned = "This account is banned."
 CONFIGcommand_connect = "&Connect"
 CONFIGcommand_disconnect = "&Disconnect"
 CONFIGcommand_language = "&Language"
+CONFIGcommand_update = "&Update"
+CONFIGcommand_register = "&Register Account"
+
+CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Name: "
 CONFIGlabel_selectlanguage = "Select your language:"
@@ -254,6 +266,10 @@ MDImsgbox_banned = "Esta cuenta esta baneada."
 CONFIGcommand_connect = "&Conectar"
 CONFIGcommand_disconnect = "&Desconectar"
 CONFIGcommand_language = "&Idioma"
+CONFIGcommand_update = "&Actualizar"
+CONFIGcommand_register = "&Registrar cuenta"
+
+CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Nombre: "
 CONFIGlabel_selectlanguage = "Elige tu idioma:"
@@ -327,6 +343,10 @@ MDImsgbox_banned = "This account is banned."
 CONFIGcommand_connect = "&Anslut"
 CONFIGcommand_disconnect = "&Frånkoppla"
 CONFIGcommand_language = "&Språk"
+CONFIGcommand_update = "&Update"
+CONFIGcommand_register = "&Register Account"
+
+CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Namn: "
 CONFIGlabel_selectlanguage = "Välj språk:"
@@ -404,6 +424,10 @@ MDImsgbox_banned = "This account is banned."
 CONFIGcommand_connect = "&Connesso"
 CONFIGcommand_disconnect = "&Disconnesso"
 CONFIGcommand_language = "&Lingua"
+CONFIGcommand_update = "&Update"
+CONFIGcommand_register = "&Register Account"
+
+CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Nome: "
 CONFIGlabel_selectlanguage = "Seleziona la tua lingua:"
@@ -482,6 +506,10 @@ MDImsgbox_banned = "This account is banned."
 CONFIGcommand_connect = "&Povezi se"
 CONFIGcommand_disconnect = "&Veza je prekinuta"
 CONFIGcommand_language = "&Jezik"
+CONFIGcommand_update = "&Update"
+CONFIGcommand_register = "&Register Account"
+
+CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Ime :"
 CONFIGlabel_selectlanguage = "Dodaj svoj jezik:"
@@ -558,6 +586,10 @@ MDImsgbox_banned = "This account is banned."
 CONFIGcommand_connect = "&Verbind"
 CONFIGcommand_disconnect = "&Verbreek de verbinding"
 CONFIGcommand_language = "&Taal"
+CONFIGcommand_update = "&Update"
+CONFIGcommand_register = "&Register Account"
+
+CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Naam: "
 CONFIGlabel_selectlanguage = "Selecteer jou taal:"
@@ -630,6 +662,10 @@ MDImsgbox_banned = "This account is banned."
 CONFIGcommand_connect = "&Connecté"
 CONFIGcommand_disconnect = "&Deconnecté"
 CONFIGcommand_language = "&Langue"
+CONFIGcommand_update = "&Update"
+CONFIGcommand_register = "&Register Account"
+
+CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Nome: "
 CONFIGlabel_selectlanguage = "Choisissez votre langue:"

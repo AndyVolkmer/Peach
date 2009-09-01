@@ -18,7 +18,6 @@ Begin VB.Form frmConfig
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MDIChild        =   -1  'True
    ScaleHeight     =   4185
    ScaleWidth      =   7500
@@ -85,7 +84,7 @@ Begin VB.Form frmConfig
          Left            =   5280
          TabIndex        =   19
          Top             =   600
-         Width           =   1575
+         Width           =   1815
       End
       Begin VB.TextBox txtPassword 
          Alignment       =   2  'Center
@@ -326,39 +325,39 @@ lblVersion.Caption = "Version : " & Rev
 
 LoadConfigForm
 
-'Read 'Nickname' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Data", "Nickname")) = 0 Then
-    txtNick.Text = "Nickname"
-Else
-    txtNick.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Nickname")
-End If
-
 'Read 'IP' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Data", "IP")) = 0 Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Connection", "IP")) = 0 Then
     txtIP.Text = "0.0.0.0"
 Else
-    txtIP.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "IP")
+    txtIP.Text = ReadIniValue(App.Path & "\Config.ini", "Connection", "IP")
 End If
 
 'Read 'Port' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Data", "Port")) = 0 Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Connection", "Port")) = 0 Then
     txtPort.Text = "4728"
 Else
-    txtPort.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Port")
+    txtPort.Text = ReadIniValue(App.Path & "\Config.ini", "Connection", "Port")
+End If
+
+'Read 'Nickname' from .ini file
+If Len(ReadIniValue(App.Path & "\Config.ini", "Private", "Nickname")) = 0 Then
+    txtNick.Text = "Nickname"
+Else
+    txtNick.Text = ReadIniValue(App.Path & "\Config.ini", "Private", "Nickname")
 End If
 
 'Read 'Account' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Data", "Account")) = 0 Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Private", "Account")) = 0 Then
     txtAccount.Text = "Your Account"
 Else
-    txtAccount.Text = ReadIniValue(App.Path & "\Config.ini", "Data", "Account")
+    txtAccount.Text = ReadIniValue(App.Path & "\Config.ini", "Private", "Account")
 End If
 
 'Read 'Save Password Tick'
-If Len(ReadIniValue(App.Path & "\Config.ini", "Data", "SPT")) = 0 Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Private", "SPT")) = 0 Then
     SPT.Value = 0
 Else
-    If ReadIniValue(App.Path & "\Config.ini", "Data", "SPT") = "0" Then
+    If ReadIniValue(App.Path & "\Config.ini", "Private", "SPT") = "0" Then
         SPT.Value = 0
     Else
         SPT.Value = 1
@@ -367,7 +366,7 @@ End If
 
 'Read 'Password' from .ini file
 If SPT.Value = 1 Then
-    txtPassword.Text = DeCode(DeCode(ReadIniValue(App.Path & "\Config.ini", "Data", "Password")))
+    txtPassword.Text = DeCode(DeCode(ReadIniValue(App.Path & "\Config.ini", "Private", "Password")))
 Else
     txtPassword.Text = vbNullString
 End If
@@ -377,8 +376,11 @@ Public Sub LoadConfigForm()
 Command1.Caption = CONFIGcommand_connect
 Command2.Caption = CONFIGcommand_disconnect
 Command3.Caption = CONFIGcommand_language
+Command4.Caption = CONFIGcommand_update
+Command5.Caption = CONFIGcommand_register
 Frame1.Caption = CONFIGframe_personal
 Frame2.Caption = CONFIGframe_connection
+SPT.Caption = CONFIGcheck_savepassword
 lblNickname.Caption = CONFIGlabel_CI_name
 End Sub
 
@@ -392,12 +394,12 @@ End Function
 
 Private Sub Form_Unload(Cancel As Integer)
 'Write data entries to .ini file
-WriteIniValue App.Path & "\Config.ini", "Data", "SPT", SPT.Value
-WriteIniValue App.Path & "\Config.ini", "Data", "Password", Encode(Encode(txtPassword.Text))
-WriteIniValue App.Path & "\Config.ini", "Data", "Account", txtAccount.Text
-WriteIniValue App.Path & "\Config.ini", "Data", "Port", txtPort.Text
-WriteIniValue App.Path & "\Config.ini", "Data", "IP", txtIP.Text
-WriteIniValue App.Path & "\Config.ini", "Data", "Nickname", txtNick.Text
+WriteIniValue App.Path & "\Config.ini", "Private", "SPT", SPT.Value
+WriteIniValue App.Path & "\Config.ini", "Private", "Password", Encode(Encode(txtPassword.Text))
+WriteIniValue App.Path & "\Config.ini", "Private", "Account", txtAccount.Text
+WriteIniValue App.Path & "\Config.ini", "Private", "Nickname", txtNick.Text
+WriteIniValue App.Path & "\Config.ini", "Connection", "Port", txtPort.Text
+WriteIniValue App.Path & "\Config.ini", "Connection", "IP", txtIP.Text
 
 'Write position entries to .ini file
 WriteIniValue App.Path & "\Config.ini", "Position", "Top", frmMain.Top

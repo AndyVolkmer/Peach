@@ -5,7 +5,7 @@ Begin VB.Form frmChat
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    Caption         =   "frmChat"
-   ClientHeight    =   3810
+   ClientHeight    =   4185
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   7485
@@ -20,9 +20,17 @@ Begin VB.Form frmChat
    EndProperty
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
-   ScaleHeight     =   3810
+   ScaleHeight     =   4185
    ScaleWidth      =   7485
    ShowInTaskbar   =   0   'False
+   Begin VB.CommandButton Command1 
+      Caption         =   "Settings"
+      Height          =   255
+      Left            =   5160
+      TabIndex        =   5
+      Top             =   3720
+      Width           =   2175
+   End
    Begin RichTextLib.RichTextBox txtToSend 
       Height          =   855
       Left            =   120
@@ -43,7 +51,7 @@ Begin VB.Form frmChat
       ScaleHeight     =   315
       ScaleWidth      =   315
       TabIndex        =   3
-      Top             =   2160
+      Top             =   2040
       Visible         =   0   'False
       Width           =   375
    End
@@ -149,10 +157,53 @@ txtToSend.SetFocus
 
 End Sub
 
+Private Sub Command1_Click()
+frmSettings.Show 1
+End Sub
+
 Public Sub Form_Load()
 Top = 0
 Left = 0
 LoadChatForm
+LoadChatSettings
+End Sub
+
+Public Sub LoadChatSettings()
+'Read 'BackColor' from .ini file
+If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")) = 0 Then
+    txtConver.BackColor = 16777215
+Else
+    txtConver.BackColor = ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")
+    txtToSend.BackColor = ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")
+End If
+
+'Read 'FontColor' from .ini file
+If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "FontCol")) = 0 Then
+    txtConver.SelColor = 0
+Else
+    With txtConver
+        .SelStart = 1
+        .SelLength = Len(.Text)
+        .SelColor = ReadIniValue(App.Path & "\Config.ini", "Chat", "FontCol")
+    End With
+End If
+
+'Read 'FontSize' from .ini file
+If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")) = 0 Then
+    txtConver.Font.Size = 8
+Else
+    With txtConver.Font
+        Select Case ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")
+        Case 0
+            .Size = 8
+        Case 1
+            .Size = 9
+        Case 2
+            .Size = 10
+        End Select
+    End With
+End If
+
 End Sub
 
 Public Sub LoadChatForm()
