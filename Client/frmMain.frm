@@ -522,6 +522,7 @@ Dim GetCommand  As String
 Dim StrArr()    As String
 Dim StrArr2()   As String
 Dim GetMessage  As String
+Dim Buffer      As String
 
 'We get the message
 Winsock1.GetData GetMessage
@@ -536,20 +537,26 @@ Select Case GetCommand
 
 Case "!accountlist"
     StrArr2 = Split(StrArr(1), " ")
-    With frmChat
-        .txtConver.Text = .txtConver.Text & vbCrLf & " Account List :"
-        For i = LBound(StrArr2) To UBound(StrArr2) - 1
-            .txtConver.Text = .txtConver.Text & vbCrLf & " - '" & StrArr2(i) & "'"
-        Next i
+    Buffer = Buffer & vbCrLf & " Account List :"
+    For i = LBound(StrArr2) To UBound(StrArr2) - 1
+        Buffer = Buffer & vbCrLf & " - '" & StrArr2(i) & "'"
+    Next i
+    With frmChat.txtConver
+        .SelStart = Len(.Text)
+        .SelRTF = Buffer
     End With
         
 Case "!userlist"
     StrArr2 = Split(StrArr(1), " ")
     With frmChat
-        .txtConver.Text = .txtConver.Text & vbCrLf & " User List :"
+        Buffer = Buffer & vbCrLf & " User List :"
         For i = LBound(StrArr2) To UBound(StrArr2) - 1
-            .txtConver.Text = .txtConver.Text & vbCrLf & " - '" & StrArr2(i) & "'"
+            Buffer = Buffer & vbCrLf & " - '" & StrArr2(i) & "'"
         Next i
+    End With
+    With frmChat.txtConver
+        .SelStart = Len(.Text)
+        .SelRTF = Buffer
     End With
     
 'We can't login

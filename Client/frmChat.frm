@@ -106,7 +106,10 @@ Dim Array1() As String: Array1 = Split(txtToSend.Text, " ")
 
 'Display the time
 If LCase$(RTrim$(txtToSend.Text)) = "/time" Then
-    txtConver.Text = txtConver.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "]" & CHATtimetext & Format$(Time, "hh:nn")
+    With txtConver
+        .SelStart = Len(.Text)
+        .SelRTF = vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "]" & CHATtimetext & Format$(Time, "hh:nn")
+    End With
     GoTo Next1
 End If
 
@@ -123,7 +126,7 @@ If LCase$(RTrim$(txtToSend.Text)) = "/online" Then
 End If
 
 'No whitespaces
-If Len(Trim$(txtToSend.Text)) = 0 Then
+If LenB(Trim$(txtToSend.Text)) = 0 Then
     GoTo Next1
 End If
 

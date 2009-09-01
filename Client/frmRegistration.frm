@@ -159,14 +159,14 @@ If Command1.Caption = "&Close" Then
 End If
 
 'Can't register if there is no Account
-If Len(txtAccount.Text) = 0 Then
+If LenB(txtAccount.Text) = 0 Then
     MsgBox "You have to enter an Account Name.", vbInformation
     txtAccount.SetFocus
     Exit Sub
 End If
 
 'Can't register if account is shorter then 5 chars.
-If Len(txtAccount.Text) < 5 Then
+If LenB(txtAccount.Text) < 5 Then
     MsgBox "Your Account needs at least 5 characters.", vbInformation
     txtAccount.SetFocus
     Exit Sub
@@ -180,14 +180,14 @@ If IsNumeric(txtAccount.Text) = True Then
 End If
 
 'Can't register if there is no Password
-If Len(txtPassword1.Text) = 0 Then
+If LenB(txtPassword1.Text) = 0 Then
     MsgBox "You have to enter a Password.", vbInformation
     txtPassword1.SetFocus
     Exit Sub
 End If
 
 'Can't register if password is shorter then 4 chars.
-If Len(txtPassword1.Text) < 4 Then
+If LenB(txtPassword1.Text) < 4 Then
     MsgBox "Your Password needs at least 4 characters."
     txtPassword1.SetFocus
     Exit Sub
