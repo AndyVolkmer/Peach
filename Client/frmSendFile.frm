@@ -210,12 +210,6 @@ If Combo1.ListIndex < 0 Then
     Exit Sub
 End If
 
-If Combo1.Text = frmConfig.txtNick.Text Then
-    MsgBox "You cant send yourself a file.", vbInformation
-    Combo1.SetFocus
-    Exit Sub
-End If
-
 If Len(txtFileName.Text) = 0 Then
     MsgBox SFmsgbox_nofilesel, vbInformation
     txtFileName.SetFocus
@@ -252,6 +246,18 @@ SckSendFile.RemotePort = bPort
 SckSendFile.Connect
 
 sFileName = FileName
+End Sub
+
+Private Sub Combo1_Click()
+If Combo1.ListCount = 0 Then
+    cmdSendFile.Enabled = False
+End If
+Select Case Combo1.Text
+Case frmConfig.txtNick.Text, "<AFK>" & frmConfig.txtNick.Text
+    cmdSendFile.Enabled = False
+Case Else
+    cmdSendFile.Enabled = True
+End Select
 End Sub
 
 Private Sub Form_Load()

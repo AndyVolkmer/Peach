@@ -506,12 +506,18 @@ Case "!w"
         'Check in listitems if forwho name is in the list and get the socket id
         With frmPanel.ListView1.ListItems
             For i = 1 To .Count
-                If ForWho = .Item(i) Then
+                Select Case ForWho
+                Case .Item(i)
                     SendSingle " [You whisper to " & GetUser & "]: " & GetConver, frmMain.Winsock1(Index)
                     SendSingle " [" & GetUser & " whispers]: " & GetConver, frmMain.Winsock1(.Item(i).SubItems(2))
                     Call SMSG(Command, GetUser, GetConver, ForWho)
                     Exit For
-                End If
+                Case "<AFK>" & .Item(i)
+                    SendSingle " " & .Item(i) & " is away from keyboard.", frmMain.Winsock1(Index)
+                    SendSingle " [" & GetUser & " whispers]: " & GetConver, frmMain.Winsock1(.Item(i).SubItems(2))
+                    Call SMSG(Command, GetUser, GetConver, ForWho)
+                    Exit For
+                End Select
             Next i
         End With
     End If
