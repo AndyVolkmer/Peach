@@ -135,7 +135,6 @@ With frmList.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).Checked = True Then
             SendMsg "!w" & "#" & frmConfig.txtNick.Text & "|" & .Item(i) & "#" & txtToSend.Text & "#"
-            Call SMSG(True, .Item(i), txtToSend.Text)
             GoTo Next1
         End If
     Next i

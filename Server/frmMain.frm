@@ -340,7 +340,7 @@ Winsock1(MAX_CONNECTION).Accept requestID
 
 'Add new user to panel without account and name
 With frmPanel.ListView1.ListItems
-    .Add , , vbNullString '"Unknown"
+    .Add , , vbNullString
     .Item(.Count).SubItems(1) = Winsock1(MAX_CONNECTION).RemoteHostIP
     .Item(.Count).SubItems(2) = MAX_CONNECTION
     .Item(.Count).SubItems(3) = vbNullString
@@ -497,14 +497,18 @@ Case "!w"
         GetUser = array2(0)
         ForWho = array2(1)
         
+        'Check if user is whispering itself
+        If GetUser = ForWho Then
+            SendSingle " You can't whisper yourself.", frmMain.Winsock1(Index)
+            Exit Sub
+        End If
+        
         'Check in listitems if forwho name is in the list and get the socket id
         With frmPanel.ListView1.ListItems
             For i = 1 To .Count
                 If ForWho = .Item(i) Then
-                    If .Item(i).SubItems(7) = "Yes" Then
-                        SendSingle " " & GetUser & " is away from keyboard.", frmMain.Winsock1(Index)
-                    End If
-                    SendSingle " [" & GetUser & "] whispers: " & GetConver, frmMain.Winsock1(.Item(i).SubItems(2))
+                    SendSingle " [You whisper to " & GetUser & "]: " & GetConver, frmMain.Winsock1(Index)
+                    SendSingle " [" & GetUser & " whispers]: " & GetConver, frmMain.Winsock1(.Item(i).SubItems(2))
                     Call SMSG(Command, GetUser, GetConver, ForWho)
                     Exit For
                 End If
@@ -559,7 +563,7 @@ Case "!msg"
     Dim IsCommand   As Boolean
     Dim IsEmote     As Boolean
     
-    'Split it
+    'Split the conversation text by spaces
     array2 = Split(GetConver, " ")
         
     'Check first position of the text for an point indicating command
@@ -577,7 +581,7 @@ Case "!msg"
     On Error GoTo TargetErrorHandler
     GetTarget = StrConv(array2(1), vbProperCase)
     
-Continue1:
+Commands:
     
     'If an command is used check out which
     If IsCommand = True Then
@@ -629,7 +633,7 @@ Continue1:
         Exit Sub
     End If
     
-Continue2:
+Emotes:
     If IsEmote = True Then
         If Mute = False Then
             Dim IsUser As Boolean
@@ -684,7 +688,7 @@ Continue2:
                         Exit Sub
                     End With
                 Case Else
-                    GoTo Continue3
+                    GoTo Message
                 End Select
             Else
                 If IsUser = True Then
@@ -721,7 +725,7 @@ Continue2:
         Exit Sub
     End If
             
-Continue3:
+Message:
     If Mute = True Then
         SendSingle " You are muted.", frmMain.Winsock1(Index)
         Call SMSG("!muted", GetUser, GetConver)
@@ -785,7 +789,7 @@ TargetErrorHandler:
                 ".command", _
                 ".commands"
                             
-                GoTo Continue1
+                GoTo Commands
                 
             Case Else
                 SendSingle " Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
@@ -793,9 +797,9 @@ TargetErrorHandler:
             End Select
         Else
             If IsEmote = True Then
-                GoTo Continue2
+                GoTo Emotes
             Else
-                GoTo Continue3
+                GoTo Message
             End If
         End If
     End Select
