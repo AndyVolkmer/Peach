@@ -201,6 +201,7 @@ Private Sub Command2_Click()
 Dim WiSk As Winsock
 
 connCounter.Enabled = False
+x = 0
 Label2.Caption = "Offline"
 
 With frmMain
@@ -236,11 +237,10 @@ End Sub
 
 Private Sub connCounter_Timer()
 x = x + 1
-Label2.Caption = "Online Time : " & TimeSerial(0, 0, x)
+Label2.Caption = "Online Time : " & Format$(TimeSerial(0, 0, x), "hh:mm:ss")
 End Sub
 
 Private Sub Form_Load()
-x = 0
 Me.Top = 0
 Me.Left = 0
 

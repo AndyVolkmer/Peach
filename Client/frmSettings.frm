@@ -229,7 +229,7 @@ With frmChat.txtConver
     Case 2
         .Font.Size = 10
     End Select
-    .SelStart = 1
+    .SelStart = 0
     .SelLength = Len(.Text)
     .SelColor = txtFontColor.BackColor
     .BackColor = txtBackgroundColor.BackColor
@@ -277,31 +277,41 @@ End With
 End Sub
 
 Private Sub LoadIniSettings()
+Dim INI_FONT As Long
+Dim INI_FONT_SIZE As Long
+Dim INI_FONT_COLOR As Long
+Dim INI_BACK_COLOR As Long
+
+INI_FONT = ReadIniValue(App.Path & "\Config.ini", "Chat", "Font")
+INI_FONT_SIZE = ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")
+INI_FONT_COLOR = ReadIniValue(App.Path & "\Config.ini", "Chat", "FontCol")
+INI_BACK_COLOR = ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")
+
 'Read 'Font Index' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "Font")) = 0 Then
+If Len(INI_FONT) = 0 Then
     cmbFont.ListIndex = 0
 Else
-    cmbFont.ListIndex = ReadIniValue(App.Path & "\Config.ini", "Chat", "Font")
+    cmbFont.ListIndex = INI_FONT
 End If
 
 'Read 'Font Size Index' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")) = 0 Then
+If Len(INI_FONT_SIZE) = 0 Then
     cmbFontSize.ListIndex = 0
 Else
-    cmbFontSize.ListIndex = ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")
+    cmbFontSize.ListIndex = INI_FONT_SIZE
 End If
 
 'Read 'Font Color' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "FontCol")) = 0 Then
+If Len(INI_FONT_COLOR) = 0 Then
     txtFontColor.BackColor = 0
 Else
-    txtFontColor.BackColor = ReadIniValue(App.Path & "\Config.ini", "Chat", "FontCol")
+    txtFontColor.BackColor = INI_FONT_COLOR
 End If
 
 'Read 'Background Color' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")) = 0 Then
-    txtBackgroundColor.BackColor = 0
+If Len(INI_BACK_COLOR) = 0 Then
+    txtBackgroundColor.BackColor = 16777215
 Else
-    txtBackgroundColor.BackColor = ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")
+    txtBackgroundColor.BackColor = INI_BACK_COLOR
 End If
 End Sub

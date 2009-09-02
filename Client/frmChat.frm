@@ -25,7 +25,7 @@ Begin VB.Form frmChat
    ShowInTaskbar   =   0   'False
    Begin VB.CommandButton Command1 
       Caption         =   "Settings"
-      Height          =   255
+      Height          =   300
       Left            =   5160
       TabIndex        =   5
       Top             =   3720
@@ -169,31 +169,49 @@ LoadChatSettings
 End Sub
 
 Public Sub LoadChatSettings()
+Dim FONT_BACK_COL   As Long
+Dim FONT_SIZE       As Integer
+Dim FONT            As Integer
+
+FONT_BACK_COL = ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")
 'Read 'BackColor' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")) = 0 Then
+If Len(FONT_BACK_COL) = 0 Then
     txtConver.BackColor = 16777215
 Else
-    txtConver.BackColor = ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")
-    txtToSend.BackColor = ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")
+    txtConver.BackColor = FONT_BACK_COL
+    txtToSend.BackColor = FONT_BACK_COL
 End If
 
-'Read 'FontColor' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "FontCol")) = 0 Then
-    txtConver.SelColor = 0
+FONT = ReadIniValue(App.Path & "\Config.ini", "Chat", "Font")
+'Read 'Font' from .ini file
+If Len(FONT) = 0 Then
+    txtConver.FONT = "Tahoma"
 Else
     With txtConver
-        .SelStart = 1
-        .SelLength = Len(.Text)
-        .SelColor = ReadIniValue(App.Path & "\Config.ini", "Chat", "FontCol")
+        Select Case FONT
+        Case 0 'Arial
+            .FONT = "Arial"
+        Case 1 'Lucida Console
+            .FONT = "Lucida Console"
+        Case 2 'Tahoma
+            .FONT = "Tahoma"
+        Case 3 'Time New Roman
+            .FONT = "Times New Roman"
+        Case 4 'Trebuchet MS
+            .FONT = "Trebuchet MS"
+        Case 5 'Verdana
+            .FONT = "Verdana"
+        End Select
     End With
 End If
 
+FONT_SIZE = ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")
 'Read 'FontSize' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")) = 0 Then
-    txtConver.Font.Size = 8
+If Len(FONT_SIZE) = 0 Then
+    txtConver.FONT.Size = 8
 Else
-    With txtConver.Font
-        Select Case ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")
+    With txtConver.FONT
+        Select Case FONT_SIZE
         Case 0
             .Size = 8
         Case 1
@@ -203,7 +221,6 @@ Else
         End Select
     End With
 End If
-
 End Sub
 
 Public Sub LoadChatForm()
@@ -295,21 +312,21 @@ Smileys = Split(Smilestring, " ")
 SmileysFile = Split(SmileFileString, ",")
 
 If UBound(Smileys) <> UBound(SmileysFile) Then
-  Debug.Print "Arrays are not same!"
-  Exit Sub
+    Debug.Print "Failure in array."
+    Exit Sub
 End If
 
 For i = LBound(Smileys) To UBound(Smileys)
-  While RTF.Find(Smileys(i), Start - 1) >= 0
-    Picture1.Picture = LoadPicture(Trim$(IconPath & SmileysFile(i)))
-    RTF.SelStart = RTF.Find(Smileys(i), Start - 1)
-    RTF.SelLength = Len(Smileys(i))
-    Start = RTF.SelStart + RTF.SelLength + 1
-    RTF.SelText = vbNullString
-    CopyPictureToRTF RTF, Picture1.Picture
-  Wend
+    While RTF.Find(Smileys(i), Start - 1) >= 0
+        Picture1.Picture = LoadPicture(Trim$(IconPath & SmileysFile(i)))
+        RTF.SelStart = RTF.Find(Smileys(i), Start - 1)
+        RTF.SelLength = Len(Smileys(i))
+        Start = RTF.SelStart + RTF.SelLength + 1
+        RTF.SelText = vbNullString
+        CopyPictureToRTF RTF, Picture1.Picture
+    Wend
 
-  Start = 1
+    Start = 1
 Next i
 
 RTF.SelStart = Pos

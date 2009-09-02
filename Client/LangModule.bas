@@ -93,9 +93,9 @@ MDIcommand_onlinelist = "&Online Liste"
 
 MDIstatusbar_disconnected = "Status: Getrennt"
 MDIstatusbar_dcfromserver = "Status: Getrennt vom Server"
-MDIstatusbar_connected = "Status: Verbunden mit "
+MDIstatusbar_connected = "Status: Verbunden"
 MDIstatusbar_connectionproblem = "Status: Getrennt aufgrund eines Verbindungsfehlers"
-MDIstatusbar_connecting = "Status: Verbinden mit "
+MDIstatusbar_connecting = "Status: Verbindung wird aufgebaut .."
 
 MDImsgbox_config_notify = "Einige Konfigurationsdateien sind veraltet oder wurden beschädigt, Peach fand den Fehler und wird es mit dem nächsten Neustart korrigieren."
 MDImsgbox_nametaken = "Der Name ist bereits vergeben."
@@ -171,9 +171,9 @@ MDIcommand_onlinelist = "&Online List"
 
 MDIstatusbar_disconnected = "Status: Disconnected"
 MDIstatusbar_dcfromserver = "Status: Disconnected from Server"
-MDIstatusbar_connected = "Status: Connected to "
+MDIstatusbar_connected = "Status: Connected"
 MDIstatusbar_connectionproblem = "Status: Disconnected due connection problem"
-MDIstatusbar_connecting = "Status: Connecting to "
+MDIstatusbar_connecting = "Status: Connecting .."
 
 'MDImsgbox_errorHandlerFormLoad
 MDImsgbox_config_notify = "Some configuration files are outdated or got damaged, Peach found the problem and will fix it on next program launch."
@@ -253,9 +253,9 @@ MDIcommand_onlinelist = "&Lista Online"
 
 MDIstatusbar_disconnected = "Estado: Desconectado"
 MDIstatusbar_dcfromserver = "Estado: Desconectado del servidor"
-MDIstatusbar_connected = "Estado: Disponible "
+MDIstatusbar_connected = "Estado: Disponible"
 MDIstatusbar_connectionproblem = "Estado: Desconectado por problemas de conexión"
-MDIstatusbar_connecting = "Estado: Conectando "
+MDIstatusbar_connecting = "Estado: Conectando .."
 
 MDImsgbox_config_notify = "Alguna configuración de archivos estan caducados o dañados, Peach busca el problema y lo arreglará en el siguiente lanzamiento del programa."
 MDImsgbox_nametaken = "Este nombre ya esta cogido."
@@ -328,9 +328,9 @@ MDIcommand_onlinelist = "&Online Lista"
 
 MDIstatusbar_disconnected = "Status: Frånkopplad"
 MDIstatusbar_dcfromserver = "Status: Koppla ifrån servern"
-MDIstatusbar_connected = "Status: Anslut till "
+MDIstatusbar_connected = "Status: Anslut"
 MDIstatusbar_connectionproblem = "Status: Avkopplad på grund av anslutningsproblem"
-MDIstatusbar_connecting = "Status: Ansluter till "
+MDIstatusbar_connecting = "Status: Ansluter .."
 
 'MDImsgbox_errorHandlerFormLoad
 MDImsgbox_config_notify = "Några Konfiguration filer är gamla eller skadade, Peach hittade problemet och det kommer bli reparerat nästa gång du kör programmet."
@@ -409,9 +409,9 @@ MDIcommand_onlinelist = "&Lista contatti Online"
 
 MDIstatusbar_disconnected = "Stato: Disconnesso"
 MDIstatusbar_dcfromserver = "Stato: Disconnesso dal Server"
-MDIstatusbar_connected = "Stato: Connesso a "
+MDIstatusbar_connected = "Stato: Connesso"
 MDIstatusbar_connectionproblem = "Stato: Disconnesso a causa di problemi di connessione"
-MDIstatusbar_connecting = "Stato: Connessione a "
+MDIstatusbar_connecting = "Stato: Connessione .."
 
 'MDImsgbox_errorHandlerFormLoad
 MDImsgbox_config_notify = "Alcuni file della configurazione potrebbero essere obsoleti o danneggiati, Peach ha riscontrato il problema e lo corregera' al prossimo avvio."
@@ -491,9 +491,9 @@ MDIcommand_onlinelist = "&Onlajn lista"
 
 MDIstatusbar_disconnected = "Status: Veza je prekinuta"
 MDIstatusbar_dcfromserver = "Status: Veza sa serverom je prekinuta"
-MDIstatusbar_connected = "Status: Povezi se "
+MDIstatusbar_connected = "Status: Povezi"
 MDIstatusbar_connectionproblem = "Status: Problem sa konekcijom veza je prekinuta "
-MDIstatusbar_connecting = "Status: Povezi se "
+MDIstatusbar_connecting = "Status: Povezi .."
 
 'MDImsgbox_errorHandlerFormLoad
 MDImsgbox_config_notify = "Datoteka konfigurac. Je zastarela ili ostecena, problem ce biti pronadjen i popravljen sledecim pokretanjem programa."
@@ -571,10 +571,10 @@ MDIcommand_sendfile = "&Bestand Verzenden"
 MDIcommand_onlinelist = "&Online List"
 
 MDIstatusbar_disconnected = "Status: Verbinding verbroken"
-MDIstatusbar_dcfromserver = "Status: verbinding verbroken met de server"
-MDIstatusbar_connected = "Status: verbonden met "
-MDIstatusbar_connectionproblem = "Status: verbinding verbroken wegens connectie problemen"
-MDIstatusbar_connecting = "Status: verbinden met "
+MDIstatusbar_dcfromserver = "Status: Verbinding verbroken met de server"
+MDIstatusbar_connected = "Status: Verbonden"
+MDIstatusbar_connectionproblem = "Status: Verbinding verbroken wegens connectie problemen"
+MDIstatusbar_connecting = "Status: Verbinden .."
 
 'MDImsgbox_errorHandlerFormLoad
 MDImsgbox_config_notify = "Enkele bestanden zijn oud of beschadigd, Peach heeft het probleem gevonden en zal het herstellen bij de volgende herstart."
@@ -649,9 +649,9 @@ MDIcommand_onlinelist = "&Liste contact Online"
 
 MDIstatusbar_disconnected = "Etat: Deconnecté"
 MDIstatusbar_dcfromserver = "Etat: Deconnecté du Server"
-MDIstatusbar_connected = "Etat: Connecté à "
+MDIstatusbar_connected = "Etat: Connecté"
 MDIstatusbar_connectionproblem = "Etat: Deconnecté à cause de problèmes do connection"
-MDIstatusbar_connecting = "Etat: Connection à "
+MDIstatusbar_connecting = "Etat: Connection .."
 
 MDImsgbox_config_notify = "Quelques files de la configuration pourrait etre daumagés ou obsolète , Peach a trouvé le problème et le corrigerà au prochain envoi."
 MDImsgbox_nametaken = "Le nom inséré est déjà utilizé."

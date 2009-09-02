@@ -642,12 +642,12 @@ Emotes:
             Dim IsUser As Boolean
             
             With frmPanel.ListView1.ListItems
-                    For i = 1 To .Count
-                        If GetTarget = .Item(i) Then
-                            IsUser = True
-                            Exit For
-                        End If
-                    Next i
+                For i = 1 To .Count
+                    If GetTarget = .Item(i) Then
+                        IsUser = True
+                        Exit For
+                    End If
+                Next i
             End With
             
             If Len(GetTarget) = 0 Then
@@ -958,7 +958,7 @@ Private Sub GetUserInfo(User As String, SIndex As Integer)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(User, vbProperCase) Then
-            SendSingle vbCrLf & " User information about '" & StrConv(User, vbProperCase) & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Login Time: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5), Winsock1(SIndex)
+            SendSingle vbCrLf & " User information about '" & User & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Last Message: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5) & vbCrLf & " Login Time: " & .Item(i).SubItems(6) & vbCrLf & " AFK: " & .Item(i).SubItems(7), Winsock1(SIndex)
             Avaible = True
             Exit For
         Else
