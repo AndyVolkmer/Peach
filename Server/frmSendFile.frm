@@ -367,7 +367,7 @@ For ii = 1 To ListView1.ListItems.Count
 Next ii
 
 'Add new account to database
-frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & i & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "dd/mm/yyyy") & "', '" & dBanned & "', '" & "0" & "')"
+frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & i & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & dBanned & "', '" & "0" & "')"
 frmMain.xCommand.Execute
 
 'Save index in variable

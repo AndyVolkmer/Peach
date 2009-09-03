@@ -181,9 +181,9 @@ Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPo
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
-Public xConnection     As ADODB.Connection
-Public xCommand        As ADODB.Command
-Public xRecordSet      As ADODB.Recordset
+Public xConnection     As New ADODB.Connection
+Public xCommand        As New ADODB.Command
+Public xRecordSet      As New ADODB.Recordset
 
 Public intCounter   As Integer
 Dim MAX_CONNECTION  As Byte     'Max 255 connections allowed
@@ -228,27 +228,29 @@ Dim L As Long
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
     
-ConnectDatabase
+ConnectMySQL
 LoadCustomerListView
 
 StatusBar1.Panels(1).Text = "Status : Disconnected"
 SetupForms frmConfig
 End Sub
 
-Private Sub ConnectDatabase()
-    
+Private Sub ConnectMySQL()
 Set xConnection = New ADODB.Connection
-xConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" & "Data Source=" & App.Path & "\Accounts.mdb"
+xConnection.ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver};" _
+    & "SERVER=127.0.0.1;" _
+    & "DATABASE=p_accounts;" _
+    & "UID=root;" _
+    & "PWD=riprip22;" _
+    & "OPTION=" & 1 + 2 + 8 + 32 + 2048 + 16384
 xConnection.Open
 
 Set xCommand = New ADODB.Command
 Set xCommand.ActiveConnection = xConnection
 xCommand.CommandType = adCmdText
-
 End Sub
 
 Private Sub LoadCustomerListView()
-                                 
 Dim strSQL      As String
 Dim xListItem   As ListItem
                                  
@@ -277,7 +279,7 @@ With xRecordSet
         Set xListItem = frmAccountPanel.ListView1.ListItems.Add(, , !ID)
         xListItem.SubItems(1) = !Name1
         xListItem.SubItems(2) = !Password1
-        xListItem.SubItems(3) = !Time1
+        xListItem.SubItems(3) = Format$(!Time1, "hh:mm:ss")
         xListItem.SubItems(4) = !Date1
         xListItem.SubItems(5) = !Banned1
         xListItem.SubItems(6) = !Level1
