@@ -245,7 +245,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Dim X As Long
 
 Private Sub Command1_Click()
 connCounter.Enabled = True
@@ -295,7 +294,6 @@ Private Sub Command2_Click()
 Dim WiSk As Winsock
 
 connCounter.Enabled = False
-X = 0
 Label2.Caption = "Offline"
 
 With frmMain
@@ -367,8 +365,9 @@ End If
 End Function
 
 Private Sub connCounter_Timer()
-X = X + 1
-Label2.Caption = "Online Time : " & Format$(TimeSerial(0, 0, X), "hh:mm:ss")
+Static x As Long
+x = x + 1
+Label2.Caption = "Online Time : " & Format$(TimeSerial(0, 0, x), "hh:mm:ss")
 End Sub
 
 Private Sub Form_Load()
