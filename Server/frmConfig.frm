@@ -23,6 +23,14 @@ Begin VB.Form frmConfig
    ScaleHeight     =   4140
    ScaleWidth      =   7560
    ShowInTaskbar   =   0   'False
+   Begin VB.CommandButton Command3 
+      Caption         =   "&Connect Database"
+      Height          =   375
+      Left            =   5280
+      TabIndex        =   22
+      Top             =   2640
+      Width           =   1695
+   End
    Begin VB.Frame Frame2 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Database Settings"
@@ -31,14 +39,6 @@ Begin VB.Form frmConfig
       TabIndex        =   11
       Top             =   1440
       Width           =   7215
-      Begin VB.CommandButton Command3 
-         Caption         =   "&Connect Database"
-         Height          =   375
-         Left            =   5280
-         TabIndex        =   22
-         Top             =   1200
-         Width           =   1695
-      End
       Begin VB.TextBox txtDBTable 
          Alignment       =   2  'Center
          Height          =   285

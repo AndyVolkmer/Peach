@@ -349,9 +349,6 @@ Call InitCommonControls
 End Sub
 
 Private Sub MDIForm_Load()
-Dim INI_TOP As Integer
-Dim INI_LEFT As Integer
-
 LoadMDIForm
 DisableFormResize Me
 
@@ -363,21 +360,18 @@ Dim L As Long
 
 StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
 
-INI_TOP = ReadIniValue(App.Path & "\Config.ini", "Position", "Top")
-INI_LEFT = ReadIniValue(App.Path & "\Config.ini", "Position", "Left")
-
 'Load 'Top' position from ini, if there is non take default value ( 1200 )
-If Len(INI_TOP) = 0 Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Position", "Top")) = 0 Then
     Me.Top = 1200
 Else
-    Me.Top = INI_TOP
+    Me.Top = ReadIniValue(App.Path & "\Config.ini", "Position", "Top")
 End If
 
 'Load 'Left' position from ini, if there is non take default value ( 1200 )
-If Len(INI_LEFT) = 0 Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Position", "Left")) = 0 Then
     Me.Left = 1200
 Else
-    Me.Left = INI_LEFT
+    Me.Left = ReadIniValue(App.Path & "\Config.ini", "Position", "Left")
 End If
 
 SetupForms frmConfig

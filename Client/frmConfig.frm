@@ -319,57 +319,37 @@ frmRegistration.Show 1
 End Sub
 
 Public Sub Form_Load()
-Dim INI_IP          As String
-Dim INI_PORT        As Integer
-Dim INI_NICKNAME    As String
-Dim INI_ACCOUNT     As String
-Dim INI_SPT         As Byte
-Dim INI_PASSWORD    As String
-
 Top = 0
 Left = 0
 lblVersion.Caption = "Version : " & Rev
 
 LoadConfigForm
 
-INI_IP = ReadIniValue(App.Path & "\Config.ini", "Connection", "IP")
 'Read 'IP' from .ini file
-If Len(INI_IP) = 0 Then
-    txtIP.Text = "0.0.0.0"
-Else
-    txtIP.Text = INI_IP
+If Len(ReadIniValue(App.Path & "\Config.ini", "Connection", "IP")) <> 0 Then
+    txtIP.Text = ReadIniValue(App.Path & "\Config.ini", "Connection", "IP")
 End If
 
-INI_PORT = ReadIniValue(App.Path & "\Config.ini", "Connection", "Port")
 'Read 'Port' from .ini file
-If Len(INI_PORT) = 0 Then
-    txtPort.Text = "4728"
-Else
-    txtPort.Text = INI_PORT
+If Len(ReadIniValue(App.Path & "\Config.ini", "Connection", "Port")) <> 0 Then
+    txtPort.Text = ReadIniValue(App.Path & "\Config.ini", "Connection", "Port")
 End If
 
-INI_NICKNAME = ReadIniValue(App.Path & "\Config.ini", "Private", "Nickname")
 'Read 'Nickname' from .ini file
-If Len(INI_NICKNAME) = 0 Then
-    txtNick.Text = "Nickname"
-Else
-    txtNick.Text = INI_NICKNAME
+If Len(ReadIniValue(App.Path & "\Config.ini", "Private", "Nickname")) <> 0 Then
+    txtNick.Text = ReadIniValue(App.Path & "\Config.ini", "Private", "Nickname")
 End If
 
-INI_ACCOUNT = ReadIniValue(App.Path & "\Config.ini", "Private", "Account")
 'Read 'Account' from .ini file
-If Len(INI_ACCOUNT) = 0 Then
-    txtAccount.Text = "Your Account"
-Else
-    txtAccount.Text = INI_ACCOUNT
+If Len(ReadIniValue(App.Path & "\Config.ini", "Private", "Account")) <> 0 Then
+    txtAccount.Text = ReadIniValue(App.Path & "\Config.ini", "Private", "Account")
 End If
 
-INI_SPT = ReadIniValue(App.Path & "\Config.ini", "Private", "SPT")
 'Read 'Save Password Tick'
-If Len(INI_SPT) = 0 Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Private", "SPT")) = 0 Then
     SPT.Value = 0
 Else
-    If INI_SPT = "0" Then
+    If ReadIniValue(App.Path & "\Config.ini", "Private", "SPT") = 0 Then
         SPT.Value = 0
     Else
         SPT.Value = 1

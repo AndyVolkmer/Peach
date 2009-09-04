@@ -222,31 +222,50 @@ Call InitCommonControls
 End Sub
 
 Private Sub MDIForm_Load()
-DisableFormResize Me
-Dim L As Long
-    L = GetWindowLong(Me.hwnd, GWL_STYLE)
-'   L = L And Not (WS_MINIMIZEBOX)
-    L = L And Not (WS_MAXIMIZEBOX)
-    L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
-    
 Dim INI_DATABASE    As String
 Dim INI_USER        As String
 Dim INI_PASSWORD    As String
 Dim INI_IP          As String
 Dim INI_TABLE       As String
 
-INI_DATABASE = ReadIniValue(App.Path & "\Config.ini", "Database", "Database")
-    frmConfig.txtDB = INI_DATABASE
-INI_USER = ReadIniValue(App.Path & "\Config.ini", "Database", "User")
-    frmConfig.txtDBUser = INI_USER
-INI_PASSWORD = DeCode(ReadIniValue(App.Path & "\Config.ini", "Database", "Password"))
-    frmConfig.txtDBPassword = INI_PASSWORD
-INI_IP = ReadIniValue(App.Path & "\Config.ini", "Database", "IP")
-    frmConfig.txtDBIP = INI_IP
-INI_TABLE = ReadIniValue(App.Path & "\Config.ini", "Database", "Table")
-    frmConfig.txtDBTable = INI_TABLE
-ConnectMySQL INI_DATABASE, INI_USER, INI_PASSWORD, INI_IP
+DisableFormResize Me
+Dim L As Long
+    L = GetWindowLong(Me.hwnd, GWL_STYLE)
+'   L = L And Not (WS_MINIMIZEBOX)
+    L = L And Not (WS_MAXIMIZEBOX)
+    L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
 
+'Assign Variables to the .ini strings
+If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "Database")) <> 0 Then
+    INI_DATABASE = ReadIniValue(App.Path & "\Config.ini", "Database", "Database")
+End If
+
+If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "User")) <> 0 Then
+    INI_USER = ReadIniValue(App.Path & "\Config.ini", "Database", "User")
+End If
+
+If Len(DeCode(ReadIniValue(App.Path & "\Config.ini", "Database", "Password"))) <> 0 Then
+    INI_PASSWORD = DeCode(ReadIniValue(App.Path & "\Config.ini", "Database", "Password"))
+End If
+
+If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "IP")) <> 0 Then
+    INI_IP = ReadIniValue(App.Path & "\Config.ini", "Database", "IP")
+End If
+
+If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "Table")) <> 0 Then
+    INI_TABLE = ReadIniValue(App.Path & "\Config.ini", "Database", "Table")
+End If
+
+'Show in the textboxes the data
+With frmConfig
+    .txtDB = INI_DATABASE
+    .txtDBUser = INI_USER
+    .txtDBPassword = INI_PASSWORD
+    .txtDBIP = INI_IP
+    .txtDBTable = INI_TABLE
+End With
+
+ConnectMySQL INI_DATABASE, INI_USER, INI_PASSWORD, INI_IP
 LoadCustomerListView INI_TABLE
 
 StatusBar1.Panels(1).Text = "Status : Disconnected"
@@ -282,6 +301,10 @@ Else
     GetInfo = False
 End If
 
+StatusBar1.Panels(1).Text = "Status : Connecting to database .."
+
+On Error GoTo HandleErrorConnection
+'Connect with Database (MySQL)
 Set xConnection = New ADODB.Connection
 xConnection.ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver};" _
     & "SERVER=" & qIP & ";" _
@@ -289,12 +312,22 @@ xConnection.ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver};" _
     & "UID=" & qUser & ";" _
     & "PWD=" & qPassword & ";" _
     & "OPTION=" & 1 + 2 + 8 + 32 + 2048 + 16384
-Debug.Print xConnection.ConnectionString
+
+Screen.MousePointer = vbHourglass
+DoEvents
 xConnection.Open
 
+Screen.MousePointer = vbDefault
 Set xCommand = New ADODB.Command
 Set xCommand.ActiveConnection = xConnection
 xCommand.CommandType = adCmdText
+
+Exit Sub
+'************
+HandleErrorConnection:
+MsgBox "Connection Error:" & vbCrLf & "[MySQL] " & Right$(Err.Description, Len(Err.Description) - 25) & ".", vbInformation
+GetInfo = True
+Screen.MousePointer = vbDefault
 End Sub
 
 Public Sub LoadCustomerListView(qTable)
@@ -306,6 +339,9 @@ If Len(qTable) = 0 Then Exit Sub
 
 strSQL = "SELECT * FROM " & qTable
 
+StatusBar1.Panels(1).Text = "Status : Loading accounts .."
+
+On Error GoTo HandleErrorTable
 xCommand.CommandText = strSQL
 Set xRecordSet = xCommand.Execute
 
@@ -342,6 +378,20 @@ frmConfig.DisableDatabaseField
 Set xListItem = Nothing
 Set xRecordSet = Nothing
 
+If Winsock1(0).State = 0 Then
+    StatusBar1.Panels(1).Text = "Status : Disconnected"
+Else
+    StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
+End If
+Exit Sub
+'************
+HandleErrorTable:
+MsgBox "Database Error:" & vbCrLf & "[MySQL] " & Right$(Err.Description, Len(Err.Description) - 50) & ".", vbInformation
+If Winsock1(0).State = 0 Then
+    StatusBar1.Panels(1).Text = "Status : Disconnected"
+Else
+    StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
+End If
 End Sub
 
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
