@@ -418,11 +418,11 @@ WriteIniValue App.Path & "\Config.ini", "Position", "Top", frmMain.Top
 WriteIniValue App.Path & "\Config.ini", "Position", "Left", frmMain.Left
 End Sub
 
-Private Sub Label7_Click()
+Private Sub lblAuthor_Click()
 frmAbout.Show 1
 End Sub
 
-Private Sub Label8_Click()
+Private Sub lblVersion_Click()
 frmAbout.Show 1
 End Sub
 

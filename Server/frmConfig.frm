@@ -23,11 +23,115 @@ Begin VB.Form frmConfig
    ScaleHeight     =   4140
    ScaleWidth      =   7560
    ShowInTaskbar   =   0   'False
+   Begin VB.Frame Frame2 
+      BackColor       =   &H00F4F4F4&
+      Caption         =   "Database Settings"
+      Height          =   1815
+      Left            =   120
+      TabIndex        =   11
+      Top             =   1440
+      Width           =   7215
+      Begin VB.CommandButton Command3 
+         Caption         =   "&Connect Database"
+         Height          =   375
+         Left            =   5280
+         TabIndex        =   22
+         Top             =   1200
+         Width           =   1695
+      End
+      Begin VB.TextBox txtDBTable 
+         Alignment       =   2  'Center
+         Height          =   285
+         Left            =   2040
+         TabIndex        =   21
+         Top             =   1200
+         Width           =   1695
+      End
+      Begin VB.TextBox txtDB 
+         Alignment       =   2  'Center
+         Height          =   285
+         Left            =   240
+         TabIndex        =   19
+         Top             =   1200
+         Width           =   1695
+      End
+      Begin VB.TextBox txtDBPassword 
+         Alignment       =   2  'Center
+         Height          =   285
+         IMEMode         =   3  'DISABLE
+         Left            =   3840
+         PasswordChar    =   "*"
+         TabIndex        =   17
+         Top             =   600
+         Width           =   1695
+      End
+      Begin VB.TextBox txtDBUser 
+         Alignment       =   2  'Center
+         Height          =   285
+         Left            =   2040
+         TabIndex        =   15
+         Top             =   600
+         Width           =   1695
+      End
+      Begin VB.TextBox txtDBIP 
+         Alignment       =   2  'Center
+         Height          =   285
+         Left            =   240
+         TabIndex        =   13
+         Top             =   600
+         Width           =   1695
+      End
+      Begin VB.Label lbl_DB_Table 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   "Table:"
+         Height          =   255
+         Left            =   2040
+         TabIndex        =   20
+         Top             =   960
+         Width           =   1095
+      End
+      Begin VB.Label lbl_DB 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   "Database:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   18
+         Top             =   960
+         Width           =   1095
+      End
+      Begin VB.Label lbl_DB_Password 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   "Password:"
+         Height          =   255
+         Left            =   3840
+         TabIndex        =   16
+         Top             =   360
+         Width           =   1095
+      End
+      Begin VB.Label lbl_DB_User 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   "User:"
+         Height          =   255
+         Left            =   2040
+         TabIndex        =   14
+         Top             =   360
+         Width           =   1095
+      End
+      Begin VB.Label lbl_DB_IP 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   "IP:"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   12
+         Top             =   360
+         Width           =   1095
+      End
+   End
    Begin VB.Timer connCounter 
       Enabled         =   0   'False
       Interval        =   1000
-      Left            =   120
-      Top             =   2400
+      Left            =   1920
+      Top             =   3480
    End
    Begin VB.CommandButton Command2 
       Caption         =   "&Disconnect"
@@ -35,7 +139,7 @@ Begin VB.Form frmConfig
       Height          =   375
       Left            =   5760
       TabIndex        =   5
-      Top             =   2400
+      Top             =   3360
       Width           =   1575
    End
    Begin VB.CommandButton Command1 
@@ -43,14 +147,14 @@ Begin VB.Form frmConfig
       Height          =   375
       Left            =   4200
       TabIndex        =   6
-      Top             =   2400
+      Top             =   3360
       Width           =   1575
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00F4F4F4&
-      Caption         =   "Configuration"
+      Caption         =   "Connection Settings"
       ForeColor       =   &H00000000&
-      Height          =   2175
+      Height          =   1215
       Left            =   120
       TabIndex        =   0
       Top             =   120
@@ -62,7 +166,7 @@ Begin VB.Form frmConfig
          MaxLength       =   5
          TabIndex        =   4
          Text            =   "4728"
-         Top             =   1320
+         Top             =   600
          Width           =   855
       End
       Begin VB.TextBox txtNick 
@@ -71,7 +175,7 @@ Begin VB.Form frmConfig
          Left            =   240
          TabIndex        =   2
          Text            =   "Server"
-         Top             =   1320
+         Top             =   600
          Width           =   1575
       End
       Begin VB.Label Label2 
@@ -79,9 +183,9 @@ Begin VB.Form frmConfig
          Caption         =   "Offline"
          ForeColor       =   &H00000040&
          Height          =   255
-         Left            =   4080
-         TabIndex        =   11
-         Top             =   1440
+         Left            =   3000
+         TabIndex        =   10
+         Top             =   600
          Width           =   2775
       End
       Begin VB.Label Label5 
@@ -89,19 +193,9 @@ Begin VB.Form frmConfig
          Caption         =   "IP : "
          ForeColor       =   &H00000040&
          Height          =   255
-         Left            =   240
-         TabIndex        =   8
-         Top             =   360
-         Width           =   2175
-      End
-      Begin VB.Label Label6 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   "Name : "
-         ForeColor       =   &H00000040&
-         Height          =   255
-         Left            =   240
+         Left            =   3000
          TabIndex        =   7
-         Top             =   720
+         Top             =   360
          Width           =   2175
       End
       Begin VB.Label Label1 
@@ -111,7 +205,7 @@ Begin VB.Form frmConfig
          Height          =   255
          Left            =   1920
          TabIndex        =   3
-         Top             =   1080
+         Top             =   360
          Width           =   975
       End
       Begin VB.Label lblNick 
@@ -121,7 +215,7 @@ Begin VB.Form frmConfig
          Height          =   255
          Left            =   240
          TabIndex        =   1
-         Top             =   1080
+         Top             =   360
          Width           =   975
       End
    End
@@ -131,7 +225,7 @@ Begin VB.Form frmConfig
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
-      TabIndex        =   10
+      TabIndex        =   9
       Top             =   3480
       Width           =   1335
    End
@@ -140,7 +234,7 @@ Begin VB.Form frmConfig
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
-      TabIndex        =   9
+      TabIndex        =   8
       Top             =   3720
       Width           =   1335
    End
@@ -151,7 +245,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Dim x As Long
+Dim X As Long
 
 Private Sub Command1_Click()
 connCounter.Enabled = True
@@ -201,7 +295,7 @@ Private Sub Command2_Click()
 Dim WiSk As Winsock
 
 connCounter.Enabled = False
-x = 0
+X = 0
 Label2.Caption = "Offline"
 
 With frmMain
@@ -235,9 +329,46 @@ Command1.Enabled = True
 Command2.Enabled = False
 End Sub
 
+Private Sub Command3_Click()
+If CheckTx(txtDBIP, "No IP entered.") = True Then Exit Sub
+If CheckTx(txtDBUser, "No User entered.") = True Then Exit Sub
+If CheckTx(txtDBPassword, "No Password entered.") = True Then Exit Sub
+If CheckTx(txtDB, "No Database entered.") = True Then Exit Sub
+If CheckTx(txtDBTable, "No Table entered.") = True Then Exit Sub
+
+frmMain.ConnectMySQL txtDB.Text, txtDBUser.Text, txtDBPassword.Text, txtDBIP.Text
+frmMain.LoadCustomerListView txtDBTable.Text
+
+End Sub
+
+Public Sub DisableDatabaseField()
+txtDBIP.Enabled = False
+txtDB.Enabled = False
+txtDBUser.Enabled = False
+txtDBPassword.Enabled = False
+txtDBTable.Enabled = False
+
+Frame2.Enabled = False
+Command3.Enabled = False
+
+lbl_DB.Enabled = False
+lbl_DB_IP.Enabled = False
+lbl_DB_Password.Enabled = False
+lbl_DB_Table.Enabled = False
+lbl_DB_User.Enabled = False
+End Sub
+
+Private Function CheckTx(TB As TextBox, MB As String) As Boolean
+If Len(TB.Text) = 0 Then
+    MsgBox MB, vbInformation
+    TB.SetFocus
+    CheckTx = True
+End If
+End Function
+
 Private Sub connCounter_Timer()
-x = x + 1
-Label2.Caption = "Online Time : " & Format$(TimeSerial(0, 0, x), "hh:mm:ss")
+X = X + 1
+Label2.Caption = "Online Time : " & Format$(TimeSerial(0, 0, X), "hh:mm:ss")
 End Sub
 
 Private Sub Form_Load()
@@ -246,9 +377,16 @@ Me.Left = 0
 
 With frmMain
     Label5.Caption = "IP : " & .Winsock1(0).LocalIP
-    Label6.Caption = "Name : " & .Winsock1(0).LocalHostName
     Label8.Caption = "Version : " & Rev
 End With
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+WriteIniValue App.Path & "\Config.ini", "Database", "IP", txtDBIP.Text
+WriteIniValue App.Path & "\Config.ini", "Database", "User", txtDBUser.Text
+WriteIniValue App.Path & "\Config.ini", "Database", "Password", Encode(txtDBPassword.Text)
+WriteIniValue App.Path & "\Config.ini", "Database", "Database", txtDB.Text
+WriteIniValue App.Path & "\Config.ini", "Database", "Table", txtDBTable.Text
 End Sub
 
 Private Sub txtNick_KeyPress(KeyAscii As Integer)

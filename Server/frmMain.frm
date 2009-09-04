@@ -191,6 +191,7 @@ Dim Vali            As Boolean
 Dim Acc             As Boolean
 Dim Muted           As Boolean
 Dim Avaible         As Boolean
+Public GetInfo      As Boolean
 
 Private Sub Command1_Click()
     SetupForms frmConfig
@@ -228,21 +229,67 @@ Dim L As Long
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
     
-ConnectMySQL
-LoadCustomerListView
+Dim INI_DATABASE    As String
+Dim INI_USER        As String
+Dim INI_PASSWORD    As String
+Dim INI_IP          As String
+Dim INI_TABLE       As String
+
+INI_DATABASE = ReadIniValue(App.Path & "\Config.ini", "Database", "Database")
+    frmConfig.txtDB = INI_DATABASE
+INI_USER = ReadIniValue(App.Path & "\Config.ini", "Database", "User")
+    frmConfig.txtDBUser = INI_USER
+INI_PASSWORD = DeCode(ReadIniValue(App.Path & "\Config.ini", "Database", "Password"))
+    frmConfig.txtDBPassword = INI_PASSWORD
+INI_IP = ReadIniValue(App.Path & "\Config.ini", "Database", "IP")
+    frmConfig.txtDBIP = INI_IP
+INI_TABLE = ReadIniValue(App.Path & "\Config.ini", "Database", "Table")
+    frmConfig.txtDBTable = INI_TABLE
+ConnectMySQL INI_DATABASE, INI_USER, INI_PASSWORD, INI_IP
+
+LoadCustomerListView INI_TABLE
 
 StatusBar1.Panels(1).Text = "Status : Disconnected"
 SetupForms frmConfig
 End Sub
 
-Private Sub ConnectMySQL()
+Public Sub ConnectMySQL(qDatabase As String, qUser As String, qPassword As String, qIP As String)
+If Len(qDatabase) = 0 Then
+    GetInfo = True
+    Exit Sub
+Else
+    GetInfo = False
+End If
+
+If Len(qUser) = 0 Then
+    GetInfo = True
+    Exit Sub
+Else
+    GetInfo = False
+End If
+
+If Len(qPassword) = 0 Then
+    GetInfo = True
+    Exit Sub
+Else
+    GetInfo = False
+End If
+
+If Len(qIP) = 0 Then
+    GetInfo = True
+    Exit Sub
+Else
+    GetInfo = False
+End If
+
 Set xConnection = New ADODB.Connection
 xConnection.ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver};" _
-    & "SERVER=127.0.0.1;" _
-    & "DATABASE=p_accounts;" _
-    & "UID=root;" _
-    & "PWD=riprip22;" _
+    & "SERVER=" & qIP & ";" _
+    & "DATABASE=" & qDatabase & ";" _
+    & "UID=" & qUser & ";" _
+    & "PWD=" & qPassword & ";" _
     & "OPTION=" & 1 + 2 + 8 + 32 + 2048 + 16384
+Debug.Print xConnection.ConnectionString
 xConnection.Open
 
 Set xCommand = New ADODB.Command
@@ -250,11 +297,14 @@ Set xCommand.ActiveConnection = xConnection
 xCommand.CommandType = adCmdText
 End Sub
 
-Private Sub LoadCustomerListView()
+Public Sub LoadCustomerListView(qTable)
 Dim strSQL      As String
 Dim xListItem   As ListItem
-                                 
-strSQL = "SELECT * FROM accounts"
+
+If GetInfo = True Then Exit Sub
+If Len(qTable) = 0 Then Exit Sub
+
+strSQL = "SELECT * FROM " & qTable
 
 xCommand.CommandText = strSQL
 Set xRecordSet = xCommand.Execute
@@ -287,15 +337,17 @@ With xRecordSet
     Loop
 End With
 
+frmConfig.DisableDatabaseField
+
 Set xListItem = Nothing
 Set xRecordSet = Nothing
 
 End Sub
 
-Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim msg As Long
 Dim sFilter As String
-msg = x / Screen.TwipsPerPixelX
+msg = X / Screen.TwipsPerPixelX
 Select Case msg
 Case WM_LBUTTONDOWN
 Case WM_LBUTTONUP
