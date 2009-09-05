@@ -24,11 +24,27 @@ Begin VB.Form frmSettings
    ScaleHeight     =   3525
    ScaleWidth      =   4725
    StartUpPosition =   1  'CenterOwner
+   Begin VB.CommandButton cmdBackgroundColor 
+      Caption         =   "..."
+      Height          =   255
+      Left            =   3840
+      TabIndex        =   15
+      Top             =   1320
+      Width           =   615
+   End
+   Begin VB.CommandButton cmdFontColor 
+      Caption         =   "..."
+      Height          =   255
+      Left            =   1680
+      TabIndex        =   14
+      Top             =   1320
+      Width           =   615
+   End
    Begin VB.CommandButton cmdCancel 
       Caption         =   "&Cancel"
       Height          =   375
       Left            =   3240
-      TabIndex        =   11
+      TabIndex        =   10
       Top             =   3000
       Width           =   1335
    End
@@ -36,7 +52,7 @@ Begin VB.Form frmSettings
       Caption         =   "&Save"
       Height          =   375
       Left            =   1920
-      TabIndex        =   12
+      TabIndex        =   11
       Top             =   3000
       Width           =   1335
    End
@@ -46,7 +62,7 @@ Begin VB.Form frmSettings
       Enabled         =   0   'False
       Height          =   255
       Left            =   120
-      TabIndex        =   9
+      TabIndex        =   8
       Top             =   2520
       Width           =   2295
    End
@@ -71,33 +87,17 @@ Begin VB.Form frmSettings
          Height          =   285
          Left            =   2280
          Locked          =   -1  'True
-         TabIndex        =   14
+         TabIndex        =   12
          Top             =   1200
          Width           =   1335
-      End
-      Begin VB.CommandButton cmdBackgroundColor 
-         Caption         =   "..."
-         Height          =   255
-         Left            =   3720
-         TabIndex        =   13
-         Top             =   1200
-         Width           =   615
       End
       Begin VB.ComboBox cmbFontSize 
          Height          =   315
          Left            =   2880
          Style           =   2  'Dropdown List
-         TabIndex        =   7
+         TabIndex        =   6
          Top             =   480
          Width           =   1335
-      End
-      Begin VB.CommandButton cmdFontColor 
-         Caption         =   "..."
-         Height          =   255
-         Left            =   1560
-         TabIndex        =   5
-         Top             =   1200
-         Width           =   615
       End
       Begin VB.TextBox txtFontColor 
          Alignment       =   2  'Center
@@ -122,7 +122,7 @@ Begin VB.Form frmSettings
          Caption         =   " Background Color:"
          Height          =   255
          Left            =   2280
-         TabIndex        =   15
+         TabIndex        =   13
          Top             =   960
          Width           =   1455
       End
@@ -134,7 +134,7 @@ Begin VB.Form frmSettings
          ForeColor       =   &H80000008&
          Height          =   375
          Left            =   120
-         TabIndex        =   8
+         TabIndex        =   7
          Top             =   1680
          Width           =   4215
       End
@@ -143,7 +143,7 @@ Begin VB.Form frmSettings
          Caption         =   " Font Size:"
          Height          =   255
          Left            =   2880
-         TabIndex        =   6
+         TabIndex        =   5
          Top             =   240
          Width           =   1095
       End
@@ -173,7 +173,7 @@ Begin VB.Form frmSettings
       Enabled         =   0   'False
       Height          =   255
       Left            =   2760
-      TabIndex        =   10
+      TabIndex        =   9
       ToolTipText     =   "Show example."
       Top             =   2520
       Width           =   375
@@ -277,41 +277,31 @@ End With
 End Sub
 
 Private Sub LoadIniSettings()
-Dim INI_FONT As Long
-Dim INI_FONT_SIZE As Long
-Dim INI_FONT_COLOR As Long
-Dim INI_BACK_COLOR As Long
-
-INI_FONT = ReadIniValue(App.Path & "\Config.ini", "Chat", "Font")
-INI_FONT_SIZE = ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")
-INI_FONT_COLOR = ReadIniValue(App.Path & "\Config.ini", "Chat", "FontCol")
-INI_BACK_COLOR = ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")
-
 'Read 'Font Index' from .ini file
-If Len(INI_FONT) = 0 Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "Font")) = 0 Then
     cmbFont.ListIndex = 0
 Else
-    cmbFont.ListIndex = INI_FONT
+    cmbFont.ListIndex = ReadIniValue(App.Path & "\Config.ini", "Chat", "Font")
 End If
 
 'Read 'Font Size Index' from .ini file
-If Len(INI_FONT_SIZE) = 0 Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")) = 0 Then
     cmbFontSize.ListIndex = 0
 Else
-    cmbFontSize.ListIndex = INI_FONT_SIZE
+    cmbFontSize.ListIndex = ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")
 End If
 
 'Read 'Font Color' from .ini file
-If Len(INI_FONT_COLOR) = 0 Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "FontCol")) = 0 Then
     txtFontColor.BackColor = 0
 Else
-    txtFontColor.BackColor = INI_FONT_COLOR
+    txtFontColor.BackColor = ReadIniValue(App.Path & "\Config.ini", "Chat", "FontCol")
 End If
 
 'Read 'Background Color' from .ini file
-If Len(INI_BACK_COLOR) = 0 Then
+If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")) = 0 Then
     txtBackgroundColor.BackColor = 16777215
 Else
-    txtBackgroundColor.BackColor = INI_BACK_COLOR
+    txtBackgroundColor.BackColor = ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")
 End If
 End Sub

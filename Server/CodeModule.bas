@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.1.0.5"
+Public Const Rev = "1.1.0.6"
 Public Const RegPort = 6222
 
 Public Prefix   As String
@@ -116,6 +116,6 @@ nid.uId = vbNull
 nid.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
 nid.uCallBackMessage = WM_MOUSEMOVE
 nid.hIcon = frmMain.Icon ' the icon will be your Form1 project icon
-nid.szTip = "Peach -  " & frmConfig.txtNick & vbNullChar
+nid.szTip = "Peach" & vbNullChar
 Shell_NotifyIcon NIM_ADD, nid
 End Sub

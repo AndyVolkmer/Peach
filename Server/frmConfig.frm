@@ -27,7 +27,7 @@ Begin VB.Form frmConfig
       Caption         =   "&Connect Database"
       Height          =   375
       Left            =   5280
-      TabIndex        =   22
+      TabIndex        =   20
       Top             =   2640
       Width           =   1695
    End
@@ -36,14 +36,14 @@ Begin VB.Form frmConfig
       Caption         =   "Database Settings"
       Height          =   1815
       Left            =   120
-      TabIndex        =   11
+      TabIndex        =   9
       Top             =   1440
       Width           =   7215
       Begin VB.TextBox txtDBTable 
          Alignment       =   2  'Center
          Height          =   285
          Left            =   2040
-         TabIndex        =   21
+         TabIndex        =   19
          Top             =   1200
          Width           =   1695
       End
@@ -51,7 +51,7 @@ Begin VB.Form frmConfig
          Alignment       =   2  'Center
          Height          =   285
          Left            =   240
-         TabIndex        =   19
+         TabIndex        =   17
          Top             =   1200
          Width           =   1695
       End
@@ -61,7 +61,7 @@ Begin VB.Form frmConfig
          IMEMode         =   3  'DISABLE
          Left            =   3840
          PasswordChar    =   "*"
-         TabIndex        =   17
+         TabIndex        =   15
          Top             =   600
          Width           =   1695
       End
@@ -69,7 +69,7 @@ Begin VB.Form frmConfig
          Alignment       =   2  'Center
          Height          =   285
          Left            =   2040
-         TabIndex        =   15
+         TabIndex        =   13
          Top             =   600
          Width           =   1695
       End
@@ -77,7 +77,7 @@ Begin VB.Form frmConfig
          Alignment       =   2  'Center
          Height          =   285
          Left            =   240
-         TabIndex        =   13
+         TabIndex        =   11
          Top             =   600
          Width           =   1695
       End
@@ -86,7 +86,7 @@ Begin VB.Form frmConfig
          Caption         =   "Table:"
          Height          =   255
          Left            =   2040
-         TabIndex        =   20
+         TabIndex        =   18
          Top             =   960
          Width           =   1095
       End
@@ -95,7 +95,7 @@ Begin VB.Form frmConfig
          Caption         =   "Database:"
          Height          =   255
          Left            =   240
-         TabIndex        =   18
+         TabIndex        =   16
          Top             =   960
          Width           =   1095
       End
@@ -104,7 +104,7 @@ Begin VB.Form frmConfig
          Caption         =   "Password:"
          Height          =   255
          Left            =   3840
-         TabIndex        =   16
+         TabIndex        =   14
          Top             =   360
          Width           =   1095
       End
@@ -113,7 +113,7 @@ Begin VB.Form frmConfig
          Caption         =   "User:"
          Height          =   255
          Left            =   2040
-         TabIndex        =   14
+         TabIndex        =   12
          Top             =   360
          Width           =   1095
       End
@@ -122,7 +122,7 @@ Begin VB.Form frmConfig
          Caption         =   "IP:"
          Height          =   255
          Left            =   240
-         TabIndex        =   12
+         TabIndex        =   10
          Top             =   360
          Width           =   1095
       End
@@ -138,7 +138,7 @@ Begin VB.Form frmConfig
       Enabled         =   0   'False
       Height          =   375
       Left            =   5760
-      TabIndex        =   5
+      TabIndex        =   3
       Top             =   3360
       Width           =   1575
    End
@@ -146,7 +146,7 @@ Begin VB.Form frmConfig
       Caption         =   "&Connect"
       Height          =   375
       Left            =   4200
-      TabIndex        =   6
+      TabIndex        =   4
       Top             =   3360
       Width           =   1575
    End
@@ -162,29 +162,20 @@ Begin VB.Form frmConfig
       Begin VB.TextBox txtPort 
          Alignment       =   2  'Center
          Height          =   285
-         Left            =   1920
+         Left            =   240
          MaxLength       =   5
-         TabIndex        =   4
+         TabIndex        =   2
          Text            =   "4728"
          Top             =   600
          Width           =   855
-      End
-      Begin VB.TextBox txtNick 
-         Alignment       =   2  'Center
-         Height          =   285
-         Left            =   240
-         TabIndex        =   2
-         Text            =   "Server"
-         Top             =   600
-         Width           =   1575
       End
       Begin VB.Label Label2 
          BackColor       =   &H00F4F4F4&
          Caption         =   "Offline"
          ForeColor       =   &H00000040&
          Height          =   255
-         Left            =   3000
-         TabIndex        =   10
+         Left            =   2880
+         TabIndex        =   8
          Top             =   600
          Width           =   2775
       End
@@ -193,24 +184,14 @@ Begin VB.Form frmConfig
          Caption         =   "IP : "
          ForeColor       =   &H00000040&
          Height          =   255
-         Left            =   3000
-         TabIndex        =   7
-         Top             =   360
-         Width           =   2175
+         Left            =   1320
+         TabIndex        =   5
+         Top             =   600
+         Width           =   1695
       End
       Begin VB.Label Label1 
          BackColor       =   &H00F4F4F4&
          Caption         =   "Port :"
-         ForeColor       =   &H00000040&
-         Height          =   255
-         Left            =   1920
-         TabIndex        =   3
-         Top             =   360
-         Width           =   975
-      End
-      Begin VB.Label lblNick 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   "Nickname :"
          ForeColor       =   &H00000040&
          Height          =   255
          Left            =   240
@@ -225,7 +206,7 @@ Begin VB.Form frmConfig
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
-      TabIndex        =   9
+      TabIndex        =   7
       Top             =   3480
       Width           =   1335
    End
@@ -234,7 +215,7 @@ Begin VB.Form frmConfig
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
-      TabIndex        =   8
+      TabIndex        =   6
       Top             =   3720
       Width           =   1335
    End
@@ -249,7 +230,6 @@ Option Explicit
 Private Sub Command1_Click()
 connCounter.Enabled = True
 'Do the buttons
-txtNick.Enabled = False
 txtPort.Enabled = False
 Command1.Enabled = False
 Command2.Enabled = True
@@ -276,7 +256,6 @@ ErrListen:
 Select Case Err.Number
 Case 10048
     MsgBox "This adress is already in use, please select another port.", vbInformation
-    txtNick.Enabled = True
     txtPort.Enabled = True
     Command1.Enabled = True
     Command2.Enabled = False
@@ -321,7 +300,6 @@ End With
 frmPanel.ListView1.ListItems.Clear
 
 'Do the buttons
-txtNick.Enabled = True
 txtPort.Enabled = True
 Command1.Enabled = True
 Command2.Enabled = False
@@ -365,9 +343,9 @@ End If
 End Function
 
 Private Sub connCounter_Timer()
-Static x As Long
-x = x + 1
-Label2.Caption = "Online Time : " & Format$(TimeSerial(0, 0, x), "hh:mm:ss")
+Static X As Long
+X = X + 1
+Label2.Caption = "Online Time : " & Format$(TimeSerial(0, 0, X), "hh:mm:ss")
 End Sub
 
 Private Sub Form_Load()
@@ -386,10 +364,6 @@ WriteIniValue App.Path & "\Config.ini", "Database", "User", txtDBUser.Text
 WriteIniValue App.Path & "\Config.ini", "Database", "Password", Encode(txtDBPassword.Text)
 WriteIniValue App.Path & "\Config.ini", "Database", "Database", txtDB.Text
 WriteIniValue App.Path & "\Config.ini", "Database", "Table", txtDBTable.Text
-End Sub
-
-Private Sub txtNick_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then Command1_Click
 End Sub
 
 Private Sub txtPort_KeyPress(KeyAscii As Integer)

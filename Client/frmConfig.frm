@@ -226,16 +226,16 @@ End If
 
 'Account can't be empty
 If CheckTx(txtAccount, CONFIGmsgbox_account) = True Then Exit Sub
-
+ 
 'Password can't be empty
 If CheckTx(txtPassword, CONFIGmsgbox_password) = True Then Exit Sub
-
+ 
 'Nick can't be empty
 If CheckTx(txtNick, CONFIGmsgbox_namenoempty) = True Then Exit Sub
-
+ 
 'IP can't be empty
 If CheckTx(txtIP, CONFIGmsgbox_ipnoempty) = True Then Exit Sub
-
+ 
 'Port can't be empty
 If CheckTx(txtPort, CONFIGmsgbox_portnoempty) = True Then Exit Sub
 
@@ -249,7 +249,7 @@ End If
 
 'Nick can't be shorter then 4 characters
 If Len(txtNick.Text) < 4 Then
-    MsgBox "Your nickname is to short!    ", vbInformation, " Error - Nickname"
+    MsgBox "Your nickname is to short!", vbInformation, " Error - Nickname"
     txtNick.SelStart = Len(txtNick.Text)
     txtNick.SetFocus
     Exit Sub

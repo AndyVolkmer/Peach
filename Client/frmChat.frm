@@ -26,10 +26,10 @@ Begin VB.Form frmChat
    Begin VB.CommandButton Command1 
       Caption         =   "Settings"
       Height          =   300
-      Left            =   5160
+      Left            =   5280
       TabIndex        =   5
       Top             =   3720
-      Width           =   2175
+      Width           =   2055
    End
    Begin RichTextLib.RichTextBox txtToSend 
       Height          =   855
@@ -182,31 +182,31 @@ End If
 
 'Read 'Font' from .ini file
 If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "Font")) = 0 Then
-    txtConver.FONT = "Tahoma"
+    txtConver.Font = "Tahoma"
 Else
     With txtConver
-        Select Case FONT
+        Select Case Font
         Case 0 'Arial
-            .FONT = "Arial"
+            .Font = "Arial"
         Case 1 'Lucida Console
-            .FONT = "Lucida Console"
+            .Font = "Lucida Console"
         Case 2 'Tahoma
-            .FONT = "Tahoma"
+            .Font = "Tahoma"
         Case 3 'Time New Roman
-            .FONT = "Times New Roman"
+            .Font = "Times New Roman"
         Case 4 'Trebuchet MS
-            .FONT = "Trebuchet MS"
+            .Font = "Trebuchet MS"
         Case 5 'Verdana
-            .FONT = "Verdana"
+            .Font = "Verdana"
         End Select
     End With
 End If
 
 'Read 'FontSize' from .ini file
 If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")) = 0 Then
-    txtConver.FONT.Size = 8
+    txtConver.Font.Size = 8
 Else
-    With txtConver.FONT
+    With txtConver.Font
         Select Case ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")
         Case 0
             .Size = 8

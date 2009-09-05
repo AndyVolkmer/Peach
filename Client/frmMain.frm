@@ -411,7 +411,7 @@ Unload frmDESP
 Unload frmBlank
 Unload frmRegistration
 Unload frmSendFile2
-Shell_NotifyIcon NIM_DELETE, nid ' del tray icon
+Shell_NotifyIcon NIM_DELETE, nid 'del tray icon
 End Sub
 
 Private Sub Show_Click()
@@ -454,7 +454,6 @@ End With
 frmDESP.DisplayMessage DESPtext_dcserver
 
 SetupForms frmConfig
-
 End Sub
 
 Private Sub Winsock1_Connect()
@@ -502,7 +501,7 @@ StatusBar1.Panels(1).Text = MDIstatusbar_connected
 
 SendMsg "!connected" & "#" & frmConfig.txtNick.Text & "#" & frmConfig.txtAccount.Text & "#"
 
-frmDESP.DisplayMessage "Hello " & frmConfig.txtNick
+frmDESP.DisplayMessage "Hello " & frmConfig.txtNick.Text
 End Sub
 
 Private Sub ConnectIsFalse()
