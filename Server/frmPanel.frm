@@ -67,6 +67,7 @@ Begin VB.Form frmPanel
       _ExtentY        =   1296
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -169,6 +170,7 @@ For i = 1 To ListView1.ListItems.Count
             Unload frmMain.Winsock1(.Item(i).SubItems(2))
             txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] " & .Item(i) & " got kicked."
             .Remove (i)
+            Exit For
         End If
     End With
 Next i

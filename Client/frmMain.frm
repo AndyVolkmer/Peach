@@ -303,14 +303,13 @@ End Sub
 Private Function socketFree() As Integer
 On Error GoTo HandleErrorFreeSocket
     Dim theIP As String
-    Dim p As Integer
-    For p = FSocket2.LBound + 1 To FSocket2.UBound
-        theIP = FSocket2(p).LocalIP
-    Next
+    For i = FSocket2.LBound + 1 To FSocket2.UBound
+        theIP = FSocket2(i).LocalIP
+    Next i
     socketFree = FSocket2.UBound + 1
 Exit Function
 HandleErrorFreeSocket:
-socketFree = p
+socketFree = i
 End Function
 
 Private Function loadSocket() As Integer
@@ -324,16 +323,16 @@ loadSocket = theFreeSocket
 End Function
 
 Private Sub FSocket2_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-Dim ArrD As String
-Dim ArrX() As String
-Dim Comm As String
+Dim GetMessage As String
+Dim Array1() As String
+Dim GetCommand As String
 
-FSocket2(Index).GetData ArrD
+FSocket2(Index).GetData GetMessage
 
-ArrX = Split(ArrD, "#")
-Comm = ArrX(0)
+Array1 = Split(GetMessage, "#")
+GetCommand = Array1(0)
 
-Select Case Comm
+Select Case GetCommand
 Case "!filerequest"
     If MsgBox(SFmsgbox_incfile, vbYesNo + vbQuestion) = vbYes Then
         FSocket2(Index).SendData "!acceptfile" & "#"

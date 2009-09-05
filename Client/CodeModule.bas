@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.1.0.6"
+Public Const Rev = "1.1.0.7"
 Public Const aPort = 6123
 Public Const bPort = 6124
 Public Const RegPort = 6222
@@ -12,7 +12,7 @@ Public GetConver    As String
 Public Message      As String
 Public ForWho       As String
 Public GetLevel     As String
-Public i            As Integer 'Global 'FOR' variable
+Public i            As Long    'Global 'FOR' variable
 
 Public Type NOTIFYICONDATA
     cbSize              As Long

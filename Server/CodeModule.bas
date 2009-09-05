@@ -1,14 +1,14 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.1.0.6"
+Public Const Rev = "1.1.0.7"
 Public Const RegPort = 6222
 
 Public Prefix   As String
 Public Command  As String
 Public Message  As String
 Public ForWho   As String
-Public i        As Integer 'Global "FOR" variable
+Public i        As Long    'Global "FOR" variable
 
 Public Type NOTIFYICONDATA
 cbSize              As Long
@@ -55,7 +55,7 @@ If Wsk.State = 7 Then
 End If
 End Sub
 
-Public Function UpdateUsersList() As Integer
+Public Sub UpdateUsersList()
 Dim GetList As String
 With frmPanel.ListView1.ListItems
     GetList = "!listupdate#"
@@ -70,7 +70,7 @@ End With
 If GetList <> "!listupdate#" Then
     SendMessage GetList
 End If
-End Function
+End Sub
 
 Public Sub SMSG(Command As String, Name As String, Message As String, Optional ForWho As String)
 Dim TimePrefix As String

@@ -185,8 +185,8 @@ Public xConnection     As New ADODB.Connection
 Public xCommand        As New ADODB.Command
 Public xRecordSet      As New ADODB.Recordset
 
-Public intCounter   As Integer
-Dim MAX_CONNECTION  As Byte     'Max 255 connections allowed
+Public intCounter   As Long
+Dim MAX_CONNECTION  As Long
 Dim Vali            As Boolean
 Dim Acc             As Boolean
 Dim Muted           As Boolean
@@ -599,17 +599,21 @@ Case "!w"
         ForWho = array2(1)
         
         'Check if user is whispering itself
-        If GetUser = ForWho Then
+        Select Case GetUser
+        Case ForWho
             SendSingle " You can't whisper yourself.", frmMain.Winsock1(Index)
             Exit Sub
-        End If
+        Case "<AFK>" & GetUser
+            SendSingle " You can't whisper yourself.", frmMain.Winsock1(Index)
+            Exit Sub
+        End Select
         
         'Check in listitems if forwho name is in the list and get the socket id
         With frmPanel.ListView1.ListItems
             For i = 1 To .Count
                 Select Case ForWho
                 Case .Item(i)
-                    SendSingle " [You whisper to " & GetUser & "]: " & GetConver, frmMain.Winsock1(Index)
+                    SendSingle " [You whisper to " & ForWho & "]: " & GetConver, frmMain.Winsock1(Index)
                     SendSingle " [" & GetUser & " whispers]: " & GetConver, frmMain.Winsock1(.Item(i).SubItems(2))
                     Call SMSG(Command, GetUser, GetConver, ForWho)
                     Exit For
@@ -1094,7 +1098,7 @@ GetCommands = vbCrLf & _
 " *********************************************"
 End Function
 
-Private Function GetLevel(Name As String) As Integer
+Private Function GetLevel(Name As String) As Long
 Dim GetAccount As String
 For i = 1 To frmPanel.ListView1.ListItems.Count
     If Name = frmPanel.ListView1.ListItems.Item(i) Then

@@ -225,7 +225,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim ii As Integer
+Dim ii As Long
 Dim Switch As String
 
 Private Sub cmdAdd_Click()
@@ -342,7 +342,7 @@ End Select
 
 DoButtons False
 End Sub
-Public Sub ModifyAccount(dName As String, dPassword As String, dBanned As String, dLevel As String, dID As Integer)
+Public Sub ModifyAccount(dName As String, dPassword As String, dBanned As String, dLevel As String, dID As Long)
 
 'Update the database
 frmMain.xCommand.CommandText = "UPDATE accounts SET Name1 = '" & dName & "', Password1 = '" & dPassword & "', Banned1 = '" & dBanned & "', Level1 = '" & dLevel & "' WHERE ID = " & dID
@@ -448,15 +448,14 @@ End Sub
 
 Private Function socketFree() As Integer
 On Error GoTo HandleErrorFreeSocket
-    Dim theIP As Variant
-    Dim p As Integer
-    For p = RegSock.LBound + 1 To RegSock.UBound
-        theIP = RegSock(p).LocalIP
-    Next
+    Dim theIP As String
+    For i = RegSock.LBound + 1 To RegSock.UBound
+        theIP = RegSock(i).LocalIP
+    Next i
     socketFree = RegSock.UBound + 1
 Exit Function
 HandleErrorFreeSocket:
-socketFree = p
+socketFree = i
 End Function
 
 Private Function loadSocket() As Integer
