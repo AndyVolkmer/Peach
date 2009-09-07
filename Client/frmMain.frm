@@ -336,7 +336,7 @@ Select Case GetCommand
 Case "!filerequest"
     If MsgBox(SFmsgbox_incfile, vbYesNo + vbQuestion) = vbYes Then
         FSocket2(Index).SendData "!acceptfile" & "#"
-        frmSendFile2.Show 1
+        frmSendFile2.Show
     Else
         FSocket2(Index).SendData "!denyfile" & "#"
     End If

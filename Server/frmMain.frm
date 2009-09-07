@@ -689,9 +689,11 @@ Case "!msg"
         IsEmote = True
     End If
     
+    Dim ANN_MSG As String
     On Error GoTo TargetErrorHandler
     GetTarget = StrConv(array2(1), vbProperCase)
-    
+    ANN_MSG = Right$(GetConver, Len(GetConver) - 5)
+    'CMSG
 Commands:
     
     'If an command is used check out which
@@ -733,7 +735,9 @@ Commands:
             
         Case ".unmute"
             MuteUser GetTarget, GetUser, "No", Index
-            
+        Case ".announce", ".ann", ".broadcast"
+            CMSG GetUser, ANN_MSG
+                    
         Case ".help", ".command", ".commands"
             SendSingle GetCommands, frmMain.Winsock1(Index)
             
@@ -855,16 +859,8 @@ Message:
         Exit Sub
     End If
         
-    'Determine users level and add associated tag
-    Select Case GetLevel(GetUser)
-    Case 0
-        SendMessage " [" & GetUser & "]: " & GetConver
-    Case 1
-        SendMessage " [GM][" & GetUser & "]: " & GetConver
-    Case 2
-        SendMessage " [Admin][" & GetUser & "]: " & GetConver
-    End Select
-    
+    'Send Message
+    SendMessage " [" & GetUser & "]: " & GetConver
     Call SMSG(Command, GetUser, GetConver)
     
 Case Else
@@ -920,6 +916,14 @@ TargetErrorHandler:
             End If
         End If
     End Select
+End Sub
+
+Private Sub CMSG(pName As String, pMessage As String)
+If GetLevel(pName) = 1 Then
+    SendMessage " " & "<GM>[" & pName & "] announces: " & pMessage
+Else
+    SendMessage " " & "<Amin>[" & pName & "] announces: " & pMessage
+End If
 End Sub
 
 Private Sub MuteUser(User As String, AdminName As String, Mute As String, SIndex As Integer)

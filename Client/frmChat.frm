@@ -152,8 +152,8 @@ End With
 SendMsg "!msg" & "#" & frmConfig.txtNick.Text & "#" & txtToSend.Text & "#"
 
 Next1:
-txtToSend.Text = vbNullString
-txtToSend.SetFocus
+    txtToSend.Text = vbNullString
+    txtToSend.SetFocus
 
 End Sub
 
@@ -232,7 +232,7 @@ End Sub
 Private Sub txtConver_Change()
 Dim hWnd1 As Long: hWnd1 = GetActiveWindow
 
-'Unlock so we can convert smiñeys
+'Unlock so we can convert smileys
 txtConver.Locked = False
 
 'If window doenst have focus then flash
@@ -286,7 +286,7 @@ Smilestring = _
     ":p " & _
     ":cool: " & _
     ":rolleyes: " & _
-    ">:("
+    ":["
 
 SmileFileString = _
     "smiley1.gif," & _

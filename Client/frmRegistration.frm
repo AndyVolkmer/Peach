@@ -273,6 +273,7 @@ With RegSock
     .RemotePort = RegPort
     .Connect
 End With
+Screen.MousePointer = vbArrowHourglass 'vbHourglass
 Me.Caption = " Loading ..."
 End Sub
 
@@ -287,6 +288,7 @@ Command1.Caption = "&Close"
 Command1.Visible = False
 Frame1.Visible = False
 Check1.Visible = False
+Screen.MousePointer = vbDefault
 End Sub
 
 Private Sub RegSock_Connect()
@@ -294,6 +296,7 @@ Me.Caption = " Peach - Registration"
 Frame1.Visible = True
 Check1.Visible = True
 Command1.Visible = True
+Screen.MousePointer = vbDefault
 End Sub
 
 Private Sub RegSock_DataArrival(ByVal bytesTotal As Long)
@@ -320,6 +323,7 @@ Me.Caption = "Error has occured ..."
 Label4.Caption = "An error has occured please try later again."
 Command1.Caption = "&Close"
 Command1.Visible = True
+Screen.MousePointer = vbDefault
 End Sub
 
 Private Sub txtAccount_KeyPress(KeyAscii As Integer)
