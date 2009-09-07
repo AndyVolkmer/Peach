@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.1.0.7"
+Public Const Rev = "1.1.0.8"
 Public Const RegPort = 6222
 
 Public Prefix   As String
@@ -91,15 +91,15 @@ With frmChat.txtConver
     Case "!nameisfree"
         .SelRTF = vbCrLf & TimePrefix & "Send answer that '" & Name & "' is free to take."
     Case "!nametaken"
-        .SelRTF = vbCrLf & TimePrefix & "Access denied for '" & Name & "'. (Name already taken)."
+        .SelRTF = vbCrLf & TimePrefix & "User '" & Name & "'. tryed to login but failed. (Name already taken)."
     Case "!account"
         .SelRTF = vbCrLf & TimePrefix & "Account '" & Name & "' tryed to login but failed. (Account doesnt exist)."
     Case "!password"
         .SelRTF = vbCrLf & TimePrefix & "Account '" & Name & "' tryed to login but failed. (Wrong Password)."
     Case "!badname"
-        .SelRTF = vbCrLf & TimePrefix & "Access denied for '" & Name & "'. (Badname)."
+        .SelRTF = vbCrLf & TimePrefix & "User '" & Name & "' tryed to login but failed . (Badname)."
     Case "!muted"
-        .SelRTF = vbCrLf & TimePrefix & "<Muted>[" & Name & "]: " & Message
+        .SelRTF = vbCrLf & TimePrefix & "[Muted][" & Name & "]: " & Message
     Case "!repeat"
         .SelRTF = vbCrLf & TimePrefix & "[" & Name & "]" & " activated flood control."
     Case Else

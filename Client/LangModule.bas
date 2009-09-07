@@ -172,7 +172,7 @@ MDIcommand_onlinelist = "&Online List"
 MDIstatusbar_disconnected = "Status: Disconnected"
 MDIstatusbar_dcfromserver = "Status: Disconnected from Server"
 MDIstatusbar_connected = "Status: Connected"
-MDIstatusbar_connectionproblem = "Status: Disconnected due connection problem"
+MDIstatusbar_connectionproblem = "Status: Cant connect to server. (Server offline)"
 MDIstatusbar_connecting = "Status: Connecting .."
 
 'MDImsgbox_errorHandlerFormLoad

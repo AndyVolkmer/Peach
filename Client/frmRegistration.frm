@@ -1,12 +1,13 @@
 VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmRegistration 
+   BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Peach - Registration"
    ClientHeight    =   3165
    ClientLeft      =   45
    ClientTop       =   435
-   ClientWidth     =   3885
+   ClientWidth     =   3870
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -20,9 +21,10 @@ Begin VB.Form frmRegistration
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    ScaleHeight     =   3165
-   ScaleWidth      =   3885
+   ScaleWidth      =   3870
    StartUpPosition =   1  'CenterOwner
    Begin VB.CheckBox Check1 
+      BackColor       =   &H00F4F4F4&
       Caption         =   "&Show Password"
       Height          =   255
       Left            =   120
@@ -49,6 +51,7 @@ Begin VB.Form frmRegistration
       Width           =   1695
    End
    Begin VB.Frame Frame1 
+      BackColor       =   &H00F4F4F4&
       Caption         =   "Enter your details"
       Height          =   2415
       Left            =   120
@@ -58,6 +61,7 @@ Begin VB.Form frmRegistration
       Width           =   3615
       Begin VB.PictureBox Picture1 
          Appearance      =   0  'Flat
+         BackColor       =   &H00F4F4F4&
          BorderStyle     =   0  'None
          ForeColor       =   &H80000008&
          Height          =   855
@@ -68,6 +72,7 @@ Begin VB.Form frmRegistration
          Top             =   1200
          Width           =   1215
          Begin VB.Label Label5 
+            BackColor       =   &H00F4F4F4&
             Height          =   615
             Left            =   120
             TabIndex        =   10
@@ -104,6 +109,7 @@ Begin VB.Form frmRegistration
          Width           =   3255
       End
       Begin VB.Label Label3 
+         BackColor       =   &H00F4F4F4&
          Caption         =   " Confirm the Password:"
          Height          =   255
          Left            =   120
@@ -112,6 +118,7 @@ Begin VB.Form frmRegistration
          Width           =   1935
       End
       Begin VB.Label Label2 
+         BackColor       =   &H00F4F4F4&
          Caption         =   " Password: "
          Height          =   255
          Left            =   120
@@ -120,6 +127,7 @@ Begin VB.Form frmRegistration
          Width           =   1335
       End
       Begin VB.Label Label1 
+         BackColor       =   &H00F4F4F4&
          Caption         =   " Account Name: "
          Height          =   255
          Left            =   120
@@ -129,6 +137,7 @@ Begin VB.Form frmRegistration
       End
    End
    Begin VB.Label Label4 
+      BackColor       =   &H00F4F4F4&
       Height          =   255
       Left            =   240
       TabIndex        =   8
@@ -159,36 +168,74 @@ If Command1.Caption = "&Close" Then
 End If
 
 'Can't register if there is no Account
-If LenB(txtAccount.Text) = 0 Then
-    MsgBox "You have to enter an Account Name.", vbInformation
+If Len(txtAccount.Text) = 0 Then
+    MsgBox "No account entered.", vbInformation
     txtAccount.SetFocus
     Exit Sub
 End If
 
-'Can't register if account is shorter then 5 chars.
-If LenB(txtAccount.Text) < 5 Then
-    MsgBox "Your Account needs at least 5 characters.", vbInformation
+'Can't register if account is shorter then 4 chars.
+If Len(txtAccount.Text) < 4 Then
+    MsgBox "Account name to short, it requieres at least 4 characters.", vbInformation
     txtAccount.SetFocus
     Exit Sub
 End If
+
+'Check for spaces and other signs in the account
+With txtAccount
+    If CheckString(.Text, " ") = True Then Exit Sub
+    If CheckString(.Text, ".") = True Then Exit Sub
+    If CheckString(.Text, "*") = True Then Exit Sub
+    If CheckString(.Text, "#") = True Then Exit Sub
+    If CheckString(.Text, "{") = True Then Exit Sub
+    If CheckString(.Text, "}") = True Then Exit Sub
+    If CheckString(.Text, ",") = True Then Exit Sub
+    If CheckString(.Text, "(") = True Then Exit Sub
+    If CheckString(.Text, ")") = True Then Exit Sub
+    If CheckString(.Text, "&") = True Then Exit Sub
+    If CheckString(.Text, "!") = True Then Exit Sub
+    If CheckString(.Text, "@") = True Then Exit Sub
+    If CheckString(.Text, "?") = True Then Exit Sub
+    If CheckString(.Text, "/") = True Then Exit Sub
+    If CheckString(.Text, "¬") = True Then Exit Sub
+    If CheckString(.Text, "=") = True Then Exit Sub
+    If CheckString(.Text, "<") = True Then Exit Sub
+    If CheckString(.Text, ">") = True Then Exit Sub
+    If CheckString(.Text, "[") = True Then Exit Sub
+    If CheckString(.Text, "]") = True Then Exit Sub
+    If CheckString(.Text, "'") = True Then Exit Sub
+    If CheckString(.Text, "¿") = True Then Exit Sub
+    If CheckString(.Text, "º") = True Then Exit Sub
+    If CheckString(.Text, "ª") = True Then Exit Sub
+    If CheckString(.Text, "\") = True Then Exit Sub
+    If CheckString(.Text, "|") = True Then Exit Sub
+    If CheckString(.Text, "~") = True Then Exit Sub
+    If CheckString(.Text, "´") = True Then Exit Sub
+    If CheckString(.Text, "`") = True Then Exit Sub
+    If CheckString(.Text, "+") = True Then Exit Sub
+    If CheckString(.Text, "-") = True Then Exit Sub
+    If CheckString(.Text, "^") = True Then Exit Sub
+    If CheckString(.Text, "_") = True Then Exit Sub
+    If CheckString(.Text, "·") = True Then Exit Sub
+End With
 
 'Can't register if the Account is made out of numbers
 If IsNumeric(txtAccount.Text) = True Then
-    MsgBox "Your Account can't be made of numeric characters.", vbInformation
+    MsgBox "Account can't be made of numeric characters.", vbInformation
     txtAccount.SetFocus
     Exit Sub
 End If
 
 'Can't register if there is no Password
-If LenB(txtPassword1.Text) = 0 Then
-    MsgBox "You have to enter a Password.", vbInformation
+If Len(txtPassword1.Text) = 0 Then
+    MsgBox "No Password entered.", vbInformation
     txtPassword1.SetFocus
     Exit Sub
 End If
 
-'Can't register if password is shorter then 4 chars.
-If LenB(txtPassword1.Text) < 4 Then
-    MsgBox "Your Password needs at least 4 characters."
+'Can't register if password is shorter then 6 chars.
+If Len(txtPassword1.Text) < 6 Then
+    MsgBox "Password to short, it requieres at least 6 characters."
     txtPassword1.SetFocus
     Exit Sub
 End If
@@ -196,9 +243,7 @@ End If
 'Can't register if passwords dont match
 If txtPassword1.Text <> txtPassword2.Text Then
     MsgBox "Your Passwords don't match.", vbInformation
-    txtPassword1.Text = vbNullString
-    txtPassword2.Text = vbNullString
-    txtPassword1.SetFocus
+    txtPassword2.SetFocus
     Exit Sub
 End If
 
@@ -210,6 +255,17 @@ End If
 
 RegSock.SendData "!register" & "#" & txtAccount.Text & "#" & txtPassword1.Text & "#"
 End Sub
+
+Private Function CheckString(pString As String, pChar As String) As Boolean
+If InStr(1, pString, pChar) <> 0 Then
+    MsgBox "Invalid account name.", vbInformation
+    With txtAccount
+        .SetFocus
+        .Text = vbNullString
+    End With
+    CheckString = True
+End If
+End Function
 
 Private Sub Form_Load()
 With RegSock
@@ -278,7 +334,7 @@ Case Is < 6
     Label5.BackColor = vbRed
     Label5.ForeColor = vbWhite
     Label5.Caption = "The password is weak."
-Case Is = 6, 7, 8
+Case 6, 7, 8
     Picture1.BackColor = vbYellow
     Picture1.BorderStyle = 1
     Label5.BackColor = vbYellow
