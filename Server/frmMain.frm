@@ -325,7 +325,7 @@ xCommand.CommandType = adCmdText
 Exit Sub
 '************
 HandleErrorConnection:
-MsgBox "Connection Error:" & vbCrLf & "[MySQL] " & Right$(Err.Description, Len(Err.Description) - 25) & ".", vbInformation
+MsgBox "Connection Error:" & vbCrLf & "[MySQL] " & Err.Description & ".", vbInformation
 GetInfo = True
 Screen.MousePointer = vbDefault
 End Sub
@@ -369,6 +369,7 @@ With xRecordSet
         xListItem.SubItems(4) = !Date1
         xListItem.SubItems(5) = !Banned1
         xListItem.SubItems(6) = !Level1
+        xListItem.SubItems(7) = !Number1
         .MoveNext
     Loop
 End With
@@ -1088,6 +1089,7 @@ Private Function GetCommands() As String
 GetCommands = vbCrLf & _
 " *********************************************" & vbCrLf & _
 " * List of all avaible commands:" & vbCrLf & _
+" * .announce 'Text' ( Send an server side tagged announced )" & vbCrLf & _
 " * .banuser 'Name' ( Bans users account )" & vbCrLf & _
 " * .banaccount 'Account' ( Bans the account )" & vbCrLf & _
 " * .unbanuser 'Name' ( Removes ban from 'Name' )" & vbCrLf & _

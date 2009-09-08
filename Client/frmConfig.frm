@@ -127,13 +127,13 @@ Begin VB.Form frmConfig
       End
       Begin VB.Label lblAccount 
          BackColor       =   &H00F4F4F4&
-         Caption         =   " Account:"
+         Caption         =   " Account / Peach ID:"
          ForeColor       =   &H00000000&
          Height          =   255
          Left            =   240
          TabIndex        =   13
          Top             =   360
-         Width           =   975
+         Width           =   1575
       End
       Begin VB.Label lblNickname 
          BackColor       =   &H00F4F4F4&
