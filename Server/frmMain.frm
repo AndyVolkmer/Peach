@@ -369,7 +369,6 @@ With xRecordSet
         xListItem.SubItems(4) = !Date1
         xListItem.SubItems(5) = !Banned1
         xListItem.SubItems(6) = !Level1
-        xListItem.SubItems(7) = !Number1
         .MoveNext
     Loop
 End With

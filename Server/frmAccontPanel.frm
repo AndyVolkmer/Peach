@@ -177,7 +177,7 @@ Begin VB.Form frmAccountPanel
       BackColor       =   -2147483643
       BorderStyle     =   1
       Appearance      =   1
-      NumItems        =   8
+      NumItems        =   7
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID"
          Object.Width           =   882
@@ -214,12 +214,6 @@ Begin VB.Form frmAccountPanel
          Alignment       =   2
          SubItemIndex    =   6
          Text            =   "Level"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   2
-         SubItemIndex    =   7
-         Text            =   "Number"
          Object.Width           =   2540
       EndProperty
    End
@@ -363,58 +357,36 @@ With ListView1.ListItems
 End With
 End Sub
 
-Private Function Random(Lowerbound As Long, Upperbound As Long) As Long
-Randomize
-Random = Int(Rnd * Upperbound) + Lowerbound
-End Function
+'Private Function Random(Lowerbound As Long, Upperbound As Long) As Long
+'Randomize
+'Random = Int(Rnd * Upperbound) + Lowerbound
+'End Function
 
 Private Sub RegisterAccount(dName As String, dPassword As String, dBanned As String)
-Dim R As Long
-
-'Random number generator
-R = Random(1, 2000)
-i = 1
-With ListView1.ListItems
-    Do
-        If i > .Count Then Exit Do
-        If Len(.Item(i).SubItems(7)) = 0 Then
-            i = i + 1
-        Else
-            If Not R = .Item(i).SubItems(7) Then
-                i = i + 1
-            Else
-                R = Random(1, 2000)
-                Exit Do
-            End If
-        End If
-    Loop
-End With
-
-i = 1
+ii = 1
 'Check list if the ID is already given
-For ii = 1 To ListView1.ListItems.Count
-    If ListView1.ListItems.Item(ii) = i Then
-        i = ii + 1
+For i = 1 To ListView1.ListItems.Count
+    If ListView1.ListItems.Item(i) = ii Then
+        ii = i + 1
     End If
-Next ii
+Next i
 
 'Add new account to database
-frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time1, Date1, Banned1, Level1, Number1) VALUES(" & i & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & dBanned & "', '" & "0" & "', '" & R & "')"
+frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & ii & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & dBanned & "', '" & "0" & "')"
 frmMain.xCommand.Execute
 
 'Save index in variable
-ii = ListView1.ListItems.Count + 1
+i = ListView1.ListItems.Count + 1
 
 'Add account to the listview
 With ListView1.ListItems
-    .Add , , i
-    .Item(ii).SubItems(1) = dName
-    .Item(ii).SubItems(2) = dPassword
-    .Item(ii).SubItems(3) = Format(Time, "hh:nn:ss")
-    .Item(ii).SubItems(4) = Format(Date, "dd/mm/yyyy")
-    .Item(ii).SubItems(5) = dBanned
-    .Item(ii).SubItems(6) = "0"
-    .Item(ii).SubItems(7) = R
+    .Add , , ii
+    .Item(i).SubItems(1) = dName
+    .Item(i).SubItems(2) = dPassword
+    .Item(i).SubItems(3) = Format(Time, "hh:nn:ss")
+    .Item(i).SubItems(4) = Format(Date, "dd/mm/yyyy")
+    .Item(i).SubItems(5) = dBanned
+    .Item(i).SubItems(6) = "0"
 End With
 End Sub
 
@@ -443,7 +415,7 @@ End Sub
 
 Private Sub ListView1_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnHeader)
 With ListView1.SelectedItem
-    MsgBox "ID: " & .Text & vbCrLf & "Name: " & .SubItems(1) & vbCrLf & "Password: " & .SubItems(2) & vbCrLf & "Time: " & .SubItems(3) & vbCrLf & "Date: " & .SubItems(4) & vbCrLf & "Banned: " & .SubItems(5) & vbCrLf & "Level: " & .SubItems(6) & vbCrLf & "Number: " & .SubItems(7), , "Information - '" & .SubItems(1) & "'"
+    MsgBox "ID: " & .Text & vbCrLf & "Name: " & .SubItems(1) & vbCrLf & "Password: " & .SubItems(2) & vbCrLf & "Time: " & .SubItems(3) & vbCrLf & "Date: " & .SubItems(4) & vbCrLf & "Banned: " & .SubItems(5) & vbCrLf & "Level: " & .SubItems(6), , "Information - '" & .SubItems(1) & "'"
 End With
 End Sub
 

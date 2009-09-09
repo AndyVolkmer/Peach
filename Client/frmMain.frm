@@ -431,9 +431,9 @@ End Sub
 
 Private Sub UpdateListPosition_Timer()
 With frmList
-    .Left = frmMain.Left + .Width * 2 + 20
+    .Left = frmMain.Left + frmMain.Width + 250
     .Top = frmMain.Top
-    .Height = frmMain.Height - 400
+    .Height = frmMain.Height - 500
 End With
 End Sub
 
