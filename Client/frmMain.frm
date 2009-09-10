@@ -97,7 +97,7 @@ Begin VB.MDIForm frmMain
       Width           =   7470
       Begin VB.CommandButton Command4 
          BackColor       =   &H00F4F4F4&
-         Caption         =   "&Online List"
+         Caption         =   "&Society"
          BeginProperty Font 
             Name            =   "Segoe UI"
             Size            =   8.25
@@ -226,11 +226,10 @@ Private Declare Sub InitCommonControls Lib "comctl32" ()
 Dim Vali            As Boolean
 
 Private Sub Close_Click()
-    Unload frmList
-    Unload frmLanguage
-    Unload frmBlank
-    Unload frmDESP
-    Unload frmAbout
+Unload frmLanguage
+Unload frmBlank
+Unload frmDESP
+Unload frmAbout
 End Sub
 
 Private Sub Command1_Click()
@@ -242,31 +241,25 @@ Private Sub Command2_Click()
 End Sub
 
 Private Sub SetupForms(Nix As Form)
-    frmChat.Hide
-    frmConfig.Hide
-    frmSendFile.Hide
-    Nix.Show
+frmSociety.Hide
+frmChat.Hide
+frmConfig.Hide
+frmSendFile.Hide
+Nix.Show
 End Sub
 
 Private Sub Command3_Click()
-    SetupForms frmSendFile
+SetupForms frmSendFile
 End Sub
 
 Private Sub Command4_Click()
-frmMain.UpdateListPosition.Enabled = True
-With frmList
-    .Left = frmMain.Left + .Width * 2 + 20
-    .Top = frmMain.Top
-    .Height = frmMain.Height - 400
-    .Show
-End With
+SetupForms frmSociety
 End Sub
 
 Public Sub LoadMDIForm()
 Command1.Caption = MDIcommand_config
 Command2.Caption = MDIcommand_chat
 Command3.Caption = MDIcommand_sendfile
-Command4.Caption = MDIcommand_onlinelist
 End Sub
 
 Private Sub FSocket_Close()
@@ -405,7 +398,6 @@ End Sub
 
 Private Sub MDIForm_Unload(Cancel As Integer)
 Unload frmLanguage
-Unload frmList
 Unload frmDESP
 Unload frmBlank
 Unload frmRegistration
@@ -426,14 +418,6 @@ With FSocket
         STimer.Enabled = False
         .SendData "!filerequest" & "#"
     End If
-End With
-End Sub
-
-Private Sub UpdateListPosition_Timer()
-With frmList
-    .Left = frmMain.Left + frmMain.Width + 250
-    .Top = frmMain.Top
-    .Height = frmMain.Height - 500
 End With
 End Sub
 
@@ -567,10 +551,10 @@ Case "!accepted"
     
 'Wipe out current list and insert new values
 Case "!listupdate"
-    frmList.ListView1.ListItems.Clear
+    frmSociety.ListView1.ListItems.Clear
     frmSendFile.Combo1.Clear
     For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
-        frmList.ListView1.ListItems.Add , , StrArr(i)
+        frmSociety.ListView1.ListItems.Add , , StrArr(i)
         frmSendFile.Combo1.AddItem StrArr(i)
     Next i
 

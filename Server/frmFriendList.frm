@@ -1,11 +1,12 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmFriendList 
+   BorderStyle     =   0  'None
    Caption         =   "Friend List Overview"
-   ClientHeight    =   2835
-   ClientLeft      =   120
-   ClientTop       =   450
-   ClientWidth     =   6525
+   ClientHeight    =   3975
+   ClientLeft      =   0
+   ClientTop       =   0
+   ClientWidth     =   8535
    BeginProperty Font 
       Name            =   "Segoe UI"
       Size            =   8.25
@@ -17,17 +18,18 @@ Begin VB.Form frmFriendList
    EndProperty
    Icon            =   "frmFriendList.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   2835
-   ScaleWidth      =   6525
-   StartUpPosition =   1  'CenterOwner
+   MDIChild        =   -1  'True
+   ScaleHeight     =   3975
+   ScaleWidth      =   8535
+   ShowInTaskbar   =   0   'False
    Begin MSComctlLib.ListView ListView1 
-      Height          =   2535
+      Height          =   2655
       Left            =   120
       TabIndex        =   0
       Top             =   120
-      Width           =   6255
-      _ExtentX        =   11033
-      _ExtentY        =   4471
+      Width           =   7455
+      _ExtentX        =   13150
+      _ExtentY        =   4683
       View            =   3
       LabelEdit       =   1
       LabelWrap       =   -1  'True
@@ -64,3 +66,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Sub Form_Load()
+Me.Top = 0: Me.Left = 0
+End Sub

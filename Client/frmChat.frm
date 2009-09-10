@@ -148,25 +148,13 @@ If LCase$(RTrim$(txtToSend.Text)) = "/time" Then
     GoTo Next1
 End If
 
-'Show online list
-If LCase$(RTrim$(txtToSend.Text)) = "/online" Then
-    frmMain.UpdateListPosition.Enabled = True
-    With frmList
-        .Left = frmMain.Left + .Width * 2 + 20
-        .Top = frmMain.Top
-        .Height = frmMain.Height - 400
-        .Show
-    End With
-    GoTo Next1
-End If
-
 'No whitespaces
 If Len(Trim$(txtToSend.Text)) = 0 Then
     GoTo Next1
 End If
 
 'If any checkbox is checked then send it private to that client
-With frmList.ListView1.ListItems
+With frmSociety.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).Checked = True Then
             SendMsg "!w" & "#" & frmConfig.txtNick.Text & "|" & .Item(i) & "#" & txtToSend.Text & "#"

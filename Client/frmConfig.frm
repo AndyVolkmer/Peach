@@ -455,7 +455,6 @@ End Sub
 
 Private Sub Command3_Click()
 frmMain.Hide
-frmList.Hide
 frmLanguage.Label1 = CONFIGlabel_selectlanguage
 With frmLanguage.Combo1
     .Clear

@@ -67,6 +67,23 @@ Begin VB.MDIForm frmMain
       TabIndex        =   0
       Top             =   0
       Width           =   7545
+      Begin VB.CommandButton Command5 
+         Caption         =   "&Friend List"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   5880
+         TabIndex        =   6
+         Top             =   120
+         Width           =   1455
+      End
       Begin VB.CommandButton Command4 
          Caption         =   "&User Panel"
          BeginProperty Font 
@@ -79,10 +96,10 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   5520
+         Left            =   4440
          TabIndex        =   4
          Top             =   120
-         Width           =   1815
+         Width           =   1455
       End
       Begin VB.CommandButton Command3 
          Caption         =   "Acco&unt Panel"
@@ -96,10 +113,10 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   3720
+         Left            =   3000
          TabIndex        =   3
          Top             =   120
-         Width           =   1815
+         Width           =   1455
       End
       Begin VB.CommandButton Command2 
          Caption         =   "Ch&at"
@@ -113,10 +130,10 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   1920
+         Left            =   1560
          TabIndex        =   2
          Top             =   120
-         Width           =   1815
+         Width           =   1455
       End
       Begin VB.CommandButton Command1 
          Caption         =   "&Configuration"
@@ -133,7 +150,7 @@ Begin VB.MDIForm frmMain
          Left            =   120
          TabIndex        =   1
          Top             =   120
-         Width           =   1815
+         Width           =   1455
       End
    End
 End
@@ -202,11 +219,12 @@ Private Sub Command2_Click()
 End Sub
 
 Public Sub SetupForms(Nix As Form)
-    frmChat.Hide
-    frmConfig.Hide
-    frmAccountPanel.Hide
-    frmPanel.Hide
-    Nix.Show
+frmChat.Hide
+frmFriendList.Hide
+frmConfig.Hide
+frmAccountPanel.Hide
+frmPanel.Hide
+Nix.Show
 End Sub
 
 Private Sub Command3_Click()
@@ -217,8 +235,8 @@ Private Sub Command4_Click()
     SetupForms frmPanel
 End Sub
 
-Private Sub DCTimer_Timer()
-Unload Me
+Private Sub Command5_Click()
+SetupForms frmFriendList
 End Sub
 
 Private Sub MDIForm_Initialize()
@@ -294,6 +312,10 @@ LoadFriends INI_FRIENDS_TABLE
 
 StatusBar1.Panels(1).Text = "Status : Disconnected"
 SetupForms frmConfig
+
+If HasError = False Then
+    WriteLog "Correctly loaded!"
+End If
 End Sub
 
 Public Sub ConnectMySQL(qDatabase As String, qUser As String, qPassword As String, qIP As String)

@@ -60,10 +60,6 @@ Public CHATcommand_clear                As String
 
 Public CHATtimetext                     As String
 
-' List form ..
-Public LISTcaption                      As String
-Public LISTcommand_close                As String
-
 ' Send File form ..
 Public SFlabel_filename                 As String
 Public SFlabel_sendingfile              As String
@@ -221,10 +217,6 @@ CHATcommand_clear = "&Clear"
 
 CHATtimetext = " The time is "
 
-' List form ..
-LISTcaption = "Online List"
-LISTcommand_close = "&Close"
-
 ' Send File form ..
 SFlabel_filename = " File Name:"
 SFlabel_sendingfile = "Sending:"
@@ -297,9 +289,6 @@ CHATcommand_send = "&Enviar"
 CHATcommand_clear = "&Limpiar"
 
 CHATtimetext = " El tiempo es "
-
-LISTcaption = "Lista Online"
-LISTcommand_close = "&Cerrar"
 
 SFlabel_filename = " Nombre del archivo:"
 SFlabel_sendingfile = "Enviando:"
@@ -378,10 +367,6 @@ CHATcommand_clear = "&Rensa"
 
 CHATtimetext = " Tiden är "
 
-' List form ..
-LISTcaption = "Online Lista"
-LISTcommand_close = "&Stäng"
-
 ' Send file form ..
 SFlabel_filename = " Fil Namn:"
 SFlabel_sendingfile = "Sänder:"
@@ -458,10 +443,6 @@ CHATcommand_send = "&Invia"
 CHATcommand_clear = "&Clear"
 
 CHATtimetext = " L'ora e' "
-
-' List form ..
-LISTcaption = "Lista Online"
-LISTcommand_close = "&Chiudi"
 
 ' Send file form ..
 SFlabel_filename = " Nome file:"
@@ -541,10 +522,6 @@ CHATcommand_clear = "&Obrisi"
 
 CHATtimetext = " Vreme je "
 
-' List form ..
-LISTcaption = "Onlajn lista"
-LISTcommand_close = "&Zatvori"
-
 ' Send file form ..
 SFlabel_filename = " Ime  arhive:"
 SFlabel_sendingfile = "Slanje:"
@@ -620,9 +597,6 @@ CHATcommand_clear = "&Leegmaken"
 
 CHATtimetext = " De Tijd is: "
 
-LISTcaption = "Online List"
-LISTcommand_close = "&Sluiten"
-
 SFlabel_filename = " Bestandsnaam:"
 SFlabel_sendingfile = "verZenden:"
 SFlabel_sent = "0.0% verzonden"
@@ -695,9 +669,6 @@ CHATcommand_send = "&Envoi"
 CHATcommand_clear = "&Clear"
 
 CHATtimetext = " L'heure est "
-
-LISTcaption = "Liste Online"
-LISTcommand_close = "&Ferme"
 
 SFlabel_filename = " Nom file:"
 SFlabel_sendingfile = "Envoyant:"
