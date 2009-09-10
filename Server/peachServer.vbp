@@ -12,6 +12,7 @@ Form=frmPanel.frm
 Module=CodeModule; CodeModule.bas
 Module=IniModule; IniModule.bas
 Module=CryptModul; CryptModul.bas
+Form=frmFriendList.frm
 IconForm="frmMain"
 Startup="frmMain"
 HelpFile=""

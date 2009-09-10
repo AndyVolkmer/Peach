@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.1.1.1"
+Public Const Rev = "1.1.1.2"
 Public Const RegPort = 6222
 
 Public Prefix   As String
@@ -39,6 +39,12 @@ Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As 
 Declare Function GetActiveWindow Lib "user32" () As Long
 
 Public nid As NOTIFYICONDATA ' trayicon variable
+
+Public Sub WriteLog(Data As String)
+With frmConfig
+    .txt_log.Text = .txt_log.Text & vbCrLf & "[" & Format$(Time, "hh:mm:ss") & "] " & Data
+End With
+End Sub
 
 Public Sub SendMessage(Message As String)
 Dim WinSk As Winsock

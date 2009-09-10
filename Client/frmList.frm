@@ -45,6 +45,15 @@ Begin VB.Form frmList
       BackColor       =   -2147483643
       BorderStyle     =   1
       Appearance      =   1
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       NumItems        =   1
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "Name"
@@ -54,6 +63,15 @@ Begin VB.Form frmList
    Begin VB.CommandButton Command1 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Close"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   2520
       TabIndex        =   1
@@ -63,6 +81,15 @@ Begin VB.Form frmList
    Begin VB.Label Label1 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Online Users : (Check to whisper)"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H00000000&
       Height          =   255
       Left            =   120

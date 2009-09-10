@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmChat 
    Appearance      =   0  'Flat
    BackColor       =   &H00F4F4F4&
@@ -25,6 +25,15 @@ Begin VB.Form frmChat
    ShowInTaskbar   =   0   'False
    Begin VB.CommandButton Command1 
       Caption         =   "Settings"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   300
       Left            =   5280
       TabIndex        =   5
@@ -59,6 +68,15 @@ Begin VB.Form frmChat
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Clear"
       Enabled         =   0   'False
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   5760
       TabIndex        =   1
@@ -69,6 +87,15 @@ Begin VB.Form frmChat
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Send"
       Enabled         =   0   'False
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   5760
       TabIndex        =   0

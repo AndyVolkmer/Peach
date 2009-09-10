@@ -26,6 +26,15 @@ Begin VB.Form frmRegistration
    Begin VB.CheckBox Check1 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Show Password"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   255
       Left            =   120
       TabIndex        =   11
@@ -43,6 +52,15 @@ Begin VB.Form frmRegistration
    Begin VB.CommandButton Command1 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Submit"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   2040
       TabIndex        =   1
@@ -53,6 +71,15 @@ Begin VB.Form frmRegistration
    Begin VB.Frame Frame1 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Enter your details"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   2415
       Left            =   120
       TabIndex        =   0
@@ -81,6 +108,15 @@ Begin VB.Form frmRegistration
          End
       End
       Begin VB.TextBox txtPassword2 
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   285
          IMEMode         =   3  'DISABLE
          Left            =   120
@@ -91,6 +127,15 @@ Begin VB.Form frmRegistration
          Width           =   1935
       End
       Begin VB.TextBox txtPassword1 
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   285
          IMEMode         =   3  'DISABLE
          Left            =   120
@@ -101,6 +146,15 @@ Begin VB.Form frmRegistration
          Width           =   1935
       End
       Begin VB.TextBox txtAccount 
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   285
          Left            =   120
          MaxLength       =   15
@@ -111,6 +165,15 @@ Begin VB.Form frmRegistration
       Begin VB.Label Label3 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Confirm the Password:"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   120
          TabIndex        =   7
@@ -120,6 +183,15 @@ Begin VB.Form frmRegistration
       Begin VB.Label Label2 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Password: "
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   120
          TabIndex        =   5
@@ -129,6 +201,15 @@ Begin VB.Form frmRegistration
       Begin VB.Label Label1 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Account Name: "
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   120
          TabIndex        =   3

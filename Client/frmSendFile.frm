@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form frmSendFile 
    Appearance      =   0  'Flat
    BackColor       =   &H00F4F4F4&
@@ -25,6 +25,15 @@ Begin VB.Form frmSendFile
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
    Begin VB.ComboBox Combo1 
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   315
       Left            =   120
       Style           =   2  'Dropdown List
@@ -33,6 +42,15 @@ Begin VB.Form frmSendFile
       Width           =   1935
    End
    Begin VB.TextBox txtFileName 
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   285
       Left            =   120
       Locked          =   -1  'True
@@ -74,6 +92,15 @@ Begin VB.Form frmSendFile
    Begin VB.CommandButton cmdBrowse 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Browse"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   5640
       TabIndex        =   1
@@ -84,6 +111,15 @@ Begin VB.Form frmSendFile
    Begin VB.CommandButton cmdSendFile 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Send File"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   5640
       TabIndex        =   0
@@ -108,6 +144,15 @@ Begin VB.Form frmSendFile
    Begin VB.Label Label4 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Send to :"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   255
       Left            =   120
       TabIndex        =   8
@@ -118,12 +163,21 @@ Begin VB.Form frmSendFile
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "File Name:"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   120
       TabIndex        =   7
       Top             =   165
-      Width           =   1455
+      Width           =   795
    End
    Begin VB.Line Line2 
       BorderColor     =   &H00FFFFFF&
@@ -136,29 +190,56 @@ Begin VB.Form frmSendFile
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "Sending File:"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   120
       TabIndex        =   5
       Top             =   2280
-      Width           =   915
+      Width           =   1005
    End
    Begin VB.Label lblProgress 
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "0.0% Sent"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   1080
       TabIndex        =   4
       Top             =   2280
-      Width           =   780
+      Width           =   750
    End
    Begin VB.Label lblSendSpeed 
       Alignment       =   1  'Right Justify
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "0.00 Kb/Sec"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   6405

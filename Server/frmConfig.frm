@@ -1,4 +1,5 @@
 VERSION 5.00
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmConfig 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
@@ -24,108 +25,26 @@ Begin VB.Form frmConfig
    ScaleWidth      =   7560
    ShowInTaskbar   =   0   'False
    Begin VB.CommandButton Command3 
-      Caption         =   "&Connect Database"
+      Caption         =   "Show Friend List"
       Height          =   375
-      Left            =   5280
-      TabIndex        =   20
-      Top             =   2640
-      Width           =   1695
+      Left            =   2640
+      TabIndex        =   11
+      Top             =   3360
+      Width           =   1455
    End
-   Begin VB.Frame Frame2 
-      BackColor       =   &H00F4F4F4&
-      Caption         =   "Database Settings"
-      Height          =   1815
+   Begin RichTextLib.RichTextBox txt_log 
+      Height          =   1215
       Left            =   120
       TabIndex        =   9
-      Top             =   1440
+      Top             =   1800
       Width           =   7215
-      Begin VB.TextBox txtDBTable 
-         Alignment       =   2  'Center
-         Height          =   285
-         Left            =   2040
-         TabIndex        =   19
-         Top             =   1200
-         Width           =   1695
-      End
-      Begin VB.TextBox txtDB 
-         Alignment       =   2  'Center
-         Height          =   285
-         Left            =   240
-         TabIndex        =   17
-         Top             =   1200
-         Width           =   1695
-      End
-      Begin VB.TextBox txtDBPassword 
-         Alignment       =   2  'Center
-         Height          =   285
-         IMEMode         =   3  'DISABLE
-         Left            =   3840
-         PasswordChar    =   "*"
-         TabIndex        =   15
-         Top             =   600
-         Width           =   1695
-      End
-      Begin VB.TextBox txtDBUser 
-         Alignment       =   2  'Center
-         Height          =   285
-         Left            =   2040
-         TabIndex        =   13
-         Top             =   600
-         Width           =   1695
-      End
-      Begin VB.TextBox txtDBIP 
-         Alignment       =   2  'Center
-         Height          =   285
-         Left            =   240
-         TabIndex        =   11
-         Top             =   600
-         Width           =   1695
-      End
-      Begin VB.Label lbl_DB_Table 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   "Table:"
-         Height          =   255
-         Left            =   2040
-         TabIndex        =   18
-         Top             =   960
-         Width           =   1095
-      End
-      Begin VB.Label lbl_DB 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   "Database:"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   16
-         Top             =   960
-         Width           =   1095
-      End
-      Begin VB.Label lbl_DB_Password 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   "Password:"
-         Height          =   255
-         Left            =   3840
-         TabIndex        =   14
-         Top             =   360
-         Width           =   1095
-      End
-      Begin VB.Label lbl_DB_User 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   "User:"
-         Height          =   255
-         Left            =   2040
-         TabIndex        =   12
-         Top             =   360
-         Width           =   1095
-      End
-      Begin VB.Label lbl_DB_IP 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   "IP:"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   10
-         Top             =   360
-         Width           =   1095
-      End
+      _ExtentX        =   12726
+      _ExtentY        =   2143
+      _Version        =   393217
+      BorderStyle     =   0
+      Enabled         =   -1  'True
+      ScrollBars      =   3
+      TextRTF         =   $"frmConfig.frx":0000
    End
    Begin VB.Timer connCounter 
       Enabled         =   0   'False
@@ -200,6 +119,14 @@ Begin VB.Form frmConfig
          Width           =   975
       End
    End
+   Begin VB.Label Label3 
+      Caption         =   " Server Log:"
+      Height          =   255
+      Left            =   120
+      TabIndex        =   10
+      Top             =   1560
+      Width           =   1095
+   End
    Begin VB.Label Label7 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Author : Notron"
@@ -228,6 +155,12 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
+If frmMain.HasError = True Then
+    Command1.Enabled = False
+    MsgBox "Database error occured, read the log for more information.", vbInformation
+    Exit Sub
+End If
+
 connCounter.Enabled = True
 'Do the buttons
 txtPort.Enabled = False
@@ -264,7 +197,7 @@ Case 10048
     connCounter.Enabled = False
     Label2.Caption = "Offline"
 Case Else
-    MsgBox "Error: " & Err.Number & vbCrLf & Err.Description & vbCrLf & "Report the number above to developer.", vbInformation
+    MsgBox "Error: " & Err.Number & vbCrLf & Err.Description & vbCrLf & "Report the number above to developement.", vbInformation
     Unload Me
 End Select
 End Sub
@@ -305,35 +238,6 @@ Command1.Enabled = True
 Command2.Enabled = False
 End Sub
 
-Private Sub Command3_Click()
-If CheckTx(txtDBIP, "No IP entered.") = True Then Exit Sub
-If CheckTx(txtDBUser, "No User entered.") = True Then Exit Sub
-If CheckTx(txtDBPassword, "No Password entered.") = True Then Exit Sub
-If CheckTx(txtDB, "No Database entered.") = True Then Exit Sub
-If CheckTx(txtDBTable, "No Table entered.") = True Then Exit Sub
-
-frmMain.ConnectMySQL txtDB.Text, txtDBUser.Text, txtDBPassword.Text, txtDBIP.Text
-frmMain.LoadCustomerListView txtDBTable.Text
-
-End Sub
-
-Public Sub DisableDatabaseField()
-txtDBIP.Enabled = False
-txtDB.Enabled = False
-txtDBUser.Enabled = False
-txtDBPassword.Enabled = False
-txtDBTable.Enabled = False
-
-Frame2.Enabled = False
-Command3.Enabled = False
-
-lbl_DB.Enabled = False
-lbl_DB_IP.Enabled = False
-lbl_DB_Password.Enabled = False
-lbl_DB_Table.Enabled = False
-lbl_DB_User.Enabled = False
-End Sub
-
 Private Function CheckTx(TB As TextBox, MB As String) As Boolean
 If Len(TB.Text) = 0 Then
     MsgBox MB, vbInformation
@@ -341,6 +245,10 @@ If Len(TB.Text) = 0 Then
     CheckTx = True
 End If
 End Function
+
+Private Sub Command3_Click()
+frmFriendList.Show
+End Sub
 
 Private Sub connCounter_Timer()
 Static X As Long
@@ -358,12 +266,10 @@ With frmMain
 End With
 End Sub
 
-Private Sub Form_Unload(Cancel As Integer)
-WriteIniValue App.Path & "\Config.ini", "Database", "IP", txtDBIP.Text
-WriteIniValue App.Path & "\Config.ini", "Database", "User", txtDBUser.Text
-WriteIniValue App.Path & "\Config.ini", "Database", "Password", Encode(txtDBPassword.Text)
-WriteIniValue App.Path & "\Config.ini", "Database", "Database", txtDB.Text
-WriteIniValue App.Path & "\Config.ini", "Database", "Table", txtDBTable.Text
+Private Sub txt_log_Change()
+With txt_log
+    .SelStart = Len(.Text)
+End With
 End Sub
 
 Private Sub txtPort_KeyPress(KeyAscii As Integer)

@@ -191,7 +191,7 @@ Dim Vali            As Boolean
 Dim Acc             As Boolean
 Dim Muted           As Boolean
 Dim Avaible         As Boolean
-Public GetInfo      As Boolean
+Public HasError     As Boolean
 
 Private Sub Command1_Click()
     SetupForms frmConfig
@@ -217,16 +217,21 @@ Private Sub Command4_Click()
     SetupForms frmPanel
 End Sub
 
+Private Sub DCTimer_Timer()
+Unload Me
+End Sub
+
 Private Sub MDIForm_Initialize()
 Call InitCommonControls
 End Sub
 
 Private Sub MDIForm_Load()
-Dim INI_DATABASE    As String
-Dim INI_USER        As String
-Dim INI_PASSWORD    As String
-Dim INI_IP          As String
-Dim INI_TABLE       As String
+Dim INI_DATABASE            As String
+Dim INI_USER                As String
+Dim INI_PASSWORD            As String
+Dim INI_IP                  As String
+Dim INI_ACCOUNT_TABLE       As String
+Dim INI_FRIENDS_TABLE       As String
 
 DisableFormResize Me
 Dim L As Long
@@ -238,69 +243,60 @@ Dim L As Long
 'Assign Variables to the .ini strings
 If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "Database")) <> 0 Then
     INI_DATABASE = ReadIniValue(App.Path & "\Config.ini", "Database", "Database")
+    WriteLog "Database loaded. (" & INI_DATABASE & ")"
+Else
+    WriteLog "No Database value found."
 End If
 
 If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "User")) <> 0 Then
     INI_USER = ReadIniValue(App.Path & "\Config.ini", "Database", "User")
+    WriteLog "User loaded. (" & INI_USER & ")"
+Else
+    WriteLog "No User value found."
 End If
 
 If Len(DeCode(ReadIniValue(App.Path & "\Config.ini", "Database", "Password"))) <> 0 Then
     INI_PASSWORD = DeCode(ReadIniValue(App.Path & "\Config.ini", "Database", "Password"))
+    WriteLog "Password loaded."
+Else
+    WriteLog "No Password value found."
 End If
 
 If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "IP")) <> 0 Then
     INI_IP = ReadIniValue(App.Path & "\Config.ini", "Database", "IP")
+    WriteLog "IP loaded. (" & INI_IP & ")"
+Else
+    WriteLog "No IP value found."
 End If
 
-If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "Table")) <> 0 Then
-    INI_TABLE = ReadIniValue(App.Path & "\Config.ini", "Database", "Table")
+If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table")) <> 0 Then
+    INI_ACCOUNT_TABLE = ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table")
+    WriteLog "Account-Table loaded. (" & INI_ACCOUNT_TABLE & ")"
+Else
+    WriteLog "No Account-Table found."
 End If
 
-'Show in the textboxes the data
-With frmConfig
-    .txtDB = INI_DATABASE
-    .txtDBUser = INI_USER
-    .txtDBPassword = INI_PASSWORD
-    .txtDBIP = INI_IP
-    .txtDBTable = INI_TABLE
-End With
+If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table")) <> 0 Then
+    INI_FRIENDS_TABLE = ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table")
+    WriteLog "Friends-Table loaded. (" & INI_FRIENDS_TABLE & ")"
+Else
+    WriteLog "No Friends-Table found."
+End If
 
+'Connect to MySQL Database
 ConnectMySQL INI_DATABASE, INI_USER, INI_PASSWORD, INI_IP
-LoadCustomerListView INI_TABLE
+
+'Load Accounts
+LoadAccounts INI_ACCOUNT_TABLE
+
+'Load Friends
+LoadFriends INI_FRIENDS_TABLE
 
 StatusBar1.Panels(1).Text = "Status : Disconnected"
 SetupForms frmConfig
 End Sub
 
 Public Sub ConnectMySQL(qDatabase As String, qUser As String, qPassword As String, qIP As String)
-If Len(qDatabase) = 0 Then
-    GetInfo = True
-    Exit Sub
-Else
-    GetInfo = False
-End If
-
-If Len(qUser) = 0 Then
-    GetInfo = True
-    Exit Sub
-Else
-    GetInfo = False
-End If
-
-If Len(qPassword) = 0 Then
-    GetInfo = True
-    Exit Sub
-Else
-    GetInfo = False
-End If
-
-If Len(qIP) = 0 Then
-    GetInfo = True
-    Exit Sub
-Else
-    GetInfo = False
-End If
-
 StatusBar1.Panels(1).Text = "Status : Connecting to database .."
 
 On Error GoTo HandleErrorConnection
@@ -314,35 +310,77 @@ xConnection.ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver};" _
     & "OPTION=" & 1 + 2 + 8 + 32 + 2048 + 16384
 
 Screen.MousePointer = vbHourglass
-DoEvents
 xConnection.Open
 
 Screen.MousePointer = vbDefault
 Set xCommand = New ADODB.Command
 Set xCommand.ActiveConnection = xConnection
 xCommand.CommandType = adCmdText
+WriteLog "[MySQL] Connected with Database"
 
 Exit Sub
-'************
 HandleErrorConnection:
-MsgBox "Connection Error:" & vbCrLf & "[MySQL] " & Err.Description & ".", vbInformation
-GetInfo = True
+'Print error
+WriteLog Err.Description
+
+'Change mouse pointer
 Screen.MousePointer = vbDefault
+
+'Set error flag
+HasError = True
+
 End Sub
 
-Public Sub LoadCustomerListView(qTable)
-Dim strSQL      As String
-Dim xListItem   As ListItem
+Private Sub LoadFriends(qTable As String)
+Dim SQL     As String
+Dim LItem   As ListItem
 
-If GetInfo = True Then Exit Sub
+If HasError = True Then Exit Sub
 If Len(qTable) = 0 Then Exit Sub
 
-strSQL = "SELECT * FROM " & qTable
+SQL = "SELECT * FROM " & qTable
+
+StatusBar1.Panels(1).Text = "Status : Loading friends .."
+
+On Error GoTo HandleErrorFriends
+xCommand.CommandText = SQL
+Set xRecordSet = xCommand.Execute
+
+With xRecordSet
+    Do Until .EOF
+        Set LItem = frmFriendList.ListView1.ListItems.Add(, , !Name)
+        LItem.SubItems(1) = !Friend
+        .MoveNext
+    Loop
+End With
+
+Set LItem = Nothing
+Set xRecordSet = Nothing
+
+WriteLog "[MySQL] Loaded table '" & qTable & "' data -> Friends."
+
+Exit Sub
+HandleErrorFriends:
+'Print error
+WriteLog Err.Description & "."
+
+'Set error flag
+HasError = True
+End Sub
+
+Private Sub LoadAccounts(qTable As String)
+Dim SQL         As String
+Dim LItem   As ListItem
+
+If HasError = True Then Exit Sub
+If Len(qTable) = 0 Then Exit Sub
+
+SQL = "SELECT * FROM " & qTable
 
 StatusBar1.Panels(1).Text = "Status : Loading accounts .."
 
 On Error GoTo HandleErrorTable
-xCommand.CommandText = strSQL
+xCommand.CommandText = SQL
 Set xRecordSet = xCommand.Execute
 
 With frmAccountPanel
@@ -362,36 +400,29 @@ End With
 
 With xRecordSet
     Do Until .EOF
-        Set xListItem = frmAccountPanel.ListView1.ListItems.Add(, , !ID)
-        xListItem.SubItems(1) = !Name1
-        xListItem.SubItems(2) = !Password1
-        xListItem.SubItems(3) = Format$(!Time1, "hh:mm:ss")
-        xListItem.SubItems(4) = !Date1
-        xListItem.SubItems(5) = !Banned1
-        xListItem.SubItems(6) = !Level1
+        Set LItem = frmAccountPanel.ListView1.ListItems.Add(, , !ID)
+        LItem.SubItems(1) = !Name1
+        LItem.SubItems(2) = !Password1
+        LItem.SubItems(3) = Format$(!Time1, "hh:mm:ss")
+        LItem.SubItems(4) = !Date1
+        LItem.SubItems(5) = !Banned1
+        LItem.SubItems(6) = !Level1
         .MoveNext
     Loop
 End With
 
-frmConfig.DisableDatabaseField
-
-Set xListItem = Nothing
+Set LItem = Nothing
 Set xRecordSet = Nothing
 
-If Winsock1(0).State = 0 Then
-    StatusBar1.Panels(1).Text = "Status : Disconnected"
-Else
-    StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
-End If
+WriteLog "[MySQL] Loaded table '" & qTable & "' data -> Accounts."
+
 Exit Sub
-'************
 HandleErrorTable:
-MsgBox "Database Error:" & vbCrLf & "[MySQL] " & Right$(Err.Description, Len(Err.Description) - 50) & ".", vbInformation
-If Winsock1(0).State = 0 Then
-    StatusBar1.Panels(1).Text = "Status : Disconnected"
-Else
-    StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
-End If
+'Print error
+WriteLog Err.Description & "."
+
+'Set error flag
+HasError = True
 End Sub
 
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -1132,6 +1163,7 @@ frmPanel.ListView1.ListItems.Clear
 
 StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
 End Sub
+
 Public Sub DisableFormResize(frm As Form)
 Dim style As Long
 Dim hMenu As Long

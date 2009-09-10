@@ -26,6 +26,15 @@ Begin VB.Form frmAbout
    Begin VB.CommandButton Command1 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Accept"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   6840
       TabIndex        =   0

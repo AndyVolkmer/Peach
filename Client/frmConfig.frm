@@ -25,6 +25,15 @@ Begin VB.Form frmConfig
    Begin VB.CommandButton Command5 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Register Account"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   320
       Left            =   5280
       TabIndex        =   18
@@ -34,6 +43,15 @@ Begin VB.Form frmConfig
    Begin VB.CommandButton Command4 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Update"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   1440
       TabIndex        =   6
@@ -44,15 +62,33 @@ Begin VB.Form frmConfig
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Disconnect"
       Enabled         =   0   'False
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
-      Left            =   5880
+      Left            =   5640
       TabIndex        =   8
       Top             =   2760
-      Width           =   1455
+      Width           =   1695
    End
    Begin VB.CommandButton Command3 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Language"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   120
       TabIndex        =   5
@@ -62,15 +98,33 @@ Begin VB.Form frmConfig
    Begin VB.CommandButton Command1 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Connect"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
-      Left            =   4440
+      Left            =   3960
       TabIndex        =   7
       Top             =   2760
-      Width           =   1455
+      Width           =   1695
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Personal Settings"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H00000000&
       Height          =   1215
       Left            =   120
@@ -80,6 +134,15 @@ Begin VB.Form frmConfig
       Begin VB.CheckBox SPT 
          BackColor       =   &H00F4F4F4&
          Caption         =   "Save Password"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   5280
          TabIndex        =   19
@@ -88,6 +151,15 @@ Begin VB.Form frmConfig
       End
       Begin VB.TextBox txtPassword 
          Alignment       =   2  'Center
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   285
          IMEMode         =   3  'DISABLE
          Left            =   1920
@@ -99,6 +171,15 @@ Begin VB.Form frmConfig
       End
       Begin VB.TextBox txtAccount 
          Alignment       =   2  'Center
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   285
          Left            =   240
          MaxLength       =   15
@@ -108,6 +189,15 @@ Begin VB.Form frmConfig
       End
       Begin VB.TextBox txtNick 
          Alignment       =   2  'Center
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   285
          Left            =   3600
          MaxLength       =   15
@@ -118,6 +208,15 @@ Begin VB.Form frmConfig
       Begin VB.Label lblPassword 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Password:"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H00000000&
          Height          =   255
          Left            =   1920
@@ -128,6 +227,15 @@ Begin VB.Form frmConfig
       Begin VB.Label lblAccount 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Account:"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H00000000&
          Height          =   255
          Left            =   240
@@ -138,6 +246,15 @@ Begin VB.Form frmConfig
       Begin VB.Label lblNickname 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Nickname:"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H00000000&
          Height          =   255
          Left            =   3600
@@ -149,6 +266,15 @@ Begin VB.Form frmConfig
    Begin VB.Frame Frame2 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Connection Settings"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   1215
       Left            =   120
       TabIndex        =   15
@@ -156,6 +282,15 @@ Begin VB.Form frmConfig
       Width           =   7215
       Begin VB.TextBox txtPort 
          Alignment       =   2  'Center
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   285
          Left            =   1920
          MaxLength       =   5
@@ -165,6 +300,15 @@ Begin VB.Form frmConfig
       End
       Begin VB.TextBox txtIP 
          Alignment       =   2  'Center
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   285
          Left            =   240
          TabIndex        =   3
@@ -174,6 +318,15 @@ Begin VB.Form frmConfig
       Begin VB.Label lblPort 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Port:"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H00000000&
          Height          =   255
          Left            =   1920
@@ -184,6 +337,15 @@ Begin VB.Form frmConfig
       Begin VB.Label lblIP 
          BackColor       =   &H00F4F4F4&
          Caption         =   " IP:"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H00000000&
          Height          =   255
          Left            =   240

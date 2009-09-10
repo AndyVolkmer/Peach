@@ -99,7 +99,7 @@ Begin VB.MDIForm frmMain
          BackColor       =   &H00F4F4F4&
          Caption         =   "&Online List"
          BeginProperty Font 
-            Name            =   "Tahoma"
+            Name            =   "Segoe UI"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -117,7 +117,7 @@ Begin VB.MDIForm frmMain
          BackColor       =   &H00F4F4F4&
          Caption         =   "&Send File"
          BeginProperty Font 
-            Name            =   "Tahoma"
+            Name            =   "Segoe UI"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -136,7 +136,7 @@ Begin VB.MDIForm frmMain
          BackColor       =   &H00F4F4F4&
          Caption         =   "Ch&at"
          BeginProperty Font 
-            Name            =   "Tahoma"
+            Name            =   "Segoe UI"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -154,7 +154,7 @@ Begin VB.MDIForm frmMain
          BackColor       =   &H00F4F4F4&
          Caption         =   "&Configuration"
          BeginProperty Font 
-            Name            =   "Tahoma"
+            Name            =   "Segoe UI"
             Size            =   8.25
             Charset         =   0
             Weight          =   400

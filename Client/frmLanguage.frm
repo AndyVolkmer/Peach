@@ -8,7 +8,7 @@ Begin VB.Form frmLanguage
    ClientTop       =   405
    ClientWidth     =   2895
    BeginProperty Font 
-      Name            =   "Tahoma"
+      Name            =   "Segoe UI"
       Size            =   8.25
       Charset         =   0
       Weight          =   400
@@ -290,8 +290,8 @@ End Select
 End Sub
 
 Private Sub Form_Initialize()
-If App.PrevInstance = True Then
-    Exit Sub
+If App.PrevInstance Then
+    End
 End If
 Call InitCommonControls
 End Sub

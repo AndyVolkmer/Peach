@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form frmSettings 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
@@ -42,6 +42,15 @@ Begin VB.Form frmSettings
    End
    Begin VB.CommandButton cmdCancel 
       Caption         =   "&Cancel"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   3240
       TabIndex        =   10
@@ -50,6 +59,15 @@ Begin VB.Form frmSettings
    End
    Begin VB.CommandButton cmdSave 
       Caption         =   "&Save"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   1920
       TabIndex        =   11
@@ -60,11 +78,20 @@ Begin VB.Form frmSettings
       BackColor       =   &H00F4F4F4&
       Caption         =   "Enable Message Windows"
       Enabled         =   0   'False
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   255
       Left            =   120
       TabIndex        =   8
       Top             =   2520
-      Width           =   2295
+      Width           =   2535
    End
    Begin MSComDlg.CommonDialog CommonDialog1 
       Left            =   4080
@@ -76,6 +103,15 @@ Begin VB.Form frmSettings
    Begin VB.Frame Frame2 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Chat Settings"
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   2295
       Left            =   120
       TabIndex        =   0
@@ -84,6 +120,15 @@ Begin VB.Form frmSettings
       Begin VB.TextBox txtBackgroundColor 
          Alignment       =   2  'Center
          Enabled         =   0   'False
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   285
          Left            =   2280
          Locked          =   -1  'True
@@ -92,6 +137,15 @@ Begin VB.Form frmSettings
          Width           =   1335
       End
       Begin VB.ComboBox cmbFontSize 
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   315
          Left            =   2880
          Style           =   2  'Dropdown List
@@ -102,6 +156,15 @@ Begin VB.Form frmSettings
       Begin VB.TextBox txtFontColor 
          Alignment       =   2  'Center
          Enabled         =   0   'False
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   285
          Left            =   120
          Locked          =   -1  'True
@@ -110,6 +173,15 @@ Begin VB.Form frmSettings
          Width           =   1335
       End
       Begin VB.ComboBox cmbFont 
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   315
          Left            =   120
          Style           =   2  'Dropdown List
@@ -120,6 +192,15 @@ Begin VB.Form frmSettings
       Begin VB.Label Label1 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Background Color:"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   2280
          TabIndex        =   13
@@ -131,6 +212,15 @@ Begin VB.Form frmSettings
          BackColor       =   &H80000005&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " This is an example text."
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   375
          Left            =   120
@@ -141,6 +231,15 @@ Begin VB.Form frmSettings
       Begin VB.Label Label5 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Font Size:"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   2880
          TabIndex        =   5
@@ -150,6 +249,15 @@ Begin VB.Form frmSettings
       Begin VB.Label Label4 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Font Color:"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   120
          TabIndex        =   3
@@ -159,6 +267,15 @@ Begin VB.Form frmSettings
       Begin VB.Label Label3 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Font:"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   120
          TabIndex        =   2
@@ -171,6 +288,15 @@ Begin VB.Form frmSettings
       BackColor       =   &H00F4F4F4&
       Caption         =   "[&?]"
       Enabled         =   0   'False
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   255
       Left            =   2760
       TabIndex        =   9
