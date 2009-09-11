@@ -7,7 +7,7 @@ Begin VB.MDIForm frmMain
    ClientHeight    =   5085
    ClientLeft      =   60
    ClientTop       =   420
-   ClientWidth     =   7545
+   ClientWidth     =   7470
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "MDIForm1"
    ScrollBars      =   0   'False
@@ -18,8 +18,8 @@ Begin VB.MDIForm frmMain
       Left            =   0
       TabIndex        =   5
       Top             =   4740
-      Width           =   7545
-      _ExtentX        =   13309
+      Width           =   7470
+      _ExtentX        =   13176
       _ExtentY        =   609
       _Version        =   393216
       BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
@@ -63,10 +63,10 @@ Begin VB.MDIForm frmMain
       Height          =   615
       Left            =   0
       ScaleHeight     =   555
-      ScaleWidth      =   7485
+      ScaleWidth      =   7410
       TabIndex        =   0
       Top             =   0
-      Width           =   7545
+      Width           =   7470
       Begin VB.CommandButton Command5 
          Caption         =   "&Friend List"
          BeginProperty Font 

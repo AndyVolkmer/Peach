@@ -26,10 +26,10 @@ LoadFile:
     LcaseTemp = LCase$(Temp)
     If InStr(LcaseTemp, "[") <> 0 Then ReadyToRead = False
     If LcaseTemp = KEY Then ReadyToRead = True
-    If InStr(LcaseTemp, "[") = 0 And ReadyToRead = True Then
-        If InStr(LcaseTemp, Variable & "=") = 1 Then
-            ReadIniValue = Mid$(Temp, 1 + Len(Variable & "="))
-            Close NF: Exit Function
+        If InStr(LcaseTemp, "[") = 0 And ReadyToRead = True Then
+            If InStr(LcaseTemp, Variable & "=") = 1 Then
+                ReadIniValue = Mid$(Temp, 1 + Len(Variable & "="))
+                Close NF: Exit Function
             End If
         End If
     Wend

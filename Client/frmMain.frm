@@ -440,38 +440,7 @@ SetupForms frmConfig
 End Sub
 
 Private Sub Winsock1_Connect()
-'Do the enable stuff
-With frmConfig
-    .lblAccount.Enabled = False
-    .txtAccount.Enabled = False
-        
-    .lblPassword.Enabled = False
-    .txtPassword.Enabled = False
-    
-    .lblNickname.Enabled = False
-    .txtNick.Enabled = False
-    
-    .lblIP.Enabled = False
-    .txtIP.Enabled = False
-    
-    .lblPort.Enabled = False
-    .txtPort.Enabled = False
-    
-    .SPT.Enabled = False
-    
-    .Frame1.Enabled = False
-    .Frame2.Enabled = False
-    
-    .Command2.Enabled = True
-    .Command1.Enabled = False
-End With
-With frmChat
-    .cmdSend.Enabled = True
-    .cmdClear.Enabled = True
-    .txtToSend.Enabled = True
-    .txtConver.Enabled = True
-End With
-
+SwitchButtons False
 SendMsg "!login" & "#" & frmConfig.txtAccount & "#" & frmConfig.txtPassword & "#"
 End Sub
 

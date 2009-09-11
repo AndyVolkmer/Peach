@@ -35,7 +35,7 @@ Begin VB.Form frmConfig
          Strikethrough   =   0   'False
       EndProperty
       Height          =   320
-      Left            =   5280
+      Left            =   5400
       TabIndex        =   18
       Top             =   3720
       Width           =   2055
@@ -72,7 +72,7 @@ Begin VB.Form frmConfig
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   5640
+      Left            =   5760
       TabIndex        =   8
       Top             =   2760
       Width           =   1695
@@ -108,7 +108,7 @@ Begin VB.Form frmConfig
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   3960
+      Left            =   4080
       TabIndex        =   7
       Top             =   2760
       Width           =   1695
@@ -130,7 +130,7 @@ Begin VB.Form frmConfig
       Left            =   120
       TabIndex        =   9
       Top             =   120
-      Width           =   7215
+      Width           =   7335
       Begin VB.CheckBox SPT 
          BackColor       =   &H00F4F4F4&
          Caption         =   "Save Password"
@@ -147,7 +147,7 @@ Begin VB.Form frmConfig
          Left            =   5280
          TabIndex        =   19
          Top             =   600
-         Width           =   1815
+         Width           =   1935
       End
       Begin VB.TextBox txtPassword 
          Alignment       =   2  'Center
@@ -279,7 +279,7 @@ Begin VB.Form frmConfig
       Left            =   120
       TabIndex        =   15
       Top             =   1440
-      Width           =   7215
+      Width           =   7335
       Begin VB.TextBox txtPort 
          Alignment       =   2  'Center
          BeginProperty Font 
@@ -455,18 +455,6 @@ End Sub
 
 Private Sub Command3_Click()
 frmMain.Hide
-frmLanguage.Label1 = CONFIGlabel_selectlanguage
-With frmLanguage.Combo1
-    .Clear
-    .AddItem CONFIGcombo_german
-    .AddItem CONFIGcombo_english
-    .AddItem CONFIGcombo_spanish
-    .AddItem CONFIGcombo_swedish
-    .AddItem CONFIGcombo_italian
-    .AddItem CONFIGcombo_dutch
-    .AddItem CONFIGcombo_serbian
-    .AddItem CONFIGcombo_french
-End With
 frmLanguage.Show
 End Sub
 

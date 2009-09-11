@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.1.1.3"
+Public Const Rev = "1.1.1.4"
 Public Const aPort = 6123
 Public Const bPort = 6124
 Public Const RegPort = 6222
@@ -144,42 +144,51 @@ Public Function GetNextWindow(ByVal lhWnd As Long) As Long
     GetNextWindow = GetWindow(lhWnd, GW_HWNDNEXT)
 End Function
 
-Public Sub Disconnect()
-Dim WiSk As Winsock
-
-'Do the buttons
+Public Sub SwitchButtons(pSwitch As Boolean)
+'True = Disconnected
+'False = Connected
 With frmConfig
-    .lblAccount.Enabled = True
-    .txtAccount.Enabled = True
+    .lblAccount.Enabled = pSwitch
+    .txtAccount.Enabled = pSwitch
         
-    .lblPassword.Enabled = True
-    .txtPassword.Enabled = True
+    .lblPassword.Enabled = pSwitch
+    .txtPassword.Enabled = pSwitch
     
-    .lblNickname.Enabled = True
-    .txtNick.Enabled = True
+    .lblNickname.Enabled = pSwitch
+    .txtNick.Enabled = pSwitch
     
-    .lblIP.Enabled = True
-    .txtIP.Enabled = True
+    .lblIP.Enabled = pSwitch
+    .txtIP.Enabled = pSwitch
     
-    .lblPort.Enabled = True
-    .txtPort.Enabled = True
+    .lblPort.Enabled = pSwitch
+    .txtPort.Enabled = pSwitch
     
-    .SPT.Enabled = True
+    .SPT.Enabled = pSwitch
     
-    .Frame1.Enabled = True
-    .Frame2.Enabled = True
+    .Frame1.Enabled = pSwitch
+    .Frame2.Enabled = pSwitch
     
-    .Command2.Enabled = False
-    .Command1.Enabled = True
+    .Command2.Enabled = Not pSwitch
+    .Command1.Enabled = pSwitch
 End With
 
 With frmChat
-    .cmdSend.Enabled = False
-    .cmdClear.Enabled = False
-    .txtToSend.Enabled = False
-    .txtConver.Enabled = False
+    .cmdSend.Enabled = Not pSwitch
+    .cmdClear.Enabled = Not pSwitch
+    .txtToSend.Enabled = Not pSwitch
+    .txtConver.Enabled = Not pSwitch
 End With
 
+With frmSociety
+    .Command1.Enabled = Not pSwitch
+    .Command2.Enabled = Not pSwitch
+End With
+End Sub
+
+Public Sub Disconnect()
+Dim WiSk As Winsock
+
+SwitchButtons True
 'Clear the online user list
 frmSociety.ListView1.ListItems.Clear
 frmSendFile.Combo1.Clear

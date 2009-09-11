@@ -31,7 +31,6 @@ Public CONFIGcommand_register           As String
 Public CONFIGcheck_savepassword         As String
 
 Public CONFIGlabel_CI_name              As String
-Public CONFIGlabel_selectlanguage       As String
 
 Public CONFIGframe_personal             As String
 Public CONFIGframe_connection           As String
@@ -75,9 +74,13 @@ Public SFmsgbox_nofilesel               As String
 Public SFmsgbox_incfile                 As String
 Public SFmsgbox_filedecilined           As String
 
-' Desp form ..
+'Desp form ..
 Public DESPtext_newmsg                  As String
 Public DESPtext_dcserver                As String
+
+'Language form ..
+Public LANG_command_enter               As String
+Public LANG_label_sellang        As String
 
 Public Sub SetLangGerman()
 
@@ -108,7 +111,6 @@ CONFIGcommand_register = "&Account registrieren"
 CONFIGcheck_savepassword = "&Password Speichern"
 
 CONFIGlabel_CI_name = "Name: "
-CONFIGlabel_selectlanguage = "Wähle deine Sprache aus:"
 
 CONFIGframe_personal = "Personelle Informationen"
 CONFIGframe_connection = "Verbindungs Informationen"
@@ -136,9 +138,6 @@ CHATcommand_clear = "&Löschen"
 
 CHATtimetext = " Die Zeit beträgt "
 
-LISTcaption = "Online Liste"
-LISTcommand_close = "&Schliessen"
-
 SFlabel_filename = " Datei Name:"
 SFlabel_sendingfile = "Sende:"
 SFlabel_sent = "0.0% Gesendet"
@@ -155,6 +154,9 @@ SFcommand_cancelsending = "Abbrechen .."
 
 DESPtext_newmsg = "Neue Nachricht!"
 DESPtext_dcserver = "Verbindung unterbrochen!"
+
+LANG_command_enter = "&Öffnen"
+LANG_label_sellang = "Wähle deine Sprache aus:"
 End Sub
 
 Public Sub SetLangEnglish()
@@ -188,7 +190,6 @@ CONFIGcommand_register = "&Register Account"
 CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Name: "
-CONFIGlabel_selectlanguage = "Select your language:"
 
 CONFIGframe_personal = "Personal Information"
 CONFIGframe_connection = "Connection Information"
@@ -234,6 +235,9 @@ SFcommand_cancelsending = "Cancel .."
 
 DESPtext_newmsg = "New Message!"
 DESPtext_dcserver = "Disconnected from Server!"
+
+LANG_command_enter = "&Open"
+LANG_label_sellang = "Select your language:"
 End Sub
 
 Public Sub SetLangSpanish()
@@ -264,7 +268,6 @@ CONFIGcommand_register = "&Registrar cuenta"
 CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Nombre: "
-CONFIGlabel_selectlanguage = "Elige tu idioma:"
 
 CONFIGframe_personal = "Informaciónes personales"
 CONFIGframe_connection = "Informaciónes de conexión"
@@ -306,6 +309,9 @@ SFcommand_cancelsending = "Cancelar .."
 
 DESPtext_newmsg = "Nuevo mensaje!"
 DESPtext_dcserver = "Desconectado del servidor!"
+
+LANG_command_enter = "&Abrir"
+LANG_label_sellang = "Elige tu idioma:"
 End Sub
 
 Public Sub SetLangSwedish()
@@ -338,7 +344,6 @@ CONFIGcommand_register = "&Register Account"
 CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Namn: "
-CONFIGlabel_selectlanguage = "Välj språk:"
 
 CONFIGframe_personal = "Personal Information"
 CONFIGframe_connection = "Connection Information"
@@ -383,6 +388,9 @@ SFcommand_sendfile = "Sänd"
 
 DESPtext_newmsg = "New Message!"
 DESPtext_dcserver = "Koppla ifrån servern!"
+
+LANG_command_enter = "&Öppna"
+LANG_label_sellang = "Välj språk:"
 End Sub
 
 Public Sub SetLangItalian()
@@ -415,7 +423,6 @@ CONFIGcommand_register = "&Register Account"
 CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Nome: "
-CONFIGlabel_selectlanguage = "Seleziona la tua lingua:"
 
 CONFIGframe_personal = "Personal Information"
 CONFIGframe_connection = "Connection Information"
@@ -461,6 +468,9 @@ SFcommand_cancelsending = "Annulla .."
 
 DESPtext_newmsg = "New Message!"
 DESPtext_dcserver = "Disconnesso dal Server!"
+
+LANG_command_enter = "&Apri"
+LANG_label_sellang = "Seleziona la tua lingua:"
 End Sub
 
 Public Sub SetLangSerbian()
@@ -493,7 +503,6 @@ CONFIGcommand_register = "&Register Account"
 CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Ime :"
-CONFIGlabel_selectlanguage = "Dodaj svoj jezik:"
 
 CONFIGframe_personal = "Personal Information"
 CONFIGframe_connection = "Connection Information"
@@ -539,6 +548,9 @@ SFcommand_cancelsending = "Otkazhi .."
 
 DESPtext_newmsg = "New Message!"
 DESPtext_dcserver = "Veza sa serverom je prekinuta!"
+
+LANG_command_enter = "&Otvori"
+LANG_label_sellang = "Dodaj svoj jezik:"
 End Sub
 
 Public Sub SetLangDutch()
@@ -569,7 +581,6 @@ CONFIGcommand_register = "&Register Account"
 CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Naam: "
-CONFIGlabel_selectlanguage = "Selecteer jou taal:"
 
 CONFIGframe_personal = "Personal Information"
 CONFIGframe_connection = "Connection Information"
@@ -579,9 +590,7 @@ CONFIGcombo_english = "Engels"
 CONFIGcombo_spanish = "Spaans"
 CONFIGcombo_swedish = "Zweeds"
 CONFIGcombo_italian = "Italiaans"
-CONFIGcombo_greek = "Grieks"
 CONFIGcombo_serbian = "Serbisch"
-CONFIGcombo_russian = "Russisch"
 CONFIGcombo_dutch = "Nederlands"
 CONFIGcombo_french = "Frans"
 
@@ -613,6 +622,9 @@ SFcommand_cancelsending = "&Annuleren .."
 
 DESPtext_newmsg = "New Message!"
 DESPtext_dcserver = "Verbinding verbroken met de server"
+
+LANG_command_enter = "&Openen"
+LANG_label_sellang = "Selecteer jou taal:"
 End Sub
 
 Public Sub SetLangFrench()
@@ -642,7 +654,6 @@ CONFIGcommand_register = "&Register Account"
 CONFIGcheck_savepassword = "&Save Password"
 
 CONFIGlabel_CI_name = "Nome: "
-CONFIGlabel_selectlanguage = "Choisissez votre langue:"
 
 CONFIGframe_personal = "Personal Information"
 CONFIGframe_connection = "Connection Information"
@@ -686,4 +697,7 @@ SFcommand_cancelsending = "Annuler .."
 
 DESPtext_newmsg = "New Message!"
 DESPtext_dcserver = "Deconnecté du Server"
+
+LANG_command_enter = "&Ouvrir"
+LANG_label_sellang = "Choisissez votre langue:"
 End Sub

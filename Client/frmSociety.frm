@@ -58,6 +58,7 @@ Begin VB.Form frmSociety
       Tab(1).ControlCount=   1
       Begin VB.CommandButton Command2 
          Caption         =   "&Remove"
+         Enabled         =   0   'False
          Height          =   375
          Left            =   5520
          TabIndex        =   4
@@ -66,6 +67,7 @@ Begin VB.Form frmSociety
       End
       Begin VB.CommandButton Command1 
          Caption         =   "&Add"
+         Enabled         =   0   'False
          Height          =   375
          Left            =   3840
          TabIndex        =   3
