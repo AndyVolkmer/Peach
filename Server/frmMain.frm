@@ -370,8 +370,9 @@ Set xRecordSet = xCommand.Execute
 
 With xRecordSet
     Do Until .EOF
-        Set LItem = frmFriendList.ListView1.ListItems.Add(, , !Name)
-        LItem.SubItems(1) = !Friend
+        Set LItem = frmFriendList.ListView1.ListItems.Add(, , !ID)
+        LItem.SubItems(1) = !Name
+        LItem.SubItems(2) = !Friend
         .MoveNext
     Loop
 End With
@@ -534,7 +535,6 @@ loadSocket = theFreeSocket
 End Function
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-'Define Variables
 Dim array1()        As String
 Dim array2()        As String
 Dim GetUser         As String
@@ -587,6 +587,18 @@ If Len(GetConver) > 200 Then
 End If
 
 Select Case Command
+'Update Friend list
+Case "!get_friends"
+    UpdateFriendList GetUser
+    
+'Check if friends exist and save
+Case "!add_friend"
+    frmFriendList.AddFriend GetUser, GetConver, Index
+
+'Remove friend from list
+Case "!remove_friend"
+    frmFriendList.RemoveFriend GetUser, GetConver, Index
+   
 'Add Name & Account to frmPanel ListView
 Case "!connected"
     'If the account is already beeing used kick first instance
@@ -688,7 +700,7 @@ Case "!login"
                 
                 'Ban Check
                 If .Item(i).SubItems(5) = "Yes" Then
-                    SendSingle "!login" & "#" & "Banned" & "#", frmMain.Winsock1(Index)
+                    SendSingle "!login#Banned#", frmMain.Winsock1(Index)
                     Call SMSG("!banned", GetUser, "")
                     Exit Sub
                 End If
@@ -696,10 +708,10 @@ Case "!login"
                 'Password Check
                 If GetConver = .Item(i).SubItems(2) Then
                     'Send back confirmation and account level
-                    SendSingle "!login" & "#" & "Yes" & "#" & .Item(i).SubItems(6) & "#", frmMain.Winsock1(Index)
+                    SendSingle "!login#Yes#", frmMain.Winsock1(Index)
                     Call SMSG(Command, GetUser, GetConver)
                 Else
-                    SendSingle "!login" & "#" & "Password" & "#", frmMain.Winsock1(Index)
+                    SendSingle "!login#Password#", frmMain.Winsock1(Index)
                     Call SMSG("!password", GetUser, "")
                 End If
                 
@@ -712,14 +724,14 @@ Case "!login"
     End With
     
     If Acc = False Then
-        SendSingle "!login" & "#" & "Account" & "#", frmMain.Winsock1(Index)
+        SendSingle "!login#Account#", frmMain.Winsock1(Index)
         Call SMSG("!account", GetUser, GetConver)
     End If
         
 Case "!iprequest"
     For i = 1 To frmPanel.ListView1.ListItems.Count
         If GetUser = frmPanel.ListView1.ListItems.Item(i) Then
-            SendSingle "!iprequest" & "#" & frmPanel.ListView1.ListItems.Item(i).SubItems(1), frmMain.Winsock1(Index)
+            SendSingle "!iprequest#" & frmPanel.ListView1.ListItems.Item(i).SubItems(1) & "#", frmMain.Winsock1(Index)
         End If
     Next i
     
@@ -755,9 +767,9 @@ Commands:
         Case ".show"
             Select Case LCase$(GetTarget)
             Case "accounts"
-                SendSingle "!accountlist" & "#" & GetAccountList, frmMain.Winsock1(Index)
+                SendSingle "!accountlist#" & GetAccountList, frmMain.Winsock1(Index)
             Case "users"
-                SendSingle "!userlist" & "#" & GetUserList, frmMain.Winsock1(Index)
+                SendSingle "!userlist#" & GetUserList, frmMain.Winsock1(Index)
             Case Else
                 SendSingle " You can just use .list account or user.", frmMain.Winsock1(Index)
             End Select

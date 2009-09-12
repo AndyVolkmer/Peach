@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.1.1.4"
+Public Const Rev = "1.1.1.5"
 Public Const aPort = 6123
 Public Const bPort = 6124
 Public Const RegPort = 6222
@@ -11,7 +11,6 @@ Public GetName      As String
 Public GetConver    As String
 Public Message      As String
 Public ForWho       As String
-Public GetLevel     As String
 Public i            As Long    'Global 'FOR' variable
 
 Public Type NOTIFYICONDATA
@@ -188,9 +187,16 @@ End Sub
 Public Sub Disconnect()
 Dim WiSk As Winsock
 
+'Reset RunOnce variable
+frmMain.RunOnce = False
+
 SwitchButtons True
 'Clear the online user list
-frmSociety.ListView1.ListItems.Clear
+With frmSociety
+    .ListView1.ListItems.Clear
+    .ListView2.ListItems.Clear
+End With
+
 frmSendFile.Combo1.Clear
 
 'Close and unload this sockets also

@@ -86,6 +86,7 @@ Begin VB.Form frmSociety
          LabelEdit       =   1
          LabelWrap       =   -1  'True
          HideSelection   =   -1  'True
+         Checkboxes      =   -1  'True
          GridLines       =   -1  'True
          _Version        =   393217
          ForeColor       =   -2147483640
@@ -158,14 +159,43 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Sub Command1_Click()
+SendMsg "!add_friend" & "#" & frmConfig.txtAccount.Text & "#" & InputBox("Please enter the account of your friend in the text box below.", "Adding a friend", "Friends Account") & "#"
+End Sub
+
+Private Sub Command2_Click()
+With ListView2.ListItems
+    For i = 1 To .Count
+        If .Item(i).Checked = True Then
+            SendMsg "!remove_friend#" & frmConfig.txtAccount.Text & "#" & .Item(i) & "#"
+            Exit For
+        End If
+    Next i
+End With
+End Sub
+
 Private Sub ListView1_BeforeLabelEdit(Cancel As Integer)
 If Item.Checked = True Then
     With ListView1.ListItems
         For i = 1 To .Count
             .Item(i).Checked = False
         Next i
+        ListView1.SelectedItem = Item
     End With
-    ListView1.SelectedItem = Item
+    Item.Checked = True
+Else
+    Item.Checked = False
+End If
+End Sub
+
+Private Sub ListView2_BeforeLabelEdit(Cancel As Integer)
+If Item.Checked = True Then
+    With ListView2.ListItems
+        For i = 1 To .Count
+            .Item(i).Checked = False
+        Next i
+        ListView2.SelectedItem = Item
+    End With
     Item.Checked = True
 Else
     Item.Checked = False

@@ -343,9 +343,10 @@ End Select
 DoButtons False
 End Sub
 Public Sub ModifyAccount(dName As String, dPassword As String, dBanned As String, dLevel As String, dID As Long)
-
+Dim account_table As String
+account_table = ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table")
 'Update the database
-frmMain.xCommand.CommandText = "UPDATE accounts SET Name1 = '" & dName & "', Password1 = '" & dPassword & "', Banned1 = '" & dBanned & "', Level1 = '" & dLevel & "' WHERE ID = " & dID
+frmMain.xCommand.CommandText = "UPDATE " & account_table & " SET Name1 = '" & dName & "', Password1 = '" & dPassword & "', Banned1 = '" & dBanned & "', Level1 = '" & dLevel & "' WHERE ID = " & dID
 frmMain.xCommand.Execute
 
 'Update the listview
@@ -357,12 +358,8 @@ With ListView1.ListItems
 End With
 End Sub
 
-'Private Function Random(Lowerbound As Long, Upperbound As Long) As Long
-'Randomize
-'Random = Int(Rnd * Upperbound) + Lowerbound
-'End Function
-
 Private Sub RegisterAccount(dName As String, dPassword As String, dBanned As String)
+Dim account_table As String
 ii = 1
 'Check list if the ID is already given
 For i = 1 To ListView1.ListItems.Count
@@ -371,8 +368,11 @@ For i = 1 To ListView1.ListItems.Count
     End If
 Next i
 
+'Get account table name
+account_table = ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table")
+
 'Add new account to database
-frmMain.xCommand.CommandText = "INSERT INTO accounts (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & ii & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & dBanned & "', '" & "0" & "')"
+frmMain.xCommand.CommandText = "INSERT INTO " & account_table & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & ii & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & dBanned & "', '" & "0" & "')"
 frmMain.xCommand.Execute
 
 'Save index in variable
@@ -494,18 +494,18 @@ Case "!register"
     For i = 1 To ListView1.ListItems.Count
         If UCase$(GetName) = UCase$(ListView1.ListItems.Item(i).SubItems(1)) Then
             If RegSock(Index).State = 7 Then
-                RegSock(Index).SendData "!nameexist" & "#"
+                RegSock(Index).SendData "!nameexist#"
                 Exit Sub
             End If
         End If
     Next i
     
     RegisterAccount GetName, GetPassword, "No"
-    RegSock(Index).SendData "!done" & "#"
+    RegSock(Index).SendData "!done#"
 End Select
 
 Exit Sub
 HandleError:
-    RegSock(Index).SendData "!error" & "#"
+    RegSock(Index).SendData "!error#"
     Exit Sub
 End Sub

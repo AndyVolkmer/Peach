@@ -27,8 +27,8 @@ Begin VB.Form frmFriendList
       Left            =   120
       TabIndex        =   0
       Top             =   120
-      Width           =   7455
-      _ExtentX        =   13150
+      Width           =   7335
+      _ExtentX        =   12938
       _ExtentY        =   4683
       View            =   3
       LabelEdit       =   1
@@ -49,13 +49,18 @@ Begin VB.Form frmFriendList
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      NumItems        =   2
+      NumItems        =   3
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Text            =   "Name"
+         Text            =   "ID"
          Object.Width           =   2540
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
+         Text            =   "Name"
+         Object.Width           =   2540
+      EndProperty
+      BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   2
          Text            =   "Friend"
          Object.Width           =   2540
       EndProperty
@@ -68,4 +73,89 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Form_Load()
 Me.Top = 0: Me.Left = 0
+End Sub
+
+Public Sub AddFriend(pUser As String, pFriend As String, pIndex As Integer)
+Dim IsValid  As Boolean
+Dim f_table  As String
+
+'Check if friends account exist
+With frmAccountPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If LCase(.Item(i).SubItems(1)) = LCase(pFriend) Then
+            IsValid = True
+            Exit For
+        End If
+    Next i
+End With
+
+'Check if the account is already added
+With ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(2) = pFriend Then
+            SendSingle "!friend_already_added#" & pFriend & "#", frmMain.Winsock1(pIndex)
+            Exit Sub
+        End If
+    Next i
+End With
+
+'If friends account exist then process
+If IsValid = True Then
+    'Get friends table name
+    f_table = ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table")
+    
+    Dim j As Integer
+    j = 0
+    With ListView1.ListItems
+        For i = 1 To .Count
+            If .Item(i) = j Then
+                j = i + 1
+            End If
+        Next i
+    End With
+    
+    'Execute into database
+    With frmMain
+        .xCommand.CommandText = "INSERT INTO " & f_table & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')"
+        .xCommand.Execute
+    End With
+    
+    'Save index in variable
+    i = ListView1.ListItems.Count + 1
+
+    'Add relation to listview
+    With ListView1.ListItems
+        .Add , , j
+        .Item(i).SubItems(1) = pUser
+        .Item(i).SubItems(2) = pFriend
+    End With
+    UpdateFriendList pUser
+Else 'Send message that the accoutn doesnt exist
+    SendSingle "!friend_not_exist#" & pFriend & "#", frmMain.Winsock1(pIndex)
+End If
+End Sub
+
+Public Sub RemoveFriend(pUser As String, pFriend As String, pIndex As Integer)
+Dim f_table As String
+Dim pID     As Integer
+
+f_table = ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table")
+
+With ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(1) = pUser Then
+            If .Item(i).SubItems(2) = pFriend Then
+                pID = .Item(i)
+                .Remove (i)
+                Exit For
+            End If
+        End If
+    Next i
+End With
+
+With frmMain
+    .xCommand.CommandText = "DELETE FROM " & f_table & " WHERE ID = " & pID
+    .xCommand.Execute
+End With
+UpdateFriendList pUser
 End Sub

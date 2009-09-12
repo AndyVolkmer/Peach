@@ -224,6 +224,7 @@ Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Dim Vali            As Boolean
+Public RunOnce         As Boolean
 
 Private Sub Close_Click()
 Unload frmLanguage
@@ -518,8 +519,26 @@ Case "!decilined"
 Case "!accepted"
     ConnectIsTrue
     
+'Wipe out current friend list and insert new values
+Case "!update_friends"
+    Dim f_array() As String
+    With frmSociety.ListView2.ListItems
+        .Clear
+        For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
+            f_array = Split(StrArr(i), "$")
+            .Add , , f_array(0)
+            .Item(.Count).SubItems(1) = f_array(1)
+        Next i
+    End With
+    
 'Wipe out current list and insert new values
 Case "!listupdate"
+    'Little check
+    If RunOnce = False Then
+        RunOnce = True
+        SendMsg "!get_friends#" & frmConfig.txtAccount.Text & "##"
+    End If
+    
     frmSociety.ListView1.ListItems.Clear
     frmSendFile.Combo1.Clear
     For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
@@ -531,7 +550,6 @@ Case "!listupdate"
 Case "!login"
     Select Case StrArr(1)
     Case "Yes"
-        GetLevel = StrArr(2)
         frmMain.StatusBar1.Panels(1).Text = "Status : " & "Authenticating.."
         SendMsg "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
     Case "Password"
@@ -578,6 +596,14 @@ Case "!iprequest"
         .Enabled = True
     End With
 
+'Display friend already added message
+Case "!friend_already_added"
+    MsgBox StrArr(1) & " is already in you friendlist.", vbInformation
+    
+'Display friend doesnt exist message
+Case "!friend_not_exist"
+    MsgBox "The account '" & StrArr(1) & "' doesnt exist.", vbInformation
+    
 Case Else
     With frmChat.txtConver
         .SelStart = Len(.Text)

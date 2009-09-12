@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.1.1.4"
+Public Const Rev = "1.1.1.5"
 Public Const RegPort = 6222
 
 Public Prefix   As String
@@ -11,13 +11,13 @@ Public ForWho   As String
 Public i        As Long    'Global "FOR" variable
 
 Public Type NOTIFYICONDATA
-cbSize              As Long
-hwnd                As Long
-uId                 As Long
-uFlags              As Long
-uCallBackMessage    As Long
-hIcon               As Long
-szTip               As String * 64
+    cbSize              As Long
+    hwnd                As Long
+    uId                 As Long
+    uFlags              As Long
+    uCallBackMessage    As Long
+    hIcon               As Long
+    szTip               As String * 64
 End Type
 
 Public Const NIM_ADD = &H0
@@ -38,7 +38,7 @@ Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal
 Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long
 Declare Function GetActiveWindow Lib "user32" () As Long
 
-Public nid As NOTIFYICONDATA ' trayicon variable
+Public nid As NOTIFYICONDATA 'trayicon variable
 
 Public Sub WriteLog(Data As String)
 With frmConfig
@@ -73,10 +73,58 @@ With frmPanel.ListView1.ListItems
         End If
     Next i
 End With
-If GetList <> "!listupdate#" Then
-    SendMessage GetList
-End If
+If GetList <> "!listupdate#" Then SendMessage GetList
 End Sub
+
+Public Sub UpdateFriendList(pName As String)
+Dim buffer As String
+Dim a_array() As String
+
+buffer = "!update_friends#"
+With frmFriendList.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(1) = pName Then
+            a_array = Split(GetAccountStatus(pName), "#")
+            
+            Select Case a_array(0)
+            Case "!online"
+                buffer = buffer & .Item(i).SubItems(2) & " (" & a_array(1) & ")$Online#"
+            Case "!offline"
+                buffer = buffer & .Item(i).SubItems(2) & "$Offline#"
+            End Select
+        End If
+    Next i
+End With
+
+SendSingle buffer, frmMain.Winsock1(GetWinsockID(pName))
+End Sub
+
+Private Function GetAccountStatus(pAccount As String) As String
+Dim IsAvaible As Boolean
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(5) = pAccount Then
+            GetAccountStatus = "!online#" & .Item(i) & "#"
+            IsAvaible = True
+            Exit For
+        End If
+    Next i
+    If IsAvaible = False Then
+        GetAccountStatus = "!offline#"
+    End If
+End With
+End Function
+
+Private Function GetWinsockID(pAccount As String) As Integer
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(5) = pAccount Then
+            GetWinsockID = .Item(i).SubItems(2)
+            Exit For
+        End If
+    Next i
+End With
+End Function
 
 Public Sub SMSG(Command As String, Name As String, Message As String, Optional ForWho As String)
 Dim TimePrefix As String
