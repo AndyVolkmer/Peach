@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.1.1.5"
+Public Const Rev = "1.1.1.6"
 Public Const RegPort = 6222
 
 Public Prefix   As String
@@ -84,11 +84,11 @@ buffer = "!update_friends#"
 With frmFriendList.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = pName Then
-            a_array = Split(GetAccountStatus(pName), "#")
+            a_array = Split(GetAccountStatus(.Item(i).SubItems(2)), "#")
             
             Select Case a_array(0)
             Case "!online"
-                buffer = buffer & .Item(i).SubItems(2) & " (" & a_array(1) & ")$Online#"
+                buffer = buffer & .Item(i).SubItems(2) & " - " & a_array(1) & "$Online#"
             Case "!offline"
                 buffer = buffer & .Item(i).SubItems(2) & "$Offline#"
             End Select
@@ -101,14 +101,15 @@ End Sub
 
 Private Function GetAccountStatus(pAccount As String) As String
 Dim IsAvaible As Boolean
+Dim j As Integer
 With frmPanel.ListView1.ListItems
-    For i = 1 To .Count
-        If .Item(i).SubItems(5) = pAccount Then
-            GetAccountStatus = "!online#" & .Item(i) & "#"
+    For j = 1 To .Count
+        If .Item(j).SubItems(5) = pAccount Then
+            GetAccountStatus = "!online#" & .Item(j) & "#"
             IsAvaible = True
             Exit For
         End If
-    Next i
+    Next j
     If IsAvaible = False Then
         GetAccountStatus = "!offline#"
     End If
