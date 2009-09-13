@@ -1,3 +1,6 @@
 *.vbw
 *.ini
 *.oca
+
+Client/Config.ini
+Server/Config.ini
