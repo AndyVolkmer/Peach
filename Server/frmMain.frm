@@ -208,7 +208,16 @@ Dim Vali            As Boolean
 Dim Acc             As Boolean
 Dim Muted           As Boolean
 Dim Avaible         As Boolean
-Public HasError     As Boolean
+
+'Database variables
+Dim INI_DATABASE            As String
+Dim INI_USER                As String
+Dim INI_PASSWORD            As String
+Dim INI_IP                  As String
+Dim INI_ACCOUNT_TABLE       As String
+Dim INI_FRIENDS_TABLE       As String
+
+Public HasError             As Boolean
 
 Private Sub Command1_Click()
     SetupForms frmConfig
@@ -244,13 +253,6 @@ Call InitCommonControls
 End Sub
 
 Private Sub MDIForm_Load()
-Dim INI_DATABASE            As String
-Dim INI_USER                As String
-Dim INI_PASSWORD            As String
-Dim INI_IP                  As String
-Dim INI_ACCOUNT_TABLE       As String
-Dim INI_FRIENDS_TABLE       As String
-
 DisableFormResize Me
 Dim L As Long
     L = GetWindowLong(Me.hwnd, GWL_STYLE)
@@ -278,6 +280,7 @@ If Len(DeCode(ReadIniValue(App.Path & "\Config.ini", "Database", "Password"))) <
     WriteLog "Password loaded."
 Else
     WriteLog "No Password value found."
+    INI_PASSWORD = InputBox("Enter your MySQL Password", "MySQL Password")
 End If
 
 If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "IP")) <> 0 Then
@@ -471,6 +474,15 @@ If Me.WindowState = 1 Then
     End If
     Vali = False
 End If
+End Sub
+
+Private Sub MDIForm_Unload(Cancel As Integer)
+WriteIniValue App.Path & "\Config.ini", "Database", "Database", INI_DATABASE
+WriteIniValue App.Path & "\Config.ini", "Database", "User", INI_USER
+WriteIniValue App.Path & "\Config.ini", "Database", "Password", INI_PASSWORD
+WriteIniValue App.Path & "\Config.ini", "Database", "IP", INI_IP
+WriteIniValue App.Path & "\Config.ini", "Database", "A_Table", INI_ACCOUNT_TABLE
+WriteIniValue App.Path & "\Config.ini", "Database", "F_Table", INI_FRIENDS_TABLE
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)

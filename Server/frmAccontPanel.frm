@@ -23,6 +23,42 @@ Begin VB.Form frmAccountPanel
    ScaleHeight     =   4065
    ScaleWidth      =   7470
    ShowInTaskbar   =   0   'False
+   Begin VB.TextBox txtName 
+      Alignment       =   2  'Center
+      Enabled         =   0   'False
+      Height          =   315
+      Left            =   240
+      TabIndex        =   14
+      Top             =   2880
+      Width           =   1215
+   End
+   Begin VB.TextBox txtPassword 
+      Alignment       =   2  'Center
+      Enabled         =   0   'False
+      Height          =   315
+      Left            =   1680
+      TabIndex        =   13
+      Top             =   2880
+      Width           =   1215
+   End
+   Begin VB.ComboBox cmbBanned 
+      Enabled         =   0   'False
+      Height          =   315
+      Left            =   3120
+      Style           =   2  'Dropdown List
+      TabIndex        =   12
+      Top             =   2880
+      Width           =   1335
+   End
+   Begin VB.ComboBox cmbLevel 
+      Enabled         =   0   'False
+      Height          =   315
+      Left            =   4680
+      Style           =   2  'Dropdown List
+      TabIndex        =   11
+      Top             =   2880
+      Width           =   975
+   End
    Begin MSWinsockLib.Winsock RegSock 
       Index           =   0
       Left            =   6480
@@ -36,7 +72,7 @@ Begin VB.Form frmAccountPanel
       Enabled         =   0   'False
       Height          =   350
       Left            =   5160
-      TabIndex        =   12
+      TabIndex        =   9
       Top             =   3600
       Width           =   1215
    End
@@ -45,7 +81,7 @@ Begin VB.Form frmAccountPanel
       Enabled         =   0   'False
       Height          =   350
       Left            =   3960
-      TabIndex        =   11
+      TabIndex        =   8
       Top             =   3600
       Width           =   1215
    End
@@ -58,49 +94,13 @@ Begin VB.Form frmAccountPanel
       TabIndex        =   4
       Top             =   2400
       Width           =   7215
-      Begin VB.ComboBox cmbLevel 
-         Enabled         =   0   'False
-         Height          =   315
-         Left            =   4560
-         Style           =   2  'Dropdown List
-         TabIndex        =   13
-         Top             =   480
-         Width           =   975
-      End
-      Begin VB.ComboBox cmbBanned 
-         Enabled         =   0   'False
-         Height          =   315
-         Left            =   3000
-         Style           =   2  'Dropdown List
-         TabIndex        =   10
-         Top             =   480
-         Width           =   1335
-      End
-      Begin VB.TextBox txtPassword 
-         Alignment       =   2  'Center
-         Enabled         =   0   'False
-         Height          =   315
-         Left            =   1560
-         TabIndex        =   7
-         Top             =   480
-         Width           =   1215
-      End
-      Begin VB.TextBox txtName 
-         Alignment       =   2  'Center
-         Enabled         =   0   'False
-         Height          =   315
-         Left            =   120
-         TabIndex        =   6
-         Top             =   480
-         Width           =   1215
-      End
       Begin VB.Label lblLevel 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Level:"
          Enabled         =   0   'False
          Height          =   255
          Left            =   4560
-         TabIndex        =   14
+         TabIndex        =   10
          Top             =   240
          Width           =   1215
       End
@@ -110,7 +110,7 @@ Begin VB.Form frmAccountPanel
          Enabled         =   0   'False
          Height          =   255
          Left            =   3000
-         TabIndex        =   9
+         TabIndex        =   7
          Top             =   240
          Width           =   1215
       End
@@ -120,7 +120,7 @@ Begin VB.Form frmAccountPanel
          Enabled         =   0   'False
          Height          =   255
          Left            =   1560
-         TabIndex        =   8
+         TabIndex        =   6
          Top             =   240
          Width           =   1215
       End

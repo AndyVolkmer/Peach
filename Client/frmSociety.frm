@@ -184,7 +184,7 @@ With ListView2.ListItems
 End With
 End Sub
 
-Private Sub ListView1_BeforeLabelEdit(Cancel As Integer)
+Private Sub ListView1_ItemCheck(ByVal Item As MSComctlLib.ListItem)
 If Item.Checked = True Then
     With ListView1.ListItems
         For i = 1 To .Count
@@ -198,7 +198,7 @@ Else
 End If
 End Sub
 
-Private Sub ListView2_BeforeLabelEdit(Cancel As Integer)
+Private Sub ListView2_ItemCheck(ByVal Item As MSComctlLib.ListItem)
 If Item.Checked = True Then
     With ListView2.ListItems
         For i = 1 To .Count

@@ -24,14 +24,6 @@ Begin VB.Form frmConfig
    ScaleHeight     =   4140
    ScaleWidth      =   7560
    ShowInTaskbar   =   0   'False
-   Begin VB.CommandButton Command3 
-      Caption         =   "Show Friend List"
-      Height          =   375
-      Left            =   2640
-      TabIndex        =   11
-      Top             =   3360
-      Width           =   1455
-   End
    Begin RichTextLib.RichTextBox txt_log 
       Height          =   1215
       Left            =   120
@@ -42,7 +34,6 @@ Begin VB.Form frmConfig
       _ExtentY        =   2143
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
    End
@@ -245,10 +236,6 @@ If Len(TB.Text) = 0 Then
     CheckTx = True
 End If
 End Function
-
-Private Sub Command3_Click()
-frmFriendList.Show
-End Sub
 
 Private Sub connCounter_Timer()
 Static X As Long
