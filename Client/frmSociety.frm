@@ -55,6 +55,7 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "ListView1"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       Begin VB.CommandButton Command2 
          Caption         =   "&Remove"
@@ -150,7 +151,7 @@ Begin VB.Form frmSociety
          NumItems        =   1
          BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
             Text            =   "Name"
-            Object.Width           =   12409
+            Object.Width           =   12347
          EndProperty
       End
    End
@@ -161,7 +162,13 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Command1_Click()
-SendMsg "!add_friend" & "#" & frmConfig.txtAccount.Text & "#" & InputBox("Please enter the account of your friend in the text box below.", "Adding a friend", "Friends Account") & "#"
+Dim Val As String
+Val = InputBox("Please enter the account of your friend in the text box below.", "Adding a friend", "Friends Account") & "#"
+If Len(Val) = 0 Then
+    Exit Sub
+Else
+    SendMsg "!add_friend" & "#" & frmConfig.txtAccount.Text & "#" & Val & "#"
+End If
 End Sub
 
 Private Sub Command2_Click()
@@ -169,14 +176,13 @@ Dim Name As String
 Dim MPos As Integer
 With ListView2.ListItems
     For i = 1 To .Count
-        MPos = InStr(1, .Item(i), " ")
-        If MPos = 0 Then
-            Name = .Item(i)
-        Else
-            Name = Left$(.Item(i), MPos - 1)
-        End If
-        Debug.Print MPos
         If .Item(i).Checked = True Then
+            MPos = InStr(1, .Item(i), " ")
+            If MPos = 0 Then
+                Name = .Item(i)
+            Else
+                Name = Left$(.Item(i), MPos - 1)
+            End If
             SendMsg "!remove_friend#" & frmConfig.txtAccount.Text & "#" & Name & "#"
             Exit For
         End If

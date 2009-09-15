@@ -286,13 +286,13 @@ End Sub
 Private Sub cmdSendFile_Click()
 'If no user selected then exit
 If Combo1.ListIndex < 0 Then
-    MsgBox SFmsgbox_nousersel, vbInformation
+    MsgBox SF_MSG_USER, vbInformation
     Combo1.SetFocus
     Exit Sub
 End If
 
 If Len(txtFileName.Text) = 0 Then
-    MsgBox SFmsgbox_nofilesel, vbInformation
+    MsgBox SF_MSG_FILE, vbInformation
     txtFileName.SetFocus
     Exit Sub
 End If
@@ -303,16 +303,16 @@ SendMsg "!iprequest" & "#" & Combo1.Text & "#"
 End Sub
 
 Public Sub SendF(IP As String)
-If cmdSendFile.Caption = SFcommand_sendfile Then
+If cmdSendFile.Caption = SF_COMMAND_SENDFILE Then
     If Len(txtFileName.Text) > 0 Then
         If Len(Dir(txtFileName.Text, vbNormal + vbArchive)) > 0 Then
-            cmdSendFile.Caption = SFcommand_cancelsending
+            cmdSendFile.Caption = SF_COMMAND_CANCEL
             SendFile txtFileName.Text, IP
         End If
     End If
 Else
     SckSendFile_Close
-    cmdSendFile.Caption = SFcommand_sendfile
+    cmdSendFile.Caption = SF_COMMAND_SENDFILE
 End If
 End Sub
 
@@ -348,12 +348,12 @@ LoadSendFileForm
 End Sub
 
 Public Sub LoadSendFileForm()
-Label1.Caption = SFlabel_filename
-lblFileToSend.Caption = SFlabel_sendingfile
-lblProgress.Caption = SFlabel_sent
-cmdBrowse.Caption = SFcommand_browse
-cmdSendFile.Caption = SFcommand_sendfile
-Label4.Caption = SFlabel_sendto
+Label1.Caption = SF_LABEL_FILENAME
+lblFileToSend.Caption = SF_LABEL_SENDING_FILE
+lblProgress.Caption = SF_LABEL_SENT
+cmdBrowse.Caption = SF_COMMAND_BROWSE
+cmdSendFile.Caption = SF_COMMAND_SENDFILE
+Label4.Caption = SF_LABEL_SEND_TO
 End Sub
 
 Private Sub SckSendFile_Close()
@@ -365,9 +365,9 @@ iFileNum = 0 'Set file number to 0, timer will exit if another timer event
 
 SckSendFile.Close
 
-cmdSendFile.Caption = SFcommand_sendfile
+cmdSendFile.Caption = SF_COMMAND_SENDFILE
 PicShowPercentage Me.picProgress, 0
-lblProgress.Caption = "0.00% " & SFlabel_sent
+lblProgress.Caption = "0.00% " & SF_LABEL_SENT
 End Sub
 
 Private Sub SckSendFile_Connect()

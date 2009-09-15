@@ -78,15 +78,14 @@ Case 7
     SetLangFrench
 End Select
 
-frmLanguage.Hide
 frmMain.LoadMDIForm
 frmSendFile.LoadSendFileForm
 frmChat.LoadChatForm
 frmConfig.LoadConfigForm
-frmMain.Show
 
 WriteIniValue App.Path & "\Config.ini", "Language", "Validate", "0"
 WriteIniValue App.Path & "\Config.ini", "Language", "Language", frmLanguage.Combo1.ListIndex
+frmLanguage.Hide
 End Sub
 
 Private Sub Combo1_Click()
@@ -112,22 +111,18 @@ SetLang
 End Sub
 
 Private Sub SetLang()
-Label1.Caption = LANG_label_sellang
-cmdEnter.Caption = LANG_command_enter
-Combo1.List(0) = CONFIGcombo_german
-Combo1.List(1) = CONFIGcombo_english
-Combo1.List(2) = CONFIGcombo_spanish
-Combo1.List(3) = CONFIGcombo_swedish
-Combo1.List(4) = CONFIGcombo_italian
-Combo1.List(5) = CONFIGcombo_dutch
-Combo1.List(6) = CONFIGcombo_serbian
-Combo1.List(7) = CONFIGcombo_french
+Label1.Caption = LANG_LABEL_SELLANG
+cmdEnter.Caption = LANG_COMMAND_ENTER
+Combo1.List(0) = LANG_GERMAN
+Combo1.List(1) = LANG_ENGLISH
+Combo1.List(2) = LANG_SPANISH
+Combo1.List(3) = LANG_SWEDISH
+Combo1.List(4) = LANG_ITALIAN
+Combo1.List(5) = LANG_DUTCH
+Combo1.List(6) = LANG_SERBIAN
+Combo1.List(7) = LANG_FRENCH
 End Sub
 
 Private Sub Form_Activate()
 SetLang
-End Sub
-
-Private Sub Form_Unload(Cancel As Integer)
-Unload frmMain
 End Sub

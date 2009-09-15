@@ -143,7 +143,7 @@ Dim Array1() As String: Array1 = Split(txtToSend.Text, " ")
 If LCase$(RTrim$(txtToSend.Text)) = "/time" Then
     With txtConver
         .SelStart = Len(.Text)
-        .SelRTF = vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "]" & CHATtimetext & Format$(Time, "hh:nn")
+        .SelRTF = vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "]" & CHAT_TIME_TEXT & Format$(Time, "hh:nn")
     End With
     GoTo Next1
 End If
@@ -157,14 +157,14 @@ End If
 With frmSociety.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).Checked = True Then
-            SendMsg "!w" & "#" & frmConfig.txtNick.Text & "|" & .Item(i) & "#" & txtToSend.Text & "#"
+            SendMsg "!w#" & frmConfig.txtNick.Text & "|" & .Item(i) & "#" & txtToSend.Text & "#"
             GoTo Next1
         End If
     Next i
 End With
 
 'Send public message
-SendMsg "!msg" & "#" & frmConfig.txtNick.Text & "#" & txtToSend.Text & "#"
+SendMsg "!msg#" & frmConfig.txtNick.Text & "#" & txtToSend.Text & "#"
 
 Next1:
     txtToSend.Text = vbNullString
@@ -235,8 +235,8 @@ End If
 End Sub
 
 Public Sub LoadChatForm()
-cmdSend.Caption = CHATcommand_send
-cmdClear.Caption = CHATcommand_clear
+cmdSend.Caption = CHAT_COMMAND_SEND
+cmdClear.Caption = CHAT_COMMAND_CLEAR
 End Sub
 
 Private Sub cmdClear_Click()

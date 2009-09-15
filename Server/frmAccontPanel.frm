@@ -172,6 +172,7 @@ Begin VB.Form frmAccountPanel
       LabelWrap       =   -1  'True
       HideSelection   =   -1  'True
       FullRowSelect   =   -1  'True
+      GridLines       =   -1  'True
       _Version        =   393217
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
@@ -288,6 +289,7 @@ cmbBanned.Enabled = Wind
 cmbLevel.Enabled = Wind
 lblName.Enabled = Wind
 lblPassword.Enabled = Wind
+lblBanned.Enabled = Wind
 lblLevel.Enabled = Wind
 Frame1.Enabled = Wind
 End Sub

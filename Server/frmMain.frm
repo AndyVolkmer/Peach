@@ -999,7 +999,7 @@ Private Sub CMSG(pName As String, pMessage As String)
 If GetLevel(pName) = 1 Then
     SendMessage " " & "<GM>[" & pName & "] announces: " & pMessage
 Else
-    SendMessage " " & "<Amin>[" & pName & "] announces: " & pMessage
+    SendMessage " " & "<Admin>[" & pName & "] announces: " & pMessage
 End If
 End Sub
 

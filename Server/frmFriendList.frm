@@ -23,18 +23,19 @@ Begin VB.Form frmFriendList
    ScaleWidth      =   8535
    ShowInTaskbar   =   0   'False
    Begin MSComctlLib.ListView ListView1 
-      Height          =   2655
+      Height          =   3855
       Left            =   120
       TabIndex        =   0
       Top             =   120
       Width           =   7335
       _ExtentX        =   12938
-      _ExtentY        =   4683
+      _ExtentY        =   6800
       View            =   3
       LabelEdit       =   1
       LabelWrap       =   -1  'True
       HideSelection   =   -1  'True
       FullRowSelect   =   -1  'True
+      GridLines       =   -1  'True
       _Version        =   393217
       ForeColor       =   -2147483640
       BackColor       =   -2147483643

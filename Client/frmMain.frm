@@ -223,8 +223,8 @@ Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPo
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
-Dim Vali            As Boolean
-Public RunOnce         As Boolean
+Dim Vali        As Boolean
+Public RunOnce  As Boolean
 
 Private Sub Close_Click()
 Unload frmLanguage
@@ -258,9 +258,9 @@ SetupForms frmSociety
 End Sub
 
 Public Sub LoadMDIForm()
-Command1.Caption = MDIcommand_config
-Command2.Caption = MDIcommand_chat
-Command3.Caption = MDIcommand_sendfile
+Command1.Caption = MDI_COMMAND_CONFIG
+Command2.Caption = MDI_COMMAND_CHAT
+Command3.Caption = MDI_COMMAND_SENDFILE
 End Sub
 
 Private Sub FSocket_Close()
@@ -281,7 +281,7 @@ Select Case CommX
 Case "!acceptfile"
     frmSendFile.SendF FSocket.RemoteHost
 Case "!denyfile"
-    MsgBox SFmsgbox_filedecilined, vbInformation
+    MsgBox SF_MSG_DECILINED, vbInformation
 End Select
 End Sub
 
@@ -328,7 +328,7 @@ GetCommand = Array1(0)
 
 Select Case GetCommand
 Case "!filerequest"
-    If MsgBox(SFmsgbox_incfile, vbYesNo + vbQuestion) = vbYes Then
+    If MsgBox(SF_MSG_INCOMMING_FILE, vbYesNo + vbQuestion) = vbYes Then
         FSocket2(Index).SendData "!acceptfile" & "#"
         frmSendFile2.Show
     Else
@@ -351,7 +351,7 @@ Dim L As Long
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
 
-StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
+StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
 
 'Load 'Top' position from ini, if there is non take default value ( 1200 )
 If Len(ReadIniValue(App.Path & "\Config.ini", "Position", "Top")) = 0 Then
@@ -429,13 +429,13 @@ Winsock1.Close
 
 Disconnect
 
-StatusBar1.Panels(1).Text = MDIstatusbar_dcfromserver
+StatusBar1.Panels(1).Text = MDI_STAT_DCFROMSERVER
 With frmChat.txtConver
     .SelStart = Len(.Text)
     .SelRTF = vbCrLf & Prefix & " [System]: You got disconnected from Server."
 End With
     
-frmDESP.DisplayMessage DESPtext_dcserver
+frmDESP.DisplayMessage DESP_TEXT_DC_SERVER
 
 SetupForms frmConfig
 End Sub
@@ -450,7 +450,7 @@ frmConfig.Hide
 frmChat.Show
 frmChat.txtToSend.SetFocus
 
-StatusBar1.Panels(1).Text = MDIstatusbar_connected
+StatusBar1.Panels(1).Text = MDI_STAT_CONNECTED
 
 SendMsg "!connected" & "#" & frmConfig.txtNick.Text & "#" & frmConfig.txtAccount.Text & "#"
 
@@ -465,7 +465,7 @@ frmChat.Hide
     .Show
     .txtNick.SetFocus
 End With
-MsgBox MDImsgbox_nametaken, vbInformation
+MsgBox MDI_MSG_NAME_TAKEN, vbInformation
 End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
@@ -560,7 +560,7 @@ Case "!login"
             .Show
             .txtPassword.SetFocus
         End With
-        MsgBox MDImsgbox_wrong_password, vbInformation
+        MsgBox MDI_MSG_WRONG_PASSWORD, vbInformation
     Case "Account"
         With frmConfig
             .Command2_Click
@@ -569,14 +569,14 @@ Case "!login"
             .Show
             .txtAccount.SetFocus
         End With
-        MsgBox MDImsgbox_wrong_account, vbInformation
+        MsgBox MDI_MSG_WRONG_ACCOUNT, vbInformation
     Case "Banned"
         With frmConfig
             .Command2_Click
         frmChat.Hide
             .Show
         End With
-        MsgBox MDImsgbox_banned, vbInformation
+        MsgBox MDI_MSG_BANNED, vbInformation
     End Select
 
 'We get ip here
@@ -609,8 +609,7 @@ Case Else
         .SelStart = Len(.Text)
         .SelRTF = vbCrLf & Prefix & GetMessage
     End With
-    If frmMain.WindowState = 1 Then frmDESP.DisplayMessage DESPtext_newmsg
-    
+    If frmMain.WindowState = 1 Then frmDESP.DisplayMessage DESP_TEXT_NEW_MSG
 End Select
 End Sub
 
@@ -625,7 +624,7 @@ Winsock1.Close
 Disconnect
 
 'Change status to connection problem
-StatusBar1.Panels(1).Text = MDIstatusbar_connectionproblem
+StatusBar1.Panels(1).Text = MDI_STAT_CONNECTION_ERROR
 
 frmConfig.Show
 End Sub

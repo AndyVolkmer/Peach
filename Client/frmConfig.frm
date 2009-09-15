@@ -387,24 +387,24 @@ If Command1.Enabled = False Then
 End If
 
 'Account can't be empty
-If CheckTx(txtAccount, CONFIGmsgbox_account) = True Then Exit Sub
+If CheckTx(txtAccount, CONFIG_MSG_ACCOUNT) = True Then Exit Sub
  
 'Password can't be empty
-If CheckTx(txtPassword, CONFIGmsgbox_password) = True Then Exit Sub
+If CheckTx(txtPassword, CONFIG_MSG_PASSWORD) = True Then Exit Sub
  
 'Nick can't be empty
-If CheckTx(txtNick, CONFIGmsgbox_namenoempty) = True Then Exit Sub
+If CheckTx(txtNick, CONFIG_MSG_NAME) = True Then Exit Sub
  
 'IP can't be empty
-If CheckTx(txtIP, CONFIGmsgbox_ipnoempty) = True Then Exit Sub
+If CheckTx(txtIP, CONFIG_MSG_IP) = True Then Exit Sub
  
 'Port can't be empty
-If CheckTx(txtPort, CONFIGmsgbox_portnoempty) = True Then Exit Sub
+If CheckTx(txtPort, CONFIG_MSG_PORT) = True Then Exit Sub
 
 'Nick can't be numeric
 If IsNumeric(txtNick.Text) = True Then
     txtNick.Text = vbNullString
-    MsgBox CONFIGmsgbox_nonumeric, vbInformation
+    MsgBox CONFIG_MSG_NUMERIC, vbInformation
     txtNick.SetFocus
     Exit Sub
 End If
@@ -442,20 +442,19 @@ End With
 Command1.Enabled = False
 Command2.Enabled = True
 
-frmMain.StatusBar1.Panels(1).Text = MDIstatusbar_connecting
+frmMain.StatusBar1.Panels(1).Text = MDI_STAT_CONNECTING
 End Sub
 
 Public Sub Command2_Click()
 Disconnect
 With frmMain
     .Winsock1.Close
-    .StatusBar1.Panels(1).Text = MDIstatusbar_disconnected
+    .StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
 End With
 End Sub
 
 Private Sub Command3_Click()
-frmMain.Hide
-frmLanguage.Show
+frmLanguage.Show 1
 End Sub
 
 Private Sub Command4_Click()
@@ -514,15 +513,15 @@ End If
 End Sub
 
 Public Sub LoadConfigForm()
-Command1.Caption = CONFIGcommand_connect
-Command2.Caption = CONFIGcommand_disconnect
-Command3.Caption = CONFIGcommand_language
-Command4.Caption = CONFIGcommand_update
-Command5.Caption = CONFIGcommand_register
-Frame1.Caption = CONFIGframe_personal
-Frame2.Caption = CONFIGframe_connection
-SPT.Caption = CONFIGcheck_savepassword
-lblNickname.Caption = CONFIGlabel_CI_name
+Command1.Caption = CONFIG_COMMAND_CONNECT
+Command2.Caption = CONFIG_COMMAND_DISCONNECT
+Command3.Caption = CONFIG_COMMAND_LANGUAGE
+Command4.Caption = CONFIG_COMMAND_UPDATE
+Command5.Caption = CONFIG_COMMAND_REGISTER
+Frame1.Caption = CONFIG_FRAME_PERSONAL
+Frame2.Caption = CONFIG_FRAME_CONNECTION
+SPT.Caption = CONFIG_CHECK_SAVE_PASSWORD
+lblNickname.Caption = CONFIG_LABEL_CI_NAME
 End Sub
 
 Private Function CheckTx(txtBox As TextBox, mBox As String) As Boolean

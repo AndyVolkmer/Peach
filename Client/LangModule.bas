@@ -3,701 +3,685 @@ Option Explicit
 
 'Start variable support for languages
 ' MDI form ..
-Public MDIcommand_config                As String
-Public MDIcommand_chat                  As String
-Public MDIcommand_sendfile              As String
-Public MDIcommand_onlinelist            As String
+Public MDI_COMMAND_CONFIG               As String
+Public MDI_COMMAND_CHAT                 As String
+Public MDI_COMMAND_SENDFILE             As String
+Public MDI_COMMAND_SOCIETY              As String
 
-Public MDIstatusbar_disconnected        As String
-Public MDIstatusbar_dcfromserver        As String
-Public MDIstatusbar_connected           As String
-Public MDIstatusbar_connectionproblem   As String
-Public MDIstatusbar_connecting          As String
+Public MDI_STAT_DISCONNECTED            As String
+Public MDI_STAT_DCFROMSERVER            As String
+Public MDI_STAT_CONNECTED               As String
+Public MDI_STAT_CONNECTION_ERROR        As String
+Public MDI_STAT_CONNECTING              As String
 
-Public MDImsgbox_errorHandlerFormLoad   As String
-Public MDImsgbox_config_notify          As String
-Public MDImsgbox_nametaken              As String
-Public MDImsgbox_wrong_account          As String
-Public MDImsgbox_wrong_password         As String
-Public MDImsgbox_banned                 As String
+Public MDI_MSG_ERROR_FORM_LOAD          As String
+Public MDI_MSG_CONFIG_NOTIFY            As String
+Public MDI_MSG_NAME_TAKEN               As String
+Public MDI_MSG_WRONG_ACCOUNT            As String
+Public MDI_MSG_WRONG_PASSWORD           As String
+Public MDI_MSG_BANNED                   As String
 
 ' Configuration form ..
-Public CONFIGcommand_connect            As String
-Public CONFIGcommand_disconnect         As String
-Public CONFIGcommand_language           As String
-Public CONFIGcommand_update             As String
-Public CONFIGcommand_register           As String
+Public CONFIG_COMMAND_CONNECT           As String
+Public CONFIG_COMMAND_DISCONNECT        As String
+Public CONFIG_COMMAND_LANGUAGE          As String
+Public CONFIG_COMMAND_UPDATE            As String
+Public CONFIG_COMMAND_REGISTER          As String
 
-Public CONFIGcheck_savepassword         As String
+Public CONFIG_CHECK_SAVE_PASSWORD       As String
 
-Public CONFIGlabel_CI_name              As String
+Public CONFIG_LABEL_CI_NAME             As String
 
-Public CONFIGframe_personal             As String
-Public CONFIGframe_connection           As String
+Public CONFIG_FRAME_PERSONAL            As String
+Public CONFIG_FRAME_CONNECTION          As String
 
-Public CONFIGcombo_german               As String
-Public CONFIGcombo_english              As String
-Public CONFIGcombo_spanish              As String
-Public CONFIGcombo_swedish              As String
-Public CONFIGcombo_italian              As String
-Public CONFIGcombo_greek                As String
-Public CONFIGcombo_serbian              As String
-Public CONFIGcombo_russian              As String
-Public CONFIGcombo_dutch                As String
-Public CONFIGcombo_french               As String
+Public CONFIG_MSG_ACCOUNT               As String
+Public CONFIG_MSG_PASSWORD              As String
+Public CONFIG_MSG_NUMERIC               As String
+Public CONFIG_MSG_PORT                  As String
+Public CONFIG_MSG_NAME                  As String
+Public CONFIG_MSG_IP                    As String
 
-Public CONFIGmsgbox_account             As String
-Public CONFIGmsgbox_password            As String
-Public CONFIGmsgbox_nonumeric           As String
-Public CONFIGmsgbox_portnoempty         As String
-Public CONFIGmsgbox_namenoempty         As String
-Public CONFIGmsgbox_ipnoempty           As String
+Public CHAT_COMMAND_SEND                As String
+Public CHAT_COMMAND_CLEAR               As String
 
-' Chat form ..
-Public CHATcommand_send                 As String
-Public CHATcommand_clear                As String
+Public CHAT_TIME_TEXT                   As String
 
-Public CHATtimetext                     As String
+Public SF_LABEL_FILENAME                As String
+Public SF_LABEL_SENDING_FILE            As String
+Public SF_LABEL_SENT                    As String
+Public SF_LABEL_SEND_TO                 As String
 
-' Send File form ..
-Public SFlabel_filename                 As String
-Public SFlabel_sendingfile              As String
-Public SFlabel_sent                     As String
-Public SFlabel_sendto                   As String
+Public SF_COMMAND_BROWSE                As String
+Public SF_COMMAND_SENDFILE              As String
+Public SF_COMMAND_CANCEL                As String
 
-Public SFcommand_browse                 As String
-Public SFcommand_sendfile               As String
-Public SFcommand_cancelsending          As String
-
-Public SFmsgbox_nousersel               As String
-Public SFmsgbox_nofilesel               As String
-Public SFmsgbox_incfile                 As String
-Public SFmsgbox_filedecilined           As String
+Public SF_MSG_USER                      As String
+Public SF_MSG_FILE                      As String
+Public SF_MSG_INCOMMING_FILE            As String
+Public SF_MSG_DECILINED                 As String
 
 'Desp form ..
-Public DESPtext_newmsg                  As String
-Public DESPtext_dcserver                As String
+Public DESP_TEXT_NEW_MSG                As String
+Public DESP_TEXT_DC_SERVER              As String
 
 'Language form ..
-Public LANG_command_enter               As String
-Public LANG_label_sellang        As String
+Public LANG_COMMAND_ENTER               As String
+Public LANG_LABEL_SELLANG               As String
+
+Public LANG_GERMAN                      As String
+Public LANG_ENGLISH                     As String
+Public LANG_SPANISH                     As String
+Public LANG_SWEDISH                     As String
+Public LANG_ITALIAN                     As String
+Public LANG_SERBIAN                     As String
+Public LANG_DUTCH                       As String
+Public LANG_FRENCH                      As String
 
 Public Sub SetLangGerman()
 
 ' MDI form ..
-MDIcommand_config = "&Einstellungen"
-MDIcommand_chat = "Ch&at"
-MDIcommand_sendfile = "&Sende Datei"
-MDIcommand_onlinelist = "&Online Liste"
+MDI_COMMAND_CONFIG = "&Einstellungen"
+MDI_COMMAND_CHAT = "Ch&at"
+MDI_COMMAND_SENDFILE = "&Sende Datei"
+MDI_COMMAND_SOCIETY = "&Online Liste"
 
-MDIstatusbar_disconnected = "Status: Getrennt"
-MDIstatusbar_dcfromserver = "Status: Getrennt vom Server"
-MDIstatusbar_connected = "Status: Verbunden"
-MDIstatusbar_connectionproblem = "Status: Getrennt aufgrund eines Verbindungsfehlers"
-MDIstatusbar_connecting = "Status: Verbindung wird aufgebaut .."
+MDI_STAT_DISCONNECTED = "Status: Getrennt"
+MDI_STAT_DCFROMSERVER = "Status: Getrennt vom Server"
+MDI_STAT_CONNECTED = "Status: Verbunden"
+MDI_STAT_CONNECTION_ERROR = "Status: Getrennt aufgrund eines Verbindungsfehlers"
+MDI_STAT_CONNECTING = "Status: Verbindung wird aufgebaut .."
 
-MDImsgbox_config_notify = "Einige Konfigurationsdateien sind veraltet oder wurden beschädigt, Peach fand den Fehler und wird es mit dem nächsten Neustart korrigieren."
-MDImsgbox_nametaken = "Der Name ist bereits vergeben."
-MDImsgbox_wrong_account = "Der Account ist nicht vorhanden oder falsch."
-MDImsgbox_wrong_password = "Das Passwort ist falsch."
-MDImsgbox_banned = "Dieser Account wurde gebannt."
+MDI_MSG_CONFIG_NOTIFY = "Einige Konfigurationsdateien sind veraltet oder wurden beschädigt, Peach fand den Fehler und wird es mit dem nächsten Neustart korrigieren."
+MDI_MSG_NAME_TAKEN = "Der Name ist bereits vergeben."
+MDI_MSG_WRONG_ACCOUNT = "Der Account ist nicht vorhanden oder falsch."
+MDI_MSG_WRONG_PASSWORD = "Das Passwort ist falsch."
+MDI_MSG_BANNED = "Dieser Account wurde gebannt."
 
-CONFIGcommand_connect = "&Verbinden"
-CONFIGcommand_disconnect = "&Verbindung trenn."
-CONFIGcommand_language = "&Sprache"
-CONFIGcommand_update = "&Aktualisieren"
-CONFIGcommand_register = "&Account registrieren"
+CONFIG_COMMAND_CONNECT = "&Verbinden"
+CONFIG_COMMAND_DISCONNECT = "&Verbindung trenn."
+CONFIG_COMMAND_LANGUAGE = "&Sprache"
+CONFIG_COMMAND_UPDATE = "&Aktualisieren"
+CONFIG_COMMAND_REGISTER = "&Account registrieren"
 
-CONFIGcheck_savepassword = "&Password Speichern"
+CONFIG_CHECK_SAVE_PASSWORD = "&Password Speichern"
 
-CONFIGlabel_CI_name = "Name: "
+CONFIG_LABEL_CI_NAME = "Name: "
 
-CONFIGframe_personal = "Personelle Informationen"
-CONFIGframe_connection = "Verbindungs Informationen"
+CONFIG_FRAME_PERSONAL = "Personelle Informationen"
+CONFIG_FRAME_CONNECTION = "Verbindungs Informationen"
 
-CONFIGcombo_german = "Deutsch"
-CONFIGcombo_english = "Englisch"
-CONFIGcombo_spanish = "Spanisch"
-CONFIGcombo_swedish = "Schwedisch"
-CONFIGcombo_italian = "Italienisch"
-CONFIGcombo_greek = "Griechisch"
-CONFIGcombo_serbian = "Serbisch"
-CONFIGcombo_russian = "Russisch"
-CONFIGcombo_dutch = "Niederländisch"
-CONFIGcombo_french = "Französisch"
+LANG_GERMAN = "Deutsch"
+LANG_ENGLISH = "Englisch"
+LANG_SPANISH = "Spanisch"
+LANG_SWEDISH = "Schwedisch"
+LANG_ITALIAN = "Italienisch"
+LANG_SERBIAN = "Serbisch"
+LANG_DUTCH = "Niederländisch"
+LANG_FRENCH = "Französisch"
 
-CONFIGmsgbox_account = "Du hast keinen Account eingegeben."
-CONFIGmsgbox_password = "Du hast kein Passwort eingegeben."
-CONFIGmsgbox_nonumeric = "Du kannst keine Ziffern in deinem Namen haben."
-CONFIGmsgbox_portnoempty = "Du hast keinen Port eingegeben."
-CONFIGmsgbox_namenoempty = "Du hast keinen Namen eingegeben."
-CONFIGmsgbox_ipnoempty = "Du hast keine IP eingegeben."
+CONFIG_MSG_ACCOUNT = "Du hast keinen Account eingegeben."
+CONFIG_MSG_PASSWORD = "Du hast kein Passwort eingegeben."
+CONFIG_MSG_NUMERIC = "Du kannst keine Ziffern in deinem Namen haben."
+CONFIG_MSG_PORT = "Du hast keinen Port eingegeben."
+CONFIG_MSG_NAME = "Du hast keinen Namen eingegeben."
+CONFIG_MSG_IP = "Du hast keine IP eingegeben."
 
-CHATcommand_send = "&Senden"
-CHATcommand_clear = "&Löschen"
+CHAT_COMMAND_SEND = "&Senden"
+CHAT_COMMAND_CLEAR = "&Löschen"
 
-CHATtimetext = " Die Zeit beträgt "
+CHAT_TIME_TEXT = " Die Zeit beträgt "
 
-SFlabel_filename = " Datei Name:"
-SFlabel_sendingfile = "Sende:"
-SFlabel_sent = "0.0% Gesendet"
-SFlabel_sendto = "Sende an:"
+SF_LABEL_FILENAME = " Datei Name:"
+SF_LABEL_SENDING_FILE = "Sende:"
+SF_LABEL_SENT = "0.0% Gesendet"
+SF_LABEL_SEND_TO = "Sende an:"
 
-SFmsgbox_nousersel = "Kein Benutzer ausgewählt."
-SFmsgbox_nofilesel = "Keine Datei ausgewählt."
-SFmsgbox_incfile = "Sie empfangen eine Datei, möchsten sie annehmen?"
-SFmsgbox_filedecilined = "Der Benutzer hat die Datei abgelehnt."
+SF_MSG_USER = "Kein Benutzer ausgewählt."
+SF_MSG_FILE = "Keine Datei ausgewählt."
+SF_MSG_INCOMMING_FILE = "Sie empfangen eine Datei, möchsten sie annehmen?"
+SF_MSG_DECILINED = "Der Benutzer hat die Datei abgelehnt."
 
-SFcommand_browse = "&Suchen .."
-SFcommand_sendfile = "Senden"
-SFcommand_cancelsending = "Abbrechen .."
+SF_COMMAND_BROWSE = "&Suchen .."
+SF_COMMAND_SENDFILE = "Senden"
+SF_COMMAND_CANCEL = "Abbrechen .."
 
-DESPtext_newmsg = "Neue Nachricht!"
-DESPtext_dcserver = "Verbindung unterbrochen!"
+DESP_TEXT_NEW_MSG = "Neue Nachricht!"
+DESP_TEXT_DC_SERVER = "Verbindung unterbrochen!"
 
-LANG_command_enter = "&Öffnen"
-LANG_label_sellang = "Wähle deine Sprache aus:"
+LANG_COMMAND_ENTER = "&Öffnen"
+LANG_LABEL_SELLANG = "Wähle deine Sprache aus:"
 End Sub
 
 Public Sub SetLangEnglish()
 
 'MDI form
-MDIcommand_config = "&Configuration"
-MDIcommand_chat = "Ch&at"
-MDIcommand_sendfile = "&Send File"
-MDIcommand_onlinelist = "&Online List"
+MDI_COMMAND_CONFIG = "&Configuration"
+MDI_COMMAND_CHAT = "Ch&at"
+MDI_COMMAND_SENDFILE = "&Send File"
+MDI_COMMAND_SOCIETY = "&Online List"
 
-MDIstatusbar_disconnected = "Status: Disconnected"
-MDIstatusbar_dcfromserver = "Status: Disconnected from Server"
-MDIstatusbar_connected = "Status: Connected"
-MDIstatusbar_connectionproblem = "Status: Cant connect to server. (Server offline)"
-MDIstatusbar_connecting = "Status: Connecting .."
+MDI_STAT_DISCONNECTED = "Status: Disconnected"
+MDI_STAT_DCFROMSERVER = "Status: Disconnected from Server"
+MDI_STAT_CONNECTED = "Status: Connected"
+MDI_STAT_CONNECTION_ERROR = "Status: Cant connect to server. (Server offline)"
+MDI_STAT_CONNECTING = "Status: Connecting .."
 
 'MDImsgbox_errorHandlerFormLoad
-MDImsgbox_config_notify = "Some configuration files are outdated or got damaged, Peach found the problem and will fix it on next program launch."
-MDImsgbox_nametaken = "This name is already taken."
-MDImsgbox_wrong_account = "The account does not exist or is wrong."
-MDImsgbox_wrong_password = "The password is wrong."
-MDImsgbox_banned = "This account is banned."
+MDI_MSG_CONFIG_NOTIFY = "Some configuration files are outdated or got damaged, Peach found the problem and will fix it on next program launch."
+MDI_MSG_NAME_TAKEN = "This name is already taken."
+MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
+MDI_MSG_WRONG_PASSWORD = "The password is wrong."
+MDI_MSG_BANNED = "This account is banned."
 
 ' Configuration form ..
-CONFIGcommand_connect = "&Connect"
-CONFIGcommand_disconnect = "&Disconnect"
-CONFIGcommand_language = "&Language"
-CONFIGcommand_update = "&Update"
-CONFIGcommand_register = "&Register Account"
+CONFIG_COMMAND_CONNECT = "&Connect"
+CONFIG_COMMAND_DISCONNECT = "&Disconnect"
+CONFIG_COMMAND_LANGUAGE = "&Language"
+CONFIG_COMMAND_UPDATE = "&Update"
+CONFIG_COMMAND_REGISTER = "&Register Account"
 
-CONFIGcheck_savepassword = "&Save Password"
+CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
-CONFIGlabel_CI_name = "Name: "
+CONFIG_LABEL_CI_NAME = "Name: "
 
-CONFIGframe_personal = "Personal Information"
-CONFIGframe_connection = "Connection Information"
+CONFIG_FRAME_PERSONAL = "Personal Information"
+CONFIG_FRAME_CONNECTION = "Connection Information"
 
-CONFIGcombo_german = "German"
-CONFIGcombo_english = "English"
-CONFIGcombo_spanish = "Spanish"
-CONFIGcombo_swedish = "Swedish"
-CONFIGcombo_italian = "Italian"
-CONFIGcombo_greek = "Greek"
-CONFIGcombo_serbian = "Serbian"
-CONFIGcombo_russian = "Russian"
-CONFIGcombo_dutch = "Dutch"
-CONFIGcombo_french = "French"
+LANG_GERMAN = "German"
+LANG_ENGLISH = "English"
+LANG_SPANISH = "Spanish"
+LANG_SWEDISH = "Swedish"
+LANG_ITALIAN = "Italian"
+LANG_SERBIAN = "Serbian"
+LANG_DUTCH = "Dutch"
+LANG_FRENCH = "French"
 
-CONFIGmsgbox_account = "You didnt introduce an account."
-CONFIGmsgbox_password = "You didnt introduce an password."
-CONFIGmsgbox_nonumeric = "You cant take numeric names."
-CONFIGmsgbox_portnoempty = "You didnt introduce an port."
-CONFIGmsgbox_namenoempty = "You didnt introduce an name."
-CONFIGmsgbox_ipnoempty = "You didnt introduce an IP."
+CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
+CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_NUMERIC = "You cant take numeric names."
+CONFIG_MSG_PORT = "You didnt introduce an port."
+CONFIG_MSG_NAME = "You didnt introduce an name."
+CONFIG_MSG_IP = "You didnt introduce an IP."
 
 ' Chat form ..
-CHATcommand_send = "&Send"
-CHATcommand_clear = "&Clear"
+CHAT_COMMAND_SEND = "&Send"
+CHAT_COMMAND_CLEAR = "&Clear"
 
-CHATtimetext = " The time is "
+CHAT_TIME_TEXT = " The time is "
 
 ' Send File form ..
-SFlabel_filename = " File Name:"
-SFlabel_sendingfile = "Sending:"
-SFlabel_sent = "0.0% Sent"
-SFlabel_sendto = "Send to:"
+SF_LABEL_FILENAME = " File Name:"
+SF_LABEL_SENDING_FILE = "Sending:"
+SF_LABEL_SENT = "0.0% Sent"
+SF_LABEL_SEND_TO = "Send to:"
 
-SFmsgbox_nousersel = "No user selected."
-SFmsgbox_nofilesel = "No file selected."
-SFmsgbox_incfile = "You are getting an incomming file, do you want to accept?"
-SFmsgbox_filedecilined = "File transfer was decilined."
+SF_MSG_USER = "No user selected."
+SF_MSG_FILE = "No file selected."
+SF_MSG_INCOMMING_FILE = "You are getting an incomming file, do you want to accept?"
+SF_MSG_DECILINED = "File transfer was decilined."
 
-SFcommand_browse = "&Search .."
-SFcommand_sendfile = "Send"
-SFcommand_cancelsending = "Cancel .."
+SF_COMMAND_BROWSE = "&Search .."
+SF_COMMAND_SENDFILE = "Send"
+SF_COMMAND_CANCEL = "Cancel .."
 
-DESPtext_newmsg = "New Message!"
-DESPtext_dcserver = "Disconnected from Server!"
+DESP_TEXT_NEW_MSG = "New Message!"
+DESP_TEXT_DC_SERVER = "Disconnected from Server!"
 
-LANG_command_enter = "&Open"
-LANG_label_sellang = "Select your language:"
+LANG_COMMAND_ENTER = "&Open"
+LANG_LABEL_SELLANG = "Select your language:"
 End Sub
 
 Public Sub SetLangSpanish()
 
-MDIcommand_config = "&Configuración"
-MDIcommand_chat = "Ch&at"
-MDIcommand_sendfile = "&Enviar Archivo"
-MDIcommand_onlinelist = "&Lista Online"
+MDI_COMMAND_CONFIG = "&Configuración"
+MDI_COMMAND_CHAT = "Ch&at"
+MDI_COMMAND_SENDFILE = "&Enviar Archivo"
+MDI_COMMAND_SOCIETY = "&Lista Online"
 
-MDIstatusbar_disconnected = "Estado: Desconectado"
-MDIstatusbar_dcfromserver = "Estado: Desconectado del servidor"
-MDIstatusbar_connected = "Estado: Disponible"
-MDIstatusbar_connectionproblem = "Estado: Desconectado por problemas de conexión"
-MDIstatusbar_connecting = "Estado: Conectando .."
+MDI_STAT_DISCONNECTED = "Estado: Desconectado"
+MDI_STAT_DCFROMSERVER = "Estado: Desconectado del servidor"
+MDI_STAT_CONNECTED = "Estado: Disponible"
+MDI_STAT_CONNECTION_ERROR = "Estado: Desconectado por problemas de conexión"
+MDI_STAT_CONNECTING = "Estado: Conectando .."
 
-MDImsgbox_config_notify = "Alguna configuración de archivos estan caducados o dañados, Peach busca el problema y lo arreglará en el siguiente lanzamiento del programa."
-MDImsgbox_nametaken = "Este nombre ya esta cogido."
-MDImsgbox_wrong_account = "La cuenta no existe o es incorrecta."
-MDImsgbox_wrong_password = "La contraseña es incorrecta."
-MDImsgbox_banned = "Esta cuenta esta baneada."
+MDI_MSG_CONFIG_NOTIFY = "Alguna configuración de archivos estan caducados o dañados, Peach busca el problema y lo arreglará en el siguiente lanzamiento del programa."
+MDI_MSG_NAME_TAKEN = "Este nombre ya esta cogido."
+MDI_MSG_WRONG_ACCOUNT = "La cuenta no existe o es incorrecta."
+MDI_MSG_WRONG_PASSWORD = "La contraseña es incorrecta."
+MDI_MSG_BANNED = "Esta cuenta esta baneada."
 
-CONFIGcommand_connect = "&Conectar"
-CONFIGcommand_disconnect = "&Desconectar"
-CONFIGcommand_language = "&Idioma"
-CONFIGcommand_update = "&Actualizar"
-CONFIGcommand_register = "&Registrar cuenta"
+CONFIG_COMMAND_CONNECT = "&Conectar"
+CONFIG_COMMAND_DISCONNECT = "&Desconectar"
+CONFIG_COMMAND_LANGUAGE = "&Idioma"
+CONFIG_COMMAND_UPDATE = "&Actualizar"
+CONFIG_COMMAND_REGISTER = "&Registrar cuenta"
 
-CONFIGcheck_savepassword = "&Save Password"
+CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
-CONFIGlabel_CI_name = "Nombre: "
+CONFIG_LABEL_CI_NAME = "Nombre: "
 
-CONFIGframe_personal = "Informaciónes personales"
-CONFIGframe_connection = "Informaciónes de conexión"
+CONFIG_FRAME_PERSONAL = "Informaciónes personales"
+CONFIG_FRAME_CONNECTION = "Informaciónes de conexión"
 
-CONFIGcombo_german = "Aleman"
-CONFIGcombo_english = "Inglés"
-CONFIGcombo_spanish = "Español"
-CONFIGcombo_swedish = "Sueco"
-CONFIGcombo_italian = "Italiano"
-CONFIGcombo_dutch = "Holandés"
-CONFIGcombo_serbian = "Serbio"
-CONFIGcombo_french = "Frances"
+LANG_GERMAN = "Aleman"
+LANG_ENGLISH = "Inglés"
+LANG_SPANISH = "Español"
+LANG_SWEDISH = "Sueco"
+LANG_ITALIAN = "Italiano"
+LANG_DUTCH = "Holandés"
+LANG_SERBIAN = "Serbio"
+LANG_FRENCH = "Frances"
 
-CONFIGmsgbox_account = "You didnt introduce an account."
-CONFIGmsgbox_password = "You didnt introduce an password."
-CONFIGmsgbox_nonumeric = "No puedes coger nombres con numeros."
-CONFIGmsgbox_portnoempty = "No has introducido un puerto."
-CONFIGmsgbox_namenoempty = "No has introducido un nombre."
-CONFIGmsgbox_ipnoempty = "No has introducido una direccion."
+CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
+CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_NUMERIC = "No puedes coger nombres con numeros."
+CONFIG_MSG_PORT = "No has introducido un puerto."
+CONFIG_MSG_NAME = "No has introducido un nombre."
+CONFIG_MSG_IP = "No has introducido una direccion."
 
-CHATcommand_send = "&Enviar"
-CHATcommand_clear = "&Limpiar"
+CHAT_COMMAND_SEND = "&Enviar"
+CHAT_COMMAND_CLEAR = "&Limpiar"
 
-CHATtimetext = " El tiempo es "
+CHAT_TIME_TEXT = " El tiempo es "
 
-SFlabel_filename = " Nombre del archivo:"
-SFlabel_sendingfile = "Enviando:"
-SFlabel_sent = "0.0% Enviado"
-SFlabel_sendto = "Enviar a:"
+SF_LABEL_FILENAME = " Nombre del archivo:"
+SF_LABEL_SENDING_FILE = "Enviando:"
+SF_LABEL_SENT = "0.0% Enviado"
+SF_LABEL_SEND_TO = "Enviar a:"
 
-SFmsgbox_nousersel = "No has seleccionado a una persona."
-SFmsgbox_nofilesel = "No has seleccionado a un archivo."
-SFmsgbox_incfile = "Estas recibiendo un archivo, quieres aceptar?"
-SFmsgbox_filedecilined = "El envio ha sido rechazado."
+SF_MSG_USER = "No has seleccionado a una persona."
+SF_MSG_FILE = "No has seleccionado a un archivo."
+SF_MSG_INCOMMING_FILE = "Estas recibiendo un archivo, quieres aceptar?"
+SF_MSG_DECILINED = "El envio ha sido rechazado."
 
-SFcommand_browse = "&Buscar .."
-SFcommand_sendfile = "Enviar"
-SFcommand_cancelsending = "Cancelar .."
+SF_COMMAND_BROWSE = "&Buscar .."
+SF_COMMAND_SENDFILE = "Enviar"
+SF_COMMAND_CANCEL = "Cancelar .."
 
-DESPtext_newmsg = "Nuevo mensaje!"
-DESPtext_dcserver = "Desconectado del servidor!"
+DESP_TEXT_NEW_MSG = "Nuevo mensaje!"
+DESP_TEXT_DC_SERVER = "Desconectado del servidor!"
 
-LANG_command_enter = "&Abrir"
-LANG_label_sellang = "Elige tu idioma:"
+LANG_COMMAND_ENTER = "&Abrir"
+LANG_LABEL_SELLANG = "Elige tu idioma:"
 End Sub
 
 Public Sub SetLangSwedish()
 ' MDI form ..
-MDIcommand_config = "&Inställningar"
-MDIcommand_chat = "Ch&att"
-MDIcommand_sendfile = "&Sänd fil"
-MDIcommand_onlinelist = "&Online Lista"
+MDI_COMMAND_CONFIG = "&Inställningar"
+MDI_COMMAND_CHAT = "Ch&att"
+MDI_COMMAND_SENDFILE = "&Sänd fil"
+MDI_COMMAND_SOCIETY = "&Online Lista"
 
-MDIstatusbar_disconnected = "Status: Frånkopplad"
-MDIstatusbar_dcfromserver = "Status: Koppla ifrån servern"
-MDIstatusbar_connected = "Status: Anslut"
-MDIstatusbar_connectionproblem = "Status: Avkopplad på grund av anslutningsproblem"
-MDIstatusbar_connecting = "Status: Ansluter .."
+MDI_STAT_DISCONNECTED = "Status: Frånkopplad"
+MDI_STAT_DCFROMSERVER = "Status: Koppla ifrån servern"
+MDI_STAT_CONNECTED = "Status: Anslut"
+MDI_STAT_CONNECTION_ERROR = "Status: Avkopplad på grund av anslutningsproblem"
+MDI_STAT_CONNECTING = "Status: Ansluter .."
 
 'MDImsgbox_errorHandlerFormLoad
-MDImsgbox_config_notify = "Några Konfiguration filer är gamla eller skadade, Peach hittade problemet och det kommer bli reparerat nästa gång du kör programmet."
-MDImsgbox_nametaken = "Namnet är upptaget."
-MDImsgbox_wrong_account = "The account does not exist or is wrong."
-MDImsgbox_wrong_password = "The password is wrong."
-MDImsgbox_banned = "This account is banned."
+MDI_MSG_CONFIG_NOTIFY = "Några Konfiguration filer är gamla eller skadade, Peach hittade problemet och det kommer bli reparerat nästa gång du kör programmet."
+MDI_MSG_NAME_TAKEN = "Namnet är upptaget."
+MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
+MDI_MSG_WRONG_PASSWORD = "The password is wrong."
+MDI_MSG_BANNED = "This account is banned."
 
 ' Config form
-CONFIGcommand_connect = "&Anslut"
-CONFIGcommand_disconnect = "&Frånkoppla"
-CONFIGcommand_language = "&Språk"
-CONFIGcommand_update = "&Update"
-CONFIGcommand_register = "&Register Account"
+CONFIG_COMMAND_CONNECT = "&Anslut"
+CONFIG_COMMAND_DISCONNECT = "&Frånkoppla"
+CONFIG_COMMAND_LANGUAGE = "&Språk"
+CONFIG_COMMAND_UPDATE = "&Update"
+CONFIG_COMMAND_REGISTER = "&Register Account"
 
-CONFIGcheck_savepassword = "&Save Password"
+CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
-CONFIGlabel_CI_name = "Namn: "
+CONFIG_LABEL_CI_NAME = "Namn: "
 
-CONFIGframe_personal = "Personal Information"
-CONFIGframe_connection = "Connection Information"
+CONFIG_FRAME_PERSONAL = "Personal Information"
+CONFIG_FRAME_CONNECTION = "Connection Information"
 
-CONFIGcombo_german = "Tyska"
-CONFIGcombo_english = "Engelska"
-CONFIGcombo_spanish = "Spanska"
-CONFIGcombo_swedish = "Svenska"
-CONFIGcombo_italian = "Italienska"
-CONFIGcombo_greek = "Grekiska"
-CONFIGcombo_serbian = "Serbiska"
-CONFIGcombo_russian = "Ryska"
-CONFIGcombo_dutch = "Holländska"
-CONFIGcombo_french = "Franska"
+LANG_GERMAN = "Tyska"
+LANG_ENGLISH = "Engelska"
+LANG_SPANISH = "Spanska"
+LANG_SWEDISH = "Svenska"
+LANG_ITALIAN = "Italienska"
+LANG_SERBIAN = "Serbiska"
+LANG_DUTCH = "Holländska"
+LANG_FRENCH = "Franska"
 
-CONFIGmsgbox_account = "You didnt introduce an account."
-CONFIGmsgbox_password = "You didnt introduce an password."
-CONFIGmsgbox_nonumeric = "Du kan inte använda siffror i namnet."
-CONFIGmsgbox_portnoempty = "Du angav inget portnummer."
-CONFIGmsgbox_namenoempty = "Du angav inte ett namn."
-CONFIGmsgbox_ipnoempty = "Du angav inte ett IP."
+CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
+CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_NUMERIC = "Du kan inte använda siffror i namnet."
+CONFIG_MSG_PORT = "Du angav inget portnummer."
+CONFIG_MSG_NAME = "Du angav inte ett namn."
+CONFIG_MSG_IP = "Du angav inte ett IP."
 
 ' Chat form ..
-CHATcommand_send = "&Sänd"
-CHATcommand_clear = "&Rensa"
+CHAT_COMMAND_SEND = "&Sänd"
+CHAT_COMMAND_CLEAR = "&Rensa"
 
-CHATtimetext = " Tiden är "
+CHAT_TIME_TEXT = " Tiden är "
 
 ' Send file form ..
-SFlabel_filename = " Fil Namn:"
-SFlabel_sendingfile = "Sänder:"
-SFlabel_sent = "0.0% Sänt"
-SFlabel_sendto = "Send to:"
+SF_LABEL_FILENAME = " Fil Namn:"
+SF_LABEL_SENDING_FILE = "Sänder:"
+SF_LABEL_SENT = "0.0% Sänt"
+SF_LABEL_SEND_TO = "Send to:"
 
-SFmsgbox_nousersel = "No user selected."
-SFmsgbox_nofilesel = "No file selected."
-SFmsgbox_incfile = "You are getting an incomming file, do you want to accept?"
-SFmsgbox_filedecilined = "File transfer was decilined."
+SF_MSG_USER = "No user selected."
+SF_MSG_FILE = "No file selected."
+SF_MSG_INCOMMING_FILE = "You are getting an incomming file, do you want to accept?"
+SF_MSG_DECILINED = "File transfer was decilined."
 
-SFcommand_browse = "&Sök .."
-SFcommand_sendfile = "Sänd"
+SF_COMMAND_BROWSE = "&Sök .."
+SF_COMMAND_SENDFILE = "Sänd"
 
-DESPtext_newmsg = "New Message!"
-DESPtext_dcserver = "Koppla ifrån servern!"
+DESP_TEXT_NEW_MSG = "New Message!"
+DESP_TEXT_DC_SERVER = "Koppla ifrån servern!"
 
-LANG_command_enter = "&Öppna"
-LANG_label_sellang = "Välj språk:"
+LANG_COMMAND_ENTER = "&Öppna"
+LANG_LABEL_SELLANG = "Välj språk:"
 End Sub
 
 Public Sub SetLangItalian()
 ' Mdi form
-MDIcommand_config = "&Configurazione"
-MDIcommand_chat = "Ch&at"
-MDIcommand_sendfile = "&Invia File"
-MDIcommand_onlinelist = "&Lista contatti Online"
+MDI_COMMAND_CONFIG = "&Configurazione"
+MDI_COMMAND_CHAT = "Ch&at"
+MDI_COMMAND_SENDFILE = "&Invia File"
+MDI_COMMAND_SOCIETY = "&Lista contatti Online"
 
-MDIstatusbar_disconnected = "Stato: Disconnesso"
-MDIstatusbar_dcfromserver = "Stato: Disconnesso dal Server"
-MDIstatusbar_connected = "Stato: Connesso"
-MDIstatusbar_connectionproblem = "Stato: Disconnesso a causa di problemi di connessione"
-MDIstatusbar_connecting = "Stato: Connessione .."
+MDI_STAT_DISCONNECTED = "Stato: Disconnesso"
+MDI_STAT_DCFROMSERVER = "Stato: Disconnesso dal Server"
+MDI_STAT_CONNECTED = "Stato: Connesso"
+MDI_STAT_CONNECTION_ERROR = "Stato: Disconnesso a causa di problemi di connessione"
+MDI_STAT_CONNECTING = "Stato: Connessione .."
 
 'MDImsgbox_errorHandlerFormLoad
-MDImsgbox_config_notify = "Alcuni file della configurazione potrebbero essere obsoleti o danneggiati, Peach ha riscontrato il problema e lo corregera' al prossimo avvio."
-MDImsgbox_nametaken = "Il nome immesso e' gia' in uso."
-MDImsgbox_wrong_account = "The account does not exist or is wrong."
-MDImsgbox_wrong_password = "The password is wrong."
-MDImsgbox_banned = "This account is banned."
+MDI_MSG_CONFIG_NOTIFY = "Alcuni file della configurazione potrebbero essere obsoleti o danneggiati, Peach ha riscontrato il problema e lo corregera' al prossimo avvio."
+MDI_MSG_NAME_TAKEN = "Il nome immesso e' gia' in uso."
+MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
+MDI_MSG_WRONG_PASSWORD = "The password is wrong."
+MDI_MSG_BANNED = "This account is banned."
 
 ' Config form ..
-CONFIGcommand_connect = "&Connesso"
-CONFIGcommand_disconnect = "&Disconnesso"
-CONFIGcommand_language = "&Lingua"
-CONFIGcommand_update = "&Update"
-CONFIGcommand_register = "&Register Account"
+CONFIG_COMMAND_CONNECT = "&Connesso"
+CONFIG_COMMAND_DISCONNECT = "&Disconnesso"
+CONFIG_COMMAND_LANGUAGE = "&Lingua"
+CONFIG_COMMAND_UPDATE = "&Update"
+CONFIG_COMMAND_REGISTER = "&Register Account"
 
-CONFIGcheck_savepassword = "&Save Password"
+CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
-CONFIGlabel_CI_name = "Nome: "
+CONFIG_LABEL_CI_NAME = "Nome: "
 
-CONFIGframe_personal = "Personal Information"
-CONFIGframe_connection = "Connection Information"
+CONFIG_FRAME_PERSONAL = "Personal Information"
+CONFIG_FRAME_CONNECTION = "Connection Information"
 
-CONFIGcombo_german = "Tedesco"
-CONFIGcombo_english = "Inglese"
-CONFIGcombo_spanish = "Spagnolo"
-CONFIGcombo_swedish = "Svedese"
-CONFIGcombo_italian = "Italiano"
-CONFIGcombo_greek = "Greco"
-CONFIGcombo_serbian = "Serbo"
-CONFIGcombo_russian = "Russo"
-CONFIGcombo_dutch = "Olandese"
-CONFIGcombo_french = "Francese"
+LANG_GERMAN = "Tedesco"
+LANG_ENGLISH = "Inglese"
+LANG_SPANISH = "Spagnolo"
+LANG_SWEDISH = "Svedese"
+LANG_ITALIAN = "Italiano"
+LANG_SERBIAN = "Serbo"
+LANG_DUTCH = "Olandese"
+LANG_FRENCH = "Francese"
 
-CONFIGmsgbox_account = "You didnt introduce an account."
-CONFIGmsgbox_password = "You didnt introduce an password."
-CONFIGmsgbox_nonumeric = "Non puoi immettere nomi composti da numeri."
-CONFIGmsgbox_portnoempty = "Non hai selezionato una porta valida."
-CONFIGmsgbox_namenoempty = "Non hai immesso un Nome utente."
-CONFIGmsgbox_ipnoempty = "Non hai immesso un IP."
+CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
+CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_NUMERIC = "Non puoi immettere nomi composti da numeri."
+CONFIG_MSG_PORT = "Non hai selezionato una porta valida."
+CONFIG_MSG_NAME = "Non hai immesso un Nome utente."
+CONFIG_MSG_IP = "Non hai immesso un IP."
 
 ' Chat form ..
-CHATcommand_send = "&Invia"
-CHATcommand_clear = "&Clear"
+CHAT_COMMAND_SEND = "&Invia"
+CHAT_COMMAND_CLEAR = "&Clear"
 
-CHATtimetext = " L'ora e' "
+CHAT_TIME_TEXT = " L'ora e' "
 
 ' Send file form ..
-SFlabel_filename = " Nome file:"
-SFlabel_sendingfile = "Inviando:"
-SFlabel_sent = "0.0% Inviato"
-SFlabel_sendto = "Send to:"
+SF_LABEL_FILENAME = " Nome file:"
+SF_LABEL_SENDING_FILE = "Inviando:"
+SF_LABEL_SENT = "0.0% Inviato"
+SF_LABEL_SEND_TO = "Send to:"
 
-SFmsgbox_nousersel = "No user selected."
-SFmsgbox_nofilesel = "No file selected."
-SFmsgbox_incfile = "You are getting an incomming file, do you want to accept?"
-SFmsgbox_filedecilined = "File transfer was decilined."
+SF_MSG_USER = "No user selected."
+SF_MSG_FILE = "No file selected."
+SF_MSG_INCOMMING_FILE = "You are getting an incomming file, do you want to accept?"
+SF_MSG_DECILINED = "File transfer was decilined."
 
-SFcommand_browse = "&Cerca .."
-SFcommand_sendfile = "Invia"
-SFcommand_cancelsending = "Annulla .."
+SF_COMMAND_BROWSE = "&Cerca .."
+SF_COMMAND_SENDFILE = "Invia"
+SF_COMMAND_CANCEL = "Annulla .."
 
-DESPtext_newmsg = "New Message!"
-DESPtext_dcserver = "Disconnesso dal Server!"
+DESP_TEXT_NEW_MSG = "New Message!"
+DESP_TEXT_DC_SERVER = "Disconnesso dal Server!"
 
-LANG_command_enter = "&Apri"
-LANG_label_sellang = "Seleziona la tua lingua:"
+LANG_COMMAND_ENTER = "&Apri"
+LANG_LABEL_SELLANG = "Seleziona la tua lingua:"
 End Sub
 
 Public Sub SetLangSerbian()
 ' Mdi form ..
-MDIcommand_config = "&Konfiguracija"
-MDIcommand_chat = "Ch&at"
-MDIcommand_sendfile = "&Slanje fajla"
-MDIcommand_onlinelist = "&Onlajn lista"
+MDI_COMMAND_CONFIG = "&Konfiguracija"
+MDI_COMMAND_CHAT = "Ch&at"
+MDI_COMMAND_SENDFILE = "&Slanje fajla"
+MDI_COMMAND_SOCIETY = "&Onlajn lista"
 
-MDIstatusbar_disconnected = "Status: Veza je prekinuta"
-MDIstatusbar_dcfromserver = "Status: Veza sa serverom je prekinuta"
-MDIstatusbar_connected = "Status: Povezi"
-MDIstatusbar_connectionproblem = "Status: Problem sa konekcijom veza je prekinuta "
-MDIstatusbar_connecting = "Status: Povezi .."
+MDI_STAT_DISCONNECTED = "Status: Veza je prekinuta"
+MDI_STAT_DCFROMSERVER = "Status: Veza sa serverom je prekinuta"
+MDI_STAT_CONNECTED = "Status: Povezi"
+MDI_STAT_CONNECTION_ERROR = "Status: Problem sa konekcijom veza je prekinuta "
+MDI_STAT_CONNECTING = "Status: Povezi .."
 
 'MDImsgbox_errorHandlerFormLoad
-MDImsgbox_config_notify = "Datoteka konfigurac. Je zastarela ili ostecena, problem ce biti pronadjen i popravljen sledecim pokretanjem programa."
-MDImsgbox_nametaken = "Ime je vec zauzeto."
-MDImsgbox_wrong_account = "The account does not exist or is wrong."
-MDImsgbox_wrong_password = "The password is wrong."
-MDImsgbox_banned = "This account is banned."
+MDI_MSG_CONFIG_NOTIFY = "Datoteka konfigurac. Je zastarela ili ostecena, problem ce biti pronadjen i popravljen sledecim pokretanjem programa."
+MDI_MSG_NAME_TAKEN = "Ime je vec zauzeto."
+MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
+MDI_MSG_WRONG_PASSWORD = "The password is wrong."
+MDI_MSG_BANNED = "This account is banned."
 
 ' Config form ..
-CONFIGcommand_connect = "&Povezi se"
-CONFIGcommand_disconnect = "&Veza je prekinuta"
-CONFIGcommand_language = "&Jezik"
-CONFIGcommand_update = "&Update"
-CONFIGcommand_register = "&Register Account"
+CONFIG_COMMAND_CONNECT = "&Povezi se"
+CONFIG_COMMAND_DISCONNECT = "&Veza je prekinuta"
+CONFIG_COMMAND_LANGUAGE = "&Jezik"
+CONFIG_COMMAND_UPDATE = "&Update"
+CONFIG_COMMAND_REGISTER = "&Register Account"
 
-CONFIGcheck_savepassword = "&Save Password"
+CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
-CONFIGlabel_CI_name = "Ime :"
+CONFIG_LABEL_CI_NAME = "Ime :"
 
-CONFIGframe_personal = "Personal Information"
-CONFIGframe_connection = "Connection Information"
+CONFIG_FRAME_PERSONAL = "Personal Information"
+CONFIG_FRAME_CONNECTION = "Connection Information"
 
-CONFIGcombo_german = "Nemacki"
-CONFIGcombo_english = "Engleski"
-CONFIGcombo_spanish = "Spanski"
-CONFIGcombo_swedish = "Svedski"
-CONFIGcombo_italian = "Italijanski"
-CONFIGcombo_greek = "Crcki"
-CONFIGcombo_serbian = "Srpski"
-CONFIGcombo_russian = "Ruski"
-CONFIGcombo_dutch = "Holandski"
-CONFIGcombo_french = "Francuski"
+LANG_GERMAN = "Nemacki"
+LANG_ENGLISH = "Engleski"
+LANG_SPANISH = "Spanski"
+LANG_SWEDISH = "Svedski"
+LANG_ITALIAN = "Italijanski"
+LANG_SERBIAN = "Srpski"
+LANG_DUTCH = "Holandski"
+LANG_FRENCH = "Francuski"
 
-CONFIGmsgbox_account = "You didnt introduce an account."
-CONFIGmsgbox_password = "You didnt introduce an password."
-CONFIGmsgbox_nonumeric = "Ne mozete uzeti numericka imena."
-CONFIGmsgbox_portnoempty = "Niste uneli port."
-CONFIGmsgbox_namenoempty = "Niste uneli ime"
-CONFIGmsgbox_ipnoempty = "Niste uneli IP"
+CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
+CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_NUMERIC = "Ne mozete uzeti numericka imena."
+CONFIG_MSG_PORT = "Niste uneli port."
+CONFIG_MSG_NAME = "Niste uneli ime"
+CONFIG_MSG_IP = "Niste uneli IP"
 
 ' Chat form ..
-CHATcommand_send = "&Posalji"
-CHATcommand_clear = "&Obrisi"
+CHAT_COMMAND_SEND = "&Posalji"
+CHAT_COMMAND_CLEAR = "&Obrisi"
 
-CHATtimetext = " Vreme je "
+CHAT_TIME_TEXT = " Vreme je "
 
 ' Send file form ..
-SFlabel_filename = " Ime  arhive:"
-SFlabel_sendingfile = "Slanje:"
-SFlabel_sent = "0.0% Poslato"
-SFlabel_sendto = "Send to:"
+SF_LABEL_FILENAME = " Ime  arhive:"
+SF_LABEL_SENDING_FILE = "Slanje:"
+SF_LABEL_SENT = "0.0% Poslato"
+SF_LABEL_SEND_TO = "Send to:"
 
-SFmsgbox_nousersel = "No user selected."
-SFmsgbox_nofilesel = "No file selected."
-SFmsgbox_incfile = "You are getting an incomming file, do you want to accept?"
-SFmsgbox_filedecilined = "File transfer was decilined."
+SF_MSG_USER = "No user selected."
+SF_MSG_FILE = "No file selected."
+SF_MSG_INCOMMING_FILE = "You are getting an incomming file, do you want to accept?"
+SF_MSG_DECILINED = "File transfer was decilined."
 
-SFcommand_browse = "Trazi .."
-SFcommand_sendfile = "Posalji"
-SFcommand_cancelsending = "Otkazhi .."
+SF_COMMAND_BROWSE = "Trazi .."
+SF_COMMAND_SENDFILE = "Posalji"
+SF_COMMAND_CANCEL = "Otkazhi .."
 
-DESPtext_newmsg = "New Message!"
-DESPtext_dcserver = "Veza sa serverom je prekinuta!"
+DESP_TEXT_NEW_MSG = "New Message!"
+DESP_TEXT_DC_SERVER = "Veza sa serverom je prekinuta!"
 
-LANG_command_enter = "&Otvori"
-LANG_label_sellang = "Dodaj svoj jezik:"
+LANG_COMMAND_ENTER = "&Otvori"
+LANG_LABEL_SELLANG = "Dodaj svoj jezik:"
 End Sub
 
 Public Sub SetLangDutch()
-MDIcommand_config = "&Configuratie"
-MDIcommand_chat = "Ch&at"
-MDIcommand_sendfile = "&Bestand Verzenden"
-MDIcommand_onlinelist = "&Online List"
+MDI_COMMAND_CONFIG = "&Configuratie"
+MDI_COMMAND_CHAT = "Ch&at"
+MDI_COMMAND_SENDFILE = "&Bestand Verzenden"
+MDI_COMMAND_SOCIETY = "&Online List"
 
-MDIstatusbar_disconnected = "Status: Verbinding verbroken"
-MDIstatusbar_dcfromserver = "Status: Verbinding verbroken met de server"
-MDIstatusbar_connected = "Status: Verbonden"
-MDIstatusbar_connectionproblem = "Status: Verbinding verbroken wegens connectie problemen"
-MDIstatusbar_connecting = "Status: Verbinden .."
+MDI_STAT_DISCONNECTED = "Status: Verbinding verbroken"
+MDI_STAT_DCFROMSERVER = "Status: Verbinding verbroken met de server"
+MDI_STAT_CONNECTED = "Status: Verbonden"
+MDI_STAT_CONNECTION_ERROR = "Status: Verbinding verbroken wegens connectie problemen"
+MDI_STAT_CONNECTING = "Status: Verbinden .."
 
 'MDImsgbox_errorHandlerFormLoad
-MDImsgbox_config_notify = "Enkele bestanden zijn oud of beschadigd, Peach heeft het probleem gevonden en zal het herstellen bij de volgende herstart."
-MDImsgbox_nametaken = "Deze naam is niet beschikbaar."
-MDImsgbox_wrong_account = "The account does not exist or is wrong."
-MDImsgbox_wrong_password = "The password is wrong."
-MDImsgbox_banned = "This account is banned."
+MDI_MSG_CONFIG_NOTIFY = "Enkele bestanden zijn oud of beschadigd, Peach heeft het probleem gevonden en zal het herstellen bij de volgende herstart."
+MDI_MSG_NAME_TAKEN = "Deze naam is niet beschikbaar."
+MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
+MDI_MSG_WRONG_PASSWORD = "The password is wrong."
+MDI_MSG_BANNED = "This account is banned."
 
-CONFIGcommand_connect = "&Verbind"
-CONFIGcommand_disconnect = "&Verbreek de verbinding"
-CONFIGcommand_language = "&Taal"
-CONFIGcommand_update = "&Update"
-CONFIGcommand_register = "&Register Account"
+CONFIG_COMMAND_CONNECT = "&Verbind"
+CONFIG_COMMAND_DISCONNECT = "&Verbreek de verbinding"
+CONFIG_COMMAND_LANGUAGE = "&Taal"
+CONFIG_COMMAND_UPDATE = "&Update"
+CONFIG_COMMAND_REGISTER = "&Register Account"
 
-CONFIGcheck_savepassword = "&Save Password"
+CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
-CONFIGlabel_CI_name = "Naam: "
+CONFIG_LABEL_CI_NAME = "Naam: "
 
-CONFIGframe_personal = "Personal Information"
-CONFIGframe_connection = "Connection Information"
+CONFIG_FRAME_PERSONAL = "Personal Information"
+CONFIG_FRAME_CONNECTION = "Connection Information"
 
-CONFIGcombo_german = "Duits"
-CONFIGcombo_english = "Engels"
-CONFIGcombo_spanish = "Spaans"
-CONFIGcombo_swedish = "Zweeds"
-CONFIGcombo_italian = "Italiaans"
-CONFIGcombo_serbian = "Serbisch"
-CONFIGcombo_dutch = "Nederlands"
-CONFIGcombo_french = "Frans"
+LANG_GERMAN = "Duits"
+LANG_ENGLISH = "Engels"
+LANG_SPANISH = "Spaans"
+LANG_SWEDISH = "Zweeds"
+LANG_ITALIAN = "Italiaans"
+LANG_SERBIAN = "Serbisch"
+LANG_DUTCH = "Nederlands"
+LANG_FRENCH = "Frans"
 
-CONFIGmsgbox_account = "You didnt introduce an account."
-CONFIGmsgbox_password = "You didnt introduce an password."
-CONFIGmsgbox_nonumeric = "U kan geen naam nemen dat nummers bevat."
-CONFIGmsgbox_portnoempty = "U hebt geen poort ingesteld."
-CONFIGmsgbox_namenoempty = "U hebt geen naam gegoven."
-CONFIGmsgbox_ipnoempty = "U hebt geen IP gegoven."
+CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
+CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_NUMERIC = "U kan geen naam nemen dat nummers bevat."
+CONFIG_MSG_PORT = "U hebt geen poort ingesteld."
+CONFIG_MSG_NAME = "U hebt geen naam gegoven."
+CONFIG_MSG_IP = "U hebt geen IP gegoven."
 
-CHATcommand_send = "&Zend"
-CHATcommand_clear = "&Leegmaken"
+CHAT_COMMAND_SEND = "&Zend"
+CHAT_COMMAND_CLEAR = "&Leegmaken"
 
-CHATtimetext = " De Tijd is: "
+CHAT_TIME_TEXT = " De Tijd is: "
 
-SFlabel_filename = " Bestandsnaam:"
-SFlabel_sendingfile = "verZenden:"
-SFlabel_sent = "0.0% verzonden"
-SFlabel_sendto = "Send to:"
+SF_LABEL_FILENAME = " Bestandsnaam:"
+SF_LABEL_SENDING_FILE = "verZenden:"
+SF_LABEL_SENT = "0.0% verzonden"
+SF_LABEL_SEND_TO = "Send to:"
 
-SFmsgbox_nousersel = "No user selected."
-SFmsgbox_nofilesel = "No file selected."
-SFmsgbox_incfile = "You are getting an incomming file, do you want to accept?"
-SFmsgbox_filedecilined = "File transfer was decilined."
+SF_MSG_USER = "No user selected."
+SF_MSG_FILE = "No file selected."
+SF_MSG_INCOMMING_FILE = "You are getting an incomming file, do you want to accept?"
+SF_MSG_DECILINED = "File transfer was decilined."
 
-SFcommand_browse = "&Zoeken .."
-SFcommand_sendfile = "&Stuur"
-SFcommand_cancelsending = "&Annuleren .."
+SF_COMMAND_BROWSE = "&Zoeken .."
+SF_COMMAND_SENDFILE = "&Stuur"
+SF_COMMAND_CANCEL = "&Annuleren .."
 
-DESPtext_newmsg = "New Message!"
-DESPtext_dcserver = "Verbinding verbroken met de server"
+DESP_TEXT_NEW_MSG = "New Message!"
+DESP_TEXT_DC_SERVER = "Verbinding verbroken met de server"
 
-LANG_command_enter = "&Openen"
-LANG_label_sellang = "Selecteer jou taal:"
+LANG_COMMAND_ENTER = "&Openen"
+LANG_LABEL_SELLANG = "Selecteer jou taal:"
 End Sub
 
 Public Sub SetLangFrench()
-MDIcommand_config = "&Configuration"
-MDIcommand_chat = "Ch&at"
-MDIcommand_sendfile = "&Envoi File"
-MDIcommand_onlinelist = "&Liste contact Online"
+MDI_COMMAND_CONFIG = "&Configuration"
+MDI_COMMAND_CHAT = "Ch&at"
+MDI_COMMAND_SENDFILE = "&Envoi File"
+MDI_COMMAND_SOCIETY = "&Liste contact Online"
 
-MDIstatusbar_disconnected = "Etat: Deconnecté"
-MDIstatusbar_dcfromserver = "Etat: Deconnecté du Server"
-MDIstatusbar_connected = "Etat: Connecté"
-MDIstatusbar_connectionproblem = "Etat: Deconnecté à cause de problèmes do connection"
-MDIstatusbar_connecting = "Etat: Connection .."
+MDI_STAT_DISCONNECTED = "Etat: Deconnecté"
+MDI_STAT_DCFROMSERVER = "Etat: Deconnecté du Server"
+MDI_STAT_CONNECTED = "Etat: Connecté"
+MDI_STAT_CONNECTION_ERROR = "Etat: Deconnecté à cause de problèmes do connection"
+MDI_STAT_CONNECTING = "Etat: Connection .."
 
-MDImsgbox_config_notify = "Quelques files de la configuration pourrait etre daumagés ou obsolète , Peach a trouvé le problème et le corrigerà au prochain envoi."
-MDImsgbox_nametaken = "Le nom inséré est déjà utilizé."
-MDImsgbox_wrong_account = "The account does not exist or is wrong."
-MDImsgbox_wrong_password = "The password is wrong."
-MDImsgbox_banned = "This account is banned."
+MDI_MSG_CONFIG_NOTIFY = "Quelques files de la configuration pourrait etre daumagés ou obsolète , Peach a trouvé le problème et le corrigerà au prochain envoi."
+MDI_MSG_NAME_TAKEN = "Le nom inséré est déjà utilizé."
+MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
+MDI_MSG_WRONG_PASSWORD = "The password is wrong."
+MDI_MSG_BANNED = "This account is banned."
 
-CONFIGcommand_connect = "&Connecté"
-CONFIGcommand_disconnect = "&Deconnecté"
-CONFIGcommand_language = "&Langue"
-CONFIGcommand_update = "&Update"
-CONFIGcommand_register = "&Register Account"
+CONFIG_COMMAND_CONNECT = "&Connecté"
+CONFIG_COMMAND_DISCONNECT = "&Deconnecté"
+CONFIG_COMMAND_LANGUAGE = "&Langue"
+CONFIG_COMMAND_UPDATE = "&Update"
+CONFIG_COMMAND_REGISTER = "&Register Account"
 
-CONFIGcheck_savepassword = "&Save Password"
+CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
-CONFIGlabel_CI_name = "Nome: "
+CONFIG_LABEL_CI_NAME = "Nome: "
 
-CONFIGframe_personal = "Personal Information"
-CONFIGframe_connection = "Connection Information"
+CONFIG_FRAME_PERSONAL = "Personal Information"
+CONFIG_FRAME_CONNECTION = "Connection Information"
 
-CONFIGcombo_german = "Alleman"
-CONFIGcombo_english = "Anglais"
-CONFIGcombo_spanish = "Espagnol"
-CONFIGcombo_swedish = "Suédois"
-CONFIGcombo_italian = "Italien"
-CONFIGcombo_greek = "Grèque"
-CONFIGcombo_serbian = "Serbois"
-CONFIGcombo_russian = "Russe"
-CONFIGcombo_dutch = "Hollandais"
-CONFIGcombo_french = "Français"
+LANG_GERMAN = "Alleman"
+LANG_ENGLISH = "Anglais"
+LANG_SPANISH = "Espagnol"
+LANG_SWEDISH = "Suédois"
+LANG_ITALIAN = "Italien"
+LANG_SERBIAN = "Serbois"
+LANG_DUTCH = "Hollandais"
+LANG_FRENCH = "Français"
 
-CONFIGmsgbox_account = "You didnt introduce an account."
-CONFIGmsgbox_password = "You didnt introduce an password."
-CONFIGmsgbox_nonumeric = "Tu ne peut pas insérer noms composé de numeros."
-CONFIGmsgbox_portnoempty = "Tu n'as pas selectionner une porte valide."
-CONFIGmsgbox_namenoempty = "Tu n'as pas innecté un Nom utilizateur."
-CONFIGmsgbox_ipnoempty = "Tu n'as pas innecté un IP."
+CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
+CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_NUMERIC = "Tu ne peut pas insérer noms composé de numeros."
+CONFIG_MSG_PORT = "Tu n'as pas selectionner une porte valide."
+CONFIG_MSG_NAME = "Tu n'as pas innecté un Nom utilizateur."
+CONFIG_MSG_IP = "Tu n'as pas innecté un IP."
 
-CHATcommand_send = "&Envoi"
-CHATcommand_clear = "&Clear"
+CHAT_COMMAND_SEND = "&Envoi"
+CHAT_COMMAND_CLEAR = "&Clear"
 
-CHATtimetext = " L'heure est "
+CHAT_TIME_TEXT = " L'heure est "
 
-SFlabel_filename = " Nom file:"
-SFlabel_sendingfile = "Envoyant:"
-SFlabel_sent = "0.0% Envoyé"
-SFlabel_sendto = "Send to:"
+SF_LABEL_FILENAME = " Nom file:"
+SF_LABEL_SENDING_FILE = "Envoyant:"
+SF_LABEL_SENT = "0.0% Envoyé"
+SF_LABEL_SEND_TO = "Send to:"
 
-SFmsgbox_nousersel = "No user selected."
-SFmsgbox_nofilesel = "No file selected."
-SFmsgbox_incfile = "You are getting an incomming file, do you want to accept?"
-SFmsgbox_filedecilined = "File transfer was decilined."
+SF_MSG_USER = "No user selected."
+SF_MSG_FILE = "No file selected."
+SF_MSG_INCOMMING_FILE = "You are getting an incomming file, do you want to accept?"
+SF_MSG_DECILINED = "File transfer was decilined."
 
-SFcommand_browse = "&Cherche .."
-SFcommand_sendfile = "Envoi"
-SFcommand_cancelsending = "Annuler .."
+SF_COMMAND_BROWSE = "&Cherche .."
+SF_COMMAND_SENDFILE = "Envoi"
+SF_COMMAND_CANCEL = "Annuler .."
 
-DESPtext_newmsg = "New Message!"
-DESPtext_dcserver = "Deconnecté du Server"
+DESP_TEXT_NEW_MSG = "New Message!"
+DESP_TEXT_DC_SERVER = "Deconnecté du Server"
 
-LANG_command_enter = "&Ouvrir"
-LANG_label_sellang = "Choisissez votre langue:"
+LANG_COMMAND_ENTER = "&Ouvrir"
+LANG_LABEL_SELLANG = "Choisissez votre langue:"
 End Sub
