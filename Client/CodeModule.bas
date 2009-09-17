@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.1.1.8"
+Public Const Rev = "1.1.1.9"
 Public Const aPort = 6123
 Public Const bPort = 6124
 Public Const RegPort = 6222
@@ -221,3 +221,10 @@ With frmSendFile2
     .SckReceiveFile(0).Close
 End With
 End Sub
+
+Function FileExists(FileName As String) As Boolean
+    On Error GoTo ErrorHandler
+    FileExists = (GetAttr(FileName) And vbDirectory) = 0
+ErrorHandler:
+    ' if an error occurs, this function returns False
+End Function

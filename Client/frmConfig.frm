@@ -459,7 +459,11 @@ End Sub
 
 Private Sub Command4_Click()
 On Error Resume Next
-Shell App.Path & "\peachUpdater.exe", vbNormalFocus
+If FileExists(App.Path & "\peachUpdater.exe") = True Then
+    Shell App.Path & "\peachUpdater.exe", vbNormalFocus
+Else
+    MsgBox "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe", vbInformation
+End If
 End Sub
 
 Private Sub Command5_Click()

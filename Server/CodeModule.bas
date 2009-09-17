@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.1.1.8"
+Public Const Rev = "1.1.1.9"
 Public Const RegPort = 6222
 
 Public Prefix   As String
@@ -127,7 +127,7 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Public Sub SMSG(Command As String, Name As String, Message As String, Optional ForWho As String)
+Public Sub SMSG(Command As String, Optional Name As String, Optional Message As String, Optional ForWho As String)
 Dim TimePrefix As String
 TimePrefix = "[" & Format(Time, "hh:nn:ss") & "] "
 With frmChat.txtConver
@@ -157,6 +157,8 @@ With frmChat.txtConver
         .SelRTF = vbCrLf & TimePrefix & "[Muted][" & Name & "]: " & Message
     Case "!repeat"
         .SelRTF = vbCrLf & TimePrefix & "[" & Name & "]" & " activated flood control."
+    Case "!long"
+        .SelRTF = vbCrLf & TimePrefix & "[" & Name & "]" & " wrote a too long message. (Kicked)"
     Case Else
         .SelRTF = vbCrLf & TimePrefix & "[" & Command & "] [" & Name & "] [" & ForWho & "] [" & Message & "]"
     End Select

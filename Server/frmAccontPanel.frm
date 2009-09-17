@@ -339,24 +339,24 @@ Case "Modify"
         Exit Sub
     End If
     
-    ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, ListView1.SelectedItem.Index
+    ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index
 End Select
 
 DoButtons False
 End Sub
-Public Sub ModifyAccount(dName As String, dPassword As String, dBanned As String, dLevel As String, dID As Long)
+Public Sub ModifyAccount(dName As String, dPassword As String, dBanned As String, dLevel As String, MOD_ID As Long, LST_ID As Long)
 Dim account_table As String
 account_table = ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table")
 'Update the database
-frmMain.xCommand.CommandText = "UPDATE " & account_table & " SET Name1 = '" & dName & "', Password1 = '" & dPassword & "', Banned1 = '" & dBanned & "', Level1 = '" & dLevel & "' WHERE ID = " & dID
+frmMain.xCommand.CommandText = "UPDATE " & account_table & " SET Name1 = '" & dName & "', Password1 = '" & dPassword & "', Banned1 = '" & dBanned & "', Level1 = '" & dLevel & "' WHERE ID = " & MOD_ID
 frmMain.xCommand.Execute
 
 'Update the listview
 With ListView1.ListItems
-    .Item(dID).SubItems(1) = dName
-    .Item(dID).SubItems(2) = dPassword
-    .Item(dID).SubItems(5) = dBanned
-    .Item(dID).SubItems(6) = dLevel
+    .Item(LST_ID).SubItems(1) = dName
+    .Item(LST_ID).SubItems(2) = dPassword
+    .Item(LST_ID).SubItems(5) = dBanned
+    .Item(LST_ID).SubItems(6) = dLevel
 End With
 End Sub
 
