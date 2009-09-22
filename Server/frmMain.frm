@@ -771,7 +771,7 @@ Case "!msg"
     On Error GoTo TargetErrorHandler
     GetTarget = StrConv(array2(1), vbProperCase)
     pGetTarget = array2(1) 'Account, not propercased
-    ANN_MSG = Right$(GetConver, Len(GetConver) - 5)
+    ANN_MSG = Mid$(GetConver, Len(array2(0)) + 2, Len(GetConver))
 
 Commands:
     
@@ -1000,9 +1000,9 @@ End Sub
 
 Private Sub CMSG(pName As String, pMessage As String)
 If GetLevel(pName) = 1 Then
-    SendMessage " " & "<GM>[" & pName & "] announces: " & pMessage
+    SendMessage " " & "<GM> [" & pName & "] announces: " & pMessage
 Else
-    SendMessage " " & "<Admin>[" & pName & "] announces: " & pMessage
+    SendMessage " " & "<Admin> [" & pName & "] announces: " & pMessage
 End If
 End Sub
 

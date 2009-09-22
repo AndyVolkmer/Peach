@@ -2,6 +2,7 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Begin VB.Form frmSociety 
+   BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    ClientHeight    =   4290
    ClientLeft      =   0
@@ -32,6 +33,7 @@ Begin VB.Form frmSociety
       _Version        =   393216
       Tabs            =   2
       TabHeight       =   520
+      BackColor       =   16053492
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI"
          Size            =   8.25
@@ -55,7 +57,6 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "ListView1"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       Begin VB.CommandButton Command2 
          Caption         =   "&Remove"

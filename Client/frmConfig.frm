@@ -7,7 +7,7 @@ Begin VB.Form frmConfig
    ClientHeight    =   4185
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   7500
+   ClientWidth     =   7695
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -20,7 +20,7 @@ Begin VB.Form frmConfig
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    ScaleHeight     =   4185
-   ScaleWidth      =   7500
+   ScaleWidth      =   7695
    ShowInTaskbar   =   0   'False
    Begin VB.CommandButton Command5 
       BackColor       =   &H00F4F4F4&
@@ -45,7 +45,7 @@ Begin VB.Form frmConfig
       Caption         =   "&Update"
       BeginProperty Font 
          Name            =   "Segoe UI"
-         Size            =   9
+         Size            =   8.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -64,7 +64,7 @@ Begin VB.Form frmConfig
       Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "Segoe UI"
-         Size            =   9
+         Size            =   8.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -82,7 +82,7 @@ Begin VB.Form frmConfig
       Caption         =   "&Language"
       BeginProperty Font 
          Name            =   "Segoe UI"
-         Size            =   9
+         Size            =   8.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -100,7 +100,7 @@ Begin VB.Form frmConfig
       Caption         =   "&Connect"
       BeginProperty Font 
          Name            =   "Segoe UI"
-         Size            =   9
+         Size            =   8.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
