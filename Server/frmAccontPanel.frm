@@ -226,7 +226,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim ii As Long
 Dim Switch As String
 
 Private Sub cmdAdd_Click()
@@ -258,7 +257,7 @@ If MsgBox("Are you sure that you want to delete account '" & strName & "' ?", vb
     Exit Sub
 End If
 
-frmMain.xCommand.CommandText = "DELETE FROM Accounts WHERE ID = " & lngID
+frmMain.xCommand.CommandText = "DELETE FROM " & Database.Account_Table & " WHERE ID = " & lngID
 frmMain.xCommand.Execute
 
 With ListView1
@@ -295,8 +294,8 @@ Frame1.Enabled = Wind
 End Sub
 
 Private Sub ClearTxBoxes()
-txtName.Text = ""
-txtPassword.Text = ""
+txtName.Text = vbNullString
+txtPassword.Text = vbNullString
 cmbBanned.ListIndex = 0
 cmbLevel.ListIndex = 0
 End Sub
@@ -326,14 +325,14 @@ Case "Add"
     RegisterAccount txtName.Text, txtPassword.Text, cmbBanned.Text
 Case "Modify"
     'Name can't be modified to nothing
-    If txtName.Text = "" Then
+    If Len(Trim$(txtName.Text)) = 0 Then
         MsgBox "The name can't be empty.", vbInformation
         txtName.SetFocus
         Exit Sub
     End If
     
     'Password can't be modified to nothing
-    If txtPassword.Text = "" Then
+    If Len(Trim$(txtPassword.Text)) = 0 Then
         MsgBox "The password can't be empty.", vbInformation
         txtPassword.SetFocus
         Exit Sub
@@ -345,10 +344,8 @@ End Select
 DoButtons False
 End Sub
 Public Sub ModifyAccount(dName As String, dPassword As String, dBanned As String, dLevel As String, MOD_ID As Long, LST_ID As Long)
-Dim account_table As String
-account_table = ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table")
 'Update the database
-frmMain.xCommand.CommandText = "UPDATE " & account_table & " SET Name1 = '" & dName & "', Password1 = '" & dPassword & "', Banned1 = '" & dBanned & "', Level1 = '" & dLevel & "' WHERE ID = " & MOD_ID
+frmMain.xCommand.CommandText = "UPDATE " & Database.Account_Table & " SET Name1 = '" & dName & "', Password1 = '" & dPassword & "', Banned1 = '" & dBanned & "', Level1 = '" & dLevel & "' WHERE ID = " & MOD_ID
 frmMain.xCommand.Execute
 
 'Update the listview
@@ -361,7 +358,7 @@ End With
 End Sub
 
 Private Sub RegisterAccount(dName As String, dPassword As String, dBanned As String)
-Dim account_table As String
+Dim ii As Long
 ii = 1
 'Check list if the ID is already given
 For i = 1 To ListView1.ListItems.Count
@@ -370,11 +367,8 @@ For i = 1 To ListView1.ListItems.Count
     End If
 Next i
 
-'Get account table name
-account_table = ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table")
-
 'Add new account to database
-frmMain.xCommand.CommandText = "INSERT INTO " & account_table & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & ii & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & dBanned & "', '" & "0" & "')"
+frmMain.xCommand.CommandText = "INSERT INTO " & Database.Account_Table & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & ii & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & dBanned & "', '" & "0" & "')"
 frmMain.xCommand.Execute
 
 'Save index in variable

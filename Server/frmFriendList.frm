@@ -3,10 +3,10 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmFriendList 
    BorderStyle     =   0  'None
    Caption         =   "Friend List Overview"
-   ClientHeight    =   3975
+   ClientHeight    =   4485
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   8535
+   ClientWidth     =   8145
    BeginProperty Font 
       Name            =   "Segoe UI"
       Size            =   8.25
@@ -19,8 +19,8 @@ Begin VB.Form frmFriendList
    Icon            =   "frmFriendList.frx":0000
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
-   ScaleHeight     =   3975
-   ScaleWidth      =   8535
+   ScaleHeight     =   4485
+   ScaleWidth      =   8145
    ShowInTaskbar   =   0   'False
    Begin MSComctlLib.ListView ListView1 
       Height          =   3855
@@ -78,7 +78,6 @@ End Sub
 
 Public Sub AddFriend(pUser As String, pFriend As String, pIndex As Integer)
 Dim IsValid  As Boolean
-Dim f_table  As String
 
 'Check if friends account exist
 With frmAccountPanel.ListView1.ListItems
@@ -102,8 +101,6 @@ End With
 
 'If friends account exist then process
 If IsValid = True Then
-    'Get friends table name
-    f_table = ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table")
     
     Dim j As Integer
     j = 0
@@ -117,7 +114,7 @@ If IsValid = True Then
     
     'Execute into database
     With frmMain
-        .xCommand.CommandText = "INSERT INTO " & f_table & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')"
+        .xCommand.CommandText = "INSERT INTO " & Database.Friend_Table & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')"
         .xCommand.Execute
     End With
     
@@ -137,10 +134,7 @@ End If
 End Sub
 
 Public Sub RemoveFriend(pUser As String, pFriend As String, pIndex As Integer)
-Dim f_table As String
 Dim pID     As Integer
-
-f_table = ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table")
 
 With ListView1.ListItems
     For i = 1 To .Count
@@ -155,7 +149,7 @@ With ListView1.ListItems
 End With
 
 With frmMain
-    .xCommand.CommandText = "DELETE FROM " & f_table & " WHERE ID = " & pID
+    .xCommand.CommandText = "DELETE FROM " & Database.Friend_Table & " WHERE ID = " & pID
     .xCommand.Execute
 End With
 UpdateFriendList pUser

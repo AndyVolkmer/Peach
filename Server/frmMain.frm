@@ -204,27 +204,14 @@ Public xRecordSet      As New ADODB.Recordset
 
 Public intCounter   As Long
 Dim MAX_CONNECTION  As Long
-Dim Vali            As Boolean
-Dim Acc             As Boolean
-Dim Muted           As Boolean
-Dim Avaible         As Boolean
-
-'Database variables
-Dim INI_DATABASE            As String
-Dim INI_USER                As String
-Dim INI_PASSWORD            As String
-Dim INI_IP                  As String
-Dim INI_ACCOUNT_TABLE       As String
-Dim INI_FRIENDS_TABLE       As String
-
-Public HasError             As Boolean
+Dim Avaible, Muted, Acc, Vali As Boolean
 
 Private Sub Command1_Click()
-    SetupForms frmConfig
+SetupForms frmConfig
 End Sub
 
 Private Sub Command2_Click()
-    SetupForms frmChat
+SetupForms frmChat
 End Sub
 
 Public Sub SetupForms(Nix As Form)
@@ -237,11 +224,11 @@ Nix.Show
 End Sub
 
 Private Sub Command3_Click()
-    SetupForms frmAccountPanel
+SetupForms frmAccountPanel
 End Sub
 
 Private Sub Command4_Click()
-    SetupForms frmPanel
+SetupForms frmPanel
 End Sub
 
 Private Sub Command5_Click()
@@ -260,58 +247,67 @@ Dim L As Long
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
 
+'Open Database variable
+With Database
+
 'Assign Variables to the .ini strings
-If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "Database")) <> 0 Then
-    INI_DATABASE = ReadIniValue(App.Path & "\Config.ini", "Database", "Database")
-    WriteLog "Database loaded. (" & INI_DATABASE & ")"
+If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "Database"))) <> 0 Then
+    .Database = ReadIniValue(App.Path & "\Config.ini", "Database", "Database")
+    WriteLog "Database loaded. (" & .Database & ")"
 Else
     WriteLog "No Database value found."
+    .Database = InputBox("The configuration file does not cotain a valid database, please insert one in the textbox below.", "Database error ..", "Database Name")
 End If
 
-If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "User")) <> 0 Then
-    INI_USER = ReadIniValue(App.Path & "\Config.ini", "Database", "User")
-    WriteLog "User loaded. (" & INI_USER & ")"
+If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "User"))) <> 0 Then
+    .User = ReadIniValue(App.Path & "\Config.ini", "Database", "User")
+    WriteLog "User loaded. (" & .User & ")"
 Else
     WriteLog "No User value found."
+    .User = InputBox("The configuration file does not cotain a valid user name, please insert one in the textbox below.", "Database error ..", "User Name")
 End If
 
-If Len(DeCode(ReadIniValue(App.Path & "\Config.ini", "Database", "Password"))) <> 0 Then
-    INI_PASSWORD = DeCode(ReadIniValue(App.Path & "\Config.ini", "Database", "Password"))
+If Len(Trim$(DeCode(ReadIniValue(App.Path & "\Config.ini", "Database", "Password")))) <> 0 Then
+    .Password = DeCode(ReadIniValue(App.Path & "\Config.ini", "Database", "Password"))
     WriteLog "Password loaded."
 Else
     WriteLog "No Password value found."
-    INI_PASSWORD = InputBox("Enter your MySQL Password", "MySQL Password")
+    .Password = InputBox("The configuration file does not cotain a valid password, please insert one in the textbox below.", "Database error ..", "Password")
 End If
 
-If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "IP")) <> 0 Then
-    INI_IP = ReadIniValue(App.Path & "\Config.ini", "Database", "IP")
-    WriteLog "IP loaded. (" & INI_IP & ")"
+If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "Host"))) <> 0 Then
+    .Host = ReadIniValue(App.Path & "\Config.ini", "Database", "Host")
+    WriteLog "Host loaded. (" & .Host & ")"
 Else
     WriteLog "No IP value found."
+    .Password = InputBox("The configuration file does not cotain a host adress, please insert one in the textbox below.", "Database error ..", "Host Adress")
 End If
 
-If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table")) <> 0 Then
-    INI_ACCOUNT_TABLE = ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table")
-    WriteLog "Account-Table loaded. (" & INI_ACCOUNT_TABLE & ")"
+If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table"))) <> 0 Then
+    .Account_Table = ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table")
+    WriteLog "Account-Table loaded. (" & .Account_Table & ")"
 Else
     WriteLog "No Account-Table found."
 End If
 
-If Len(ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table")) <> 0 Then
-    INI_FRIENDS_TABLE = ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table")
-    WriteLog "Friends-Table loaded. (" & INI_FRIENDS_TABLE & ")"
+If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table"))) <> 0 Then
+    .Friend_Table = ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table")
+    WriteLog "Friends-Table loaded. (" & .Friend_Table & ")"
 Else
     WriteLog "No Friends-Table found."
 End If
 
 'Connect to MySQL Database
-ConnectMySQL INI_DATABASE, INI_USER, INI_PASSWORD, INI_IP
+CONNECT_MYSQL .Database, .User, .Password, .Host
 
 'Load Accounts
-LoadAccounts INI_ACCOUNT_TABLE
+LoadAccounts .Account_Table
 
 'Load Friends
-LoadFriends INI_FRIENDS_TABLE
+LoadFriends .Friend_Table
+
+'Close Database variable
+End With
 
 StatusBar1.Panels(1).Text = "Status : Disconnected"
 SetupForms frmConfig
@@ -321,7 +317,7 @@ If HasError = False Then
 End If
 End Sub
 
-Public Sub ConnectMySQL(qDatabase As String, qUser As String, qPassword As String, qIP As String)
+Public Sub CONNECT_MYSQL(qDatabase As String, qUser As String, qPassword As String, qIP As String)
 StatusBar1.Panels(1).Text = "Status : Connecting to database .."
 
 On Error GoTo HandleErrorConnection
@@ -477,12 +473,19 @@ End If
 End Sub
 
 Private Sub MDIForm_Unload(Cancel As Integer)
-WriteIniValue App.Path & "\Config.ini", "Database", "Database", INI_DATABASE
-WriteIniValue App.Path & "\Config.ini", "Database", "User", INI_USER
-WriteIniValue App.Path & "\Config.ini", "Database", "Password", INI_PASSWORD
-WriteIniValue App.Path & "\Config.ini", "Database", "IP", INI_IP
-WriteIniValue App.Path & "\Config.ini", "Database", "A_Table", INI_ACCOUNT_TABLE
-WriteIniValue App.Path & "\Config.ini", "Database", "F_Table", INI_FRIENDS_TABLE
+'Open Database variable
+With Database
+
+'Write values into .ini file
+WriteIniValue App.Path & "\Config.ini", "Database", "Database", .Database
+WriteIniValue App.Path & "\Config.ini", "Database", "User", .User
+WriteIniValue App.Path & "\Config.ini", "Database", "Password", .Password
+WriteIniValue App.Path & "\Config.ini", "Database", "Host", .Host
+WriteIniValue App.Path & "\Config.ini", "Database", "A_Table", .Account_Table
+WriteIniValue App.Path & "\Config.ini", "Database", "F_Table", .Friend_Table
+
+'Close Database variable
+End With
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
@@ -526,6 +529,7 @@ End Sub
 
 Private Function socketFree() As Integer
 On Error GoTo HandleErrorFreeSocket
+
 For i = Winsock1.LBound + 1 To Winsock1.UBound
     If Winsock1(i).LocalIP Then
     End If
@@ -553,8 +557,10 @@ Dim array2()        As String
 Dim GetUser         As String
 Dim GetMessage      As String
 Dim GetConver       As String
+Dim GetCommand      As String
 Dim GetTarget       As String
 Dim pGetTarget      As String
+Dim ForWho          As String
 Dim GetLastMessage  As String
 Dim bMatch, Mute    As Boolean
 
@@ -565,7 +571,7 @@ frmMain.Winsock1(Index).GetData GetMessage
 array1 = Split(GetMessage, "#")
 
 'Assign the variables to the array
-Command = array1(0)
+GetCommand = array1(0)
 GetUser = array1(1)
 GetConver = array1(2)
 
@@ -590,7 +596,7 @@ End With
 
 'Validate: If message is to long then kick
 If Len(GetConver) > 200 Then
-    SMSG "!long", GetUser
+    CMSG "!long", GetUser
     frmPanel.ListView1.ListItems.Remove (Index) ' Remove from list
     Winsock1(Index).Close 'Close connection
     Unload Winsock1(Index) 'Remove socket
@@ -599,7 +605,7 @@ If Len(GetConver) > 200 Then
     Exit Sub
 End If
 
-Select Case Command
+Select Case GetCommand
 'Update Friend list
 Case "!get_friends"
     UpdateFriendList GetUser
@@ -618,7 +624,7 @@ Case "!connected"
     With frmPanel.ListView1.ListItems
         For i = 1 To .Count
             If .Item(i).SubItems(5) = GetConver Then
-                SMSG "!dinstance", GetConver
+                CMSG "!dinstance", GetConver
                 Winsock1(.Item(i).SubItems(2)).Close
                 Unload Winsock1(.Item(i).SubItems(2))
                 .Remove (i)
@@ -629,20 +635,21 @@ Case "!connected"
         Next i
     End With
         
-    SMSG Command, GetUser
+    CMSG GetCommand, GetUser
     With frmPanel.ListView1.ListItems
-        .Item(.Count).Text = GetUser
-        .Item(.Count).SubItems(5) = GetConver
+        i = .Count
+        .Item(i).Text = GetUser
+        .Item(i).SubItems(5) = GetConver
     End With
     UpdateUsersList
 
 Case "!namerequest"
-    SMSG Command, GetUser
+    CMSG GetCommand, GetUser
     'Check badname list
     For i = 0 To frmPanel.List1.ListCount
         If frmPanel.List1.List(i) = GetUser Then
             bMatch = True
-            SMSG "!badname", GetUser
+            CMSG "!badname", GetUser
             Exit For
         End If
     Next i
@@ -652,7 +659,7 @@ Case "!namerequest"
         For i = 1 To .Count
             If .Item(i) = GetUser Then
                 bMatch = True
-                SMSG "!nametaken", GetUser
+                CMSG "!nametaken", GetUser
                 Exit For
             End If
         Next i
@@ -663,13 +670,13 @@ Case "!namerequest"
         SendSingle "!decilined", frmMain.Winsock1(Index)
     Else
         SendSingle "!accepted", frmMain.Winsock1(Index)
-        SMSG "!nameisfree", GetUser
+        CMSG "!nameisfree", GetUser
     End If
     
 Case "!w"
     If Mute = True Then
-        SendSingle " You are muted.", frmMain.Winsock1(Index)
-        SMSG "!wmuted", GetUser, GetConver
+        SendSingle "You are muted.", frmMain.Winsock1(Index)
+        CMSG "!wmuted", GetUser, GetConver
     Else
         'Split name into user name and normal name
         array2 = Split(GetUser, "|")
@@ -678,11 +685,8 @@ Case "!w"
         
         'Check if user is whispering itself
         Select Case GetUser
-        Case ForWho
-            SendSingle " You can't whisper yourself.", frmMain.Winsock1(Index)
-            Exit Sub
-        Case "<AFK>" & GetUser
-            SendSingle " You can't whisper yourself.", frmMain.Winsock1(Index)
+        Case ForWho, "<AFK>" & GetUser
+            SendSingle "You can't whisper yourself.", frmMain.Winsock1(Index)
             Exit Sub
         End Select
         
@@ -691,14 +695,14 @@ Case "!w"
             For i = 1 To .Count
                 Select Case ForWho
                 Case .Item(i)
-                    SendSingle " [You whisper to " & ForWho & "]: " & GetConver, frmMain.Winsock1(Index)
-                    SendSingle " [" & GetUser & " whispers]: " & GetConver, frmMain.Winsock1(.Item(i).SubItems(2))
-                    SMSG Command, GetUser, GetConver, ForWho
+                    SendSingle "[You whisper to " & ForWho & "]: " & GetConver, frmMain.Winsock1(Index)
+                    SendSingle "[" & GetUser & " whispers]: " & GetConver, frmMain.Winsock1(.Item(i).SubItems(2))
+                    CMSG GetCommand, GetUser, GetConver, ForWho
                     Exit For
                 Case "<AFK>" & .Item(i)
-                    SendSingle " " & .Item(i) & " is away from keyboard.", frmMain.Winsock1(Index)
-                    SendSingle " [" & GetUser & " whispers]: " & GetConver, frmMain.Winsock1(.Item(i).SubItems(2))
-                    SMSG Command, GetUser, GetConver, ForWho
+                    SendSingle .Item(i) & " is away from keyboard.", frmMain.Winsock1(Index)
+                    SendSingle "[" & GetUser & " whispers]: " & GetConver, frmMain.Winsock1(.Item(i).SubItems(2))
+                    CMSG GetCommand, GetUser, GetConver, ForWho
                     Exit For
                 End Select
             Next i
@@ -714,7 +718,7 @@ Case "!login"
                 'Ban Check
                 If .Item(i).SubItems(5) = "Yes" Then
                     SendSingle "!login#Banned#", frmMain.Winsock1(Index)
-                    SMSG "!banned", GetUser
+                    CMSG "!banned", GetUser
                     Exit Sub
                 End If
                 
@@ -722,10 +726,10 @@ Case "!login"
                 If GetConver = .Item(i).SubItems(2) Then
                     'Send back confirmation and account level
                     SendSingle "!login#Yes#", frmMain.Winsock1(Index)
-                    SMSG Command, GetUser, GetConver
+                    CMSG GetCommand, GetUser, GetConver
                 Else
                     SendSingle "!login#Password#", frmMain.Winsock1(Index)
-                    SMSG "!password", GetUser
+                    CMSG "!password", GetUser
                 End If
                 
                 Acc = True
@@ -738,7 +742,7 @@ Case "!login"
     
     If Acc = False Then
         SendSingle "!login#Account#", frmMain.Winsock1(Index)
-        SMSG "!account", GetUser, GetConver
+        CMSG "!account", GetUser, GetConver
     End If
         
 Case "!iprequest"
@@ -785,7 +789,7 @@ Commands:
             Case "users"
                 SendSingle "!userlist#" & GetUserList, frmMain.Winsock1(Index)
             Case Else
-                SendSingle " You can just use .list account or user.", frmMain.Winsock1(Index)
+                SendSingle "You can just use .list account or user.", frmMain.Winsock1(Index)
             End Select
             
         Case ".userinfo", ".uinfo"
@@ -816,13 +820,13 @@ Commands:
             MuteUser GetTarget, GetUser, "No", Index
             
         Case ".announce", ".ann", ".broadcast"
-            CMSG GetUser, ANN_MSG
+            SendMessage GET_TAG(GetUser) & "[" & GetUser & "] announces: " & ANN_MSG
                     
         Case ".help", ".command", ".commands"
             SendSingle GetCommands, frmMain.Winsock1(Index)
             
         Case Else
-            SendSingle " Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
+            SendSingle "Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
                         
         End Select
         Exit Sub
@@ -845,29 +849,29 @@ Emotes:
             If Len(GetTarget) = 0 Then
                 Select Case LCase(array2(0))
                 Case "/lol", "/laugh"
-                    SendMessage " " & GetUser & " laughs."
+                    SendMessage GetUser & " laughs."
                 Case "/rofl"
-                    SendMessage " " & GetUser & " rolls on the floor laughing."
+                    SendMessage GetUser & " rolls on the floor laughing."
                 Case "/beer"
-                    SendMessage " " & GetUser & " takes a beer from the fridge."
+                    SendMessage GetUser & " takes a beer from the fridge."
                 Case "/fart"
-                    SendMessage " " & GetUser & " farts loudly."
+                    SendMessage GetUser & " farts loudly."
                 Case "/lmao"
-                    SendMessage " " & GetUser & " is laughing his / her ass off."
+                    SendMessage GetUser & " is laughing his / her ass off."
                 Case "/facepalm"
-                    SendMessage " " & GetUser & " covers his face with his palm."
+                    SendMessage GetUser & " covers his face with his palm."
                 Case "/violin"
-                    SendMessage " " & GetUser & " plays the world smallest violin."
+                    SendMessage GetUser & " plays the world smallest violin."
                 Case "/insult"
-                    SendMessage " " & GetUser & " insults him / her-self as bitch."
+                    SendMessage GetUser & " insults him / her-self as bitch."
                 Case "/smile"
-                    SendMessage " " & GetUser & " smiles."
+                    SendMessage GetUser & " smiles."
                 Case "/love", "/<3"
-                    SendMessage " " & GetUser & " feels the love."
+                    SendMessage GetUser & " feels the love."
                 Case "/cheer"
-                    SendMessage " " & GetUser & " cheers."
+                    SendMessage GetUser & " cheers."
                 Case "/kiss"
-                    SendMessage " " & GetUser & " blows a kiss into the wind."
+                    SendMessage GetUser & " blows a kiss into the wind."
                 Case "/afk"
                     'Set afk flag
                     With frmPanel.ListView1.ListItems
@@ -891,35 +895,37 @@ Emotes:
                 If IsUser = True Then
                     Select Case LCase(array2(0))
                     Case "/lol"
-                        SendMessage " " & GetUser & " laughs at " & GetTarget & "."
+                        SendMessage GetUser & " laughs at " & GetTarget & "."
                     Case "/rofl"
-                        SendMessage " " & GetUser & " rolls on the floor laughing at " & GetTarget & "."
+                        SendMessage GetUser & " rolls on the floor laughing at " & GetTarget & "."
                     Case "/beer"
-                        SendMessage " " & GetUser & " takes a beer from the fridge."
+                        SendMessage GetUser & " takes a beer from the fridge."
                     Case "/fart"
-                        SendMessage " " & GetUser & " brushes up and farts loudly against " & GetTarget & "."
+                        SendMessage GetUser & " brushes up and farts loudly against " & GetTarget & "."
                     Case "/lmao"
-                        SendMessage " " & GetUser & " is laughing his / her ass off at " & GetTarget & "."
+                        SendMessage GetUser & " is laughing his / her ass off at " & GetTarget & "."
                     Case "/facepalm"
-                        SendMessage " " & GetUser & " takes a look on " & GetTarget & " and covers his face with a palm."
+                        SendMessage GetUser & " takes a look on " & GetTarget & " and covers his face with a palm."
                     Case "/violin"
-                        SendMessage " " & GetUser & " looks at " & GetTarget & " and starts playing the world smallest violin."
+                        SendMessage GetUser & " looks at " & GetTarget & " and starts playing the world smallest violin."
                     Case "/insult"
-                        SendMessage " " & GetUser & " starts insulting " & GetTarget & "  heavily."
+                        SendMessage GetUser & " starts insulting " & GetTarget & "  heavily."
                     Case "/smile"
-                        SendMessage " " & GetUser & " smiles at " & GetTarget & "."
+                        SendMessage GetUser & " smiles at " & GetTarget & "."
                     Case "/love"
-                        SendMessage " " & GetUser & " loves " & GetTarget & "."
+                        SendMessage GetUser & " loves " & GetTarget & "."
                     Case "/cheer"
-                        SendMessage " " & GetUser & " cheers at " & GetTarget & "."
+                        SendMessage GetUser & " cheers at " & GetTarget & "."
                     Case "/kiss"
-                        SendMessage " " & GetUser & " blows a kiss to " & GetTarget & "."
+                        SendMessage GetUser & " blows a kiss to " & GetTarget & "."
                     End Select
                 Else
-                    SendSingle " User '" & GetTarget & "' not found.", frmMain.Winsock1(Index)
+                    SendSingle "User '" & GetTarget & "' not found.", frmMain.Winsock1(Index)
                 End If
             End If
-            SMSG "!emote", GetUser, GetConver
+            CMSG "!emote", GetUser, GetConver
+        Else
+            SendSingle "You are muted.", frmMain.Winsock1(Index)
         End If
         Exit Sub
     End If
@@ -927,26 +933,27 @@ Emotes:
 Message:
     'Check if user is muted
     If Mute = True Then
-        SendSingle " You are muted.", frmMain.Winsock1(Index)
-        SMSG "!muted", GetUser, GetConver
+        SendSingle "You are muted.", frmMain.Winsock1(Index)
+        CMSG "!muted", GetUser, GetConver
         Exit Sub
     End If
     
     'Check if user is repeating
     If GetConver = GetLastMessage Then
-        SendSingle " Your message has triggered serverside flood protection. Please don't repeat yourself.", frmMain.Winsock1(Index)
-        SMSG "!repeat", GetUser, ""
+        SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", frmMain.Winsock1(Index)
+        CMSG "!repeat", GetUser, ""
         Exit Sub
     End If
         
     'Send Message
-    SendMessage " [" & GetUser & "]: " & GetConver
-    SMSG Command, GetUser, GetConver
+    SendMessage "[" & GetUser & "]: " & GetConver
+    CMSG GetCommand, GetUser, GetConver
     
 Case Else
-    SendMessage " Unknown operation."
-
+    SendMessage "Unknown operation."
 End Select
+
+'Set last message
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If GetUser = .Item(i) Then
@@ -955,6 +962,8 @@ With frmPanel.ListView1.ListItems
     Next i
 End With
 Exit Sub
+
+'=== Start Error Handling
 TargetErrorHandler:
     Select Case Err.Number
     Case 9
@@ -975,7 +984,7 @@ TargetErrorHandler:
                 ".mute", _
                 ".unmute"
                 
-                SendSingle " Incorrect Syntax. Use .help for more information about commands.", frmMain.Winsock1(Index)
+                SendSingle "Incorrect Syntax. Use .help for more information about commands.", frmMain.Winsock1(Index)
         
             Case _
                 ".help", _
@@ -985,7 +994,7 @@ TargetErrorHandler:
                 GoTo Commands
                 
             Case Else
-                SendSingle " Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
+                SendSingle "Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
                 
             End Select
         Else
@@ -998,13 +1007,14 @@ TargetErrorHandler:
     End Select
 End Sub
 
-Private Sub CMSG(pName As String, pMessage As String)
-If GetLevel(pName) = 1 Then
-    SendMessage " " & "<GM> [" & pName & "] announces: " & pMessage
-Else
-    SendMessage " " & "<Admin> [" & pName & "] announces: " & pMessage
-End If
-End Sub
+Private Function GET_TAG(User As String) As String
+Select Case GetLevel(User)
+Case 1
+    GET_TAG = "<GM> "
+Case 2
+    GET_TAG = "<Admin> "
+End Select
+End Function
 
 Private Sub MuteUser(User As String, AdminName As String, Mute As String, SIndex As Integer)
 User = StrConv(User, vbProperCase)
@@ -1021,12 +1031,12 @@ With frmPanel.ListView1.ListItems
 End With
 
 If Avaible = False Then
-    SendSingle " User '" & User & "' was not found.", Winsock1(SIndex)
+    SendSingle "User '" & User & "' was not found.", Winsock1(SIndex)
 Else
     If Mute = "Yes" Then
-        SendMessage " " & User & " got muted by " & AdminName & "."
+        SendMessage User & " got muted by " & GET_TAG(AdminName) & AdminName & "."
     Else
-        SendMessage " " & User & " got unmuted by " & AdminName & "."
+        SendMessage User & " got unmuted by " & GET_TAG(AdminName) & AdminName & "."
     End If
 End If
 End Sub
@@ -1061,7 +1071,7 @@ With frmPanel.ListView1.ListItems
 End With
 
 If Avaible = False Then
-    SendSingle " User '" & User & "' not found.", Winsock1(SIndex)
+    SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
 End If
 End Sub
 
@@ -1093,12 +1103,12 @@ End With
 
 'Announce or give feedback
 If Avaible = False Then
-    SendSingle " Account '" & Account & "' not found.", Winsock1(SIndex)
+    SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
 Else
     If Ban = "Yes" Then
-        SendMessage " " & User & " was account banned by " & AdminName & "."
+        SendMessage User & " was account banned by " & GET_TAG(AdminName) & AdminName & "."
     Else
-        SendMessage " " & User & " was unbanned by " & AdminName & "."
+        SendMessage User & " was unbanned by " & GET_TAG(AdminName) & AdminName & "."
     End If
 End If
 End Sub
@@ -1122,7 +1132,7 @@ End With
 If Avaible = True Then
     UpdateUsersList
 Else
-    SendSingle " User '" & User & "' not found.", Winsock1(SIndex)
+    SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
 End If
 
 frmMain.StatusBar1.Panels(1).Text = "Status: Connected with " & frmMain.Winsock1.Count - 1 & " Client(s)."
@@ -1142,7 +1152,7 @@ With frmAccountPanel.ListView1.ListItems
     Next i
 End With
 If Avaible = False Then
-    SendSingle " Account '" & Account & "' not found.", Winsock1(SIndex)
+    SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
 End If
 End Sub
 
@@ -1150,7 +1160,7 @@ Private Sub GetUserInfo(User As String, SIndex As Integer)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(User, vbProperCase) Then
-            SendSingle vbCrLf & " User information about '" & User & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Last Message: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5) & vbCrLf & " Login Time: " & .Item(i).SubItems(6) & vbCrLf & " AFK: " & .Item(i).SubItems(7), Winsock1(SIndex)
+            SendSingle vbCrLf & "User information about '" & User & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Last Message: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5) & vbCrLf & " Login Time: " & .Item(i).SubItems(6) & vbCrLf & " AFK: " & .Item(i).SubItems(7), Winsock1(SIndex)
             Avaible = True
             Exit For
         Else
@@ -1160,27 +1170,27 @@ With frmPanel.ListView1.ListItems
 End With
 
 If Avaible = False Then
-    SendSingle " User '" & User & " was not found.", Winsock1(SIndex)
+    SendSingle "User '" & User & " was not found.", Winsock1(SIndex)
 End If
 End Sub
 
 Private Function GetCommands() As String
 GetCommands = vbCrLf & _
-" *********************************************" & vbCrLf & _
-" * List of all avaible commands:" & vbCrLf & _
-" * .announce 'Text' ( Send an server side tagged announced )" & vbCrLf & _
-" * .banuser 'Name' ( Bans users account )" & vbCrLf & _
-" * .banaccount 'Account' ( Bans the account )" & vbCrLf & _
-" * .unbanuser 'Name' ( Removes ban from 'Name' )" & vbCrLf & _
-" * .unbanaccount 'Account' ( Removes ban from 'Account )" & vbCrLf & _
-" * .kick 'Name' ( Kicks 'Name' from Server )" & vbCrLf & _
-" * .mute 'Name' ( Mutes 'Name' until unmute )" & vbCrLf & _
-" * .unmute 'Name' ( Removes mute from 'Name' )" & vbCrLf & _
-" * .userinfo 'Name' ( Shows all information about 'Name' )" & vbCrLf & _
-" * .accountinfo / .accinfo ( Shows all information about that account )" & vbCrLf & _
-" * .show accounts / users ( Shows a list of all accounts / user )" & vbCrLf & _
-" * .help ( shows this list of all avaible commands )" & vbCrLf & _
-" *********************************************"
+"*********************************************" & vbCrLf & _
+"* List of all avaible commands:" & vbCrLf & _
+"* .announce 'Text' ( Send an server side tagged announced )" & vbCrLf & _
+"* .banuser 'Name' ( Bans users account )" & vbCrLf & _
+"* .banaccount 'Account' ( Bans the account )" & vbCrLf & _
+"* .unbanuser 'Name' ( Removes ban from 'Name' )" & vbCrLf & _
+"* .unbanaccount 'Account' ( Removes ban from 'Account )" & vbCrLf & _
+"* .kick 'Name' ( Kicks 'Name' from Server )" & vbCrLf & _
+"* .mute 'Name' ( Mutes 'Name' until unmute )" & vbCrLf & _
+"* .unmute 'Name' ( Removes mute from 'Name' )" & vbCrLf & _
+"* .userinfo 'Name' ( Shows all information about 'Name' )" & vbCrLf & _
+"* .accountinfo / .accinfo ( Shows all information about that account )" & vbCrLf & _
+"* .show accounts / users ( Shows a list of all accounts / user )" & vbCrLf & _
+"* .help ( shows this list of all avaible commands )" & vbCrLf & _
+"*********************************************"
 End Function
 
 Private Function GetLevel(Name As String) As Long
@@ -1200,12 +1210,11 @@ Next i
 End Function
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-Prefix = "[" & Format(Time, "hh:nn:ss") & "]"
-
 Winsock1(Index).Close
 Unload Winsock1(Index)
 
-frmChat.txtConver.Text = frmChat.txtConver.Text & vbCrLf & Prefix & "[System]: Disconnected due connection problem."
+CMSG "!disconnected"
+
 StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
 
 frmPanel.ListView1.ListItems.Clear

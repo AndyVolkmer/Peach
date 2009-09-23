@@ -1,16 +1,13 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.1.2.0"
+Public Const Rev = "1.1.2.1"
 Public Const RegPort = 6222
 
-Public Prefix   As String
-Public Command  As String
-Public Message  As String
-Public ForWho   As String
 Public i        As Long    'Global "FOR" variable
+Public HasError As Boolean 'Used in frmMain and frmConfig
 
-Public Type NOTIFYICONDATA
+Type NOTIFYICONDATA
     cbSize              As Long
     hwnd                As Long
     uId                 As Long
@@ -19,6 +16,17 @@ Public Type NOTIFYICONDATA
     hIcon               As Long
     szTip               As String * 64
 End Type
+
+Type DB
+    Database       As String
+    User           As String
+    Host           As String
+    Password       As String
+    Friend_Table   As String
+    Account_Table  As String
+End Type
+
+Public Database As DB
 
 Public Const NIM_ADD = &H0
 Public Const NIM_MODIFY = &H1
@@ -127,7 +135,7 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Public Sub SMSG(Command As String, Optional Name As String, Optional Message As String, Optional ForWho As String)
+Public Sub CMSG(Command As String, Optional Name As String, Optional Message As String, Optional ForWho As String)
 Dim TimePrefix As String
 TimePrefix = "[" & Format(Time, "hh:nn:ss") & "] "
 With frmChat.txtConver
@@ -156,9 +164,13 @@ With frmChat.txtConver
     Case "!muted"
         .SelRTF = vbCrLf & TimePrefix & "[Muted][" & Name & "]: " & Message
     Case "!repeat"
-        .SelRTF = vbCrLf & TimePrefix & "[" & Name & "]" & " activated flood control."
+        .SelRTF = vbCrLf & TimePrefix & "[" & Name & "] activated flood control."
     Case "!long"
-        .SelRTF = vbCrLf & TimePrefix & "[" & Name & "]" & " wrote a too long message. (Kicked)"
+        .SelRTF = vbCrLf & TimePrefix & "[" & Name & "] wrote a too long message. (Kicked)"
+    Case "!banned"
+        .SelRTF = vbCrLf & TimePrefix & "'" & Name & "' tryed to login but failed. (Account banned)."
+    Case "!disconnected"
+        .SelRTF = vbCrLf & TimePrefix & "[System]: Disconnected due connection problem."
     Case Else
         .SelRTF = vbCrLf & TimePrefix & "[" & Command & "] [" & Name & "] [" & ForWho & "] [" & Message & "]"
     End Select

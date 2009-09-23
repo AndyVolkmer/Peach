@@ -607,7 +607,7 @@ Case "!friend_not_exist"
 Case Else
     With frmChat.txtConver
         .SelStart = Len(.Text)
-        .SelRTF = vbCrLf & Prefix & GetMessage
+        .SelRTF = vbCrLf & Space(1) & Prefix & Space(1) & GetMessage
     End With
     If frmMain.WindowState = 1 Then frmDESP.DisplayMessage DESP_TEXT_NEW_MSG
 End Select
@@ -617,7 +617,7 @@ Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal
 Dim WiSk As Winsock
 Prefix = "[" & Format$(Time, "hh:nn:ss") & "]"
 
-'Close connecting winsock ( state = 0 )
+'Close connecting winsock ( set state = 0 )
 Winsock1.Close
 
 'Call Disconnect function to DC all sockets and do buttons

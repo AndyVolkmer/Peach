@@ -34,6 +34,7 @@ Begin VB.Form frmConfig
       _ExtentY        =   2143
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
    End
@@ -146,7 +147,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-If frmMain.HasError = True Then
+If HasError = True Then
     Command1.Enabled = False
     MsgBox "Database error occured, read the log for more information.", vbInformation
     Exit Sub
