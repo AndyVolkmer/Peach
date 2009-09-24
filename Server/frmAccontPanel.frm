@@ -176,7 +176,6 @@ Begin VB.Form frmAccountPanel
       _Version        =   393217
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
-      BorderStyle     =   1
       Appearance      =   1
       NumItems        =   7
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 

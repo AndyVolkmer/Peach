@@ -67,7 +67,6 @@ Begin VB.Form frmPanel
       _ExtentY        =   1296
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -106,7 +105,6 @@ Begin VB.Form frmPanel
       _Version        =   393217
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
-      BorderStyle     =   1
       Appearance      =   1
       NumItems        =   8
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 

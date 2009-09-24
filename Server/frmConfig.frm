@@ -34,9 +34,17 @@ Begin VB.Form frmConfig
       _ExtentY        =   2143
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Segoe UI"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin VB.Timer connCounter 
       Enabled         =   0   'False
