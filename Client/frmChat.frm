@@ -137,39 +137,33 @@ Option Explicit
 Private Const WM_PASTE = &H302
 
 Private Sub cmdSend_Click()
-Dim Array1() As String: Array1 = Split(txtToSend.Text, " ")
-
 'Display the time
 If LCase$(RTrim$(txtToSend.Text)) = "/time" Then
     With txtConver
         .SelStart = Len(.Text)
         .SelRTF = vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "]" & CHAT_TIME_TEXT & Format$(Time, "hh:nn")
     End With
-    GoTo Next1
+    Call Clear
+    Exit Sub
 End If
 
 'No whitespaces
 If Len(Trim$(txtToSend.Text)) = 0 Then
-    GoTo Next1
+    Call Clear
+    Exit Sub
 End If
-
-'If any checkbox is checked then send it private to that client
-With frmSociety.ListView1.ListItems
-    For i = 1 To .Count
-        If .Item(i).Checked = True Then
-            SendMsg "!w#" & frmConfig.txtNick.Text & "|" & .Item(i) & "#" & txtToSend.Text & "#"
-            GoTo Next1
-        End If
-    Next i
-End With
 
 'Send public message
 SendMsg "!msg#" & frmConfig.txtNick.Text & "#" & txtToSend.Text & "#"
 
-Next1:
-    txtToSend.Text = vbNullString
-    txtToSend.SetFocus
+Call Clear
+End Sub
 
+Private Sub Clear()
+With txtToSend
+    .Text = vbNullString
+    .SetFocus
+End With
 End Sub
 
 Private Sub Command1_Click()

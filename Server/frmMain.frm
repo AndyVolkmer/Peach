@@ -952,11 +952,11 @@ End Sub
 Private Sub Whisper(User As String, Target As String, Conversation As String, Index As Integer)
 
 'Check if user is whispering itself
-'Select Case User
-'Case Target, "<AFK>" & User
-'    SendSingle "You can't whisper yourself.", frmMain.Winsock1(Index)
-'    Exit Sub
-'End Select
+Select Case User
+Case Target, "<AFK>" & User
+    SendSingle "You can't whisper yourself.", frmMain.Winsock1(Index)
+    Exit Sub
+End Select
 
 'Search target in list and send message
 With frmPanel.ListView1.ListItems

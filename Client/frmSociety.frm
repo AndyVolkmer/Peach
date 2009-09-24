@@ -57,6 +57,7 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "ListView1"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       Begin VB.CommandButton Command2 
          Caption         =   "&Remove"
@@ -132,7 +133,6 @@ Begin VB.Form frmSociety
          LabelEdit       =   1
          LabelWrap       =   -1  'True
          HideSelection   =   -1  'True
-         Checkboxes      =   -1  'True
          FullRowSelect   =   -1  'True
          GridLines       =   -1  'True
          _Version        =   393217
@@ -189,20 +189,6 @@ With ListView2.ListItems
         End If
     Next i
 End With
-End Sub
-
-Private Sub ListView1_ItemCheck(ByVal Item As MSComctlLib.ListItem)
-If Item.Checked = True Then
-    With ListView1.ListItems
-        For i = 1 To .Count
-            .Item(i).Checked = False
-        Next i
-        ListView1.SelectedItem = Item
-    End With
-    Item.Checked = True
-Else
-    Item.Checked = False
-End If
 End Sub
 
 Private Sub ListView2_ItemCheck(ByVal Item As MSComctlLib.ListItem)
