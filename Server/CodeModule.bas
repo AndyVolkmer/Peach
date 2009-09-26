@@ -1,8 +1,8 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev = "1.1.2.4"
-Public Const RegPort = 6222
+Public Const Rev  	  As String = "1.1.2.5"
+Public Const RegPort  As Long = 6222
 
 Public i        As Long    'Global "FOR" variable
 Public HasError As Boolean 'Used in frmMain and frmConfig

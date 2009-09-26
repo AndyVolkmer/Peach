@@ -88,7 +88,6 @@ Begin VB.Form frmSociety
          LabelEdit       =   1
          LabelWrap       =   -1  'True
          HideSelection   =   -1  'True
-         Checkboxes      =   -1  'True
          FullRowSelect   =   -1  'True
          GridLines       =   -1  'True
          _Version        =   393217
@@ -169,19 +168,17 @@ End Sub
 Private Sub Command2_Click()
 Dim Name As String
 Dim MPos As Integer
-With ListView2.ListItems
-    For i = 1 To .Count
-        If .Item(i).Checked = True Then
-            MPos = InStr(1, .Item(i), " ")
-            If MPos = 0 Then
-                Name = .Item(i)
-            Else
-                Name = Left$(.Item(i), MPos - 1)
-            End If
-            SendMsg "!remove_friend#" & frmConfig.txtAccount.Text & "#" & Name & "#"
-            Exit For
-        End If
-    Next i
+
+If ListView2.SelectedItem Is Nothing Then Exit Sub
+
+With ListView2.SelectedItem
+    MPos = InStr(1, .Text, " ")
+    If MPos = 0 Then
+        Name = .Text
+    Else
+        Name = Left$(.Text, MPos - 1)
+    End If
+    SendMsg "!remove_friend#" & frmConfig.txtAccount.Text & "#" & Name & "#"
 End With
 End Sub
 

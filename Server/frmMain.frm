@@ -826,6 +826,24 @@ Emotes:
                 Next i
             End With
             
+            'Set AFK Flag
+            If LCase(array2(0)) = "/afk" Then
+                With frmPanel.ListView1.ListItems
+                    For i = 1 To .Count
+                        If .Item(i) = GetUser Then
+                            If .Item(i).SubItems(7) = "Yes" Then
+                                .Item(i).SubItems(7) = "No"
+                            Else
+                                .Item(i).SubItems(7) = "Yes"
+                            End If
+                            Exit For
+                        End If
+                    Next i
+                    UpdateUsersList
+                End With
+                Exit Sub
+            End If
+            
             If Len(GetTarget) = 0 Then
                 Select Case LCase(array2(0))
                 Case "/lol", "/laugh"
@@ -852,25 +870,8 @@ Emotes:
                     SendMessage GetUser & " cheers."
                 Case "/kiss"
                     SendMessage GetUser & " blows a kiss into the wind."
-                Case "/afk"
-                    'Set afk flag
-                    With frmPanel.ListView1.ListItems
-                        For i = 1 To .Count
-                            If .Item(i) = GetUser Then
-                                If .Item(i).SubItems(7) = "Yes" Then
-                                    .Item(i).SubItems(7) = "No"
-                                Else
-                                    .Item(i).SubItems(7) = "Yes"
-                                End If
-                                Exit For
-                            End If
-                        Next i
-                        UpdateUsersList
-                        Exit Sub
-                    End With
                 Case "/w", "/whisper" 'Whisper
-                    SendSingle GetUser & " is offline or does not exist.", frmMain.Winsock1(Index)
-                    'Whisper GetUser, GetTarget, array2(2), Index
+                    Exit Sub
                 
                 Case Else
                     GoTo Message
@@ -906,7 +907,7 @@ Emotes:
                         Whisper GetUser, GetTarget, array2(2), Index
                     End Select
                 Else
-                    SendSingle "User '" & GetTarget & "' not found.", frmMain.Winsock1(Index)
+                    SendSingle GetUser & " is offline or does not exist.", frmMain.Winsock1(Index)
                 End If
             End If
             CMSG "!emote", GetUser, GetConver
