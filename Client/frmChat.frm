@@ -5,7 +5,7 @@ Begin VB.Form frmChat
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    Caption         =   "frmChat"
-   ClientHeight    =   4185
+   ClientHeight    =   3870
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   7485
@@ -20,26 +20,9 @@ Begin VB.Form frmChat
    EndProperty
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
-   ScaleHeight     =   4185
+   ScaleHeight     =   3870
    ScaleWidth      =   7485
    ShowInTaskbar   =   0   'False
-   Begin VB.CommandButton Command1 
-      Caption         =   "Settings"
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   300
-      Left            =   5280
-      TabIndex        =   5
-      Top             =   3720
-      Width           =   2055
-   End
    Begin RichTextLib.RichTextBox txtToSend 
       Height          =   855
       Left            =   120
@@ -155,8 +138,8 @@ End If
 
 'Send public message
 SendMsg "!msg#" & frmConfig.txtNick.Text & "#" & txtToSend.Text & "#"
-
 Call Clear
+
 End Sub
 
 Private Sub Clear()
@@ -166,66 +149,9 @@ With txtToSend
 End With
 End Sub
 
-Private Sub Command1_Click()
-frmSettings.Show 1
-End Sub
-
 Public Sub Form_Load()
-Top = 0
-Left = 0
-LoadChatForm
-LoadChatSettings
-End Sub
-
-Public Sub LoadChatSettings()
-Dim FONT_BACK_COL   As Long
-
-'Read 'BackColor' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")) = 0 Then
-    txtConver.BackColor = 16777215
-Else
-    FONT_BACK_COL = ReadIniValue(App.Path & "\Config.ini", "Chat", "BackCol")
-    txtConver.BackColor = FONT_BACK_COL
-    txtToSend.BackColor = FONT_BACK_COL
-End If
-
-'Read 'Font' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "Font")) = 0 Then
-    txtConver.Font = "Tahoma"
-Else
-    With txtConver
-        Select Case Font
-        Case 0 'Arial
-            .Font = "Arial"
-        Case 1 'Lucida Console
-            .Font = "Lucida Console"
-        Case 2 'Tahoma
-            .Font = "Tahoma"
-        Case 3 'Time New Roman
-            .Font = "Times New Roman"
-        Case 4 'Trebuchet MS
-            .Font = "Trebuchet MS"
-        Case 5 'Verdana
-            .Font = "Verdana"
-        End Select
-    End With
-End If
-
-'Read 'FontSize' from .ini file
-If Len(ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")) = 0 Then
-    txtConver.Font.Size = 8
-Else
-    With txtConver.Font
-        Select Case ReadIniValue(App.Path & "\Config.ini", "Chat", "FontSize")
-        Case 0
-            .Size = 8
-        Case 1
-            .Size = 9
-        Case 2
-            .Size = 10
-        End Select
-    End With
-End If
+Top = 0: Left = 0
+Call LoadChatForm
 End Sub
 
 Public Sub LoadChatForm()

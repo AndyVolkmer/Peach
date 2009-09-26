@@ -1,4 +1,4 @@
-Attribute VB_Name = "LangModule"
+Attribute VB_Name = "modLang"
 Option Explicit
 
 'Start variable support for languages

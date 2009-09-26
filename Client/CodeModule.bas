@@ -1,17 +1,14 @@
-Attribute VB_Name = "CodeModule"
+Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const Rev = "1.1.2.3"
-Public Const aPort = 6123
-Public Const bPort = 6124
-Public Const RegPort = 6222
+Public Const Rev      As String = "1.1.2.4"
 
-Public Prefix       As String
-Public GetName      As String
-Public GetConver    As String
-Public Message      As String
-Public ForWho       As String
-Public i            As Long    'Global 'FOR' variable
+Public Const aPort    As Long = 6123
+Public Const bPort    As Long = 6124
+Public Const rPort    As Long = 6222
+
+Public Prefix   As String  'Time Prefix vairbale
+Public i        As Long    'Global 'FOR' variable
 
 Public Type NOTIFYICONDATA
     cbSize              As Long

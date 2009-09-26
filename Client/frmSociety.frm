@@ -57,7 +57,6 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "ListView1"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       Begin VB.CommandButton Command2 
          Caption         =   "&Remove"
@@ -94,7 +93,7 @@ Begin VB.Form frmSociety
          GridLines       =   -1  'True
          _Version        =   393217
          ForeColor       =   -2147483640
-         BackColor       =   -2147483643
+         BackColor       =   16777215
          Appearance      =   1
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Segoe UI"
@@ -105,19 +104,14 @@ Begin VB.Form frmSociety
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         NumItems        =   3
+         NumItems        =   2
          BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
             Text            =   "Name"
-            Object.Width           =   7316
+            Object.Width           =   9878
          EndProperty
          BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
             SubItemIndex    =   1
             Text            =   "Status"
-            Object.Width           =   2540
-         EndProperty
-         BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-            SubItemIndex    =   2
-            Text            =   "Last Message"
             Object.Width           =   2540
          EndProperty
       End

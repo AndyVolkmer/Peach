@@ -351,10 +351,10 @@ End Function
 Private Sub Form_Load()
 With RegSock
     .RemoteHost = frmConfig.txtIP.Text
-    .RemotePort = RegPort
+    .RemotePort = rPort
     .Connect
 End With
-Screen.MousePointer = vbArrowHourglass 'vbHourglass
+Screen.MousePointer = vbArrowHourglass
 Me.Caption = " Loading ..."
 End Sub
 
