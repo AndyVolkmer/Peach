@@ -915,7 +915,11 @@ Emotes:
             If IsUser = True Then
                 Whisper GetUser, GetTarget, array2(2), Index
             Else
-                SendSingle GetUser & " is offline or does not exist.", frmMain.Winsock1(Index)
+                If Len(Trim$(GetTarget)) = 0 Then
+                    Exit Sub
+                Else
+                    SendSingle "No user named '" & GetTarget & "' is currently online.", frmMain.Winsock1(Index)
+                End If
             End If
                         
         Case "/afk"
@@ -933,14 +937,13 @@ Emotes:
                 Next i
                 UpdateUsersList
             End With
-            Exit Sub
-            
+                        
         Case Else
             SendSingle "Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
-        
+                    
         End Select
         CMSG "!emote", GetUser, GetConver
-        
+    Exit Sub
     End If
             
 Message:
