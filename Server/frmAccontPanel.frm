@@ -442,7 +442,7 @@ End Sub
 Private Sub RegSock_ConnectionRequest(Index As Integer, ByVal requestID As Long)
 Dim intCounter1 As Integer
     intCounter1 = loadSocket
-    RegSock(intCounter1).LocalPort = RegPort
+    RegSock(intCounter1).LocalPort = rPort
     RegSock(intCounter1).Accept requestID
 End Sub
 

@@ -814,107 +814,133 @@ Commands:
     
 Emotes:
     If IsSlash = True Then
-        If Mute = False Then
-            Dim IsUser As Boolean
+        If Mute = True Then
+            SendSingle "You are muted.", frmMain.Winsock1(Index)
+            Exit Sub
+        End If
+        
+        Dim IsUser As Boolean
             
+        With frmPanel.ListView1.ListItems
+            For i = 1 To .Count
+                If GetTarget = .Item(i) Then
+                    IsUser = True
+                    Exit For
+                End If
+            Next i
+        End With
+            
+        Select Case LCase(array2(0))
+        Case "/lol", "/laugh"
+            If IsUser = True Then
+                SendMessage GetUser & " laughs at " & GetTarget & "."
+            Else
+                SendMessage GetUser & " laughs."
+            End If
+            
+        Case "/rofl"
+            If IsUser = True Then
+                SendMessage GetUser & " rolls on the floor laughing at " & GetTarget & "."
+            Else
+                SendMessage GetUser & " rolls on the floor laughing."
+            End If
+            
+        Case "/beer"
+            SendMessage GetUser & " takes a beer from the fridge."
+            
+        Case "/fart"
+            If IsUser = True Then
+                SendMessage GetUser & " brushes up and farts loudly against " & GetTarget & "."
+            Else
+                SendMessage GetUser & " farts loudly."
+            End If
+            
+        Case "/lmao"
+            If IsUser = True Then
+                SendMessage GetUser & " is laughing his / her ass off at " & GetTarget & "."
+            Else
+                SendMessage GetUser & " is laughing his / her ass off."
+            End If
+            
+        Case "/facepalm"
+            If IsUser = True Then
+                SendMessage GetUser & " takes a look on " & GetTarget & " and covers his face with a palm."
+            Else
+                SendMessage GetUser & " covers his face with his palm."
+            End If
+            
+        Case "/violin"
+            If IsUser = True Then
+                SendMessage GetUser & " looks at " & GetTarget & " and starts playing the world smallest violin."
+            Else
+                SendMessage GetUser & " plays the world smallest violin."
+            End If
+            
+        Case "/insult"
+            If IsUser = True Then
+                SendMessage GetUser & " starts insulting " & GetTarget & "  heavily."
+            Else
+                SendMessage GetUser & " insults him / her-self as bitch."
+            End If
+            
+        Case "/smile"
+            If IsUser = True Then
+                SendMessage GetUser & " smiles at " & GetTarget & "."
+            Else
+                SendMessage GetUser & " smiles."
+            End If
+            
+        Case "/love", "/<3"
+            If IsUser = True Then
+                SendMessage GetUser & " loves " & GetTarget & "."
+            Else
+                SendMessage GetUser & " feels the love."
+            End If
+            
+        Case "/cheer"
+            If IsUser = True Then
+                SendMessage GetUser & " cheers at " & GetTarget & "."
+            Else
+                SendMessage GetUser & " cheers."
+            End If
+            
+        Case "/kiss"
+            If IsUser = True Then
+                SendMessage GetUser & " blows a kiss to " & GetTarget & "."
+            Else
+                SendMessage GetUser & " blows a kiss into the wind."
+            End If
+            
+        Case "/w", "/whisper" 'Whisper
+            If IsUser = True Then
+                Whisper GetUser, GetTarget, array2(2), Index
+            Else
+                SendSingle GetUser & " is offline or does not exist.", frmMain.Winsock1(Index)
+            End If
+                        
+        Case "/afk"
+            'Set AFK Flag
             With frmPanel.ListView1.ListItems
                 For i = 1 To .Count
-                    If GetTarget = .Item(i) Then
-                        IsUser = True
+                    If .Item(i) = GetUser Then
+                        If .Item(i).SubItems(7) = "Yes" Then
+                            .Item(i).SubItems(7) = "No"
+                        Else
+                            .Item(i).SubItems(7) = "Yes"
+                        End If
                         Exit For
                     End If
                 Next i
+                UpdateUsersList
             End With
+            Exit Sub
             
-            'Set AFK Flag
-            If LCase(array2(0)) = "/afk" Then
-                With frmPanel.ListView1.ListItems
-                    For i = 1 To .Count
-                        If .Item(i) = GetUser Then
-                            If .Item(i).SubItems(7) = "Yes" Then
-                                .Item(i).SubItems(7) = "No"
-                            Else
-                                .Item(i).SubItems(7) = "Yes"
-                            End If
-                            Exit For
-                        End If
-                    Next i
-                    UpdateUsersList
-                End With
-                Exit Sub
-            End If
-            
-            If Len(GetTarget) = 0 Then
-                Select Case LCase(array2(0))
-                Case "/lol", "/laugh"
-                    SendMessage GetUser & " laughs."
-                Case "/rofl"
-                    SendMessage GetUser & " rolls on the floor laughing."
-                Case "/beer"
-                    SendMessage GetUser & " takes a beer from the fridge."
-                Case "/fart"
-                    SendMessage GetUser & " farts loudly."
-                Case "/lmao"
-                    SendMessage GetUser & " is laughing his / her ass off."
-                Case "/facepalm"
-                    SendMessage GetUser & " covers his face with his palm."
-                Case "/violin"
-                    SendMessage GetUser & " plays the world smallest violin."
-                Case "/insult"
-                    SendMessage GetUser & " insults him / her-self as bitch."
-                Case "/smile"
-                    SendMessage GetUser & " smiles."
-                Case "/love", "/<3"
-                    SendMessage GetUser & " feels the love."
-                Case "/cheer"
-                    SendMessage GetUser & " cheers."
-                Case "/kiss"
-                    SendMessage GetUser & " blows a kiss into the wind."
-                Case "/w", "/whisper" 'Whisper
-                    Exit Sub
-                
-                Case Else
-                    GoTo Message
-                End Select
-            Else
-                If IsUser = True Then
-                    Select Case LCase(array2(0))
-                    Case "/lol"
-                        SendMessage GetUser & " laughs at " & GetTarget & "."
-                    Case "/rofl"
-                        SendMessage GetUser & " rolls on the floor laughing at " & GetTarget & "."
-                    Case "/beer"
-                        SendMessage GetUser & " takes a beer from the fridge."
-                    Case "/fart"
-                        SendMessage GetUser & " brushes up and farts loudly against " & GetTarget & "."
-                    Case "/lmao"
-                        SendMessage GetUser & " is laughing his / her ass off at " & GetTarget & "."
-                    Case "/facepalm"
-                        SendMessage GetUser & " takes a look on " & GetTarget & " and covers his face with a palm."
-                    Case "/violin"
-                        SendMessage GetUser & " looks at " & GetTarget & " and starts playing the world smallest violin."
-                    Case "/insult"
-                        SendMessage GetUser & " starts insulting " & GetTarget & "  heavily."
-                    Case "/smile"
-                        SendMessage GetUser & " smiles at " & GetTarget & "."
-                    Case "/love"
-                        SendMessage GetUser & " loves " & GetTarget & "."
-                    Case "/cheer"
-                        SendMessage GetUser & " cheers at " & GetTarget & "."
-                    Case "/kiss"
-                        SendMessage GetUser & " blows a kiss to " & GetTarget & "."
-                    Case "/w", "/whisper" 'Whisper
-                        Whisper GetUser, GetTarget, array2(2), Index
-                    End Select
-                Else
-                    SendSingle GetUser & " is offline or does not exist.", frmMain.Winsock1(Index)
-                End If
-            End If
-            CMSG "!emote", GetUser, GetConver
-        Else
-            SendSingle "You are muted.", frmMain.Winsock1(Index)
-        End If
-        Exit Sub
+        Case Else
+            SendSingle "Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
+        
+        End Select
+        CMSG "!emote", GetUser, GetConver
+        
     End If
             
 Message:
