@@ -204,7 +204,7 @@ Public xRecordSet      As New ADODB.Recordset
 
 Public intCounter   As Long
 Dim MAX_CONNECTION  As Long
-Dim Avaible, Muted, Acc, Vali As Boolean
+Dim Avaible, Muted, Vali As Boolean
 
 Private Sub Command1_Click()
 SetupForms frmConfig
@@ -567,7 +567,6 @@ Dim GetConver       As String
 Dim GetCommand      As String
 Dim GetTarget       As String
 Dim pGetTarget      As String
-Dim ForWho          As String
 Dim GetLastMessage  As String
 Dim bMatch, Mute    As Boolean
 
@@ -604,7 +603,7 @@ End With
 'Validate: If message is to long then kick
 If Len(GetConver) > 200 Then
     CMSG "!long", GetUser
-    frmPanel.ListView1.ListItems.Remove (Index) ' Remove from list
+    frmPanel.ListView1.ListItems.Remove (Index) 'Remove from list
     Winsock1(Index).Close 'Close connection
     Unload Winsock1(Index) 'Remove socket
     StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
@@ -683,9 +682,7 @@ Case "!namerequest"
 Case "!login"
     With frmAccountPanel.ListView1.ListItems
         For i = 1 To .Count
-            Select Case GetUser
-            Case .Item(i).SubItems(1)
-                
+            If .Item(i).SubItems(1) = GetUser Then
                 'Ban Check
                 If .Item(i).SubItems(5) = "Yes" Then
                     SendSingle "!login#Banned#", frmMain.Winsock1(Index)
@@ -695,27 +692,23 @@ Case "!login"
                 
                 'Password Check
                 If GetConver = .Item(i).SubItems(2) Then
-                    'Send back confirmation and account level
+                    'Send back confirmation
                     SendSingle "!login#Yes#", frmMain.Winsock1(Index)
                     CMSG GetCommand, GetUser, GetConver
                 Else
                     SendSingle "!login#Password#", frmMain.Winsock1(Index)
                     CMSG "!password", GetUser
                 End If
-                
-                Acc = True
                 Exit For
-            Case Else
-                Acc = False
-            End Select
+            Else
+                If i = .Count Then
+                    SendSingle "!login#Account#", frmMain.Winsock1(Index)
+                    CMSG "!account", GetUser, GetConver
+                End If
+            End If
         Next i
     End With
     
-    If Acc = False Then
-        SendSingle "!login#Account#", frmMain.Winsock1(Index)
-        CMSG "!account", GetUser, GetConver
-    End If
-        
 Case "!iprequest"
     For i = 1 To frmPanel.ListView1.ListItems.Count
         If GetUser = frmPanel.ListView1.ListItems.Item(i) Then
@@ -744,15 +737,14 @@ Case "!msg"
     End If
     
     'Lets try to work without GoTo's
-    Select Case UBound(array2)
-    Case 1, 2
+    If UBound(array2) > 0 Then
         GetTarget = StrConv(array2(1), vbProperCase)
         
         'Just capture the non propercased name if it's an command, emotes dont use accounts
         If IsCommand = True Then
             pGetTarget = array2(1)
         End If
-    End Select
+    End If
     
     'It can be an announce with more then 3 words so we always capture it
     ANN_MSG = Mid$(GetConver, Len(array2(0)) + 2, Len(GetConver))
