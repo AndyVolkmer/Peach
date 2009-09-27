@@ -120,18 +120,19 @@ Option Explicit
 Private Const WM_PASTE = &H302
 
 Private Sub cmdSend_Click()
+
+'No whitespaces
+If Len(Trim$(txtToSend.Text)) = 0 Then
+    Call Clear
+    Exit Sub
+End If
+
 'Display the time
 If LCase$(RTrim$(txtToSend.Text)) = "/time" Then
     With txtConver
         .SelStart = Len(.Text)
         .SelRTF = vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "]" & CHAT_TIME_TEXT & Format$(Time, "hh:nn")
     End With
-    Call Clear
-    Exit Sub
-End If
-
-'No whitespaces
-If Len(Trim$(txtToSend.Text)) = 0 Then
     Call Clear
     Exit Sub
 End If

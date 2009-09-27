@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const Rev      As String = "1.1.2.8"
+Public Const Rev      As String = "1.1.2.9"
 
 Public Const aPort    As Long = 6123
 Public Const bPort    As Long = 6124
@@ -77,17 +77,6 @@ Public nid As NOTIFYICONDATA ' trayicon variable
 Public Sub SendMsg(iMessage As String)
 If frmMain.Winsock1.State <> 7 Then Exit Sub
 frmMain.Winsock1.SendData iMessage
-End Sub
-
-Public Sub SMSG(Whisper As Boolean, Name As String, Conver As String)
-With frmChat.txtConver
-    .SelStart = Len(.Text)
-    If Whisper = True Then
-        .SelRTF = vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] [You whisper to " & Name & "]: " & Conver
-    Else
-        .SelRTF = vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] [" & Name & "]: " & Conver
-    End If
-End With
 End Sub
 
 Public Sub FlashTitle(Handle As Long, ReturnOrig As Boolean)
