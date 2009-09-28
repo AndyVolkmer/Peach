@@ -1,6 +1,6 @@
 *.vbw
-*.ini
 *.oca
+*.ini
 
 Client\Config.ini
 Server\Config.ini

@@ -932,7 +932,23 @@ Case "!msg"
         CMSG "!emote", GetUser, GetConver
     Exit Sub
     End If
-            
+    
+    Dim S1&, E$
+  
+    S1 = 0
+    For i = 1 To Len(GetConver)
+        E = Mid$(GetConver, i, 1)
+        If UCase$(E) = E Then S1 = S1 + 1
+    Next i
+    
+    Debug.Print "% OF CAPS IN TEXT : " & Format$(100 * S1 / Len(GetConver), "0.00")
+    If IsNumeric(GetConver) = False Then
+        If Format$(100 * S1 / Len(GetConver), "0.00") > 75 Then
+            SendSingle "Message blocked. Please do not write more then 75% in caps.", frmMain.Winsock1(Index)
+            Exit Sub
+        End If
+    End If
+    
     'Check if user is muted
     If Mute = True Then
         SendSingle "You are muted.", frmMain.Winsock1(Index)
