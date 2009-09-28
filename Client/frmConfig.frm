@@ -441,6 +441,9 @@ End With
 
 Command1.Enabled = False
 Command2.Enabled = True
+Command3.Enabled = False
+Command4.Enabled = False
+Command5.Enabled = False
 
 frmMain.StatusBar1.Panels(1).Text = MDI_STAT_CONNECTING
 End Sub
@@ -551,10 +554,12 @@ WriteIniValue App.Path & "\Config.ini", "Position", "Left", frmMain.Left
 End Sub
 
 Private Sub lblAuthor_Click()
+If Command1.Enabled = False Then Exit Sub
 frmAbout.Show 1
 End Sub
 
 Private Sub lblVersion_Click()
+If Command1.Enabled = False Then Exit Sub
 frmAbout.Show 1
 End Sub
 

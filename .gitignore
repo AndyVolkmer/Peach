@@ -2,5 +2,5 @@
 *.ini
 *.oca
 
-Client/Config.ini
-Server/Config.ini
+Client\Config.ini
+Server\Config.ini

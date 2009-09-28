@@ -746,9 +746,7 @@ Case "!msg"
             ANN_MSG = Mid$(GetConver, Len(array2(0)) + 2, Len(GetConver))
         End If
     End If
-    
-Commands:
-    
+   
     'If an command is used check out which
     If IsCommand = True Then
         Select Case array2(0)
@@ -802,7 +800,6 @@ Commands:
         Exit Sub
     End If
     
-Emotes:
     If IsSlash = True Then
         If Mute = True Then
             SendSingle "You are muted.", frmMain.Winsock1(Index)
@@ -929,14 +926,13 @@ Emotes:
             End With
                         
         Case Else
-            SendSingle "Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
+            SendSingle "Unknown command used.", frmMain.Winsock1(Index)
                     
         End Select
         CMSG "!emote", GetUser, GetConver
     Exit Sub
     End If
             
-Message:
     'Check if user is muted
     If Mute = True Then
         SendSingle "You are muted.", frmMain.Winsock1(Index)
@@ -957,6 +953,7 @@ Message:
     
 Case Else
     SendMessage "Unknown operation."
+    
 End Select
 
 'Set last message
@@ -1022,7 +1019,11 @@ With frmPanel.ListView1.ListItems
             
             Exit For
         Else
-            If i = .Count Then SendSingle "User '" & User & "' was not found.", Winsock1(SIndex)
+            If Len(Trim$(User)) = 0 Then
+                If i = .Count Then SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+            Else
+                If i = .Count Then SendSingle "User '" & User & "' was not found.", Winsock1(SIndex)
+            End If
         End If
     Next i
 End With
@@ -1051,7 +1052,11 @@ With frmPanel.ListView1.ListItems
             BanAccount .Item(i).SubItems(5), AdminName, Ban, SIndex
             Exit For
         Else
-            If i = .Count Then SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
+            If Len(Trim$(User)) = 0 Then
+                If i = .Count Then SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+            Else
+                If i = .Count Then SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
+            End If
         End If
     Next i
 End With
@@ -1084,7 +1089,11 @@ With frmAccountPanel.ListView1.ListItems
             
             Exit For
         Else
-            If i = .Count Then SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
+            If Len(Trim$(Account)) = 0 Then
+                If i = .Count Then SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+            Else
+                If i = .Count Then SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
+            End If
         End If
     Next i
 End With
@@ -1107,7 +1116,11 @@ With frmPanel.ListView1.ListItems
             
             Exit For
         Else
-            If i = .Count Then SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
+            If Len(Trim$(User)) = 0 Then
+                If i = .Count Then SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+            Else
+                If i = .Count Then SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
+            End If
         End If
     Next i
 End With
@@ -1120,7 +1133,11 @@ With frmAccountPanel.ListView1.ListItems
             SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " Name: " & .Item(i).SubItems(1) & vbCrLf & " Password: " & .Item(i).SubItems(2) & vbCrLf & " Registration Time: " & .Item(i).SubItems(3) & vbCrLf & " Registration Date: " & .Item(i).SubItems(4) & vbCrLf & " Banned: " & .Item(i).SubItems(5) & vbCrLf & " Level: " & .Item(i).SubItems(6), Winsock1(SIndex)
             Exit For
         Else
-            If i = .Count Then SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
+            If Len(Trim$(Account)) = 0 Then
+                If i = .Count Then SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+            Else
+                If i = .Count Then SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
+            End If
         End If
     Next i
 End With
@@ -1133,7 +1150,11 @@ With frmPanel.ListView1.ListItems
             SendSingle vbCrLf & "User information about '" & User & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Last Message: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5) & vbCrLf & " Login Time: " & .Item(i).SubItems(6) & vbCrLf & " AFK: " & .Item(i).SubItems(7), Winsock1(SIndex)
             Exit For
         Else
-            If i = .Count Then SendSingle "User '" & User & " was not found.", Winsock1(SIndex)
+            If Len(Trim$(User)) = 0 Then
+                If i = .Count Then SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+            Else
+                If i = .Count Then SendSingle "User '" & User & " was not found.", Winsock1(SIndex)
+            End If
         End If
     Next i
 End With

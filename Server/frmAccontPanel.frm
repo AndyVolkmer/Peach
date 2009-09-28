@@ -410,7 +410,7 @@ End Sub
 
 Private Sub ListView1_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnHeader)
 With ListView1.SelectedItem
-    MsgBox "ID: " & .Text & vbCrLf & "Name: " & .SubItems(1) & vbCrLf & "Password: " & .SubItems(2) & vbCrLf & "Time: " & .SubItems(3) & vbCrLf & "Date: " & .SubItems(4) & vbCrLf & "Banned: " & .SubItems(5) & vbCrLf & "Level: " & .SubItems(6), , "Information - '" & .SubItems(1) & "'"
+    MsgBox "ID: " & .Text & vbCrLf & "Name: " & .SubItems(1) & vbCrLf & "Password: " & .SubItems(2) & vbCrLf & "Time: " & .SubItems(3) & vbCrLf & "Date: " & .SubItems(4) & vbCrLf & "Banned: " & .SubItems(5) & vbCrLf & "Level: " & .SubItems(6)
 End With
 End Sub
 

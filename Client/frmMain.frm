@@ -128,7 +128,6 @@ Begin VB.MDIForm frmMain
          Height          =   375
          Left            =   3720
          TabIndex        =   3
-         ToolTipText     =   "Work in progess .."
          Top             =   120
          Width           =   1815
       End
@@ -423,7 +422,7 @@ End With
 End Sub
 
 Private Sub Winsock1_Close()
-Prefix = " [" & Format$(Time, "hh:nn:ss") & "]"
+Prefix = "[" & Format$(Time, "hh:nn:ss") & "]"
 
 Winsock1.Close
 
@@ -469,7 +468,7 @@ MsgBox MDI_MSG_NAME_TAKEN, vbInformation
 End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
-Prefix = " [" & Format$(Time, "hh:nn:ss") & "]"
+Prefix = "[" & Format$(Time, "hh:nn:ss") & "]"
 Dim GetCommand  As String
 Dim StrArr()    As String
 Dim StrArr2()   As String
@@ -615,7 +614,7 @@ End Sub
 
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Dim WiSk As Winsock
-Prefix = " [" & Format$(Time, "hh:nn:ss") & "]"
+Prefix = "[" & Format$(Time, "hh:nn:ss") & "]"
 
 'Close connecting winsock ( set state = 0 )
 Winsock1.Close

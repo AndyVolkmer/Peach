@@ -25,22 +25,6 @@ Begin VB.Form frmPanel
    ScaleHeight     =   4080
    ScaleWidth      =   7515
    ShowInTaskbar   =   0   'False
-   Begin VB.CommandButton Command2 
-      Caption         =   "&Uncheck All"
-      Height          =   350
-      Left            =   6000
-      TabIndex        =   6
-      Top             =   2760
-      Width           =   1335
-   End
-   Begin VB.CommandButton Command5 
-      Caption         =   "&Check All"
-      Height          =   350
-      Left            =   4680
-      TabIndex        =   7
-      Top             =   2760
-      Width           =   1335
-   End
    Begin VB.CommandButton Command4 
       Caption         =   "&Unmute"
       Height          =   350
@@ -67,6 +51,7 @@ Begin VB.Form frmPanel
       _ExtentY        =   1296
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -181,14 +166,6 @@ UpdateUsersList
 frmMain.StatusBar1.Panels(1).Text = "Status: Connected with " & frmMain.Winsock1.Count - 1 & " Client(s)."
 End Sub
 
-Private Sub Command2_Click()
-For i = 1 To ListView1.ListItems.Count
-    If ListView1.ListItems.Item(i).Checked = True Then
-        ListView1.ListItems.Item(i).Checked = False
-    End If
-Next i
-End Sub
-
 Private Sub Command3_Click()
 If ListView1.ListItems.Count <= 0 Then
     txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] List is empty."
@@ -224,14 +201,6 @@ For i = 1 To ListView1.ListItems.Count
         End If
     End If
     ListView1.ListItems.Item(i).Checked = False
-Next i
-End Sub
-
-Private Sub Command5_Click()
-For i = 1 To ListView1.ListItems.Count
-    If ListView1.ListItems.Item(i).Checked = False Then
-        ListView1.ListItems.Item(i).Checked = True
-    End If
 Next i
 End Sub
 

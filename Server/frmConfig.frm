@@ -7,7 +7,7 @@ Begin VB.Form frmConfig
    ClientHeight    =   4140
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   7560
+   ClientWidth     =   7605
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -22,7 +22,7 @@ Begin VB.Form frmConfig
    MDIChild        =   -1  'True
    MinButton       =   0   'False
    ScaleHeight     =   4140
-   ScaleWidth      =   7560
+   ScaleWidth      =   7605
    ShowInTaskbar   =   0   'False
    Begin RichTextLib.RichTextBox txt_log 
       Height          =   1215
@@ -35,6 +35,7 @@ Begin VB.Form frmConfig
       _Version        =   393217
       BorderStyle     =   0
       Enabled         =   -1  'True
+      ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
