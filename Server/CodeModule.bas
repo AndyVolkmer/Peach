@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev    As String = "1.1.3.1"
+Public Const Rev    As String = "1.1.3.2"
 Public Const rPort  As Long = 6222
 
 Public i        As Long    'Global "FOR" variable
@@ -176,6 +176,10 @@ With frmChat.txtConver
     End Select
 End With
 End Sub
+
+Public Function IsAlphaCharacter(sChar As String) As Boolean
+    IsAlphaCharacter = (Not (UCase(sChar) = LCase(sChar))) Or (sChar = " ")
+End Function
 
 Public Sub minimize_to_tray()
 frmMain.Hide
