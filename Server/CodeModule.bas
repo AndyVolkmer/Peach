@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev    As String = "1.1.3.2"
+Public Const Rev    As String = "1.1.3.3"
 Public Const rPort  As Long = 6222
 
 Public i        As Long    'Global "FOR" variable
@@ -74,7 +74,7 @@ Dim GetList As String
 With frmPanel.ListView1.ListItems
     GetList = "!listupdate#"
     For i = 1 To .Count
-        If .Item(i).SubItems(7) = "Yes" Then
+        If .Item(i).SubItems(7) = "True" Then
             GetList = GetList & "<AFK>" & .Item(i) & "#"
         Else
             GetList = GetList & .Item(i) & "#"

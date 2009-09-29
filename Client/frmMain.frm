@@ -422,7 +422,7 @@ End With
 End Sub
 
 Private Sub Winsock1_Close()
-Prefix = "[" & Format$(Time, "hh:nn:ss") & "]"
+Prefix = " [" & Format$(Time, "hh:nn:ss") & "]"
 
 Winsock1.Close
 
@@ -614,7 +614,6 @@ End Sub
 
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Dim WiSk As Winsock
-Prefix = "[" & Format$(Time, "hh:nn:ss") & "]"
 
 'Close connecting winsock ( set state = 0 )
 Winsock1.Close

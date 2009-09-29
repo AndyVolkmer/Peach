@@ -415,8 +415,8 @@ With frmAccountPanel
     .ListView1.ListItems.Clear
     With .cmbBanned
         .Clear
-        .AddItem "Yes"
-        .AddItem "No"
+        .AddItem "True"
+        .AddItem "False"
     End With
     With .cmbLevel
         .Clear
@@ -525,10 +525,10 @@ With frmPanel.ListView1.ListItems
     .Item(i).SubItems(1) = Winsock1(MAX_CONNECTION).RemoteHostIP
     .Item(i).SubItems(2) = MAX_CONNECTION
     .Item(i).SubItems(3) = vbNullString
-    .Item(i).SubItems(4) = "No"
+    .Item(i).SubItems(4) = "False"
     .Item(i).SubItems(5) = vbNullString
     .Item(i).SubItems(6) = Format$(Time, "hh:mm:ss")
-    .Item(i).SubItems(7) = "No"
+    .Item(i).SubItems(7) = "False"
 End With
 
 StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
@@ -720,6 +720,7 @@ Case "!msg"
     Dim IsCommand   As Boolean
     Dim IsSlash     As Boolean
     Dim ANN_MSG     As String
+    Dim Reason      As String
     
     'Split the conversation text by spaces
     array2 = Split(GetConver, " ")
@@ -749,6 +750,10 @@ Case "!msg"
    
     'If an command is used check out which
     If IsCommand = True Then
+        'Save the reason
+        For i = 2 To UBound(array2)
+            Reason = Reason & array2(i) & " "
+        Next i
         Select Case array2(0)
         Case ".show"
             Select Case LCase$(GetTarget)
@@ -770,22 +775,22 @@ Case "!msg"
             KickUser GetTarget, Index
                         
         Case ".banaccount"
-            BanAccount pGetTarget, GetUser, "Yes", Index
+            BanAccount pGetTarget, GetUser, True, Index, Trim$(Reason)
                         
         Case ".banuser"
-            BanUser GetTarget, GetUser, "Yes", Index
+            BanUser GetTarget, GetUser, True, Index, Trim$(Reason)
                         
         Case ".unbanuser"
-            BanUser GetTarget, GetUser, "No", Index
+            BanUser GetTarget, GetUser, False, Index, Trim$(Reason)
                         
         Case ".unbanaccount"
-            BanAccount pGetTarget, GetUser, "No", Index
+            BanAccount pGetTarget, GetUser, False, Index, Trim$(Reason)
                         
         Case ".mute"
-            MuteUser GetTarget, GetUser, "Yes", Index
+            MuteUser GetTarget, GetUser, True, Index, Trim$(Reason)
             
         Case ".unmute"
-            MuteUser GetTarget, GetUser, "No", Index
+            MuteUser GetTarget, GetUser, False, Index, Trim$(Reason)
             
         Case ".announce", ".ann", ".broadcast"
             SendMessage GetTag(GetUser) & "[" & GetUser & "] announces: " & ANN_MSG
@@ -914,10 +919,10 @@ Case "!msg"
             With frmPanel.ListView1.ListItems
                 For i = 1 To .Count
                     If .Item(i) = GetUser Then
-                        If .Item(i).SubItems(7) = "Yes" Then
-                            .Item(i).SubItems(7) = "No"
+                        If .Item(i).SubItems(7) = "True" Then
+                            .Item(i).SubItems(7) = "False"
                         Else
-                            .Item(i).SubItems(7) = "Yes"
+                            .Item(i).SubItems(7) = "True"
                         End If
                         Exit For
                     End If
@@ -1022,26 +1027,36 @@ Case 2
 End Select
 End Function
 
-Private Sub MuteUser(User As String, AdminName As String, Mute As String, SIndex As Integer)
+Private Sub MuteUser(User As String, AdminName As String, Mute As Boolean, SIndex As Integer, Reason As String)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             'Set flag in userlist
-            .Item(i).SubItems(4) = Mute
+            .Item(i).SubItems(4) = CStr(Mute)
             
             'Announce the action
-            If Mute = "Yes" Then
-                SendMessage User & " got muted by " & GetTag(AdminName) & AdminName & "."
+            If Len(Reason) = 0 Then
+                If Mute = True Then
+                    SendMessage User & " got muted by " & GetTag(AdminName) & AdminName & "."
+                Else
+                    SendMessage User & " got unmuted by " & GetTag(AdminName) & AdminName & "."
+                End If
             Else
-                SendMessage User & " got unmuted by " & GetTag(AdminName) & AdminName & "."
+                If Mute = True Then
+                    SendMessage User & " got muted by " & GetTag(AdminName) & AdminName & ". (" & Reason & ")"
+                Else
+                    SendMessage User & " got unmuted by " & GetTag(AdminName) & AdminName & ". (" & Reason & ")"
+                End If
             End If
             
             Exit For
         Else
-            If Len(Trim$(User)) = 0 Then
-                If i = .Count Then SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
-            Else
-                If i = .Count Then SendSingle "User '" & User & "' was not found.", Winsock1(SIndex)
+            If i = .Count Then
+                If Len(Trim$(User)) = 0 Then
+                    SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+                Else
+                    SendSingle "User '" & User & "' was not found.", Winsock1(SIndex)
+                End If
             End If
         End If
     Next i
@@ -1064,11 +1079,11 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Private Sub BanUser(User As String, AdminName As String, Ban As String, SIndex As Integer)
+Private Sub BanUser(User As String, AdminName As String, Ban As Boolean, SIndex As Integer, Reason As String)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(User, vbProperCase) Then
-            BanAccount .Item(i).SubItems(5), AdminName, Ban, SIndex
+            BanAccount .Item(i).SubItems(5), AdminName, Ban, SIndex, Reason
             Exit For
         Else
             If Len(Trim$(User)) = 0 Then
@@ -1081,9 +1096,9 @@ With frmPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub BanAccount(Account As String, AdminName As String, Ban As String, Optional SIndex As Integer)
-Dim User As String
-Dim j As Long
+Private Sub BanAccount(Account As String, AdminName As String, Ban As Boolean, SIndex As Integer, Reason As String)
+Dim User    As String
+Dim j       As Long
 
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
@@ -1100,18 +1115,27 @@ With frmAccountPanel.ListView1.ListItems
             Next j
             
             'Announce the action
-            If Ban = "Yes" Then
-                SendMessage User & " was account banned by " & GetTag(AdminName) & AdminName & "."
+            If Len(Trim$(Reason)) = 0 Then
+                If Ban = True Then
+                    SendMessage User & " was account banned by " & GetTag(AdminName) & AdminName & "."
+                Else
+                    SendMessage User & " was unbanned by " & GetTag(AdminName) & AdminName & "."
+                End If
             Else
-                SendMessage User & " was unbanned by " & GetTag(AdminName) & AdminName & "."
+                If Ban = True Then
+                    SendMessage User & " was account banned by " & GetTag(AdminName) & AdminName & ". (" & Reason & ")"
+                Else
+                    SendMessage User & " was account unbanned by " & GetTag(AdminName) & AdminName & ". (" & Reason & ")"
+                End If
             End If
-            
             Exit For
         Else
-            If Len(Trim$(Account)) = 0 Then
-                If i = .Count Then SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
-            Else
-                If i = .Count Then SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
+            If i = .Count Then
+                If Len(Trim$(Account)) = 0 Then
+                    SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+                Else
+                    SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
+                End If
             End If
         End If
     Next i

@@ -51,7 +51,6 @@ Begin VB.Form frmPanel
       _ExtentY        =   1296
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmPanel.frx":0000
@@ -173,10 +172,10 @@ If ListView1.ListItems.Count <= 0 Then
 End If
 For i = 1 To ListView1.ListItems.Count
     If ListView1.ListItems(i).Checked = True Then
-        If ListView1.ListItems.Item(i).SubItems(4) = "Yes" Then
+        If ListView1.ListItems.Item(i).SubItems(4) = "True" Then
             txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] " & ListView1.ListItems.Item(i) & " is already muted."
         Else
-            ListView1.ListItems.Item(i).SubItems(4) = "Yes"
+            ListView1.ListItems.Item(i).SubItems(4) = "True"
             txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] " & ListView1.ListItems.Item(i) & " got muted."
             SendMessage ListView1.ListItems.Item(i) & " got muted."
         End If
@@ -192,8 +191,8 @@ If ListView1.ListItems.Count <= 0 Then
 End If
 For i = 1 To ListView1.ListItems.Count
     If ListView1.ListItems(i).Checked = True Then
-        If ListView1.ListItems(i).SubItems(4) = "Yes" Then
-            ListView1.ListItems.Item(i).SubItems(4) = "No"
+        If ListView1.ListItems(i).SubItems(4) = "True" Then
+            ListView1.ListItems.Item(i).SubItems(4) = "False"
             txtLOG.Text = txtLOG.Text & vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "] " & ListView1.ListItems.Item(i) & " got unmuted."
             SendMessage ListView1.ListItems.Item(i) & " got unmuted."
         Else
