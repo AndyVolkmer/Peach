@@ -251,7 +251,7 @@ End Function
 Private Sub connCounter_Timer()
 Static X As Long
 X = X + 1
-Label2.Caption = "Online Time : " & Format$(TimeSerial(0, 0, X), "hh:mm:ss")
+Label2.Caption = "Server Uptime : " & Format$(TimeSerial(0, 0, X), "hh:mm:ss")
 End Sub
 
 Private Sub Form_Load()

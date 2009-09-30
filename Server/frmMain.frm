@@ -203,8 +203,7 @@ Public xCommand        As New ADODB.Command
 Public xRecordSet      As New ADODB.Recordset
 
 Public intCounter   As Long
-Dim MAX_CONNECTION  As Long
-Dim Muted, Vali As Boolean
+Dim Muted, Vali     As Boolean
 
 Private Sub Command1_Click()
 SetupForms frmConfig
@@ -513,6 +512,7 @@ StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " C
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
+Dim MAX_CONNECTION As Long
 MAX_CONNECTION = loadSocket
 
 Winsock1(MAX_CONNECTION).LocalPort = frmConfig.txtPort.Text
@@ -593,7 +593,7 @@ With frmPanel.ListView1.ListItems
     'Check if user is muted
     For i = 1 To .Count
         If .Item(i) = GetUser Then
-            If .Item(i).SubItems(4) = "Yes" Then
+            If .Item(i).SubItems(4) = "True" Then
                 Mute = True
             End If
         End If
@@ -612,6 +612,10 @@ If Len(GetConver) > 200 Then
 End If
 
 Select Case GetCommand
+'Send Server information
+Case "!server_info"
+    SendSingle "!split_text#" & GetServerInformation, frmMain.Winsock1(Index)
+    
 'Update Friend list
 Case "!get_friends"
     UpdateFriendList GetUser
@@ -709,6 +713,7 @@ Case "!login"
         Next i
     End With
     
+'We get ip request and send ip back
 Case "!iprequest"
     For i = 1 To frmPanel.ListView1.ListItems.Count
         If GetUser = frmPanel.ListView1.ListItems.Item(i) Then
@@ -903,7 +908,22 @@ Case "!msg"
                 SendMessage GetUser & " blows a kiss into the wind."
             End If
             
-        Case "/w", "/whisper" 'Whisper
+        Case "/hug"
+            If IsUser = True Then
+                SendMessage GetUser & " hugs " & GetTarget & "."
+            Else
+                SendMessage GetUser & " needs a hug!"
+            End If
+            
+        Case "/facepalm", "/fp"
+            If IsUser = True Then
+                SendMessage GetUser & " covers his face with the palm."
+            Else
+                SendMessage GetUser & " looks at " & GetTarget & " and covers his face with the palm."
+            End If
+            
+        Case "/w", "/whisper"
+            'Whisper
             If IsUser = True Then
                 Whisper GetUser, GetTarget, array2(2), Index
             Else
@@ -913,7 +933,7 @@ Case "!msg"
                     SendSingle "No user named '" & GetTarget & "' is currently online.", frmMain.Winsock1(Index)
                 End If
             End If
-                        
+        
         Case "/afk"
             'Set AFK Flag
             With frmPanel.ListView1.ListItems
@@ -955,8 +975,7 @@ Case "!msg"
             End If
         End If
     End If
-    Debug.Print "% OF CAPS IN TEXT : " & Format$(100 * S1 / Len(GetConver), "0.00")
-    
+        
     'Check if user is muted
     If Mute = True Then
         SendSingle "You are muted.", frmMain.Winsock1(Index)
@@ -967,10 +986,10 @@ Case "!msg"
     'Check if user is repeating
     If GetConver = GetLastMessage Then
         SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", frmMain.Winsock1(Index)
-        CMSG "!repeat", GetUser, ""
+        CMSG "!repeat", GetUser
         Exit Sub
     End If
-        
+    
     'Send Message
     SendMessage "[" & GetUser & "]: " & GetConver
     CMSG GetCommand, GetUser, GetConver
@@ -989,6 +1008,14 @@ With frmPanel.ListView1.ListItems
     Next i
 End With
 End Sub
+
+Private Function GetServerInformation() As String
+GetServerInformation = _
+"Welcome to Peach Servers." & "#" & _
+"Server: Peach " & Rev & " - Win32" & "#" & _
+"Online User: " & frmMain.Winsock1.Count - 1 & "#" & _
+frmConfig.Label2.Caption & "#"
+End Function
 
 Private Sub Whisper(User As String, Target As String, Conversation As String, Index As Integer)
 

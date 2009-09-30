@@ -223,7 +223,7 @@ Smilestring = _
     ":cool: " & _
     ":rolleyes: " & _
     ":["
-
+    
 SmileFileString = _
     "smiley1.gif," & _
     "smiley1.gif," & _

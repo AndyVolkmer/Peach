@@ -486,6 +486,15 @@ GetCommand = StrArr(0)
 
 Select Case GetCommand
 
+Case "!split_text"
+    For i = 1 To UBound(StrArr)
+        Buffer = Buffer & vbCrLf & " " & StrArr(i)
+    Next i
+    With frmChat.txtConver
+        .SelStart = Len(.Text)
+        .SelRTF = Buffer
+    End With
+
 Case "!accountlist"
     StrArr2 = Split(StrArr(1), " ")
     Buffer = Buffer & vbCrLf & " Account List :"
@@ -528,6 +537,7 @@ Case "!update_friends"
             .Add , , f_array(0)
             .Item(.Count).SubItems(1) = f_array(1)
         Next i
+        SendMsg "!server_info##"
     End With
     
 'Wipe out current list and insert new values

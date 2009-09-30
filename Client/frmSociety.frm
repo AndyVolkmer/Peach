@@ -168,15 +168,22 @@ End Sub
 Private Sub Command2_Click()
 Dim Name As String
 Dim MPos As Integer
+Dim Temp() As String
 
-If ListView2.SelectedItem Is Nothing Then Exit Sub
-
-With ListView2.SelectedItem
-    MPos = InStr(1, .Text, " ")
+With ListView2
+    If .SelectedItem Is Nothing Then Exit Sub
+    
+    Temp = Split(.SelectedItem.Text, " ")
+    
+    If MsgBox("Do you want to delete '" & Temp(0) & "' from your friendlist?", vbQuestion + vbYesNo, "Deleting '" & Temp(0) & "'") = vbNo Then
+        Exit Sub
+    End If
+    
+    MPos = InStr(1, .SelectedItem.Text, " ")
     If MPos = 0 Then
-        Name = .Text
+        Name = .SelectedItem.Text
     Else
-        Name = Left$(.Text, MPos - 1)
+        Name = Left$(.SelectedItem.Text, MPos - 1)
     End If
     SendMsg "!remove_friend#" & frmConfig.txtAccount.Text & "#" & Name & "#"
 End With
