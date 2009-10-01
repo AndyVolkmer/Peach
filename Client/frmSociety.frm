@@ -23,13 +23,13 @@ Begin VB.Form frmSociety
    ScaleWidth      =   7665
    ShowInTaskbar   =   0   'False
    Begin TabDlg.SSTab SSTab1 
-      Height          =   3855
+      Height          =   3975
       Left            =   120
       TabIndex        =   0
-      Top             =   240
+      Top             =   120
       Width           =   7365
       _ExtentX        =   12991
-      _ExtentY        =   6800
+      _ExtentY        =   7011
       _Version        =   393216
       Tabs            =   2
       TabHeight       =   520

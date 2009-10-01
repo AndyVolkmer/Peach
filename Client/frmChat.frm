@@ -36,6 +36,15 @@ Begin VB.Form frmChat
       MultiLine       =   0   'False
       MaxLength       =   180
       TextRTF         =   $"frmChat.frx":0000
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Segoe UI"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin VB.PictureBox Picture1 
       Height          =   375
@@ -98,10 +107,10 @@ Begin VB.Form frmChat
       Enabled         =   0   'False
       ReadOnly        =   -1  'True
       ScrollBars      =   3
-      TextRTF         =   $"frmChat.frx":007B
+      TextRTF         =   $"frmChat.frx":007D
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Arial"
-         Size            =   8.25
+         Name            =   "Segoe UI"
+         Size            =   9
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False

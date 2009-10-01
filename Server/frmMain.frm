@@ -1058,6 +1058,20 @@ Private Sub MuteUser(User As String, AdminName As String, Mute As Boolean, SInde
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
+            
+            If Mute = True Then
+                'If the user is already muted then return feedback
+                If .Item(i).SubItems(4) = "True" Then
+                    SendSingle User & " is already muted.", frmMain.Winsock1(SIndex)
+                    Exit Sub
+                End If
+            Else
+                If .Item(i).SubItems(4) = "False" Then
+                    SendSingle User & " is not muted.", frmMain.Winsock1(SIndex)
+                    Exit Sub
+                End If
+            End If
+        
             'Set flag in userlist
             .Item(i).SubItems(4) = CStr(Mute)
             
@@ -1130,6 +1144,19 @@ Dim j       As Long
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(1)) = LCase(Account) Then
+            'If the account is already banned send feedback
+            If Ban = True Then
+                If .Item(i).SubItems(5) = "True" Then
+                    SendSingle "Account '" & Account & "' is already banned.", frmMain.Winsock1(SIndex)
+                    Exit Sub
+                End If
+            Else
+                If .Item(i).SubItems(5) = "False" Then
+                    SendSingle "Account '" & Account & "' is not banned.", frmMain.Winsock1(SIndex)
+                    Exit Sub
+                End If
+            End If
+        
             'Ban account in database
             frmAccountPanel.ModifyAccount Account, .Item(i).SubItems(2), Ban, .Item(i).SubItems(6), .Item(i), .Item(i).Index
             
