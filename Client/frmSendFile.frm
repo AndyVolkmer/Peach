@@ -70,6 +70,7 @@ Begin VB.Form frmSendFile
    End
    Begin VB.PictureBox picProgress 
       AutoRedraw      =   -1  'True
+      BackColor       =   &H00F4F4F4&
       FillColor       =   &H00C00000&
       BeginProperty Font 
          Name            =   "MS Sans Serif"

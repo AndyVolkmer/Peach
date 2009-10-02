@@ -24,15 +24,12 @@ Public MDI_MSG_BANNED                   As String
 ' Configuration form ..
 Public CONFIG_COMMAND_CONNECT           As String
 Public CONFIG_COMMAND_DISCONNECT        As String
-Public CONFIG_COMMAND_LANGUAGE          As String
+Public CONFIG_COMMAND_SETTINGS          As String
 Public CONFIG_COMMAND_UPDATE            As String
 Public CONFIG_COMMAND_REGISTER          As String
 
 Public CONFIG_CHECK_SAVE_PASSWORD       As String
 
-Public CONFIG_LABEL_CI_NAME             As String
-
-Public CONFIG_FRAME_PERSONAL            As String
 Public CONFIG_FRAME_CONNECTION          As String
 
 Public CONFIG_MSG_ACCOUNT               As String
@@ -100,15 +97,12 @@ MDI_MSG_BANNED = "Dieser Account wurde gebannt."
 
 CONFIG_COMMAND_CONNECT = "&Verbinden"
 CONFIG_COMMAND_DISCONNECT = "&Verbindung trenn."
-CONFIG_COMMAND_LANGUAGE = "&Sprache"
+CONFIG_COMMAND_SETTINGS = "&Einstellungen"
 CONFIG_COMMAND_UPDATE = "&Aktualisieren"
 CONFIG_COMMAND_REGISTER = "&Account registrieren"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Password Speichern"
 
-CONFIG_LABEL_CI_NAME = "Name: "
-
-CONFIG_FRAME_PERSONAL = "Personelle Informationen"
 CONFIG_FRAME_CONNECTION = "Verbindungs Informationen"
 
 LANG_GERMAN = "Deutsch"
@@ -149,7 +143,7 @@ SF_COMMAND_CANCEL = "Abbrechen .."
 DESP_TEXT_NEW_MSG = "Neue Nachricht!"
 DESP_TEXT_DC_SERVER = "Verbindung unterbrochen!"
 
-LANG_COMMAND_ENTER = "&Öffnen"
+LANG_COMMAND_ENTER = "&Auswählen"
 LANG_LABEL_SELLANG = "Wähle deine Sprache aus:"
 End Sub
 
@@ -177,15 +171,12 @@ MDI_MSG_BANNED = "This account is banned."
 ' Configuration form ..
 CONFIG_COMMAND_CONNECT = "&Connect"
 CONFIG_COMMAND_DISCONNECT = "&Disconnect"
-CONFIG_COMMAND_LANGUAGE = "&Language"
+CONFIG_COMMAND_SETTINGS = "&Settings"
 CONFIG_COMMAND_UPDATE = "&Update"
 CONFIG_COMMAND_REGISTER = "&Register Account"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
-CONFIG_LABEL_CI_NAME = "Name: "
-
-CONFIG_FRAME_PERSONAL = "Personal Information"
 CONFIG_FRAME_CONNECTION = "Connection Information"
 
 LANG_GERMAN = "German"
@@ -228,7 +219,7 @@ SF_COMMAND_CANCEL = "Cancel .."
 DESP_TEXT_NEW_MSG = "New Message!"
 DESP_TEXT_DC_SERVER = "Disconnected from Server!"
 
-LANG_COMMAND_ENTER = "&Open"
+LANG_COMMAND_ENTER = "&Select"
 LANG_LABEL_SELLANG = "Select your language:"
 End Sub
 
@@ -253,15 +244,12 @@ MDI_MSG_BANNED = "Esta cuenta esta baneada."
 
 CONFIG_COMMAND_CONNECT = "&Conectar"
 CONFIG_COMMAND_DISCONNECT = "&Desconectar"
-CONFIG_COMMAND_LANGUAGE = "&Idioma"
+CONFIG_COMMAND_SETTINGS = "&Ajustes"
 CONFIG_COMMAND_UPDATE = "&Actualizar"
 CONFIG_COMMAND_REGISTER = "&Registrar cuenta"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
-CONFIG_LABEL_CI_NAME = "Nombre: "
-
-CONFIG_FRAME_PERSONAL = "Informaciónes personales"
 CONFIG_FRAME_CONNECTION = "Informaciónes de conexión"
 
 LANG_GERMAN = "Aleman"
@@ -302,7 +290,7 @@ SF_COMMAND_CANCEL = "Cancelar .."
 DESP_TEXT_NEW_MSG = "Nuevo mensaje!"
 DESP_TEXT_DC_SERVER = "Desconectado del servidor!"
 
-LANG_COMMAND_ENTER = "&Abrir"
+LANG_COMMAND_ENTER = "&Seleccionar"
 LANG_LABEL_SELLANG = "Elige tu idioma:"
 End Sub
 
@@ -329,15 +317,12 @@ MDI_MSG_BANNED = "This account is banned."
 ' Config form
 CONFIG_COMMAND_CONNECT = "&Anslut"
 CONFIG_COMMAND_DISCONNECT = "&Frånkoppla"
-CONFIG_COMMAND_LANGUAGE = "&Språk"
+CONFIG_COMMAND_SETTINGS = "&Settings"
 CONFIG_COMMAND_UPDATE = "&Update"
 CONFIG_COMMAND_REGISTER = "&Register Account"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
-CONFIG_LABEL_CI_NAME = "Namn: "
-
-CONFIG_FRAME_PERSONAL = "Personal Information"
 CONFIG_FRAME_CONNECTION = "Connection Information"
 
 LANG_GERMAN = "Tyska"
@@ -406,16 +391,11 @@ MDI_MSG_BANNED = "This account is banned."
 ' Config form ..
 CONFIG_COMMAND_CONNECT = "&Connesso"
 CONFIG_COMMAND_DISCONNECT = "&Disconnesso"
-CONFIG_COMMAND_LANGUAGE = "&Lingua"
+CONFIG_COMMAND_SETTINGS = "&Settings"
 CONFIG_COMMAND_UPDATE = "&Update"
 CONFIG_COMMAND_REGISTER = "&Register Account"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
-
-CONFIG_LABEL_CI_NAME = "Nome: "
-
-CONFIG_FRAME_PERSONAL = "Personal Information"
-CONFIG_FRAME_CONNECTION = "Connection Information"
 
 LANG_GERMAN = "Tedesco"
 LANG_ENGLISH = "Inglese"
@@ -484,16 +464,11 @@ MDI_MSG_BANNED = "This account is banned."
 ' Config form ..
 CONFIG_COMMAND_CONNECT = "&Povezi se"
 CONFIG_COMMAND_DISCONNECT = "&Veza je prekinuta"
-CONFIG_COMMAND_LANGUAGE = "&Jezik"
+CONFIG_COMMAND_SETTINGS = "&Settings"
 CONFIG_COMMAND_UPDATE = "&Update"
 CONFIG_COMMAND_REGISTER = "&Register Account"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
-
-CONFIG_LABEL_CI_NAME = "Ime :"
-
-CONFIG_FRAME_PERSONAL = "Personal Information"
-CONFIG_FRAME_CONNECTION = "Connection Information"
 
 LANG_GERMAN = "Nemacki"
 LANG_ENGLISH = "Engleski"
@@ -560,16 +535,11 @@ MDI_MSG_BANNED = "This account is banned."
 
 CONFIG_COMMAND_CONNECT = "&Verbind"
 CONFIG_COMMAND_DISCONNECT = "&Verbreek de verbinding"
-CONFIG_COMMAND_LANGUAGE = "&Taal"
+CONFIG_COMMAND_SETTINGS = "&Settings"
 CONFIG_COMMAND_UPDATE = "&Update"
 CONFIG_COMMAND_REGISTER = "&Register Account"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
-
-CONFIG_LABEL_CI_NAME = "Naam: "
-
-CONFIG_FRAME_PERSONAL = "Personal Information"
-CONFIG_FRAME_CONNECTION = "Connection Information"
 
 LANG_GERMAN = "Duits"
 LANG_ENGLISH = "Engels"
@@ -633,16 +603,11 @@ MDI_MSG_BANNED = "This account is banned."
 
 CONFIG_COMMAND_CONNECT = "&Connecté"
 CONFIG_COMMAND_DISCONNECT = "&Deconnecté"
-CONFIG_COMMAND_LANGUAGE = "&Langue"
+CONFIG_COMMAND_SETTINGS = "&Settings"
 CONFIG_COMMAND_UPDATE = "&Update"
 CONFIG_COMMAND_REGISTER = "&Register Account"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
-
-CONFIG_LABEL_CI_NAME = "Nome: "
-
-CONFIG_FRAME_PERSONAL = "Personal Information"
-CONFIG_FRAME_CONNECTION = "Connection Information"
 
 LANG_GERMAN = "Alleman"
 LANG_ENGLISH = "Anglais"

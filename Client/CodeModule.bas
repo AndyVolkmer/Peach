@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const Rev      As String = "1.1.3.5"
+Public Const Rev      As String = "1.1.3.6"
 
 Public Const aPort    As Long = 6123
 Public Const bPort    As Long = 6124
@@ -9,6 +9,34 @@ Public Const rPort    As Long = 6222
 
 Public Prefix   As String  'Time Prefix vairbale
 Public i        As Long    'Global 'FOR' variable
+
+Private Type CONFIG
+    'frmMain values
+    MAIN_TOP        As Long
+    MAIN_LEFT       As Long
+    
+    'Language values
+    VALIDATE        As Long
+    LANGUAGE        As Long
+        
+    'Peach color scheme
+    SCHEME_COLOR    As String
+    
+    'Ticks
+    ACCOUNT_TICK    As Boolean
+    PASSWORD_TICK   As Boolean
+    
+    'Server information
+    SERVER_IP       As String
+    SERVER_PORT     As String
+    
+    'frmCOnfig information
+    ACCOUNT         As String
+    PASSWORD        As String
+    NICKNAME        As String
+End Type
+
+Public Setting As CONFIG
 
 Public Type NOTIFYICONDATA
     cbSize              As Long
@@ -142,22 +170,10 @@ With frmConfig
     .lblNickname.Enabled = pSwitch
     .txtNick.Enabled = pSwitch
     
-    .lblIP.Enabled = pSwitch
-    .txtIP.Enabled = pSwitch
-    
-    .lblPort.Enabled = pSwitch
-    .txtPort.Enabled = pSwitch
-    
-    .SPT.Enabled = pSwitch
-    
-    .Frame1.Enabled = pSwitch
-    .Frame2.Enabled = pSwitch
-    
     .Command1.Enabled = pSwitch
     .Command2.Enabled = Not pSwitch
     .Command3.Enabled = pSwitch
     .Command4.Enabled = pSwitch
-    .Command5.Enabled = pSwitch
 End With
 
 With frmChat

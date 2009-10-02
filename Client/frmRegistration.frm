@@ -350,16 +350,12 @@ End Function
 
 Private Sub Form_Load()
 With RegSock
-    .RemoteHost = frmConfig.txtIP.Text
+    .RemoteHost = Setting.SERVER_IP
     .RemotePort = rPort
     .Connect
 End With
 Screen.MousePointer = vbArrowHourglass
 Me.Caption = " Loading ..."
-End Sub
-
-Private Sub Form_Unload(Cancel As Integer)
-RegSock.Close
 End Sub
 
 Private Sub RegSock_Close()

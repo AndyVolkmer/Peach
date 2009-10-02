@@ -22,6 +22,7 @@ Module=modEncrypt; CryptModul.bas
 Form=frmSociety.frm
 Object={BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0; TABCTL32.OCX
 Module=modMain; MainModule.bas
+Form=frmSettings.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""

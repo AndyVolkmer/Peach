@@ -74,4 +74,3 @@ Label1.Caption = "Author : Notron" & vbCrLf _
             "Do not publish this anywhere without " & _
             "permissions of the author."
 End Sub
-

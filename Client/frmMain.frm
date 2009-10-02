@@ -352,19 +352,8 @@ Dim L As Long
 
 StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
 
-'Load 'Top' position from ini, if there is non take default value ( 1200 )
-If Len(ReadIniValue(App.Path & "\Config.ini", "Position", "Top")) = 0 Then
-    Me.Top = 1200
-Else
-    Me.Top = ReadIniValue(App.Path & "\Config.ini", "Position", "Top")
-End If
-
-'Load 'Left' position from ini, if there is non take default value ( 1200 )
-If Len(ReadIniValue(App.Path & "\Config.ini", "Position", "Left")) = 0 Then
-    Me.Left = 1200
-Else
-    Me.Left = ReadIniValue(App.Path & "\Config.ini", "Position", "Left")
-End If
+Me.Top = Setting.MAIN_TOP
+Me.Left = Setting.MAIN_LEFT
 
 SetupForms frmConfig
 End Sub
@@ -397,11 +386,7 @@ End If
 End Sub
 
 Private Sub MDIForm_Unload(Cancel As Integer)
-Unload frmLanguage
-Unload frmDESP
-Unload frmBlank
-Unload frmRegistration
-Unload frmSendFile2
+End
 Shell_NotifyIcon NIM_DELETE, nid 'del tray icon
 End Sub
 
@@ -412,9 +397,7 @@ End Sub
 
 Private Sub STimer_Timer()
 With FSocket
-    If .State <> 7 Then
-        'Do Nothing
-    Else
+    If .State = 7 Then
         STimer.Enabled = False
         .SendData "!filerequest" & "#"
     End If

@@ -103,7 +103,6 @@ End With
 If IsValid = True Then
     
     Dim j As Integer
-    j = 0
     With ListView1.ListItems
         For i = 1 To .Count
             If .Item(i) = j Then
@@ -118,12 +117,10 @@ If IsValid = True Then
         .xCommand.Execute
     End With
     
-    'Save index in variable
-    i = ListView1.ListItems.Count + 1
-
     'Add relation to listview
     With ListView1.ListItems
         .Add , , j
+        i = ListView1.ListItems.Count
         .Item(i).SubItems(1) = pUser
         .Item(i).SubItems(2) = pFriend
     End With

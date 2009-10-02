@@ -7,7 +7,7 @@ Begin VB.MDIForm frmMain
    ClientHeight    =   5085
    ClientLeft      =   60
    ClientTop       =   420
-   ClientWidth     =   7470
+   ClientWidth     =   7395
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "MDIForm1"
    ScrollBars      =   0   'False
@@ -18,8 +18,8 @@ Begin VB.MDIForm frmMain
       Left            =   0
       TabIndex        =   5
       Top             =   4740
-      Width           =   7470
-      _ExtentX        =   13176
+      Width           =   7395
+      _ExtentX        =   13044
       _ExtentY        =   609
       _Version        =   393216
       BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
@@ -63,10 +63,10 @@ Begin VB.MDIForm frmMain
       Height          =   615
       Left            =   0
       ScaleHeight     =   615
-      ScaleWidth      =   7470
+      ScaleWidth      =   7395
       TabIndex        =   0
       Top             =   0
-      Width           =   7470
+      Width           =   7395
       Begin VB.CommandButton Command5 
          Caption         =   "&Friend List"
          BeginProperty Font 
@@ -282,12 +282,14 @@ If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table"))) <> 
     .Account_Table = ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table")
 Else
     WriteLog "No Account-Table found."
+    .Account_Table = InputBox("The configuration file does not contain a account table, please insert one in the textbox below.", "Database error ..", "Account Table")
 End If
 
 If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table"))) <> 0 Then
     .Friend_Table = ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table")
 Else
     WriteLog "No Friends-Table found."
+    .Friend_Table = InputBox("The configuration file does not contain a friend table, please insert one in the textbox below.", "Database error ..", "Friend Table")
 End If
 
 WriteLog "Values from configuration:" _
