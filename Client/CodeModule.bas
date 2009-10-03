@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const Rev      As String = "1.1.3.6"
+Public Const Rev      As String = "1.1.3.7"
 
 Public Const aPort    As Long = 6123
 Public Const bPort    As Long = 6124
@@ -174,6 +174,7 @@ With frmConfig
     .Command2.Enabled = Not pSwitch
     .Command3.Enabled = pSwitch
     .Command4.Enabled = pSwitch
+    .Label1.Enabled = pSwitch
 End With
 
 With frmChat

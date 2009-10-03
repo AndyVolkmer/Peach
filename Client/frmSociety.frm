@@ -25,7 +25,7 @@ Begin VB.Form frmSociety
    Begin TabDlg.SSTab SSTab1 
       Height          =   3975
       Left            =   120
-      TabIndex        =   0
+      TabIndex        =   4
       Top             =   120
       Width           =   7365
       _ExtentX        =   12991
@@ -57,13 +57,14 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "ListView1"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       Begin VB.CommandButton Command2 
          Caption         =   "&Remove"
          Enabled         =   0   'False
          Height          =   375
          Left            =   5520
-         TabIndex        =   4
+         TabIndex        =   2
          Top             =   3360
          Width           =   1695
       End
@@ -72,14 +73,14 @@ Begin VB.Form frmSociety
          Enabled         =   0   'False
          Height          =   375
          Left            =   3840
-         TabIndex        =   3
+         TabIndex        =   1
          Top             =   3360
          Width           =   1695
       End
       Begin MSComctlLib.ListView ListView2 
          Height          =   2775
          Left            =   120
-         TabIndex        =   2
+         TabIndex        =   0
          Top             =   480
          Width           =   7095
          _ExtentX        =   12515
@@ -115,13 +116,13 @@ Begin VB.Form frmSociety
          EndProperty
       End
       Begin MSComctlLib.ListView ListView1 
-         Height          =   3015
+         Height          =   2775
          Left            =   -74880
-         TabIndex        =   1
+         TabIndex        =   3
          Top             =   480
          Width           =   7095
          _ExtentX        =   12515
-         _ExtentY        =   5318
+         _ExtentY        =   4895
          View            =   3
          LabelEdit       =   1
          LabelWrap       =   -1  'True
@@ -131,7 +132,6 @@ Begin VB.Form frmSociety
          _Version        =   393217
          ForeColor       =   -2147483640
          BackColor       =   -2147483643
-         BorderStyle     =   1
          Appearance      =   1
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Segoe UI"

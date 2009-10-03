@@ -3,7 +3,7 @@ Option Explicit
 
 'Start variable support for languages
 ' MDI form ..
-Public MDI_COMMAND_CONFIG               As String
+'Public MDI_COMMAND_CONFIG               As String
 Public MDI_COMMAND_CHAT                 As String
 Public MDI_COMMAND_SENDFILE             As String
 Public MDI_COMMAND_SOCIETY              As String
@@ -78,7 +78,6 @@ Public LANG_FRENCH                      As String
 Public Sub SetLangGerman()
 
 ' MDI form ..
-MDI_COMMAND_CONFIG = "&Einstellungen"
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Sende Datei"
 MDI_COMMAND_SOCIETY = "&Online Liste"
@@ -150,7 +149,6 @@ End Sub
 Public Sub SetLangEnglish()
 
 'MDI form
-MDI_COMMAND_CONFIG = "&Configuration"
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Send File"
 MDI_COMMAND_SOCIETY = "&Online List"
@@ -188,8 +186,8 @@ LANG_SERBIAN = "Serbian"
 LANG_DUTCH = "Dutch"
 LANG_FRENCH = "French"
 
-CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
-CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
+CONFIG_MSG_PASSWORD = "You did'nt introduce an password."
 CONFIG_MSG_NUMERIC = "You cant take numeric names."
 CONFIG_MSG_PORT = "You didnt introduce an port."
 CONFIG_MSG_NAME = "You didnt introduce an name."
@@ -225,7 +223,6 @@ End Sub
 
 Public Sub SetLangSpanish()
 
-MDI_COMMAND_CONFIG = "&Configuración"
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Enviar Archivo"
 MDI_COMMAND_SOCIETY = "&Lista Online"
@@ -261,8 +258,8 @@ LANG_DUTCH = "Holandés"
 LANG_SERBIAN = "Serbio"
 LANG_FRENCH = "Frances"
 
-CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
-CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
+CONFIG_MSG_PASSWORD = "You did'nt introduce an password."
 CONFIG_MSG_NUMERIC = "No puedes coger nombres con numeros."
 CONFIG_MSG_PORT = "No has introducido un puerto."
 CONFIG_MSG_NAME = "No has introducido un nombre."
@@ -296,7 +293,6 @@ End Sub
 
 Public Sub SetLangSwedish()
 ' MDI form ..
-MDI_COMMAND_CONFIG = "&Inställningar"
 MDI_COMMAND_CHAT = "Ch&att"
 MDI_COMMAND_SENDFILE = "&Sänd fil"
 MDI_COMMAND_SOCIETY = "&Online Lista"
@@ -334,8 +330,8 @@ LANG_SERBIAN = "Serbiska"
 LANG_DUTCH = "Holländska"
 LANG_FRENCH = "Franska"
 
-CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
-CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
+CONFIG_MSG_PASSWORD = "You did'nt introduce an password."
 CONFIG_MSG_NUMERIC = "Du kan inte använda siffror i namnet."
 CONFIG_MSG_PORT = "Du angav inget portnummer."
 CONFIG_MSG_NAME = "Du angav inte ett namn."
@@ -370,7 +366,6 @@ End Sub
 
 Public Sub SetLangItalian()
 ' Mdi form
-MDI_COMMAND_CONFIG = "&Configurazione"
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Invia File"
 MDI_COMMAND_SOCIETY = "&Lista contatti Online"
@@ -406,8 +401,8 @@ LANG_SERBIAN = "Serbo"
 LANG_DUTCH = "Olandese"
 LANG_FRENCH = "Francese"
 
-CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
-CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
+CONFIG_MSG_PASSWORD = "You did'nt introduce an password."
 CONFIG_MSG_NUMERIC = "Non puoi immettere nomi composti da numeri."
 CONFIG_MSG_PORT = "Non hai selezionato una porta valida."
 CONFIG_MSG_NAME = "Non hai immesso un Nome utente."
@@ -443,7 +438,6 @@ End Sub
 
 Public Sub SetLangSerbian()
 ' Mdi form ..
-MDI_COMMAND_CONFIG = "&Konfiguracija"
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Slanje fajla"
 MDI_COMMAND_SOCIETY = "&Onlajn lista"
@@ -479,8 +473,8 @@ LANG_SERBIAN = "Srpski"
 LANG_DUTCH = "Holandski"
 LANG_FRENCH = "Francuski"
 
-CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
-CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
+CONFIG_MSG_PASSWORD = "You did'nt introduce an password."
 CONFIG_MSG_NUMERIC = "Ne mozete uzeti numericka imena."
 CONFIG_MSG_PORT = "Niste uneli port."
 CONFIG_MSG_NAME = "Niste uneli ime"
@@ -515,7 +509,6 @@ LANG_LABEL_SELLANG = "Dodaj svoj jezik:"
 End Sub
 
 Public Sub SetLangDutch()
-MDI_COMMAND_CONFIG = "&Configuratie"
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Bestand Verzenden"
 MDI_COMMAND_SOCIETY = "&Online List"
@@ -550,8 +543,8 @@ LANG_SERBIAN = "Serbisch"
 LANG_DUTCH = "Nederlands"
 LANG_FRENCH = "Frans"
 
-CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
-CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
+CONFIG_MSG_PASSWORD = "You did'nt introduce an password."
 CONFIG_MSG_NUMERIC = "U kan geen naam nemen dat nummers bevat."
 CONFIG_MSG_PORT = "U hebt geen poort ingesteld."
 CONFIG_MSG_NAME = "U hebt geen naam gegoven."
@@ -584,7 +577,6 @@ LANG_LABEL_SELLANG = "Selecteer jou taal:"
 End Sub
 
 Public Sub SetLangFrench()
-MDI_COMMAND_CONFIG = "&Configuration"
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Envoi File"
 MDI_COMMAND_SOCIETY = "&Liste contact Online"
@@ -618,8 +610,8 @@ LANG_SERBIAN = "Serbois"
 LANG_DUTCH = "Hollandais"
 LANG_FRENCH = "Français"
 
-CONFIG_MSG_ACCOUNT = "You didnt introduce an account."
-CONFIG_MSG_PASSWORD = "You didnt introduce an password."
+CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
+CONFIG_MSG_PASSWORD = "You did'nt introduce an password."
 CONFIG_MSG_NUMERIC = "Tu ne peut pas insérer noms composé de numeros."
 CONFIG_MSG_PORT = "Tu n'as pas selectionner une porte valide."
 CONFIG_MSG_NAME = "Tu n'as pas innecté un Nom utilizateur."

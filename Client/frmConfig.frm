@@ -300,6 +300,7 @@ Command1.Enabled = False
 Command2.Enabled = True
 Command3.Enabled = False
 Command4.Enabled = False
+Label1.Enabled = False
 
 frmMain.StatusBar1.Panels(1).Text = MDI_STAT_CONNECTING
 End Sub

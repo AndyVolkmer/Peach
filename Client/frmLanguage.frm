@@ -27,6 +27,7 @@ Begin VB.Form frmLanguage
    Begin VB.CommandButton cmdEnter 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Enter"
+      Enabled         =   0   'False
       Height          =   350
       Left            =   1440
       TabIndex        =   2
@@ -89,6 +90,7 @@ frmLanguage.Hide
 End Sub
 
 Private Sub Combo1_Click()
+cmdEnter.Enabled = True
 Select Case Combo1.ListIndex
 Case 0 'German
     SetLangGerman

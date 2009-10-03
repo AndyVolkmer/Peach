@@ -1,5 +1,6 @@
 Attribute VB_Name = "modMain"
 Option Explicit
+
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Sub Main()
@@ -34,13 +35,12 @@ If Setting.VALIDATE = 0 Then
         SetLangFrench
     End Select
     frmMain.Show
+    SetScheme
 Else
     'Set language default -> english
     SetLangEnglish
     frmLanguage.Show
 End If
-
-SetScheme
 
 WriteIniValue App.Path & "\Config.ini", "Revision", "Number", Rev
 End Sub

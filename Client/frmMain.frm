@@ -151,7 +151,7 @@ Begin VB.MDIForm frmMain
       End
       Begin VB.CommandButton Command1 
          BackColor       =   &H00F4F4F4&
-         Caption         =   "&Configuration"
+         Caption         =   "&Login"
          BeginProperty Font 
             Name            =   "Segoe UI"
             Size            =   8.25
@@ -257,7 +257,6 @@ SetupForms frmSociety
 End Sub
 
 Public Sub LoadMDIForm()
-Command1.Caption = MDI_COMMAND_CONFIG
 Command2.Caption = MDI_COMMAND_CHAT
 Command3.Caption = MDI_COMMAND_SENDFILE
 End Sub
