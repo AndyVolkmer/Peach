@@ -57,7 +57,6 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "ListView1"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       Begin VB.CommandButton Command2 
          Caption         =   "&Remove"
@@ -158,11 +157,10 @@ Attribute VB_Exposed = False
 Private Sub Command1_Click()
 Dim Val As String
 Val = InputBox("Please enter the account of your friend in the text box below.", "Adding a friend", "Friends Account") & "#"
-If Len(Val) = 0 Then
-    Exit Sub
-Else
-    SendMsg "!add_friend" & "#" & frmConfig.txtAccount.Text & "#" & Val & "#"
-End If
+If Val = "#" Then Exit Sub
+
+SendMsg "!add_friend" & "#" & frmConfig.txtAccount.Text & "#" & Val & "#"
+
 End Sub
 
 Private Sub Command2_Click()
