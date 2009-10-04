@@ -498,18 +498,15 @@ End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
 Unload Winsock1(Index)
-For i = 1 To frmPanel.ListView1.ListItems.Count + 1
-    'Update user lists ( server and client )
-    If frmPanel.ListView1.ListItems.Item(i).SubItems(2) = Index Then
-    
-        'Pick the user
-        frmPanel.ListView1.ListItems.Remove (i)
-        
-        'Update Users List
-        UpdateUsersList
-        Exit For
-    End If
-Next i
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(2) = Index Then
+            .Remove (i)
+            UpdateUsersList
+            Exit For
+        End If
+    Next i
+End With
 StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
@@ -690,7 +687,7 @@ Case "!login"
         For i = 1 To .Count
             If .Item(i).SubItems(1) = GetUser Then
                 'Ban Check
-                If .Item(i).SubItems(5) = "Yes" Then
+                If .Item(i).SubItems(5) = "True" Then
                     SendSingle "!login#Banned#", frmMain.Winsock1(Index)
                     CMSG "!banned", GetUser
                     Exit Sub
@@ -800,7 +797,11 @@ Case "!msg"
             MuteUser GetTarget, GetUser, False, Index, Trim$(Reason)
             
         Case ".announce", ".ann", ".broadcast"
-            SendMessage GetTag(GetUser) & "[" & GetUser & "] announces: " & ANN_MSG
+            If Len(Trim$(ANN_MSG)) = 0 Then
+                SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(Index)
+            Else
+                SendMessage GetTag(GetUser) & "[" & GetUser & "] announces: " & ANN_MSG
+            End If
                     
         Case ".help", ".command", ".commands"
             SendSingle GetCommands, frmMain.Winsock1(Index)

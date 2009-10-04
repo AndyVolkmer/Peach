@@ -145,7 +145,7 @@ Begin VB.Form frmSociety
          NumItems        =   1
          BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
             Text            =   "Name"
-            Object.Width           =   12347
+            Object.Width           =   12409
          EndProperty
       End
    End

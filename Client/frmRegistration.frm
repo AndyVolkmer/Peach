@@ -23,6 +23,13 @@ Begin VB.Form frmRegistration
    ScaleHeight     =   3165
    ScaleWidth      =   3870
    StartUpPosition =   1  'CenterOwner
+   Begin MSWinsockLib.Winsock RegSock 
+      Left            =   120
+      Top             =   2640
+      _ExtentX        =   741
+      _ExtentY        =   741
+      _Version        =   393216
+   End
    Begin VB.CheckBox Check1 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Show Password"
@@ -41,13 +48,6 @@ Begin VB.Form frmRegistration
       Top             =   2640
       Visible         =   0   'False
       Width           =   1815
-   End
-   Begin MSWinsockLib.Winsock RegSock 
-      Left            =   120
-      Top             =   2640
-      _ExtentX        =   741
-      _ExtentY        =   741
-      _Version        =   393216
    End
    Begin VB.CommandButton Command1 
       BackColor       =   &H00F4F4F4&

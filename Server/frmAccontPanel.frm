@@ -23,6 +23,15 @@ Begin VB.Form frmAccountPanel
    ScaleHeight     =   4065
    ScaleWidth      =   7470
    ShowInTaskbar   =   0   'False
+   Begin VB.CommandButton cmdSave 
+      Caption         =   "&Save"
+      Enabled         =   0   'False
+      Height          =   350
+      Left            =   3960
+      TabIndex        =   8
+      Top             =   3600
+      Width           =   1215
+   End
    Begin VB.TextBox txtName 
       Alignment       =   2  'Center
       Enabled         =   0   'False
@@ -73,15 +82,6 @@ Begin VB.Form frmAccountPanel
       Height          =   350
       Left            =   5160
       TabIndex        =   9
-      Top             =   3600
-      Width           =   1215
-   End
-   Begin VB.CommandButton cmdSave 
-      Caption         =   "&Save"
-      Enabled         =   0   'False
-      Height          =   350
-      Left            =   3960
-      TabIndex        =   8
       Top             =   3600
       Width           =   1215
    End

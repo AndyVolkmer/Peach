@@ -32,6 +32,7 @@ Begin VB.Form frmChat
       _ExtentX        =   9763
       _ExtentY        =   1508
       _Version        =   393217
+      BorderStyle     =   0
       Enabled         =   0   'False
       MultiLine       =   0   'False
       MaxLength       =   180
@@ -147,7 +148,7 @@ If LCase$(RTrim$(txtToSend.Text)) = "/time" Then
 End If
 
 'Send public message
-SendMsg "!msg#" & frmConfig.txtNick.Text & "#" & txtToSend.Text & "#"
+SendMsg "!msg#" & frmConfig.txtNick.Text & "#" & Trim$(txtToSend.Text) & "#"
 Call Clear
 
 End Sub

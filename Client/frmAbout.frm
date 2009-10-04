@@ -3,10 +3,10 @@ Begin VB.Form frmAbout
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   "About Peach"
-   ClientHeight    =   5010
+   ClientHeight    =   1755
    ClientLeft      =   45
    ClientTop       =   435
-   ClientWidth     =   8760
+   ClientWidth     =   5790
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -20,8 +20,8 @@ Begin VB.Form frmAbout
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   5010
-   ScaleWidth      =   8760
+   ScaleHeight     =   1755
+   ScaleWidth      =   5790
    StartUpPosition =   1  'CenterOwner
    Begin VB.CommandButton Command1 
       BackColor       =   &H00F4F4F4&
@@ -36,26 +36,19 @@ Begin VB.Form frmAbout
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   6840
+      Left            =   4080
       TabIndex        =   0
-      Top             =   4440
+      Top             =   1200
       Width           =   1575
    End
    Begin VB.Label Label1 
       BackColor       =   &H00F4F4F4&
-      ForeColor       =   &H8000000C&
+      ForeColor       =   &H00000000&
       Height          =   975
-      Left            =   240
+      Left            =   120
       TabIndex        =   1
-      Top             =   3840
+      Top             =   240
       Width           =   5535
-   End
-   Begin VB.Image Image1 
-      Height          =   4110
-      Left            =   -120
-      Picture         =   "frmAbout.frx":08CA
-      Top             =   -120
-      Width           =   9000
    End
 End
 Attribute VB_Name = "frmAbout"

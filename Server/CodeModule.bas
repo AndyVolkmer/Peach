@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev    As String = "1.1.3.7"
+Public Const Rev    As String = "1.1.3.8"
 Public Const rPort  As Long = 6222
 
 Public i        As Long    'Global "FOR" variable

@@ -166,20 +166,20 @@ Command2.Enabled = False
 Dim Path As String
 Path = App.Path & "\Config.ini"
 
-With Setting
-
 WriteIniValue Path, "Connection", "IP", txtIP.Text
-    .SERVER_IP = txtIP.Text
 WriteIniValue Path, "Connection", "Port", txtPort.Text
-    .SERVER_PORT = txtPort.Text
 WriteIniValue Path, "Private", "SchemeColor", txtColor.BackColor
-    .SCHEME_COLOR = txtColor.BackColor
 WriteIniValue Path, "Private", "PasswordTick", CBool(SavePassword.Value)
-    .PASSWORD_TICK = SavePassword.Value
 WriteIniValue Path, "Private", "AccountTick", CBool(SaveAccount.Value)
-    .ACCOUNT_TICK = SaveAccount.Value
 
+With Setting
+    .SERVER_IP = txtIP.Text
+    .SERVER_PORT = txtPort.Text
+    .SCHEME_COLOR = txtColor.BackColor
+    .PASSWORD_TICK = SavePassword.Value
+    .ACCOUNT_TICK = SaveAccount.Value
 End With
+
 SetScheme
 End Sub
 

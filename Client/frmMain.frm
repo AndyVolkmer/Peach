@@ -519,16 +519,19 @@ Case "!update_friends"
             .Add , , f_array(0)
             .Item(.Count).SubItems(1) = f_array(1)
         Next i
-        SendMsg "!server_info##"
+        If RunOnce = False Then
+            RunOnce = True
+            SendMsg "!server_info##"
+        End If
     End With
     
 'Wipe out current list and insert new values
 Case "!listupdate"
     'Little check
-    If RunOnce = False Then
-        RunOnce = True
+'    If RunOnce = False Then
+'        RunOnce = True
         SendMsg "!get_friends#" & frmConfig.txtAccount.Text & "##"
-    End If
+'    End If
     
     frmSociety.ListView1.ListItems.Clear
     frmSendFile.Combo1.Clear
