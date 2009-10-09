@@ -343,8 +343,7 @@ End Select
 End Sub
 
 Private Sub Form_Load()
-Top = 0
-Left = 0
+Top = 0: Left = 0
 LoadSendFileForm
 End Sub
 

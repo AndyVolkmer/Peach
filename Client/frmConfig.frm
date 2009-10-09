@@ -9,8 +9,8 @@ Begin VB.Form frmConfig
    ClientTop       =   0
    ClientWidth     =   7695
    BeginProperty Font 
-      Name            =   "Tahoma"
-      Size            =   8.25
+      Name            =   "Segoe UI"
+      Size            =   9
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -22,6 +22,14 @@ Begin VB.Form frmConfig
    ScaleHeight     =   4425
    ScaleWidth      =   7695
    ShowInTaskbar   =   0   'False
+   Begin VB.CommandButton cmdConnect 
+      Caption         =   "cmdConnect"
+      Height          =   375
+      Left            =   2880
+      TabIndex        =   11
+      Top             =   2640
+      Width           =   1935
+   End
    Begin VB.CommandButton Command4 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Update"
@@ -36,7 +44,7 @@ Begin VB.Form frmConfig
       EndProperty
       Height          =   375
       Left            =   120
-      TabIndex        =   7
+      TabIndex        =   5
       Top             =   2760
       Width           =   1335
    End
@@ -54,7 +62,7 @@ Begin VB.Form frmConfig
       EndProperty
       Height          =   375
       Left            =   120
-      TabIndex        =   5
+      TabIndex        =   3
       Top             =   2400
       Width           =   1335
    End
@@ -114,50 +122,22 @@ Begin VB.Form frmConfig
       Top             =   1440
       Width           =   1935
    End
-   Begin VB.CommandButton Command2 
-      BackColor       =   &H00F4F4F4&
-      Caption         =   "&Disconnect"
-      Enabled         =   0   'False
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   375
-      Left            =   2850
-      TabIndex        =   4
-      Top             =   3000
-      Width           =   1935
-   End
-   Begin VB.CommandButton Command1 
-      BackColor       =   &H00F4F4F4&
-      Caption         =   "&Connect"
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   375
-      Left            =   2850
-      TabIndex        =   3
-      Top             =   2640
-      Width           =   1935
-   End
    Begin VB.Label Label1 
       Alignment       =   2  'Center
       Caption         =   "&Register Account"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   255
       Left            =   2850
-      TabIndex        =   12
-      Top             =   3600
+      TabIndex        =   10
+      Top             =   3240
       Width           =   1935
    End
    Begin VB.Label lblNickname 
@@ -175,7 +155,7 @@ Begin VB.Form frmConfig
       ForeColor       =   &H00000000&
       Height          =   255
       Left            =   2850
-      TabIndex        =   11
+      TabIndex        =   9
       Top             =   1920
       Width           =   975
    End
@@ -194,7 +174,7 @@ Begin VB.Form frmConfig
       ForeColor       =   &H00000000&
       Height          =   255
       Left            =   2850
-      TabIndex        =   10
+      TabIndex        =   8
       Top             =   480
       Width           =   1575
    End
@@ -213,26 +193,44 @@ Begin VB.Form frmConfig
       ForeColor       =   &H00000000&
       Height          =   255
       Left            =   2850
-      TabIndex        =   9
+      TabIndex        =   7
       Top             =   1200
       Width           =   975
    End
    Begin VB.Label lblVersion 
       BackColor       =   &H00F4F4F4&
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
-      TabIndex        =   8
+      TabIndex        =   6
       Top             =   3720
       Width           =   1455
    End
    Begin VB.Label lblAuthor 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Author : Notron"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
-      TabIndex        =   6
+      TabIndex        =   4
       Top             =   3480
       Width           =   1335
    End
@@ -244,73 +242,69 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub Command1_Click()
-If Command1.Enabled = False Then
-    Exit Sub
+Public Sub cmdConnect_Click()
+If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
+    'Account can't be empty
+    If CheckTx(txtAccount, CONFIG_MSG_ACCOUNT) = True Then Exit Sub
+    
+    'Password can't be empty
+    If CheckTx(txtPassword, CONFIG_MSG_PASSWORD) = True Then Exit Sub
+     
+    'Nick can't be empty
+    If CheckTx(txtNick, CONFIG_MSG_NAME) = True Then Exit Sub
+     
+    'Nick can't be numeric
+    If IsNumeric(txtNick.Text) = True Then
+        txtNick.Text = vbNullString
+        MsgBox CONFIG_MSG_NUMERIC, vbInformation
+        txtNick.SetFocus
+        Exit Sub
+    End If
+
+    'Nick can't be shorter then 4 characters
+    If Len(txtNick.Text) < 4 Then
+        MsgBox "Your nickname is to short!", vbInformation, " Error - Nickname"
+        txtNick.SelStart = Len(txtNick.Text)
+        txtNick.SetFocus
+        Exit Sub
+    End If
+    
+    'Make the name proper case
+    txtNick.Text = StrConv(txtNick.Text, vbProperCase)
+
+    'Connect winsocks
+    With frmMain.Winsock1
+        .RemotePort = Setting.SERVER_PORT
+        .RemoteHost = Setting.SERVER_IP
+        .Connect
+    End With
+
+    'Set Recieve-Request-Winsock to listen
+    With frmMain
+        .FSocket2(0).LocalPort = aPort
+        .FSocket2(0).Listen
+    End With
+
+    'Set Recieve-File-Winsock to listen
+    With frmSendFile2
+        .SckReceiveFile(0).LocalPort = bPort
+        .SckReceiveFile(0).Listen
+    End With
+
+    Command3.Enabled = False
+    Command4.Enabled = False
+    Label1.Enabled = False
+    cmdConnect.Caption = CONFIG_COMMAND_DISCONNECT
+    frmMain.StatusBar1.Panels(1).Text = MDI_STAT_CONNECTING
+Else
+    cmdConnect.Caption = CONFIG_COMMAND_CONNECT
+    
+    Disconnect
+    With frmMain
+        .Winsock1.Close
+        .StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
+    End With
 End If
-
-'Account can't be empty
-If CheckTx(txtAccount, CONFIG_MSG_ACCOUNT) = True Then Exit Sub
-
-'Password can't be empty
-If CheckTx(txtPassword, CONFIG_MSG_PASSWORD) = True Then Exit Sub
- 
-'Nick can't be empty
-If CheckTx(txtNick, CONFIG_MSG_NAME) = True Then Exit Sub
- 
-'Nick can't be numeric
-If IsNumeric(txtNick.Text) = True Then
-    txtNick.Text = vbNullString
-    MsgBox CONFIG_MSG_NUMERIC, vbInformation
-    txtNick.SetFocus
-    Exit Sub
-End If
-
-'Nick can't be shorter then 4 characters
-If Len(txtNick.Text) < 4 Then
-    MsgBox "Your nickname is to short!", vbInformation, " Error - Nickname"
-    txtNick.SelStart = Len(txtNick.Text)
-    txtNick.SetFocus
-    Exit Sub
-End If
-
-'Make the name proper case
-txtNick.Text = StrConv(txtNick.Text, vbProperCase)
-
-'Connect winsocks
-With frmMain.Winsock1
-    .RemotePort = Setting.SERVER_PORT
-    .RemoteHost = Setting.SERVER_IP
-    .Connect
-End With
-
-'Set Recieve-Request-Winsock to listen
-With frmMain
-    .FSocket2(0).LocalPort = aPort
-    .FSocket2(0).Listen
-End With
-
-'Set Recieve-File-Winsock to listen
-With frmSendFile2
-    .SckReceiveFile(0).LocalPort = bPort
-    .SckReceiveFile(0).Listen
-End With
-
-Command1.Enabled = False
-Command2.Enabled = True
-Command3.Enabled = False
-Command4.Enabled = False
-Label1.Enabled = False
-
-frmMain.StatusBar1.Panels(1).Text = MDI_STAT_CONNECTING
-End Sub
-
-Public Sub Command2_Click()
-Disconnect
-With frmMain
-    .Winsock1.Close
-    .StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
-End With
 End Sub
 
 Private Sub Command3_Click()
@@ -338,11 +332,10 @@ LoadConfigForm
 End Sub
 
 Public Sub LoadConfigForm()
-Command1.Caption = CONFIG_COMMAND_CONNECT
-Command2.Caption = CONFIG_COMMAND_DISCONNECT
 Command3.Caption = CONFIG_COMMAND_SETTINGS
 Command4.Caption = CONFIG_COMMAND_UPDATE
 Label1.Caption = CONFIG_COMMAND_REGISTER
+cmdConnect.Caption = CONFIG_COMMAND_CONNECT
 End Sub
 
 Private Function CheckTx(txtBox As TextBox, mBox As String) As Boolean
@@ -369,25 +362,23 @@ frmRegistration.Show 1
 End Sub
 
 Private Sub lblAuthor_Click()
-If Command1.Enabled = False Then Exit Sub
 frmAbout.Show 1
 End Sub
 
 Private Sub lblVersion_Click()
-If Command1.Enabled = False Then Exit Sub
 frmAbout.Show 1
 End Sub
 
 Private Sub txtAccount_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then Command1_Click
+If KeyAscii = vbKeyReturn Then cmdConnect_Click
 End Sub
 
 Private Sub txtIP_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then Command1_Click
+If KeyAscii = vbKeyReturn Then cmdConnect_Click
 End Sub
 
 Private Sub txtNick_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then Command1_Click
+If KeyAscii = vbKeyReturn Then cmdConnect_Click
 End Sub
 
 Private Sub txtNick_LostFocus()
@@ -395,9 +386,9 @@ txtNick.Text = StrConv(txtNick.Text, vbProperCase)
 End Sub
 
 Private Sub txtPassword_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then Command1_Click
+If KeyAscii = vbKeyReturn Then cmdConnect_Click
 End Sub
 
 Private Sub txtPort_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then Command1_Click
+If KeyAscii = vbKeyReturn Then cmdConnect_Click
 End Sub

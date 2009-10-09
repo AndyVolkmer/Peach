@@ -440,7 +440,7 @@ End Sub
 
 Private Sub ConnectIsFalse()
 With frmConfig
-    .Command2_Click
+    .cmdConnect_Click
     .txtNick = vbNullString
 frmChat.Hide
     .Show
@@ -527,11 +527,7 @@ Case "!update_friends"
     
 'Wipe out current list and insert new values
 Case "!listupdate"
-    'Little check
-'    If RunOnce = False Then
-'        RunOnce = True
-        SendMsg "!get_friends#" & frmConfig.txtAccount.Text & "##"
-'    End If
+    SendMsg "!get_friends#" & frmConfig.txtAccount.Text & "##"
     
     frmSociety.ListView1.ListItems.Clear
     frmSendFile.Combo1.Clear
@@ -548,7 +544,7 @@ Case "!login"
         SendMsg "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
     Case "Password"
         With frmConfig
-            .Command2_Click
+            .cmdConnect_Click
             .txtPassword = vbNullString
         frmChat.Hide
             .Show
@@ -557,7 +553,7 @@ Case "!login"
         MsgBox MDI_MSG_WRONG_PASSWORD, vbInformation
     Case "Account"
         With frmConfig
-            .Command2_Click
+            .cmdConnect_Click
             .txtAccount = vbNullString
         frmChat.Hide
             .Show
@@ -566,7 +562,7 @@ Case "!login"
         MsgBox MDI_MSG_WRONG_ACCOUNT, vbInformation
     Case "Banned"
         With frmConfig
-            .Command2_Click
+            .cmdConnect_Click
         frmChat.Hide
             .Show
         End With
@@ -610,13 +606,8 @@ End Sub
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Dim WiSk As Winsock
 
-'Close connecting winsock ( set state = 0 )
 Winsock1.Close
-
-'Call Disconnect function to DC all sockets and do buttons
 Disconnect
-
-'Change status to connection problem
 StatusBar1.Panels(1).Text = MDI_STAT_CONNECTION_ERROR
 
 frmConfig.Show

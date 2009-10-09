@@ -160,7 +160,7 @@ With txtToSend
 End With
 End Sub
 
-Public Sub Form_Load()
+Private Sub Form_Load()
 Top = 0: Left = 0
 Call LoadChatForm
 End Sub
