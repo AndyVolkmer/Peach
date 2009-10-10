@@ -264,8 +264,8 @@ Private Sub cmdBrowse_Click()
 On Error GoTo ErrCancel
 CDialog.ShowOpen
 
-txtFileName.Text = CDialog.FileName
-txtFileName.SelStart = Len(txtFileName.Text)
+txtFileName = CDialog.FileName
+txtFileName.SelStart = Len(txtFileName)
 
 Exit Sub
 ErrCancel:
@@ -292,23 +292,23 @@ If Combo1.ListIndex < 0 Then
     Exit Sub
 End If
 
-If Len(txtFileName.Text) = 0 Then
+If Len(txtFileName) = 0 Then
     MsgBox SF_MSG_FILE, vbInformation
     txtFileName.SetFocus
     Exit Sub
 End If
 
 'Request IP
-SendMsg "!iprequest" & "#" & Combo1.Text & "#"
+SendMsg "!iprequest#" & Combo1.Text & "#"
 
 End Sub
 
 Public Sub SendF(IP As String)
 If cmdSendFile.Caption = SF_COMMAND_SENDFILE Then
-    If Len(txtFileName.Text) > 0 Then
-        If Len(Dir(txtFileName.Text, vbNormal + vbArchive)) > 0 Then
+    If Len(txtFileName) > 0 Then
+        If Len(Dir(txtFileName, vbNormal + vbArchive)) > 0 Then
             cmdSendFile.Caption = SF_COMMAND_CANCEL
-            SendFile txtFileName.Text, IP
+            SendFile txtFileName, IP
         End If
     End If
 Else
@@ -335,7 +335,7 @@ If Combo1.ListCount = 0 Then
     cmdSendFile.Enabled = False
 End If
 Select Case Combo1.Text
-Case frmConfig.txtNick.Text, "<AFK>" & frmConfig.txtNick.Text
+Case frmConfig.txtNick, "<AFK>" & frmConfig.txtNick
     cmdSendFile.Enabled = False
 Case Else
     cmdSendFile.Enabled = True

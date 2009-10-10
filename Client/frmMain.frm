@@ -423,7 +423,7 @@ End Sub
 
 Private Sub Winsock1_Connect()
 SwitchButtons False
-SendMsg "!login" & "#" & frmConfig.txtAccount & "#" & frmConfig.txtPassword & "#"
+SendMsg "!login#" & frmConfig.txtAccount & "#" & frmConfig.txtPassword & "#"
 End Sub
 
 Private Sub ConnectIsTrue()
@@ -433,7 +433,7 @@ frmChat.txtToSend.SetFocus
 
 StatusBar1.Panels(1).Text = MDI_STAT_CONNECTED
 
-SendMsg "!connected" & "#" & frmConfig.txtNick.Text & "#" & frmConfig.txtAccount.Text & "#"
+SendMsg "!connected#" & frmConfig.txtNick & "#" & frmConfig.txtAccount & "#"
 
 frmDESP.DisplayMessage "Hello " & frmConfig.txtNick.Text
 End Sub
@@ -527,7 +527,7 @@ Case "!update_friends"
     
 'Wipe out current list and insert new values
 Case "!listupdate"
-    SendMsg "!get_friends#" & frmConfig.txtAccount.Text & "##"
+    SendMsg "!get_friends#" & frmConfig.txtAccount & "##"
     
     frmSociety.ListView1.ListItems.Clear
     frmSendFile.Combo1.Clear
@@ -541,7 +541,7 @@ Case "!login"
     Select Case StrArr(1)
     Case "Yes"
         frmMain.StatusBar1.Panels(1).Text = "Status : " & "Authenticating.."
-        SendMsg "!namerequest" & "#" & frmConfig.txtNick.Text & "#"
+        SendMsg "!namerequest#" & frmConfig.txtNick & "#"
     Case "Password"
         With frmConfig
             .cmdConnect_Click

@@ -159,7 +159,7 @@ Dim Val As String
 Val = InputBox("Please enter the account of your friend in the text box below.", "Adding a friend", "Friends Account") & "#"
 If Val = "#" Then Exit Sub
 
-SendMsg "!add_friend" & "#" & frmConfig.txtAccount.Text & "#" & Val & "#"
+SendMsg "!add_friend" & "#" & frmConfig.txtAccount & "#" & Val & "#"
 
 End Sub
 
@@ -185,6 +185,17 @@ With ListView2
     End If
     SendMsg "!remove_friend#" & frmConfig.txtAccount.Text & "#" & Name & "#"
 End With
+End Sub
+
+Public Sub LoadSocietyForm()
+SSTab1.TabCaption(0) = SOC_FRIEND_LIST
+SSTab1.TabCaption(1) = SOC_ONLINE_LIST
+Command1.Caption = SOC_COMMAND_ADD
+Command2.Caption = SOC_COMMAND_REMOVE
+End Sub
+
+Private Sub Form_Load()
+LoadSocietyForm
 End Sub
 
 Private Sub ListView2_ItemCheck(ByVal Item As MSComctlLib.ListItem)

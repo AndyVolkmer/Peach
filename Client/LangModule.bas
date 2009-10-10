@@ -75,8 +75,58 @@ Public LANG_SERBIAN                     As String
 Public LANG_DUTCH                       As String
 Public LANG_FRENCH                      As String
 
-Public Sub SetLangGerman()
+Public SOC_FRIEND_LIST                  As String
+Public SOC_ONLINE_LIST
 
+Public SOC_COMMAND_ADD                  As String
+Public SOC_COMMAND_REMOVE               As String
+
+'Register account form
+Public REG_FRAME_DETAIL                 As String
+
+Public REG_LABEL_ACCOUNT_NAME           As String
+Public REG_LABEL_PASSWORD               As String
+Public REG_LABEL_PASSWORD_CONFIRM       As String
+Public REG_LABEL_PASSWORD_WEAK          As String
+Public REG_LABEL_PASSWORD_NORMAL        As String
+Public REG_LABEL_PASSWORD_STRONG        As String
+Public REG_LABEL_ERROR                  As String
+
+Public REG_CHECK_PASSWORD_SHOW          As String
+
+Public REG_COMMAND_SUBMIT               As String
+Public REG_COMMAND_CLOSE                As String
+
+Public REG_MSG_ACCOUNT_EXIST            As String
+Public REG_MSG_ACCOUNT_INVALID          As String
+Public REG_MSG_ACCOUNT_NUMERIC          As String
+Public REG_MSG_ACCOUNT_EMPTY            As String
+Public REG_MSG_ACCOUNT_SHORT            As String
+
+Public REG_MSG_SUCCESSFULLY             As String
+Public REG_MSG_ERROR                    As String
+Public REG_MSG_ERROR_OCCURED            As String
+Public REG_MSG_LOADING                  As String
+Public REG_MSG_CONNECTION_BROKEN        As String
+Public REG_MSG_PASSWORD_MATCH           As String
+Public REG_MSG_PASSWORD_SHORT           As String
+Public REG_MSG_PASSWORD_EMPTY           As String
+
+'Settings form
+Public SET_LABEL_COLOR                  As String
+
+Public SET_FRAME_OPTIONS                As String
+Public SET_FRAME_CONNECTION             As String
+
+Public SET_CHECK_SAVE_ACCOUNT           As String
+Public SET_CHECK_SAVE_PASSWORD          As String
+
+Public SET_COMMAND_LANGUAGE             As String
+Public SET_COMMAND_SAVE                 As String
+
+Public SF2_COMMAND_OPEN_FILE            As String
+
+Public Sub SET_LANG_GERMAN()
 ' MDI form ..
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Sende Datei"
@@ -144,10 +194,58 @@ DESP_TEXT_DC_SERVER = "Verbindung unterbrochen!"
 
 LANG_COMMAND_ENTER = "&Auswählen"
 LANG_LABEL_SELLANG = "Wähle deine Sprache aus:"
+
+SOC_FRIEND_LIST = "Freundes Liste"
+SOC_ONLINE_LIST = "Online Liste"
+
+SOC_COMMAND_ADD = "&Hinzufügen"
+SOC_COMMAND_REMOVE = "&Entfernen"
+
+REG_FRAME_DETAIL = "Gebe deine Daten an"
+
+REG_LABEL_ACCOUNT_NAME = " Benutzer Name:"
+REG_LABEL_PASSWORD = " Passwort:"
+REG_LABEL_PASSWORD_CONFIRM = " Passwort bestätigen:"
+REG_LABEL_PASSWORD_WEAK = "Das Passwort ist schwach."
+REG_LABEL_PASSWORD_NORMAL = "Das Passwort ist gut."
+REG_LABEL_PASSWORD_STRONG = "Das Passwort ist stark."
+
+REG_COMMAND_SUBMIT = "&Registrieren"
+REG_COMMAND_CLOSE = "&Schliessen"
+
+REG_CHECK_PASSWORD_SHOW = "&Passwort anzeig."
+
+REG_MSG_ACCOUNT_EXIST = "Der Account Name ist bereits vergeben."
+REG_MSG_ACCOUNT_INVALID = "Ungültiger Account Name."
+REG_MSG_ACCOUNT_NUMERIC = "Der Account Name darf nicht aus ziffern bestehen."
+REG_MSG_ACCOUNT_EMPTY = "Kein Account angegeben."
+REG_MSG_ACCOUNT_SHORT = "Der Account Name ist zu kurz, muss aus wenigstens 4 Zeichen bestehen."
+
+REG_MSG_PASSWORD_MATCH = "Die Passwörter stimmen nicht überein."
+REG_MSG_PASSWORD_SHORT = "Das Passwort ist zu kurz, muss aus wenigstens 6 Zeichen bestehen."
+REG_MSG_PASSWORD_EMPTY = "Kein Passwort angegeben."
+
+REG_MSG_SUCCESSFULLY = "Der Account wurde erfolgreich erstellt."
+REG_MSG_ERROR = "Ein Fehler ist aufgetreten bitte versuchen sie es später nochmal."
+REG_MSG_ERROR_OCCURED = "Fehler aufgetreten ..."
+REG_MSG_LOADING = " Lädt .."
+REG_MSG_CONNECTION_BROKEN = "Die Verbindung wurde unterbrochen bitte versuchen sie es später nochmal."
+
+SET_LABEL_COLOR = "Jetzige Farbe:"
+
+SET_FRAME_OPTIONS = "Optionen"
+SET_FRAME_CONNECTION = "Verbindungs Einstellungen"
+
+SET_CHECK_SAVE_ACCOUNT = "Account speichern"
+SET_CHECK_SAVE_PASSWORD = "Passwort speichern"
+
+SET_COMMAND_LANGUAGE = "&Sprache"
+SET_COMMAND_SAVE = "&Speichern"
+
+SF2_COMMAND_OPEN_FILE = "&Datei Ordner öffnen"
 End Sub
 
-Public Sub SetLangEnglish()
-
+Public Sub SET_LANG_ENGLISH()
 'MDI form
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Send File"
@@ -186,8 +284,8 @@ LANG_SERBIAN = "Serbian"
 LANG_DUTCH = "Dutch"
 LANG_FRENCH = "French"
 
-CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
-CONFIG_MSG_PASSWORD = "You did'nt introduce an password."
+CONFIG_MSG_ACCOUNT = "You didn't enter an account."
+CONFIG_MSG_PASSWORD = "You didn't enter a password."
 CONFIG_MSG_NUMERIC = "You cant take numeric names."
 CONFIG_MSG_PORT = "You didnt introduce an port."
 CONFIG_MSG_NAME = "You didnt introduce an name."
@@ -219,10 +317,58 @@ DESP_TEXT_DC_SERVER = "Disconnected from Server!"
 
 LANG_COMMAND_ENTER = "&Select"
 LANG_LABEL_SELLANG = "Select your language:"
+
+SOC_FRIEND_LIST = "Friend List"
+SOC_ONLINE_LIST = "Online List"
+
+SOC_COMMAND_ADD = "&Add"
+SOC_COMMAND_REMOVE = "&Remove"
+
+REG_FRAME_DETAIL = "Enter your details"
+
+REG_LABEL_ACCOUNT_NAME = " Account Name:"
+REG_LABEL_PASSWORD = " Password:"
+REG_LABEL_PASSWORD_CONFIRM = " Confirm the Password:"
+REG_LABEL_PASSWORD_WEAK = "The password is weak."
+REG_LABEL_PASSWORD_NORMAL = "The password is normal."
+REG_LABEL_PASSWORD_STRONG = "The password is strong."
+
+REG_COMMAND_SUBMIT = "&Submit"
+REG_COMMAND_CLOSE = "&Close"
+
+REG_CHECK_PASSWORD_SHOW = "&Show Password."
+
+REG_MSG_ACCOUNT_EXIST = "The account name already exists."
+REG_MSG_ACCOUNT_INVALID = "Invalid account name."
+REG_MSG_ACCOUNT_NUMERIC = "Account can't be made of numeric characters."
+REG_MSG_ACCOUNT_EMPTY = "No account entered."
+REG_MSG_ACCOUNT_SHORT = "Account name to short, it requieres at least 4 characters."
+
+REG_MSG_PASSWORD_MATCH = "The passwords dont match."
+REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
+REG_MSG_PASSWORD_EMPTY = "No Password entered."
+
+REG_MSG_SUCCESSFULLY = "The account was successfully registered."
+REG_MSG_ERROR = "An error has occured please try later again."
+REG_MSG_ERROR_OCCURED = "Error has occured ..."
+REG_MSG_LOADING = " Loading .."
+REG_MSG_CONNECTION_BROKEN = "Connection is broken please try again later."
+
+SET_LABEL_COLOR = "Current Color:"
+
+SET_FRAME_OPTIONS = "Options"
+SET_FRAME_CONNECTION = "Connection Settings"
+
+SET_CHECK_SAVE_ACCOUNT = "Save Account"
+SET_CHECK_SAVE_PASSWORD = "Save Password"
+
+SET_COMMAND_LANGUAGE = "&Language"
+SET_COMMAND_SAVE = "&Save"
+
+SF2_COMMAND_OPEN_FILE = "&Open File Folder"
 End Sub
 
-Public Sub SetLangSpanish()
-
+Public Sub SET_LANG_SPANISH()
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Enviar Archivo"
 MDI_COMMAND_SOCIETY = "&Lista Online"
@@ -289,9 +435,58 @@ DESP_TEXT_DC_SERVER = "Desconectado del servidor!"
 
 LANG_COMMAND_ENTER = "&Seleccionar"
 LANG_LABEL_SELLANG = "Elige tu idioma:"
+
+SOC_FRIEND_LIST = "Lista de contactos"
+SOC_ONLINE_LIST = "Lista de online"
+
+SOC_COMMAND_ADD = "&Añadir"
+SOC_COMMAND_REMOVE = "&Quitar"
+
+REG_FRAME_DETAIL = "Enter your details"
+
+REG_LABEL_ACCOUNT_NAME = " Nombre de cuenta:"
+REG_LABEL_PASSWORD = " Contraseña:"
+REG_LABEL_PASSWORD_CONFIRM = " Confirmar contraseña:"
+REG_LABEL_PASSWORD_WEAK = "La contraseña es floja."
+REG_LABEL_PASSWORD_NORMAL = "La contraseña es normal."
+REG_LABEL_PASSWORD_STRONG = "La contraseña es fuerte."
+
+REG_COMMAND_SUBMIT = "&Registrar"
+REG_COMMAND_CLOSE = "&Cerrar"
+
+REG_CHECK_PASSWORD_SHOW = "&Ver contraseña"
+
+REG_MSG_ACCOUNT_EXIST = "El nombre de la cuenta ya existe."
+REG_MSG_ACCOUNT_INVALID = "El nombre de la cuenta es invalido."
+REG_MSG_ACCOUNT_NUMERIC = "El nombre de la cuenta no puede ser numerico."
+REG_MSG_ACCOUNT_EMPTY = "No ha introducido un nombre de cuenta."
+REG_MSG_ACCOUNT_SHORT = "Nombre de cuenta corto, debe que tener por lo menos 4 digitos."
+
+REG_MSG_PASSWORD_MATCH = "Las contraseñas no son las mismas."
+REG_MSG_PASSWORD_SHORT = "Contraseña corta, debe que tener por lo menos 6 digitos."
+REG_MSG_PASSWORD_EMPTY = "No ha introducido una contraseña."
+
+REG_MSG_SUCCESSFULLY = "La cuenta ha sido registrada con exito."
+REG_MSG_ERROR = "Un error ha occurido intenten de nuevo despues."
+REG_MSG_ERROR_OCCURED = "Error occurido ..."
+REG_MSG_LOADING = " Cargando .."
+REG_MSG_CONNECTION_BROKEN = "La conexión se ha roto, intenten de nuevo despues."
+
+SET_LABEL_COLOR = "Color activo:"
+
+SET_FRAME_OPTIONS = "Opciones"
+SET_FRAME_CONNECTION = "Confgiuración de conexión"
+
+SET_CHECK_SAVE_ACCOUNT = "Guardar cuenta"
+SET_CHECK_SAVE_PASSWORD = "Guardar contraseña"
+
+SET_COMMAND_LANGUAGE = "&Idioma"
+SET_COMMAND_SAVE = "&Guardar"
+
+SF2_COMMAND_OPEN_FILE = "&Abrir carpeta"
 End Sub
 
-Public Sub SetLangSwedish()
+Public Sub SET_LANG_SWEDISH()
 ' MDI form ..
 MDI_COMMAND_CHAT = "Ch&att"
 MDI_COMMAND_SENDFILE = "&Sänd fil"
@@ -313,13 +508,9 @@ MDI_MSG_BANNED = "This account is banned."
 ' Config form
 CONFIG_COMMAND_CONNECT = "&Anslut"
 CONFIG_COMMAND_DISCONNECT = "&Frånkoppla"
-CONFIG_COMMAND_SETTINGS = "&Settings"
-CONFIG_COMMAND_UPDATE = "&Update"
-CONFIG_COMMAND_REGISTER = "&Register Account"
-
-CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
-
-CONFIG_FRAME_CONNECTION = "Connection Information"
+CONFIG_COMMAND_SETTINGS = "&Inställningar"
+CONFIG_COMMAND_REGISTER = "&Skapa konto"
+CONFIG_COMMAND_UPDATE = "&Updatering"
 
 LANG_GERMAN = "Tyska"
 LANG_ENGLISH = "Engelska"
@@ -330,8 +521,8 @@ LANG_SERBIAN = "Serbiska"
 LANG_DUTCH = "Holländska"
 LANG_FRENCH = "Franska"
 
-CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
-CONFIG_MSG_PASSWORD = "You did'nt introduce an password."
+CONFIG_MSG_ACCOUNT = "Du skrev inte in en användare."
+CONFIG_MSG_PASSWORD = "Du skrev inte in ett lösenord."
 CONFIG_MSG_NUMERIC = "Du kan inte använda siffror i namnet."
 CONFIG_MSG_PORT = "Du angav inget portnummer."
 CONFIG_MSG_NAME = "Du angav inte ett namn."
@@ -347,24 +538,73 @@ CHAT_TIME_TEXT = " Tiden är "
 SF_LABEL_FILENAME = " Fil Namn:"
 SF_LABEL_SENDING_FILE = "Sänder:"
 SF_LABEL_SENT = "0.0% Sänt"
-SF_LABEL_SEND_TO = "Send to:"
+SF_LABEL_SEND_TO = "Skicka till:"
 
-SF_MSG_USER = "No user selected."
-SF_MSG_FILE = "No file selected."
-SF_MSG_INCOMMING_FILE = "You are getting an incomming file, do you want to accept?"
-SF_MSG_DECILINED = "File transfer was decilined."
+SF_MSG_USER = "Ingen användare vald."
+SF_MSG_FILE = "Ingen fil vald."
+SF_MSG_INCOMMING_FILE = "Filöverföring har skickats till dig, vill du acceptera?"
+SF_MSG_DECILINED = "Filöverföringen var nekad."
 
 SF_COMMAND_BROWSE = "&Sök .."
 SF_COMMAND_SENDFILE = "Sänd"
 
-DESP_TEXT_NEW_MSG = "New Message!"
+SF2_COMMAND_OPEN_FILE = "&Öppna fil map"
+
+DESP_TEXT_NEW_MSG = "Nytt meddelande!"
 DESP_TEXT_DC_SERVER = "Koppla ifrån servern!"
 
 LANG_COMMAND_ENTER = "&Öppna"
 LANG_LABEL_SELLANG = "Välj språk:"
+
+SOC_FRIEND_LIST = "Kompis Lista"
+SOC_ONLINE_LIST = "Online Lista"
+
+SOC_COMMAND_ADD = "&Tillägg"
+SOC_COMMAND_REMOVE = "&Ta bort"
+
+REG_FRAME_DETAIL = "Ange dina detaljer"
+
+REG_LABEL_ACCOUNT_NAME = " Användar Namn:"
+REG_LABEL_PASSWORD = " Lösenord:"
+REG_LABEL_PASSWORD_CONFIRM = " Bekräfta lösenord:"
+REG_LABEL_PASSWORD_WEAK = "Lösenordet är lätt."
+REG_LABEL_PASSWORD_NORMAL = "Lösenordet är normalt."
+REG_LABEL_PASSWORD_STRONG = "Lösenordet är svårt."
+
+REG_COMMAND_SUBMIT = "&Acceptera"
+REG_COMMAND_CLOSE = "&Ständ"
+
+REG_CHECK_PASSWORD_SHOW = "&Show Password."
+
+REG_MSG_ACCOUNT_EXIST = "Namnet är upptaget."
+REG_MSG_ACCOUNT_INVALID = "Ogiltigt namn."
+REG_MSG_ACCOUNT_NUMERIC = "Namnet kan inte bestå av number."
+REG_MSG_ACCOUNT_EMPTY = "Inget namn angivet."
+REG_MSG_ACCOUNT_SHORT = "För kort namn, det kräver åtminstone 4 bokstäver."
+
+REG_MSG_PASSWORD_MATCH = "Ogiltigt lösenord."
+REG_MSG_PASSWORD_SHORT = "För kort lösenord, det kräver åtminstone 6 bokstäver."
+REG_MSG_PASSWORD_EMPTY = "Inget lösenord angivet."
+
+REG_MSG_SUCCESSFULLY = "Kontot har skapats."
+REG_MSG_ERROR = "Ett fel har uppstått var snäll och försök igen."
+REG_MSG_ERROR_OCCURED = "Ett fel har uppstått ..."
+REG_MSG_LOADING = " Laddar .."
+REG_MSG_CONNECTION_BROKEN = "Anslutnings fel, var snäll och försök igen."
+
+SET_LABEL_COLOR = "Nuvarande färg:"
+
+SET_FRAME_OPTIONS = "Alternativ"
+SET_FRAME_CONNECTION = "Anslutnings inställningar"
+
+SET_CHECK_SAVE_ACCOUNT = "Spara konto"
+SET_CHECK_SAVE_PASSWORD = "Spara lösenord"
+
+SET_COMMAND_LANGUAGE = "&Språk"
+SET_COMMAND_SAVE = "&Spara"
 End Sub
 
-Public Sub SetLangItalian()
+Public Sub SET_LANG_ITALIAN()
 ' Mdi form
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Invia File"
@@ -434,9 +674,58 @@ DESP_TEXT_DC_SERVER = "Disconnesso dal Server!"
 
 LANG_COMMAND_ENTER = "&Apri"
 LANG_LABEL_SELLANG = "Seleziona la tua lingua:"
+
+SOC_FRIEND_LIST = "Friend List"
+SOC_ONLINE_LIST = "Online List"
+
+SOC_COMMAND_ADD = "&Add"
+SOC_COMMAND_REMOVE = "&Remove"
+
+REG_FRAME_DETAIL = "Enter your details"
+
+REG_LABEL_ACCOUNT_NAME = " Account Name:"
+REG_LABEL_PASSWORD = " Password:"
+REG_LABEL_PASSWORD_CONFIRM = " Confirm the Password:"
+REG_LABEL_PASSWORD_WEAK = "The password is weak."
+REG_LABEL_PASSWORD_NORMAL = "The password is normal."
+REG_LABEL_PASSWORD_STRONG = "The password is strong."
+
+REG_COMMAND_SUBMIT = "&Submit"
+REG_COMMAND_CLOSE = "&Close"
+
+REG_CHECK_PASSWORD_SHOW = "&Show Password."
+
+REG_MSG_ACCOUNT_EXIST = "The account name already exists."
+REG_MSG_ACCOUNT_INVALID = "Invalid account name."
+REG_MSG_ACCOUNT_NUMERIC = "Account can't be made of numeric characters."
+REG_MSG_ACCOUNT_EMPTY = "No account entered."
+REG_MSG_ACCOUNT_SHORT = "Account name to short, it requieres at least 4 characters."
+
+REG_MSG_PASSWORD_MATCH = "The passwords dont match."
+REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
+REG_MSG_PASSWORD_EMPTY = "No Password entered."
+
+REG_MSG_SUCCESSFULLY = "The account was successfully registered."
+REG_MSG_ERROR = "An error has occured please try later again."
+REG_MSG_ERROR_OCCURED = "Error has occured ..."
+REG_MSG_LOADING = " Loading .."
+REG_MSG_CONNECTION_BROKEN = "Connection is broken please try again later."
+
+SET_LABEL_COLOR = "Current Color:"
+
+SET_FRAME_OPTIONS = "Options"
+SET_FRAME_CONNECTION = "Connection Settings"
+
+SET_CHECK_SAVE_ACCOUNT = "Save Account"
+SET_CHECK_SAVE_PASSWORD = "Save Password"
+
+SET_COMMAND_LANGUAGE = "&Language"
+SET_COMMAND_SAVE = "&Save"
+
+SF2_COMMAND_OPEN_FILE = "&Open File Folder"
 End Sub
 
-Public Sub SetLangSerbian()
+Public Sub SET_LANG_SERBIAN()
 ' Mdi form ..
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Slanje fajla"
@@ -506,9 +795,58 @@ DESP_TEXT_DC_SERVER = "Veza sa serverom je prekinuta!"
 
 LANG_COMMAND_ENTER = "&Otvori"
 LANG_LABEL_SELLANG = "Dodaj svoj jezik:"
+
+SOC_FRIEND_LIST = "Friend List"
+SOC_ONLINE_LIST = "Online List"
+
+SOC_COMMAND_ADD = "&Add"
+SOC_COMMAND_REMOVE = "&Remove"
+
+REG_FRAME_DETAIL = "Enter your details"
+
+REG_LABEL_ACCOUNT_NAME = " Account Name:"
+REG_LABEL_PASSWORD = " Password:"
+REG_LABEL_PASSWORD_CONFIRM = " Confirm the Password:"
+REG_LABEL_PASSWORD_WEAK = "The password is weak."
+REG_LABEL_PASSWORD_NORMAL = "The password is normal."
+REG_LABEL_PASSWORD_STRONG = "The password is strong."
+
+REG_COMMAND_SUBMIT = "&Submit"
+REG_COMMAND_CLOSE = "&Close"
+
+REG_CHECK_PASSWORD_SHOW = "&Show Password."
+
+REG_MSG_ACCOUNT_EXIST = "The account name already exists."
+REG_MSG_ACCOUNT_INVALID = "Invalid account name."
+REG_MSG_ACCOUNT_NUMERIC = "Account can't be made of numeric characters."
+REG_MSG_ACCOUNT_EMPTY = "No account entered."
+REG_MSG_ACCOUNT_SHORT = "Account name to short, it requieres at least 4 characters."
+
+REG_MSG_PASSWORD_MATCH = "The passwords dont match."
+REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
+REG_MSG_PASSWORD_EMPTY = "No Password entered."
+
+REG_MSG_SUCCESSFULLY = "The account was successfully registered."
+REG_MSG_ERROR = "An error has occured please try later again."
+REG_MSG_ERROR_OCCURED = "Error has occured ..."
+REG_MSG_LOADING = " Loading .."
+REG_MSG_CONNECTION_BROKEN = "Connection is broken please try again later."
+
+SET_LABEL_COLOR = "Current Color:"
+
+SET_FRAME_OPTIONS = "Options"
+SET_FRAME_CONNECTION = "Connection Settings"
+
+SET_CHECK_SAVE_ACCOUNT = "Save Account"
+SET_CHECK_SAVE_PASSWORD = "Save Password"
+
+SET_COMMAND_LANGUAGE = "&Language"
+SET_COMMAND_SAVE = "&Save"
+
+SF2_COMMAND_OPEN_FILE = "&Open File Folder"
 End Sub
 
-Public Sub SetLangDutch()
+Public Sub SET_LANG_DUTCH()
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Bestand Verzenden"
 MDI_COMMAND_SOCIETY = "&Online List"
@@ -527,10 +865,10 @@ MDI_MSG_WRONG_PASSWORD = "The password is wrong."
 MDI_MSG_BANNED = "This account is banned."
 
 CONFIG_COMMAND_CONNECT = "&Verbind"
-CONFIG_COMMAND_DISCONNECT = "&Verbreek de verbinding"
-CONFIG_COMMAND_SETTINGS = "&Settings"
+CONFIG_COMMAND_DISCONNECT = "&Verbinding verbreken"
+CONFIG_COMMAND_SETTINGS = "&Instellingen"
+CONFIG_COMMAND_REGISTER = "&Account aanmaken"
 CONFIG_COMMAND_UPDATE = "&Update"
-CONFIG_COMMAND_REGISTER = "&Register Account"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
@@ -543,8 +881,8 @@ LANG_SERBIAN = "Serbisch"
 LANG_DUTCH = "Nederlands"
 LANG_FRENCH = "Frans"
 
-CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
-CONFIG_MSG_PASSWORD = "You did'nt introduce an password."
+CONFIG_MSG_ACCOUNT = "Je hebt geen gebruikersnaam ingevuld."
+CONFIG_MSG_PASSWORD = "Je hebt geen wachtwoord ingevuld."
 CONFIG_MSG_NUMERIC = "U kan geen naam nemen dat nummers bevat."
 CONFIG_MSG_PORT = "U hebt geen poort ingesteld."
 CONFIG_MSG_NAME = "U hebt geen naam gegoven."
@@ -569,14 +907,70 @@ SF_COMMAND_BROWSE = "&Zoeken .."
 SF_COMMAND_SENDFILE = "&Stuur"
 SF_COMMAND_CANCEL = "&Annuleren .."
 
-DESP_TEXT_NEW_MSG = "New Message!"
+DESP_TEXT_NEW_MSG = "Nieuw bericht!"
 DESP_TEXT_DC_SERVER = "Verbinding verbroken met de server"
 
 LANG_COMMAND_ENTER = "&Openen"
 LANG_LABEL_SELLANG = "Selecteer jou taal:"
+
+SOC_FRIEND_LIST = "Vriendenlijst"
+SOC_ONLINE_LIST = "Online List"
+
+SOC_COMMAND_ADD = "&Toevoegen"
+SOC_COMMAND_REMOVE = "&Verwijderen"
+
+REG_FRAME_DETAIL = "Voeg je gegevens in"
+
+REG_LABEL_ACCOUNT_NAME = " Gebruikersnaam:"
+REG_LABEL_PASSWORD = " Wachtwoord:"
+REG_LABEL_PASSWORD_CONFIRM = " Bevestig Wachtwoord:"
+REG_LABEL_PASSWORD_WEAK = "Dit wachtwoord is zwak."
+REG_LABEL_PASSWORD_NORMAL = "Dit wachtwoord is redelijk."
+REG_LABEL_PASSWORD_STRONG = "Dit wachtwoord is goed."
+
+REG_CHECK_PASSWORD_SHOW = "Laat wachtwoord zien"
+
+REG_COMMAND_SUBMIT = "&Versturen"
+REG_COMMAND_CLOSE = "&Sluiten"
+
+REG_MSG_ACCOUNT_EXIST = "Deze gebruikersnaam is al in gebruik."
+REG_MSG_ACCOUNT_INVALID = "Niet bruikbare gebruikersnaam."
+REG_MSG_ACCOUNT_NUMERIC = "Een account kan niet uit cijfers bestaan."
+REG_MSG_ACCOUNT_EMPTY = "Geen gebruikersnaam ingevoerd."
+REG_MSG_ACCOUNT_SHORT = "Gebruikersnaam te kort, minstens 4 teken."
+
+REG_MSG_PASSWORD_MATCH = "Wachtwoorden komen niet overeen."
+REG_MSG_PASSWORD_SHORT = "Wachtwoord te kort, minstens 4 tekens."
+REG_MSG_PASSWORD_EMPTY = "Geen wachtwoord ingevoerd."
+
+REG_MSG_SUCCESSFULLY = "Account succesvol aangemaakt."
+REG_MSG_ERROR = "Er is een fout opgetreden, probeer het later opnieuw."
+REG_MSG_ERROR_OCCURED = "Fout opgetreden ..."
+REG_MSG_LOADING = " Laden.. "
+REG_MSG_CONNECTION_BROKEN = "Verbinding verbroken."
+
+SET_LABEL_COLOR = "Momenteel gebruikte kleur:"
+
+SET_FRAME_OPTIONS = "Instellingen"
+SET_FRAME_CONNECTION = "Verbinding Instellingen"
+
+SET_CHECK_SAVE_ACCOUNT = "Gebruiker opslaan"
+SET_CHECK_SAVE_PASSWORD = "Wachtwoord opslaan"
+
+SET_COMMAND_LANGUAGE = "&Taal"
+SET_COMMAND_SAVE = "&Opslaan"
+
+SF_LABEL_SEND_TO = "Verzenden naar:"
+
+SF_MSG_USER = "Geen gebruiker geselecteerd."
+SF_MSG_FILE = "Geen bestand geselecteerd."
+SF_MSG_INCOMMING_FILE = "Iemand wil een bestand versturen, wilt u accepteren?"
+SF_MSG_DECILINED = "Gegevensoverdracht geweigerd."
+
+SF2_COMMAND_OPEN_FILE = "&Open bestandsmap"
 End Sub
 
-Public Sub SetLangFrench()
+Public Sub SET_LANG_FRENCH()
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Envoi File"
 MDI_COMMAND_SOCIETY = "&Liste contact Online"
@@ -641,4 +1035,53 @@ DESP_TEXT_DC_SERVER = "Deconnecté du Server"
 
 LANG_COMMAND_ENTER = "&Ouvrir"
 LANG_LABEL_SELLANG = "Choisissez votre langue:"
+
+SOC_FRIEND_LIST = "Friend List"
+SOC_ONLINE_LIST = "Online List"
+
+SOC_COMMAND_ADD = "&Add"
+SOC_COMMAND_REMOVE = "&Remove"
+
+REG_FRAME_DETAIL = "Enter your details"
+
+REG_LABEL_ACCOUNT_NAME = " Account Name:"
+REG_LABEL_PASSWORD = " Password:"
+REG_LABEL_PASSWORD_CONFIRM = " Confirm the Password:"
+REG_LABEL_PASSWORD_WEAK = "The password is weak."
+REG_LABEL_PASSWORD_NORMAL = "The password is normal."
+REG_LABEL_PASSWORD_STRONG = "The password is strong."
+
+REG_COMMAND_SUBMIT = "&Submit"
+REG_COMMAND_CLOSE = "&Close"
+
+REG_CHECK_PASSWORD_SHOW = "&Show Password."
+
+REG_MSG_ACCOUNT_EXIST = "The account name already exists."
+REG_MSG_ACCOUNT_INVALID = "Invalid account name."
+REG_MSG_ACCOUNT_NUMERIC = "Account can't be made of numeric characters."
+REG_MSG_ACCOUNT_EMPTY = "No account entered."
+REG_MSG_ACCOUNT_SHORT = "Account name to short, it requieres at least 4 characters."
+
+REG_MSG_PASSWORD_MATCH = "The passwords dont match."
+REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
+REG_MSG_PASSWORD_EMPTY = "No Password entered."
+
+REG_MSG_SUCCESSFULLY = "The account was successfully registered."
+REG_MSG_ERROR = "An error has occured please try later again."
+REG_MSG_ERROR_OCCURED = "Error has occured ..."
+REG_MSG_LOADING = " Loading .."
+REG_MSG_CONNECTION_BROKEN = "Connection is broken please try again later."
+
+SET_LABEL_COLOR = "Current Color:"
+
+SET_FRAME_OPTIONS = "Options"
+SET_FRAME_CONNECTION = "Connection Settings"
+
+SET_CHECK_SAVE_ACCOUNT = "Save Account"
+SET_CHECK_SAVE_PASSWORD = "Save Password"
+
+SET_COMMAND_LANGUAGE = "&Language"
+SET_COMMAND_SAVE = "&Save"
+
+SF2_COMMAND_OPEN_FILE = "&Open File Folder"
 End Sub

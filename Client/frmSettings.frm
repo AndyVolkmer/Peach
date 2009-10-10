@@ -76,18 +76,18 @@ Begin VB.Form frmSettings
       Begin VB.CheckBox SavePassword 
          Caption         =   "Save Password"
          Height          =   195
-         Left            =   1800
+         Left            =   2040
          TabIndex        =   3
          Top             =   360
-         Width           =   1695
+         Width           =   2055
       End
       Begin VB.CheckBox SaveAccount 
          Caption         =   "Save Account"
          Height          =   195
-         Left            =   240
+         Left            =   120
          TabIndex        =   2
          Top             =   360
-         Width           =   1695
+         Width           =   1815
       End
    End
    Begin VB.CommandButton Command2 
@@ -166,15 +166,15 @@ Command2.Enabled = False
 Dim Path As String
 Path = App.Path & "\Config.ini"
 
-WriteIniValue Path, "Connection", "IP", txtIP.Text
-WriteIniValue Path, "Connection", "Port", txtPort.Text
+WriteIniValue Path, "Connection", "IP", txtIP
+WriteIniValue Path, "Connection", "Port", txtPort
 WriteIniValue Path, "Private", "SchemeColor", txtColor.BackColor
 WriteIniValue Path, "Private", "PasswordTick", CBool(SavePassword.Value)
 WriteIniValue Path, "Private", "AccountTick", CBool(SaveAccount.Value)
 
 With Setting
-    .SERVER_IP = txtIP.Text
-    .SERVER_PORT = txtPort.Text
+    .SERVER_IP = txtIP
+    .SERVER_PORT = txtPort
     .SCHEME_COLOR = txtColor.BackColor
     .PASSWORD_TICK = SavePassword.Value
     .ACCOUNT_TICK = SaveAccount.Value
@@ -183,7 +183,18 @@ End With
 SetScheme
 End Sub
 
+Public Sub LoadSettingsForm()
+Label1.Caption = SET_LABEL_COLOR
+Frame2.Caption = SET_FRAME_OPTIONS
+SaveAccount.Caption = SET_CHECK_SAVE_ACCOUNT
+SavePassword.Caption = SET_CHECK_SAVE_PASSWORD
+Frame3.Caption = SET_FRAME_CONNECTION
+Command1.Caption = SET_COMMAND_LANGUAGE
+Command2.Caption = SET_COMMAND_SAVE
+End Sub
+
 Private Sub Form_Load()
+LoadSettingsForm
 With Setting
     txtColor.BackColor = .SCHEME_COLOR
     If .ACCOUNT_TICK = True Then
@@ -196,8 +207,8 @@ With Setting
     Else
         SavePassword.Value = 0
     End If
-    txtIP.Text = .SERVER_IP
-    txtPort.Text = .SERVER_PORT
+    txtIP = .SERVER_IP
+    txtPort = .SERVER_PORT
 End With
 End Sub
 

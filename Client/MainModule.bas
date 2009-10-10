@@ -18,27 +18,27 @@ LoadIniValue
 If Setting.VALIDATE = 0 Then
     Select Case Setting.LANGUAGE
     Case 0 'German
-        SetLangGerman
+        SET_LANG_GERMAN
     Case 1 'English
-        SetLangEnglish
+        SET_LANG_ENGLISH
     Case 2 'Spanish
-        SetLangSpanish
+        SET_LANG_SPANISH
     Case 3 'Swedish
-        SetLangSwedish
+        SET_LANG_SWEDISH
     Case 4 'Italian
-        SetLangItalian
+        SET_LANG_ITALIAN
     Case 5 'Dutch
-        SetLangDutch
+        SET_LANG_DUTCH
     Case 6 'Serbian
-        SetLangSerbian
+        SET_LANG_SERBIAN
     Case 7 'French
-        SetLangFrench
+        SET_LANG_FRENCH
     End Select
     frmMain.Show
     SetScheme
 Else
     'Set language default -> english
-    SetLangEnglish
+    SET_LANG_ENGLISH
     frmLanguage.Show
 End If
 

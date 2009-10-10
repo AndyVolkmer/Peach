@@ -25,7 +25,7 @@ Begin VB.Form frmRegistration
    StartUpPosition =   1  'CenterOwner
    Begin MSWinsockLib.Winsock RegSock 
       Left            =   120
-      Top             =   2640
+      Top             =   2880
       _ExtentX        =   741
       _ExtentY        =   741
       _Version        =   393216
@@ -47,7 +47,7 @@ Begin VB.Form frmRegistration
       TabIndex        =   11
       Top             =   2640
       Visible         =   0   'False
-      Width           =   1815
+      Width           =   1935
    End
    Begin VB.CommandButton Command1 
       BackColor       =   &H00F4F4F4&
@@ -219,7 +219,7 @@ Begin VB.Form frmRegistration
    End
    Begin VB.Label Label4 
       BackColor       =   &H00F4F4F4&
-      Height          =   255
+      Height          =   615
       Left            =   240
       TabIndex        =   8
       Top             =   120
@@ -243,103 +243,81 @@ End Sub
 
 Private Sub Command1_Click()
 'Close form
-If Command1.Caption = "&Close" Then
+If Command1.Caption = REG_COMMAND_CLOSE Then
     Unload Me
     Exit Sub
 End If
 
 'Can't register if there is no Account
-If Len(txtAccount.Text) = 0 Then
-    MsgBox "No account entered.", vbInformation
+If Len(txtAccount) = 0 Then
+    MsgBox REG_MSG_ACCOUNT_EMPTY, vbInformation
     txtAccount.SetFocus
     Exit Sub
 End If
 
 'Can't register if account is shorter then 4 chars.
-If Len(txtAccount.Text) < 4 Then
-    MsgBox "Account name to short, it requieres at least 4 characters.", vbInformation
+If Len(txtAccount) < 4 Then
+    MsgBox REG_MSG_ACCOUNT_SHORT, vbInformation
     txtAccount.SetFocus
     Exit Sub
 End If
 
 'Check for spaces and other signs in the account
-With txtAccount
-    If CheckString(.Text, " ") = True Then Exit Sub
-    If CheckString(.Text, ".") = True Then Exit Sub
-    If CheckString(.Text, "*") = True Then Exit Sub
-    If CheckString(.Text, "#") = True Then Exit Sub
-    If CheckString(.Text, "{") = True Then Exit Sub
-    If CheckString(.Text, "}") = True Then Exit Sub
-    If CheckString(.Text, ",") = True Then Exit Sub
-    If CheckString(.Text, "(") = True Then Exit Sub
-    If CheckString(.Text, ")") = True Then Exit Sub
-    If CheckString(.Text, "&") = True Then Exit Sub
-    If CheckString(.Text, "!") = True Then Exit Sub
-    If CheckString(.Text, "@") = True Then Exit Sub
-    If CheckString(.Text, "?") = True Then Exit Sub
-    If CheckString(.Text, "/") = True Then Exit Sub
-    If CheckString(.Text, "¬") = True Then Exit Sub
-    If CheckString(.Text, "=") = True Then Exit Sub
-    If CheckString(.Text, "<") = True Then Exit Sub
-    If CheckString(.Text, ">") = True Then Exit Sub
-    If CheckString(.Text, "[") = True Then Exit Sub
-    If CheckString(.Text, "]") = True Then Exit Sub
-    If CheckString(.Text, "'") = True Then Exit Sub
-    If CheckString(.Text, "¿") = True Then Exit Sub
-    If CheckString(.Text, "º") = True Then Exit Sub
-    If CheckString(.Text, "ª") = True Then Exit Sub
-    If CheckString(.Text, "\") = True Then Exit Sub
-    If CheckString(.Text, "|") = True Then Exit Sub
-    If CheckString(.Text, "~") = True Then Exit Sub
-    If CheckString(.Text, "´") = True Then Exit Sub
-    If CheckString(.Text, "`") = True Then Exit Sub
-    If CheckString(.Text, "+") = True Then Exit Sub
-    If CheckString(.Text, "-") = True Then Exit Sub
-    If CheckString(.Text, "^") = True Then Exit Sub
-    If CheckString(.Text, "_") = True Then Exit Sub
-    If CheckString(.Text, "·") = True Then Exit Sub
-End With
+Dim SIGN_STRING As String
+Dim SIGN_ARRAY() As String
+
+SIGN_STRING = " 1F.1F*1F#1F{1F}1F,1F(1F)1F&1F!1F@1F?1F/1F¬1F=1F<1F>1F[1F]1F'1F¿1Fº1Fª1F\1F|1F~1F´1F`1F+1F-1F^1F_1F·"
+SIGN_ARRAY = Split(SIGN_STRING, "1F")
+
+For i = LBound(SIGN_ARRAY) To UBound(SIGN_ARRAY)
+    If CheckString(txtAccount, SIGN_ARRAY(i)) = True Then
+        SIGN_STRING = vbNullString
+        Exit Sub
+    End If
+Next i
+
+SIGN_STRING = vbNullString
 
 'Can't register if the Account is made out of numbers
-If IsNumeric(txtAccount.Text) = True Then
-    MsgBox "Account can't be made of numeric characters.", vbInformation
+If IsNumeric(txtAccount) = True Then
+    MsgBox REG_MSG_ACCOUNT_NUMERIC, vbInformation
     txtAccount.SetFocus
     Exit Sub
 End If
 
 'Can't register if there is no Password
-If Len(txtPassword1.Text) = 0 Then
-    MsgBox "No Password entered.", vbInformation
+If Len(txtPassword1) = 0 Then
+    MsgBox REG_MSG_PASSWORD_EMPTY, vbInformation
     txtPassword1.SetFocus
     Exit Sub
 End If
 
 'Can't register if password is shorter then 6 chars.
-If Len(txtPassword1.Text) < 6 Then
-    MsgBox "Password to short, it requieres at least 6 characters."
+If Len(txtPassword1) < 6 Then
+    MsgBox REG_MSG_PASSWORD_SHORT, vbInformation
     txtPassword1.SetFocus
     Exit Sub
 End If
 
 'Can't register if passwords dont match
-If txtPassword1.Text <> txtPassword2.Text Then
-    MsgBox "Your Passwords don't match.", vbInformation
+If txtPassword1 <> txtPassword2 Then
+    MsgBox REG_MSG_PASSWORD_MATCH, vbInformation
     txtPassword2.SetFocus
     Exit Sub
 End If
 
 'Can't register if the winsock is not connected
 If RegSock.State <> 7 Then
-    MsgBox "Connection is broken please try again later.", vbInformation
+    MsgBox REG_MSG_CONNECTION_BROKEN, vbInformation
     Exit Sub
 End If
 
-RegSock.SendData "!register" & "#" & txtAccount.Text & "#" & txtPassword1.Text & "#"
+RegSock.SendData "!register" & "#" & txtAccount & "#" & txtPassword1 & "#"
 End Sub
 
 Private Function CheckString(pString As String, pChar As String) As Boolean
 If InStr(1, pString, pChar) <> 0 Then
-    MsgBox "Invalid account name.", vbInformation
+    MsgBox REG_MSG_ACCOUNT_INVALID, vbInformation
     With txtAccount
         .SetFocus
         .Text = vbNullString
@@ -349,19 +327,29 @@ End If
 End Function
 
 Private Sub Form_Load()
+LoadRegistrationForm
 With RegSock
     .RemoteHost = Setting.SERVER_IP
     .RemotePort = rPort
     .Connect
 End With
 Screen.MousePointer = vbArrowHourglass
-Me.Caption = " Loading ..."
+Me.Caption = REG_MSG_LOADING
+End Sub
+
+Public Sub LoadRegistrationForm()
+Frame1.Caption = REG_FRAME_DETAIL
+Label1.Caption = REG_LABEL_ACCOUNT_NAME
+Label2.Caption = REG_LABEL_PASSWORD
+Label3.Caption = REG_LABEL_PASSWORD_CONFIRM
+Check1.Caption = REG_CHECK_PASSWORD_SHOW
+Command1.Caption = REG_COMMAND_SUBMIT
 End Sub
 
 Private Sub RegSock_Close()
-Me.Caption = "Error has occured ..."
-Label4.Caption = "An error has occured please try later again."
-Command1.Caption = "&Close"
+Me.Caption = REG_MSG_ERROR_OCCURED
+Label4.Caption = REG_MSG_ERROR
+Command1.Caption = REG_COMMAND_CLOSE
 Command1.Visible = False
 Frame1.Visible = False
 Check1.Visible = False
@@ -386,19 +374,19 @@ Array1 = Split(GetMessage, "#")
 
 Select Case Array1(0)
 Case "!nameexist"
-    MsgBox "The account name already exists.", vbInformation
-    txtAccount.Text = vbNullString
+    MsgBox REG_MSG_ACCOUNT_EXIST, vbInformation
+    txtAccount = vbNullString
     txtAccount.SetFocus
 Case "!done"
-    MsgBox "The account was successfully registered.", vbInformation
+    MsgBox REG_MSG_SUCCESSFULLY, vbInformation
     Unload Me
 End Select
 End Sub
 
 Private Sub RegSock_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-Me.Caption = "Error has occured ..."
-Label4.Caption = "An error has occured please try later again."
-Command1.Caption = "&Close"
+Me.Caption = REG_MSG_ERROR_OCCURED
+Label4.Caption = REG_MSG_ERROR
+Command1.Caption = REG_COMMAND_CLOSE
 Command1.Visible = True
 Screen.MousePointer = vbDefault
 End Sub
@@ -408,25 +396,25 @@ If KeyAscii = vbKeyReturn Then Command1_Click
 End Sub
 
 Private Sub txtPassword1_Change()
-Select Case Len(txtPassword1.Text)
+Select Case Len(txtPassword1)
 Case Is < 6
     Picture1.BackColor = vbRed
     Picture1.BorderStyle = 1
     Label5.BackColor = vbRed
     Label5.ForeColor = vbWhite
-    Label5.Caption = "The password is weak."
+    Label5.Caption = REG_LABEL_PASSWORD_WEAK
 Case 6, 7, 8
     Picture1.BackColor = vbYellow
     Picture1.BorderStyle = 1
     Label5.BackColor = vbYellow
     Label5.ForeColor = vbBlack
-    Label5.Caption = "The password is normal."
+    Label5.Caption = REG_LABEL_PASSWORD_NORMAL
 Case Is > 9
     Picture1.BackColor = vbGreen
     Picture1.BorderStyle = 1
     Label5.BackColor = vbGreen
     Label5.ForeColor = vbBlack
-    Label5.Caption = "The password is strong."
+    Label5.Caption = REG_LABEL_PASSWORD_STRONG
 End Select
 End Sub
 

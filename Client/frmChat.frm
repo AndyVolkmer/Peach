@@ -148,7 +148,7 @@ If LCase$(RTrim$(txtToSend.Text)) = "/time" Then
 End If
 
 'Send public message
-SendMsg "!msg#" & frmConfig.txtNick.Text & "#" & Trim$(txtToSend.Text) & "#"
+SendMsg "!msg#" & frmConfig.txtNick & "#" & Trim$(txtToSend.Text) & "#"
 Call Clear
 
 End Sub

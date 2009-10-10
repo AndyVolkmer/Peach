@@ -232,7 +232,7 @@ Begin VB.Form frmConfig
       Left            =   120
       TabIndex        =   4
       Top             =   3480
-      Width           =   1335
+      Width           =   1455
    End
 End
 Attribute VB_Name = "frmConfig"
@@ -254,7 +254,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     If CheckTx(txtNick, CONFIG_MSG_NAME) = True Then Exit Sub
      
     'Nick can't be numeric
-    If IsNumeric(txtNick.Text) = True Then
+    If IsNumeric(txtNick) = True Then
         txtNick.Text = vbNullString
         MsgBox CONFIG_MSG_NUMERIC, vbInformation
         txtNick.SetFocus
@@ -262,15 +262,15 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     End If
 
     'Nick can't be shorter then 4 characters
-    If Len(txtNick.Text) < 4 Then
+    If Len(txtNick) < 4 Then
         MsgBox "Your nickname is to short!", vbInformation, " Error - Nickname"
-        txtNick.SelStart = Len(txtNick.Text)
+        txtNick.SelStart = Len(txtNick)
         txtNick.SetFocus
         Exit Sub
     End If
     
     'Make the name proper case
-    txtNick.Text = StrConv(txtNick.Text, vbProperCase)
+    txtNick = StrConv(txtNick, vbProperCase)
 
     'Connect winsocks
     With frmMain.Winsock1
@@ -324,9 +324,9 @@ Public Sub Form_Load()
 Top = 0: Left = 0
 lblVersion.Caption = "Version : " & Rev
 
-txtAccount.Text = Setting.ACCOUNT
-txtNick.Text = Setting.NICKNAME
-txtPassword.Text = Setting.PASSWORD
+txtAccount = Setting.ACCOUNT
+txtNick = Setting.NICKNAME
+txtPassword = Setting.PASSWORD
 
 LoadConfigForm
 End Sub
@@ -339,7 +339,7 @@ cmdConnect.Caption = CONFIG_COMMAND_CONNECT
 End Sub
 
 Private Function CheckTx(txtBox As TextBox, mBox As String) As Boolean
-If Len(Trim$(txtBox.Text)) = 0 Then
+If Len(Trim$(txtBox)) = 0 Then
     MsgBox mBox, vbInformation
     txtBox.SetFocus
     CheckTx = True
@@ -348,9 +348,9 @@ End Function
 
 Private Sub Form_Unload(Cancel As Integer)
 'Write data entries to .ini file
-WriteIniValue App.Path & "\Config.ini", "Private", "Password", Encode(Encode(txtPassword.Text))
-WriteIniValue App.Path & "\Config.ini", "Private", "Account", txtAccount.Text
-WriteIniValue App.Path & "\Config.ini", "Private", "Nickname", txtNick.Text
+WriteIniValue App.Path & "\Config.ini", "Private", "Password", Encode(Encode(txtPassword))
+WriteIniValue App.Path & "\Config.ini", "Private", "Account", txtAccount
+WriteIniValue App.Path & "\Config.ini", "Private", "Nickname", txtNick
 
 'Write position entries to .ini file
 WriteIniValue App.Path & "\Config.ini", "Position", "Top", frmMain.Top
@@ -362,11 +362,11 @@ frmRegistration.Show 1
 End Sub
 
 Private Sub lblAuthor_Click()
-frmAbout.Show 1
+frmAbout.Show
 End Sub
 
 Private Sub lblVersion_Click()
-frmAbout.Show 1
+frmAbout.Show
 End Sub
 
 Private Sub txtAccount_KeyPress(KeyAscii As Integer)
@@ -382,7 +382,7 @@ If KeyAscii = vbKeyReturn Then cmdConnect_Click
 End Sub
 
 Private Sub txtNick_LostFocus()
-txtNick.Text = StrConv(txtNick.Text, vbProperCase)
+txtNick = StrConv(txtNick, vbProperCase)
 End Sub
 
 Private Sub txtPassword_KeyPress(KeyAscii As Integer)

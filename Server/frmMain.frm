@@ -952,7 +952,10 @@ Case "!msg"
                 Next i
                 UpdateUsersList
             End With
-                        
+        
+        Case "/logout"
+            KickUser GetUser, Index
+        
         Case Else
             SendSingle "Unknown command used.", frmMain.Winsock1(Index)
                     

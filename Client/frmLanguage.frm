@@ -62,27 +62,29 @@ Attribute VB_Exposed = False
 Private Sub cmdEnter_Click()
 Select Case Combo1.ListIndex
 Case 0
-    SetLangGerman
+    SET_LANG_GERMAN
 Case 1
-    SetLangEnglish
+    SET_LANG_ENGLISH
 Case 2
-    SetLangSpanish
+    SET_LANG_SPANISH
 Case 3
-    SetLangSwedish
+    SET_LANG_SWEDISH
 Case 4
-    SetLangItalian
+    SET_LANG_ITALIAN
 Case 5
-    SetLangDutch
+    SET_LANG_DUTCH
 Case 6
-    SetLangSerbian
+    SET_LANG_SERBIAN
 Case 7
-    SetLangFrench
+    SET_LANG_FRENCH
 End Select
 
 frmMain.LoadMDIForm
 frmSendFile.LoadSendFileForm
 frmChat.LoadChatForm
 frmConfig.LoadConfigForm
+frmSettings.LoadSettingsForm
+frmRegistration.LoadRegistrationForm
 
 WriteIniValue App.Path & "\Config.ini", "Language", "Validate", "0"
 WriteIniValue App.Path & "\Config.ini", "Language", "Language", frmLanguage.Combo1.ListIndex
@@ -93,21 +95,21 @@ Private Sub Combo1_Click()
 cmdEnter.Enabled = True
 Select Case Combo1.ListIndex
 Case 0 'German
-    SetLangGerman
+    SET_LANG_GERMAN
 Case 1 'English
-    SetLangEnglish
+    SET_LANG_ENGLISH
 Case 2 'Spanish
-    SetLangSpanish
+    SET_LANG_SPANISH
 Case 3 'Swedish
-    SetLangSwedish
+    SET_LANG_SWEDISH
 Case 4 'Italian
-    SetLangItalian
+    SET_LANG_ITALIAN
 Case 5 'Dutch
-    SetLangDutch
+    SET_LANG_DUTCH
 Case 6 'Serbian
-    SetLangSerbian
+    SET_LANG_SERBIAN
 Case 7 'French
-    SetLangFrench
+    SET_LANG_FRENCH
 End Select
 SetLang
 End Sub
