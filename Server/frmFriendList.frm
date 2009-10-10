@@ -77,8 +77,8 @@ Me.Top = 0: Me.Left = 0
 End Sub
 
 Public Sub AddFriend(pUser As String, pFriend As String, pIndex As Integer)
-Dim IsValid  As Boolean
-
+Dim IsValid   As Boolean
+Dim j         As Integer
 'Check if friends account exist
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
@@ -92,17 +92,19 @@ End With
 'Check if the account is already added
 With ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(2) = pFriend Then
-            SendSingle "!friend_already_added#" & pFriend & "#", frmMain.Winsock1(pIndex)
-            Exit Sub
+        If .Item(i).SubItems(1) = pUser Then
+            If .Item(i).SubItems(2) = pFriend Then
+                SendSingle "!friend_already_added#" & pFriend & "#", frmMain.Winsock1(pIndex)
+                Exit Sub
+            End If
         End If
     Next i
 End With
 
+j = 0
+
 'If friends account exist then process
 If IsValid = True Then
-    
-    Dim j As Integer
     With ListView1.ListItems
         For i = 1 To .Count
             If .Item(i) = j Then

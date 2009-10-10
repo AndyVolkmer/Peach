@@ -151,6 +151,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub cmdColor_Click()
 With frmSendFile.CDialog
+    .CancelError = False
     .ShowColor
     txtColor.BackColor = .Color
 End With

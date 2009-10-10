@@ -3,7 +3,7 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.MDIForm frmMain 
    BackColor       =   &H00F4F4F4&
-   Caption         =   " Peach (Server)"
+   Caption         =   " Peach Server"
    ClientHeight    =   5085
    ClientLeft      =   60
    ClientTop       =   420
@@ -594,7 +594,16 @@ With frmPanel.ListView1.ListItems
         If .Item(i) = GetUser Then
             If .Item(i).SubItems(4) = "True" Then
                 Mute = True
+                Exit For
             End If
+        End If
+    Next i
+    
+    'Get proper account name
+    For i = 1 To .Count
+        If LCase(.Item(i).SubItems(5)) = LCase(GetUser) Then
+            pGetTarget = .Item(i).SubItems(5)
+            Exit For
         End If
     Next i
 End With
@@ -617,15 +626,15 @@ Case "!server_info"
     
 'Update Friend list
 Case "!get_friends"
-    UpdateFriendList GetUser
+    UpdateFriendList pGetTarget
     
 'Check if friends exist and save
 Case "!add_friend"
-    frmFriendList.AddFriend GetUser, GetConver, Index
+    frmFriendList.AddFriend pGetTarget, GetConver, Index
 
 'Remove friend from list
 Case "!remove_friend"
-    frmFriendList.RemoveFriend GetUser, GetConver, Index
+    frmFriendList.RemoveFriend pGetTarget, GetConver, Index
    
 'Add Name & Account to frmPanel ListView
 Case "!connected"
@@ -643,12 +652,24 @@ Case "!connected"
             End If
         Next i
     End With
-        
+    
+    Dim ORIGINAL_ACCOUNT As String
+    
+    'Save the original account name
+    With frmAccountPanel.ListView1.ListItems
+        For i = 1 To .Count
+            If LCase(.Item(i).SubItems(1)) = LCase(GetConver) Then
+                ORIGINAL_ACCOUNT = .Item(i).SubItems(1)
+                Exit For
+            End If
+        Next i
+    End With
+    
     CMSG GetCommand, GetUser
     With frmPanel.ListView1.ListItems
         i = .Count
         .Item(i).Text = GetUser
-        .Item(i).SubItems(5) = GetConver
+        .Item(i).SubItems(5) = ORIGINAL_ACCOUNT
     End With
     UpdateUsersList
 
@@ -685,7 +706,7 @@ Case "!namerequest"
 Case "!login"
     With frmAccountPanel.ListView1.ListItems
         For i = 1 To .Count
-            If .Item(i).SubItems(1) = GetUser Then
+            If LCase(.Item(i).SubItems(1)) = LCase(GetUser) Then
                 'Ban Check
                 If .Item(i).SubItems(5) = "True" Then
                     SendSingle "!login#Banned#", frmMain.Winsock1(Index)
