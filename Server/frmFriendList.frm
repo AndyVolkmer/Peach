@@ -83,6 +83,7 @@ Dim j         As Integer
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(1)) = LCase(pFriend) Then
+            pFriend = .Item(i).SubItems(1)
             IsValid = True
             Exit For
         End If
