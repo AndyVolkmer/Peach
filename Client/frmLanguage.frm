@@ -59,6 +59,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 Private Sub cmdEnter_Click()
 Select Case Combo1.ListIndex
 Case 0
@@ -85,6 +87,7 @@ frmChat.LoadChatForm
 frmConfig.LoadConfigForm
 frmSettings.LoadSettingsForm
 frmRegistration.LoadRegistrationForm
+frmSociety.LoadSocietyForm
 
 WriteIniValue App.Path & "\Config.ini", "Language", "Validate", "0"
 WriteIniValue App.Path & "\Config.ini", "Language", "Language", frmLanguage.Combo1.ListIndex
@@ -111,10 +114,10 @@ Case 6 'Serbian
 Case 7 'French
     SET_LANG_FRENCH
 End Select
-SetLang
+SET_LANG
 End Sub
 
-Private Sub SetLang()
+Private Sub SET_LANG()
 Label1.Caption = LANG_LABEL_SELLANG
 cmdEnter.Caption = LANG_COMMAND_ENTER
 Combo1.List(0) = LANG_GERMAN
@@ -128,5 +131,5 @@ Combo1.List(7) = LANG_FRENCH
 End Sub
 
 Private Sub Form_Activate()
-SetLang
+SET_LANG
 End Sub

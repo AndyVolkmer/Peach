@@ -47,7 +47,7 @@ Begin VB.Form frmRegistration
       TabIndex        =   11
       Top             =   2640
       Visible         =   0   'False
-      Width           =   1935
+      Width           =   1815
    End
    Begin VB.CommandButton Command1 
       BackColor       =   &H00F4F4F4&

@@ -52,11 +52,15 @@ With Setting
 'Read 'IP' from .ini file
 If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Connection", "IP"))) <> 0 Then
     .SERVER_IP = ReadIniValue(App.Path & "\Config.ini", "Connection", "IP")
+Else
+    .SERVER_IP = "127.0.0.1"
 End If
-
+ 
 'Read 'Port' from .ini file
 If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Connection", "Port"))) <> 0 Then
     .SERVER_PORT = ReadIniValue(App.Path & "\Config.ini", "Connection", "Port")
+Else
+    .SERVER_PORT = 4728
 End If
 
 'Read 'Nickname' from .ini file

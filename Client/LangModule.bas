@@ -15,7 +15,6 @@ Public MDI_STAT_CONNECTION_ERROR        As String
 Public MDI_STAT_CONNECTING              As String
 
 Public MDI_MSG_ERROR_FORM_LOAD          As String
-Public MDI_MSG_CONFIG_NOTIFY            As String
 Public MDI_MSG_NAME_TAKEN               As String
 Public MDI_MSG_WRONG_ACCOUNT            As String
 Public MDI_MSG_WRONG_PASSWORD           As String
@@ -81,6 +80,9 @@ Public SOC_ONLINE_LIST
 Public SOC_COMMAND_ADD                  As String
 Public SOC_COMMAND_REMOVE               As String
 
+Public SOC_ASK_DEL_1                    As String
+Public SOC_ASK_DEL_2                    As String
+
 'Register account form
 Public REG_FRAME_DETAIL                 As String
 
@@ -138,7 +140,6 @@ MDI_STAT_CONNECTED = "Status: Verbunden"
 MDI_STAT_CONNECTION_ERROR = "Status: Getrennt aufgrund eines Verbindungsfehlers"
 MDI_STAT_CONNECTING = "Status: Verbindung wird aufgebaut .."
 
-MDI_MSG_CONFIG_NOTIFY = "Einige Konfigurationsdateien sind veraltet oder wurden beschädigt, Peach fand den Fehler und wird es mit dem nächsten Neustart korrigieren."
 MDI_MSG_NAME_TAKEN = "Der Name ist bereits vergeben."
 MDI_MSG_WRONG_ACCOUNT = "Der Account ist nicht vorhanden oder falsch."
 MDI_MSG_WRONG_PASSWORD = "Das Passwort ist falsch."
@@ -201,6 +202,9 @@ SOC_ONLINE_LIST = "Online Liste"
 SOC_COMMAND_ADD = "&Hinzufügen"
 SOC_COMMAND_REMOVE = "&Entfernen"
 
+SOC_ASK_DEL_1 = "Möchten Sie '"
+SOC_ASK_DEL_2 = "' von ihrer Freundesliste löschen?"
+
 REG_FRAME_DETAIL = "Gebe deine Daten an"
 
 REG_LABEL_ACCOUNT_NAME = " Benutzer Name:"
@@ -213,7 +217,7 @@ REG_LABEL_PASSWORD_STRONG = "Das Passwort ist stark."
 REG_COMMAND_SUBMIT = "&Registrieren"
 REG_COMMAND_CLOSE = "&Schliessen"
 
-REG_CHECK_PASSWORD_SHOW = "&Passwort anzeig."
+REG_CHECK_PASSWORD_SHOW = "&Passwort anzeigen"
 
 REG_MSG_ACCOUNT_EXIST = "Der Account Name ist bereits vergeben."
 REG_MSG_ACCOUNT_INVALID = "Ungültiger Account Name."
@@ -254,11 +258,10 @@ MDI_COMMAND_SOCIETY = "&Online List"
 MDI_STAT_DISCONNECTED = "Status: Disconnected"
 MDI_STAT_DCFROMSERVER = "Status: Disconnected from Server"
 MDI_STAT_CONNECTED = "Status: Connected"
-MDI_STAT_CONNECTION_ERROR = "Status: Cant connect to server. (Server offline)"
+MDI_STAT_CONNECTION_ERROR = "Status: Can't connect to server."
 MDI_STAT_CONNECTING = "Status: Connecting .."
 
 'MDImsgbox_errorHandlerFormLoad
-MDI_MSG_CONFIG_NOTIFY = "Some configuration files are outdated or got damaged, Peach found the problem and will fix it on next program launch."
 MDI_MSG_NAME_TAKEN = "This name is already taken."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
@@ -324,6 +327,9 @@ SOC_ONLINE_LIST = "Online List"
 SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
 
+SOC_ASK_DEL_1 = "Do you want to delete '"
+SOC_ASK_DEL_2 = "' from your friendlist?"
+
 REG_FRAME_DETAIL = "Enter your details"
 
 REG_LABEL_ACCOUNT_NAME = " Account Name:"
@@ -379,7 +385,6 @@ MDI_STAT_CONNECTED = "Estado: Disponible"
 MDI_STAT_CONNECTION_ERROR = "Estado: Desconectado por problemas de conexión"
 MDI_STAT_CONNECTING = "Estado: Conectando .."
 
-MDI_MSG_CONFIG_NOTIFY = "Alguna configuración de archivos estan caducados o dañados, Peach busca el problema y lo arreglará en el siguiente lanzamiento del programa."
 MDI_MSG_NAME_TAKEN = "Este nombre ya esta cogido."
 MDI_MSG_WRONG_ACCOUNT = "La cuenta no existe o es incorrecta."
 MDI_MSG_WRONG_PASSWORD = "La contraseña es incorrecta."
@@ -442,6 +447,9 @@ SOC_ONLINE_LIST = "Lista de online"
 SOC_COMMAND_ADD = "&Añadir"
 SOC_COMMAND_REMOVE = "&Quitar"
 
+SOC_ASK_DEL_1 = "¿Estas seguro que quieres borrar a '"
+SOC_ASK_DEL_2 = "' de tu lista de amigos?"
+
 REG_FRAME_DETAIL = "Enter your details"
 
 REG_LABEL_ACCOUNT_NAME = " Nombre de cuenta:"
@@ -499,7 +507,6 @@ MDI_STAT_CONNECTION_ERROR = "Status: Avkopplad på grund av anslutningsproblem"
 MDI_STAT_CONNECTING = "Status: Ansluter .."
 
 'MDImsgbox_errorHandlerFormLoad
-MDI_MSG_CONFIG_NOTIFY = "Några Konfiguration filer är gamla eller skadade, Peach hittade problemet och det kommer bli reparerat nästa gång du kör programmet."
 MDI_MSG_NAME_TAKEN = "Namnet är upptaget."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
@@ -562,6 +569,9 @@ SOC_ONLINE_LIST = "Online Lista"
 SOC_COMMAND_ADD = "&Tillägg"
 SOC_COMMAND_REMOVE = "&Ta bort"
 
+SOC_ASK_DEL_1 = "Do you want to delete '"
+SOC_ASK_DEL_2 = "' from your friendlist?"
+
 REG_FRAME_DETAIL = "Ange dina detaljer"
 
 REG_LABEL_ACCOUNT_NAME = " Användar Namn:"
@@ -617,7 +627,6 @@ MDI_STAT_CONNECTION_ERROR = "Stato: Disconnesso a causa di problemi di connessio
 MDI_STAT_CONNECTING = "Stato: Connessione .."
 
 'MDImsgbox_errorHandlerFormLoad
-MDI_MSG_CONFIG_NOTIFY = "Alcuni file della configurazione potrebbero essere obsoleti o danneggiati, Peach ha riscontrato il problema e lo corregera' al prossimo avvio."
 MDI_MSG_NAME_TAKEN = "Il nome immesso e' gia' in uso."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
@@ -681,6 +690,9 @@ SOC_ONLINE_LIST = "Online List"
 SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
 
+SOC_ASK_DEL_1 = "Do you want to delete '"
+SOC_ASK_DEL_2 = "' from your friendlist?"
+
 REG_FRAME_DETAIL = "Enter your details"
 
 REG_LABEL_ACCOUNT_NAME = " Account Name:"
@@ -738,7 +750,6 @@ MDI_STAT_CONNECTION_ERROR = "Status: Problem sa konekcijom veza je prekinuta "
 MDI_STAT_CONNECTING = "Status: Povezi .."
 
 'MDImsgbox_errorHandlerFormLoad
-MDI_MSG_CONFIG_NOTIFY = "Datoteka konfigurac. Je zastarela ili ostecena, problem ce biti pronadjen i popravljen sledecim pokretanjem programa."
 MDI_MSG_NAME_TAKEN = "Ime je vec zauzeto."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
@@ -802,6 +813,9 @@ SOC_ONLINE_LIST = "Online List"
 SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
 
+SOC_ASK_DEL_1 = "Do you want to delete '"
+SOC_ASK_DEL_2 = "' from your friendlist?"
+
 REG_FRAME_DETAIL = "Enter your details"
 
 REG_LABEL_ACCOUNT_NAME = " Account Name:"
@@ -858,7 +872,6 @@ MDI_STAT_CONNECTION_ERROR = "Status: Verbinding verbroken wegens connectie probl
 MDI_STAT_CONNECTING = "Status: Verbinden .."
 
 'MDImsgbox_errorHandlerFormLoad
-MDI_MSG_CONFIG_NOTIFY = "Enkele bestanden zijn oud of beschadigd, Peach heeft het probleem gevonden en zal het herstellen bij de volgende herstart."
 MDI_MSG_NAME_TAKEN = "Deze naam is niet beschikbaar."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
@@ -918,6 +931,9 @@ SOC_ONLINE_LIST = "Online List"
 
 SOC_COMMAND_ADD = "&Toevoegen"
 SOC_COMMAND_REMOVE = "&Verwijderen"
+
+SOC_ASK_DEL_1 = "Do you want to delete '"
+SOC_ASK_DEL_2 = "' from your friendlist?"
 
 REG_FRAME_DETAIL = "Voeg je gegevens in"
 
@@ -981,7 +997,6 @@ MDI_STAT_CONNECTED = "Etat: Connecté"
 MDI_STAT_CONNECTION_ERROR = "Etat: Deconnecté à cause de problèmes do connection"
 MDI_STAT_CONNECTING = "Etat: Connection .."
 
-MDI_MSG_CONFIG_NOTIFY = "Quelques files de la configuration pourrait etre daumagés ou obsolète , Peach a trouvé le problème et le corrigerà au prochain envoi."
 MDI_MSG_NAME_TAKEN = "Le nom inséré est déjà utilizé."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
@@ -1041,6 +1056,9 @@ SOC_ONLINE_LIST = "Online List"
 
 SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
+
+SOC_ASK_DEL_1 = "Do you want to delete '"
+SOC_ASK_DEL_2 = "' from your friendlist?"
 
 REG_FRAME_DETAIL = "Enter your details"
 

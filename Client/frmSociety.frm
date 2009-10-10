@@ -160,7 +160,6 @@ Val = InputBox("Please enter the account of your friend in the text box below.",
 If Val = "#" Then Exit Sub
 
 SendMsg "!add_friend" & "#" & frmConfig.txtAccount & "#" & Val & "#"
-
 End Sub
 
 Private Sub Command2_Click()
@@ -172,8 +171,7 @@ With ListView2
     If .SelectedItem Is Nothing Then Exit Sub
     
     Temp = Split(.SelectedItem.Text, " ")
-    
-    If MsgBox("Do you want to delete '" & Temp(0) & "' from your friendlist?", vbQuestion + vbYesNo, "Deleting '" & Temp(0) & "'") = vbNo Then
+    If MsgBox(SOC_ASK_DEL_1 & Temp(0) & SOC_ASK_DEL_2, vbQuestion + vbYesNo, "Deleting '" & Temp(0) & "'") = vbNo Then
         Exit Sub
     End If
     
@@ -183,6 +181,7 @@ With ListView2
     Else
         Name = Left$(.SelectedItem.Text, MPos - 1)
     End If
+    
     SendMsg "!remove_friend#" & frmConfig.txtAccount.Text & "#" & Name & "#"
 End With
 End Sub
