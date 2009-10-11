@@ -141,7 +141,7 @@ End If
 If LCase$(RTrim$(txtToSend.Text)) = "/time" Then
     With txtConver
         .SelStart = Len(.Text)
-        .SelRTF = vbCrLf & "[" & Format$(Time, "hh:nn:ss") & "]" & CHAT_TIME_TEXT & Format$(Time, "hh:nn")
+        .SelRTF = vbCrLf & CHAT_TIME_TEXT & Format$(Time, "hh:nn:ss") & "."
     End With
     Call Clear
     Exit Sub

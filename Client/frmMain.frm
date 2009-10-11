@@ -476,31 +476,7 @@ Case "!split_text"
         .SelStart = Len(.Text)
         .SelRTF = Buffer
     End With
-
-Case "!accountlist"
-    StrArr2 = Split(StrArr(1), " ")
-    Buffer = Buffer & vbCrLf & " Account List :"
-    For i = LBound(StrArr2) To UBound(StrArr2) - 1
-        Buffer = Buffer & vbCrLf & " - '" & StrArr2(i) & "'"
-    Next i
-    With frmChat.txtConver
-        .SelStart = Len(.Text)
-        .SelRTF = Buffer
-    End With
-        
-Case "!userlist"
-    StrArr2 = Split(StrArr(1), " ")
-    With frmChat
-        Buffer = Buffer & vbCrLf & " User List :"
-        For i = LBound(StrArr2) To UBound(StrArr2) - 1
-            Buffer = Buffer & vbCrLf & " - '" & StrArr2(i) & "'"
-        Next i
-    End With
-    With frmChat.txtConver
-        .SelStart = Len(.Text)
-        .SelRTF = Buffer
-    End With
-    
+   
 'We can't login
 Case "!decilined"
     ConnectIsFalse

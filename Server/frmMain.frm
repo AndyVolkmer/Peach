@@ -174,6 +174,7 @@ Private Const MIIM_STATE As Long = &H1&
 Private Const MIIM_ID As Long = &H2&
 Private Const MFS_GRAYED As Long = &H3&
 Private Const WM_NCACTIVATE As Long = &H86
+
 Private Type MENUITEMINFO
     cbSize As Long
     fMask As Long
@@ -187,6 +188,7 @@ Private Type MENUITEMINFO
     dwTypeData As String
     cch As Long
 End Type
+
 Private Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Long, ByVal bRevert As Long) As Long
 Private Declare Function GetMenuItemInfo Lib "user32" Alias "GetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal b As Boolean, lpMenuItemInfo As MENUITEMINFO) As Long
 Private Declare Function SetMenuItemInfo Lib "user32" Alias "SetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal bool As Boolean, lpcMenuItemInfo As MENUITEMINFO) As Long
@@ -416,8 +418,8 @@ With frmAccountPanel
     .ListView1.ListItems.Clear
     With .cmbBanned
         .Clear
-        .AddItem "True"
         .AddItem "False"
+        .AddItem "True"
     End With
     With .cmbLevel
         .Clear
@@ -638,6 +640,8 @@ Case "!remove_friend"
    
 'Add Name & Account to frmPanel ListView
 Case "!connected"
+    Dim ORIGINAL_ACCOUNT As String
+    
     'If the account is already beeing used kick first instance
     With frmPanel.ListView1.ListItems
         For i = 1 To .Count
@@ -653,9 +657,7 @@ Case "!connected"
         Next i
     End With
     
-    Dim ORIGINAL_ACCOUNT As String
-    
-    'Save the original account name
+    'Get the proper written account name
     With frmAccountPanel.ListView1.ListItems
         For i = 1 To .Count
             If LCase(.Item(i).SubItems(1)) = LCase(GetConver) Then
@@ -750,7 +752,7 @@ Case "!msg"
     'Split the conversation text by spaces
     array2 = Split(GetConver, " ")
         
-    'Check first position of the text for an point indicating command
+    'Check first position of the text for a point indicating command
     If Left$(GetConver, 1) = "." Then
         If GetLevel(GetUser) <> 0 Then
             IsCommand = True
@@ -766,28 +768,29 @@ Case "!msg"
     If UBound(array2) > 0 Then
         GetTarget = StrConv(array2(1), vbProperCase)
         
-        'Just capture the non propercased name if it's an command, emotes dont use accounts
+        'Just capture the non propercased name if it's a command, emotes dont use accounts
         If IsCommand = True Then
             pGetTarget = array2(1)
             ANN_MSG = Mid$(GetConver, Len(array2(0)) + 2, Len(GetConver))
         End If
     End If
    
-    'If an command is used check out which
+    'If a command is used check out which
     If IsCommand = True Then
         'Save the reason
         For i = 2 To UBound(array2)
             Reason = Reason & array2(i) & " "
         Next i
+        
         Select Case array2(0)
         Case ".show"
             Select Case LCase$(GetTarget)
-            Case "accounts"
-                SendSingle "!accountlist#" & GetAccountList, frmMain.Winsock1(Index)
-            Case "users"
-                SendSingle "!userlist#" & GetUserList, frmMain.Winsock1(Index)
+            Case "accounts", "account", "a"
+                SendSingle "!split_text#" & GetAccountList, frmMain.Winsock1(Index)
+            Case "users", "user", "u"
+                SendSingle "!split_text#" & GetUserList, frmMain.Winsock1(Index)
             Case Else
-                SendSingle "You can just use .list account or user.", frmMain.Winsock1(Index)
+                SendSingle "Incorrect Syntax. Use .show - account / user", frmMain.Winsock1(Index)
             End Select
             
         Case ".userinfo", ".uinfo"
@@ -798,35 +801,36 @@ Case "!msg"
                         
         Case ".kick"
             KickUser GetTarget, Index
-                        
+            
         Case ".banaccount"
             BanAccount pGetTarget, GetUser, True, Index, Trim$(Reason)
                         
         Case ".banuser"
             BanUser GetTarget, GetUser, True, Index, Trim$(Reason)
-                        
+            
         Case ".unbanuser"
             BanUser GetTarget, GetUser, False, Index, Trim$(Reason)
                         
         Case ".unbanaccount"
             BanAccount pGetTarget, GetUser, False, Index, Trim$(Reason)
-                        
+            
         Case ".mute"
             MuteUser GetTarget, GetUser, True, Index, Trim$(Reason)
-            
+                    
         Case ".unmute"
             MuteUser GetTarget, GetUser, False, Index, Trim$(Reason)
-            
+                    
         Case ".announce", ".ann", ".broadcast"
             If Len(Trim$(ANN_MSG)) = 0 Then
                 SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(Index)
             Else
                 SendMessage GetTag(GetUser) & "[" & GetUser & "] announces: " & ANN_MSG
             End If
+            ANN_MSG = vbNullString
                     
         Case ".help", ".command", ".commands"
             SendSingle GetCommands, frmMain.Winsock1(Index)
-            
+                    
         Case Else
             SendSingle "Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
                         
@@ -982,7 +986,7 @@ Case "!msg"
                     
         End Select
         CMSG "!emote", GetUser, GetConver
-    Exit Sub
+        Exit Sub
     End If
     
     Dim S1&, E$
@@ -995,6 +999,7 @@ Case "!msg"
                     E = Mid$(GetConver, i, 1)
                     If UCase$(E) = E Then S1 = S1 + 1
                 Next i
+                E = vbNullString
                 If Format$(100 * S1 / Len(GetConver), "0.00") > 75 Then
                     SendSingle "Message blocked. Please do not write more then 75% in caps.", frmMain.Winsock1(Index)
                     Exit Sub
@@ -1021,19 +1026,19 @@ Case "!msg"
     SendMessage "[" & GetUser & "]: " & GetConver
     CMSG GetCommand, GetUser, GetConver
     
+    'Set last message
+    With frmPanel.ListView1.ListItems
+        For i = 1 To .Count
+            If GetUser = .Item(i) Then
+                frmPanel.ListView1.ListItems.Item(i).SubItems(3) = GetConver
+            End If
+        Next i
+    End With
+    
 Case Else
     SendMessage "Unknown operation."
     
 End Select
-
-'Set last message
-With frmPanel.ListView1.ListItems
-    For i = 1 To .Count
-        If GetUser = .Item(i) Then
-            frmPanel.ListView1.ListItems.Item(i).SubItems(3) = GetConver
-        End If
-    Next i
-End With
 End Sub
 
 Private Function GetServerInformation() As String
@@ -1045,7 +1050,6 @@ frmConfig.Label2.Caption & "#"
 End Function
 
 Private Sub Whisper(User As String, Target As String, Conversation As String, Index As Integer)
-
 'Check if user is whispering itself
 Select Case User
 Case Target, "<AFK>" & User
@@ -1133,16 +1137,18 @@ End Sub
 
 Private Function GetAccountList() As String
 With frmAccountPanel.ListView1.ListItems
+    GetAccountList = "Account List:#"
     For i = 1 To .Count
-        GetAccountList = GetAccountList & .Item(i).SubItems(1) & " "
+        GetAccountList = GetAccountList & .Item(i).SubItems(1) & "#"
     Next i
 End With
 End Function
 
 Private Function GetUserList() As String
 With frmPanel.ListView1.ListItems
+    GetUserList = "User List:#"
     For i = 1 To .Count
-        GetUserList = GetUserList & .Item(i) & " "
+        GetUserList = GetUserList & .Item(i) & "#"
     Next i
 End With
 End Function

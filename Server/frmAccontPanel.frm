@@ -408,9 +408,9 @@ End Sub
 
 Private Sub ListView1_ItemClick(ByVal Item As MSComctlLib.ListItem)
 With Item
-    txtName.Text = .SubItems(1)
-    txtPassword.Text = .SubItems(2)
-    If .SubItems(5) = "Yes" Then
+    txtName = .SubItems(1)
+    txtPassword = .SubItems(2)
+    If .SubItems(5) = "False" Then
         cmbBanned.ListIndex = 0
     Else
         cmbBanned.ListIndex = 1

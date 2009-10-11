@@ -79,6 +79,7 @@ End Sub
 Public Sub AddFriend(pUser As String, pFriend As String, pIndex As Integer)
 Dim IsValid   As Boolean
 Dim j         As Integer
+
 'Check if friends account exist
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
