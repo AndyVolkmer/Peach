@@ -23,13 +23,13 @@ Begin VB.Form frmFriendList
    ScaleWidth      =   8145
    ShowInTaskbar   =   0   'False
    Begin MSComctlLib.ListView ListView1 
-      Height          =   3855
+      Height          =   3975
       Left            =   120
       TabIndex        =   0
       Top             =   120
-      Width           =   7335
-      _ExtentX        =   12938
-      _ExtentY        =   6800
+      Width           =   7275
+      _ExtentX        =   12832
+      _ExtentY        =   7011
       View            =   3
       LabelEdit       =   1
       LabelWrap       =   -1  'True
@@ -39,7 +39,6 @@ Begin VB.Form frmFriendList
       _Version        =   393217
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
-      BorderStyle     =   1
       Appearance      =   1
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI"

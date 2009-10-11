@@ -31,7 +31,6 @@ Begin VB.Form frmSociety
       _ExtentX        =   12991
       _ExtentY        =   7011
       _Version        =   393216
-      Tabs            =   2
       TabHeight       =   520
       BackColor       =   16053492
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -58,6 +57,34 @@ Begin VB.Form frmSociety
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "ListView1"
       Tab(1).ControlCount=   1
+      TabCaption(2)   =   "Ignore LIst"
+      TabPicture(2)   =   "frmSociety.frx":0038
+      Tab(2).ControlEnabled=   0   'False
+      Tab(2).Control(0)=   "ListView3"
+      Tab(2).Control(0).Enabled=   0   'False
+      Tab(2).Control(1)=   "Command4"
+      Tab(2).Control(1).Enabled=   0   'False
+      Tab(2).Control(2)=   "Command3"
+      Tab(2).Control(2).Enabled=   0   'False
+      Tab(2).ControlCount=   3
+      Begin VB.CommandButton Command3 
+         Caption         =   "&Remove"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   -69480
+         TabIndex        =   5
+         Top             =   3360
+         Width           =   1695
+      End
+      Begin VB.CommandButton Command4 
+         Caption         =   "&Add"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   -71160
+         TabIndex        =   6
+         Top             =   3360
+         Width           =   1695
+      End
       Begin VB.CommandButton Command2 
          Caption         =   "&Remove"
          Enabled         =   0   'False
@@ -145,6 +172,39 @@ Begin VB.Form frmSociety
          BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
             Text            =   "Name"
             Object.Width           =   12409
+         EndProperty
+      End
+      Begin MSComctlLib.ListView ListView3 
+         Height          =   2775
+         Left            =   -74880
+         TabIndex        =   7
+         Top             =   480
+         Width           =   7095
+         _ExtentX        =   12515
+         _ExtentY        =   4895
+         View            =   3
+         LabelEdit       =   1
+         LabelWrap       =   -1  'True
+         HideSelection   =   -1  'True
+         FullRowSelect   =   -1  'True
+         GridLines       =   -1  'True
+         _Version        =   393217
+         ForeColor       =   -2147483640
+         BackColor       =   16777215
+         Appearance      =   1
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         NumItems        =   1
+         BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+            Text            =   "Name"
+            Object.Width           =   12418
          EndProperty
       End
    End

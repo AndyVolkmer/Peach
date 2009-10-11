@@ -790,7 +790,7 @@ Case "!msg"
             Case "users", "user", "u"
                 SendSingle "!split_text#" & GetUserList, frmMain.Winsock1(Index)
             Case Else
-                SendSingle "Incorrect Syntax. Use .show - account / user", frmMain.Winsock1(Index)
+                SendSingle "Incorrect Syntax, use the following format .show 'account'/'user'.", frmMain.Winsock1(Index)
             End Select
             
         Case ".userinfo", ".uinfo"
@@ -822,7 +822,7 @@ Case "!msg"
                     
         Case ".announce", ".ann", ".broadcast"
             If Len(Trim$(ANN_MSG)) = 0 Then
-                SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(Index)
+                SendSingle "Incorrect syntax, use the following format .announce 'Text to announce'.", frmMain.Winsock1(Index)
             Else
                 SendMessage GetTag(GetUser) & "[" & GetUser & "] announces: " & ANN_MSG
             End If
@@ -948,6 +948,13 @@ Case "!msg"
                 SendMessage GetUser & " covers his face with the palm."
             Else
                 SendMessage GetUser & " looks at " & GetTarget & " and covers his face with the palm."
+            End If
+        
+        Case "/cry"
+            If IsUser = True Then
+                SendMessage GetUser & " cries on " & GetTarget & "'s shoulder."
+            Else
+                SendMessage GetUser & " cries a river."
             End If
             
         Case "/w", "/whisper"
@@ -1125,7 +1132,7 @@ With frmPanel.ListView1.ListItems
         Else
             If i = .Count Then
                 If Len(Trim$(User)) = 0 Then
-                    SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+                    SendSingle "Incorrect syntax, use the following format .mute 'User' 'Reason'.", frmMain.Winsock1(SIndex)
                 Else
                     SendSingle "User '" & User & "' was not found.", Winsock1(SIndex)
                 End If
@@ -1161,7 +1168,7 @@ With frmPanel.ListView1.ListItems
             Exit For
         Else
             If Len(Trim$(User)) = 0 Then
-                If i = .Count Then SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+                If i = .Count Then SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
             Else
                 If i = .Count Then SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
             End If
@@ -1219,7 +1226,7 @@ With frmAccountPanel.ListView1.ListItems
         Else
             If i = .Count Then
                 If Len(Trim$(Account)) = 0 Then
-                    SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+                    SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
                 Else
                     SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
                 End If
@@ -1247,7 +1254,7 @@ With frmPanel.ListView1.ListItems
             Exit For
         Else
             If Len(Trim$(User)) = 0 Then
-                If i = .Count Then SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+                If i = .Count Then SendSingle "Incorrect syntax, use following format .kick 'User'.", frmMain.Winsock1(SIndex)
             Else
                 If i = .Count Then SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
             End If
@@ -1264,7 +1271,7 @@ With frmAccountPanel.ListView1.ListItems
             Exit For
         Else
             If Len(Trim$(Account)) = 0 Then
-                If i = .Count Then SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+                If i = .Count Then SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
             Else
                 If i = .Count Then SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
             End If

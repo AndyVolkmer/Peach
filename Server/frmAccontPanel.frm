@@ -476,8 +476,7 @@ GetCommand = array1(0)
 GetName = array1(1)
 GetPassword = array1(2)
 
-Select Case GetCommand
-Case "!register"
+If GetCommand = "!register" Then
     For i = 1 To ListView1.ListItems.Count
         If UCase$(GetName) = UCase$(ListView1.ListItems.Item(i).SubItems(1)) Then
             If RegSock(Index).State = 7 Then
@@ -489,7 +488,7 @@ Case "!register"
     
     RegisterAccount GetName, GetPassword
     RegSock(Index).SendData "!done#"
-End Select
+End If
 
 Exit Sub
 HandleError:
