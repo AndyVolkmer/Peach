@@ -1038,6 +1038,7 @@ Case "!msg"
         For i = 1 To .Count
             If GetUser = .Item(i) Then
                 frmPanel.ListView1.ListItems.Item(i).SubItems(3) = GetConver
+                Exit For
             End If
         Next i
     End With

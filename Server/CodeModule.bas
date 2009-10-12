@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev    As String = "1.1.4.6"
+Public Const Rev    As String = "1.1.4.7"
 Public Const rPort  As Long = 6222
 
 Public i        As Long    'Global "FOR" variable
@@ -59,6 +59,7 @@ Dim WinSk As Winsock
 For Each WinSk In frmMain.Winsock1
     If WinSk.State = 7 Then
         WinSk.SendData Message
+        DoEvents
     End If
 Next
 End Sub
@@ -66,6 +67,7 @@ End Sub
 Public Sub SendSingle(Message As String, Wsk As Winsock)
 If Wsk.State = 7 Then
     Wsk.SendData Message
+    DoEvents
 End If
 End Sub
 
