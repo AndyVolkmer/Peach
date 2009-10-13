@@ -31,7 +31,6 @@ Begin VB.Form frmSociety
       _ExtentX        =   12991
       _ExtentY        =   7011
       _Version        =   393216
-      Tab             =   2
       TabHeight       =   520
       BackColor       =   16053492
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -45,7 +44,7 @@ Begin VB.Form frmSociety
       EndProperty
       TabCaption(0)   =   "Friend List"
       TabPicture(0)   =   "frmSociety.frx":0000
-      Tab(0).ControlEnabled=   0   'False
+      Tab(0).ControlEnabled=   -1  'True
       Tab(0).Control(0)=   "ListView2"
       Tab(0).Control(0).Enabled=   0   'False
       Tab(0).Control(1)=   "Command1"
@@ -61,7 +60,7 @@ Begin VB.Form frmSociety
       Tab(1).ControlCount=   1
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
-      Tab(2).ControlEnabled=   -1  'True
+      Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "ListView3"
       Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "Command4"
@@ -73,7 +72,7 @@ Begin VB.Form frmSociety
          Caption         =   "&Remove"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   5520
+         Left            =   -69480
          TabIndex        =   5
          Top             =   3360
          Width           =   1695
@@ -82,7 +81,7 @@ Begin VB.Form frmSociety
          Caption         =   "&Add"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   3840
+         Left            =   -71160
          TabIndex        =   6
          Top             =   3360
          Width           =   1695
@@ -91,7 +90,7 @@ Begin VB.Form frmSociety
          Caption         =   "&Remove"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   -69480
+         Left            =   5520
          TabIndex        =   2
          Top             =   3360
          Width           =   1695
@@ -100,14 +99,14 @@ Begin VB.Form frmSociety
          Caption         =   "&Add"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   -71160
+         Left            =   3840
          TabIndex        =   1
          Top             =   3360
          Width           =   1695
       End
       Begin MSComctlLib.ListView ListView2 
          Height          =   2775
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   0
          Top             =   480
          Width           =   7095
@@ -178,7 +177,7 @@ Begin VB.Form frmSociety
       End
       Begin MSComctlLib.ListView ListView3 
          Height          =   2775
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   7
          Top             =   480
          Width           =   7095

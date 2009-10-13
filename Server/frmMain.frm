@@ -960,7 +960,20 @@ Case "!msg"
         Case "/w", "/whisper"
             'Whisper
             If IsUser = True Then
-                Whisper GetUser, GetTarget, array2(2), Index
+                If UBound(array2) > 1 Then
+                    Whisper GetUser, GetTarget, array2(2), Index
+                    'Set last message
+                    With frmPanel.ListView1.ListItems
+                        For i = 1 To .Count
+                            If GetUser = .Item(i) Then
+                                frmPanel.ListView1.ListItems.Item(i).SubItems(3) = GetConver
+                                Exit For
+                            End If
+                        Next i
+                    End With
+                Else
+                    Exit Sub
+                End If
             Else
                 If Len(Trim$(GetTarget)) = 0 Then
                     Exit Sub
