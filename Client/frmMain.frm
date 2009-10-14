@@ -22,7 +22,7 @@ Begin VB.MDIForm frmMain
    End
    Begin VB.Timer STimer 
       Enabled         =   0   'False
-      Left            =   480
+      Left            =   0
       Top             =   1080
    End
    Begin MSWinsockLib.Winsock FSocket 
@@ -31,12 +31,6 @@ Begin VB.MDIForm frmMain
       _ExtentX        =   741
       _ExtentY        =   741
       _Version        =   393216
-   End
-   Begin VB.Timer UpdateListPosition 
-      Enabled         =   0   'False
-      Interval        =   1
-      Left            =   0
-      Top             =   1080
    End
    Begin MSComctlLib.StatusBar StatusBar1 
       Align           =   2  'Align Bottom
@@ -504,15 +498,15 @@ Case "!update_friends"
     
 'Wipe out current list and insert new values
 Case "!listupdate"
-    SendMsg "!get_friends#" & frmConfig.txtAccount & "##"
-    
     frmSociety.ListView1.ListItems.Clear
     frmSendFile.Combo1.Clear
     For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
         frmSociety.ListView1.ListItems.Add , , StrArr(i)
         frmSendFile.Combo1.AddItem StrArr(i)
     Next i
-
+    
+    SendMsg "!get_friends#" & frmConfig.txtAccount & "##"
+    
 'We get login answer here
 Case "!login"
     Select Case StrArr(1)

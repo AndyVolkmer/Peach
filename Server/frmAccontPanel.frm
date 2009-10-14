@@ -23,6 +23,15 @@ Begin VB.Form frmAccountPanel
    ScaleHeight     =   4065
    ScaleWidth      =   7470
    ShowInTaskbar   =   0   'False
+   Begin VB.CommandButton cmdCancel 
+      Caption         =   "&Cancel"
+      Enabled         =   0   'False
+      Height          =   350
+      Left            =   5160
+      TabIndex        =   9
+      Top             =   3600
+      Width           =   1215
+   End
    Begin VB.CommandButton cmdSave 
       Caption         =   "&Save"
       Enabled         =   0   'False
@@ -75,15 +84,6 @@ Begin VB.Form frmAccountPanel
       _ExtentX        =   741
       _ExtentY        =   741
       _Version        =   393216
-   End
-   Begin VB.CommandButton cmdCancel 
-      Caption         =   "&Cancel"
-      Enabled         =   0   'False
-      Height          =   350
-      Left            =   5160
-      TabIndex        =   9
-      Top             =   3600
-      Width           =   1215
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00F4F4F4&
@@ -357,17 +357,22 @@ End With
 End Sub
 
 Private Sub RegisterAccount(dName As String, dPassword As String)
-Dim ii As Long
-ii = 1
+Dim j As Long
+
+j = 0
 'Check list if the ID is already given
-For i = 1 To ListView1.ListItems.Count
-    If ListView1.ListItems.Item(i) = ii Then
-        ii = i + 1
-    End If
-Next i
+With ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i) > j Then
+            j = .Item(i)
+        End If
+    Next i
+End With
+
+j = j + 1
 
 'Add new account to database
-frmMain.xCommand.CommandText = "INSERT INTO " & Database.Account_Table & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & ii & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', 'False', '0')"
+frmMain.xCommand.CommandText = "INSERT INTO " & Database.Account_Table & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & j & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', 'False', '0')"
 frmMain.xCommand.Execute
 
 'Save index in variable
@@ -375,7 +380,7 @@ i = ListView1.ListItems.Count + 1
 
 'Add account to the listview
 With ListView1.ListItems
-    .Add , , ii
+    .Add , , j
     .Item(i).SubItems(1) = dName
     .Item(i).SubItems(2) = dPassword
     .Item(i).SubItems(3) = Format(Time, "hh:nn:ss")

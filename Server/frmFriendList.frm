@@ -76,8 +76,8 @@ Me.Top = 0: Me.Left = 0
 End Sub
 
 Public Sub AddFriend(pUser As String, pFriend As String, pIndex As Integer)
-Dim IsValid   As Boolean
-Dim j         As Integer
+Dim IsValid    As Boolean
+Dim j          As Long
 
 'Check if friends account exist
 With frmAccountPanel.ListView1.ListItems
@@ -102,17 +102,18 @@ With ListView1.ListItems
     Next i
 End With
 
-j = 0
-
 'If friends account exist then process
 If IsValid = True Then
+    j = 0
     With ListView1.ListItems
         For i = 1 To .Count
-            If .Item(i) = j Then
-                j = i + 1
+            If .Item(i) > j Then
+                j = .Item(i)
             End If
         Next i
     End With
+    
+    j = j + 1
     
     'Execute into database
     With frmMain
