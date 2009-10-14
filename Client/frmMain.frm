@@ -459,6 +459,7 @@ Dim Buffer      As String
 
 'We get the message
 Winsock1.GetData GetMessage
+DoEvents
 
 'We split the message into an array
 StrArr = Split(GetMessage, "#")

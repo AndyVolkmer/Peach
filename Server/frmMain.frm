@@ -573,6 +573,7 @@ Dim bMatch, Mute    As Boolean
 
 'Get Message
 frmMain.Winsock1(Index).GetData GetMessage
+DoEvents
 
 'We decode (split) the message into an array
 array1 = Split(GetMessage, "#")
@@ -1221,6 +1222,10 @@ With frmAccountPanel.ListView1.ListItems
                     Exit For
                 End If
             Next j
+            
+            If Len(Trim$(User)) = 0 Then
+                User = Account
+            End If
             
             'Announce the action
             If Len(Trim$(Reason)) = 0 Then
