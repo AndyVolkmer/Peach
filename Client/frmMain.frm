@@ -361,7 +361,7 @@ Case WM_LBUTTONDOWN
 Case WM_LBUTTONUP
 Case WM_LBUTTONDBLCLK
     Vali = True
-    frmMain.Show ' show form
+    frmMain.Show 'Show form
 Case WM_RBUTTONDOWN
     frmMain.PopupMenu myPOP
 Case WM_RBUTTONUP
@@ -392,7 +392,7 @@ Private Sub STimer_Timer()
 With FSocket
     If .State = 7 Then
         STimer.Enabled = False
-        .SendData "!filerequest" & "#"
+        .SendData "!filerequest#"
     End If
 End With
 End Sub

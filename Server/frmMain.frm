@@ -754,14 +754,14 @@ Case "!msg"
     array2 = Split(GetConver, " ")
         
     'Check first position of the text for a point indicating command
-    If Left$(GetConver, 1) = "." Then
+    If Left$(GetConver, 1) = Chr(46) Then
         If GetLevel(GetUser) <> 0 Then
             IsCommand = True
         End If
     End If
     
     'Check first position of the text for an slash indicating emote
-    If Left$(GetConver, 1) = "/" Then
+    If Left$(GetConver, 1) = Chr(47) Then
         IsSlash = True
     End If
     
@@ -1307,7 +1307,7 @@ With frmPanel.ListView1.ListItems
             Exit For
         Else
             If Len(Trim$(User)) = 0 Then
-                If i = .Count Then SendSingle "Incorrect syntax. Use .help for more explanation.", frmMain.Winsock1(SIndex)
+                If i = .Count Then SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
             Else
                 If i = .Count Then SendSingle "User '" & User & " was not found.", Winsock1(SIndex)
             End If
