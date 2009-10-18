@@ -379,8 +379,8 @@ End If
 End Sub
 
 Private Sub MDIForm_Unload(Cancel As Integer)
-End
 Shell_NotifyIcon NIM_DELETE, nid 'del tray icon
+End
 End Sub
 
 Private Sub Show_Click()
@@ -483,13 +483,29 @@ Case "!accepted"
 'Wipe out current friend list and insert new values
 Case "!update_friends"
     Dim f_array() As String
+    Dim j As Long
+    
     With frmSociety.ListView2.ListItems
         .Clear
         For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
             f_array = Split(StrArr(i), "$")
+            
+            'Add account name of friend
             .Add , , f_array(0)
-            .Item(.Count).SubItems(1) = f_array(1)
+            j = .Count
+            
+            'Write down status
+            .Item(j).SubItems(1) = f_array(1)
+            
+            'Color the listview with apropiate color
+            If Len(f_array(1)) = 6 Then
+                .Item(j).ListSubItems(1).ForeColor = vbGreen
+            Else
+                .Item(j).ListSubItems(1).ForeColor = vbRed
+            End If
         Next i
+        
+        'Ask for server information
         If RunOnce = False Then
             RunOnce = True
             SendMsg "!server_info##"
@@ -505,14 +521,17 @@ Case "!listupdate"
         frmSendFile.Combo1.AddItem StrArr(i)
     Next i
     
+    'Ask for friendlist
     SendMsg "!get_friends#" & frmConfig.txtAccount & "##"
     
 'We get login answer here
 Case "!login"
     Select Case StrArr(1)
+    
     Case "Yes"
-        frmMain.StatusBar1.Panels(1).Text = "Status : " & "Authenticating.."
+        frmMain.StatusBar1.Panels(1).Text = "Status : Authenticating.."
         SendMsg "!namerequest#" & frmConfig.txtNick & "#"
+        
     Case "Password"
         With frmConfig
             .cmdConnect_Click
@@ -522,6 +541,7 @@ Case "!login"
             .txtPassword.SetFocus
         End With
         MsgBox MDI_MSG_WRONG_PASSWORD, vbInformation
+        
     Case "Account"
         With frmConfig
             .cmdConnect_Click
@@ -531,6 +551,7 @@ Case "!login"
             .txtAccount.SetFocus
         End With
         MsgBox MDI_MSG_WRONG_ACCOUNT, vbInformation
+        
     Case "Banned"
         With frmConfig
             .cmdConnect_Click
@@ -538,6 +559,7 @@ Case "!login"
             .Show
         End With
         MsgBox MDI_MSG_BANNED, vbInformation
+        
     End Select
 
 'We get ip here

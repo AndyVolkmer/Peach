@@ -263,20 +263,12 @@ If Len(txtAccount) < 4 Then
 End If
 
 'Check for spaces and other signs in the account
-Dim SIGN_STRING As String
-Dim SIGN_ARRAY() As String
+If CheckString(txtAccount) = True Then
+    MsgBox REG_MSG_ACCOUNT_INVALID, vbInformation
+    txtAccount.SetFocus
+    Exit Sub
+End If
 
-SIGN_STRING = " 1F.1F*1F#1F{1F}1F,1F(1F)1F&1F!1F@1F?1F/1F¬1F=1F<1F>1F[1F]1F'1F¿1Fº1Fª1F\1F|1F~1F´1F`1F+1F-1F^1F_1F·"
-SIGN_ARRAY = Split(SIGN_STRING, "1F")
-
-For i = LBound(SIGN_ARRAY) To UBound(SIGN_ARRAY)
-    If CheckString(txtAccount, SIGN_ARRAY(i)) = True Then
-        SIGN_STRING = vbNullString
-        Exit Sub
-    End If
-Next i
-
-SIGN_STRING = vbNullString
 
 'Can't register if the Account is made out of numbers
 If IsNumeric(txtAccount) = True Then
@@ -314,17 +306,6 @@ End If
 
 RegSock.SendData "!register" & "#" & txtAccount & "#" & txtPassword1 & "#"
 End Sub
-
-Private Function CheckString(pString As String, pChar As String) As Boolean
-If InStr(1, pString, pChar) <> 0 Then
-    MsgBox REG_MSG_ACCOUNT_INVALID, vbInformation
-    With txtAccount
-        .SetFocus
-        .Text = vbNullString
-    End With
-    CheckString = True
-End If
-End Function
 
 Private Sub Form_Load()
 LoadRegistrationForm

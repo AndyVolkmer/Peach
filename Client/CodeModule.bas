@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const Rev      As String = "1.1.5.1"
+Public Const Rev      As String = "1.1.5.2"
 
 Public Const aPort    As Long = 6123
 Public Const bPort    As Long = 6124
@@ -234,9 +234,25 @@ With frmSendFile2
 End With
 End Sub
 
-Function FileExists(FileName As String) As Boolean
+Public Function FileExists(FileName As String) As Boolean
     On Error GoTo ErrorHandler
     FileExists = (GetAttr(FileName) And vbDirectory) = 0
 ErrorHandler:
     ' if an error occurs, this function returns False
+End Function
+
+Public Function CheckString(pString As String) As Boolean
+Dim CHAR As String
+Dim SIGN_STRING As String
+Dim SIGN_ARRAY() As String
+
+SIGN_STRING = " 1F.1F*1F#1F{1F}1F,1F(1F)1F&1F!1F@1F?1F/1F¬1F=1F<1F>1F[1F]1F'1F¿1Fº1Fª1F\1F|1F~1F´1F`1F+1F-1F^1F_1F·"
+SIGN_ARRAY = Split(SIGN_STRING, "1F")
+
+For i = LBound(SIGN_ARRAY) To UBound(SIGN_ARRAY)
+    If InStr(1, pString, SIGN_ARRAY(i)) <> 0 Then
+        CheckString = True
+        Exit Function
+    End If
+Next i
 End Function

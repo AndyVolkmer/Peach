@@ -496,6 +496,7 @@ WriteIniValue App.Path & "\Config.ini", "Database", "F_Table", .Friend_Table
 
 'Close Database variable
 End With
+Shell_NotifyIcon NIM_DELETE, nid 'del tray icon
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
@@ -513,18 +514,18 @@ StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " C
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
-Dim MAX_CONNECTION As Long
-MAX_CONNECTION = loadSocket
+Dim j As Long
+j = loadSocket
 
-Winsock1(MAX_CONNECTION).LocalPort = frmConfig.txtPort.Text
-Winsock1(MAX_CONNECTION).Accept requestID
+Winsock1(j).LocalPort = frmConfig.txtPort.Text
+Winsock1(j).Accept requestID
 
 'Add new user to panel without account and name
 With frmPanel.ListView1.ListItems
     .Add , , vbNullString
     i = .Count
-    .Item(i).SubItems(1) = Winsock1(MAX_CONNECTION).RemoteHostIP
-    .Item(i).SubItems(2) = MAX_CONNECTION
+    .Item(i).SubItems(1) = Winsock1(j).RemoteHostIP
+    .Item(i).SubItems(2) = j
     .Item(i).SubItems(3) = vbNullString
     .Item(i).SubItems(4) = "False"
     .Item(i).SubItems(5) = vbNullString
@@ -714,7 +715,6 @@ Case "!login"
                 If .Item(i).SubItems(5) = "True" Then
                     SendSingle "!login#Banned#", frmMain.Winsock1(Index)
                     CMSG "!banned", GetUser
-                    Exit Sub
                 End If
                 
                 'Password Check
@@ -726,7 +726,7 @@ Case "!login"
                     SendSingle "!login#Password#", frmMain.Winsock1(Index)
                     CMSG "!password", GetUser
                 End If
-                Exit For
+                Exit Sub
             Else
                 If i = .Count Then
                     SendSingle "!login#Account#", frmMain.Winsock1(Index)
@@ -1289,10 +1289,12 @@ With frmAccountPanel.ListView1.ListItems
             SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " Name: " & .Item(i).SubItems(1) & vbCrLf & " Password: " & .Item(i).SubItems(2) & vbCrLf & " Registration Time: " & .Item(i).SubItems(3) & vbCrLf & " Registration Date: " & .Item(i).SubItems(4) & vbCrLf & " Banned: " & .Item(i).SubItems(5) & vbCrLf & " Level: " & .Item(i).SubItems(6), Winsock1(SIndex)
             Exit For
         Else
-            If Len(Trim$(Account)) = 0 Then
-                If i = .Count Then SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
-            Else
-                If i = .Count Then SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
+            If i = .Count Then
+                If Len(Trim$(Account)) = 0 Then
+                    SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
+                Else
+                    SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
+                End If
             End If
         End If
     Next i
@@ -1306,10 +1308,12 @@ With frmPanel.ListView1.ListItems
             SendSingle vbCrLf & "User information about '" & User & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Last Message: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5) & vbCrLf & " Login Time: " & .Item(i).SubItems(6) & vbCrLf & " AFK: " & .Item(i).SubItems(7), Winsock1(SIndex)
             Exit For
         Else
-            If Len(Trim$(User)) = 0 Then
-                If i = .Count Then SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
-            Else
-                If i = .Count Then SendSingle "User '" & User & " was not found.", Winsock1(SIndex)
+            If i = .Count Then
+                If Len(Trim$(User)) = 0 Then
+                    SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
+                Else
+                    SendSingle "User '" & User & "' was not found.", Winsock1(SIndex)
+                End If
             End If
         End If
     Next i
