@@ -307,6 +307,20 @@ End If
 RegSock.SendData "!register" & "#" & txtAccount & "#" & txtPassword1 & "#"
 End Sub
 
+Private Sub Form_Activate()
+Dim SC As String
+SC = Setting.SCHEME_COLOR
+BackColor = SC
+Check1.BackColor = SC
+Frame1.BackColor = SC
+Label1.BackColor = SC
+Label2.BackColor = SC
+Label3.BackColor = SC
+Label4.BackColor = SC
+Label5.BackColor = SC
+Picture1.BackColor = SC
+End Sub
+
 Private Sub Form_Load()
 LoadRegistrationForm
 With RegSock

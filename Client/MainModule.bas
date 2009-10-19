@@ -35,7 +35,7 @@ If Setting.VALIDATE = 0 Then
         SET_LANG_FRENCH
     End Select
     frmMain.Show
-    SetScheme
+    SetScheme True
 Else
     'Set language default -> english
     SET_LANG_ENGLISH
@@ -134,72 +134,52 @@ End If
 End With
 End Sub
 
-Public Sub SetScheme()
+Public Sub SetScheme(IsFirst As Boolean)
+Dim SC As String
+SC = Setting.SCHEME_COLOR
+
 With frmMain
-    .BackColor = Setting.SCHEME_COLOR
-    .Picture1.BackColor = Setting.SCHEME_COLOR
+    .BackColor = SC
+    .Picture1.BackColor = SC
 End With
 
-With frmAbout
-    .BackColor = Setting.SCHEME_COLOR
-    .Label1.BackColor = Setting.SCHEME_COLOR
-End With
-
-frmChat.BackColor = Setting.SCHEME_COLOR
-
-With frmLanguage
-    .BackColor = Setting.SCHEME_COLOR
-    .Label1.BackColor = Setting.SCHEME_COLOR
-End With
+frmChat.BackColor = SC
 
 With frmConfig
-    .BackColor = Setting.SCHEME_COLOR
-    .Label1.BackColor = Setting.SCHEME_COLOR
-    .lblAccount.BackColor = Setting.SCHEME_COLOR
-    .lblAuthor.BackColor = Setting.SCHEME_COLOR
-    .lblNickname.BackColor = Setting.SCHEME_COLOR
-    .lblPassword.BackColor = Setting.SCHEME_COLOR
-    .lblVersion.BackColor = Setting.SCHEME_COLOR
-End With
-
-With frmRegistration
-    .BackColor = Setting.SCHEME_COLOR
-    .Check1.BackColor = Setting.SCHEME_COLOR
-    .Frame1.BackColor = Setting.SCHEME_COLOR
-    .Label1.BackColor = Setting.SCHEME_COLOR
-    .Label2.BackColor = Setting.SCHEME_COLOR
-    .Label3.BackColor = Setting.SCHEME_COLOR
-    .Label4.BackColor = Setting.SCHEME_COLOR
-    .Label5.BackColor = Setting.SCHEME_COLOR
-    .Picture1.BackColor = Setting.SCHEME_COLOR
+    .BackColor = SC
+    .Label1.BackColor = SC
+    .lblAccount.BackColor = SC
+    .lblAuthor.BackColor = SC
+    .lblNickname.BackColor = SC
+    .lblPassword.BackColor = SC
+    .lblVersion.BackColor = SC
 End With
 
 With frmSendFile
-    .BackColor = Setting.SCHEME_COLOR
-    .picProgress.BackColor = Setting.SCHEME_COLOR
-    .Label1.BackColor = Setting.SCHEME_COLOR
-    .Label4.BackColor = Setting.SCHEME_COLOR
-    .lblFileToSend.BackColor = Setting.SCHEME_COLOR
-    .lblProgress.BackColor = Setting.SCHEME_COLOR
-    .lblSendSpeed.BackColor = Setting.SCHEME_COLOR
+    .BackColor = SC
+    .picProgress.BackColor = SC
+    .Label1.BackColor = SC
+    .Label4.BackColor = SC
+    .lblFileToSend.BackColor = SC
+    .lblProgress.BackColor = SC
+    .lblSendSpeed.BackColor = SC
 End With
 
-frmSendFile2.BackColor = Setting.SCHEME_COLOR
-
-With frmSettings
-    .BackColor = Setting.SCHEME_COLOR
-    .Frame1.BackColor = Setting.SCHEME_COLOR
-    .Frame2.BackColor = Setting.SCHEME_COLOR
-    .Frame3.BackColor = Setting.SCHEME_COLOR
-    .Label1.BackColor = Setting.SCHEME_COLOR
-    .Label2.BackColor = Setting.SCHEME_COLOR
-    .Label3.BackColor = Setting.SCHEME_COLOR
-    .SaveAccount.BackColor = Setting.SCHEME_COLOR
-    .SavePassword.BackColor = Setting.SCHEME_COLOR
-End With
-
+If IsFirst = False Then
+    With frmSettings
+        .BackColor = SC
+        .Frame1.BackColor = SC
+        .Frame2.BackColor = SC
+        .Frame3.BackColor = SC
+        .Label1.BackColor = SC
+        .Label2.BackColor = SC
+        .Label3.BackColor = SC
+        .SaveAccount.BackColor = SC
+        .SavePassword.BackColor = SC
+    End With
+End If
 With frmSociety
-    .BackColor = Setting.SCHEME_COLOR
-    .SSTab1.BackColor = Setting.SCHEME_COLOR
+    .BackColor = SC
+    .SSTab1.BackColor = SC
 End With
 End Sub

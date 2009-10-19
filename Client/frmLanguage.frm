@@ -132,4 +132,7 @@ End Sub
 
 Private Sub Form_Activate()
 SET_LANG
+
+Me.BackColor = Setting.SCHEME_COLOR
+Label1.BackColor = Setting.SCHEME_COLOR
 End Sub

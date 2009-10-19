@@ -121,6 +121,10 @@ Private Sub Command1_Click()
 Shell "Explorer.exe " & App.Path, vbNormalFocus
 End Sub
 
+Private Sub Form_Activate()
+frmSendFile2.BackColor = Setting.SCHEME_COLOR
+End Sub
+
 Private Sub Form_Load()
 lstConnections.ListItems.Add , , "0"
 End Sub

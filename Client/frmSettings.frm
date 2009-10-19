@@ -181,7 +181,7 @@ With Setting
     .ACCOUNT_TICK = SaveAccount.Value
 End With
 
-SetScheme
+SetScheme False
 End Sub
 
 Public Sub LoadSettingsForm()
@@ -192,6 +192,20 @@ SavePassword.Caption = SET_CHECK_SAVE_PASSWORD
 Frame3.Caption = SET_FRAME_CONNECTION
 Command1.Caption = SET_COMMAND_LANGUAGE
 Command2.Caption = SET_COMMAND_SAVE
+End Sub
+
+Private Sub Form_Activate()
+Dim SC As String
+SC = Setting.SCHEME_COLOR
+Me.BackColor = SC
+Frame1.BackColor = SC
+Frame2.BackColor = SC
+Frame3.BackColor = SC
+Label1.BackColor = SC
+Label2.BackColor = SC
+Label3.BackColor = SC
+SaveAccount.BackColor = SC
+SavePassword.BackColor = SC
 End Sub
 
 Private Sub Form_Load()

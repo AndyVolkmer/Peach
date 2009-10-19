@@ -60,6 +60,11 @@ Private Sub Command1_Click()
 Unload Me
 End Sub
 
+Private Sub Form_Activate()
+Me.BackColor = Setting.SCHEME_COLOR
+Label1.BackColor = Setting.SCHEME_COLOR
+End Sub
+
 Private Sub Form_Load()
 Label1.Caption = "Author : Notron" & vbCrLf _
             & "Version : " & Rev & vbCrLf & vbCrLf _

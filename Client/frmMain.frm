@@ -351,7 +351,6 @@ Me.Left = Setting.MAIN_LEFT
 SetupForms frmConfig
 End Sub
 
-
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim Msg As Long
 Dim sFilter As String
