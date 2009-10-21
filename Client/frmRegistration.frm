@@ -304,7 +304,7 @@ If RegSock.State <> 7 Then
     Exit Sub
 End If
 
-RegSock.SendData "!register" & "#" & txtAccount & "#" & txtPassword1 & "#"
+RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#"
 End Sub
 
 Private Sub Form_Activate()

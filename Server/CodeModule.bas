@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev    As String = "1.1.5.3"
+Public Const Rev    As String = "1.1.5.4"
 Public Const rPort  As Long = 6222
 
 Public i        As Long    'Global "FOR" variable
@@ -74,7 +74,7 @@ End Sub
 Public Sub UpdateUsersList()
 Dim GetList As String
 With frmPanel.ListView1.ListItems
-    GetList = "!listupdate#"
+    GetList = "!update_online#"
     For i = 1 To .Count
         If .Item(i).SubItems(7) = "True" Then
             GetList = GetList & "<AFK>" & .Item(i) & "#"

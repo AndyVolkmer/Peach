@@ -581,8 +581,12 @@ array1 = Split(GetMessage, "#")
 
 'Assign the variables to the array
 GetCommand = array1(0)
-GetUser = array1(1)
-GetConver = array1(2)
+If UBound(array1) > 0 Then
+    GetUser = array1(1)
+    If UBound(array1) > 1 Then
+        GetConver = array1(2)
+    End If
+End If
 
 With frmPanel.ListView1.ListItems
     'Get the latest message
@@ -649,10 +653,7 @@ Case "!connected"
         For i = 1 To .Count
             If .Item(i).SubItems(5) = GetConver Then
                 CMSG "!dinstance", GetConver
-                Winsock1(.Item(i).SubItems(2)).Close
-                Unload Winsock1(.Item(i).SubItems(2))
-                .Remove (i)
-                
+                KickUser GetConver, Index
                 StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
                 Exit For
             End If

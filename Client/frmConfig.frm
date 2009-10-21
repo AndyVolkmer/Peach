@@ -319,7 +319,6 @@ frmSettings.Show 1
 End Sub
 
 Private Sub Command4_Click()
-On Error Resume Next
 If FileExists(App.Path & "\peachUpdater.exe") = True Then
     Shell App.Path & "\peachUpdater.exe", vbNormalFocus
 Else

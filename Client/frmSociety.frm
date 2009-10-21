@@ -61,11 +61,11 @@ Begin VB.Form frmSociety
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "ListView3"
+      Tab(2).Control(0)=   "Command3"
       Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "Command4"
       Tab(2).Control(1).Enabled=   0   'False
-      Tab(2).Control(2)=   "Command3"
+      Tab(2).Control(2)=   "ListView3"
       Tab(2).Control(2).Enabled=   0   'False
       Tab(2).ControlCount=   3
       Begin VB.CommandButton Command3 
@@ -220,7 +220,7 @@ Dim Val As String
 Val = InputBox("Please enter the account of your friend in the text box below.", "Adding a friend", "Friends Account") & "#"
 If Val = "#" Then Exit Sub
 
-SendMsg "!add_friend" & "#" & frmConfig.txtAccount & "#" & Val & "#"
+SendMsg "!add_friend#" & frmConfig.txtAccount & "#" & Val & "#"
 End Sub
 
 Private Sub Command2_Click()

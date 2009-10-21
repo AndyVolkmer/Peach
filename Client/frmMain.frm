@@ -321,10 +321,10 @@ GetCommand = Array1(0)
 Select Case GetCommand
 Case "!filerequest"
     If MsgBox(SF_MSG_INCOMMING_FILE, vbYesNo + vbQuestion) = vbYes Then
-        FSocket2(Index).SendData "!acceptfile" & "#"
+        FSocket2(Index).SendData "!acceptfile#"
         frmSendFile2.Show
     Else
-        FSocket2(Index).SendData "!denyfile" & "#"
+        FSocket2(Index).SendData "!denyfile#"
     End If
 End Select
 End Sub
@@ -507,21 +507,24 @@ Case "!update_friends"
         'Ask for server information
         If RunOnce = False Then
             RunOnce = True
-            SendMsg "!server_info##"
+            SendMsg "!server_info#"
         End If
     End With
     
 'Wipe out current list and insert new values
-Case "!listupdate"
+Case "!update_online"
+    'Clear the current list so we don't get multiply entries
     frmSociety.ListView1.ListItems.Clear
     frmSendFile.Combo1.Clear
+    
+    'Go through array and added users
     For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
         frmSociety.ListView1.ListItems.Add , , StrArr(i)
         frmSendFile.Combo1.AddItem StrArr(i)
     Next i
     
     'Ask for friendlist
-    SendMsg "!get_friends#" & frmConfig.txtAccount & "##"
+    SendMsg "!get_friends#" & frmConfig.txtAccount & "#"
     
 'We get login answer here
 Case "!login"
