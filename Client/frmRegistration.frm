@@ -338,14 +338,13 @@ Label1.Caption = REG_LABEL_ACCOUNT_NAME
 Label2.Caption = REG_LABEL_PASSWORD
 Label3.Caption = REG_LABEL_PASSWORD_CONFIRM
 Check1.Caption = REG_CHECK_PASSWORD_SHOW
-Command1.Caption = REG_COMMAND_SUBMIT
+Command1.Caption = REG_COMMAND_CLOSE
 End Sub
 
 Private Sub RegSock_Close()
 Me.Caption = REG_MSG_ERROR_OCCURED
 Label4.Caption = REG_MSG_ERROR
 Command1.Caption = REG_COMMAND_CLOSE
-Command1.Visible = False
 Frame1.Visible = False
 Check1.Visible = False
 Screen.MousePointer = vbDefault
@@ -356,6 +355,7 @@ Me.Caption = " Peach - Registration"
 Frame1.Visible = True
 Check1.Visible = True
 Command1.Visible = True
+Command1.Caption = REG_COMMAND_SUBMIT
 Screen.MousePointer = vbDefault
 End Sub
 
@@ -392,19 +392,19 @@ End Sub
 
 Private Sub txtPassword1_Change()
 Select Case Len(txtPassword1)
-Case Is < 6
+Case Is < 7
     Picture1.BackColor = vbRed
     Picture1.BorderStyle = 1
     Label5.BackColor = vbRed
     Label5.ForeColor = vbWhite
     Label5.Caption = REG_LABEL_PASSWORD_WEAK
-Case 6, 7, 8
+Case 7, 8, 9
     Picture1.BackColor = vbYellow
     Picture1.BorderStyle = 1
     Label5.BackColor = vbYellow
     Label5.ForeColor = vbBlack
     Label5.Caption = REG_LABEL_PASSWORD_NORMAL
-Case Is > 9
+Case Is > 10
     Picture1.BackColor = vbGreen
     Picture1.BorderStyle = 1
     Label5.BackColor = vbGreen

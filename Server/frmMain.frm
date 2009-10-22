@@ -204,8 +204,7 @@ Public xConnection     As New ADODB.Connection
 Public xCommand        As New ADODB.Command
 Public xRecordSet      As New ADODB.Recordset
 
-Public intCounter   As Long
-Dim Muted, Vali     As Boolean
+Dim Vali As Boolean
 
 Private Sub Command1_Click()
 SetupForms frmConfig
@@ -317,7 +316,7 @@ StatusBar1.Panels(1).Text = "Status : Disconnected"
 SetupForms frmConfig
 
 If HasError = False Then
-    WriteLog "Correctly loaded!"
+    WriteLog "Correctly loaded."
 End If
 End Sub
 
@@ -517,8 +516,10 @@ Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long
 Dim j As Long
 j = loadSocket
 
-Winsock1(j).LocalPort = frmConfig.txtPort.Text
-Winsock1(j).Accept requestID
+With Winsock1(j)
+    .LocalPort = frmConfig.txtPort.Text
+    .Accept requestID
+End With
 
 'Add new user to panel without account and name
 With frmPanel.ListView1.ListItems
@@ -536,15 +537,17 @@ End With
 StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
-Private Function socketFree() As Integer
+Private Function socketFree() As Long
 On Error GoTo HandleErrorFreeSocket
 
-For i = Winsock1.LBound + 1 To Winsock1.UBound
-    If Winsock1(i).LocalIP Then
-    End If
-Next i
+With Winsock1
+    For i = .LBound + 1 To .UBound
+        If Winsock1(i).LocalIP Then
+        End If
+    Next i
+    socketFree = .UBound + 1
+End With
 
-socketFree = Winsock1.UBound + 1
 Exit Function
 HandleErrorFreeSocket:
 socketFree = i
@@ -561,16 +564,14 @@ loadSocket = theFreeSocket
 End Function
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-Dim array1()        As String
-Dim array2()        As String
-Dim GetUser         As String
-Dim GetMessage      As String
-Dim GetConver       As String
-Dim GetCommand      As String
-Dim GetTarget       As String
-Dim pGetTarget      As String
-Dim GetLastMessage  As String
-Dim bMatch, Mute    As Boolean
+Dim array1()        As String   'Whole message string is saved here and split up
+Dim GetUser         As String   'The second string from array1 used to be the username
+Dim GetMessage      As String   'We save message from bytes here to split it in array1
+Dim GetConver       As String   'The third string from array1 used to be the conversation
+Dim GetCommand      As String   'The first string from array1 used to be the command
+Dim pGetTarget      As String   'We save here the account propercased or the username
+Dim GetLastMessage  As String   'We save here the latest message from that user
+Dim bMatch, Mute    As Boolean  'bMatch controls the login, Mute explains itself
 
 'Get Message
 frmMain.Winsock1(Index).GetData GetMessage
@@ -616,17 +617,6 @@ With frmPanel.ListView1.ListItems
     Next i
 End With
 
-'Validate: If message is to long then kick
-If Len(GetConver) > 200 Then
-    CMSG "!long", GetUser
-    frmPanel.ListView1.ListItems.Remove (Index) 'Remove from list
-    Winsock1(Index).Close 'Close connection
-    Unload Winsock1(Index) 'Remove socket
-    StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
-    UpdateUsersList
-    Exit Sub
-End If
-
 Select Case GetCommand
 'Send Server information
 Case "!server_info"
@@ -653,7 +643,10 @@ Case "!connected"
         For i = 1 To .Count
             If .Item(i).SubItems(5) = GetConver Then
                 CMSG "!dinstance", GetConver
-                KickUser GetConver, Index
+                Winsock1(.Item(i).SubItems(2)).Close
+                Unload Winsock1(.Item(i).SubItems(2))
+                .Remove (i)
+                
                 StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
                 Exit For
             End If
@@ -746,11 +739,13 @@ Case "!iprequest"
     Next i
     
 Case "!msg"
-    Dim IsCommand   As Boolean
-    Dim IsSlash     As Boolean
-    Dim ANN_MSG     As String
-    Dim Reason      As String
-    
+    Dim array2()    As String   'Client textbox split by spaces is saved here
+    Dim IsCommand   As Boolean  'Controls the command handling
+    Dim IsSlash     As Boolean  'Controls emote / user command handling
+    Dim ANN_MSG     As String   'A chosen part of the text
+    Dim Reason      As String   'The third part of the text
+    Dim GetTarget   As String   'We save the second word from the array2 here (target)
+        
     'Split the conversation text by spaces
     array2 = Split(GetConver, " ")
         
@@ -1059,7 +1054,7 @@ Case "!msg"
     End With
     
 Case Else
-    SendMessage "Unknown operation."
+    SendMessage "Error."
     
 End Select
 End Sub
@@ -1067,7 +1062,7 @@ End Sub
 Private Function GetServerInformation() As String
 GetServerInformation = _
 "Welcome to Peach Servers." & "#" & _
-"Server: Peach " & Rev & " - Win32" & "#" & _
+"Server: Peach r " & Rev & "/Win32-x86" & "#" & _
 "Online User: " & frmMain.Winsock1.Count - 1 & "#" & _
 frmConfig.Label2.Caption & "#"
 End Function
@@ -1269,14 +1264,16 @@ With frmPanel.ListView1.ListItems
             
             'Update userlist and statusbar
             UpdateUsersList
-            frmMain.StatusBar1.Panels(1).Text = "Status: Connected with " & frmMain.Winsock1.Count - 1 & " Client(s)."
+            StatusBar1.Panels(1).Text = "Status: Connected with " & frmMain.Winsock1.Count - 1 & " Client(s)."
             
             Exit For
         Else
-            If Len(Trim$(User)) = 0 Then
-                If i = .Count Then SendSingle "Incorrect syntax, use following format .kick 'User'.", frmMain.Winsock1(SIndex)
-            Else
-                If i = .Count Then SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
+            If i = .Count Then
+                If Len(Trim$(User)) = 0 Then
+                    SendSingle "Incorrect syntax, use following format .kick 'User'.", frmMain.Winsock1(SIndex)
+                Else
+                    SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
+                End If
             End If
         End If
     Next i

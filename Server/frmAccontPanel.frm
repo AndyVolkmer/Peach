@@ -431,10 +431,10 @@ Unload RegSock(Index)
 End Sub
 
 Private Sub RegSock_ConnectionRequest(Index As Integer, ByVal requestID As Long)
-Dim intCounter1 As Integer
-    intCounter1 = loadSocket
-    RegSock(intCounter1).LocalPort = rPort
-    RegSock(intCounter1).Accept requestID
+Dim intCounter As Integer
+    intCounter = loadSocket
+    RegSock(intCounter).LocalPort = rPort
+    RegSock(intCounter).Accept requestID
 End Sub
 
 Private Function socketFree() As Integer
