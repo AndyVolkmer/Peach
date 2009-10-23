@@ -24,3 +24,15 @@ CREATE TABLE `friends` (
   `Friend` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `emotes`
+-- ----------------------------
+DROP TABLE IF EXISTS `emotes`;
+CREATE TABLE `emotes` (
+  `command` varchar(255) NOT NULL DEFAULT '',
+  `is_user_text_1` varchar(255) DEFAULT '',
+  `is_user_text_2` varchar(255) DEFAULT '',
+  `is_not_user` varchar(255) DEFAULT '',
+  PRIMARY KEY (`command`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
 Begin VB.Form frmConfig 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
@@ -34,7 +34,6 @@ Begin VB.Form frmConfig
       _ExtentY        =   2143
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -255,8 +254,7 @@ Label2.Caption = "Server Uptime : " & Format$(TimeSerial(0, 0, X), "hh:mm:ss")
 End Sub
 
 Private Sub Form_Load()
-Me.Top = 0
-Me.Left = 0
+Me.Top = 0: Me.Left = 0
 
 With frmMain
     Label5.Caption = "IP : " & .Winsock1(0).LocalIP

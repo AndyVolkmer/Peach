@@ -293,12 +293,20 @@ Else
     .Friend_Table = InputBox("The configuration file does not contain a friend table, please insert one in the textbox below.", "Database error ..", "Friend Table")
 End If
 
+If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "E_Table"))) <> 0 Then
+    .Emote_Table = ReadIniValue(App.Path & "\Config.ini", "Database", "E_Table")
+Else
+    WriteLog "No Emotes-Table found."
+    .Emote_Table = InputBox("The configuration file does not contain a emote table, please insert one in the textbox below.", "Database error ..", "Emote Table")
+End If
+
 WriteLog "Values from configuration:" _
         & vbCrLf & vbTab & "Database: " & .Database _
         & vbCrLf & vbTab & "Host: " & .Host _
         & vbCrLf & vbTab & "Password: " & .Password _
         & vbCrLf & vbTab & "Account Table: " & .Account_Table _
-        & vbCrLf & vbTab & "Friend Table: " & .Friend_Table
+        & vbCrLf & vbTab & "Friend Table: " & .Friend_Table _
+        & vbCrLf & vbTab & "Emote Table: " & .Emote_Table
 
 'Connect to MySQL Database
 CONNECT_MYSQL .Database, .User, .Password, .Host
@@ -306,7 +314,8 @@ CONNECT_MYSQL .Database, .User, .Password, .Host
 'Load Accounts
 LoadAccounts .Account_Table
 
-LoadEmotes "emotes"
+'Load Emotes
+LoadEmotes .Emote_Table
 
 'Load Friends
 LoadFriends .Friend_Table
@@ -537,6 +546,7 @@ WriteIniValue App.Path & "\Config.ini", "Database", "Password", .Password
 WriteIniValue App.Path & "\Config.ini", "Database", "Host", .Host
 WriteIniValue App.Path & "\Config.ini", "Database", "A_Table", .Account_Table
 WriteIniValue App.Path & "\Config.ini", "Database", "F_Table", .Friend_Table
+WriteIniValue App.Path & "\Config.ini", "Database", "E_Table", .Emote_Table
 
 'Close Database variable
 End With
