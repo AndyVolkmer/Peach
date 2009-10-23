@@ -495,12 +495,13 @@ Case "!update_friends"
             
             'Write down status
             .Item(j).SubItems(1) = f_array(1)
+            .Item(j).ListSubItems(1).Bold = True
             
             'Color the listview with apropiate color
             If Len(f_array(1)) = 6 Then
-                .Item(j).ListSubItems(1).ForeColor = vbGreen
+                .Item(j).ListSubItems(1).ForeColor = RGB(0, 132, 43)
             Else
-                .Item(j).ListSubItems(1).ForeColor = vbRed
+                .Item(j).ListSubItems(1).ForeColor = RGB(132, 0, 0)
             End If
         Next i
         

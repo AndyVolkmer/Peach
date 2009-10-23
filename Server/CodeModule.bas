@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev    As String = "1.1.5.5"
+Public Const Rev    As String = "1.1.5.6"
 Public Const rPort  As Long = 6222
 
 Public i        As Long    'Global "FOR" variable
@@ -26,7 +26,15 @@ Type DB
     Account_Table  As String
 End Type
 
+Type EMT
+    Command         As String
+    IsUserText1     As String
+    IsUserText2     As String
+    IsNotUser       As String
+End Type
+
 Public Database As DB
+Public Emotes() As EMT
 
 Public Const NIM_ADD = &H0
 Public Const NIM_MODIFY = &H1

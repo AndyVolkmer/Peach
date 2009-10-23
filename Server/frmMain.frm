@@ -306,6 +306,8 @@ CONNECT_MYSQL .Database, .User, .Password, .Host
 'Load Accounts
 LoadAccounts .Account_Table
 
+LoadEmotes "emotes"
+
 'Load Friends
 LoadFriends .Friend_Table
 
@@ -353,6 +355,49 @@ Screen.MousePointer = vbDefault
 'Set error flag
 HasError = True
 
+End Sub
+
+Private Sub LoadEmotes(qTable As String)
+Dim SQL     As String
+Dim Counter As Long
+
+If HasError = True Then Exit Sub
+If Len(qTable) = 0 Then Exit Sub
+
+SQL = "SELECT * FROM " & qTable
+Counter = 0
+
+StatusBar1.Panels(1).Text = "Status : Loading emotes .."
+
+On Error GoTo HandleErrorEmotes
+xCommand.CommandText = SQL
+Set xRecordSet = xCommand.Execute
+
+ReDim Emotes(0)
+
+With xRecordSet
+    Do Until .EOF
+        ReDim Preserve Emotes(Counter + 1)
+        Emotes(Counter).Command = !Command
+        Emotes(Counter).IsNotUser = !is_not_user
+        Emotes(Counter).IsUserText1 = !is_user_text_1
+        Emotes(Counter).IsUserText2 = !is_user_text_2
+        .MoveNext
+        Counter = Counter + 1
+    Loop
+End With
+
+Set xRecordSet = Nothing
+
+WriteLog "Loaded " & Counter & " emote(s) from '" & qTable & "'."
+
+Exit Sub
+HandleErrorEmotes:
+'Print error
+WriteLog Err.Description & "."
+
+'Set error flag
+HasError = True
 End Sub
 
 Private Sub LoadFriends(qTable As String)
@@ -851,109 +896,8 @@ Case "!msg"
                 End If
             Next i
         End With
-            
-        Select Case LCase(array2(0))
-        Case "/lol", "/laugh"
-            If IsUser = True Then
-                SendMessage GetUser & " laughs at " & GetTarget & "."
-            Else
-                SendMessage GetUser & " laughs."
-            End If
-            
-        Case "/rofl"
-            If IsUser = True Then
-                SendMessage GetUser & " rolls on the floor laughing at " & GetTarget & "."
-            Else
-                SendMessage GetUser & " rolls on the floor laughing."
-            End If
-            
-        Case "/beer"
-            SendMessage GetUser & " takes a beer from the fridge."
-            
-        Case "/fart"
-            If IsUser = True Then
-                SendMessage GetUser & " brushes up and farts loudly against " & GetTarget & "."
-            Else
-                SendMessage GetUser & " farts loudly."
-            End If
-            
-        Case "/lmao"
-            If IsUser = True Then
-                SendMessage GetUser & " is laughing his / her ass off at " & GetTarget & "."
-            Else
-                SendMessage GetUser & " is laughing his / her ass off."
-            End If
-            
-        Case "/facepalm"
-            If IsUser = True Then
-                SendMessage GetUser & " takes a look on " & GetTarget & " and covers his face with a palm."
-            Else
-                SendMessage GetUser & " covers his face with his palm."
-            End If
-            
-        Case "/violin"
-            If IsUser = True Then
-                SendMessage GetUser & " looks at " & GetTarget & " and starts playing the world smallest violin."
-            Else
-                SendMessage GetUser & " plays the world smallest violin."
-            End If
-            
-        Case "/insult"
-            If IsUser = True Then
-                SendMessage GetUser & " starts insulting " & GetTarget & "  heavily."
-            Else
-                SendMessage GetUser & " insults him / her-self as bitch."
-            End If
-            
-        Case "/smile"
-            If IsUser = True Then
-                SendMessage GetUser & " smiles at " & GetTarget & "."
-            Else
-                SendMessage GetUser & " smiles."
-            End If
-            
-        Case "/love", "/<3"
-            If IsUser = True Then
-                SendMessage GetUser & " loves " & GetTarget & "."
-            Else
-                SendMessage GetUser & " feels the love."
-            End If
-            
-        Case "/cheer"
-            If IsUser = True Then
-                SendMessage GetUser & " cheers at " & GetTarget & "."
-            Else
-                SendMessage GetUser & " cheers."
-            End If
-            
-        Case "/kiss"
-            If IsUser = True Then
-                SendMessage GetUser & " blows a kiss to " & GetTarget & "."
-            Else
-                SendMessage GetUser & " blows a kiss into the wind."
-            End If
-            
-        Case "/hug"
-            If IsUser = True Then
-                SendMessage GetUser & " hugs " & GetTarget & "."
-            Else
-                SendMessage GetUser & " needs a hug!"
-            End If
-            
-        Case "/facepalm", "/fp"
-            If IsUser = True Then
-                SendMessage GetUser & " covers his face with the palm."
-            Else
-                SendMessage GetUser & " looks at " & GetTarget & " and covers his face with the palm."
-            End If
         
-        Case "/cry"
-            If IsUser = True Then
-                SendMessage GetUser & " cries on " & GetTarget & "'s shoulder."
-            Else
-                SendMessage GetUser & " cries a river."
-            End If
-            
+        Select Case LCase(array2(0))
         Case "/w", "/whisper"
             'Whisper
             If IsUser = True Then
@@ -999,7 +943,19 @@ Case "!msg"
             KickUser GetUser, Index
         
         Case Else
-            SendSingle "Unknown command used.", frmMain.Winsock1(Index)
+            For i = LBound(Emotes) To UBound(Emotes)
+                If Emotes(i).Command = LCase(array2(0)) Then
+                    If IsUser = True Then
+                        SendMessage GetUser & Emotes(i).IsUserText1 & GetTarget & Emotes(i).IsUserText2
+                    Else
+                        SendMessage GetUser & Emotes(i).IsNotUser
+                    End If
+                Else
+                    If i = UBound(Emotes) Then
+                        SendSingle "Unknown command used.", frmMain.Winsock1(Index)
+                    End If
+                End If
+            Next i
                     
         End Select
         CMSG "!emote", GetUser, GetConver
