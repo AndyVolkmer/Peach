@@ -971,7 +971,15 @@ Case "!msg"
         Exit Sub
     End If
     
-    Dim S1&, E$
+    'Check if user is muted
+    If Mute = True Then
+        SendSingle "You are muted.", frmMain.Winsock1(Index)
+        CMSG "!muted", GetUser, GetConver
+        Exit Sub
+    End If
+    
+    Dim S1 As Long
+    Dim E As String
   
     If Len(GetConver) > 5 Then
         If IsNumeric(GetConver) = False Then
@@ -989,14 +997,7 @@ Case "!msg"
             End If
         End If
     End If
-        
-    'Check if user is muted
-    If Mute = True Then
-        SendSingle "You are muted.", frmMain.Winsock1(Index)
-        CMSG "!muted", GetUser, GetConver
-        Exit Sub
-    End If
-    
+   
     'Check if user is repeating
     If GetConver = GetLastMessage Then
         SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", frmMain.Winsock1(Index)
