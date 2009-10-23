@@ -960,10 +960,9 @@ Case "!msg"
                     Else
                         SendMessage GetUser & Emotes(i).IsNotUser
                     End If
+                    Exit For
                 Else
-                    If i = UBound(Emotes) Then
-                        SendSingle "Unknown command used.", frmMain.Winsock1(Index)
-                    End If
+                    If i = UBound(Emotes) Then SendSingle "Unknown command used.", frmMain.Winsock1(Index)
                 End If
             Next i
                     
