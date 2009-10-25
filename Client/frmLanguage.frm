@@ -61,25 +61,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Dim FIRST_LANG As Long
+
 Private Sub cmdEnter_Click()
-Select Case Combo1.ListIndex
-Case 0
-    SET_LANG_GERMAN
-Case 1
-    SET_LANG_ENGLISH
-Case 2
-    SET_LANG_SPANISH
-Case 3
-    SET_LANG_SWEDISH
-Case 4
-    SET_LANG_ITALIAN
-Case 5
-    SET_LANG_DUTCH
-Case 6
-    SET_LANG_SERBIAN
-Case 7
-    SET_LANG_FRENCH
-End Select
+SET_LANG_1 Combo1.ListIndex
 
 frmMain.LoadMDIForm
 frmSendFile.LoadSendFileForm
@@ -96,24 +81,7 @@ End Sub
 
 Private Sub Combo1_Click()
 cmdEnter.Enabled = True
-Select Case Combo1.ListIndex
-Case 0 'German
-    SET_LANG_GERMAN
-Case 1 'English
-    SET_LANG_ENGLISH
-Case 2 'Spanish
-    SET_LANG_SPANISH
-Case 3 'Swedish
-    SET_LANG_SWEDISH
-Case 4 'Italian
-    SET_LANG_ITALIAN
-Case 5 'Dutch
-    SET_LANG_DUTCH
-Case 6 'Serbian
-    SET_LANG_SERBIAN
-Case 7 'French
-    SET_LANG_FRENCH
-End Select
+SET_LANG_1 Combo1.ListIndex
 SET_LANG
 End Sub
 
@@ -132,7 +100,32 @@ End Sub
 
 Private Sub Form_Activate()
 SET_LANG
-
+FIRST_LANG = CURRENT_LANG
 Me.BackColor = Setting.SCHEME_COLOR
 Label1.BackColor = Setting.SCHEME_COLOR
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+SET_LANG_1 FIRST_LANG
+End Sub
+
+Private Sub SET_LANG_1(Lang As Long)
+Select Case Lang
+Case 0 'German
+    SET_LANG_GERMAN
+Case 1 'English
+    SET_LANG_ENGLISH
+Case 2 'Spanish
+    SET_LANG_SPANISH
+Case 3 'Swedish
+    SET_LANG_SWEDISH
+Case 4 'Italian
+    SET_LANG_ITALIAN
+Case 5 'Dutch
+    SET_LANG_DUTCH
+Case 6 'Serbian
+    SET_LANG_SERBIAN
+Case 7 'French
+    SET_LANG_FRENCH
+End Select
 End Sub

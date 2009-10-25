@@ -24,35 +24,35 @@ Begin VB.Form frmSettings
    ScaleWidth      =   4470
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.TextBox txtIP 
+      Alignment       =   2  'Center
+      Height          =   285
+      Left            =   360
+      TabIndex        =   13
+      Top             =   2880
+      Width           =   3735
+   End
+   Begin VB.TextBox txtPort 
+      Alignment       =   2  'Center
+      Height          =   285
+      Left            =   360
+      TabIndex        =   12
+      Top             =   3480
+      Width           =   1575
+   End
    Begin VB.Frame Frame3 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Connection Setting"
       Height          =   1815
       Left            =   120
-      TabIndex        =   11
+      TabIndex        =   9
       Top             =   2280
       Width           =   4215
-      Begin VB.TextBox txtPort 
-         Alignment       =   2  'Center
-         Height          =   285
-         Left            =   240
-         TabIndex        =   5
-         Top             =   1200
-         Width           =   1575
-      End
-      Begin VB.TextBox txtIP 
-         Alignment       =   2  'Center
-         Height          =   285
-         Left            =   240
-         TabIndex        =   4
-         Top             =   600
-         Width           =   3735
-      End
       Begin VB.Label Label3 
          Caption         =   " Server Port:"
          Height          =   255
          Left            =   240
-         TabIndex        =   13
+         TabIndex        =   11
          Top             =   960
          Width           =   975
       End
@@ -60,7 +60,7 @@ Begin VB.Form frmSettings
          Caption         =   " Server IP:"
          Height          =   255
          Left            =   240
-         TabIndex        =   12
+         TabIndex        =   10
          Top             =   360
          Width           =   975
       End
@@ -70,7 +70,7 @@ Begin VB.Form frmSettings
       Caption         =   "Options"
       Height          =   855
       Left            =   120
-      TabIndex        =   10
+      TabIndex        =   8
       Top             =   1320
       Width           =   4215
       Begin VB.CheckBox SavePassword 
@@ -94,7 +94,7 @@ Begin VB.Form frmSettings
       Caption         =   "&Save"
       Height          =   375
       Left            =   2880
-      TabIndex        =   7
+      TabIndex        =   5
       Top             =   4200
       Width           =   1455
    End
@@ -102,7 +102,7 @@ Begin VB.Form frmSettings
       Caption         =   "&Language"
       Height          =   375
       Left            =   120
-      TabIndex        =   6
+      TabIndex        =   4
       Top             =   4200
       Width           =   1455
    End
@@ -130,7 +130,7 @@ Begin VB.Form frmSettings
          Height          =   285
          Left            =   240
          Locked          =   -1  'True
-         TabIndex        =   9
+         TabIndex        =   7
          Top             =   480
          Width           =   1095
       End
@@ -138,7 +138,7 @@ Begin VB.Form frmSettings
          Caption         =   "Current Color:"
          Height          =   255
          Left            =   240
-         TabIndex        =   8
+         TabIndex        =   6
          Top             =   255
          Width           =   1215
       End

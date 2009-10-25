@@ -300,14 +300,6 @@ Else
     .Emote_Table = InputBox("The configuration file does not contain a emote table, please insert one in the textbox below.", "Database error ..", "Emote Table")
 End If
 
-WriteLog "Values from configuration:" _
-        & vbCrLf & vbTab & "Database: " & .Database _
-        & vbCrLf & vbTab & "Host: " & .Host _
-        & vbCrLf & vbTab & "Password: " & .Password _
-        & vbCrLf & vbTab & "Account Table: " & .Account_Table _
-        & vbCrLf & vbTab & "Friend Table: " & .Friend_Table _
-        & vbCrLf & vbTab & "Emote Table: " & .Emote_Table
-
 'Connect to MySQL Database
 CONNECT_MYSQL .Database, .User, .Password, .Host
 
@@ -371,7 +363,6 @@ Dim SQL     As String
 Dim Counter As Long
 
 If HasError = True Then Exit Sub
-If Len(qTable) = 0 Then Exit Sub
 
 SQL = "SELECT * FROM " & qTable
 Counter = 0
@@ -415,7 +406,6 @@ Dim LItem   As ListItem
 Dim Counter As Long
 
 If HasError = True Then Exit Sub
-If Len(qTable) = 0 Then Exit Sub
 
 SQL = "SELECT * FROM " & qTable
 Counter = 0
@@ -456,7 +446,6 @@ Dim LItem   As ListItem
 Dim Counter As Long
 
 If HasError = True Then Exit Sub
-If Len(qTable) = 0 Then Exit Sub
 
 SQL = "SELECT * FROM " & qTable
 Counter = 0
@@ -819,12 +808,6 @@ Case "!msg"
     'Lets try to work without GoTo's
     If UBound(array2) > 0 Then
         GetTarget = StrConv(array2(1), vbProperCase)
-        
-        'Just capture the non propercased name if it's a command, emotes dont use accounts
-        If IsCommand = True Then
-            pGetTarget = array2(1)
-            ANN_MSG = Mid$(GetConver, Len(array2(0)) + 2, Len(GetConver))
-        End If
     End If
    
     'If a command is used check out which
@@ -833,6 +816,12 @@ Case "!msg"
         For i = 2 To UBound(array2)
             Reason = Reason & array2(i) & " "
         Next i
+        
+        'Capture non propercase name and announce message
+        If UBound(array2) > 0 Then
+            pGetTarget = array2(1)
+            ANN_MSG = Mid$(GetConver, Len(array2(0)) + 2, Len(GetConver))
+        End If
         
         Select Case array2(0)
         Case ".show"
@@ -980,29 +969,31 @@ Case "!msg"
     
     Dim S1 As Long
     Dim E As String
-  
-    If Len(GetConver) > 5 Then
-        If IsNumeric(GetConver) = False Then
-            If IsAlphaCharacter(GetConver) = True Then
-                S1 = 0
-                For i = 1 To Len(GetConver)
-                    E = Mid$(GetConver, i, 1)
-                    If UCase$(E) = E Then S1 = S1 + 1
-                Next i
-                E = vbNullString
-                If Format$(100 * S1 / Len(GetConver), "0.00") > 75 Then
-                    SendSingle "Message blocked. Please do not write more then 75% in caps.", frmMain.Winsock1(Index)
-                    Exit Sub
+    
+    If GetLevel(GetUser) = 0 Then
+        If Len(GetConver) > 5 Then
+            If IsNumeric(GetConver) = False Then
+                If IsAlphaCharacter(GetConver) = True Then
+                    S1 = 0
+                    For i = 1 To Len(GetConver)
+                        E = Mid$(GetConver, i, 1)
+                        If UCase$(E) = E Then S1 = S1 + 1
+                    Next i
+                    E = vbNullString
+                    If Format$(100 * S1 / Len(GetConver), "0.00") > 75 Then
+                        SendSingle "Message blocked. Please do not write more then 75% in caps.", frmMain.Winsock1(Index)
+                        Exit Sub
+                    End If
                 End If
             End If
         End If
-    End If
-   
-    'Check if user is repeating
-    If GetConver = GetLastMessage Then
-        SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", frmMain.Winsock1(Index)
-        CMSG "!repeat", GetUser
-        Exit Sub
+        
+        'Check if user is repeating
+        If GetConver = GetLastMessage Then
+            SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", frmMain.Winsock1(Index)
+            CMSG "!repeat", GetUser
+            Exit Sub
+        End If
     End If
     
     'Send Message
@@ -1012,7 +1003,7 @@ Case "!msg"
     'Set last message
     With frmPanel.ListView1.ListItems
         For i = 1 To .Count
-            If GetUser = .Item(i) Then
+            If .Item(i) = GetUser Then
                 frmPanel.ListView1.ListItems.Item(i).SubItems(3) = GetConver
                 Exit For
             End If
@@ -1048,15 +1039,14 @@ With frmPanel.ListView1.ListItems
         Case .Item(i)
             SendSingle "[You whisper to " & Target & "]: " & Conversation, frmMain.Winsock1(Index)
             SendSingle "[" & User & " whispers]: " & Conversation, frmMain.Winsock1(.Item(i).SubItems(2))
-            CMSG "!w", User, Conversation, Target
             Exit For
         Case "<AFK>" & .Item(i)
             SendSingle .Item(i) & " is away from keyboard.", frmMain.Winsock1(Index)
             SendSingle "[" & User & " whispers]: " & Conversation, frmMain.Winsock1(.Item(i).SubItems(2))
-            CMSG "!w", User, Conversation, Target
             Exit For
         End Select
     Next i
+    CMSG "!w", User, Conversation, Target
 End With
 End Sub
 
@@ -1073,7 +1063,6 @@ Private Sub MuteUser(User As String, AdminName As String, Mute As Boolean, SInde
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            
             If Mute = True Then
                 'If the user is already muted then return feedback
                 If .Item(i).SubItems(4) = "True" Then
@@ -1104,7 +1093,6 @@ With frmPanel.ListView1.ListItems
                     SendMessage User & " got unmuted by " & GetTag(AdminName) & AdminName & ". (" & Reason & ")"
                 End If
             End If
-            
             Exit For
         Else
             If i = .Count Then
@@ -1144,10 +1132,12 @@ With frmPanel.ListView1.ListItems
             BanAccount .Item(i).SubItems(5), AdminName, Ban, SIndex, Reason
             Exit For
         Else
-            If Len(Trim$(User)) = 0 Then
-                If i = .Count Then SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
-            Else
-                If i = .Count Then SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
+            If i = .Count Then
+                If Len(Trim$(User)) = 0 Then
+                    SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
+                Else
+                    SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
+                End If
             End If
         End If
     Next i

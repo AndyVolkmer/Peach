@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev    As String = "1.1.5.9"
+Public Const Rev    As String = "1.1.6.0"
 Public Const rPort  As Long = 6222
 
 Public i        As Long    'Global "FOR" variable
@@ -127,11 +127,10 @@ With frmPanel.ListView1.ListItems
             GetAccountStatus = "!online#" & .Item(j) & "#"
             IsAvaible = True
             Exit For
+        Else
+            If j = .Count Then GetAccountStatus = "!offline#"
         End If
     Next j
-    If IsAvaible = False Then
-        GetAccountStatus = "!offline#"
-    End If
 End With
 End Function
 

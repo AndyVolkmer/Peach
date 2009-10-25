@@ -221,17 +221,15 @@ Public RunOnce  As Boolean
 
 Private Sub Close_Click()
 Unload frmLanguage
-Unload frmBlank
-Unload frmDESP
 Unload frmAbout
 End Sub
 
 Private Sub Command1_Click()
-    SetupForms frmConfig
+SetupForms frmConfig
 End Sub
 
 Private Sub Command2_Click()
-    SetupForms frmChat
+SetupForms frmChat
 End Sub
 
 Private Sub SetupForms(Nix As Form)
@@ -409,8 +407,6 @@ With frmChat.txtConver
     .SelRTF = vbCrLf & Prefix & " [System]: You got disconnected from Server."
 End With
     
-frmDESP.DisplayMessage DESP_TEXT_DC_SERVER
-
 SetupForms frmConfig
 End Sub
 
@@ -427,8 +423,6 @@ frmChat.txtToSend.SetFocus
 StatusBar1.Panels(1).Text = MDI_STAT_CONNECTED
 
 SendMsg "!connected#" & frmConfig.txtNick & "#" & frmConfig.txtAccount & "#"
-
-frmDESP.DisplayMessage "Hello " & frmConfig.txtNick.Text
 End Sub
 
 Private Sub ConnectIsFalse()
@@ -595,7 +589,6 @@ Case Else
         .SelStart = Len(.Text)
         .SelRTF = vbCrLf & Space(1) & Prefix & Space(1) & GetMessage
     End With
-    If frmMain.WindowState = 1 Then frmDESP.DisplayMessage DESP_TEXT_NEW_MSG
 End Select
 End Sub
 

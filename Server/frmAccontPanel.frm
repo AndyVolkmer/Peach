@@ -359,7 +359,6 @@ End Sub
 Private Sub RegisterAccount(dName As String, dPassword As String)
 Dim j As Long
 
-j = 0
 'Check list if the ID is already given
 With ListView1.ListItems
     For i = 1 To .Count

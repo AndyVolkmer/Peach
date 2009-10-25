@@ -1,6 +1,7 @@
 Attribute VB_Name = "modLang"
 Option Explicit
 
+Public CURRENT_LANG                     As Long
 'Start variable support for languages
 ' MDI form ..
 'Public MDI_COMMAND_CONFIG               As String
@@ -129,6 +130,8 @@ Public SET_COMMAND_SAVE                 As String
 Public SF2_COMMAND_OPEN_FILE            As String
 
 Public Sub SET_LANG_GERMAN()
+CURRENT_LANG = 0
+
 ' MDI form ..
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Sende Datei"
@@ -250,6 +253,8 @@ SF2_COMMAND_OPEN_FILE = "&Datei Ordner öffnen"
 End Sub
 
 Public Sub SET_LANG_ENGLISH()
+CURRENT_LANG = 1
+
 'MDI form
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Send File"
@@ -375,6 +380,8 @@ SF2_COMMAND_OPEN_FILE = "&Open File Folder"
 End Sub
 
 Public Sub SET_LANG_SPANISH()
+CURRENT_LANG = 2
+
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Enviar Archivo"
 MDI_COMMAND_SOCIETY = "&Lista Online"
@@ -495,6 +502,8 @@ SF2_COMMAND_OPEN_FILE = "&Abrir carpeta"
 End Sub
 
 Public Sub SET_LANG_SWEDISH()
+CURRENT_LANG = 3
+
 ' MDI form ..
 MDI_COMMAND_CHAT = "Ch&att"
 MDI_COMMAND_SENDFILE = "&Sänd fil"
@@ -615,6 +624,8 @@ SET_COMMAND_SAVE = "&Spara"
 End Sub
 
 Public Sub SET_LANG_ITALIAN()
+CURRENT_LANG = 4
+
 ' Mdi form
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Invia File"
@@ -738,6 +749,8 @@ SF2_COMMAND_OPEN_FILE = "&Open File Folder"
 End Sub
 
 Public Sub SET_LANG_SERBIAN()
+CURRENT_LANG = 6
+
 ' Mdi form ..
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Slanje fajla"
@@ -861,6 +874,8 @@ SF2_COMMAND_OPEN_FILE = "&Open File Folder"
 End Sub
 
 Public Sub SET_LANG_DUTCH()
+CURRENT_LANG = 5
+
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Bestand Verzenden"
 MDI_COMMAND_SOCIETY = "&Online List"
@@ -987,6 +1002,8 @@ SF2_COMMAND_OPEN_FILE = "&Open bestandsmap"
 End Sub
 
 Public Sub SET_LANG_FRENCH()
+CURRENT_LANG = 7
+
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Envoi File"
 MDI_COMMAND_SOCIETY = "&Liste contact Online"
