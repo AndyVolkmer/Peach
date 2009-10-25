@@ -823,7 +823,7 @@ Case "!msg"
             ANN_MSG = Mid$(GetConver, Len(array2(0)) + 2, Len(GetConver))
         End If
         
-        Select Case array2(0)
+        Select Case LCase$(array2(0))
         Case ".show"
             Select Case LCase$(GetTarget)
             Case "accounts", "account", "a"

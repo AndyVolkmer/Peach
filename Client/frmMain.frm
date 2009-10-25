@@ -335,11 +335,11 @@ Private Sub MDIForm_Load()
 LoadMDIForm
 DisableFormResize Me
 
-Dim L As Long
-    L = GetWindowLong(Me.hwnd, GWL_STYLE)
+Dim l As Long
+    l = GetWindowLong(Me.hwnd, GWL_STYLE)
 '   L = L And Not (WS_MINIMIZEBOX)
-    L = L And Not (WS_MAXIMIZEBOX)
-    L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
+    l = l And Not (WS_MAXIMIZEBOX)
+    l = SetWindowLong(Me.hwnd, GWL_STYLE, l)
 
 StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
 
@@ -349,10 +349,10 @@ Me.Left = Setting.MAIN_LEFT
 SetupForms frmConfig
 End Sub
 
-Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
 Dim Msg As Long
 Dim sFilter As String
-Msg = X / Screen.TwipsPerPixelX
+Msg = x / Screen.TwipsPerPixelX
 Select Case Msg
 Case WM_LBUTTONDOWN
 Case WM_LBUTTONUP

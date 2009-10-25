@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
 Begin VB.Form frmChat 
    Appearance      =   0  'Flat
    BackColor       =   &H00F4F4F4&
@@ -127,7 +127,17 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (ByVal hwnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
+
+Private Const EM_CHARFROMPOS As Long = &HD7&
 Private Const WM_PASTE = &H302
+
+Private Type POINTAPI
+    x As Long
+    y As Long
+End Type
+
+Private Sign(255) As Integer
 
 Private Sub cmdSend_Click()
 
@@ -181,6 +191,12 @@ Dim hWnd1 As Long: hWnd1 = GetActiveWindow
 'Unlock so we can convert smileys
 txtConver.Locked = False
 
+'Create smileys
+Call Create_Smileys(txtConver)
+
+Call InitSigns
+Call Highlight(txtConver)
+
 'If window doenst have focus then flash
 With frmMain
     If Not hWnd1 = .hwnd Then
@@ -188,14 +204,46 @@ With frmMain
     End If
 End With
 
-'Create smileys
-Call Create_Smileys(txtConver)
-
 'Set cursor to last position
 txtConver.SelStart = Len(txtConver.Text)
 
 'Lock again
 txtConver.Locked = True
+End Sub
+
+Private Sub txtConver_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Dim Text As String
+Dim lnk As Long
+Dim ret As Long
+
+Text = GetWord(txtConver, x, y)
+
+lnk = IsUrlOrMail(Text)
+
+If lnk > 0 Then
+    ret = RemoveSign(Text)
+    ret = RemoveBrackets(Text)
+    
+    If lnk > 100 Then
+        Text = "mailto:" + Text
+    End If
+    
+    'MsgBox Text$
+    Call SendLink(Text)
+End If
+
+End Sub
+
+Private Sub txtConver_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Dim Text As String
+    
+Text = GetWord(txtConver, x, y)
+
+If IsUrlOrMail(Text) Then
+    txtConver.MousePointer = 99
+Else
+    txtConver.MousePointer = 0
+End If
 End Sub
 
 Private Sub txtToSend_KeyPress(KeyAscii As Integer)
@@ -207,12 +255,12 @@ Dim Smileys() As String
 Dim SmileysFile() As String
 Dim Smilestring As String
 Dim SmileFileString As String
-Dim Pos As Long, Start As Long
+Dim pos As Long, Start As Long
 Dim IconPath As String
 
 Screen.MousePointer = vbHourglass
 
-Pos = RTF.SelStart
+pos = RTF.SelStart
 
 Start = 1
 
@@ -271,7 +319,7 @@ For i = LBound(Smileys) To UBound(Smileys)
     Start = 1
 Next i
 
-RTF.SelStart = Pos
+RTF.SelStart = pos
 
 Screen.MousePointer = vbNormal
 End Sub
@@ -302,5 +350,197 @@ Else
   If Buf <> 0 Then
     Clipboard.SetData Buf
   End If
+E
+If Sign(Last) = 1 Then
+    Test = Left$(Test, Len(Test) - 1)
+    RemoveSign = 1
 End If
+End Function
+
+Private Sub SendLink(ByVal Link As String)
+Dim Success As Long
+Success = ShellExecute(0&, vbNullString, Link, vbNullString, "C:\", 1)
+End Sub
+
+Private Function GetWord(Rich As RichTextBox, ByVal x&, ByVal y&) As String
+Dim pos As Long, P1 As Long, P2 As Long
+Dim Char As Long
+Dim MousePointer As POINTAPI
+
+MousePointer.x = x \ Screen.TwipsPerPixelX
+MousePointer.y = y \ Screen.TwipsPerPixelY
+pos = SendMessage(Rich.hwnd, EM_CHARFROMPOS, 0&, MousePointer)
+If pos <= 0 Then Exit Function
+
+For P1 = pos To 1 Step -1
+    Char = Asc(Mid$(Rich.Text, P1, 1))
+    If Sign(Char) = 2 Then
+        Exit For
+    End If
+Next P1
+P1 = P1 + 1
+
+' Wortende finden.
+For P2 = pos To Len(Rich.Text)
+    Char = Asc(Mid$(Rich.Text, P2, 1))
+    If Sign(Char) = 2 Then
+        Exit For
+    End If
+Next P2
+P2 = P2 - 1
+
+If P1 < P2 Then GetWord = Mid$(Rich.Text, P1, P2 - P1 + 1)
+End Function
+
+Private Function RemoveSign(ByRef Test As String) As Long
+Dim Last As Long
+
+Last = Asc(Right$(Test, 1))
+If Sign(Last) = 1 Then
+    Test = Left$(Test, Len(Test) - 1)
+    RemoveSign = 1
+End If
+End Function
+
+Private Function RemoveBrackets(Test As String) As Long
+If Left$(Test, 1) = Chr$(40) Then
+    If Right(Test, 1) = Chr$(41) Then
+        Test = Mid$(Test, 2, Len(Test) - 2)
+        RemoveBrackets = 1
+    End If
+End If
+
+If Left$(Test, 1) = Chr$(34) Then
+    If Right(Test, 1) = Chr$(34) Then
+        Test = Mid$(Test$, 2, Len(Test) - 2)
+        RemoveBrackets = 1
+    End If
+End If
+
+If Left$(Test, 1) = Chr$(39) Then
+    If Right(Test, 1) = Chr$(39) Then
+        Test = Mid$(Test, 2, Len(Test) - 2)
+        RemoveBrackets = 1
+    End If
+End If
+End Function
+
+Private Function IsUrlOrMail(Test As String) As Long
+Dim ok As Long
+Dim pos As Long
+
+pos = InStr(1, Test$, "://", 1)
+If pos > 0 Then
+    pos = InStr(1, Test$, "http", 1)
+    If pos > 0 Then
+        ok = 1
+    Else
+        pos = InStr(1, Test$, "ftp", 1)
+        If pos > 0 Then
+            ok = 11
+        End If
+    End If
+    If ok > 0 Then
+        pos = InStr(1, Test$, ".", 1)
+        If pos = 0 Then
+            ok = 0
+        End If
+    End If
+     
+Else
+    If LCase(Left$(Test$, 4)) = "www." Then
+        pos = InStr(5, Test$, ".", 1)
+        If pos > 0 Then
+            ok = 5
+        End If
+    End If
+          
+End If
+
+If ok > 0 Then
+    IsUrlOrMail = ok
+    Exit Function
+End If
+
+pos = InStr(1, Test$, "@", 1)
+If pos > 1 Then
+    pos = InStr(pos + 1, Test$, ".", 1)
+    If pos > 0 Then
+        ok = 101
+    End If
+End If
+
+IsUrlOrMail = ok
+End Function
+
+Private Sub InitSigns()
+Dim i As Long
+Dim k As Long
+Dim Test As String
+
+Test = ".,;:?!"
+For i = 1 To Len(Test)
+    k = Asc(Mid$(Test, i, 1))
+    Sign(k) = 1
+Next i
+
+Test = " " + vbCrLf + Chr$(160)
+For i = 1 To Len(Test)
+    k = Asc(Mid$(Test, i, 1))
+    Sign(k) = 2
+Next i
+
+End Sub
+
+Private Sub Highlight(Rtb As RichTextBox)
+Dim pos2 As Long
+Dim pos1 As Long
+Dim br As Long
+Dim lnk As Long
+Dim ret As Long
+Dim l As Long
+Dim Text As String
+Dim Test As String
+
+Text = Rtb.Text
+l = Len(Text$)
+pos1 = 1
+
+Do
+    pos2 = InStr(pos1, Text$, " ", 1)
+    If pos2 > pos1 Then
+        Test = Mid$(Text, pos1, (pos2 - pos1))
+        br = RemoveBrackets(Test)
+        ret = RemoveSign(Test)
+        lnk = IsUrlOrMail(Test)
+        
+        If lnk > 0 Then
+            Rtb.SelStart = pos1 - 1 + br
+            Rtb.SelLength = Len(Test)
+            
+            Select Case lnk
+                Case 1 To 10
+                    Rtb.SelColor = vbBlue
+                Case 11 To 20
+                    Rtb.SelColor = RGB(0, 127, 0)
+                Case Is > 100
+                    Rtb.SelColor = vbRed
+            End Select
+            
+            Rtb.SelBold = True
+        Else
+            Rtb.SelStart = pos1 - 1
+            Rtb.SelLength = Len(Test$)
+            Rtb.SelColor = 0
+            Rtb.SelBold = False
+        End If
+        
+        pos1 = pos2 + 1
+    Else
+        If pos2 = pos1 Then
+            pos1 = pos2 + 1
+        End If
+        
+    End If
+Loop Until pos2 = 0 Or pos2 >= l
 End Sub
