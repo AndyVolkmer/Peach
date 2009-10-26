@@ -95,7 +95,7 @@ With ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = pUser Then
             If .Item(i).SubItems(2) = pFriend Then
-                SendSingle "!friend_already_added#" & pFriend & "#", frmMain.Winsock1(pIndex)
+                SendSingle "!msgbox#" & pFriend & " is already in you friendlist.#", frmMain.Winsock1(pIndex)
                 Exit Sub
             End If
         End If
@@ -130,7 +130,7 @@ If IsValid = True Then
     End With
     UpdateFriendList pUser
 Else 'Send message that the accoutn doesnt exist
-    SendSingle "!friend_not_exist#" & pFriend & "#", frmMain.Winsock1(pIndex)
+    SendSingle "!msgbox#" & "The account '" & pFriend & "' doesnt exist.#", frmMain.Winsock1(pIndex)
 End If
 End Sub
 

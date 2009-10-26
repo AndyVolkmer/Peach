@@ -133,8 +133,8 @@ Private Const EM_CHARFROMPOS As Long = &HD7&
 Private Const WM_PASTE = &H302
 
 Private Type POINTAPI
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
 End Type
 
 Private Sign(255) As Integer
@@ -194,7 +194,6 @@ txtConver.Locked = False
 'Create smileys
 Call Create_Smileys(txtConver)
 
-Call InitSigns
 Call Highlight(txtConver)
 
 'If window doenst have focus then flash
@@ -211,12 +210,12 @@ txtConver.SelStart = Len(txtConver.Text)
 txtConver.Locked = True
 End Sub
 
-Private Sub txtConver_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub txtConver_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim Text As String
 Dim lnk As Long
 Dim ret As Long
 
-Text = GetWord(txtConver, x, y)
+Text = GetWord(txtConver, X, Y)
 
 lnk = IsUrlOrMail(Text)
 
@@ -234,10 +233,10 @@ End If
 
 End Sub
 
-Private Sub txtConver_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub txtConver_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim Text As String
     
-Text = GetWord(txtConver, x, y)
+Text = GetWord(txtConver, X, Y)
 
 If IsUrlOrMail(Text) Then
     txtConver.MousePointer = 99
@@ -255,12 +254,12 @@ Dim Smileys() As String
 Dim SmileysFile() As String
 Dim Smilestring As String
 Dim SmileFileString As String
-Dim pos As Long, Start As Long
+Dim Pos As Long, Start As Long
 Dim IconPath As String
 
 Screen.MousePointer = vbHourglass
 
-pos = RTF.SelStart
+Pos = RTF.SelStart
 
 Start = 1
 
@@ -319,7 +318,7 @@ For i = LBound(Smileys) To UBound(Smileys)
     Start = 1
 Next i
 
-RTF.SelStart = pos
+RTF.SelStart = Pos
 
 Screen.MousePointer = vbNormal
 End Sub
@@ -362,28 +361,28 @@ Dim Success As Long
 Success = ShellExecute(0&, vbNullString, Link, vbNullString, "C:\", 1)
 End Sub
 
-Private Function GetWord(Rich As RichTextBox, ByVal x&, ByVal y&) As String
-Dim pos As Long, P1 As Long, P2 As Long
-Dim Char As Long
+Private Function GetWord(Rich As RichTextBox, ByVal X&, ByVal Y&) As String
+Dim Pos As Long, P1 As Long, P2 As Long
+Dim CHAR As Long
 Dim MousePointer As POINTAPI
 
-MousePointer.x = x \ Screen.TwipsPerPixelX
-MousePointer.y = y \ Screen.TwipsPerPixelY
-pos = SendMessage(Rich.hwnd, EM_CHARFROMPOS, 0&, MousePointer)
-If pos <= 0 Then Exit Function
+MousePointer.X = X \ Screen.TwipsPerPixelX
+MousePointer.Y = Y \ Screen.TwipsPerPixelY
+Pos = SendMessage(Rich.hwnd, EM_CHARFROMPOS, 0&, MousePointer)
+If Pos <= 0 Then Exit Function
 
-For P1 = pos To 1 Step -1
-    Char = Asc(Mid$(Rich.Text, P1, 1))
-    If Sign(Char) = 2 Then
+For P1 = Pos To 1 Step -1
+    CHAR = Asc(Mid$(Rich.Text, P1, 1))
+    If Sign(CHAR) = 2 Then
         Exit For
     End If
 Next P1
 P1 = P1 + 1
 
 ' Wortende finden.
-For P2 = pos To Len(Rich.Text)
-    Char = Asc(Mid$(Rich.Text, P2, 1))
-    If Sign(Char) = 2 Then
+For P2 = Pos To Len(Rich.Text)
+    CHAR = Asc(Mid$(Rich.Text, P2, 1))
+    If Sign(CHAR) = 2 Then
         Exit For
     End If
 Next P2
@@ -394,7 +393,6 @@ End Function
 
 Private Function RemoveSign(ByRef Test As String) As Long
 Dim Last As Long
-
 Last = Asc(Right$(Test, 1))
 If Sign(Last) = 1 Then
     Test = Left$(Test, Len(Test) - 1)
@@ -427,30 +425,30 @@ End Function
 
 Private Function IsUrlOrMail(Test As String) As Long
 Dim ok As Long
-Dim pos As Long
+Dim Pos As Long
 
-pos = InStr(1, Test$, "://", 1)
-If pos > 0 Then
-    pos = InStr(1, Test$, "http", 1)
-    If pos > 0 Then
+Pos = InStr(1, Test$, "://", 1)
+If Pos > 0 Then
+    Pos = InStr(1, Test$, "http", 1)
+    If Pos > 0 Then
         ok = 1
     Else
-        pos = InStr(1, Test$, "ftp", 1)
-        If pos > 0 Then
+        Pos = InStr(1, Test$, "ftp", 1)
+        If Pos > 0 Then
             ok = 11
         End If
     End If
     If ok > 0 Then
-        pos = InStr(1, Test$, ".", 1)
-        If pos = 0 Then
+        Pos = InStr(1, Test$, ".", 1)
+        If Pos = 0 Then
             ok = 0
         End If
     End If
      
 Else
     If LCase(Left$(Test$, 4)) = "www." Then
-        pos = InStr(5, Test$, ".", 1)
-        If pos > 0 Then
+        Pos = InStr(5, Test$, ".", 1)
+        If Pos > 0 Then
             ok = 5
         End If
     End If
@@ -462,10 +460,10 @@ If ok > 0 Then
     Exit Function
 End If
 
-pos = InStr(1, Test$, "@", 1)
-If pos > 1 Then
-    pos = InStr(pos + 1, Test$, ".", 1)
-    If pos > 0 Then
+Pos = InStr(1, Test$, "@", 1)
+If Pos > 1 Then
+    Pos = InStr(Pos + 1, Test$, ".", 1)
+    If Pos > 0 Then
         ok = 101
     End If
 End If
@@ -473,27 +471,8 @@ End If
 IsUrlOrMail = ok
 End Function
 
-Private Sub InitSigns()
-Dim i As Long
-Dim k As Long
-Dim Test As String
-
-Test = ".,;:?!"
-For i = 1 To Len(Test)
-    k = Asc(Mid$(Test, i, 1))
-    Sign(k) = 1
-Next i
-
-Test = " " + vbCrLf + Chr$(160)
-For i = 1 To Len(Test)
-    k = Asc(Mid$(Test, i, 1))
-    Sign(k) = 2
-Next i
-
-End Sub
-
 Private Sub Highlight(Rtb As RichTextBox)
-Dim pos2 As Long
+Dim Pos2 As Long
 Dim pos1 As Long
 Dim br As Long
 Dim lnk As Long
@@ -507,9 +486,9 @@ l = Len(Text$)
 pos1 = 1
 
 Do
-    pos2 = InStr(pos1, Text$, " ", 1)
-    If pos2 > pos1 Then
-        Test = Mid$(Text, pos1, (pos2 - pos1))
+    Pos2 = InStr(pos1, Text$, " ", 1)
+    If Pos2 > pos1 Then
+        Test = Mid$(Text, pos1, (Pos2 - pos1))
         br = RemoveBrackets(Test)
         ret = RemoveSign(Test)
         lnk = IsUrlOrMail(Test)
@@ -535,12 +514,12 @@ Do
             Rtb.SelBold = False
         End If
         
-        pos1 = pos2 + 1
+        pos1 = Pos2 + 1
     Else
-        If pos2 = pos1 Then
-            pos1 = pos2 + 1
+        If Pos2 = pos1 Then
+            pos1 = Pos2 + 1
         End If
         
     End If
-Loop Until pos2 = 0 Or pos2 >= l
+Loop Until Pos2 = 0 Or Pos2 >= l
 End Sub

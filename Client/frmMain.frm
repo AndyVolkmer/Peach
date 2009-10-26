@@ -349,10 +349,10 @@ Me.Left = Setting.MAIN_LEFT
 SetupForms frmConfig
 End Sub
 
-Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim Msg As Long
 Dim sFilter As String
-Msg = x / Screen.TwipsPerPixelX
+Msg = X / Screen.TwipsPerPixelX
 Select Case Msg
 Case WM_LBUTTONDOWN
 Case WM_LBUTTONUP
@@ -561,7 +561,6 @@ Case "!login"
 
 'We get ip here
 Case "!iprequest"
-    
     'Connect new winsock to client
     FSocket.Close
     With FSocket
@@ -576,14 +575,10 @@ Case "!iprequest"
         .Enabled = True
     End With
 
-'Display friend already added message
-Case "!friend_already_added"
-    MsgBox StrArr(1) & " is already in you friendlist.", vbInformation
-    
-'Display friend doesnt exist message
-Case "!friend_not_exist"
-    MsgBox "The account '" & StrArr(1) & "' doesnt exist.", vbInformation
-    
+'Function to display information messageboxes
+Case "!msgbox"
+    MsgBox StrArr(1), vbInformation
+
 Case Else
     With frmChat.txtConver
         .SelStart = Len(.Text)
