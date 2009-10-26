@@ -349,12 +349,8 @@ Else
   If Buf <> 0 Then
     Clipboard.SetData Buf
   End If
-E
-If Sign(Last) = 1 Then
-    Test = Left$(Test, Len(Test) - 1)
-    RemoveSign = 1
 End If
-End Function
+End Sub
 
 Private Sub SendLink(ByVal Link As String)
 Dim Success As Long
