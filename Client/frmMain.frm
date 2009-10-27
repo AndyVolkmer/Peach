@@ -508,6 +508,8 @@ Case "!update_friends"
     
 'Wipe out current list and insert new values
 Case "!update_online"
+    Dim User As String
+    
     'Clear the current list so we don't get multiply entries
     frmSociety.ListView1.ListItems.Clear
     frmSendFile.Combo1.Clear
@@ -515,7 +517,8 @@ Case "!update_online"
     'Go through array and added users
     For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
         frmSociety.ListView1.ListItems.Add , , StrArr(i)
-        frmSendFile.Combo1.AddItem StrArr(i)
+        User = Left(StrArr(i), InStr(1, StrArr(i), " ") - 1)
+        frmSendFile.Combo1.AddItem User
     Next i
     
     'Ask for friendlist

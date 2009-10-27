@@ -103,7 +103,7 @@ With ListView1.ListItems
 End With
 
 'If friends account exist then process
-If IsValid = True Then
+If IsValid Then
     j = 0
     With ListView1.ListItems
         For i = 1 To .Count

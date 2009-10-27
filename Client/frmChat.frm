@@ -166,7 +166,6 @@ End Sub
 Private Sub Clear()
 With txtToSend
     .Text = vbNullString
-    .SetFocus
 End With
 End Sub
 
@@ -194,7 +193,7 @@ txtConver.Locked = False
 'Create smileys
 Call Create_Smileys(txtConver)
 
-Call Highlight(txtConver)
+'Call Highlight(txtConver)
 
 Call InitSigns
 
@@ -204,6 +203,9 @@ With frmMain
         Call FlashTitle(.hwnd, True)
     End If
 End With
+
+'Set cursor to last position
+txtConver.SelStart = Len(txtConver.Text)
 
 'Lock again
 txtConver.Locked = True

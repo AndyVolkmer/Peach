@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev    As String = "1.1.6.4"
+Public Const Rev    As String = "1.1.6.5"
 Public Const rPort  As Long = 6222
 
 Public i        As Long    'Global "FOR" variable
@@ -86,9 +86,9 @@ With frmPanel.ListView1.ListItems
     GetList = "!update_online#"
     For i = 1 To .Count
         If .Item(i).SubItems(7) = "True" Then
-            GetList = GetList & "<AFK>" & .Item(i) & "#"
+            GetList = GetList & "<AFK>" & .Item(i) & " - [ Account: " & .Item(i).SubItems(5) & " ]#"
         Else
-            GetList = GetList & .Item(i) & "#"
+            GetList = GetList & .Item(i) & " - [ Account: " & .Item(i).SubItems(5) & " ]#"
         End If
     Next i
 End With

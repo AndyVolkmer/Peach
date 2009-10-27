@@ -362,7 +362,7 @@ Private Sub LoadEmotes(qTable As String)
 Dim SQL     As String
 Dim Counter As Long
 
-If HasError = True Then Exit Sub
+If HasError Then Exit Sub
 
 SQL = "SELECT * FROM " & qTable
 Counter = 0
@@ -405,7 +405,7 @@ Dim SQL     As String
 Dim LItem   As ListItem
 Dim Counter As Long
 
-If HasError = True Then Exit Sub
+If HasError Then Exit Sub
 
 SQL = "SELECT * FROM " & qTable
 Counter = 0
@@ -445,7 +445,7 @@ Dim SQL     As String
 Dim LItem   As ListItem
 Dim Counter As Long
 
-If HasError = True Then Exit Sub
+If HasError Then Exit Sub
 
 SQL = "SELECT * FROM " & qTable
 Counter = 0
@@ -615,7 +615,8 @@ Dim GetConver       As String   'The third string from array1 used to be the con
 Dim GetCommand      As String   'The first string from array1 used to be the command
 Dim pGetTarget      As String   'We save here the account propercased or the username
 Dim GetLastMessage  As String   'We save here the latest message from that user
-Dim bMatch, Mute    As Boolean  'bMatch controls the login, Mute explains itself
+Dim bMatch          As Boolean  'bMatch controls the login
+Dim Mute            As Boolean  'Mute explains itself
 
 'Get Message
 frmMain.Winsock1(Index).GetData GetMessage
@@ -738,7 +739,7 @@ Case "!namerequest"
     End With
     
     'Return answer to client
-    If bMatch = True Then
+    If bMatch Then
         SendSingle "!decilined", frmMain.Winsock1(Index)
     Else
         SendSingle "!accepted", frmMain.Winsock1(Index)
@@ -811,7 +812,7 @@ Case "!msg"
     End If
    
     'If a command is used check out which
-    If IsCommand = True Then
+    If IsCommand Then
         'Save the reason
         For i = 2 To UBound(array2)
             Reason = Reason & array2(i) & " "
@@ -865,7 +866,7 @@ Case "!msg"
             If Len(Trim$(ANN_MSG)) = 0 Then
                 SendSingle "Incorrect syntax, use the following format .announce 'Text to announce'.", frmMain.Winsock1(Index)
             Else
-                SendMessage GetTag(GetUser) & "[" & GetUser & "] announces: " & ANN_MSG
+                SendMessage "[" & GetUser & " announces]: " & ANN_MSG
             End If
             ANN_MSG = vbNullString
                     
@@ -879,8 +880,8 @@ Case "!msg"
         Exit Sub
     End If
     
-    If IsSlash = True Then
-        If Mute = True Then
+    If IsSlash Then
+        If Mute Then
             SendSingle "You are muted.", frmMain.Winsock1(Index)
             Exit Sub
         End If
@@ -899,7 +900,7 @@ Case "!msg"
         Select Case LCase(array2(0))
         Case "/w", "/whisper"
             'Whisper
-            If IsUser = True Then
+            If IsUser Then
                 If UBound(array2) > 1 Then
                     Whisper GetUser, GetTarget, array2(2), Index
                     'Set last message
@@ -944,7 +945,7 @@ Case "!msg"
         Case Else
             For i = LBound(Emotes) To UBound(Emotes)
                 If Emotes(i).Command = LCase(array2(0)) Then
-                    If IsUser = True Then
+                    If IsUser Then
                         SendMessage GetUser & Emotes(i).IsUserText1 & GetTarget & Emotes(i).IsUserText2
                     Else
                         SendMessage GetUser & Emotes(i).IsNotUser
@@ -961,7 +962,7 @@ Case "!msg"
     End If
     
     'Check if user is muted
-    If Mute = True Then
+    If Mute Then
         SendSingle "You are muted.", frmMain.Winsock1(Index)
         CMSG "!muted", GetUser, GetConver
         Exit Sub
@@ -970,10 +971,10 @@ Case "!msg"
     Dim S1 As Long
     Dim E As String
     
-    If GetLevel(GetUser) = 0 Then
+    If GetLevel(GetUser) <> 2 Then
         If Len(GetConver) > 5 Then
             If IsNumeric(GetConver) = False Then
-                If IsAlphaCharacter(GetConver) = True Then
+                If IsAlphaCharacter(GetConver) Then
                     S1 = 0
                     For i = 1 To Len(GetConver)
                         E = Mid$(GetConver, i, 1)
@@ -1050,20 +1051,11 @@ With frmPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Function GetTag(User As String) As String
-Select Case GetLevel(User)
-Case 1
-    GetTag = "<GM> "
-Case 2
-    GetTag = "<Admin> "
-End Select
-End Function
-
 Private Sub MuteUser(User As String, AdminName As String, Mute As Boolean, SIndex As Integer, Reason As String)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            If Mute = True Then
+            If Mute Then
                 'If the user is already muted then return feedback
                 If .Item(i).SubItems(4) = "True" Then
                     SendSingle User & " is already muted.", frmMain.Winsock1(SIndex)
@@ -1081,16 +1073,16 @@ With frmPanel.ListView1.ListItems
             
             'Announce the action
             If Len(Reason) = 0 Then
-                If Mute = True Then
-                    SendMessage User & " got muted by " & GetTag(AdminName) & AdminName & "."
+                If Mute Then
+                    SendMessage User & " got muted by " & AdminName & "."
                 Else
-                    SendMessage User & " got unmuted by " & GetTag(AdminName) & AdminName & "."
+                    SendMessage User & " got unmuted by " & AdminName & "."
                 End If
             Else
-                If Mute = True Then
-                    SendMessage User & " got muted by " & GetTag(AdminName) & AdminName & ". (" & Reason & ")"
+                If Mute Then
+                    SendMessage User & " got muted by " & AdminName & ". Reason: " & Reason
                 Else
-                    SendMessage User & " got unmuted by " & GetTag(AdminName) & AdminName & ". (" & Reason & ")"
+                    SendMessage User & " got unmuted by " & AdminName & ". Reason: " & Reason
                 End If
             End If
             Exit For
@@ -1152,7 +1144,7 @@ With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(1)) = LCase(Account) Then
             'If the account is already banned send feedback
-            If Ban = True Then
+            If Ban Then
                 If .Item(i).SubItems(5) = "True" Then
                     SendSingle "Account '" & Account & "' is already banned.", frmMain.Winsock1(SIndex)
                     Exit Sub
@@ -1181,16 +1173,16 @@ With frmAccountPanel.ListView1.ListItems
             
             'Announce the action
             If Len(Trim$(Reason)) = 0 Then
-                If Ban = True Then
-                    SendMessage User & " was account banned by " & GetTag(AdminName) & AdminName & "."
+                If Ban Then
+                    SendMessage User & " was account banned by " & AdminName & "."
                 Else
-                    SendMessage User & " was unbanned by " & GetTag(AdminName) & AdminName & "."
+                    SendMessage User & " was unbanned by " & AdminName & "."
                 End If
             Else
-                If Ban = True Then
-                    SendMessage User & " was account banned by " & GetTag(AdminName) & AdminName & ". (" & Reason & ")"
+                If Ban Then
+                    SendMessage User & " was account banned by " & AdminName & ". Reason: " & Reason
                 Else
-                    SendMessage User & " was account unbanned by " & GetTag(AdminName) & AdminName & ". (" & Reason & ")"
+                    SendMessage User & " was account unbanned by " & AdminName & ". Reason: " & Reason
                 End If
             End If
             Exit For
