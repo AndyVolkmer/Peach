@@ -196,15 +196,14 @@ Call Create_Smileys(txtConver)
 
 Call Highlight(txtConver)
 
+Call InitSigns
+
 'If window doenst have focus then flash
 With frmMain
     If Not hWnd1 = .hwnd Then
         Call FlashTitle(.hwnd, True)
     End If
 End With
-
-'Set cursor to last position
-txtConver.SelStart = Len(txtConver.Text)
 
 'Lock again
 txtConver.Locked = True
@@ -227,15 +226,13 @@ If lnk > 0 Then
         Text = "mailto:" + Text
     End If
     
-    'MsgBox Text$
     Call SendLink(Text)
 End If
-
 End Sub
 
 Private Sub txtConver_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim Text As String
-    
+
 Text = GetWord(txtConver, X, Y)
 
 If IsUrlOrMail(Text) Then
@@ -254,12 +251,10 @@ Dim Smileys() As String
 Dim SmileysFile() As String
 Dim Smilestring As String
 Dim SmileFileString As String
-Dim Pos As Long, Start As Long
+Dim Start As Long
 Dim IconPath As String
 
 Screen.MousePointer = vbHourglass
-
-Pos = RTF.SelStart
 
 Start = 1
 
@@ -314,11 +309,8 @@ For i = LBound(Smileys) To UBound(Smileys)
         RTF.SelText = vbNullString
         CopyPictureToRTF RTF, Picture1.Picture
     Wend
-
     Start = 1
 Next i
-
-RTF.SelStart = Pos
 
 Screen.MousePointer = vbNormal
 End Sub
@@ -375,7 +367,6 @@ For P1 = Pos To 1 Step -1
 Next P1
 P1 = P1 + 1
 
-' Wortende finden.
 For P2 = Pos To Len(Rich.Text)
     CHAR = Asc(Mid$(Rich.Text, P2, 1))
     If Sign(CHAR) = 2 Then
@@ -389,6 +380,7 @@ End Function
 
 Private Function RemoveSign(ByRef Test As String) As Long
 Dim Last As Long
+
 Last = Asc(Right$(Test, 1))
 If Sign(Last) = 1 Then
     Test = Left$(Test, Len(Test) - 1)
@@ -466,6 +458,24 @@ End If
 
 IsUrlOrMail = ok
 End Function
+
+Private Sub InitSigns()
+Dim i As Long
+Dim K As Long
+Dim Test As String
+
+Test = ".,;:?!"
+For i = 1 To Len(Test)
+    K = Asc(Mid$(Test, i, 1))
+    Sign(K) = 1
+Next i
+
+Test = " " + vbCrLf + Chr$(160)
+For i = 1 To Len(Test)
+    K = Asc(Mid$(Test, i, 1))
+    Sign(K) = 2
+Next i
+End Sub
 
 Private Sub Highlight(Rtb As RichTextBox)
 Dim Pos2 As Long
