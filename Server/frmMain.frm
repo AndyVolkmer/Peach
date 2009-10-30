@@ -616,7 +616,7 @@ Dim GetCommand      As String   'The first string from array1 used to be the com
 Dim pGetTarget      As String   'We save here the account propercased or the username
 Dim GetLastMessage  As String   'We save here the latest message from that user
 Dim bMatch          As Boolean  'bMatch controls the login
-Dim Mute            As Boolean  'Mute explains itself
+Dim IsMuted         As Boolean  'Mute explains itself
 
 'Get Message
 frmMain.Winsock1(Index).GetData GetMessage
@@ -637,7 +637,7 @@ End If
 With frmPanel.ListView1.ListItems
     'Get the latest message
     For i = 1 To .Count
-        If GetUser = .Item(i) Then
+        If .Item(i) = GetUser Then
             GetLastMessage = .Item(i).SubItems(3)
             Exit For
         End If
@@ -647,7 +647,7 @@ With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = GetUser Then
             If .Item(i).SubItems(4) = "True" Then
-                Mute = True
+                IsMuted = True
                 Exit For
             End If
         End If
@@ -806,7 +806,7 @@ Case "!msg"
         IsSlash = True
     End If
     
-    'Lets try to work without GoTo's
+    'Capture target
     If UBound(array2) > 0 Then
         GetTarget = StrConv(array2(1), vbProperCase)
     End If
@@ -881,7 +881,7 @@ Case "!msg"
     End If
     
     If IsSlash Then
-        If Mute Then
+        If IsMuted Then
             SendSingle "You are muted.", frmMain.Winsock1(Index)
             Exit Sub
         End If
@@ -962,7 +962,7 @@ Case "!msg"
     End If
     
     'Check if user is muted
-    If Mute Then
+    If IsMuted Then
         SendSingle "You are muted.", frmMain.Winsock1(Index)
         CMSG "!muted", GetUser, GetConver
         Exit Sub
@@ -1020,7 +1020,7 @@ End Sub
 Private Function GetServerInformation() As String
 GetServerInformation = _
 "Welcome to Peach Servers." & "#" & _
-"Server: Peach r " & Rev & "/Win32-x86" & "#" & _
+"Server: Peach r " & Rev & "/" & GetVersion & "#" & _
 "Online User: " & frmMain.Winsock1.Count - 1 & "#" & _
 frmConfig.Label2.Caption & "#"
 End Function
@@ -1051,11 +1051,11 @@ With frmPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub MuteUser(User As String, AdminName As String, Mute As Boolean, SIndex As Integer, Reason As String)
+Private Sub MuteUser(User As String, AdminName As String, IsMuted As Boolean, SIndex As Integer, Reason As String)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            If Mute Then
+            If IsMuted Then
                 'If the user is already muted then return feedback
                 If .Item(i).SubItems(4) = "True" Then
                     SendSingle User & " is already muted.", frmMain.Winsock1(SIndex)
@@ -1069,17 +1069,17 @@ With frmPanel.ListView1.ListItems
             End If
         
             'Set flag in userlist
-            .Item(i).SubItems(4) = CStr(Mute)
+            .Item(i).SubItems(4) = CStr(IsMuted)
             
             'Announce the action
             If Len(Reason) = 0 Then
-                If Mute Then
+                If IsMuted Then
                     SendMessage User & " got muted by " & AdminName & "."
                 Else
                     SendMessage User & " got unmuted by " & AdminName & "."
                 End If
             Else
-                If Mute Then
+                If IsMuted Then
                     SendMessage User & " got muted by " & AdminName & ". Reason: " & Reason
                 Else
                     SendMessage User & " got unmuted by " & AdminName & ". Reason: " & Reason

@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const Rev      As String = "1.1.6.5"
+Public Const Rev      As String = "1.1.6.6"
 
 Public Const aPort    As Long = 6123
 Public Const bPort    As Long = 6124
@@ -235,10 +235,10 @@ End With
 End Sub
 
 Public Function FileExists(FileName As String) As Boolean
-    On Error GoTo ErrorHandler
-    FileExists = (GetAttr(FileName) And vbDirectory) = 0
+On Error GoTo ErrorHandler
+FileExists = (GetAttr(FileName) And vbDirectory) = 0
 ErrorHandler:
-    ' if an error occurs, this function returns False
+'If an error occurs, this function returns False
 End Function
 
 Public Function CheckString(pString As String) As Boolean

@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev    As String = "1.1.6.5"
+Public Const Rev    As String = "1.1.6.6"
 Public Const rPort  As Long = 6222
 
 Public i        As Long    'Global "FOR" variable
@@ -15,6 +15,15 @@ Type NOTIFYICONDATA
     uCallBackMessage    As Long
     hIcon               As Long
     szTip               As String * 64
+End Type
+
+Type OSVERSIONINFO
+  dwOSVersionInfoSize As Long
+  dwMajorVersion As Long
+  dwMinorVersion As Long
+  dwBuildNumber As Long
+  dwPlatformId As Long
+  szCSDVersion As String * 128
 End Type
 
 Type DB
@@ -37,6 +46,7 @@ End Type
 Public Database As DB
 Public Emotes() As EMT
 
+'Tray Constants
 Public Const NIM_ADD = &H0
 Public Const NIM_MODIFY = &H1
 Public Const NIM_DELETE = &H2
@@ -44,6 +54,8 @@ Public Const WM_MOUSEMOVE = &H200
 Public Const NIF_MESSAGE = &H1
 Public Const NIF_ICON = &H2
 Public Const NIF_TIP = &H4
+
+'Mouseclick constants
 Public Const WM_LBUTTONDBLCLK = &H203 'Double-click
 Public Const WM_LBUTTONDOWN = &H201 'Button down
 Public Const WM_LBUTTONUP = &H202 'Button up
@@ -51,6 +63,12 @@ Public Const WM_RBUTTONDBLCLK = &H206 'Double-click
 Public Const WM_RBUTTONDOWN = &H204 'Button down
 Public Const WM_RBUTTONUP = &H205 'Button up
 
+'Windows version constant
+Public Const VER_PLATFORM_WIN32s = 0        ' Win32s on Windows 3.1
+Public Const VER_PLATFORM_WIN32_WINDOWS = 1 ' Windows 95, Windows 98, or Windows Me
+Public Const VER_PLATFORM_WIN32_NT = 2      ' Windows NT, Windows 2000, Windows XP, or Windows Server 2003 family.
+
+Declare Function GetVersionExA Lib "kernel32" (lpVersionInformation As OSVERSIONINFO) As Integer
 Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal dwMessage As Long, pnid As NOTIFYICONDATA) As Boolean
 Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long
 Declare Function GetActiveWindow Lib "user32" () As Long
@@ -202,3 +220,71 @@ nid.hIcon = frmMain.Icon ' the icon will be your Form1 project icon
 nid.szTip = "Peach" & vbNullChar
 Shell_NotifyIcon NIM_ADD, nid
 End Sub
+
+Public Function GetVersion() As String
+'                           Major     Minor
+' OS              Platform  Version   Version  Build
+' Windows 95      1         4          0
+' Windows 98      1         4         10       1998
+' Windows 98SE    1         4         10       2222
+' Windows Me      1         4         90       3000
+' NT 3.51         2         3         51
+' NT              2         4          0       1381
+' 2000            2         5          0
+' XP              2         5          1       2600
+' Server 2003     2         5          2
+Dim OSInfo As OSVERSIONINFO
+Dim retvalue As Integer
+  
+OSInfo.dwOSVersionInfoSize = 148
+OSInfo.szCSDVersion = Space$(128)
+retvalue = GetVersionExA(OSInfo)
+  
+With OSInfo
+    Select Case .dwPlatformId
+    Case VER_PLATFORM_WIN32s           ' Win32s on Windows 3.1
+        GetVersion = "Windows 3.1"
+
+    Case VER_PLATFORM_WIN32_WINDOWS    ' Windows 95, Windows 98,
+        Select Case .dwMinorVersion    ' or Windows Me
+        Case 0
+            GetVersion = "Windows 95"
+        Case 10
+            If (OSInfo.dwBuildNumber And &HFFFF&) = 2222 Then
+                GetVersion = "Windows 98SE"
+            Else
+                GetVersion = "Windows 98"
+            End If
+        Case 90
+            GetVersion = "Windows Me"
+        End Select
+
+    Case VER_PLATFORM_WIN32_NT         ' Windows NT, Windows 2000, Windows XP,
+        Select Case .dwMajorVersion    ' or Windows Server 2003 family.
+        Case 3
+            GetVersion = "Windows NT 3.51"
+        Case 4
+            GetVersion = "Windows NT 4.0"
+        Case 5
+            Select Case .dwMinorVersion
+            Case 0
+                GetVersion = "Windows 2000"
+            Case 1
+                GetVersion = "Windows XP"
+            Case 2
+                GetVersion = "Windows Server 2003"
+            End Select
+        Case 6
+            Select Case .dwMinorVersion
+            Case 0
+                GetVersion = "Windows Vista"
+            Case 1
+                GetVersion = "Windows 7"
+            End Select
+    End Select
+
+Case Else
+    GetVersion = "Failed"
+End Select
+End With
+End Function
