@@ -942,7 +942,7 @@ Case "!msg"
             End With
         
         Case "/online"
-            SendSingle "Your online for " & GetOnlineTime(GetUser) & " (Hour:Minute:Second).", frmMain.Winsock1(Index)
+            SendSingle "You are online for " & GetOnlineTime(GetUser) & ".", frmMain.Winsock1(Index)
         
         Case "/logout"
             KickUser GetUser, Index
@@ -1023,10 +1023,29 @@ End Select
 End Sub
 
 Private Function GetOnlineTime(pUser As String) As String
+Dim TD      As String
+Dim TD1()   As String
+Dim j       As Long
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
-            GetOnlineTime = TimeSerial(0, 0, DateDiff("s", .Item(i).SubItems(6), Time))
+            TD = TimeSerial(0, 0, DateDiff("s", .Item(i).SubItems(6), Time))
+            
+            TD1 = Split(TD, ":")
+            TD = vbNullString
+            
+            For j = LBound(TD1) To UBound(TD1)
+                Select Case j
+                Case 0
+                    TD = TD & TD1(j) & " hours "
+                Case 1
+                    TD = TD & TD1(j) & " minutes "
+                Case 2
+                    TD = TD & TD1(j) & " seconds"
+                End Select
+            Next j
+            GetOnlineTime = TD
         End If
     Next i
 End With
