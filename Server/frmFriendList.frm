@@ -79,6 +79,12 @@ Public Sub AddFriend(pUser As String, pFriend As String, pIndex As Integer)
 Dim IsValid    As Boolean
 Dim j          As Long
 
+'Check if ur trying to add urself
+If LCase$(pUser) = LCase$(pFriend) Then
+    SendSingle "!msgbox#You can't add yourself.#", frmMain.Winsock1(pIndex)
+    Exit Sub
+End If
+
 'Check if friends account exist
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
@@ -128,7 +134,7 @@ If IsValid Then
         .Item(i).SubItems(1) = pUser
         .Item(i).SubItems(2) = pFriend
     End With
-    UpdateFriendList pUser
+    UPDATE_FRIEND pUser
 Else 'Send message that the accoutn doesnt exist
     SendSingle "!msgbox#" & "The account '" & pFriend & "' doesnt exist.#", frmMain.Winsock1(pIndex)
 End If
@@ -153,5 +159,5 @@ With frmMain
     .xCommand.CommandText = "DELETE FROM " & Database.Friend_Table & " WHERE ID = " & pID
     .xCommand.Execute
 End With
-UpdateFriendList pUser
+UPDATE_FRIEND pUser
 End Sub

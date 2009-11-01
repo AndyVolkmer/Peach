@@ -60,9 +60,9 @@ Begin VB.Form frmSociety
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "ListView3"
+      Tab(2).Control(0)=   "Command3"
       Tab(2).Control(1)=   "Command4"
-      Tab(2).Control(2)=   "Command3"
+      Tab(2).Control(2)=   "ListView3"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton Command3 
          Caption         =   "&Remove"
@@ -182,7 +182,6 @@ Begin VB.Form frmSociety
          LabelWrap       =   -1  'True
          HideSelection   =   -1  'True
          FullRowSelect   =   -1  'True
-         GridLines       =   -1  'True
          _Version        =   393217
          ForeColor       =   -2147483640
          BackColor       =   16777215

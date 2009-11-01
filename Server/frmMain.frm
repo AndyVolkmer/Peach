@@ -548,11 +548,12 @@ With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(2) = Index Then
             .Remove (i)
-            UpdateUsersList
             Exit For
         End If
     Next i
 End With
+
+UPDATE_ONLINE
 StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 
@@ -669,7 +670,7 @@ Case "!server_info"
     
 'Update Friend list
 Case "!get_friends"
-    UpdateFriendList pGetTarget
+    UPDATE_FRIEND pGetTarget
     
 'Check if friends exist and save
 Case "!add_friend"
@@ -714,7 +715,8 @@ Case "!connected"
         .Item(i).Text = GetUser
         .Item(i).SubItems(5) = ORIGINAL_ACCOUNT
     End With
-    UpdateUsersList
+    
+    UPDATE_ONLINE
 
 Case "!namerequest"
     CMSG GetCommand, GetUser
@@ -936,7 +938,7 @@ Case "!msg"
                         Exit For
                     End If
                 Next i
-                UpdateUsersList
+                UPDATE_ONLINE
             End With
         
         Case "/logout"
@@ -1080,9 +1082,9 @@ With frmPanel.ListView1.ListItems
                 End If
             Else
                 If IsMuted Then
-                    SendMessage User & " got muted by " & AdminName & ". Reason: " & Reason
+                    SendMessage User & " got muted by " & AdminName & ". [Reason: " & Reason & "]"
                 Else
-                    SendMessage User & " got unmuted by " & AdminName & ". Reason: " & Reason
+                    SendMessage User & " got unmuted by " & AdminName & ". [Reason: " & Reason & "]"
                 End If
             End If
             Exit For
@@ -1211,7 +1213,7 @@ With frmPanel.ListView1.ListItems
             .Remove (i)
             
             'Update userlist and statusbar
-            UpdateUsersList
+            UPDATE_ONLINE
             StatusBar1.Panels(1).Text = "Status: Connected with " & frmMain.Winsock1.Count - 1 & " Client(s)."
             
             Exit For
@@ -1302,15 +1304,17 @@ Next i
 End Function
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-Winsock1(Index).Close
 Unload Winsock1(Index)
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(2) = Index Then
+            .Remove (i)
+            Exit For
+        End If
+    Next i
+End With
 
-CMSG "!disconnected"
-
-StatusBar1.Panels(1).Text = "[System]: Disconnected due connection problem."
-
-frmPanel.ListView1.ListItems.Clear
-
+UPDATE_ONLINE
 StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
 End Sub
 

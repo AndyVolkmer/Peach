@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev    As String = "1.1.6.6"
+Public Const Rev    As String = "1.1.6.7"
 Public Const rPort  As Long = 6222
 
 Public i        As Long    'Global "FOR" variable
@@ -18,12 +18,12 @@ Type NOTIFYICONDATA
 End Type
 
 Type OSVERSIONINFO
-  dwOSVersionInfoSize As Long
-  dwMajorVersion As Long
-  dwMinorVersion As Long
-  dwBuildNumber As Long
-  dwPlatformId As Long
-  szCSDVersion As String * 128
+    dwOSVersionInfoSize As Long
+    dwMajorVersion      As Long
+    dwMinorVersion      As Long
+    dwBuildNumber       As Long
+    dwPlatformId        As Long
+    szCSDVersion        As String * 128
 End Type
 
 Type DB
@@ -98,7 +98,7 @@ If Wsk.State = 7 Then
 End If
 End Sub
 
-Public Sub UpdateUsersList()
+Public Sub UPDATE_ONLINE()
 Dim GetList As String
 With frmPanel.ListView1.ListItems
     GetList = "!update_online#"
@@ -110,10 +110,10 @@ With frmPanel.ListView1.ListItems
         End If
     Next i
 End With
-If GetList <> "!listupdate#" Then SendMessage GetList
+If GetList <> "!update_online#" Then SendMessage GetList
 End Sub
 
-Public Sub UpdateFriendList(pName As String)
+Public Sub UPDATE_FRIEND(pName As String)
 Dim buffer As String
 Dim a_array() As String
 
