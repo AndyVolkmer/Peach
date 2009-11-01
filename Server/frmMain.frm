@@ -941,6 +941,9 @@ Case "!msg"
                 UPDATE_ONLINE
             End With
         
+        Case "/online"
+            SendSingle "Your online for " & GetOnlineTime(GetUser) & " (Hour:Minute:Second).", frmMain.Winsock1(Index)
+        
         Case "/logout"
             KickUser GetUser, Index
         
@@ -1018,6 +1021,16 @@ Case Else
     
 End Select
 End Sub
+
+Private Function GetOnlineTime(pUser As String) As String
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i) = pUser Then
+            GetOnlineTime = TimeSerial(0, 0, DateDiff("s", .Item(i).SubItems(6), Time))
+        End If
+    Next i
+End With
+End Function
 
 Private Function GetServerInformation() As String
 GetServerInformation = _

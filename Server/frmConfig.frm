@@ -34,7 +34,6 @@ Begin VB.Form frmConfig
       _ExtentY        =   2143
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -208,6 +207,7 @@ Private Sub Command2_Click()
 Dim WiSk As Winsock
 
 connCounter.Enabled = False
+VarTime = 0
 Label2.Caption = "Offline"
 
 With frmMain
@@ -249,9 +249,8 @@ End If
 End Function
 
 Private Sub connCounter_Timer()
-Static X As Long
-X = X + 1
-Label2.Caption = "Server Uptime : " & Format$(TimeSerial(0, 0, X), "hh:mm:ss")
+VarTime = VarTime + 1
+Label2.Caption = "Server Uptime : " & Format$(TimeSerial(0, 0, VarTime), "hh:mm:ss")
 End Sub
 
 Private Sub Form_Load()

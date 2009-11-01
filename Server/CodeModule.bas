@@ -1,9 +1,10 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev    As String = "1.1.6.7"
+Public Const Rev    As String = "1.1.6.8"
 Public Const rPort  As Long = 6222
 
+Public VarTime  As Long    'Time counter variable
 Public i        As Long    'Global "FOR" variable
 Public HasError As Boolean 'Used in frmMain and frmConfig
 
