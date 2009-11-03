@@ -300,6 +300,13 @@ Else
     .Emote_Table = InputBox("The configuration file does not contain a emote table, please insert one in the textbox below.", "Database error ..", "Emote Table")
 End If
 
+If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "D_N_Table"))) <> 0 Then
+    .Declined_Name_Table = ReadIniValue(App.Path & "\Config.ini", "Database", "D_N_Table")
+Else
+    WriteLog "No Declined-Names-Table found."
+    .Declined_Name_Table = InputBox("The configuration file does not contain a declined name table, please insert one in the textbox below.", "Database error ..", "Declined Name Table")
+End If
+
 'Connect to MySQL Database
 CONNECT_MYSQL .Database, .User, .Password, .Host
 
@@ -311,6 +318,9 @@ LoadEmotes .Emote_Table
 
 'Load Friends
 LoadFriends .Friend_Table
+
+'Load Declined Names
+LoadDeclinedNames .Declined_Name_Table
 
 'Close Database variable
 End With
@@ -356,6 +366,45 @@ Screen.MousePointer = vbDefault
 'Set error flag
 HasError = True
 
+End Sub
+
+Private Sub LoadDeclinedNames(qTable As String)
+Dim SQL     As String
+Dim Counter As Long
+
+If HasError Then Exit Sub
+
+SQL = "SELECT * FROM " & qTable
+Counter = 0
+
+StatusBar1.Panels(1).Text = "Status : Loading declined names .."
+
+On Error GoTo HandleErrorEmotes
+xCommand.CommandText = SQL
+Set xRecordSet = xCommand.Execute
+
+ReDim Declined_Names(0)
+
+With xRecordSet
+    Do Until .EOF
+        ReDim Preserve Declined_Names(Counter + 1)
+        Declined_Names(Counter) = !Name
+        Counter = Counter + 1
+        .MoveNext
+    Loop
+End With
+
+Set xRecordSet = Nothing
+
+WriteLog "Loaded " & Counter & " declined name(s) from '" & qTable & "'."
+
+Exit Sub
+HandleErrorEmotes:
+'Print error
+WriteLog Err.Description & "."
+
+'Set error flag
+HasError = True
 End Sub
 
 Private Sub LoadEmotes(qTable As String)
@@ -536,6 +585,7 @@ WriteIniValue App.Path & "\Config.ini", "Database", "Host", .Host
 WriteIniValue App.Path & "\Config.ini", "Database", "A_Table", .Account_Table
 WriteIniValue App.Path & "\Config.ini", "Database", "F_Table", .Friend_Table
 WriteIniValue App.Path & "\Config.ini", "Database", "E_Table", .Emote_Table
+WriteIniValue App.Path & "\Config.ini", "Database", "D_N_Table", .Declined_Name_Table
 
 'Close Database variable
 End With
@@ -721,8 +771,8 @@ Case "!connected"
 Case "!namerequest"
     CMSG GetCommand, GetUser
     'Check badname list
-    For i = 0 To frmPanel.List1.ListCount
-        If frmPanel.List1.List(i) = GetUser Then
+    For i = LBound(Declined_Names) To UBound(Declined_Names)
+        If Declined_Names(i) = GetUser Then
             bMatch = True
             CMSG "!badname", GetUser
             Exit For
@@ -751,7 +801,7 @@ Case "!namerequest"
 Case "!login"
     With frmAccountPanel.ListView1.ListItems
         For i = 1 To .Count
-            If LCase(.Item(i).SubItems(1)) = LCase(GetUser) Then
+            If LCase(GetUser) = LCase(.Item(i).SubItems(1)) Then
                 'Ban Check
                 If .Item(i).SubItems(5) = "True" Then
                     SendSingle "!login#Banned#", frmMain.Winsock1(Index)

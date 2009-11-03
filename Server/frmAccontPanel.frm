@@ -193,25 +193,21 @@ Begin VB.Form frmAccountPanel
          Object.Width           =   2540
       EndProperty
       BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   2
          SubItemIndex    =   3
          Text            =   "Time"
          Object.Width           =   2540
       EndProperty
       BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   2
          SubItemIndex    =   4
          Text            =   "Date"
          Object.Width           =   2540
       EndProperty
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   2
          SubItemIndex    =   5
          Text            =   "Banned"
          Object.Width           =   2540
       EndProperty
       BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   2
          SubItemIndex    =   6
          Text            =   "Level"
          Object.Width           =   2540

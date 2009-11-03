@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev    As String = "1.1.6.9"
+Public Const Rev    As String = "1.1.7.0"
 Public Const rPort  As Long = 6222
 
 Public VarTime  As Long    'Time counter variable
@@ -28,13 +28,14 @@ Type OSVERSIONINFO
 End Type
 
 Type DB
-    Database       As String
-    User           As String
-    Host           As String
-    Password       As String
-    Friend_Table   As String
-    Account_Table  As String
-    Emote_Table    As String
+    Database                As String
+    User                    As String
+    Host                    As String
+    Password                As String
+    Friend_Table            As String
+    Account_Table           As String
+    Emote_Table             As String
+    Declined_Name_Table     As String
 End Type
 
 Type EMT
@@ -44,8 +45,9 @@ Type EMT
     IsNotUser       As String
 End Type
 
-Public Database As DB
-Public Emotes() As EMT
+Public Database             As DB
+Public Emotes()             As EMT
+Public Declined_Names()     As String
 
 'Tray Constants
 Public Const NIM_ADD = &H0

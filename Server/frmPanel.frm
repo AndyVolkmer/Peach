@@ -24,14 +24,6 @@ Begin VB.Form frmPanel
    ScaleHeight     =   4260
    ScaleWidth      =   7515
    ShowInTaskbar   =   0   'False
-   Begin VB.ListBox List1 
-      Height          =   1425
-      Left            =   5280
-      TabIndex        =   1
-      Top             =   1080
-      Visible         =   0   'False
-      Width           =   2055
-   End
    Begin MSComctlLib.ListView ListView1 
       Height          =   3975
       Left            =   120
@@ -100,31 +92,6 @@ Attribute VB_Exposed = False
 Private Sub Form_Load()
 Me.Top = 0
 Me.Left = 0
-AddBadWordsToList
-End Sub
-
-Private Sub AddBadWordsToList()
-With List1
-    .AddItem "Cunt"
-    .AddItem "Penis"
-    .AddItem "Defaultnick"
-    .AddItem "Nickname"
-    .AddItem "God"
-    .AddItem "Retard"
-    .AddItem "Nickname"
-    .AddItem "Vagina"
-    .AddItem "Schwanz"
-    .AddItem "Kurac"
-    .AddItem "Noob"
-    .AddItem "Pizda"
-    .AddItem "Fjortis"
-    .AddItem "Dick"
-    .AddItem "Porno"
-    .AddItem "Porn"
-    .AddItem "Unknown"
-    .AddItem "User"
-    .AddItem "Name"
-End With
 End Sub
 
 Private Sub ListView1_ItemCheck(ByVal Item As MSComctlLib.ListItem)
