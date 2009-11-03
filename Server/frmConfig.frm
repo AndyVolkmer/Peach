@@ -25,20 +25,21 @@ Begin VB.Form frmConfig
    ScaleWidth      =   7605
    ShowInTaskbar   =   0   'False
    Begin RichTextLib.RichTextBox txt_log 
-      Height          =   1215
+      Height          =   1815
       Left            =   120
       TabIndex        =   9
-      Top             =   1800
+      Top             =   1440
       Width           =   7215
       _ExtentX        =   12726
-      _ExtentY        =   2143
+      _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Segoe UI"
+         Name            =   "Microsoft JhengHei"
          Size            =   9
          Charset         =   0
          Weight          =   400
@@ -119,14 +120,6 @@ Begin VB.Form frmConfig
          Top             =   360
          Width           =   975
       End
-   End
-   Begin VB.Label Label3 
-      Caption         =   " Server Log:"
-      Height          =   255
-      Left            =   120
-      TabIndex        =   10
-      Top             =   1560
-      Width           =   1095
    End
    Begin VB.Label Label7 
       BackColor       =   &H00F4F4F4&

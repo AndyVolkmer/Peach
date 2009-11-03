@@ -396,7 +396,7 @@ End With
 
 Set xRecordSet = Nothing
 
-WriteLog "Loaded " & Counter & " declined name(s) from '" & qTable & "'."
+WriteLog "Loaded " & Counter & " declined name(s)."
 
 Exit Sub
 HandleErrorEmotes:
@@ -438,7 +438,7 @@ End With
 
 Set xRecordSet = Nothing
 
-WriteLog "Loaded " & Counter & " emote(s) from '" & qTable & "'."
+WriteLog "Loaded " & Counter & " emote(s)."
 
 Exit Sub
 HandleErrorEmotes:
@@ -478,7 +478,7 @@ End With
 Set LItem = Nothing
 Set xRecordSet = Nothing
 
-WriteLog "Loaded " & Counter & " relation(s) from '" & qTable & "'."
+WriteLog "Loaded " & Counter & " relation(s)."
 
 Exit Sub
 HandleErrorFriends:
@@ -537,7 +537,7 @@ End With
 Set LItem = Nothing
 Set xRecordSet = Nothing
 
-WriteLog "Loaded " & Counter & " account(s) from '" & qTable & "'."
+WriteLog "Loaded " & Counter & " account(s)."
 
 Exit Sub
 HandleErrorTable:
