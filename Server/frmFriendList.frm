@@ -3,10 +3,10 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmFriendList 
    BorderStyle     =   0  'None
    Caption         =   "Friend List Overview"
-   ClientHeight    =   4485
+   ClientHeight    =   5220
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   8145
+   ClientWidth     =   7635
    BeginProperty Font 
       Name            =   "Segoe UI"
       Size            =   8.25
@@ -19,8 +19,8 @@ Begin VB.Form frmFriendList
    Icon            =   "frmFriendList.frx":0000
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
-   ScaleHeight     =   4485
-   ScaleWidth      =   8145
+   ScaleHeight     =   5220
+   ScaleWidth      =   7635
    ShowInTaskbar   =   0   'False
    Begin MSComctlLib.ListView ListView1 
       Height          =   3975

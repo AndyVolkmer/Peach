@@ -214,15 +214,6 @@ Private Sub Command2_Click()
 SetupForms frmChat
 End Sub
 
-Public Sub SetupForms(Nix As Form)
-frmChat.Hide
-frmFriendList.Hide
-frmConfig.Hide
-frmAccountPanel.Hide
-frmPanel.Hide
-Nix.Show
-End Sub
-
 Private Sub Command3_Click()
 SetupForms frmAccountPanel
 End Sub
@@ -328,22 +319,22 @@ End With
 StatusBar1.Panels(1).Text = "Status : Disconnected"
 SetupForms frmConfig
 
-If HasError = False Then
-    WriteLog "Correctly loaded."
-End If
+If HasError = False Then WriteLog "Correctly loaded."
+
 End Sub
 
-Public Sub CONNECT_MYSQL(qDatabase As String, qUser As String, qPassword As String, qIP As String)
+Public Sub CONNECT_MYSQL(pDatabase As String, pUser As String, pPassword As String, pIP As String)
 StatusBar1.Panels(1).Text = "Status : Connecting to database .."
 
 On Error GoTo HandleErrorConnection
+
 'Connect with Database (MySQL)
 Set xConnection = New ADODB.Connection
 xConnection.ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver};" _
-    & "SERVER=" & qIP & ";" _
-    & "DATABASE=" & qDatabase & ";" _
-    & "UID=" & qUser & ";" _
-    & "PWD=" & qPassword & ";" _
+    & "SERVER=" & pIP & ";" _
+    & "DATABASE=" & pDatabase & ";" _
+    & "UID=" & pUser & ";" _
+    & "PWD=" & pPassword & ";" _
     & "OPTION=" & 1 + 2 + 8 + 32 + 2048 + 16384
 
 Screen.MousePointer = vbHourglass
@@ -1095,6 +1086,7 @@ With frmPanel.ListView1.ListItems
                     TD = TD & TD1(j) & " seconds"
                 End Select
             Next j
+            
             GetOnlineTime = TD
         End If
     Next i
@@ -1104,7 +1096,7 @@ End Function
 Private Function GetServerInformation() As String
 GetServerInformation = _
 "Welcome to Peach Servers." & "#" & _
-"Server: Peach r " & Rev & "/" & GetVersion & "#" & _
+"Server: Peach r " & Rev & "/" & GetOS & "#" & _
 "Online User: " & frmMain.Winsock1.Count - 1 & "#" & _
 frmConfig.Label2.Caption & "#"
 End Function
@@ -1228,6 +1220,8 @@ With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(1)) = LCase(Account) Then
             'If the account is already banned send feedback
+            Account = .Item(i).SubItems(1)
+            
             If Ban Then
                 If .Item(i).SubItems(5) = "True" Then
                     SendSingle "Account '" & Account & "' is already banned.", frmMain.Winsock1(SIndex)
@@ -1444,4 +1438,13 @@ SendMessage2 hwnd, WM_NCACTIVATE, True, 0
 
 frm.Width = frm.Width - 1
 frm.Width = frm.Width + 1
+End Sub
+
+Public Sub SetupForms(pForm As Form)
+frmChat.Hide
+frmFriendList.Hide
+frmConfig.Hide
+frmAccountPanel.Hide
+frmPanel.Hide
+pForm.Show
 End Sub

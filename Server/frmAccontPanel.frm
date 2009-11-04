@@ -5,10 +5,10 @@ Begin VB.Form frmAccountPanel
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    Caption         =   "frmSendFile"
-   ClientHeight    =   4065
+   ClientHeight    =   5220
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   7470
+   ClientWidth     =   7635
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -20,8 +20,8 @@ Begin VB.Form frmAccountPanel
    EndProperty
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
-   ScaleHeight     =   4065
-   ScaleWidth      =   7470
+   ScaleHeight     =   5220
+   ScaleWidth      =   7635
    ShowInTaskbar   =   0   'False
    Begin VB.CommandButton cmdCancel 
       Caption         =   "&Cancel"
@@ -160,13 +160,13 @@ Begin VB.Form frmAccountPanel
       Width           =   1215
    End
    Begin MSComctlLib.ListView ListView1 
-      Height          =   2295
+      Height          =   2220
       Left            =   120
       TabIndex        =   0
       Top             =   120
       Width           =   7215
       _ExtentX        =   12726
-      _ExtentY        =   4048
+      _ExtentY        =   3916
       View            =   3
       LabelEdit       =   1
       LabelWrap       =   -1  'True
@@ -224,21 +224,22 @@ Option Explicit
 Dim Switch As String
 
 Private Sub cmdAdd_Click()
-Switch = "Add"
+Switch = "ADD"
 DoButtons True
 ClearTxBoxes
 End Sub
 
 Private Sub cmdCancel_Click()
 DoButtons False
+SetData ListView1.SelectedItem
 End Sub
 
 Private Sub cmdDel_Click()
 Dim strName         As String
 Dim lngID           As Long
-Dim lngNewSelIndex  As Long
+Dim NewIndex  As Long
 
-If ListView1.SelectedItem Is Nothing Then
+If ListView1.ListItems.Count = 0 Then
     MsgBox "No account selected to delete.", vbInformation, "Delete"
     Exit Sub
 End If
@@ -248,22 +249,22 @@ With ListView1.SelectedItem
     lngID = CLng(.Text)
 End With
     
-If MsgBox("Are you sure that you want to delete account '" & strName & "' ?", vbYesNo + vbQuestion, "Confirm Delete") = vbNo Then
-    Exit Sub
-End If
+If MsgBox("Are you sure that you want to delete account '" & strName & "' ?", vbYesNo + vbQuestion, "Confirm Delete") = vbNo Then Exit Sub
 
-frmMain.xCommand.CommandText = "DELETE FROM " & Database.Account_Table & " WHERE ID = " & lngID
-frmMain.xCommand.Execute
+With frmMain.xCommand
+    .CommandText = "DELETE FROM " & Database.Account_Table & " WHERE ID = " & lngID
+    .Execute
+End With
 
 With ListView1
     If .SelectedItem.Index = .ListItems.Count Then
-        lngNewSelIndex = .ListItems.Count - 1
+        NewIndex = .ListItems.Count - 1
     Else
-        lngNewSelIndex = .SelectedItem.Index
+        NewIndex = .SelectedItem.Index
     End If
     .ListItems.Remove .SelectedItem.Index
     If .ListItems.Count > 0 Then
-        Set .SelectedItem = .ListItems(lngNewSelIndex)
+        Set .SelectedItem = .ListItems(NewIndex)
         ListView1_ItemClick .SelectedItem
     Else
         ClearTxBoxes
@@ -297,18 +298,18 @@ End Sub
 
 Private Sub cmdMod_Click()
 'If there is no account selected give the message
-If ListView1.SelectedItem Is Nothing Then
+If ListView1.ListItems.Count = 0 Then
     MsgBox "No account selected to modify.", vbInformation, "Modify"
     Exit Sub
 End If
 'Set switch to modify
-Switch = "Modify"
+Switch = "MOD"
 DoButtons True
 End Sub
 
 Private Sub cmdSave_Click()
 Select Case Switch
-Case "Add"
+Case "ADD"
     For i = 1 To ListView1.ListItems.Count
         If txtName.Text = ListView1.ListItems.Item(i).SubItems(1) Then
             MsgBox "Name already given.", vbInformation
@@ -318,7 +319,8 @@ Case "Add"
         End If
     Next i
     RegisterAccount txtName.Text, txtPassword.Text
-Case "Modify"
+    
+Case "MOD"
     'Name can't be modified to nothing
     If Len(Trim$(txtName.Text)) = 0 Then
         MsgBox "The name can't be empty.", vbInformation
@@ -386,14 +388,8 @@ End With
 End Sub
 
 Private Sub Form_Activate()
-If ListView1.ListItems.Count <> 0 Then
-    With ListView1.SelectedItem
-        txtName.Text = .SubItems(1)
-        txtPassword.Text = .SubItems(2)
-        cmbBanned.Text = .SubItems(5)
-        cmbLevel.ListIndex = .SubItems(6)
-    End With
-End If
+SetData ListView1.SelectedItem
+
 End Sub
 
 Private Sub Form_Load()
@@ -401,23 +397,7 @@ Me.Top = 0: Me.Left = 0
 End Sub
 
 Private Sub ListView1_ItemClick(ByVal Item As MSComctlLib.ListItem)
-With Item
-    txtName = .SubItems(1)
-    txtPassword = .SubItems(2)
-    If .SubItems(5) = "False" Then
-        cmbBanned.ListIndex = 0
-    Else
-        cmbBanned.ListIndex = 1
-    End If
-    Select Case .SubItems(6)
-    Case 0
-        cmbLevel.ListIndex = 0
-    Case 1
-        cmbLevel.ListIndex = 1
-    Case 2
-        cmbLevel.ListIndex = 2
-    End Select
-End With
+SetData Item
 End Sub
 
 Private Sub RegSock_Close(Index As Integer)
@@ -430,6 +410,17 @@ Dim intCounter As Integer
     intCounter = loadSocket
     RegSock(intCounter).LocalPort = rPort
     RegSock(intCounter).Accept requestID
+End Sub
+
+Private Sub SetData(pItem As ListItem)
+If ListView1.ListItems.Count <> 0 Then
+    With pItem
+        txtName.Text = .SubItems(1)
+        txtPassword.Text = .SubItems(2)
+        cmbBanned.Text = .SubItems(5)
+        cmbLevel.ListIndex = .SubItems(6)
+    End With
+End If
 End Sub
 
 Private Function socketFree() As Integer

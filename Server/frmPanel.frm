@@ -4,10 +4,10 @@ Begin VB.Form frmPanel
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    Caption         =   "frmPanel"
-   ClientHeight    =   4260
+   ClientHeight    =   5220
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   7515
+   ClientWidth     =   7635
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -21,8 +21,8 @@ Begin VB.Form frmPanel
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   4260
-   ScaleWidth      =   7515
+   ScaleHeight     =   5220
+   ScaleWidth      =   7635
    ShowInTaskbar   =   0   'False
    Begin MSComctlLib.ListView ListView1 
       Height          =   3975
@@ -90,20 +90,5 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Form_Load()
-Me.Top = 0
-Me.Left = 0
-End Sub
-
-Private Sub ListView1_ItemCheck(ByVal Item As MSComctlLib.ListItem)
-If Item.Checked Then
-    With ListView1.ListItems
-        For i = 1 To .Count
-            .Item(i).Checked = False
-        Next i
-    End With
-    ListView1.SelectedItem = Item
-    Item.Checked = True
-Else
-    Item.Checked = False
-End If
+Me.Top = 0: Me.Left = 0
 End Sub

@@ -4,7 +4,7 @@ Begin VB.Form frmConfig
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    Caption         =   "frmConfig"
-   ClientHeight    =   4140
+   ClientHeight    =   5220
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   7605
@@ -21,7 +21,7 @@ Begin VB.Form frmConfig
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   4140
+   ScaleHeight     =   5220
    ScaleWidth      =   7605
    ShowInTaskbar   =   0   'False
    Begin RichTextLib.RichTextBox txt_log 
@@ -34,7 +34,6 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000

@@ -1,30 +1,30 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev    As String = "1.1.7.1"
-Public Const rPort  As Long = 6222
+Public Const Rev            As String = "1.1.7.2"
+Public Const rPort          As Long = 6222
 
-Public VarTime  As Long    'Time counter variable
-Public i        As Long    'Global "FOR" variable
-Public HasError As Boolean 'Used in frmMain and frmConfig
+Public VarTime              As Long    'Time counter variable
+Public i                    As Long    'Global "FOR" variable
+Public HasError             As Boolean 'Used in frmMain and frmConfig
 
 Type NOTIFYICONDATA
-    cbSize              As Long
-    hwnd                As Long
-    uId                 As Long
-    uFlags              As Long
-    uCallBackMessage    As Long
-    hIcon               As Long
-    szTip               As String * 64
+    cbSize                  As Long
+    hwnd                    As Long
+    uId                     As Long
+    uFlags                  As Long
+    uCallBackMessage        As Long
+    hIcon                   As Long
+    szTip                   As String * 64
 End Type
 
 Type OSVERSIONINFO
-    dwOSVersionInfoSize As Long
-    dwMajorVersion      As Long
-    dwMinorVersion      As Long
-    dwBuildNumber       As Long
-    dwPlatformId        As Long
-    szCSDVersion        As String * 128
+    dwOSVersionInfoSize     As Long
+    dwMajorVersion          As Long
+    dwMinorVersion          As Long
+    dwBuildNumber           As Long
+    dwPlatformId            As Long
+    szCSDVersion            As String * 128
 End Type
 
 Type DB
@@ -39,10 +39,10 @@ Type DB
 End Type
 
 Type EMT
-    Command         As String
-    IsUserText1     As String
-    IsUserText2     As String
-    IsNotUser       As String
+    Command                 As String
+    IsUserText1             As String
+    IsUserText2             As String
+    IsNotUser               As String
 End Type
 
 Public Database             As DB
@@ -224,7 +224,7 @@ nid.szTip = "Peach" & vbNullChar
 Shell_NotifyIcon NIM_ADD, nid
 End Sub
 
-Public Function GetVersion() As String
+Public Function GetOS() As String
 '                           Major     Minor
 ' OS              Platform  Version   Version  Build
 ' Windows 95      1         4          0
@@ -246,48 +246,48 @@ retvalue = GetVersionExA(OSInfo)
 With OSInfo
     Select Case .dwPlatformId
     Case VER_PLATFORM_WIN32s           ' Win32s on Windows 3.1
-        GetVersion = "Windows 3.1"
+        GetOS = "Windows 3.1"
 
     Case VER_PLATFORM_WIN32_WINDOWS    ' Windows 95, Windows 98,
         Select Case .dwMinorVersion    ' or Windows Me
         Case 0
-            GetVersion = "Windows 95"
+            GetOS = "Windows 95"
         Case 10
             If (OSInfo.dwBuildNumber And &HFFFF&) = 2222 Then
-                GetVersion = "Windows 98SE"
+                GetOS = "Windows 98SE"
             Else
-                GetVersion = "Windows 98"
+                GetOS = "Windows 98"
             End If
         Case 90
-            GetVersion = "Windows Me"
+            GetOS = "Windows Me"
         End Select
 
     Case VER_PLATFORM_WIN32_NT         ' Windows NT, Windows 2000, Windows XP,
         Select Case .dwMajorVersion    ' or Windows Server 2003 family.
         Case 3
-            GetVersion = "Windows NT 3.51"
+            GetOS = "Windows NT 3.51"
         Case 4
-            GetVersion = "Windows NT 4.0"
+            GetOS = "Windows NT 4.0"
         Case 5
             Select Case .dwMinorVersion
             Case 0
-                GetVersion = "Windows 2000"
+                GetOS = "Windows 2000"
             Case 1
-                GetVersion = "Windows XP"
+                GetOS = "Windows XP"
             Case 2
-                GetVersion = "Windows Server 2003"
+                GetOS = "Windows Server 2003"
             End Select
         Case 6
             Select Case .dwMinorVersion
             Case 0
-                GetVersion = "Windows Vista"
+                GetOS = "Windows Vista"
             Case 1
-                GetVersion = "Windows 7"
+                GetOS = "Windows 7"
             End Select
     End Select
 
 Case Else
-    GetVersion = "Failed"
+    GetOS = "Failed"
 End Select
 End With
 End Function

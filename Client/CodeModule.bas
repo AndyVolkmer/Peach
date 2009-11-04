@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const Rev      As String = "1.1.7.1"
+Public Const Rev      As String = "1.1.7.2"
 
 Public Const aPort    As Long = 6123
 Public Const bPort    As Long = 6124
