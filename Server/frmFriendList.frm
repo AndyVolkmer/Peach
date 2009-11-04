@@ -159,5 +159,6 @@ With frmMain
     .xCommand.CommandText = "DELETE FROM " & Database.Friend_Table & " WHERE ID = " & pID
     .xCommand.Execute
 End With
+
 UPDATE_FRIEND pUser
 End Sub

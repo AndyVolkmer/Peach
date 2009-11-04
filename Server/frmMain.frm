@@ -11,7 +11,6 @@ Begin VB.MDIForm frmMain
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "MDIForm1"
    ScrollBars      =   0   'False
-   StartUpPosition =   2  'CenterScreen
    Begin MSComctlLib.StatusBar StatusBar1 
       Align           =   2  'Align Bottom
       Height          =   345
@@ -159,6 +158,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Option Explicit
 
 Private Const GWL_STYLE = (-16)
@@ -296,6 +296,19 @@ If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "D_N_Table"))) <
 Else
     WriteLog "No Declined-Names-Table found."
     .Declined_Name_Table = InputBox("The configuration file does not contain a declined name table, please insert one in the textbox below.", "Database error ..", "Declined Name Table")
+End If
+
+'Load position
+If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Position", "Top"))) <> 0 Then
+    Me.Top = ReadIniValue(App.Path & "\Config.ini", "Position", "Top")
+Else
+    Me.Top = 1200
+End If
+
+If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Position", "Left"))) <> 0 Then
+    Me.Left = ReadIniValue(App.Path & "\Config.ini", "Position", "Left")
+Else
+    Me.Left = 1200
 End If
 
 'Connect to MySQL Database
@@ -577,6 +590,8 @@ WriteIniValue App.Path & "\Config.ini", "Database", "A_Table", .Account_Table
 WriteIniValue App.Path & "\Config.ini", "Database", "F_Table", .Friend_Table
 WriteIniValue App.Path & "\Config.ini", "Database", "E_Table", .Emote_Table
 WriteIniValue App.Path & "\Config.ini", "Database", "D_N_Table", .Declined_Name_Table
+WriteIniValue App.Path & "\Config.ini", "Position", "Top", Me.Top
+WriteIniValue App.Path & "\Config.ini", "Position", "Left", Me.Left
 
 'Close Database variable
 End With
@@ -710,15 +725,15 @@ Case "!server_info"
     SendSingle "!split_text#" & GetServerInformation, frmMain.Winsock1(Index)
     
 'Update Friend list
-Case "!get_friends"
+Case "!friend_get"
     UPDATE_FRIEND pGetTarget
     
 'Check if friends exist and save
-Case "!add_friend"
+Case "!friend_add"
     frmFriendList.AddFriend pGetTarget, GetConver, Index
 
 'Remove friend from list
-Case "!remove_friend"
+Case "!friend_remove"
     frmFriendList.RemoveFriend pGetTarget, GetConver, Index
    
 'Add Name & Account to frmPanel ListView

@@ -522,7 +522,7 @@ Case "!update_online"
     Next i
     
     'Ask for friendlist
-    SendMsg "!get_friends#" & frmConfig.txtAccount & "#"
+    SendMsg "!friend_get#" & frmConfig.txtAccount & "#"
     
 'We get login answer here
 Case "!login"
@@ -587,6 +587,7 @@ Case Else
         .SelStart = Len(.Text)
         .SelRTF = vbCrLf & Space(1) & Prefix & Space(1) & GetMessage
     End With
+    
 End Select
 End Sub
 
