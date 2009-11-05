@@ -256,6 +256,8 @@ With frmMain.xCommand
     .Execute
 End With
 
+frmFriendList.DeleteFriend strName
+
 With ListView1
     If .SelectedItem.Index = .ListItems.Count Then
         NewIndex = .ListItems.Count - 1

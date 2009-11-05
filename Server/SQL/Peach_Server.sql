@@ -38,9 +38,9 @@ CREATE TABLE `emotes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for `declined_names`
+-- Table structure for `declinednames`
 -- ----------------------------
-DROP TABLE IF EXISTS `declined_names`;
-CREATE TABLE `declined_names` (
+DROP TABLE IF EXISTS `declinednames`;
+CREATE TABLE `declinednames` (
   `Name` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

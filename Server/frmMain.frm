@@ -372,13 +372,13 @@ HasError = True
 
 End Sub
 
-Private Sub LoadDeclinedNames(qTable As String)
+Private Sub LoadDeclinedNames(pTable As String)
 Dim SQL     As String
 Dim Counter As Long
 
 If HasError Then Exit Sub
 
-SQL = "SELECT * FROM " & qTable
+SQL = "SELECT * FROM " & pTable
 Counter = 0
 
 StatusBar1.Panels(1).Text = "Status : Loading declined names .."
@@ -387,12 +387,12 @@ On Error GoTo HandleErrorEmotes
 xCommand.CommandText = SQL
 Set xRecordSet = xCommand.Execute
 
-ReDim Declined_Names(0)
+ReDim DeclinedNames(0)
 
 With xRecordSet
     Do Until .EOF
-        ReDim Preserve Declined_Names(Counter + 1)
-        Declined_Names(Counter) = !Name
+        ReDim Preserve DeclinedNames(Counter + 1)
+        DeclinedNames(Counter) = !Name
         Counter = Counter + 1
         .MoveNext
     Loop
@@ -411,13 +411,13 @@ WriteLog Err.Description & "."
 HasError = True
 End Sub
 
-Private Sub LoadEmotes(qTable As String)
+Private Sub LoadEmotes(pTable As String)
 Dim SQL     As String
 Dim Counter As Long
 
 If HasError Then Exit Sub
 
-SQL = "SELECT * FROM " & qTable
+SQL = "SELECT * FROM " & pTable
 Counter = 0
 
 StatusBar1.Panels(1).Text = "Status : Loading emotes .."
@@ -453,14 +453,14 @@ WriteLog Err.Description & "."
 HasError = True
 End Sub
 
-Private Sub LoadFriends(qTable As String)
+Private Sub LoadFriends(pTable As String)
 Dim SQL     As String
 Dim LItem   As ListItem
 Dim Counter As Long
 
 If HasError Then Exit Sub
 
-SQL = "SELECT * FROM " & qTable
+SQL = "SELECT * FROM " & pTable
 Counter = 0
 
 StatusBar1.Panels(1).Text = "Status : Loading friends .."
@@ -493,14 +493,14 @@ WriteLog Err.Description & "."
 HasError = True
 End Sub
 
-Private Sub LoadAccounts(qTable As String)
+Private Sub LoadAccounts(pTable As String)
 Dim SQL     As String
 Dim LItem   As ListItem
 Dim Counter As Long
 
 If HasError Then Exit Sub
 
-SQL = "SELECT * FROM " & qTable
+SQL = "SELECT * FROM " & pTable
 Counter = 0
 
 StatusBar1.Panels(1).Text = "Status : Loading accounts .."
@@ -529,7 +529,7 @@ With xRecordSet
         Set LItem = frmAccountPanel.ListView1.ListItems.Add(, , !ID)
         LItem.SubItems(1) = !Name1
         LItem.SubItems(2) = !Password1
-        LItem.SubItems(3) = Format$(!Time1, "hh:mm:ss")
+        LItem.SubItems(3) = Format$(!Time1, "hh:nn:ss")
         LItem.SubItems(4) = !Date1
         LItem.SubItems(5) = !Banned1
         LItem.SubItems(6) = !Level1
@@ -738,7 +738,7 @@ Case "!friend_remove"
    
 'Add Name & Account to frmPanel ListView
 Case "!connected"
-    Dim ORIGINAL_ACCOUNT As String
+    Dim GetOriginalAccount As String
     
     'If the account is already beeing used kick first instance
     With frmPanel.ListView1.ListItems
@@ -759,7 +759,7 @@ Case "!connected"
     With frmAccountPanel.ListView1.ListItems
         For i = 1 To .Count
             If LCase(.Item(i).SubItems(1)) = LCase(GetConver) Then
-                ORIGINAL_ACCOUNT = .Item(i).SubItems(1)
+                GetOriginalAccount = .Item(i).SubItems(1)
                 Exit For
             End If
         Next i
@@ -769,7 +769,7 @@ Case "!connected"
     With frmPanel.ListView1.ListItems
         i = .Count
         .Item(i).Text = GetUser
-        .Item(i).SubItems(5) = ORIGINAL_ACCOUNT
+        .Item(i).SubItems(5) = GetOriginalAccount
     End With
     
     UPDATE_ONLINE
@@ -777,8 +777,8 @@ Case "!connected"
 Case "!namerequest"
     CMSG GetCommand, GetUser
     'Check badname list
-    For i = LBound(Declined_Names) To UBound(Declined_Names)
-        If Declined_Names(i) = GetUser Then
+    For i = LBound(DeclinedNames) To UBound(DeclinedNames)
+        If DeclinedNames(i) = GetUser Then
             bMatch = True
             CMSG "!badname", GetUser
             Exit For

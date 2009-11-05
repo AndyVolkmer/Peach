@@ -141,7 +141,7 @@ End If
 End Sub
 
 Public Sub RemoveFriend(pUser As String, pFriend As String, pIndex As Integer)
-Dim pID     As Integer
+Dim pID As Integer
 
 With ListView1.ListItems
     For i = 1 To .Count
@@ -161,4 +161,37 @@ With frmMain
 End With
 
 UPDATE_FRIEND pUser
+End Sub
+
+Public Sub DeleteFriend(pUser As String)
+
+'Search for the user in Name row
+With ListView1.ListItems
+    For i = 1 To .Count
+        If i > .Count Then Exit For
+        If .Item(i).SubItems(1) = pUser Then
+            .Remove (i)
+            i = i - 1
+        End If
+    Next i
+End With
+
+'Search for the user in Friend row
+With ListView1.ListItems
+    For i = 1 To .Count
+        If i > .Count Then Exit For
+        If .Item(i).SubItems(2) = pUser Then
+            .Remove (i)
+            i = i - 1
+        End If
+    Next i
+End With
+
+'Delete user from database
+With frmMain.xCommand
+    .CommandText = "DELETE FROM " & Database.Friend_Table & " WHERE Name ='" & pUser & "'"
+    .Execute
+    .CommandText = "DELETE FROM " & Database.Friend_Table & " WHERE Friend ='" & pUser & "'"
+    .Execute
+End With
 End Sub

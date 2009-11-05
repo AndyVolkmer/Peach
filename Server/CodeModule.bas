@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev            As String = "1.1.7.3"
+Public Const Rev            As String = "1.1.7.4"
 Public Const rPort          As Long = 6222
 
 Public VarTime              As Long    'Time counter variable
@@ -47,7 +47,7 @@ End Type
 
 Public Database             As DB
 Public Emotes()             As EMT
-Public Declined_Names()     As String
+Public DeclinedNames()     As String
 
 'Tray Constants
 Public Const NIM_ADD = &H0
