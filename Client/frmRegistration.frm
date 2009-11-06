@@ -269,7 +269,6 @@ If CheckString(txtAccount) = True Then
     Exit Sub
 End If
 
-
 'Can't register if the Account is made out of numbers
 If IsNumeric(txtAccount) = True Then
     MsgBox REG_MSG_ACCOUNT_NUMERIC, vbInformation

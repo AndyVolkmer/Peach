@@ -807,7 +807,7 @@ Case "!namerequest"
 Case "!login"
     With frmAccountPanel.ListView1.ListItems
         For i = 1 To .Count
-            If LCase(GetUser) = LCase(.Item(i).SubItems(1)) Then
+            If LCase(.Item(i).SubItems(1)) = LCase(GetUser) Then
                 'Ban Check
                 If .Item(i).SubItems(5) = "True" Then
                     SendSingle "!login#Banned#", frmMain.Winsock1(Index)
@@ -815,7 +815,7 @@ Case "!login"
                 End If
                 
                 'Password Check
-                If GetConver = .Item(i).SubItems(2) Then
+                If .Item(i).SubItems(2) = GetConver Then
                     'Send back confirmation
                     SendSingle "!login#Yes#", frmMain.Winsock1(Index)
                     CMSG GetCommand, GetUser, GetConver
@@ -835,11 +835,13 @@ Case "!login"
     
 'We get ip request and send ip back
 Case "!iprequest"
-    For i = 1 To frmPanel.ListView1.ListItems.Count
-        If GetUser = frmPanel.ListView1.ListItems.Item(i) Then
-            SendSingle "!iprequest#" & frmPanel.ListView1.ListItems.Item(i).SubItems(1) & "#", frmMain.Winsock1(Index)
-        End If
-    Next i
+    With frmPanel.ListView1.ListItems
+        For i = 1 To .Count
+            If .Item(i) = GetUser Then
+                SendSingle "!iprequest#" & .Item(i).SubItems(1) & "#", frmMain.Winsock1(Index)
+            End If
+        Next i
+    End With
     
 Case "!msg"
     Dim array2()    As String   'Client textbox split by spaces is saved here
@@ -980,7 +982,7 @@ Case "!msg"
                     SendSingle "No user named '" & GetTarget & "' is currently online.", frmMain.Winsock1(Index)
                 End If
             End If
-        
+            
         Case "/afk"
             'Set AFK Flag
             With frmPanel.ListView1.ListItems
@@ -1066,7 +1068,7 @@ Case "!msg"
     With frmPanel.ListView1.ListItems
         For i = 1 To .Count
             If .Item(i) = GetUser Then
-                frmPanel.ListView1.ListItems.Item(i).SubItems(3) = GetConver
+                .Item(i).SubItems(3) = GetConver
                 Exit For
             End If
         Next i

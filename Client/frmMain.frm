@@ -398,7 +398,6 @@ Private Sub Winsock1_Close()
 Prefix = " [" & Format$(Time, "hh:nn:ss") & "]"
 
 Winsock1.Close
-
 Disconnect
 
 StatusBar1.Panels(1).Text = MDI_STAT_DCFROMSERVER
@@ -527,7 +526,6 @@ Case "!update_online"
 'We get login answer here
 Case "!login"
     Select Case StrArr(1)
-    
     Case "Yes"
         frmMain.StatusBar1.Panels(1).Text = "Status : Authenticating.."
         SendMsg "!namerequest#" & frmConfig.txtNick & "#"

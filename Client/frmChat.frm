@@ -23,6 +23,19 @@ Begin VB.Form frmChat
    ScaleHeight     =   3870
    ScaleWidth      =   7485
    ShowInTaskbar   =   0   'False
+   Begin RichTextLib.RichTextBox NRTB 
+      Height          =   495
+      Left            =   120
+      TabIndex        =   5
+      Top             =   120
+      Visible         =   0   'False
+      Width           =   7215
+      _ExtentX        =   12726
+      _ExtentY        =   873
+      _Version        =   393217
+      Enabled         =   -1  'True
+      TextRTF         =   $"frmChat.frx":0000
+   End
    Begin RichTextLib.RichTextBox txtToSend 
       Height          =   855
       Left            =   120
@@ -36,7 +49,7 @@ Begin VB.Form frmChat
       Enabled         =   0   'False
       MultiLine       =   0   'False
       MaxLength       =   180
-      TextRTF         =   $"frmChat.frx":0000
+      TextRTF         =   $"frmChat.frx":007B
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI"
          Size            =   9
@@ -108,7 +121,7 @@ Begin VB.Form frmChat
       Enabled         =   0   'False
       ReadOnly        =   -1  'True
       ScrollBars      =   3
-      TextRTF         =   $"frmChat.frx":007D
+      TextRTF         =   $"frmChat.frx":00F8
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI"
          Size            =   9
@@ -193,7 +206,7 @@ txtConver.Locked = False
 'Create smileys
 Call Create_Smileys(txtConver)
 
-'Call Highlight(txtConver)
+Call Highlight(txtConver)
 
 Call InitSigns
 
@@ -480,54 +493,58 @@ Next i
 End Sub
 
 Private Sub Highlight(Rtb As RichTextBox)
-Dim Pos2 As Long
-Dim pos1 As Long
-Dim br As Long
-Dim lnk As Long
-Dim ret As Long
-Dim l As Long
-Dim Text As String
-Dim Test As String
+Dim Pos2    As Long
+Dim Pos1    As Long
+Dim br      As Long
+Dim lnk     As Long
+Dim ret     As Long
+Dim l       As Long
+Dim Text    As String
+Dim Test    As String
+
+NRTB.TextRTF = Rtb.TextRTF
 
 Text = Rtb.Text
 l = Len(Text$)
-pos1 = 1
+Pos1 = 1
 
 Do
-    Pos2 = InStr(pos1, Text$, " ", 1)
-    If Pos2 > pos1 Then
-        Test = Mid$(Text, pos1, (Pos2 - pos1))
+    Pos2 = InStr(Pos1, Text$, " ", 1)
+    If Pos2 > Pos1 Then
+        Test = Mid$(Text, Pos1, (Pos2 - Pos1))
         br = RemoveBrackets(Test)
         ret = RemoveSign(Test)
         lnk = IsUrlOrMail(Test)
         
         If lnk > 0 Then
-            Rtb.SelStart = pos1 - 1 + br
-            Rtb.SelLength = Len(Test)
+            NRTB.SelStart = Pos1 - 1 + br
+            NRTB.SelLength = Len(Test)
             
             Select Case lnk
                 Case 1 To 10
-                    Rtb.SelColor = vbBlue
+                    NRTB.SelColor = vbBlue
                 Case 11 To 20
-                    Rtb.SelColor = RGB(0, 127, 0)
+                    NRTB.SelColor = RGB(0, 127, 0)
                 Case Is > 100
-                    Rtb.SelColor = vbRed
+                    NRTB.SelColor = vbRed
             End Select
             
-            Rtb.SelBold = True
+            NRTB.SelBold = True
         Else
-            Rtb.SelStart = pos1 - 1
-            Rtb.SelLength = Len(Test$)
-            Rtb.SelColor = 0
-            Rtb.SelBold = False
+            NRTB.SelStart = Pos1 - 1
+            NRTB.SelLength = Len(Test$)
+            NRTB.SelColor = 0
+            NRTB.SelBold = False
         End If
         
-        pos1 = Pos2 + 1
+        Pos1 = Pos2 + 1
     Else
-        If Pos2 = pos1 Then
-            pos1 = Pos2 + 1
+        If Pos2 = Pos1 Then
+            Pos1 = Pos2 + 1
         End If
         
     End If
 Loop Until Pos2 = 0 Or Pos2 >= l
+
+Rtb.TextRTF = NRTB.TextRTF
 End Sub

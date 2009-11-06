@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const Rev      As String = "1.1.7.5"
+Public Const Rev      As String = "1.1.7.6"
 
 Public Const aPort    As Long = 6123
 Public Const bPort    As Long = 6124
@@ -30,7 +30,7 @@ Private Type CONFIG
     SERVER_IP       As String
     SERVER_PORT     As String
     
-    'frmCOnfig information
+    'frmConfig information
     ACCOUNT         As String
     PASSWORD        As String
     NICKNAME        As String

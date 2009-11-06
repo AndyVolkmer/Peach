@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev            As String = "1.1.7.5"
+Public Const Rev            As String = "1.1.7.6"
 Public Const rPort          As Long = 6222
 
 Public VarTime              As Long    'Time counter variable
@@ -246,17 +246,17 @@ retvalue = GetVersionExA(OSInfo)
 With OSInfo
     Select Case .dwPlatformId
     Case VER_PLATFORM_WIN32s           ' Win32s on Windows 3.1
-        GetOS = "Windows 3.1"
+        GetOS = "WinDOS_3.1"
 
     Case VER_PLATFORM_WIN32_WINDOWS    ' Windows 95, Windows 98,
         Select Case .dwMinorVersion    ' or Windows Me
         Case 0
-            GetOS = "Windows 95"
+            GetOS = "Win95"
         Case 10
             If (OSInfo.dwBuildNumber And &HFFFF&) = 2222 Then
-                GetOS = "Windows 98SE"
+                GetOS = "Win98SE"
             Else
-                GetOS = "Windows 98"
+                GetOS = "Win98"
             End If
         Case 90
             GetOS = "Windows Me"
@@ -265,24 +265,24 @@ With OSInfo
     Case VER_PLATFORM_WIN32_NT         ' Windows NT, Windows 2000, Windows XP,
         Select Case .dwMajorVersion    ' or Windows Server 2003 family.
         Case 3
-            GetOS = "Windows NT 3.51"
+            GetOS = "WinNT3.51"
         Case 4
-            GetOS = "Windows NT 4.0"
+            GetOS = "WinNT4"
         Case 5
             Select Case .dwMinorVersion
             Case 0
-                GetOS = "Windows 2000"
+                GetOS = "Win2000"
             Case 1
-                GetOS = "Windows XP"
+                GetOS = "WinXP"
             Case 2
                 GetOS = "Windows Server 2003"
             End Select
         Case 6
             Select Case .dwMinorVersion
             Case 0
-                GetOS = "Windows Vista"
+                GetOS = "WinVista"
             Case 1
-                GetOS = "Windows 7"
+                GetOS = "Win7"
             End Select
     End Select
 

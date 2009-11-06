@@ -211,7 +211,7 @@ Attribute VB_Exposed = False
 Private Sub Command1_Click()
 Dim Val As String
 Val = InputBox("Please enter the account of your friend in the text box below.", "Adding a friend", "Friends Account") & "#"
-If Val = "#" Then Exit Sub
+If Trim$(Val) = "#" Then Exit Sub
 
 SendMsg "!friend_add#" & frmConfig.txtAccount & "#" & Val & "#"
 End Sub
