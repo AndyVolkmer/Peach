@@ -52,17 +52,17 @@ Begin VB.Form frmFriendList
       NumItems        =   3
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID"
-         Object.Width           =   2540
+         Object.Width           =   4207
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
          Text            =   "Name"
-         Object.Width           =   2540
+         Object.Width           =   4260
       EndProperty
       BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   2
          Text            =   "Friend"
-         Object.Width           =   2540
+         Object.Width           =   4260
       EndProperty
    End
 End
@@ -165,8 +165,8 @@ End Sub
 
 Public Sub DeleteFriend(pUser As String)
 
-'Search for the user in Name row
 With ListView1.ListItems
+    'Search for the user in Name row
     For i = 1 To .Count
         If i > .Count Then Exit For
         If .Item(i).SubItems(1) = pUser Then
@@ -174,10 +174,8 @@ With ListView1.ListItems
             i = i - 1
         End If
     Next i
-End With
 
-'Search for the user in Friend row
-With ListView1.ListItems
+    'Search for the user in Friend row
     For i = 1 To .Count
         If i > .Count Then Exit For
         If .Item(i).SubItems(2) = pUser Then

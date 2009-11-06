@@ -339,27 +339,27 @@ Case "MOD"
     
     ModifyAccount txtName.Text, txtPassword.Text, CBool(cmbBanned.Text), cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index
 End Select
-
 DoButtons False
 End Sub
-Public Sub ModifyAccount(dName As String, dPassword As String, dBanned As Boolean, dLevel As String, MOD_ID As Long, LST_ID As Long)
+
+Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Boolean, pLevel As String, MOD_ID As Long, LST_ID As Long)
 'Update the database
-frmMain.xCommand.CommandText = "UPDATE " & Database.Account_Table & " SET Name1 = '" & dName & "', Password1 = '" & dPassword & "', Banned1 = '" & CStr(dBanned) & "', Level1 = '" & dLevel & "' WHERE ID = " & MOD_ID
+frmMain.xCommand.CommandText = "UPDATE " & Database.Account_Table & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & CStr(pBanned) & "', Level1 = '" & pLevel & "' WHERE ID = " & MOD_ID
 frmMain.xCommand.Execute
 
 'Update the listview
 With ListView1.ListItems
-    .Item(LST_ID).SubItems(1) = dName
-    .Item(LST_ID).SubItems(2) = dPassword
-    .Item(LST_ID).SubItems(5) = CStr(dBanned)
-    .Item(LST_ID).SubItems(6) = dLevel
+    .Item(LST_ID).SubItems(1) = pName
+    .Item(LST_ID).SubItems(2) = pPassword
+    .Item(LST_ID).SubItems(5) = CStr(pBanned)
+    .Item(LST_ID).SubItems(6) = pLevel
 End With
 End Sub
 
-Private Sub RegisterAccount(dName As String, dPassword As String)
+Private Sub RegisterAccount(pName As String, pPassword As String)
 Dim j As Long
 
-'Check list if the ID is already given
+'Check list for biggest value
 With ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) > j Then
@@ -368,10 +368,11 @@ With ListView1.ListItems
     Next i
 End With
 
+'Create new index
 j = j + 1
 
 'Add new account to database
-frmMain.xCommand.CommandText = "INSERT INTO " & Database.Account_Table & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & j & ", '" & dName & "', '" & dPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', 'False', '0')"
+frmMain.xCommand.CommandText = "INSERT INTO " & Database.Account_Table & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', 'False', '0')"
 frmMain.xCommand.Execute
 
 'Save index in variable
@@ -380,8 +381,8 @@ i = ListView1.ListItems.Count + 1
 'Add account to the listview
 With ListView1.ListItems
     .Add , , j
-    .Item(i).SubItems(1) = dName
-    .Item(i).SubItems(2) = dPassword
+    .Item(i).SubItems(1) = pName
+    .Item(i).SubItems(2) = pPassword
     .Item(i).SubItems(3) = Format(Time, "hh:nn:ss")
     .Item(i).SubItems(4) = Format(Date, "dd/mm/yyyy")
     .Item(i).SubItems(5) = "False"
@@ -391,7 +392,6 @@ End Sub
 
 Private Sub Form_Activate()
 SetData ListView1.SelectedItem
-
 End Sub
 
 Private Sub Form_Load()
@@ -463,9 +463,10 @@ GetCommand = array1(0)
 GetName = array1(1)
 GetPassword = array1(2)
 
-If GetCommand = "!register" Then
-    For i = 1 To ListView1.ListItems.Count
-        If UCase$(GetName) = UCase$(ListView1.ListItems.Item(i).SubItems(1)) Then
+'If GetCommand = "!register" Then
+With ListView1.ListItems
+    For i = 1 To .Count
+        If UCase$(GetName) = UCase$(.Item(i).SubItems(1)) Then
             If RegSock(Index).State = 7 Then
                 RegSock(Index).SendData "!nameexist#"
                 Exit Sub
@@ -475,10 +476,10 @@ If GetCommand = "!register" Then
     
     RegisterAccount GetName, GetPassword
     RegSock(Index).SendData "!done#"
-End If
+End With
+'End If
 
 Exit Sub
 HandleError:
     RegSock(Index).SendData "!error#"
-    Exit Sub
 End Sub

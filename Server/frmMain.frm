@@ -552,7 +552,7 @@ WriteLog Err.Description & "."
 HasError = True
 End Sub
 
-Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
 Dim msg As Long
 Dim sFilter As String
 msg = X / Screen.TwipsPerPixelX
@@ -1228,8 +1228,8 @@ End With
 End Sub
 
 Private Sub BanAccount(Account As String, AdminName As String, Ban As Boolean, SIndex As Integer, Reason As String)
-Dim User    As String
-Dim j       As Long
+Dim User As String
+Dim j    As Long
 
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
@@ -1248,17 +1248,19 @@ With frmAccountPanel.ListView1.ListItems
                     Exit Sub
                 End If
             End If
-        
+            
             'Ban account in database
             frmAccountPanel.ModifyAccount Account, .Item(i).SubItems(2), Ban, .Item(i).SubItems(6), .Item(i), .Item(i).Index
             
             'Determine user from account
-            For j = 1 To frmPanel.ListView1.ListItems.Count
-                If LCase(frmPanel.ListView1.ListItems.Item(j).SubItems(5)) = LCase(Account) Then
-                    User = frmPanel.ListView1.ListItems.Item(j)
-                    Exit For
-                End If
-            Next j
+            With frmPanel.ListView1.ListItems
+                For j = 1 To .Count
+                    If LCase(.Item(j).SubItems(5)) = LCase(Account) Then
+                        User = .Item(j)
+                        Exit For
+                    End If
+                Next j
+            End With
             
             If Len(Trim$(User)) = 0 Then
                 User = Account
@@ -1269,7 +1271,7 @@ With frmAccountPanel.ListView1.ListItems
                 If Ban Then
                     SendMessage User & " was account banned by " & AdminName & "."
                 Else
-                    SendMessage User & " was unbanned by " & AdminName & "."
+                    SendMessage User & " was account unbanned by " & AdminName & "."
                 End If
             Else
                 If Ban Then
@@ -1378,20 +1380,24 @@ GetCommands = vbCrLf & _
 "*********************************************"
 End Function
 
-Private Function GetLevel(Name As String) As Long
-Dim GetAccount As String
-For i = 1 To frmPanel.ListView1.ListItems.Count
-    If Name = frmPanel.ListView1.ListItems.Item(i) Then
-        GetAccount = frmPanel.ListView1.ListItems.Item(i).SubItems(5)
-        Exit For
-    End If
-Next i
-For i = 1 To frmAccountPanel.ListView1.ListItems.Count
-    If GetAccount = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(1) Then
-        GetLevel = frmAccountPanel.ListView1.ListItems.Item(i).SubItems(6)
-        Exit For
-    End If
-Next i
+Private Function GetLevel(ByVal Name As String) As Long
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i) = Name Then
+            Name = .Item(i).SubItems(5)
+            Exit For
+        End If
+    Next i
+End With
+
+With frmAccountPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(1) = Name Then
+            GetLevel = .Item(i).SubItems(6)
+            Exit For
+        End If
+    Next i
+End With
 End Function
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
