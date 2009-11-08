@@ -36,8 +36,11 @@ Public CONFIG_MSG_ACCOUNT               As String
 Public CONFIG_MSG_PASSWORD              As String
 Public CONFIG_MSG_NUMERIC               As String
 Public CONFIG_MSG_PORT                  As String
-Public CONFIG_MSG_NAME                  As String
 Public CONFIG_MSG_IP                    As String
+Public CONFIG_MSG_NAME                  As String
+Public CONFIG_MSG_NAME_SHORT            As String
+Public CONFIG_MSG_NAME_INVALID          As String
+
 
 Public CHAT_COMMAND_SEND                As String
 Public CHAT_COMMAND_CLEAR               As String
@@ -173,6 +176,8 @@ CONFIG_MSG_NUMERIC = "Du kannst keine Ziffern in deinem Namen haben."
 CONFIG_MSG_PORT = "Du hast keinen Port eingegeben."
 CONFIG_MSG_NAME = "Du hast keinen Namen eingegeben."
 CONFIG_MSG_IP = "Du hast keine IP eingegeben."
+CONFIG_MSG_NAME_SHORT = "Du hast einen zu kurzen Namen eingegeben."
+CONFIG_MSG_NAME_INVALID = "Du hast einen ungültigen Namen eingegeben."
 
 CHAT_COMMAND_SEND = "&Senden"
 CHAT_COMMAND_CLEAR = "&Löschen"
@@ -294,10 +299,12 @@ LANG_FRENCH = "French"
 
 CONFIG_MSG_ACCOUNT = "You didn't enter an account."
 CONFIG_MSG_PASSWORD = "You didn't enter a password."
-CONFIG_MSG_NUMERIC = "You cant take numeric names."
-CONFIG_MSG_PORT = "You didnt introduce an port."
-CONFIG_MSG_NAME = "You didnt introduce an name."
-CONFIG_MSG_IP = "You didnt introduce an IP."
+CONFIG_MSG_NUMERIC = "You can't take numeric names."
+CONFIG_MSG_PORT = "You didn't introduce a port."
+CONFIG_MSG_NAME = "You didn't introduce a name."
+CONFIG_MSG_IP = "You didn't introduce a IP."
+CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
+CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
 
 ' Chat form ..
 CHAT_COMMAND_SEND = "&Send"
@@ -422,6 +429,8 @@ CONFIG_MSG_NUMERIC = "No puedes coger nombres con numeros."
 CONFIG_MSG_PORT = "No has introducido un puerto."
 CONFIG_MSG_NAME = "No has introducido un nombre."
 CONFIG_MSG_IP = "No has introducido una direccion."
+CONFIG_MSG_NAME_SHORT = "El nombre que has introducido es corto."
+CONFIG_MSG_NAME_INVALID = "El nombre que has introducido es invalido."
 
 CHAT_COMMAND_SEND = "&Enviar"
 CHAT_COMMAND_CLEAR = "&Limpiar"
@@ -541,8 +550,10 @@ CONFIG_MSG_ACCOUNT = "Du skrev inte in en användare."
 CONFIG_MSG_PASSWORD = "Du skrev inte in ett lösenord."
 CONFIG_MSG_NUMERIC = "Du kan inte använda siffror i namnet."
 CONFIG_MSG_PORT = "Du angav inget portnummer."
-CONFIG_MSG_NAME = "Du angav inte ett namn."
 CONFIG_MSG_IP = "Du angav inte ett IP."
+CONFIG_MSG_NAME = "Du angav inte ett namn."
+CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
+CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
 
 ' Chat form ..
 CHAT_COMMAND_SEND = "&Sänd"
@@ -665,8 +676,10 @@ CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
 CONFIG_MSG_PASSWORD = "You did'nt introduce an password."
 CONFIG_MSG_NUMERIC = "Non puoi immettere nomi composti da numeri."
 CONFIG_MSG_PORT = "Non hai selezionato una porta valida."
-CONFIG_MSG_NAME = "Non hai immesso un Nome utente."
 CONFIG_MSG_IP = "Non hai immesso un IP."
+CONFIG_MSG_NAME = "Non hai immesso un Nome utente."
+CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
+CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
 
 ' Chat form ..
 CHAT_COMMAND_SEND = "&Invia"
@@ -790,8 +803,10 @@ CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
 CONFIG_MSG_PASSWORD = "You did'nt introduce an password."
 CONFIG_MSG_NUMERIC = "Ne mozete uzeti numericka imena."
 CONFIG_MSG_PORT = "Niste uneli port."
-CONFIG_MSG_NAME = "Niste uneli ime"
 CONFIG_MSG_IP = "Niste uneli IP"
+CONFIG_MSG_NAME = "Niste uneli ime"
+CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
+CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
 
 ' Chat form ..
 CHAT_COMMAND_SEND = "&Posalji"
@@ -913,8 +928,10 @@ CONFIG_MSG_ACCOUNT = "Je hebt geen gebruikersnaam ingevuld."
 CONFIG_MSG_PASSWORD = "Je hebt geen wachtwoord ingevuld."
 CONFIG_MSG_NUMERIC = "U kan geen naam nemen dat nummers bevat."
 CONFIG_MSG_PORT = "U hebt geen poort ingesteld."
-CONFIG_MSG_NAME = "U hebt geen naam gegoven."
 CONFIG_MSG_IP = "U hebt geen IP gegoven."
+CONFIG_MSG_NAME = "U hebt geen naam gegoven."
+CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
+CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
 
 CHAT_COMMAND_SEND = "&Zend"
 CHAT_COMMAND_CLEAR = "&Leegmaken"
@@ -1040,8 +1057,10 @@ CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
 CONFIG_MSG_PASSWORD = "You did'nt introduce an password."
 CONFIG_MSG_NUMERIC = "Tu ne peut pas insérer noms composé de numeros."
 CONFIG_MSG_PORT = "Tu n'as pas selectionner une porte valide."
-CONFIG_MSG_NAME = "Tu n'as pas innecté un Nom utilizateur."
 CONFIG_MSG_IP = "Tu n'as pas innecté un IP."
+CONFIG_MSG_NAME = "Tu n'as pas innecté un Nom utilizateur."
+CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
+CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
 
 CHAT_COMMAND_SEND = "&Envoi"
 CHAT_COMMAND_CLEAR = "&Clear"

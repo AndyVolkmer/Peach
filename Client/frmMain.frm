@@ -220,8 +220,7 @@ Dim Vali        As Boolean
 Public RunOnce  As Boolean
 
 Private Sub Close_Click()
-Unload frmLanguage
-Unload frmAbout
+End
 End Sub
 
 Private Sub Command1_Click()

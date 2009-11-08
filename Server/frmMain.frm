@@ -595,7 +595,7 @@ WriteIniValue App.Path & "\Config.ini", "Position", "Left", Me.Left
 
 'Close Database variable
 End With
-Shell_NotifyIcon NIM_DELETE, nid 'del tray icon
+Shell_NotifyIcon NIM_DELETE, nid  'del tray icon
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
@@ -870,7 +870,7 @@ Case "!msg"
     If UBound(array2) > 0 Then
         GetTarget = StrConv(array2(1), vbProperCase)
     End If
-   
+    
     'If a command is used check out which
     If IsCommand Then
         'Save the reason
@@ -894,34 +894,34 @@ Case "!msg"
             Case Else
                 SendSingle "Incorrect Syntax, use the following format .show 'account'/'user'.", frmMain.Winsock1(Index)
             End Select
-            
+        
         Case ".userinfo", ".uinfo"
             GetUserInfo GetTarget, Index
-                        
+        
         Case ".accountinfo", ".accinfo", ".ainfo"
             GetAccountInfo pGetTarget, Index
-                        
+        
         Case ".kick"
             KickUser GetTarget, Index
-            
+        
         Case ".banaccount"
             BanAccount pGetTarget, GetUser, True, Index, Trim$(Reason)
-                        
+        
         Case ".banuser"
             BanUser GetTarget, GetUser, True, Index, Trim$(Reason)
-            
+        
         Case ".unbanuser"
             BanUser GetTarget, GetUser, False, Index, Trim$(Reason)
-                        
+        
         Case ".unbanaccount"
             BanAccount pGetTarget, GetUser, False, Index, Trim$(Reason)
-            
+        
         Case ".mute"
             MuteUser GetTarget, GetUser, True, Index, Trim$(Reason)
-                    
+        
         Case ".unmute"
             MuteUser GetTarget, GetUser, False, Index, Trim$(Reason)
-                    
+        
         Case ".announce", ".ann", ".broadcast"
             If Len(Trim$(ANN_MSG)) = 0 Then
                 SendSingle "Incorrect syntax, use the following format .announce 'Text to announce'.", frmMain.Winsock1(Index)
@@ -929,13 +929,13 @@ Case "!msg"
                 SendMessage "[" & GetUser & " announces]: " & ANN_MSG
             End If
             ANN_MSG = vbNullString
-                    
+        
         Case ".help", ".command", ".commands"
             SendSingle GetCommands, frmMain.Winsock1(Index)
                     
         Case Else
             SendSingle "Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
-                        
+        
         End Select
         Exit Sub
     End If
@@ -947,10 +947,10 @@ Case "!msg"
         End If
         
         Dim IsUser As Boolean
-            
+        
         With frmPanel.ListView1.ListItems
             For i = 1 To .Count
-                If GetTarget = .Item(i) Then
+                If .Item(i) = GetTarget Then
                     IsUser = True
                     Exit For
                 End If
@@ -982,7 +982,7 @@ Case "!msg"
                     SendSingle "No user named '" & GetTarget & "' is currently online.", frmMain.Winsock1(Index)
                 End If
             End If
-            
+        
         Case "/afk"
             'Set AFK Flag
             With frmPanel.ListView1.ListItems
@@ -1018,7 +1018,7 @@ Case "!msg"
                     If i = UBound(Emotes) Then SendSingle "Unknown command used.", frmMain.Winsock1(Index)
                 End If
             Next i
-                    
+        
         End Select
         CMSG "!emote", GetUser, GetConver
         Exit Sub

@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const Rev      As String = "1.1.7.6"
+Public Const Rev      As String = "1.1.7.7"
 
 Public Const aPort    As Long = 6123
 Public Const bPort    As Long = 6124
@@ -246,7 +246,7 @@ Dim CHAR As String
 Dim SIGN_STRING As String
 Dim SIGN_ARRAY() As String
 
-SIGN_STRING = " 1F.1F*1F#1F{1F}1F,1F(1F)1F&1F!1F@1F?1F/1F¬1F=1F<1F>1F[1F]1F'1F¿1Fº1Fª1F\1F|1F~1F´1F`1F+1F-1F^1F_1F·"
+SIGN_STRING = " 1F.1F*1F#1F{1F}1F,1F(1F)1F&1F!1F@1F?1F/1F¬1F=1F<1F>1F[1F]1F'1F¿1Fº1Fª1F\1F|1F~1F´1F`1F+1F-1F^1F_1F·1F€"
 SIGN_ARRAY = Split(SIGN_STRING, "1F")
 
 For i = LBound(SIGN_ARRAY) To UBound(SIGN_ARRAY)

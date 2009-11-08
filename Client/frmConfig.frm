@@ -262,7 +262,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
 
     'Nick can't be shorter then 4 characters
     If Len(txtNick) < 4 Then
-        MsgBox "Your nickname is to short!", vbInformation, " Error - Nickname"
+        MsgBox CONFIG_MSG_NAME_SHORT, vbInformation, " Error - Nickname"
         txtNick.SelStart = Len(txtNick)
         txtNick.SetFocus
         Exit Sub
@@ -270,7 +270,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     
     'Nick can't contain invalid characters
     If CheckString(txtNick) = True Then
-        MsgBox "The nickname contains invalid characters.", vbInformation
+        MsgBox CONFIG_MSG_NAME_INVALID, vbInformation
         txtNick.SelStart = Len(txtNick)
         txtNick.SetFocus
         Exit Sub
