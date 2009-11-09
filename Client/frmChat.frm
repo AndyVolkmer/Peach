@@ -153,19 +153,8 @@ End Type
 Private Sign(255) As Integer
 
 Private Sub cmdSend_Click()
-
 'No whitespaces
 If Len(Trim$(txtToSend.Text)) = 0 Then
-    Call Clear
-    Exit Sub
-End If
-
-'Display the time
-If LCase$(RTrim$(txtToSend.Text)) = "/time" Then
-    With txtConver
-        .SelStart = Len(.Text)
-        .SelRTF = vbCrLf & CHAT_TIME_TEXT & Format$(Time, "hh:nn:ss") & "."
-    End With
     Call Clear
     Exit Sub
 End If
@@ -173,7 +162,6 @@ End If
 'Send public message
 SendMsg "!msg#" & frmConfig.txtNick & "#" & Trim$(txtToSend.Text) & "#"
 Call Clear
-
 End Sub
 
 Private Sub Clear()

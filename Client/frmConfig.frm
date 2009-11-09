@@ -293,9 +293,9 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     End With
 
     'Set Recieve-File-Winsock to listen
-    With frmSendFile2
-        .SckReceiveFile(0).LocalPort = bPort
-        .SckReceiveFile(0).Listen
+    With frmSendFile2.SckReceiveFile(0)
+        .LocalPort = bPort
+        .Listen
     End With
 
     Command3.Enabled = False

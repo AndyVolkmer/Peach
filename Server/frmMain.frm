@@ -1310,7 +1310,6 @@ With frmPanel.ListView1.ListItems
             'Update userlist and statusbar
             UPDATE_ONLINE
             StatusBar1.Panels(1).Text = "Status: Connected with " & frmMain.Winsock1.Count - 1 & " Client(s)."
-            
             Exit For
         Else
             If i = .Count Then
@@ -1418,11 +1417,11 @@ StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " C
 End Sub
 
 Public Sub DisableFormResize(frm As Form)
-Dim style As Long
-Dim hMenu As Long
-Dim MII As MENUITEMINFO
-Dim lngMenuID As Long
-Const xSC_MAXIMIZE As Long = -11
+Dim style           As Long
+Dim hMenu           As Long
+Dim MII             As MENUITEMINFO
+Dim lngMenuID       As Long
+Const xSC_MAXIMIZE  As Long = -11
 
 style = GetWindowLong(frm.hwnd, GWL_STYLE)
 

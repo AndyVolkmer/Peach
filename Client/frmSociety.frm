@@ -60,25 +60,25 @@ Begin VB.Form frmSociety
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "ListView3"
-      Tab(2).Control(1)=   "Command4"
-      Tab(2).Control(2)=   "Command3"
+      Tab(2).Control(0)=   "Command4"
+      Tab(2).Control(1)=   "Command3"
+      Tab(2).Control(2)=   "ListView3"
       Tab(2).ControlCount=   3
-      Begin VB.CommandButton Command3 
+      Begin VB.CommandButton Command4 
          Caption         =   "&Remove"
          Enabled         =   0   'False
          Height          =   375
          Left            =   -69480
-         TabIndex        =   5
+         TabIndex        =   6
          Top             =   3360
          Width           =   1695
       End
-      Begin VB.CommandButton Command4 
+      Begin VB.CommandButton Command3 
          Caption         =   "&Add"
          Enabled         =   0   'False
          Height          =   375
          Left            =   -71160
-         TabIndex        =   6
+         TabIndex        =   5
          Top             =   3360
          Width           =   1695
       End
@@ -245,6 +245,8 @@ SSTab1.TabCaption(0) = SOC_FRIEND_LIST
 SSTab1.TabCaption(1) = SOC_ONLINE_LIST
 Command1.Caption = SOC_COMMAND_ADD
 Command2.Caption = SOC_COMMAND_REMOVE
+Command3.Caption = SOC_COMMAND_ADD
+Command4.Caption = SOC_COMMAND_REMOVE
 End Sub
 
 Private Sub Form_Load()

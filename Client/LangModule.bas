@@ -10,7 +10,7 @@ Public MDI_COMMAND_SENDFILE             As String
 Public MDI_COMMAND_SOCIETY              As String
 
 Public MDI_STAT_DISCONNECTED            As String
-Public MDI_STAT_DCFROMSERVER            As String
+Public MDI_STAT_DISCONNECT              As String
 Public MDI_STAT_CONNECTED               As String
 Public MDI_STAT_CONNECTION_ERROR        As String
 Public MDI_STAT_CONNECTING              As String
@@ -44,8 +44,6 @@ Public CONFIG_MSG_NAME_INVALID          As String
 
 Public CHAT_COMMAND_SEND                As String
 Public CHAT_COMMAND_CLEAR               As String
-
-Public CHAT_TIME_TEXT                   As String
 
 Public SF_LABEL_FILENAME                As String
 Public SF_LABEL_SENDING_FILE            As String
@@ -141,7 +139,7 @@ MDI_COMMAND_SENDFILE = "&Sende Datei"
 MDI_COMMAND_SOCIETY = "&Online Liste"
 
 MDI_STAT_DISCONNECTED = "Status: Getrennt"
-MDI_STAT_DCFROMSERVER = "Status: Getrennt vom Server"
+MDI_STAT_DISCONNECT = "Status: Getrennt vom Server"
 MDI_STAT_CONNECTED = "Status: Verbunden"
 MDI_STAT_CONNECTION_ERROR = "Status: Getrennt aufgrund eines Verbindungsfehlers"
 MDI_STAT_CONNECTING = "Status: Verbindung wird aufgebaut .."
@@ -181,8 +179,6 @@ CONFIG_MSG_NAME_INVALID = "Du hast einen ungültigen Namen eingegeben."
 
 CHAT_COMMAND_SEND = "&Senden"
 CHAT_COMMAND_CLEAR = "&Löschen"
-
-CHAT_TIME_TEXT = " Die Zeit beträgt "
 
 SF_LABEL_FILENAME = " Datei Name:"
 SF_LABEL_SENDING_FILE = "Sende:"
@@ -266,7 +262,7 @@ MDI_COMMAND_SENDFILE = "&Send File"
 MDI_COMMAND_SOCIETY = "&Online List"
 
 MDI_STAT_DISCONNECTED = "Status: Disconnected"
-MDI_STAT_DCFROMSERVER = "Status: Disconnected from Server"
+MDI_STAT_DISCONNECT = "Status: Disconnected from Server"
 MDI_STAT_CONNECTED = "Status: Connected"
 MDI_STAT_CONNECTION_ERROR = "Status: Can't connect to server."
 MDI_STAT_CONNECTING = "Status: Connecting .."
@@ -309,8 +305,6 @@ CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
 ' Chat form ..
 CHAT_COMMAND_SEND = "&Send"
 CHAT_COMMAND_CLEAR = "&Clear"
-
-CHAT_TIME_TEXT = " The time is "
 
 ' Send File form ..
 SF_LABEL_FILENAME = " File Name:"
@@ -394,7 +388,7 @@ MDI_COMMAND_SENDFILE = "&Enviar Archivo"
 MDI_COMMAND_SOCIETY = "&Lista Online"
 
 MDI_STAT_DISCONNECTED = "Estado: Desconectado"
-MDI_STAT_DCFROMSERVER = "Estado: Desconectado del servidor"
+MDI_STAT_DISCONNECT = "Estado: Desconectado del servidor"
 MDI_STAT_CONNECTED = "Estado: Disponible"
 MDI_STAT_CONNECTION_ERROR = "Estado: Desconectado por problemas de conexión"
 MDI_STAT_CONNECTING = "Estado: Conectando .."
@@ -434,8 +428,6 @@ CONFIG_MSG_NAME_INVALID = "El nombre que has introducido es invalido."
 
 CHAT_COMMAND_SEND = "&Enviar"
 CHAT_COMMAND_CLEAR = "&Limpiar"
-
-CHAT_TIME_TEXT = " El tiempo es "
 
 SF_LABEL_FILENAME = " Nombre del archivo:"
 SF_LABEL_SENDING_FILE = "Enviando:"
@@ -519,7 +511,7 @@ MDI_COMMAND_SENDFILE = "&Sänd fil"
 MDI_COMMAND_SOCIETY = "&Online Lista"
 
 MDI_STAT_DISCONNECTED = "Status: Frånkopplad"
-MDI_STAT_DCFROMSERVER = "Status: Koppla ifrån servern"
+MDI_STAT_DISCONNECT = "Status: Koppla ifrån servern"
 MDI_STAT_CONNECTED = "Status: Anslut"
 MDI_STAT_CONNECTION_ERROR = "Status: Avkopplad på grund av anslutningsproblem"
 MDI_STAT_CONNECTING = "Status: Ansluter .."
@@ -558,8 +550,6 @@ CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
 ' Chat form ..
 CHAT_COMMAND_SEND = "&Sänd"
 CHAT_COMMAND_CLEAR = "&Rensa"
-
-CHAT_TIME_TEXT = " Tiden är "
 
 ' Send file form ..
 SF_LABEL_FILENAME = " Fil Namn:"
@@ -643,7 +633,7 @@ MDI_COMMAND_SENDFILE = "&Invia File"
 MDI_COMMAND_SOCIETY = "&Lista contatti Online"
 
 MDI_STAT_DISCONNECTED = "Stato: Disconnesso"
-MDI_STAT_DCFROMSERVER = "Stato: Disconnesso dal Server"
+MDI_STAT_DISCONNECT = "Stato: Disconnesso dal Server"
 MDI_STAT_CONNECTED = "Stato: Connesso"
 MDI_STAT_CONNECTION_ERROR = "Stato: Disconnesso a causa di problemi di connessione"
 MDI_STAT_CONNECTING = "Stato: Connessione .."
@@ -684,8 +674,6 @@ CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
 ' Chat form ..
 CHAT_COMMAND_SEND = "&Invia"
 CHAT_COMMAND_CLEAR = "&Clear"
-
-CHAT_TIME_TEXT = " L'ora e' "
 
 ' Send file form ..
 SF_LABEL_FILENAME = " Nome file:"
@@ -770,7 +758,7 @@ MDI_COMMAND_SENDFILE = "&Slanje fajla"
 MDI_COMMAND_SOCIETY = "&Onlajn lista"
 
 MDI_STAT_DISCONNECTED = "Status: Veza je prekinuta"
-MDI_STAT_DCFROMSERVER = "Status: Veza sa serverom je prekinuta"
+MDI_STAT_DISCONNECT = "Status: Veza sa serverom je prekinuta"
 MDI_STAT_CONNECTED = "Status: Povezi"
 MDI_STAT_CONNECTION_ERROR = "Status: Problem sa konekcijom veza je prekinuta "
 MDI_STAT_CONNECTING = "Status: Povezi .."
@@ -808,13 +796,11 @@ CONFIG_MSG_NAME = "Niste uneli ime"
 CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
 CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
 
-' Chat form ..
+'Chat form ..
 CHAT_COMMAND_SEND = "&Posalji"
 CHAT_COMMAND_CLEAR = "&Obrisi"
 
-CHAT_TIME_TEXT = " Vreme je "
-
-' Send file form ..
+'Send file form ..
 SF_LABEL_FILENAME = " Ime  arhive:"
 SF_LABEL_SENDING_FILE = "Slanje:"
 SF_LABEL_SENT = "0.0% Poslato"
@@ -896,7 +882,7 @@ MDI_COMMAND_SENDFILE = "&Bestand Verzenden"
 MDI_COMMAND_SOCIETY = "&Online List"
 
 MDI_STAT_DISCONNECTED = "Status: Verbinding verbroken"
-MDI_STAT_DCFROMSERVER = "Status: Verbinding verbroken met de server"
+MDI_STAT_DISCONNECT = "Status: Verbinding verbroken met de server"
 MDI_STAT_CONNECTED = "Status: Verbonden"
 MDI_STAT_CONNECTION_ERROR = "Status: Verbinding verbroken wegens connectie problemen"
 MDI_STAT_CONNECTING = "Status: Verbinden .."
@@ -935,8 +921,6 @@ CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
 
 CHAT_COMMAND_SEND = "&Zend"
 CHAT_COMMAND_CLEAR = "&Leegmaken"
-
-CHAT_TIME_TEXT = " De Tijd is: "
 
 SF_LABEL_FILENAME = " Bestandsnaam:"
 SF_LABEL_SENDING_FILE = "verZenden:"
@@ -1026,7 +1010,7 @@ MDI_COMMAND_SENDFILE = "&Envoi File"
 MDI_COMMAND_SOCIETY = "&Liste contact Online"
 
 MDI_STAT_DISCONNECTED = "Etat: Deconnecté"
-MDI_STAT_DCFROMSERVER = "Etat: Deconnecté du Server"
+MDI_STAT_DISCONNECT = "Etat: Deconnecté du Server"
 MDI_STAT_CONNECTED = "Etat: Connecté"
 MDI_STAT_CONNECTION_ERROR = "Etat: Deconnecté à cause de problèmes do connection"
 MDI_STAT_CONNECTING = "Etat: Connection .."
@@ -1064,8 +1048,6 @@ CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
 
 CHAT_COMMAND_SEND = "&Envoi"
 CHAT_COMMAND_CLEAR = "&Clear"
-
-CHAT_TIME_TEXT = " L'heure est "
 
 SF_LABEL_FILENAME = " Nom file:"
 SF_LABEL_SENDING_FILE = "Envoyant:"

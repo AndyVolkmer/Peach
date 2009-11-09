@@ -357,7 +357,12 @@ Case WM_LBUTTONDOWN
 Case WM_LBUTTONUP
 Case WM_LBUTTONDBLCLK
     Vali = True
-    frmMain.Show 'Show form
+    With frmMain
+        .Show
+        .SetFocus
+        .WindowState = 0
+    End With
+    Shell_NotifyIcon NIM_DELETE, nid 'Del tray icon
 Case WM_RBUTTONDOWN
     frmMain.PopupMenu myPOP
 Case WM_RBUTTONUP
@@ -375,13 +380,18 @@ End If
 End Sub
 
 Private Sub MDIForm_Unload(Cancel As Integer)
-Shell_NotifyIcon NIM_DELETE, nid 'del tray icon
+Shell_NotifyIcon NIM_DELETE, nid 'Del tray icon
 End
 End Sub
 
 Private Sub Show_Click()
 Vali = True
-frmMain.Show
+With frmMain
+    .Show
+    .SetFocus
+    .WindowState = 0
+End With
+Shell_NotifyIcon NIM_DELETE, nid 'Del tray icon
 End Sub
 
 Private Sub STimer_Timer()
@@ -399,7 +409,7 @@ Prefix = " [" & Format$(Time, "hh:nn:ss") & "]"
 Winsock1.Close
 Disconnect
 
-StatusBar1.Panels(1).Text = MDI_STAT_DCFROMSERVER
+StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECT
 With frmChat.txtConver
     .SelStart = Len(.Text)
     .SelRTF = vbCrLf & Prefix & " [System]: You got disconnected from Server."
