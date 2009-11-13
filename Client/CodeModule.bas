@@ -1,14 +1,15 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const Rev      As String = "1.1.8.0"
+Public Const pRev       As String = "1.1.8.1"
+Public Const pAuthor    As String = "Andy"
 
-Public Const aPort    As Long = 6123
-Public Const bPort    As Long = 6124
-Public Const rPort    As Long = 6222
+Public Const aPort      As Long = 6123
+Public Const bPort      As Long = 6124
+Public Const rPort      As Long = 6222
 
-Public Prefix   As String  'Time Prefix vairbale
-Public i        As Long    'Global 'FOR' variable
+Public Prefix           As String  'Time Prefix vairbale
+Public i                As Long    'Global 'FOR' variable
 
 Private Type CONFIG
     'frmMain values
@@ -174,6 +175,7 @@ With frmConfig
     .Command3.Enabled = pSwitch
     .Command4.Enabled = pSwitch
     .Label1.Enabled = pSwitch
+    .Label2.Enabled = pSwitch
 
     If pSwitch = True Then
         .cmdConnect.Caption = CONFIG_COMMAND_CONNECT

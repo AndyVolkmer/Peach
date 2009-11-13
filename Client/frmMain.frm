@@ -307,13 +307,13 @@ End Function
 
 Private Sub FSocket2_DataArrival(Index As Integer, ByVal bytesTotal As Long)
 Dim GetMessage As String
-Dim Array1() As String
+Dim array1() As String
 Dim GetCommand As String
 
 FSocket2(Index).GetData GetMessage
 
-Array1 = Split(GetMessage, "#")
-GetCommand = Array1(0)
+array1 = Split(GetMessage, "#")
+GetCommand = array1(0)
 
 Select Case GetCommand
 Case "!filerequest"

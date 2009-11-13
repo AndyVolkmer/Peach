@@ -66,9 +66,9 @@ Label1.BackColor = Setting.SCHEME_COLOR
 End Sub
 
 Private Sub Form_Load()
-Label1.Caption = "Author : Andy V." & vbCrLf _
-            & "Version : " & Rev & vbCrLf & vbCrLf _
-            & "Peach is beeing developed by Andy V. " & _
-            "Do not publish this anywhere without " & _
-            "permissions of the author."
+Label1.Caption = "Author : " & pAuthor & vbCrLf _
+        & "Version : " & pRev & vbCrLf & vbCrLf _
+        & "Peach is beeing developed by " & pAuthor & _
+        ". Do not publish this anywhere without " & _
+        "permissions of the author."
 End Sub

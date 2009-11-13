@@ -177,7 +177,7 @@ Begin VB.Form frmAccountPanel
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
       Appearance      =   1
-      NumItems        =   8
+      NumItems        =   9
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID"
          Object.Width           =   882
@@ -214,7 +214,12 @@ Begin VB.Form frmAccountPanel
       EndProperty
       BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   7
-         Text            =   "Email"
+         Text            =   "Secret Question"
+         Object.Width           =   2540
+      EndProperty
+      BeginProperty ColumnHeader(9) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   8
+         Text            =   "Secret Answer"
          Object.Width           =   2540
       EndProperty
    End
@@ -325,7 +330,7 @@ Case "ADD"
             Exit Sub
         End If
     Next i
-    RegisterAccount txtName.Text, txtPassword.Text, vbNullString
+    RegisterAccount txtName.Text, txtPassword.Text, vbNullString, vbNullString
     
 Case "MOD"
     'Name can't be modified to nothing
@@ -363,7 +368,7 @@ With ListView1.ListItems
 End With
 End Sub
 
-Private Sub RegisterAccount(pName As String, pPassword As String, pEmail As String)
+Private Sub RegisterAccount(pName As String, pPassword As String, pSecretQuestion As String, pSecretAnswer As String)
 Dim j As Long
 
 'Check list for biggest value
@@ -380,7 +385,7 @@ j = j + 1
 
 'Add new account to database
 With frmMain.xCommand
-    .CommandText = "INSERT INTO " & Database.Account_Table & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, Email1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', 'False', '0', '" & pEmail & "')"
+    .CommandText = "INSERT INTO " & Database.Account_Table & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', 'False', '0', '" & pSecretQuestion & "', '" & pSecretAnswer & "')"
     .Execute
 End With
 
@@ -396,7 +401,8 @@ With ListView1.ListItems
     .Item(i).SubItems(4) = Format(Date, "dd/mm/yyyy")
     .Item(i).SubItems(5) = "False"
     .Item(i).SubItems(6) = "0"
-    .Item(i).SubItems(7) = pEmail
+    .Item(i).SubItems(7) = pSecretQuestion
+    .Item(i).SubItems(8) = pSecretAnswer
 End With
 End Sub
 
@@ -458,37 +464,47 @@ loadSocket = theFreeSocket
 End Function
 
 Private Sub RegSock_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-Dim array1()        As String
-Dim GetMessage      As String
-Dim GetName         As String
-Dim GetPassword     As String
-Dim GetEmail        As String
+Dim array1()            As String
+Dim GetMessage          As String
+Dim GetName             As String
+Dim GetPassword         As String
+Dim GetSecretQuestion   As String
+Dim GetSecretAnswer     As String
 
 On Error GoTo HandleError
 RegSock(Index).GetData GetMessage
-
 array1 = Split(GetMessage, "#")
 
 GetName = array1(1)
 GetPassword = array1(2)
-GetEmail = array1(3)
+GetSecretQuestion = array1(3)
+GetSecretAnswer = array1(4)
 
-With ListView1.ListItems
-    'Check if the account already exists
-    For i = 1 To .Count
-        If UCase$(GetName) = UCase$(.Item(i).SubItems(1)) Then
-            If RegSock(Index).State = 7 Then
-                RegSock(Index).SendData "!nameexist#"
-                Exit Sub
+Select Case array1(0)
+
+'Regster an account
+Case "!register"
+    With ListView1.ListItems
+        'Check if the account already exists
+        For i = 1 To .Count
+            If UCase$(GetName) = UCase$(.Item(i).SubItems(1)) Then
+                If RegSock(Index).State = 7 Then
+                    RegSock(Index).SendData "!nameexist#"
+                    Exit Sub
+                End If
             End If
-        End If
-    Next i
-End With
+        Next i
+    End With
 
-RegisterAccount GetName, GetPassword, GetEmail
-RegSock(Index).SendData "!done#"
-
+    RegisterAccount GetName, GetPassword, GetSecretQuestion, GetSecretAnswer
+    RegSock(Index).SendData "!done#"
+    
+'Check the secret question and send password
+Case ""
+    
+End Select
 Exit Sub
+
 HandleError:
     RegSock(Index).SendData "!error#"
 End Sub

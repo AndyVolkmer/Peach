@@ -78,7 +78,7 @@ Begin VB.Form frmConfig
          Strikethrough   =   0   'False
       EndProperty
       Height          =   285
-      Left            =   2850
+      Left            =   2880
       MaxLength       =   15
       TabIndex        =   2
       Top             =   2160
@@ -96,7 +96,7 @@ Begin VB.Form frmConfig
          Strikethrough   =   0   'False
       EndProperty
       Height          =   285
-      Left            =   2850
+      Left            =   2880
       MaxLength       =   15
       TabIndex        =   0
       Top             =   720
@@ -115,11 +115,29 @@ Begin VB.Form frmConfig
       EndProperty
       Height          =   285
       IMEMode         =   3  'DISABLE
-      Left            =   2850
+      Left            =   2880
       MaxLength       =   15
       PasswordChar    =   "*"
       TabIndex        =   1
       Top             =   1440
+      Width           =   1935
+   End
+   Begin VB.Label Label2 
+      Alignment       =   2  'Center
+      Caption         =   "CONFIG_COMMAND_FORGOT_PASSWORD"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   2880
+      TabIndex        =   12
+      Top             =   3600
       Width           =   1935
    End
    Begin VB.Label Label1 
@@ -135,7 +153,7 @@ Begin VB.Form frmConfig
          Strikethrough   =   0   'False
       EndProperty
       Height          =   255
-      Left            =   2850
+      Left            =   2880
       TabIndex        =   10
       Top             =   3240
       Width           =   1935
@@ -173,10 +191,10 @@ Begin VB.Form frmConfig
       EndProperty
       ForeColor       =   &H00000000&
       Height          =   255
-      Left            =   2850
+      Left            =   2880
       TabIndex        =   8
       Top             =   480
-      Width           =   1575
+      Width           =   1935
    End
    Begin VB.Label lblPassword 
       BackColor       =   &H00F4F4F4&
@@ -192,10 +210,10 @@ Begin VB.Form frmConfig
       EndProperty
       ForeColor       =   &H00000000&
       Height          =   255
-      Left            =   2850
+      Left            =   2880
       TabIndex        =   7
       Top             =   1200
-      Width           =   975
+      Width           =   1935
    End
    Begin VB.Label lblVersion 
       BackColor       =   &H00F4F4F4&
@@ -217,7 +235,6 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label lblAuthor 
       BackColor       =   &H00F4F4F4&
-      Caption         =   "Author : Andy V."
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -301,6 +318,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     Command3.Enabled = False
     Command4.Enabled = False
     Label1.Enabled = False
+    Label2.Enabled = False
     cmdConnect.Caption = CONFIG_COMMAND_DISCONNECT
     frmMain.StatusBar1.Panels(1).Text = MDI_STAT_CONNECTING
 Else
@@ -328,7 +346,8 @@ End Sub
 
 Public Sub Form_Load()
 Top = 0: Left = 0
-lblVersion.Caption = "Version : " & Rev
+lblAuthor.Caption = "Author : " & pAuthor
+lblVersion.Caption = "Version : " & pRev
 
 txtAccount = Setting.ACCOUNT
 txtNick = Setting.NICKNAME
@@ -341,6 +360,7 @@ Public Sub LoadConfigForm()
 Command3.Caption = CONFIG_COMMAND_SETTINGS
 Command4.Caption = CONFIG_COMMAND_UPDATE
 Label1.Caption = CONFIG_COMMAND_REGISTER
+Label2.Caption = CONFIG_COMMAND_FORGOT_PASSWORD
 cmdConnect.Caption = CONFIG_COMMAND_CONNECT
 End Sub
 

@@ -4,10 +4,10 @@ Begin VB.Form frmRegistration
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Peach - Registration"
-   ClientHeight    =   3735
+   ClientHeight    =   4230
    ClientLeft      =   45
    ClientTop       =   435
-   ClientWidth     =   3870
+   ClientWidth     =   3855
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -20,12 +20,29 @@ Begin VB.Form frmRegistration
    Icon            =   "frmRegistration.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   3735
-   ScaleWidth      =   3870
+   ScaleHeight     =   4230
+   ScaleWidth      =   3855
    StartUpPosition =   1  'CenterOwner
+   Begin VB.ComboBox cmbSecretQuestion 
+      Height          =   315
+      Left            =   240
+      Style           =   2  'Dropdown List
+      TabIndex        =   15
+      Top             =   2520
+      Visible         =   0   'False
+      Width           =   3255
+   End
+   Begin VB.TextBox txtSecretAnswer 
+      Height          =   285
+      Left            =   240
+      TabIndex        =   14
+      Top             =   3120
+      Visible         =   0   'False
+      Width           =   3255
+   End
    Begin MSWinsockLib.Winsock RegSock 
       Left            =   1560
-      Top             =   3240
+      Top             =   3720
       _ExtentX        =   741
       _ExtentY        =   741
       _Version        =   393216
@@ -45,7 +62,7 @@ Begin VB.Form frmRegistration
       Height          =   255
       Left            =   120
       TabIndex        =   11
-      Top             =   3240
+      Top             =   3720
       Visible         =   0   'False
       Width           =   1815
    End
@@ -64,7 +81,7 @@ Begin VB.Form frmRegistration
       Height          =   375
       Left            =   2040
       TabIndex        =   1
-      Top             =   3240
+      Top             =   3720
       Visible         =   0   'False
       Width           =   1695
    End
@@ -80,28 +97,12 @@ Begin VB.Form frmRegistration
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   3015
+      Height          =   3495
       Left            =   120
       TabIndex        =   0
       Top             =   120
       Visible         =   0   'False
       Width           =   3615
-      Begin VB.TextBox txtEmail 
-         BeginProperty Font 
-            Name            =   "Segoe UI"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   285
-         Left            =   120
-         TabIndex        =   12
-         Top             =   2400
-         Width           =   3255
-      End
       Begin VB.PictureBox Picture1 
          Appearance      =   0  'Flat
          BackColor       =   &H00F4F4F4&
@@ -178,9 +179,9 @@ Begin VB.Form frmRegistration
          Top             =   600
          Width           =   3255
       End
-      Begin VB.Label Label6 
+      Begin VB.Label Label7 
          BackColor       =   &H00F4F4F4&
-         Caption         =   " Email: "
+         Caption         =   " Secret question:"
          BeginProperty Font 
             Name            =   "Segoe UI"
             Size            =   8.25
@@ -194,7 +195,25 @@ Begin VB.Form frmRegistration
          Left            =   120
          TabIndex        =   13
          Top             =   2160
-         Width           =   615
+         Width           =   3255
+      End
+      Begin VB.Label Label8 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   " Secret answer:"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   120
+         TabIndex        =   12
+         Top             =   2760
+         Width           =   3255
       End
       Begin VB.Label Label3 
          BackColor       =   &H00F4F4F4&
@@ -332,16 +351,16 @@ If txtPassword1 <> txtPassword2 Then
 End If
 
 'Can't register if email is empty.
-If Len(Trim$(txtEmail)) = 0 Then
-    MsgBox "REG_MSG_EMAIL_EMPTY", vbInformation
-    txtEmail.SetFocus
+If Len(Trim$(txtSecretAnswer)) = 0 Then
+    MsgBox REG_MSG_SECRET_ANSWER_EMPTY, vbInformation
+    txtSecretAnswer.SetFocus
     Exit Sub
 End If
 
 'Can't register if email is to shorter then 8 chars.
-If Len(txtEmail) < 8 Then
-    MsgBox "REG_MSG_EMAIL_SHORT", vbInformation
-    txtEmail.SetFocus
+If Len(txtSecretAnswer) < 8 Then
+    MsgBox REG_MSG_SECRET_ANSWER_SHORT, vbInformation
+    txtSecretAnswer.SetFocus
     Exit Sub
 End If
 
@@ -351,7 +370,7 @@ If RegSock.State <> 7 Then
     Exit Sub
 End If
 
-RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#" & Trim$(txtEmail) & "#"
+RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#"
 End Sub
 
 Private Sub Form_Activate()
@@ -365,6 +384,8 @@ Label2.BackColor = SC
 Label3.BackColor = SC
 Label4.BackColor = SC
 Label5.BackColor = SC
+Label7.BackColor = SC
+Label8.BackColor = SC
 Picture1.BackColor = SC
 End Sub
 
@@ -386,6 +407,21 @@ Label2.Caption = REG_LABEL_PASSWORD
 Label3.Caption = REG_LABEL_PASSWORD_CONFIRM
 Check1.Caption = REG_CHECK_PASSWORD_SHOW
 Command1.Caption = REG_COMMAND_CLOSE
+With cmbSecretQuestion
+    .List(0) = REG_CMB_SECRET_QUESTION_0
+    .List(1) = REG_CMB_SECRET_QUESTION_1
+    .List(2) = REG_CMB_SECRET_QUESTION_2
+    .List(3) = REG_CMB_SECRET_QUESTION_3
+    .List(4) = REG_CMB_SECRET_QUESTION_4
+    .List(5) = REG_CMB_SECRET_QUESTION_5
+    .ListIndex = 0
+End With
+Label7.Caption = REG_LABEL_SECRET_QUESTION
+Label8.Caption = REG_LABEL_SECRET_ANSWER
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+Screen.MousePointer = vbDefault
 End Sub
 
 Private Sub RegSock_Close()
@@ -394,6 +430,8 @@ Label4.Caption = REG_MSG_ERROR
 Command1.Caption = REG_COMMAND_CLOSE
 Frame1.Visible = False
 Check1.Visible = False
+cmbSecretQuestion.Visible = False
+txtSecretAnswer.Visible = False
 Screen.MousePointer = vbDefault
 End Sub
 
@@ -408,13 +446,13 @@ End Sub
 
 Private Sub RegSock_DataArrival(ByVal bytesTotal As Long)
 Dim GetMessage As String
-Dim Array1() As String
+Dim array1() As String
 
 RegSock.GetData GetMessage
 
-Array1 = Split(GetMessage, "#")
+array1 = Split(GetMessage, "#")
 
-Select Case Array1(0)
+Select Case array1(0)
 Case "!nameexist"
     MsgBox REG_MSG_ACCOUNT_EXIST, vbInformation
     txtAccount = vbNullString

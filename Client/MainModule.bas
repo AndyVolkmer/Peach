@@ -42,7 +42,7 @@ Else
     frmLanguage.Show
 End If
 
-WriteIniValue App.Path & "\Config.ini", "Revision", "Number", Rev
+WriteIniValue App.Path & "\Config.ini", "Revision", "Number", pRev
 End Sub
 
 Private Sub LoadIniValue()
@@ -148,6 +148,7 @@ frmChat.BackColor = SC
 With frmConfig
     .BackColor = SC
     .Label1.BackColor = SC
+    .Label2.BackColor = SC
     .lblAccount.BackColor = SC
     .lblAuthor.BackColor = SC
     .lblNickname.BackColor = SC

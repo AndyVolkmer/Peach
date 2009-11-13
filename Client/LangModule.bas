@@ -27,6 +27,7 @@ Public CONFIG_COMMAND_DISCONNECT        As String
 Public CONFIG_COMMAND_SETTINGS          As String
 Public CONFIG_COMMAND_UPDATE            As String
 Public CONFIG_COMMAND_REGISTER          As String
+Public CONFIG_COMMAND_FORGOT_PASSWORD   As String
 
 Public CONFIG_CHECK_SAVE_PASSWORD       As String
 
@@ -40,7 +41,6 @@ Public CONFIG_MSG_IP                    As String
 Public CONFIG_MSG_NAME                  As String
 Public CONFIG_MSG_NAME_SHORT            As String
 Public CONFIG_MSG_NAME_INVALID          As String
-
 
 Public CHAT_COMMAND_SEND                As String
 Public CHAT_COMMAND_CLEAR               As String
@@ -95,6 +95,8 @@ Public REG_LABEL_PASSWORD_WEAK          As String
 Public REG_LABEL_PASSWORD_NORMAL        As String
 Public REG_LABEL_PASSWORD_STRONG        As String
 Public REG_LABEL_ERROR                  As String
+Public REG_LABEL_SECRET_QUESTION        As String
+Public REG_LABEL_SECRET_ANSWER          As String
 
 Public REG_CHECK_PASSWORD_SHOW          As String
 
@@ -115,6 +117,15 @@ Public REG_MSG_CONNECTION_BROKEN        As String
 Public REG_MSG_PASSWORD_MATCH           As String
 Public REG_MSG_PASSWORD_SHORT           As String
 Public REG_MSG_PASSWORD_EMPTY           As String
+Public REG_MSG_SECRET_ANSWER_SHORT      As String
+Public REG_MSG_SECRET_ANSWER_EMPTY      As String
+
+Public REG_CMB_SECRET_QUESTION_0        As String
+Public REG_CMB_SECRET_QUESTION_1        As String
+Public REG_CMB_SECRET_QUESTION_2        As String
+Public REG_CMB_SECRET_QUESTION_3        As String
+Public REG_CMB_SECRET_QUESTION_4        As String
+Public REG_CMB_SECRET_QUESTION_5        As String
 
 'Settings form
 Public SET_LABEL_COLOR                  As String
@@ -154,6 +165,7 @@ CONFIG_COMMAND_DISCONNECT = "&Verbindung trenn."
 CONFIG_COMMAND_SETTINGS = "&Einstellungen"
 CONFIG_COMMAND_UPDATE = "&Aktualisieren"
 CONFIG_COMMAND_REGISTER = "&Account registrieren"
+CONFIG_COMMAND_FORGOT_PASSWORD = "&Password vergessen"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Password Speichern"
 
@@ -217,6 +229,8 @@ REG_LABEL_PASSWORD_CONFIRM = " Passwort bestätigen:"
 REG_LABEL_PASSWORD_WEAK = "Das Passwort ist schwach."
 REG_LABEL_PASSWORD_NORMAL = "Das Passwort ist gut."
 REG_LABEL_PASSWORD_STRONG = "Das Passwort ist stark."
+REG_LABEL_SECRET_QUESTION = " Geheime Frage:"
+REG_LABEL_SECRET_ANSWER = " Geheime Antwort:"
 
 REG_COMMAND_SUBMIT = "&Registrieren"
 REG_COMMAND_CLOSE = "&Schliessen"
@@ -233,11 +247,21 @@ REG_MSG_PASSWORD_MATCH = "Die Passwörter stimmen nicht überein."
 REG_MSG_PASSWORD_SHORT = "Das Passwort ist zu kurz, muss aus wenigstens 6 Zeichen bestehen."
 REG_MSG_PASSWORD_EMPTY = "Kein Passwort angegeben."
 
+REG_MSG_SECRET_ANSWER_SHORT = "Die geheime Antwort ist zu kurz, Sie muss aus wenigstens 8 Zeichen bestehen."
+REG_MSG_SECRET_ANSWER_EMPTY = "Keine geheime Antwort angegeben."
+
 REG_MSG_SUCCESSFULLY = "Der Account wurde erfolgreich erstellt."
 REG_MSG_ERROR = "Ein Fehler ist aufgetreten bitte versuchen sie es später nochmal."
 REG_MSG_ERROR_OCCURED = "Fehler aufgetreten ..."
 REG_MSG_LOADING = " Lädt .."
 REG_MSG_CONNECTION_BROKEN = "Die Verbindung wurde unterbrochen bitte versuchen sie es später nochmal."
+
+REG_CMB_SECRET_QUESTION_0 = "Wie heißt dein Haustier?"
+REG_CMB_SECRET_QUESTION_1 = "Dein Lieblings-Buch?"
+REG_CMB_SECRET_QUESTION_2 = "Dein Lieblings-Film?"
+REG_CMB_SECRET_QUESTION_3 = "Dein Lieblings-Spiel?"
+REG_CMB_SECRET_QUESTION_4 = "Dein Lieblings-Sänger?"
+REG_CMB_SECRET_QUESTION_5 = "Geburtsort deiner mutter?"
 
 SET_LABEL_COLOR = "Jetzige Farbe:"
 
@@ -279,6 +303,7 @@ CONFIG_COMMAND_DISCONNECT = "&Disconnect"
 CONFIG_COMMAND_SETTINGS = "&Settings"
 CONFIG_COMMAND_UPDATE = "&Update"
 CONFIG_COMMAND_REGISTER = "&Register Account"
+CONFIG_COMMAND_FORGOT_PASSWORD = "&Forgot Password"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
@@ -344,6 +369,8 @@ REG_LABEL_PASSWORD_CONFIRM = " Confirm the Password:"
 REG_LABEL_PASSWORD_WEAK = "The password is weak."
 REG_LABEL_PASSWORD_NORMAL = "The password is normal."
 REG_LABEL_PASSWORD_STRONG = "The password is strong."
+REG_LABEL_SECRET_QUESTION = "Secret question:"
+REG_LABEL_SECRET_ANSWER = "Secret answer:"
 
 REG_COMMAND_SUBMIT = "&Submit"
 REG_COMMAND_CLOSE = "&Close"
@@ -360,11 +387,21 @@ REG_MSG_PASSWORD_MATCH = "The passwords dont match."
 REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
 REG_MSG_PASSWORD_EMPTY = "No Password entered."
 
+REG_MSG_SECRET_ANSWER_SHORT = "Secret answer to short, it requieres at least 8 characters."
+REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
+
 REG_MSG_SUCCESSFULLY = "The account was successfully registered."
 REG_MSG_ERROR = "An error has occured please try later again."
 REG_MSG_ERROR_OCCURED = "Error has occured ..."
 REG_MSG_LOADING = " Loading .."
 REG_MSG_CONNECTION_BROKEN = "Connection is broken please try again later."
+
+REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
+REG_CMB_SECRET_QUESTION_1 = "Your favorite book?"
+REG_CMB_SECRET_QUESTION_2 = "Your favorite movie?"
+REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
+REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
+REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
 
 SET_LABEL_COLOR = "Current Color:"
 
@@ -403,6 +440,7 @@ CONFIG_COMMAND_DISCONNECT = "&Desconectar"
 CONFIG_COMMAND_SETTINGS = "&Ajustes"
 CONFIG_COMMAND_UPDATE = "&Actualizar"
 CONFIG_COMMAND_REGISTER = "&Registrar cuenta"
+CONFIG_COMMAND_FORGOT_PASSWORD = "¿Ha olvidado contraseña?"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
@@ -466,6 +504,8 @@ REG_LABEL_PASSWORD_CONFIRM = " Confirmar contraseña:"
 REG_LABEL_PASSWORD_WEAK = "La contraseña es floja."
 REG_LABEL_PASSWORD_NORMAL = "La contraseña es normal."
 REG_LABEL_PASSWORD_STRONG = "La contraseña es fuerte."
+REG_LABEL_SECRET_QUESTION = "Pregunta secreta:"
+REG_LABEL_SECRET_ANSWER = "Respuesta secreta:"
 
 REG_COMMAND_SUBMIT = "&Registrar"
 REG_COMMAND_CLOSE = "&Cerrar"
@@ -482,11 +522,21 @@ REG_MSG_PASSWORD_MATCH = "Las contraseñas no son las mismas."
 REG_MSG_PASSWORD_SHORT = "Contraseña corta, debe que tener por lo menos 6 digitos."
 REG_MSG_PASSWORD_EMPTY = "No ha introducido una contraseña."
 
+REG_MSG_SECRET_ANSWER_SHORT = "Repuesta secreta corta, debe que tener lo menos 8 digitos."
+REG_MSG_SECRET_ANSWER_EMPTY = "No ha introducido una respuesta secreta."
+
 REG_MSG_SUCCESSFULLY = "La cuenta ha sido registrada con exito."
 REG_MSG_ERROR = "Un error ha occurido intenten de nuevo despues."
 REG_MSG_ERROR_OCCURED = "Error occurido ..."
 REG_MSG_LOADING = " Cargando .."
 REG_MSG_CONNECTION_BROKEN = "La conexión se ha roto, intenten de nuevo despues."
+
+REG_CMB_SECRET_QUESTION_0 = "¿Cual es el nombre de tu mascota?"
+REG_CMB_SECRET_QUESTION_1 = "¿Tu libro favorito?"
+REG_CMB_SECRET_QUESTION_2 = "¿Tu pelicula favorita?"
+REG_CMB_SECRET_QUESTION_3 = "¿Tu juego favorito?"
+REG_CMB_SECRET_QUESTION_4 = "¿Tu cantante favorito?"
+REG_CMB_SECRET_QUESTION_5 = "¿El lugar de nacimiento de tu madre?"
 
 SET_LABEL_COLOR = "Color activo:"
 
@@ -528,6 +578,7 @@ CONFIG_COMMAND_DISCONNECT = "&Frånkoppla"
 CONFIG_COMMAND_SETTINGS = "&Inställningar"
 CONFIG_COMMAND_REGISTER = "&Skapa konto"
 CONFIG_COMMAND_UPDATE = "&Updatering"
+CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
 
 LANG_GERMAN = "Tyska"
 LANG_ENGLISH = "Engelska"
@@ -590,6 +641,8 @@ REG_LABEL_PASSWORD_CONFIRM = " Bekräfta lösenord:"
 REG_LABEL_PASSWORD_WEAK = "Lösenordet är lätt."
 REG_LABEL_PASSWORD_NORMAL = "Lösenordet är normalt."
 REG_LABEL_PASSWORD_STRONG = "Lösenordet är svårt."
+REG_LABEL_SECRET_QUESTION = "Secret question:"
+REG_LABEL_SECRET_ANSWER = "Secret answer:"
 
 REG_COMMAND_SUBMIT = "&Acceptera"
 REG_COMMAND_CLOSE = "&Ständ"
@@ -606,11 +659,21 @@ REG_MSG_PASSWORD_MATCH = "Ogiltigt lösenord."
 REG_MSG_PASSWORD_SHORT = "För kort lösenord, det kräver åtminstone 6 bokstäver."
 REG_MSG_PASSWORD_EMPTY = "Inget lösenord angivet."
 
+REG_MSG_SECRET_ANSWER_SHORT = "Secret answer to short, it requieres at least 8 characters."
+REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
+
 REG_MSG_SUCCESSFULLY = "Kontot har skapats."
 REG_MSG_ERROR = "Ett fel har uppstått var snäll och försök igen."
 REG_MSG_ERROR_OCCURED = "Ett fel har uppstått ..."
 REG_MSG_LOADING = " Laddar .."
 REG_MSG_CONNECTION_BROKEN = "Anslutnings fel, var snäll och försök igen."
+
+REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
+REG_CMB_SECRET_QUESTION_1 = "Your favorite book?"
+REG_CMB_SECRET_QUESTION_2 = "Your favorite movie?"
+REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
+REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
+REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
 
 SET_LABEL_COLOR = "Nuvarande färg:"
 
@@ -650,6 +713,7 @@ CONFIG_COMMAND_DISCONNECT = "&Disconnesso"
 CONFIG_COMMAND_SETTINGS = "&Settings"
 CONFIG_COMMAND_UPDATE = "&Update"
 CONFIG_COMMAND_REGISTER = "&Register Account"
+CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
@@ -713,6 +777,8 @@ REG_LABEL_PASSWORD_CONFIRM = " Confirm the Password:"
 REG_LABEL_PASSWORD_WEAK = "The password is weak."
 REG_LABEL_PASSWORD_NORMAL = "The password is normal."
 REG_LABEL_PASSWORD_STRONG = "The password is strong."
+REG_LABEL_SECRET_QUESTION = "Secret question:"
+REG_LABEL_SECRET_ANSWER = "Secret answer:"
 
 REG_COMMAND_SUBMIT = "&Submit"
 REG_COMMAND_CLOSE = "&Close"
@@ -729,11 +795,21 @@ REG_MSG_PASSWORD_MATCH = "The passwords dont match."
 REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
 REG_MSG_PASSWORD_EMPTY = "No Password entered."
 
+REG_MSG_SECRET_ANSWER_SHORT = "Secret answer to short, it requieres at least 8 characters."
+REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
+
 REG_MSG_SUCCESSFULLY = "The account was successfully registered."
 REG_MSG_ERROR = "An error has occured please try later again."
 REG_MSG_ERROR_OCCURED = "Error has occured ..."
 REG_MSG_LOADING = " Loading .."
 REG_MSG_CONNECTION_BROKEN = "Connection is broken please try again later."
+
+REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
+REG_CMB_SECRET_QUESTION_1 = "Your favorite book?"
+REG_CMB_SECRET_QUESTION_2 = "Your favorite movie?"
+REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
+REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
+REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
 
 SET_LABEL_COLOR = "Current Color:"
 
@@ -775,6 +851,7 @@ CONFIG_COMMAND_DISCONNECT = "&Veza je prekinuta"
 CONFIG_COMMAND_SETTINGS = "&Settings"
 CONFIG_COMMAND_UPDATE = "&Update"
 CONFIG_COMMAND_REGISTER = "&Register Account"
+CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
@@ -838,6 +915,8 @@ REG_LABEL_PASSWORD_CONFIRM = " Confirm the Password:"
 REG_LABEL_PASSWORD_WEAK = "The password is weak."
 REG_LABEL_PASSWORD_NORMAL = "The password is normal."
 REG_LABEL_PASSWORD_STRONG = "The password is strong."
+REG_LABEL_SECRET_QUESTION = "Secret question:"
+REG_LABEL_SECRET_ANSWER = "Secret answer:"
 
 REG_COMMAND_SUBMIT = "&Submit"
 REG_COMMAND_CLOSE = "&Close"
@@ -854,11 +933,21 @@ REG_MSG_PASSWORD_MATCH = "The passwords dont match."
 REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
 REG_MSG_PASSWORD_EMPTY = "No Password entered."
 
+REG_MSG_SECRET_ANSWER_SHORT = "Secret answer to short, it requieres at least 8 characters."
+REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
+
 REG_MSG_SUCCESSFULLY = "The account was successfully registered."
 REG_MSG_ERROR = "An error has occured please try later again."
 REG_MSG_ERROR_OCCURED = "Error has occured ..."
 REG_MSG_LOADING = " Loading .."
 REG_MSG_CONNECTION_BROKEN = "Connection is broken please try again later."
+
+REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
+REG_CMB_SECRET_QUESTION_1 = "Your favorite book?"
+REG_CMB_SECRET_QUESTION_2 = "Your favorite movie?"
+REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
+REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
+REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
 
 SET_LABEL_COLOR = "Current Color:"
 
@@ -898,6 +987,7 @@ CONFIG_COMMAND_DISCONNECT = "&Verbinding verbreken"
 CONFIG_COMMAND_SETTINGS = "&Instellingen"
 CONFIG_COMMAND_REGISTER = "&Account aanmaken"
 CONFIG_COMMAND_UPDATE = "&Update"
+CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
@@ -959,6 +1049,8 @@ REG_LABEL_PASSWORD_CONFIRM = " Bevestig Wachtwoord:"
 REG_LABEL_PASSWORD_WEAK = "Dit wachtwoord is zwak."
 REG_LABEL_PASSWORD_NORMAL = "Dit wachtwoord is redelijk."
 REG_LABEL_PASSWORD_STRONG = "Dit wachtwoord is goed."
+REG_LABEL_SECRET_QUESTION = "Secret question:"
+REG_LABEL_SECRET_ANSWER = "Secret answer:"
 
 REG_CHECK_PASSWORD_SHOW = "Laat wachtwoord zien"
 
@@ -975,11 +1067,21 @@ REG_MSG_PASSWORD_MATCH = "Wachtwoorden komen niet overeen."
 REG_MSG_PASSWORD_SHORT = "Wachtwoord te kort, minstens 4 tekens."
 REG_MSG_PASSWORD_EMPTY = "Geen wachtwoord ingevoerd."
 
+REG_MSG_SECRET_ANSWER_SHORT = "Secret answer to short, it requieres at least 8 characters."
+REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
+
 REG_MSG_SUCCESSFULLY = "Account succesvol aangemaakt."
 REG_MSG_ERROR = "Er is een fout opgetreden, probeer het later opnieuw."
 REG_MSG_ERROR_OCCURED = "Fout opgetreden ..."
 REG_MSG_LOADING = " Laden.. "
 REG_MSG_CONNECTION_BROKEN = "Verbinding verbroken."
+
+REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
+REG_CMB_SECRET_QUESTION_1 = "Your favorite book?"
+REG_CMB_SECRET_QUESTION_2 = "Your favorite movie?"
+REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
+REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
+REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
 
 SET_LABEL_COLOR = "Momenteel gebruikte kleur:"
 
@@ -1025,6 +1127,7 @@ CONFIG_COMMAND_DISCONNECT = "&Deconnecté"
 CONFIG_COMMAND_SETTINGS = "&Settings"
 CONFIG_COMMAND_UPDATE = "&Update"
 CONFIG_COMMAND_REGISTER = "&Register Account"
+CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
@@ -1086,6 +1189,8 @@ REG_LABEL_PASSWORD_CONFIRM = " Confirm the Password:"
 REG_LABEL_PASSWORD_WEAK = "The password is weak."
 REG_LABEL_PASSWORD_NORMAL = "The password is normal."
 REG_LABEL_PASSWORD_STRONG = "The password is strong."
+REG_LABEL_SECRET_QUESTION = "Secret question:"
+REG_LABEL_SECRET_ANSWER = "Secret answer:"
 
 REG_COMMAND_SUBMIT = "&Submit"
 REG_COMMAND_CLOSE = "&Close"
@@ -1102,11 +1207,21 @@ REG_MSG_PASSWORD_MATCH = "The passwords dont match."
 REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
 REG_MSG_PASSWORD_EMPTY = "No Password entered."
 
+REG_MSG_SECRET_ANSWER_SHORT = "Secret answer to short, it requieres at least 8 characters."
+REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
+
 REG_MSG_SUCCESSFULLY = "The account was successfully registered."
 REG_MSG_ERROR = "An error has occured please try later again."
 REG_MSG_ERROR_OCCURED = "Error has occured ..."
 REG_MSG_LOADING = " Loading .."
 REG_MSG_CONNECTION_BROKEN = "Connection is broken please try again later."
+
+REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
+REG_CMB_SECRET_QUESTION_1 = "Your favorite book?"
+REG_CMB_SECRET_QUESTION_2 = "Your favorite movie?"
+REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
+REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
+REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
 
 SET_LABEL_COLOR = "Current Color:"
 
