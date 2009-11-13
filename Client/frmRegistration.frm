@@ -4,7 +4,7 @@ Begin VB.Form frmRegistration
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Peach - Registration"
-   ClientHeight    =   3165
+   ClientHeight    =   3735
    ClientLeft      =   45
    ClientTop       =   435
    ClientWidth     =   3870
@@ -20,12 +20,12 @@ Begin VB.Form frmRegistration
    Icon            =   "frmRegistration.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   3165
+   ScaleHeight     =   3735
    ScaleWidth      =   3870
    StartUpPosition =   1  'CenterOwner
    Begin MSWinsockLib.Winsock RegSock 
-      Left            =   120
-      Top             =   2880
+      Left            =   1560
+      Top             =   3240
       _ExtentX        =   741
       _ExtentY        =   741
       _Version        =   393216
@@ -45,7 +45,7 @@ Begin VB.Form frmRegistration
       Height          =   255
       Left            =   120
       TabIndex        =   11
-      Top             =   2640
+      Top             =   3240
       Visible         =   0   'False
       Width           =   1815
    End
@@ -64,7 +64,7 @@ Begin VB.Form frmRegistration
       Height          =   375
       Left            =   2040
       TabIndex        =   1
-      Top             =   2640
+      Top             =   3240
       Visible         =   0   'False
       Width           =   1695
    End
@@ -80,12 +80,28 @@ Begin VB.Form frmRegistration
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   2415
+      Height          =   3015
       Left            =   120
       TabIndex        =   0
       Top             =   120
       Visible         =   0   'False
       Width           =   3615
+      Begin VB.TextBox txtEmail 
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Left            =   120
+         TabIndex        =   12
+         Top             =   2400
+         Width           =   3255
+      End
       Begin VB.PictureBox Picture1 
          Appearance      =   0  'Flat
          BackColor       =   &H00F4F4F4&
@@ -161,6 +177,24 @@ Begin VB.Form frmRegistration
          TabIndex        =   2
          Top             =   600
          Width           =   3255
+      End
+      Begin VB.Label Label6 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   " Email: "
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   120
+         TabIndex        =   13
+         Top             =   2160
+         Width           =   615
       End
       Begin VB.Label Label3 
          BackColor       =   &H00F4F4F4&
@@ -248,8 +282,8 @@ If Command1.Caption = REG_COMMAND_CLOSE Then
     Exit Sub
 End If
 
-'Can't register if there is no Account
-If Len(txtAccount) = 0 Then
+'Can't register if there is no Account.
+If Len(Trim$(txtAccount)) = 0 Then
     MsgBox REG_MSG_ACCOUNT_EMPTY, vbInformation
     txtAccount.SetFocus
     Exit Sub
@@ -262,21 +296,21 @@ If Len(txtAccount) < 4 Then
     Exit Sub
 End If
 
-'Check for spaces and other signs in the account
+'Check for spaces and other signs in the account.
 If CheckString(txtAccount) = True Then
     MsgBox REG_MSG_ACCOUNT_INVALID, vbInformation
     txtAccount.SetFocus
     Exit Sub
 End If
 
-'Can't register if the Account is made out of numbers
+'Can't register if the Account is made out of numbers.
 If IsNumeric(txtAccount) = True Then
     MsgBox REG_MSG_ACCOUNT_NUMERIC, vbInformation
     txtAccount.SetFocus
     Exit Sub
 End If
 
-'Can't register if there is no Password
+'Can't register if there is no Password.
 If Len(txtPassword1) = 0 Then
     MsgBox REG_MSG_PASSWORD_EMPTY, vbInformation
     txtPassword1.SetFocus
@@ -290,20 +324,34 @@ If Len(txtPassword1) < 6 Then
     Exit Sub
 End If
 
-'Can't register if passwords dont match
+'Can't register if passwords dont match.
 If txtPassword1 <> txtPassword2 Then
     MsgBox REG_MSG_PASSWORD_MATCH, vbInformation
     txtPassword2.SetFocus
     Exit Sub
 End If
 
-'Can't register if the winsock is not connected
+'Can't register if email is empty.
+If Len(Trim$(txtEmail)) = 0 Then
+    MsgBox "REG_MSG_EMAIL_EMPTY", vbInformation
+    txtEmail.SetFocus
+    Exit Sub
+End If
+
+'Can't register if email is to shorter then 8 chars.
+If Len(txtEmail) < 8 Then
+    MsgBox "REG_MSG_EMAIL_SHORT", vbInformation
+    txtEmail.SetFocus
+    Exit Sub
+End If
+
+'Can't register if the winsock is not connected.
 If RegSock.State <> 7 Then
     MsgBox REG_MSG_CONNECTION_BROKEN, vbInformation
     Exit Sub
 End If
 
-RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#"
+RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#" & Trim$(txtEmail) & "#"
 End Sub
 
 Private Sub Form_Activate()

@@ -177,7 +177,7 @@ Begin VB.Form frmAccountPanel
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
       Appearance      =   1
-      NumItems        =   7
+      NumItems        =   8
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID"
          Object.Width           =   882
@@ -210,6 +210,11 @@ Begin VB.Form frmAccountPanel
       BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   6
          Text            =   "Level"
+         Object.Width           =   2540
+      EndProperty
+      BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   7
+         Text            =   "Email"
          Object.Width           =   2540
       EndProperty
    End
@@ -320,7 +325,7 @@ Case "ADD"
             Exit Sub
         End If
     Next i
-    RegisterAccount txtName.Text, txtPassword.Text
+    RegisterAccount txtName.Text, txtPassword.Text, vbNullString
     
 Case "MOD"
     'Name can't be modified to nothing
@@ -344,8 +349,10 @@ End Sub
 
 Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Boolean, pLevel As String, MOD_ID As Long, LST_ID As Long)
 'Update the database
-frmMain.xCommand.CommandText = "UPDATE " & Database.Account_Table & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & CStr(pBanned) & "', Level1 = '" & pLevel & "' WHERE ID = " & MOD_ID
-frmMain.xCommand.Execute
+With frmMain.xCommand
+    .CommandText = "UPDATE " & Database.Account_Table & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & CStr(pBanned) & "', Level1 = '" & pLevel & "' WHERE ID = " & MOD_ID
+    .Execute
+End With
 
 'Update the listview
 With ListView1.ListItems
@@ -356,7 +363,7 @@ With ListView1.ListItems
 End With
 End Sub
 
-Private Sub RegisterAccount(pName As String, pPassword As String)
+Private Sub RegisterAccount(pName As String, pPassword As String, pEmail As String)
 Dim j As Long
 
 'Check list for biggest value
@@ -372,8 +379,10 @@ End With
 j = j + 1
 
 'Add new account to database
-frmMain.xCommand.CommandText = "INSERT INTO " & Database.Account_Table & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', 'False', '0')"
-frmMain.xCommand.Execute
+With frmMain.xCommand
+    .CommandText = "INSERT INTO " & Database.Account_Table & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, Email1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', 'False', '0', '" & pEmail & "')"
+    .Execute
+End With
 
 'Save index in variable
 i = ListView1.ListItems.Count + 1
@@ -387,6 +396,7 @@ With ListView1.ListItems
     .Item(i).SubItems(4) = Format(Date, "dd/mm/yyyy")
     .Item(i).SubItems(5) = "False"
     .Item(i).SubItems(6) = "0"
+    .Item(i).SubItems(7) = pEmail
 End With
 End Sub
 
@@ -448,23 +458,23 @@ loadSocket = theFreeSocket
 End Function
 
 Private Sub RegSock_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-Dim array1()    As String
-Dim GetMessage  As String
-Dim GetCommand  As String
-Dim GetName     As String
-Dim GetPassword As String
+Dim array1()        As String
+Dim GetMessage      As String
+Dim GetName         As String
+Dim GetPassword     As String
+Dim GetEmail        As String
 
 On Error GoTo HandleError
 RegSock(Index).GetData GetMessage
 
 array1 = Split(GetMessage, "#")
 
-GetCommand = array1(0)
 GetName = array1(1)
 GetPassword = array1(2)
+GetEmail = array1(3)
 
-'If GetCommand = "!register" Then
 With ListView1.ListItems
+    'Check if the account already exists
     For i = 1 To .Count
         If UCase$(GetName) = UCase$(.Item(i).SubItems(1)) Then
             If RegSock(Index).State = 7 Then
@@ -473,11 +483,10 @@ With ListView1.ListItems
             End If
         End If
     Next i
-    
-    RegisterAccount GetName, GetPassword
-    RegSock(Index).SendData "!done#"
 End With
-'End If
+
+RegisterAccount GetName, GetPassword, GetEmail
+RegSock(Index).SendData "!done#"
 
 Exit Sub
 HandleError:

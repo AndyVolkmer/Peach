@@ -217,7 +217,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label lblAuthor 
       BackColor       =   &H00F4F4F4&
-      Caption         =   "Author : Notron"
+      Caption         =   "Author : Andy V."
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -262,7 +262,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
 
     'Nick can't be shorter then 4 characters
     If Len(txtNick) < 4 Then
-        MsgBox CONFIG_MSG_NAME_SHORT, vbInformation, " Error - Nickname"
+        MsgBox CONFIG_MSG_NAME_SHORT, vbInformation, "Error - Nickname"
         txtNick.SelStart = Len(txtNick)
         txtNick.SetFocus
         Exit Sub

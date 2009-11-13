@@ -533,6 +533,7 @@ With xRecordSet
         LItem.SubItems(4) = !Date1
         LItem.SubItems(5) = !Banned1
         LItem.SubItems(6) = !Level1
+        LItem.SubItems(7) = !Email1
         .MoveNext
         Counter = Counter + 1
     Loop

@@ -33,7 +33,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   873
       _Version        =   393217
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin RichTextLib.RichTextBox txtToSend 
@@ -153,21 +152,19 @@ End Type
 Private Sign(255) As Integer
 
 Private Sub cmdSend_Click()
+Dim TTS As String
+
+'Save textbox in variabel
+TTS = txtToSend.Text
+
+'Wipeout textbox
+txtToSend.Text = vbNullString
+
 'No whitespaces
-If Len(Trim$(txtToSend.Text)) = 0 Then
-    Call Clear
-    Exit Sub
-End If
+If Len(Trim$(TTS)) = 0 Then Exit Sub
 
 'Send public message
-SendMsg "!msg#" & frmConfig.txtNick & "#" & Trim$(txtToSend.Text) & "#"
-Call Clear
-End Sub
-
-Private Sub Clear()
-With txtToSend
-    .Text = vbNullString
-End With
+SendMsg "!msg#" & frmConfig.txtNick & "#" & Trim$(TTS) & "#"
 End Sub
 
 Private Sub Form_Load()
@@ -194,9 +191,9 @@ txtConver.Locked = False
 'Create smileys
 Call Create_Smileys(txtConver)
 
-Call Highlight(txtConver)
-
 Call InitSigns
+
+Call Highlight(txtConver)
 
 'If window doenst have focus then flash
 With frmMain

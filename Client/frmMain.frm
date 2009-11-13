@@ -421,25 +421,25 @@ SwitchButtons False
 SendMsg "!login#" & frmConfig.txtAccount & "#" & frmConfig.txtPassword & "#"
 End Sub
 
-Private Sub ConnectIsTrue()
-frmConfig.Hide
-frmChat.Show
-frmChat.txtToSend.SetFocus
-
-StatusBar1.Panels(1).Text = MDI_STAT_CONNECTED
-
-SendMsg "!connected#" & frmConfig.txtNick & "#" & frmConfig.txtAccount & "#"
-End Sub
-
-Private Sub ConnectIsFalse()
-With frmConfig
-    .cmdConnect_Click
-    .txtNick = vbNullString
-frmChat.Hide
-    .Show
-    .txtNick.SetFocus
-End With
-MsgBox MDI_MSG_NAME_TAKEN, vbInformation
+Private Sub Connection(Args As Boolean)
+If Args = True Then
+    frmConfig.Hide
+    frmChat.Show
+    frmChat.txtToSend.SetFocus
+    
+    StatusBar1.Panels(1).Text = MDI_STAT_CONNECTED
+    
+    SendMsg "!connected#" & frmConfig.txtNick & "#" & frmConfig.txtAccount & "#"
+Else
+    With frmConfig
+        .cmdConnect_Click
+        .txtNick = vbNullString
+        frmChat.Hide
+        .Show
+        .txtNick.SetFocus
+    End With
+    MsgBox MDI_MSG_NAME_TAKEN, vbInformation
+End If
 End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
@@ -473,11 +473,11 @@ Case "!split_text"
    
 'We can't login
 Case "!decilined"
-    ConnectIsFalse
+    Connection False
     
 'We can login
 Case "!accepted"
-    ConnectIsTrue
+    Connection True
     
 'Wipe out current friend list and insert new values
 Case "!update_friends"
@@ -541,7 +541,7 @@ Case "!login"
         With frmConfig
             .cmdConnect_Click
             .txtPassword = vbNullString
-        frmChat.Hide
+            frmChat.Hide
             .Show
             .txtPassword.SetFocus
         End With
@@ -551,7 +551,7 @@ Case "!login"
         With frmConfig
             .cmdConnect_Click
             .txtAccount = vbNullString
-        frmChat.Hide
+            frmChat.Hide
             .Show
             .txtAccount.SetFocus
         End With
@@ -560,7 +560,7 @@ Case "!login"
     Case "Banned"
         With frmConfig
             .cmdConnect_Click
-        frmChat.Hide
+            frmChat.Hide
             .Show
         End With
         MsgBox MDI_MSG_BANNED, vbInformation
