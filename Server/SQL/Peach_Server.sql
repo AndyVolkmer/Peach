@@ -11,6 +11,8 @@ CREATE TABLE `accounts` (
   `Date1` date DEFAULT NULL,
   `Banned1` varchar(255) DEFAULT NULL,
   `Level1` int(11) DEFAULT NULL,
+  `SecretQuestion1` varchar(255) DEFAULT '',
+  `SecretAnswer1` varchar(255) DEFAULT '',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
