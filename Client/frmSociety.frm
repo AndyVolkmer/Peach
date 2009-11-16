@@ -27,8 +27,8 @@ Begin VB.Form frmSociety
       Left            =   120
       TabIndex        =   4
       Top             =   120
-      Width           =   7365
-      _ExtentX        =   12991
+      Width           =   7275
+      _ExtentX        =   12832
       _ExtentY        =   7011
       _Version        =   393216
       TabHeight       =   520
@@ -56,23 +56,19 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "ListView1"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "ListView3"
-      Tab(2).Control(0).Enabled=   0   'False
+      Tab(2).Control(0)=   "Command4"
       Tab(2).Control(1)=   "Command3"
-      Tab(2).Control(1).Enabled=   0   'False
-      Tab(2).Control(2)=   "Command4"
-      Tab(2).Control(2).Enabled=   0   'False
+      Tab(2).Control(2)=   "ListView3"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton Command4 
          Caption         =   "&Remove"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   -69480
+         Left            =   -69600
          TabIndex        =   6
          Top             =   3360
          Width           =   1695
@@ -81,7 +77,7 @@ Begin VB.Form frmSociety
          Caption         =   "&Add"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   -71160
+         Left            =   -71280
          TabIndex        =   5
          Top             =   3360
          Width           =   1695
@@ -90,7 +86,7 @@ Begin VB.Form frmSociety
          Caption         =   "&Remove"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   5520
+         Left            =   5400
          TabIndex        =   2
          Top             =   3360
          Width           =   1695
@@ -99,7 +95,7 @@ Begin VB.Form frmSociety
          Caption         =   "&Add"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   3840
+         Left            =   3720
          TabIndex        =   1
          Top             =   3360
          Width           =   1695

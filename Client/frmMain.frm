@@ -2,12 +2,13 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.MDIForm frmMain 
+   Appearance      =   0  'Flat
    BackColor       =   &H00F4F4F4&
    Caption         =   " Peach"
    ClientHeight    =   5085
    ClientLeft      =   60
    ClientTop       =   420
-   ClientWidth     =   7470
+   ClientWidth     =   7350
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "MDIForm1"
    LockControls    =   -1  'True
@@ -38,15 +39,16 @@ Begin VB.MDIForm frmMain
       Left            =   0
       TabIndex        =   5
       Top             =   4740
-      Width           =   7470
-      _ExtentX        =   13176
+      Width           =   7350
+      _ExtentX        =   12965
       _ExtentY        =   609
       _Version        =   393216
       BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
          NumPanels       =   1
          BeginProperty Panel1 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
-            Object.Width           =   11466
-            MinWidth        =   11466
+            Bevel           =   0
+            Object.Width           =   14994
+            MinWidth        =   14994
          EndProperty
       EndProperty
       Enabled         =   0   'False
@@ -85,10 +87,10 @@ Begin VB.MDIForm frmMain
       Height          =   615
       Left            =   0
       ScaleHeight     =   615
-      ScaleWidth      =   7470
+      ScaleWidth      =   7350
       TabIndex        =   0
       Top             =   0
-      Width           =   7470
+      Width           =   7350
       Begin VB.CommandButton Command4 
          BackColor       =   &H00F4F4F4&
          Caption         =   "&Society"

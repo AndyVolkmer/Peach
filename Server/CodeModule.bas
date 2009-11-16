@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev            As String = "1.1.8.3"
+Public Const Rev            As String = "1.1.8.4"
 Public Const rPort          As Long = 6222
 
 Public VarTime              As Long    'Time counter variable
