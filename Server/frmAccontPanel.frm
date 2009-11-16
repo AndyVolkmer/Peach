@@ -500,8 +500,37 @@ Case "!register"
     RegSock(Index).SendData "!done#"
     
 'Check the secret question and send password
-Case ""
-    
+Case "!request_password"
+    With ListView1.ListItems
+        For i = 1 To .Count
+            'Check if the account exists
+            If UCase$(GetName) = UCase$(.Item(i).SubItems(1)) Then
+                'Check if the question chosen is the same
+                If .Item(i).SubItems(7) = GetPassword Then
+                    'Check if the answer is the same
+                    If .Item(i).SubItems(8) = GetSecretQuestion Then
+                        If RegSock(Index).State = 7 Then
+                            RegSock(Index).SendData "!successfull#" & .Item(i).SubItems(2) & ".#"
+                        End If
+                    Else
+                        If RegSock(Index).State = 7 Then
+                            RegSock(Index).SendData "!error_fp#"
+                        End If
+                    End If
+                Else
+                    If RegSock(Index).State = 7 Then
+                        RegSock(Index).SendData "!error_fp#"
+                    End If
+                End If
+            Else
+                If i = .Count Then
+                    If RegSock(Index).State = 7 Then
+                        RegSock(Index).SendData "!account_not_exist#"
+                    End If
+                End If
+            End If
+        Next i
+    End With
 End Select
 Exit Sub
 

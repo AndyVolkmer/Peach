@@ -1,13 +1,12 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmRegistration 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Peach - Registration"
-   ClientHeight    =   4230
+   ClientHeight    =   4365
    ClientLeft      =   45
    ClientTop       =   435
-   ClientWidth     =   3855
+   ClientWidth     =   3870
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -20,8 +19,8 @@ Begin VB.Form frmRegistration
    Icon            =   "frmRegistration.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   4230
-   ScaleWidth      =   3855
+   ScaleHeight     =   4365
+   ScaleWidth      =   3870
    StartUpPosition =   1  'CenterOwner
    Begin VB.ComboBox cmbSecretQuestion 
       Height          =   315
@@ -36,16 +35,9 @@ Begin VB.Form frmRegistration
       Height          =   285
       Left            =   240
       TabIndex        =   14
-      Top             =   3120
+      Top             =   3240
       Visible         =   0   'False
       Width           =   3255
-   End
-   Begin MSWinsockLib.Winsock RegSock 
-      Left            =   1560
-      Top             =   3720
-      _ExtentX        =   741
-      _ExtentY        =   741
-      _Version        =   393216
    End
    Begin VB.CheckBox Check1 
       BackColor       =   &H00F4F4F4&
@@ -62,7 +54,7 @@ Begin VB.Form frmRegistration
       Height          =   255
       Left            =   120
       TabIndex        =   11
-      Top             =   3720
+      Top             =   3840
       Visible         =   0   'False
       Width           =   1815
    End
@@ -81,7 +73,7 @@ Begin VB.Form frmRegistration
       Height          =   375
       Left            =   2040
       TabIndex        =   1
-      Top             =   3720
+      Top             =   3840
       Visible         =   0   'False
       Width           =   1695
    End
@@ -97,7 +89,7 @@ Begin VB.Form frmRegistration
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   3495
+      Height          =   3615
       Left            =   120
       TabIndex        =   0
       Top             =   120
@@ -109,7 +101,7 @@ Begin VB.Form frmRegistration
          BorderStyle     =   0  'None
          ForeColor       =   &H80000008&
          Height          =   855
-         Left            =   2160
+         Left            =   2280
          ScaleHeight     =   855
          ScaleWidth      =   1215
          TabIndex        =   9
@@ -212,7 +204,7 @@ Begin VB.Form frmRegistration
          Height          =   255
          Left            =   120
          TabIndex        =   12
-         Top             =   2760
+         Top             =   2880
          Width           =   3255
       End
       Begin VB.Label Label3 
@@ -357,20 +349,13 @@ If Len(Trim$(txtSecretAnswer)) = 0 Then
     Exit Sub
 End If
 
-'Can't register if email is to shorter then 8 chars.
-If Len(txtSecretAnswer) < 8 Then
-    MsgBox REG_MSG_SECRET_ANSWER_SHORT, vbInformation
-    txtSecretAnswer.SetFocus
-    Exit Sub
-End If
-
 'Can't register if the winsock is not connected.
 If RegSock.State <> 7 Then
     MsgBox REG_MSG_CONNECTION_BROKEN, vbInformation
     Exit Sub
 End If
 
-RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#"
+frmMain.RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#"
 End Sub
 
 Private Sub Form_Activate()
@@ -391,13 +376,15 @@ End Sub
 
 Private Sub Form_Load()
 LoadRegistrationForm
-With RegSock
+With frmMain.RegSock
+    .Close
     .RemoteHost = Setting.SERVER_IP
     .RemotePort = rPort
     .Connect
 End With
 Screen.MousePointer = vbArrowHourglass
 Me.Caption = REG_MSG_LOADING
+ACC_SWITCH = "REG"
 End Sub
 
 Public Sub LoadRegistrationForm()
@@ -421,53 +408,6 @@ Label8.Caption = REG_LABEL_SECRET_ANSWER
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-Screen.MousePointer = vbDefault
-End Sub
-
-Private Sub RegSock_Close()
-Me.Caption = REG_MSG_ERROR_OCCURED
-Label4.Caption = REG_MSG_ERROR
-Command1.Caption = REG_COMMAND_CLOSE
-Frame1.Visible = False
-Check1.Visible = False
-cmbSecretQuestion.Visible = False
-txtSecretAnswer.Visible = False
-Screen.MousePointer = vbDefault
-End Sub
-
-Private Sub RegSock_Connect()
-Me.Caption = " Peach - Registration"
-Frame1.Visible = True
-Check1.Visible = True
-Command1.Visible = True
-Command1.Caption = REG_COMMAND_SUBMIT
-Screen.MousePointer = vbDefault
-End Sub
-
-Private Sub RegSock_DataArrival(ByVal bytesTotal As Long)
-Dim GetMessage As String
-Dim array1() As String
-
-RegSock.GetData GetMessage
-
-array1 = Split(GetMessage, "#")
-
-Select Case array1(0)
-Case "!nameexist"
-    MsgBox REG_MSG_ACCOUNT_EXIST, vbInformation
-    txtAccount = vbNullString
-    txtAccount.SetFocus
-Case "!done"
-    MsgBox REG_MSG_SUCCESSFULLY, vbInformation
-    Unload Me
-End Select
-End Sub
-
-Private Sub RegSock_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-Me.Caption = REG_MSG_ERROR_OCCURED
-Label4.Caption = REG_MSG_ERROR
-Command1.Caption = REG_COMMAND_CLOSE
-Command1.Visible = True
 Screen.MousePointer = vbDefault
 End Sub
 
@@ -503,5 +443,9 @@ If KeyAscii = vbKeyReturn Then Command1_Click
 End Sub
 
 Private Sub txtPassword2_KeyPress(KeyAscii As Integer)
+If KeyAscii = vbKeyReturn Then Command1_Click
+End Sub
+
+Private Sub txtSecretAnswer_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then Command1_Click
 End Sub

@@ -86,6 +86,8 @@ Public SOC_ASK_DEL_1                    As String
 Public SOC_ASK_DEL_2                    As String
 
 'Register account form
+Public REG_CAPTION                      As String
+
 Public REG_FRAME_DETAIL                 As String
 
 Public REG_LABEL_ACCOUNT_NAME           As String
@@ -117,7 +119,6 @@ Public REG_MSG_CONNECTION_BROKEN        As String
 Public REG_MSG_PASSWORD_MATCH           As String
 Public REG_MSG_PASSWORD_SHORT           As String
 Public REG_MSG_PASSWORD_EMPTY           As String
-Public REG_MSG_SECRET_ANSWER_SHORT      As String
 Public REG_MSG_SECRET_ANSWER_EMPTY      As String
 
 Public REG_CMB_SECRET_QUESTION_0        As String
@@ -140,6 +141,16 @@ Public SET_COMMAND_LANGUAGE             As String
 Public SET_COMMAND_SAVE                 As String
 
 Public SF2_COMMAND_OPEN_FILE            As String
+
+Public FP_FRAME_FORGOT_PASSWORD         As String
+Public FP_LABEL_ACCOUNT                 As String
+Public FP_LABEL_SECRET_QUESTION         As String
+Public FP_LABEL_SECRET_ANSWER           As String
+Public FP_COMMAND_REQUEST               As String
+Public FP_CAPTION                       As String
+
+Public FP_MSG_SUCCESSFULL               As String
+Public FP_MSG_WRONG_ANSWER              As String
 
 Public Sub SET_LANG_GERMAN()
 CURRENT_LANG = 0
@@ -221,6 +232,8 @@ SOC_COMMAND_REMOVE = "&Entfernen"
 SOC_ASK_DEL_1 = "Möchten Sie '"
 SOC_ASK_DEL_2 = "' von ihrer Freundesliste löschen?"
 
+REG_CAPTION = "Peach - Registration"
+
 REG_FRAME_DETAIL = "Gebe deine Daten an"
 
 REG_LABEL_ACCOUNT_NAME = " Benutzer Name:"
@@ -247,7 +260,6 @@ REG_MSG_PASSWORD_MATCH = "Die Passwörter stimmen nicht überein."
 REG_MSG_PASSWORD_SHORT = "Das Passwort ist zu kurz, muss aus wenigstens 6 Zeichen bestehen."
 REG_MSG_PASSWORD_EMPTY = "Kein Passwort angegeben."
 
-REG_MSG_SECRET_ANSWER_SHORT = "Die geheime Antwort ist zu kurz, Sie muss aus wenigstens 8 Zeichen bestehen."
 REG_MSG_SECRET_ANSWER_EMPTY = "Keine geheime Antwort angegeben."
 
 REG_MSG_SUCCESSFULLY = "Der Account wurde erfolgreich erstellt."
@@ -275,6 +287,16 @@ SET_COMMAND_LANGUAGE = "&Sprache"
 SET_COMMAND_SAVE = "&Speichern"
 
 SF2_COMMAND_OPEN_FILE = "&Datei Ordner öffnen"
+
+FP_FRAME_FORGOT_PASSWORD = "Password vergessen"
+FP_LABEL_ACCOUNT = " Gebe deinen Account ein:"
+FP_LABEL_SECRET_QUESTION = " Geheime Frage:"
+FP_LABEL_SECRET_ANSWER = " Geheime Antwort:"
+FP_COMMAND_REQUEST = "&Abfragen"
+FP_CAPTION = "Peach - Password vergessen"
+
+FP_MSG_SUCCESSFULL = "Ihr Passwort lautet "
+FP_MSG_WRONG_ANSWER = "Die Antwort ist falsch."
 End Sub
 
 Public Sub SET_LANG_ENGLISH()
@@ -361,6 +383,8 @@ SOC_COMMAND_REMOVE = "&Remove"
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from your friendlist?"
 
+REG_CAPTION = "Peach - Registration"
+
 REG_FRAME_DETAIL = "Enter your details"
 
 REG_LABEL_ACCOUNT_NAME = " Account Name:"
@@ -387,7 +411,6 @@ REG_MSG_PASSWORD_MATCH = "The passwords dont match."
 REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
 REG_MSG_PASSWORD_EMPTY = "No Password entered."
 
-REG_MSG_SECRET_ANSWER_SHORT = "Secret answer to short, it requieres at least 8 characters."
 REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
 
 REG_MSG_SUCCESSFULLY = "The account was successfully registered."
@@ -415,6 +438,16 @@ SET_COMMAND_LANGUAGE = "&Language"
 SET_COMMAND_SAVE = "&Save"
 
 SF2_COMMAND_OPEN_FILE = "&Open File Folder"
+
+FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
+FP_LABEL_ACCOUNT = " Enter your account name:"
+FP_LABEL_SECRET_QUESTION = " Secret Question:"
+FP_LABEL_SECRET_ANSWER = " Secret Answer:"
+FP_COMMAND_REQUEST = "&Request"
+FP_CAPTION = "Peach - Forgot Password"
+
+FP_MSG_SUCCESSFULL = "Your password is "
+FP_MSG_WRONG_ANSWER = "The answer is wrong."
 End Sub
 
 Public Sub SET_LANG_SPANISH()
@@ -496,6 +529,8 @@ SOC_COMMAND_REMOVE = "&Quitar"
 SOC_ASK_DEL_1 = "¿Estas seguro que quieres borrar a '"
 SOC_ASK_DEL_2 = "' de tu lista de amigos?"
 
+REG_CAPTION = "Peach - Registración"
+
 REG_FRAME_DETAIL = "Enter your details"
 
 REG_LABEL_ACCOUNT_NAME = " Nombre de cuenta:"
@@ -522,7 +557,6 @@ REG_MSG_PASSWORD_MATCH = "Las contraseñas no son las mismas."
 REG_MSG_PASSWORD_SHORT = "Contraseña corta, debe que tener por lo menos 6 digitos."
 REG_MSG_PASSWORD_EMPTY = "No ha introducido una contraseña."
 
-REG_MSG_SECRET_ANSWER_SHORT = "Repuesta secreta corta, debe que tener lo menos 8 digitos."
 REG_MSG_SECRET_ANSWER_EMPTY = "No ha introducido una respuesta secreta."
 
 REG_MSG_SUCCESSFULLY = "La cuenta ha sido registrada con exito."
@@ -550,6 +584,16 @@ SET_COMMAND_LANGUAGE = "&Idioma"
 SET_COMMAND_SAVE = "&Guardar"
 
 SF2_COMMAND_OPEN_FILE = "&Abrir carpeta"
+
+FP_FRAME_FORGOT_PASSWORD = "¿Ha olvidado contraseña?"
+FP_LABEL_ACCOUNT = " Introduce su nombre de cuenta:"
+FP_LABEL_SECRET_QUESTION = " Pregunta secreta:"
+FP_LABEL_SECRET_ANSWER = " Respuesta secreta:"
+FP_COMMAND_REQUEST = "&Solicitar"
+FP_CAPTION = "Peach - Recuperar contraseña"
+
+FP_MSG_SUCCESSFULL = "Tu contraseña es "
+FP_MSG_WRONG_ANSWER = "La respuesta es incorrecta."
 End Sub
 
 Public Sub SET_LANG_SWEDISH()
@@ -633,6 +677,8 @@ SOC_COMMAND_REMOVE = "&Ta bort"
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from your friendlist?"
 
+REG_CAPTION = "Peach - Registration"
+
 REG_FRAME_DETAIL = "Ange dina detaljer"
 
 REG_LABEL_ACCOUNT_NAME = " Användar Namn:"
@@ -659,7 +705,6 @@ REG_MSG_PASSWORD_MATCH = "Ogiltigt lösenord."
 REG_MSG_PASSWORD_SHORT = "För kort lösenord, det kräver åtminstone 6 bokstäver."
 REG_MSG_PASSWORD_EMPTY = "Inget lösenord angivet."
 
-REG_MSG_SECRET_ANSWER_SHORT = "Secret answer to short, it requieres at least 8 characters."
 REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
 
 REG_MSG_SUCCESSFULLY = "Kontot har skapats."
@@ -685,6 +730,16 @@ SET_CHECK_SAVE_PASSWORD = "Spara lösenord"
 
 SET_COMMAND_LANGUAGE = "&Språk"
 SET_COMMAND_SAVE = "&Spara"
+
+FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
+FP_LABEL_ACCOUNT = " Enter your account name:"
+FP_LABEL_SECRET_QUESTION = " Secret Question:"
+FP_LABEL_SECRET_ANSWER = " Secret Answer:"
+FP_COMMAND_REQUEST = "&Request"
+FP_CAPTION = "Peach - Forgot Password"
+
+FP_MSG_SUCCESSFULL = "Your password is "
+FP_MSG_WRONG_ANSWER = "The answer is wrong."
 End Sub
 
 Public Sub SET_LANG_ITALIAN()
@@ -769,6 +824,8 @@ SOC_COMMAND_REMOVE = "&Remove"
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from your friendlist?"
 
+REG_CAPTION = "Peach - Registration"
+
 REG_FRAME_DETAIL = "Enter your details"
 
 REG_LABEL_ACCOUNT_NAME = " Account Name:"
@@ -795,7 +852,6 @@ REG_MSG_PASSWORD_MATCH = "The passwords dont match."
 REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
 REG_MSG_PASSWORD_EMPTY = "No Password entered."
 
-REG_MSG_SECRET_ANSWER_SHORT = "Secret answer to short, it requieres at least 8 characters."
 REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
 
 REG_MSG_SUCCESSFULLY = "The account was successfully registered."
@@ -823,6 +879,16 @@ SET_COMMAND_LANGUAGE = "&Language"
 SET_COMMAND_SAVE = "&Save"
 
 SF2_COMMAND_OPEN_FILE = "&Open File Folder"
+
+FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
+FP_LABEL_ACCOUNT = " Enter your account name:"
+FP_LABEL_SECRET_QUESTION = " Secret Question:"
+FP_LABEL_SECRET_ANSWER = " Secret Answer:"
+FP_COMMAND_REQUEST = "&Request"
+FP_CAPTION = "Peach - Forgot Password"
+
+FP_MSG_SUCCESSFULL = "Your password is "
+FP_MSG_WRONG_ANSWER = "The answer is wrong."
 End Sub
 
 Public Sub SET_LANG_SERBIAN()
@@ -907,6 +973,8 @@ SOC_COMMAND_REMOVE = "&Remove"
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from your friendlist?"
 
+REG_CAPTION = "Peach - Registration"
+
 REG_FRAME_DETAIL = "Enter your details"
 
 REG_LABEL_ACCOUNT_NAME = " Account Name:"
@@ -933,7 +1001,6 @@ REG_MSG_PASSWORD_MATCH = "The passwords dont match."
 REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
 REG_MSG_PASSWORD_EMPTY = "No Password entered."
 
-REG_MSG_SECRET_ANSWER_SHORT = "Secret answer to short, it requieres at least 8 characters."
 REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
 
 REG_MSG_SUCCESSFULLY = "The account was successfully registered."
@@ -961,6 +1028,16 @@ SET_COMMAND_LANGUAGE = "&Language"
 SET_COMMAND_SAVE = "&Save"
 
 SF2_COMMAND_OPEN_FILE = "&Open File Folder"
+
+FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
+FP_LABEL_ACCOUNT = " Enter your account name:"
+FP_LABEL_SECRET_QUESTION = " Secret Question:"
+FP_LABEL_SECRET_ANSWER = " Secret Answer:"
+FP_COMMAND_REQUEST = "&Request"
+FP_CAPTION = "Peach - Forgot Password"
+
+FP_MSG_SUCCESSFULL = "Your password is "
+FP_MSG_WRONG_ANSWER = "The answer is wrong."
 End Sub
 
 Public Sub SET_LANG_DUTCH()
@@ -1041,6 +1118,8 @@ SOC_COMMAND_REMOVE = "&Verwijderen"
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from your friendlist?"
 
+REG_CAPTION = "Peach - Registration"
+
 REG_FRAME_DETAIL = "Voeg je gegevens in"
 
 REG_LABEL_ACCOUNT_NAME = " Gebruikersnaam:"
@@ -1067,7 +1146,6 @@ REG_MSG_PASSWORD_MATCH = "Wachtwoorden komen niet overeen."
 REG_MSG_PASSWORD_SHORT = "Wachtwoord te kort, minstens 4 tekens."
 REG_MSG_PASSWORD_EMPTY = "Geen wachtwoord ingevoerd."
 
-REG_MSG_SECRET_ANSWER_SHORT = "Secret answer to short, it requieres at least 8 characters."
 REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
 
 REG_MSG_SUCCESSFULLY = "Account succesvol aangemaakt."
@@ -1102,6 +1180,16 @@ SF_MSG_INCOMMING_FILE = "Iemand wil een bestand versturen, wilt u accepteren?"
 SF_MSG_DECILINED = "Gegevensoverdracht geweigerd."
 
 SF2_COMMAND_OPEN_FILE = "&Open bestandsmap"
+
+FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
+FP_LABEL_ACCOUNT = " Enter your account name:"
+FP_LABEL_SECRET_QUESTION = " Secret Question:"
+FP_LABEL_SECRET_ANSWER = " Secret Answer:"
+FP_COMMAND_REQUEST = "&Request"
+FP_CAPTION = "Peach - Forgot Password"
+
+FP_MSG_SUCCESSFULL = "Your password is "
+FP_MSG_WRONG_ANSWER = "The answer is wrong."
 End Sub
 
 Public Sub SET_LANG_FRENCH()
@@ -1181,6 +1269,8 @@ SOC_COMMAND_REMOVE = "&Remove"
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from your friendlist?"
 
+REG_CAPTION = "Peach - Registration"
+
 REG_FRAME_DETAIL = "Enter your details"
 
 REG_LABEL_ACCOUNT_NAME = " Account Name:"
@@ -1207,7 +1297,6 @@ REG_MSG_PASSWORD_MATCH = "The passwords dont match."
 REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
 REG_MSG_PASSWORD_EMPTY = "No Password entered."
 
-REG_MSG_SECRET_ANSWER_SHORT = "Secret answer to short, it requieres at least 8 characters."
 REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
 
 REG_MSG_SUCCESSFULLY = "The account was successfully registered."
@@ -1235,4 +1324,14 @@ SET_COMMAND_LANGUAGE = "&Language"
 SET_COMMAND_SAVE = "&Save"
 
 SF2_COMMAND_OPEN_FILE = "&Open File Folder"
+
+FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
+FP_LABEL_ACCOUNT = " Enter your account name:"
+FP_LABEL_SECRET_QUESTION = " Secret Question:"
+FP_LABEL_SECRET_ANSWER = " Secret Answer:"
+FP_COMMAND_REQUEST = "&Request"
+FP_CAPTION = "Peach - Forgot Password"
+
+FP_MSG_SUCCESSFULL = "Your password is "
+FP_MSG_WRONG_ANSWER = "The answer is wrong."
 End Sub

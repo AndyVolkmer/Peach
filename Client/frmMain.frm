@@ -162,6 +162,13 @@ Begin VB.MDIForm frmMain
          Width           =   1815
       End
    End
+   Begin MSWinsockLib.Winsock RegSock 
+      Left            =   1440
+      Top             =   600
+      _ExtentX        =   741
+      _ExtentY        =   741
+      _Version        =   393216
+   End
    Begin VB.Menu myPOP 
       Caption         =   "myPOP"
       Visible         =   0   'False
@@ -651,3 +658,124 @@ SendMessage hwnd, WM_NCACTIVATE, True, 0
 frm.Width = frm.Width - 1
 frm.Width = frm.Width + 1
 End Sub
+
+Private Sub RegSock_Close()
+If ACC_SWITCH = "REG" Then
+    With frmRegistration
+        .Caption = REG_MSG_ERROR_OCCURED
+        .Label4.Caption = REG_MSG_ERROR
+        .Command1.Caption = REG_COMMAND_CLOSE
+        .Command1.Visible = True
+        .Frame1.Visible = False
+        .Check1.Visible = False
+        .cmbSecretQuestion.Visible = False
+        .txtSecretAnswer.Visible = False
+    End With
+Else
+    With frmForgotPassword
+        .Caption = REG_MSG_ERROR_OCCURED
+        .lblStatus.Caption = REG_MSG_ERROR
+        .cmdRequest.Caption = REG_COMMAND_CLOSE
+        .cmdRequest.Visible = True
+        .Frame1.Visible = False
+        .txtAccount.Visible = False
+        .cmbSecretQuestion.Visible = False
+        .txtSecretAnswer.Visible = False
+    End With
+End If
+Screen.MousePointer = vbDefault
+End Sub
+
+Private Sub RegSock_Connect()
+If ACC_SWITCH = "REG" Then
+    With frmRegistration
+        .Caption = REG_CAPTION
+        .Frame1.Visible = True
+        .Check1.Visible = True
+        .cmbSecretQuestion.Visible = True
+        .txtSecretAnswer.Visible = True
+        .Command1.Visible = True
+        .Command1.Caption = REG_COMMAND_SUBMIT
+    End With
+Else
+    With frmForgotPassword
+        .Caption = FP_CAPTION
+        .Frame1.Visible = True
+        .txtAccount.Visible = True
+        .txtSecretAnswer.Visible = True
+        .cmbSecretQuestion.Visible = True
+        .cmdRequest.Visible = True
+        .cmdRequest.Caption = FP_COMMAND_REQUEST
+    End With
+End If
+Screen.MousePointer = vbDefault
+End Sub
+
+Private Sub RegSock_DataArrival(ByVal bytesTotal As Long)
+Dim GetMessage As String
+Dim array1() As String
+
+RegSock.GetData GetMessage
+
+array1 = Split(GetMessage, "#")
+
+Select Case array1(0)
+Case "!nameexist"
+    MsgBox REG_MSG_ACCOUNT_EXIST, vbInformation
+    With frmRegistration
+        .txtAccount = vbNullString
+        .txtAccount.SetFocus
+    End With
+    
+Case "!done"
+    MsgBox REG_MSG_SUCCESSFULLY, vbInformation
+    Unload frmRegistration
+    
+Case "!error_fp"
+    MsgBox FP_MSG_WRONG_ANSWER, vbInformation
+    With frmForgotPassword
+        .txtSecretAnswer = vbNullString
+        .txtSecretAnswer.SetFocus
+    End With
+    
+Case "!successfull"
+    MsgBox FP_MSG_SUCCESSFULL & array1(1), vbInformation
+    Unload frmForgotPassword
+    
+Case "!account_not_exist"
+    MsgBox MDI_MSG_WRONG_ACCOUNT, vbInformation
+    With frmForgotPassword
+        .txtAccount = vbNullString
+        .txtAccount.SetFocus
+    End With
+    
+End Select
+End Sub
+
+Private Sub RegSock_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
+If ACC_SWITCH = "REG" Then
+    With frmRegistration
+        .Caption = REG_MSG_ERROR_OCCURED
+        .Label4.Caption = REG_MSG_ERROR
+        .Command1.Caption = REG_COMMAND_CLOSE
+        .Command1.Visible = True
+        .Frame1.Visible = False
+        .Check1.Visible = False
+        .cmbSecretQuestion.Visible = False
+        .txtSecretAnswer.Visible = False
+    End With
+Else
+    With frmForgotPassword
+        .Caption = REG_MSG_ERROR_OCCURED
+        .lblStatus.Caption = REG_MSG_ERROR
+        .cmdRequest.Caption = REG_COMMAND_CLOSE
+        .cmdRequest.Visible = True
+        .Frame1.Visible = False
+        .txtAccount.Visible = False
+        .cmbSecretQuestion.Visible = False
+        .txtSecretAnswer.Visible = False
+    End With
+End If
+Screen.MousePointer = vbDefault
+End Sub
+

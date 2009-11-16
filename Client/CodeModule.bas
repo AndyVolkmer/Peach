@@ -1,13 +1,14 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const pRev       As String = "1.1.8.1"
+Public Const pRev       As String = "1.1.8.2"
 Public Const pAuthor    As String = "Andy"
 
 Public Const aPort      As Long = 6123
 Public Const bPort      As Long = 6124
 Public Const rPort      As Long = 6222
 
+Public ACC_SWITCH       As String
 Public Prefix           As String  'Time Prefix vairbale
 Public i                As Long    'Global 'FOR' variable
 

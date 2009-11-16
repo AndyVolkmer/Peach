@@ -3,10 +3,10 @@ Begin VB.Form frmLanguage
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Peach"
-   ClientHeight    =   1365
+   ClientHeight    =   1410
    ClientLeft      =   45
    ClientTop       =   405
-   ClientWidth     =   2895
+   ClientWidth     =   2880
    BeginProperty Font 
       Name            =   "Segoe UI"
       Size            =   8.25
@@ -21,8 +21,8 @@ Begin VB.Form frmLanguage
    LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   1365
-   ScaleWidth      =   2895
+   ScaleHeight     =   1410
+   ScaleWidth      =   2880
    StartUpPosition =   1  'CenterOwner
    Begin VB.CommandButton cmdEnter 
       BackColor       =   &H00F4F4F4&
@@ -73,6 +73,7 @@ frmConfig.LoadConfigForm
 frmSettings.LoadSettingsForm
 frmRegistration.LoadRegistrationForm
 frmSociety.LoadSocietyForm
+frmForgotPassword.LoadForgotPasswordForm
 
 WriteIniValue App.Path & "\Config.ini", "Language", "Validate", "0"
 WriteIniValue App.Path & "\Config.ini", "Language", "Language", frmLanguage.Combo1.ListIndex

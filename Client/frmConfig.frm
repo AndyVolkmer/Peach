@@ -124,7 +124,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label Label2 
       Alignment       =   2  'Center
-      Caption         =   "CONFIG_COMMAND_FORGOT_PASSWORD"
+      Caption         =   "&Forgot Password"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -385,6 +385,10 @@ End Sub
 
 Private Sub Label1_Click()
 frmRegistration.Show 1
+End Sub
+
+Private Sub Label2_Click()
+frmForgotPassword.Show 1
 End Sub
 
 Private Sub lblAuthor_Click()
