@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev            As String = "1.1.8.4"
+Public Const Rev            As String = "1.1.8.5"
 Public Const rPort          As Long = 6222
 
 Public VarTime              As Long    'Time counter variable
@@ -43,6 +43,7 @@ Type EMT
     IsUserText1             As String
     IsUserText2             As String
     IsNotUser               As String
+    Description             As String
 End Type
 
 Public Database             As DB

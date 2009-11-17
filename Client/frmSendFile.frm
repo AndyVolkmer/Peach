@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form frmSendFile 
    Appearance      =   0  'Flat
    BackColor       =   &H00F4F4F4&
@@ -269,11 +269,6 @@ txtFileName.SelStart = Len(txtFileName)
 
 Exit Sub
 ErrCancel:
-    If Err.Number = 32755 Then
-        Exit Sub
-    Else
-        MsgBox "Error# " & Err.Number & vbNewLine & "Description: " & Err.Description, vbExclamation
-    End If
 End Sub
 
 Private Sub PicShowPercentage(pic As PictureBox, ByVal Percentage As Single, Optional ByVal ForeColor As Long = -2, Optional ByVal BackColor As Long = -2)

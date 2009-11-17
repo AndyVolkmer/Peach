@@ -22,6 +22,46 @@ Begin VB.Form frmRegistration
    ScaleHeight     =   4365
    ScaleWidth      =   3870
    StartUpPosition =   1  'CenterOwner
+   Begin VB.TextBox txtPassword1 
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   285
+      IMEMode         =   3  'DISABLE
+      Left            =   240
+      MaxLength       =   15
+      PasswordChar    =   "*"
+      TabIndex        =   15
+      Top             =   1320
+      Visible         =   0   'False
+      Width           =   1935
+   End
+   Begin VB.TextBox txtPassword2 
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   285
+      IMEMode         =   3  'DISABLE
+      Left            =   240
+      MaxLength       =   15
+      PasswordChar    =   "*"
+      TabIndex        =   14
+      Top             =   1920
+      Visible         =   0   'False
+      Width           =   1935
+   End
    Begin VB.TextBox txtAccount 
       BeginProperty Font 
          Name            =   "Segoe UI"
@@ -35,15 +75,16 @@ Begin VB.Form frmRegistration
       Height          =   285
       Left            =   240
       MaxLength       =   15
-      TabIndex        =   15
+      TabIndex        =   13
       Top             =   720
+      Visible         =   0   'False
       Width           =   3255
    End
    Begin VB.ComboBox cmbSecretQuestion 
       Height          =   315
       Left            =   240
       Style           =   2  'Dropdown List
-      TabIndex        =   14
+      TabIndex        =   12
       Top             =   2520
       Visible         =   0   'False
       Width           =   3255
@@ -51,7 +92,7 @@ Begin VB.Form frmRegistration
    Begin VB.TextBox txtSecretAnswer 
       Height          =   285
       Left            =   240
-      TabIndex        =   13
+      TabIndex        =   11
       Top             =   3240
       Visible         =   0   'False
       Width           =   3255
@@ -70,7 +111,7 @@ Begin VB.Form frmRegistration
       EndProperty
       Height          =   255
       Left            =   120
-      TabIndex        =   10
+      TabIndex        =   8
       Top             =   3840
       Visible         =   0   'False
       Width           =   1815
@@ -118,58 +159,20 @@ Begin VB.Form frmRegistration
          BorderStyle     =   0  'None
          ForeColor       =   &H80000008&
          Height          =   855
-         Left            =   2280
+         Left            =   2160
          ScaleHeight     =   855
          ScaleWidth      =   1215
-         TabIndex        =   8
+         TabIndex        =   6
          Top             =   1200
          Width           =   1215
          Begin VB.Label Label5 
             BackColor       =   &H00F4F4F4&
             Height          =   615
             Left            =   120
-            TabIndex        =   9
+            TabIndex        =   7
             Top             =   120
             Width           =   975
          End
-      End
-      Begin VB.TextBox txtPassword2 
-         BeginProperty Font 
-            Name            =   "Segoe UI"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   285
-         IMEMode         =   3  'DISABLE
-         Left            =   120
-         MaxLength       =   15
-         PasswordChar    =   "*"
-         TabIndex        =   5
-         Top             =   1800
-         Width           =   1935
-      End
-      Begin VB.TextBox txtPassword1 
-         BeginProperty Font 
-            Name            =   "Segoe UI"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   285
-         IMEMode         =   3  'DISABLE
-         Left            =   120
-         MaxLength       =   15
-         PasswordChar    =   "*"
-         TabIndex        =   3
-         Top             =   1200
-         Width           =   1935
       End
       Begin VB.Label Label7 
          BackColor       =   &H00F4F4F4&
@@ -185,7 +188,7 @@ Begin VB.Form frmRegistration
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   12
+         TabIndex        =   10
          Top             =   2160
          Width           =   3255
       End
@@ -203,7 +206,7 @@ Begin VB.Form frmRegistration
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   11
+         TabIndex        =   9
          Top             =   2880
          Width           =   3255
       End
@@ -221,7 +224,7 @@ Begin VB.Form frmRegistration
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   6
+         TabIndex        =   4
          Top             =   1560
          Width           =   1935
       End
@@ -239,7 +242,7 @@ Begin VB.Form frmRegistration
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   4
+         TabIndex        =   3
          Top             =   960
          Width           =   1335
       End
@@ -266,7 +269,7 @@ Begin VB.Form frmRegistration
       BackColor       =   &H00F4F4F4&
       Height          =   615
       Left            =   240
-      TabIndex        =   7
+      TabIndex        =   5
       Top             =   120
       Width           =   3255
    End

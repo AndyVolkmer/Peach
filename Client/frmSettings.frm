@@ -150,12 +150,13 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub cmdColor_Click()
+On Error GoTo ErrCancel
 With frmSendFile.CDialog
-    .CancelError = False
     .ShowColor
     txtColor.BackColor = .Color
 End With
 Command2.Enabled = True
+ErrCancel:
 End Sub
 
 Private Sub Command1_Click()
@@ -163,9 +164,9 @@ frmLanguage.Show 1
 End Sub
 
 Private Sub Command2_Click()
+Dim Path As String: Path = App.Path & "\Config.ini"
+
 Command2.Enabled = False
-Dim Path As String
-Path = App.Path & "\Config.ini"
 
 WriteIniValue Path, "Connection", "IP", txtIP
 WriteIniValue Path, "Connection", "Port", txtPort
