@@ -483,14 +483,14 @@ Dim Pos1    As Long
 Dim br      As Long
 Dim lnk     As Long
 Dim ret     As Long
-Dim l       As Long
+Dim L       As Long
 Dim Text    As String
 Dim Test    As String
 
 NRTB.TextRTF = Rtb.TextRTF
 
 Text = Rtb.Text
-l = Len(Text$)
+L = Len(Text$)
 Pos1 = 1
 
 Do
@@ -529,7 +529,7 @@ Do
         End If
         
     End If
-Loop Until Pos2 = 0 Or Pos2 >= l
+Loop Until Pos2 = 0 Or Pos2 >= L
 
 Rtb.TextRTF = NRTB.TextRTF
 End Sub

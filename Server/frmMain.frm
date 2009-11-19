@@ -2,6 +2,7 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.MDIForm frmMain 
+   Appearance      =   0  'Flat
    BackColor       =   &H00F4F4F4&
    Caption         =   " Peach Server"
    ClientHeight    =   5085
@@ -931,7 +932,6 @@ Case "!msg"
             Else
                 SendMessage "[" & GetUser & " announces]: " & ANN_MSG
             End If
-            ANN_MSG = vbNullString
         
         Case ".help", ".command", ".commands"
             SendSingle GetCommands, frmMain.Winsock1(Index)

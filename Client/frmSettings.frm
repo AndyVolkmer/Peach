@@ -3,7 +3,7 @@ Begin VB.Form frmSettings
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Peach Settings"
-   ClientHeight    =   4785
+   ClientHeight    =   5355
    ClientLeft      =   45
    ClientTop       =   375
    ClientWidth     =   4470
@@ -20,7 +20,7 @@ Begin VB.Form frmSettings
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4785
+   ScaleHeight     =   5355
    ScaleWidth      =   4470
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
@@ -29,7 +29,7 @@ Begin VB.Form frmSettings
       Height          =   285
       Left            =   360
       TabIndex        =   13
-      Top             =   2880
+      Top             =   3480
       Width           =   3735
    End
    Begin VB.TextBox txtPort 
@@ -37,7 +37,7 @@ Begin VB.Form frmSettings
       Height          =   285
       Left            =   360
       TabIndex        =   12
-      Top             =   3480
+      Top             =   4080
       Width           =   1575
    End
    Begin VB.Frame Frame3 
@@ -46,7 +46,7 @@ Begin VB.Form frmSettings
       Height          =   1815
       Left            =   120
       TabIndex        =   9
-      Top             =   2280
+      Top             =   2880
       Width           =   4215
       Begin VB.Label Label3 
          Caption         =   " Server Port:"
@@ -68,26 +68,37 @@ Begin VB.Form frmSettings
    Begin VB.Frame Frame2 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Options"
-      Height          =   855
+      Height          =   1455
       Left            =   120
       TabIndex        =   8
       Top             =   1320
       Width           =   4215
+      Begin VB.CheckBox CheckAsk 
+         BackColor       =   &H8000000A&
+         Caption         =   "Ask before closing"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   14
+         Top             =   1080
+         Width           =   3975
+      End
       Begin VB.CheckBox SavePassword 
+         BackColor       =   &H8000000A&
          Caption         =   "Save Password"
          Height          =   195
-         Left            =   2040
+         Left            =   120
          TabIndex        =   3
-         Top             =   360
-         Width           =   2055
+         Top             =   720
+         Width           =   3975
       End
       Begin VB.CheckBox SaveAccount 
+         BackColor       =   &H8000000A&
          Caption         =   "Save Account"
          Height          =   195
          Left            =   120
          TabIndex        =   2
          Top             =   360
-         Width           =   1815
+         Width           =   3975
       End
    End
    Begin VB.CommandButton Command2 
@@ -95,7 +106,7 @@ Begin VB.Form frmSettings
       Height          =   375
       Left            =   2880
       TabIndex        =   5
-      Top             =   4200
+      Top             =   4800
       Width           =   1455
    End
    Begin VB.CommandButton Command1 
@@ -103,7 +114,7 @@ Begin VB.Form frmSettings
       Height          =   375
       Left            =   120
       TabIndex        =   4
-      Top             =   4200
+      Top             =   4800
       Width           =   1455
    End
    Begin VB.Frame Frame1 
@@ -149,6 +160,10 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Sub CheckAsk_Click()
+Command2.Enabled = True
+End Sub
+
 Private Sub cmdColor_Click()
 On Error GoTo ErrCancel
 With frmSendFile.CDialog
@@ -173,6 +188,7 @@ WriteIniValue Path, "Connection", "Port", txtPort
 WriteIniValue Path, "Private", "SchemeColor", txtColor.BackColor
 WriteIniValue Path, "Private", "PasswordTick", CBool(SavePassword.Value)
 WriteIniValue Path, "Private", "AccountTick", CBool(SaveAccount.Value)
+WriteIniValue Path, "Private", "CloseQuestion", CBool(CheckAsk.Value)
 
 With Setting
     .SERVER_IP = txtIP
@@ -180,6 +196,7 @@ With Setting
     .SCHEME_COLOR = txtColor.BackColor
     .PASSWORD_TICK = SavePassword.Value
     .ACCOUNT_TICK = SaveAccount.Value
+    .ASK_TICK = CheckAsk.Value
 End With
 
 SetScheme False
@@ -207,6 +224,7 @@ Label2.BackColor = SC
 Label3.BackColor = SC
 SaveAccount.BackColor = SC
 SavePassword.BackColor = SC
+CheckAsk.BackColor = SC
 End Sub
 
 Private Sub Form_Load()
@@ -222,6 +240,11 @@ With Setting
         SavePassword.Value = 1
     Else
         SavePassword.Value = 0
+    End If
+    If .ASK_TICK = True Then
+        CheckAsk.Value = 1
+    Else
+        CheckAsk.Value = 0
     End If
     txtIP = .SERVER_IP
     txtPort = .SERVER_PORT

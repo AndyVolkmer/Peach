@@ -4,7 +4,6 @@ Option Explicit
 Public CURRENT_LANG                     As Long
 'Start variable support for languages
 ' MDI form ..
-'Public MDI_COMMAND_CONFIG               As String
 Public MDI_COMMAND_CHAT                 As String
 Public MDI_COMMAND_SENDFILE             As String
 Public MDI_COMMAND_SOCIETY              As String
@@ -20,6 +19,7 @@ Public MDI_MSG_NAME_TAKEN               As String
 Public MDI_MSG_WRONG_ACCOUNT            As String
 Public MDI_MSG_WRONG_PASSWORD           As String
 Public MDI_MSG_BANNED                   As String
+Public MDI_MSG_UNLOAD                   As String
 
 ' Configuration form ..
 Public CONFIG_COMMAND_CONNECT           As String
@@ -170,6 +170,7 @@ MDI_MSG_NAME_TAKEN = "Der Name ist bereits vergeben."
 MDI_MSG_WRONG_ACCOUNT = "Der Account ist nicht vorhanden oder falsch."
 MDI_MSG_WRONG_PASSWORD = "Das Passwort ist falsch."
 MDI_MSG_BANNED = "Dieser Account wurde gebannt."
+MDI_MSG_UNLOAD = "Sind Sie sicher, dass Sie Peach schliessen wollen?"
 
 CONFIG_COMMAND_CONNECT = "&Verbinden"
 CONFIG_COMMAND_DISCONNECT = "&Verbindung trenn."
@@ -318,6 +319,7 @@ MDI_MSG_NAME_TAKEN = "This name is already taken."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
 MDI_MSG_BANNED = "This account is banned."
+MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
 ' Configuration form ..
 CONFIG_COMMAND_CONNECT = "&Connect"
@@ -467,6 +469,7 @@ MDI_MSG_NAME_TAKEN = "Este nombre ya esta cogido."
 MDI_MSG_WRONG_ACCOUNT = "La cuenta no existe o es incorrecta."
 MDI_MSG_WRONG_PASSWORD = "La contraseña es incorrecta."
 MDI_MSG_BANNED = "Esta cuenta esta baneada."
+MDI_MSG_UNLOAD = "¿Esta seguro que quiere cerrar a Peach?"
 
 CONFIG_COMMAND_CONNECT = "&Conectar"
 CONFIG_COMMAND_DISCONNECT = "&Desconectar"
@@ -615,6 +618,7 @@ MDI_MSG_NAME_TAKEN = "Namnet är upptaget."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
 MDI_MSG_BANNED = "This account is banned."
+MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
 ' Config form
 CONFIG_COMMAND_CONNECT = "&Anslut"
@@ -761,6 +765,7 @@ MDI_MSG_NAME_TAKEN = "Il nome immesso e' gia' in uso."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
 MDI_MSG_BANNED = "This account is banned."
+MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
 ' Config form ..
 CONFIG_COMMAND_CONNECT = "&Connesso"
@@ -910,6 +915,7 @@ MDI_MSG_NAME_TAKEN = "Ime je vec zauzeto."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
 MDI_MSG_BANNED = "This account is banned."
+MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
 ' Config form ..
 CONFIG_COMMAND_CONNECT = "&Povezi se"
@@ -1058,6 +1064,7 @@ MDI_MSG_NAME_TAKEN = "Deze naam is niet beschikbaar."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
 MDI_MSG_BANNED = "This account is banned."
+MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
 CONFIG_COMMAND_CONNECT = "&Verbind"
 CONFIG_COMMAND_DISCONNECT = "&Verbinding verbreken"
@@ -1209,6 +1216,7 @@ MDI_MSG_NAME_TAKEN = "Le nom inséré est déjà utilizé."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
 MDI_MSG_BANNED = "This account is banned."
+MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
 CONFIG_COMMAND_CONNECT = "&Connecté"
 CONFIG_COMMAND_DISCONNECT = "&Deconnecté"

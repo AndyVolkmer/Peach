@@ -343,11 +343,11 @@ Private Sub MDIForm_Load()
 LoadMDIForm
 DisableFormResize Me
 
-Dim l As Long
-    l = GetWindowLong(Me.hwnd, GWL_STYLE)
+Dim L As Long
+    L = GetWindowLong(Me.hwnd, GWL_STYLE)
 '   L = L And Not (WS_MINIMIZEBOX)
-    l = l And Not (WS_MAXIMIZEBOX)
-    l = SetWindowLong(Me.hwnd, GWL_STYLE, l)
+    L = L And Not (WS_MAXIMIZEBOX)
+    L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
 
 StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
 

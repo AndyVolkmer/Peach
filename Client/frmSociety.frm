@@ -250,7 +250,17 @@ Command4.Caption = SOC_COMMAND_REMOVE
 End Sub
 
 Private Sub Form_Load()
+Me.Top = 0: Me.Left = 0
 LoadSocietyForm
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+If Setting.ASK_TICK = True Then
+    If MsgBox(MDI_MSG_UNLOAD, vbQuestion + vbYesNo) = vbNo Then
+        Cancel = 1
+        Exit Sub
+    End If
+End If
 End Sub
 
 Private Sub ListView2_ItemCheck(ByVal Item As MSComctlLib.ListItem)

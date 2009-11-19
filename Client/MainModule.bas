@@ -96,6 +96,13 @@ Else
     .PASSWORD = vbNullString
 End If
 
+'CloseQuestion Tick
+If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Private", "CloseQuestion"))) = 0 Then
+    .ASK_TICK = False
+Else
+    .ASK_TICK = CBool(ReadIniValue(App.Path & "\Config.ini", "Private", "CloseQuestion"))
+End If
+
 'Load configuration from .ini file into switch variables
 If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Language", "Validate"))) = 0 Then
     .VALIDATE = 1 'Default choose language

@@ -353,7 +353,7 @@ If Len(Trim$(txtSecretAnswer)) = 0 Then
 End If
 
 'Can't register if the winsock is not connected.
-If RegSock.State <> 7 Then
+If frmMain.RegSock.State <> 7 Then
     MsgBox REG_MSG_CONNECTION_BROKEN, vbInformation
     Exit Sub
 End If

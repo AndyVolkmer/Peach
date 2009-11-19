@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const pRev       As String = "1.1.8.5"
+Public Const pRev       As String = "1.1.8.6"
 Public Const pAuthor    As String = "Andy"
 
 Public Const aPort      As Long = 6123
@@ -14,28 +14,29 @@ Public i                As Long    'Global 'FOR' variable
 
 Private Type CONFIG
     'frmMain values
-    MAIN_TOP        As Long
-    MAIN_LEFT       As Long
+    MAIN_TOP            As Long
+    MAIN_LEFT           As Long
     
     'Language values
-    VALIDATE        As Long
-    LANGUAGE        As Long
+    VALIDATE            As Long
+    LANGUAGE            As Long
         
     'Peach color scheme
-    SCHEME_COLOR    As String
+    SCHEME_COLOR        As String
     
     'Ticks
-    ACCOUNT_TICK    As Boolean
-    PASSWORD_TICK   As Boolean
+    ACCOUNT_TICK        As Boolean
+    PASSWORD_TICK       As Boolean
+    ASK_TICK            As Boolean
     
     'Server information
-    SERVER_IP       As String
-    SERVER_PORT     As String
+    SERVER_IP           As String
+    SERVER_PORT         As String
     
     'frmConfig information
-    ACCOUNT         As String
-    PASSWORD        As String
-    NICKNAME        As String
+    ACCOUNT             As String
+    PASSWORD            As String
+    NICKNAME            As String
 End Type
 
 Public Setting As CONFIG
