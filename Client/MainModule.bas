@@ -46,95 +46,104 @@ WriteIniValue App.Path & "\Config.ini", "Revision", "Number", pRev
 End Sub
 
 Private Sub LoadIniValue()
+Dim Path As String
+Path = App.Path & "\Config.ini"
 'Open Settings variable
 With Setting
 
 'Read 'IP' from .ini file
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Connection", "IP"))) <> 0 Then
-    .SERVER_IP = ReadIniValue(App.Path & "\Config.ini", "Connection", "IP")
+If Len(Trim$(ReadIniValue(Path, "Connection", "IP"))) <> 0 Then
+    .SERVER_IP = ReadIniValue(Path, "Connection", "IP")
 Else
     .SERVER_IP = "127.0.0.1"
 End If
  
 'Read 'Port' from .ini file
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Connection", "Port"))) <> 0 Then
-    .SERVER_PORT = ReadIniValue(App.Path & "\Config.ini", "Connection", "Port")
+If Len(Trim$(ReadIniValue(Path, "Connection", "Port"))) <> 0 Then
+    .SERVER_PORT = ReadIniValue(Path, "Connection", "Port")
 Else
     .SERVER_PORT = 4728
 End If
 
 'Read 'Nickname' from .ini file
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Private", "Nickname"))) <> 0 Then
-    .NICKNAME = ReadIniValue(App.Path & "\Config.ini", "Private", "Nickname")
+If Len(Trim$(ReadIniValue(Path, "Private", "Nickname"))) <> 0 Then
+    .NICKNAME = ReadIniValue(Path, "Private", "Nickname")
 End If
 
 'Account Tick
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Private", "AccountTick"))) = 0 Then
+If Len(Trim$(ReadIniValue(Path, "Private", "AccountTick"))) = 0 Then
     .ACCOUNT_TICK = False
 Else
-    .ACCOUNT_TICK = CBool(ReadIniValue(App.Path & "\Config.ini", "Private", "AccountTick"))
+    .ACCOUNT_TICK = CBool(ReadIniValue(Path, "Private", "AccountTick"))
 End If
 
 'If Account Tick = True then read account
 If .ACCOUNT_TICK = True Then
-    If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Private", "Account"))) <> 0 Then
-        .ACCOUNT = ReadIniValue(App.Path & "\Config.ini", "Private", "Account")
+    If Len(Trim$(ReadIniValue(Path, "Private", "Account"))) <> 0 Then
+        .ACCOUNT = ReadIniValue(Path, "Private", "Account")
     End If
 End If
 
 'Password Tick
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Private", "PasswordTick"))) = 0 Then
+If Len(Trim$(ReadIniValue(Path, "Private", "PasswordTick"))) = 0 Then
     .PASSWORD_TICK = False
 Else
-    .PASSWORD_TICK = CBool(ReadIniValue(App.Path & "\Config.ini", "Private", "PasswordTick"))
+    .PASSWORD_TICK = CBool(ReadIniValue(Path, "Private", "PasswordTick"))
 End If
 
 'If Password Tick = True then read password
 If .PASSWORD_TICK = True Then
-    .PASSWORD = DeCode(DeCode(ReadIniValue(App.Path & "\Config.ini", "Private", "Password")))
+    .PASSWORD = DeCode(DeCode(ReadIniValue(Path, "Private", "Password")))
 Else
     .PASSWORD = vbNullString
 End If
 
 'CloseQuestion Tick
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Private", "CloseQuestion"))) = 0 Then
+If Len(Trim$(ReadIniValue(Path, "Private", "CloseQuestion"))) = 0 Then
     .ASK_TICK = False
 Else
-    .ASK_TICK = CBool(ReadIniValue(App.Path & "\Config.ini", "Private", "CloseQuestion"))
+    .ASK_TICK = CBool(ReadIniValue(Path, "Private", "CloseQuestion"))
+End If
+
+'MinimizeTray Tick
+If Len(Trim$(ReadIniValue(Path, "Private", "MinimizeTray"))) = 0 Then
+    .MIN_TICK = False
+Else
+    .MIN_TICK = CBool(ReadIniValue(Path, "Private", "MinimizeTray"))
 End If
 
 'Load configuration from .ini file into switch variables
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Language", "Validate"))) = 0 Then
+If Len(Trim$(ReadIniValue(Path, "Language", "Validate"))) = 0 Then
     .VALIDATE = 1 'Default choose language
 Else
-    .VALIDATE = ReadIniValue(App.Path & "\Config.ini", "Language", "Validate")
+    .VALIDATE = ReadIniValue(Path, "Language", "Validate")
 End If
 
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Language", "Language"))) = 0 Then
-    .LANGUAGE = 1  'Default language english
+If Len(Trim$(ReadIniValue(Path, "Language", "Language"))) = 0 Then
+    .LANGUAGE = 1 'Default language english
 Else
-    .LANGUAGE = ReadIniValue(App.Path & "\Config.ini", "Language", "Language")
+    .LANGUAGE = ReadIniValue(Path, "Language", "Language")
 End If
 
 'Load 'Top' position from ini, if there is non take default value ( 1200 )
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Position", "Top"))) = 0 Then
+If Len(Trim$(ReadIniValue(Path, "Position", "Top"))) = 0 Then
     Setting.MAIN_TOP = 1200
 Else
-    Setting.MAIN_TOP = ReadIniValue(App.Path & "\Config.ini", "Position", "Top")
+    Setting.MAIN_TOP = ReadIniValue(Path, "Position", "Top")
 End If
 
 'Load 'Left' position from ini, if there is non take default value ( 1200 )
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Position", "Left"))) = 0 Then
+If Len(Trim$(ReadIniValue(Path, "Position", "Left"))) = 0 Then
     Setting.MAIN_LEFT = 1200
 Else
-    Setting.MAIN_LEFT = ReadIniValue(App.Path & "\Config.ini", "Position", "Left")
+    Setting.MAIN_LEFT = ReadIniValue(Path, "Position", "Left")
 End If
 
 'Load scheme color
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Private", "SchemeColor"))) = 0 Then
+If Len(Trim$(ReadIniValue(Path, "Private", "SchemeColor"))) = 0 Then
     Setting.SCHEME_COLOR = &HF4F4F4
 Else
-    Setting.SCHEME_COLOR = ReadIniValue(App.Path & "\Config.ini", "Private", "SchemeColor")
+    Setting.SCHEME_COLOR = ReadIniValue(Path, "Private", "SchemeColor")
 End If
 
 'Close Settings variable

@@ -136,6 +136,8 @@ Public SET_FRAME_CONNECTION             As String
 
 Public SET_CHECK_SAVE_ACCOUNT           As String
 Public SET_CHECK_SAVE_PASSWORD          As String
+Public SET_CHECK_ASK_CLOSING            As String
+Public SET_CHECK_MINIMIZE               As String
 
 Public SET_COMMAND_LANGUAGE             As String
 Public SET_COMMAND_SAVE                 As String
@@ -283,6 +285,8 @@ SET_FRAME_CONNECTION = "Verbindungs Einstellungen"
 
 SET_CHECK_SAVE_ACCOUNT = "Account speichern"
 SET_CHECK_SAVE_PASSWORD = "Passwort speichern"
+SET_CHECK_ASK_CLOSING = "Abfragen bevor schliessen"
+SET_CHECK_MINIMIZE = "Peach-Fenster in die Taskleiste minimieren"
 
 SET_COMMAND_LANGUAGE = "&Sprache"
 SET_COMMAND_SAVE = "&Speichern"
@@ -435,6 +439,8 @@ SET_FRAME_CONNECTION = "Connection Settings"
 
 SET_CHECK_SAVE_ACCOUNT = "Save Account"
 SET_CHECK_SAVE_PASSWORD = "Save Password"
+SET_CHECK_ASK_CLOSING = "Ask before closing"
+SET_CHECK_MINIMIZE = "Minimize Peach window to system tray"
 
 SET_COMMAND_LANGUAGE = "&Language"
 SET_COMMAND_SAVE = "&Save"
@@ -582,6 +588,8 @@ SET_FRAME_CONNECTION = "Confgiuración de conexión"
 
 SET_CHECK_SAVE_ACCOUNT = "Guardar cuenta"
 SET_CHECK_SAVE_PASSWORD = "Guardar contraseña"
+SET_CHECK_ASK_CLOSING = "Preguntar antes de cerrar"
+SET_CHECK_MINIMIZE = "Minimizar ventana de Peach en la bandeja del sistema"
 
 SET_COMMAND_LANGUAGE = "&Idioma"
 SET_COMMAND_SAVE = "&Guardar"
@@ -731,6 +739,8 @@ SET_FRAME_CONNECTION = "Anslutnings inställningar"
 
 SET_CHECK_SAVE_ACCOUNT = "Spara konto"
 SET_CHECK_SAVE_PASSWORD = "Spara lösenord"
+SET_CHECK_ASK_CLOSING = "Ask before closing"
+SET_CHECK_MINIMIZE = "Minimera Peach-fönstret till Aktivitetsfältet"
 
 SET_COMMAND_LANGUAGE = "&Språk"
 SET_COMMAND_SAVE = "&Spara"
@@ -879,6 +889,8 @@ SET_FRAME_CONNECTION = "Connection Settings"
 
 SET_CHECK_SAVE_ACCOUNT = "Save Account"
 SET_CHECK_SAVE_PASSWORD = "Save Password"
+SET_CHECK_ASK_CLOSING = "Ask before closing"
+SET_CHECK_MINIMIZE = "Contrai la finestra di Peach nella barra delle applicazioni"
 
 SET_COMMAND_LANGUAGE = "&Language"
 SET_COMMAND_SAVE = "&Save"
@@ -1029,6 +1041,8 @@ SET_FRAME_CONNECTION = "Connection Settings"
 
 SET_CHECK_SAVE_ACCOUNT = "Save Account"
 SET_CHECK_SAVE_PASSWORD = "Save Password"
+SET_CHECK_ASK_CLOSING = "Ask before closing"
+SET_CHECK_MINIMIZE = "Minimize Peach window to system tray"
 
 SET_COMMAND_LANGUAGE = "&Language"
 SET_COMMAND_SAVE = "&Save"
@@ -1175,6 +1189,8 @@ SET_FRAME_CONNECTION = "Verbinding Instellingen"
 
 SET_CHECK_SAVE_ACCOUNT = "Gebruiker opslaan"
 SET_CHECK_SAVE_PASSWORD = "Wachtwoord opslaan"
+SET_CHECK_ASK_CLOSING = "Ask before closing"
+SET_CHECK_MINIMIZE = "Minimize Peach window to system tray"
 
 SET_COMMAND_LANGUAGE = "&Taal"
 SET_COMMAND_SAVE = "&Opslaan"
@@ -1327,6 +1343,8 @@ SET_FRAME_CONNECTION = "Connection Settings"
 
 SET_CHECK_SAVE_ACCOUNT = "Save Account"
 SET_CHECK_SAVE_PASSWORD = "Save Password"
+SET_CHECK_ASK_CLOSING = "Ask before closing"
+SET_CHECK_MINIMIZE = "Minimize Peach window to system tray"
 
 SET_COMMAND_LANGUAGE = "&Language"
 SET_COMMAND_SAVE = "&Save"

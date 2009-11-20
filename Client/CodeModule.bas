@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const pRev       As String = "1.1.8.6"
+Public Const pRev       As String = "1.1.8.7"
 Public Const pAuthor    As String = "Andy"
 
 Public Const aPort      As Long = 6123
@@ -28,6 +28,7 @@ Private Type CONFIG
     ACCOUNT_TICK        As Boolean
     PASSWORD_TICK       As Boolean
     ASK_TICK            As Boolean
+    MIN_TICK            As Boolean
     
     'Server information
     SERVER_IP           As String

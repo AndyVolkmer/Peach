@@ -381,7 +381,9 @@ End Sub
 Private Sub MDIForm_Resize()
 If Me.WindowState = 1 Then
     If Vali = False Then
-        minimize_to_tray
+        If Setting.MIN_TICK = True Then
+            minimize_to_tray
+        End If
     End If
     Vali = False
 End If
