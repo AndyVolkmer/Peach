@@ -64,7 +64,6 @@ Begin VB.Form frmSendFile
       Top             =   0
    End
    Begin VB.Timer tmrCalcSpeed 
-      Enabled         =   0   'False
       Interval        =   1000
       Left            =   2295
       Top             =   0

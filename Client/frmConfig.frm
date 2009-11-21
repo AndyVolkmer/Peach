@@ -314,7 +314,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
         .LocalPort = bPort
         .Listen
     End With
-
+    
     SwitchButtons False
     
     frmMain.StatusBar1.Panels(1).Text = MDI_STAT_CONNECTING

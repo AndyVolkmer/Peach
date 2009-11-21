@@ -33,6 +33,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   873
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin RichTextLib.RichTextBox txtToSend 
@@ -272,8 +273,8 @@ Smilestring = _
     ":D " & _
     ":P " & _
     ":p " & _
-    ":cool: " & _
-    ":rolleyes: " & _
+    "*cool* " & _
+    "*rolleyes* " & _
     ":["
     
 SmileFileString = _
