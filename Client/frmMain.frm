@@ -315,16 +315,14 @@ End Function
 Private Sub FSocket2_DataArrival(Index As Integer, ByVal bytesTotal As Long)
 Dim GetMessage As String
 Dim array1() As String
-Dim GetCommand As String
 
 FSocket2(Index).GetData GetMessage
 
 array1 = Split(GetMessage, "#")
-GetCommand = array1(0)
 
-Select Case GetCommand
+Select Case array1(0)
 Case "!filerequest"
-    If MsgBox(SF_MSG_INCOMMING_FILE, vbYesNo + vbQuestion) = vbYes Then
+    If MsgBox(SF_MSG_INCOMMING_FILE_1 & array1(1) & SF_MSG_INCOMMING_FILE_2 & array1(2) & SF_MSG_INCOMMING_FILE_3, vbYesNo + vbQuestion) = vbYes Then
         FSocket2(Index).SendData "!acceptfile#"
         frmSendFile2.Show
     Else
@@ -405,7 +403,7 @@ Private Sub STimer_Timer()
 With FSocket
     If .State = 7 Then
         STimer.Enabled = False
-        .SendData "!filerequest#"
+        .SendData "!filerequest#" & frmSendFile.CDialog.FileTitle & "#" & frmConfig.txtNick & "#"
     End If
 End With
 End Sub

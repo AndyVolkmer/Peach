@@ -302,7 +302,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
         .RemoteHost = Setting.SERVER_IP
         .Connect
     End With
-
+    
     'Set Recieve-Request-Winsock to listen
     With frmMain
         .FSocket2(0).LocalPort = aPort

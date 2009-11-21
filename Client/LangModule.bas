@@ -57,7 +57,9 @@ Public SF_COMMAND_CANCEL                As String
 
 Public SF_MSG_USER                      As String
 Public SF_MSG_FILE                      As String
-Public SF_MSG_INCOMMING_FILE            As String
+Public SF_MSG_INCOMMING_FILE_1          As String
+Public SF_MSG_INCOMMING_FILE_2          As String
+Public SF_MSG_INCOMMING_FILE_3          As String
 Public SF_MSG_DECILINED                 As String
 
 'Desp form ..
@@ -215,7 +217,9 @@ SF_LABEL_SEND_TO = "Sende an:"
 
 SF_MSG_USER = "Kein Benutzer ausgewählt."
 SF_MSG_FILE = "Keine Datei ausgewählt."
-SF_MSG_INCOMMING_FILE = "Sie empfangen eine Datei, möchsten sie annehmen?"
+SF_MSG_INCOMMING_FILE_1 = "Du empfängst gerade '"
+SF_MSG_INCOMMING_FILE_2 = "' von "
+SF_MSG_INCOMMING_FILE_3 = ". Willst du die Datei annehmen?"
 SF_MSG_DECILINED = "Der Benutzer hat die Datei abgelehnt."
 
 SF_COMMAND_BROWSE = "&Suchen .."
@@ -370,7 +374,9 @@ SF_LABEL_SEND_TO = "Send to:"
 
 SF_MSG_USER = "No user selected."
 SF_MSG_FILE = "No file selected."
-SF_MSG_INCOMMING_FILE = "You are getting an incomming file, do you want to accept?"
+SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
+SF_MSG_INCOMMING_FILE_2 = "' from "
+SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
 SF_MSG_DECILINED = "File transfer was decilined."
 
 SF_COMMAND_BROWSE = "&Search .."
@@ -520,7 +526,9 @@ SF_LABEL_SEND_TO = "Enviar a:"
 
 SF_MSG_USER = "No has seleccionado a una persona."
 SF_MSG_FILE = "No has seleccionado a un archivo."
-SF_MSG_INCOMMING_FILE = "Estas recibiendo un archivo, quieres aceptar?"
+SF_MSG_INCOMMING_FILE_1 = "Esta recibiendo '"
+SF_MSG_INCOMMING_FILE_2 = "' de "
+SF_MSG_INCOMMING_FILE_3 = ". ¿Quieres aceptar?"
 SF_MSG_DECILINED = "El envio ha sido rechazado."
 
 SF_COMMAND_BROWSE = "&Buscar .."
@@ -671,7 +679,9 @@ SF_LABEL_SEND_TO = "Skicka till:"
 
 SF_MSG_USER = "Ingen användare vald."
 SF_MSG_FILE = "Ingen fil vald."
-SF_MSG_INCOMMING_FILE = "Filöverföring har skickats till dig, vill du acceptera?"
+SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
+SF_MSG_INCOMMING_FILE_2 = "' from "
+SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
 SF_MSG_DECILINED = "Filöverföringen var nekad."
 
 SF_COMMAND_BROWSE = "&Sök .."
@@ -823,7 +833,9 @@ SF_LABEL_SEND_TO = "Send to:"
 
 SF_MSG_USER = "No user selected."
 SF_MSG_FILE = "No file selected."
-SF_MSG_INCOMMING_FILE = "You are getting an incomming file, do you want to accept?"
+SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
+SF_MSG_INCOMMING_FILE_2 = "' from "
+SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
 SF_MSG_DECILINED = "File transfer was decilined."
 
 SF_COMMAND_BROWSE = "&Cerca .."
@@ -976,7 +988,9 @@ SF_LABEL_SEND_TO = "Send to:"
 
 SF_MSG_USER = "No user selected."
 SF_MSG_FILE = "No file selected."
-SF_MSG_INCOMMING_FILE = "You are getting an incomming file, do you want to accept?"
+SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
+SF_MSG_INCOMMING_FILE_2 = "' from "
+SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
 SF_MSG_DECILINED = "File transfer was decilined."
 
 SF_COMMAND_BROWSE = "Trazi .."
@@ -1125,7 +1139,9 @@ SF_LABEL_SEND_TO = "Send to:"
 
 SF_MSG_USER = "No user selected."
 SF_MSG_FILE = "No file selected."
-SF_MSG_INCOMMING_FILE = "You are getting an incomming file, do you want to accept?"
+SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
+SF_MSG_INCOMMING_FILE_2 = "' from "
+SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
 SF_MSG_DECILINED = "File transfer was decilined."
 
 SF_COMMAND_BROWSE = "&Zoeken .."
@@ -1207,7 +1223,9 @@ SF_LABEL_SEND_TO = "Verzenden naar:"
 
 SF_MSG_USER = "Geen gebruiker geselecteerd."
 SF_MSG_FILE = "Geen bestand geselecteerd."
-SF_MSG_INCOMMING_FILE = "Iemand wil een bestand versturen, wilt u accepteren?"
+SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
+SF_MSG_INCOMMING_FILE_2 = "' from "
+SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
 SF_MSG_DECILINED = "Gegevensoverdracht geweigerd."
 
 SF2_COMMAND_OPEN_FILE = "&Open bestandsmap"
@@ -1280,7 +1298,9 @@ SF_LABEL_SEND_TO = "Send to:"
 
 SF_MSG_USER = "No user selected."
 SF_MSG_FILE = "No file selected."
-SF_MSG_INCOMMING_FILE = "You are getting an incomming file, do you want to accept?"
+SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
+SF_MSG_INCOMMING_FILE_2 = "' from "
+SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
 SF_MSG_DECILINED = "File transfer was decilined."
 
 SF_COMMAND_BROWSE = "&Cherche .."
