@@ -27,8 +27,8 @@ Begin VB.Form frmSociety
       Left            =   120
       TabIndex        =   4
       Top             =   120
-      Width           =   7275
-      _ExtentX        =   12832
+      Width           =   7300
+      _ExtentX        =   12885
       _ExtentY        =   7011
       _Version        =   393216
       TabHeight       =   520
@@ -56,17 +56,13 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "ListView1"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "ListView3"
-      Tab(2).Control(0).Enabled=   0   'False
+      Tab(2).Control(0)=   "Command4"
       Tab(2).Control(1)=   "Command3"
-      Tab(2).Control(1).Enabled=   0   'False
-      Tab(2).Control(2)=   "Command4"
-      Tab(2).Control(2).Enabled=   0   'False
+      Tab(2).Control(2)=   "ListView3"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton Command4 
          Caption         =   "&Remove"

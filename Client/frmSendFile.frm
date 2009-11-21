@@ -282,22 +282,26 @@ pic.Line (pic.ScaleWidth * Percentage, pic.ScaleHeight)-(pic.ScaleWidth, 0), Bac
 End Sub
 
 Private Sub cmdSendFile_Click()
-'If no user selected then exit
-If Combo1.ListIndex < 0 Then
-    MsgBox SF_MSG_USER, vbInformation
-    Combo1.SetFocus
-    Exit Sub
+If cmdSendFile.Caption = SF_COMMAND_SENDFILE Then
+    'If no user selected then exit
+    If Combo1.ListIndex < 0 Then
+        MsgBox SF_MSG_USER, vbInformation
+        Combo1.SetFocus
+        Exit Sub
+    End If
+    
+    If Len(txtFileName) = 0 Then
+        MsgBox SF_MSG_FILE, vbInformation
+        txtFileName.SetFocus
+        Exit Sub
+    End If
+    
+    'Request IP
+    SendMsg "!iprequest#" & Combo1.Text & "#"
+Else
+    SckSendFile.Close
+    cmdSendFile.Caption = SF_COMMAND_SENDFILE
 End If
-
-If Len(txtFileName) = 0 Then
-    MsgBox SF_MSG_FILE, vbInformation
-    txtFileName.SetFocus
-    Exit Sub
-End If
-
-'Request IP
-SendMsg "!iprequest#" & Combo1.Text & "#"
-
 End Sub
 
 Public Sub SendF(IP As String)
