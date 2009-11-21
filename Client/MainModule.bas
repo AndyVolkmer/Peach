@@ -193,6 +193,9 @@ If IsFirst = False Then
         .Label3.BackColor = SC
         .SaveAccount.BackColor = SC
         .SavePassword.BackColor = SC
+        .CheckAsk.BackColor = SC
+        .CheckMin.BackColor = SC
+        .lblMinimizeTray.BackColor = SC
     End With
 End If
 With frmSociety

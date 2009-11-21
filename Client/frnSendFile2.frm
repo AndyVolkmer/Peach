@@ -55,10 +55,10 @@ Begin VB.Form frmSendFile2
       _ExtentX        =   12700
       _ExtentY        =   5609
       View            =   3
+      LabelEdit       =   1
       LabelWrap       =   -1  'True
       HideSelection   =   -1  'True
       FullRowSelect   =   -1  'True
-      GridLines       =   -1  'True
       _Version        =   393217
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
@@ -127,10 +127,6 @@ End Sub
 
 Private Sub Form_Load()
 lstConnections.ListItems.Add , , "0"
-End Sub
-
-Private Sub lstConnections_BeforeLabelEdit(Cancel As Integer)
-    Cancel = 1
 End Sub
 
 Private Sub SckReceiveFile_Close(Index As Integer)

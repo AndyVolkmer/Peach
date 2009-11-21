@@ -113,6 +113,7 @@ Begin VB.Form frmSendFile
    Begin VB.CommandButton cmdSendFile 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Send File"
+      Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "Segoe UI"
          Size            =   8.25
@@ -353,13 +354,15 @@ Label4.Caption = SF_LABEL_SEND_TO
 End Sub
 
 Private Sub SckSendFile_Close()
-tmrSendFile.Enabled = False
-tmrSendFile.Interval = 0
-
-Close iFileNum 'Close file
-iFileNum = 0 'Set file number to 0, timer will exit if another timer event
-
 SckSendFile.Close
+
+With tmrSendFile
+    .Enabled = False
+    .Interval = 0
+End With
+
+Close iFileNum  'Close file
+iFileNum = 0    'Set file number to 0, timer will exit if another timer event
 
 cmdSendFile.Caption = SF_COMMAND_SENDFILE
 PicShowPercentage Me.picProgress, 0

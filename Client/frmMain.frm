@@ -266,16 +266,14 @@ Disconnect
 End Sub
 
 Private Sub FSocket_DataArrival(ByVal bytesTotal As Long)
-Dim strMsg As String
-Dim StrArr() As String
-Dim CommX As String
+Dim GetMessage As String
+Dim array1() As String
 
-FSocket.GetData strMsg
+FSocket.GetData GetMessage
 
-StrArr = Split(strMsg, "#")
-CommX = StrArr(0)
+array1 = Split(GetMessage, "#")
 
-Select Case CommX
+Select Case array1(0)
 Case "!acceptfile"
     frmSendFile.SendF FSocket.RemoteHost
 Case "!denyfile"
@@ -413,17 +411,7 @@ End With
 End Sub
 
 Private Sub Winsock1_Close()
-Prefix = " [" & Format$(Time, "hh:nn:ss") & "]"
-
-Winsock1.Close
 Disconnect
-
-StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECT
-With frmChat.txtConver
-    .SelStart = Len(.Text)
-    .SelRTF = vbCrLf & Prefix & " [System]: You got disconnected from Server."
-End With
-    
 SetupForms frmConfig
 End Sub
 
@@ -434,21 +422,11 @@ End Sub
 
 Private Sub Connection(Args As Boolean)
 If Args = True Then
-    frmConfig.Hide
-    frmChat.Show
-    frmChat.txtToSend.SetFocus
-    
+    SetupForms frmChat
     StatusBar1.Panels(1).Text = MDI_STAT_CONNECTED
-    
     SendMsg "!connected#" & frmConfig.txtNick & "#" & frmConfig.txtAccount & "#"
 Else
-    With frmConfig
-        .cmdConnect_Click
-        .txtNick = vbNullString
-        frmChat.Hide
-        .Show
-        .txtNick.SetFocus
-    End With
+    Disconnect
     MsgBox MDI_MSG_NAME_TAKEN, vbInformation
 End If
 End Sub

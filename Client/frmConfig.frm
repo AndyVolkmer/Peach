@@ -286,7 +286,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     End If
     
     'Nick can't contain invalid characters
-    If CheckString(txtNick) = True Then
+    If IsInvalid(txtNick) = True Then
         MsgBox CONFIG_MSG_NAME_INVALID, vbInformation
         txtNick.SelStart = Len(txtNick)
         txtNick.SetFocus
@@ -315,20 +315,12 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
         .Listen
     End With
 
-    Command3.Enabled = False
-    Command4.Enabled = False
-    Label1.Enabled = False
-    Label2.Enabled = False
-    cmdConnect.Caption = CONFIG_COMMAND_DISCONNECT
-    frmMain.StatusBar1.Panels(1).Text = MDI_STAT_CONNECTING
-Else
-    cmdConnect.Caption = CONFIG_COMMAND_CONNECT
+    SwitchButtons False
     
+    frmMain.StatusBar1.Panels(1).Text = MDI_STAT_CONNECTING
+    cmdConnect.Caption = CONFIG_COMMAND_DISCONNECT
+Else
     Disconnect
-    With frmMain
-        .Winsock1.Close
-        .StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
-    End With
 End If
 End Sub
 
@@ -340,7 +332,7 @@ Private Sub Command4_Click()
 If FileExists(App.Path & "\peachUpdater.exe") = True Then
     Shell App.Path & "\peachUpdater.exe", vbNormalFocus
 Else
-    MsgBox "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe", vbInformation
+    MsgBox CONFIG_MSG_UPDATE_FILE, vbInformation
 End If
 End Sub
 
@@ -373,14 +365,16 @@ End If
 End Function
 
 Private Sub Form_Unload(Cancel As Integer)
+Dim Path As String
+Path = App.Path & "\Config.ini"
 'Write data entries to .ini file
-WriteIniValue App.Path & "\Config.ini", "Private", "Password", Encode(Encode(txtPassword))
-WriteIniValue App.Path & "\Config.ini", "Private", "Account", txtAccount
-WriteIniValue App.Path & "\Config.ini", "Private", "Nickname", txtNick
+WriteIniValue Path, "Private", "Password", Encode(Encode(txtPassword))
+WriteIniValue Path, "Private", "Account", txtAccount
+WriteIniValue Path, "Private", "Nickname", txtNick
 
 'Write position entries to .ini file
-WriteIniValue App.Path & "\Config.ini", "Position", "Top", frmMain.Top
-WriteIniValue App.Path & "\Config.ini", "Position", "Left", frmMain.Left
+WriteIniValue Path, "Position", "Top", frmMain.Top
+WriteIniValue Path, "Position", "Left", frmMain.Left
 End Sub
 
 Private Sub Label1_Click()

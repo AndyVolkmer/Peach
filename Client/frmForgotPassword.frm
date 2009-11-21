@@ -119,7 +119,7 @@ If cmdRequest.Caption = FP_COMMAND_REQUEST Then
     End If
 
     'Can't request if account invalid
-    If CheckString(txtAccount) = True Then
+    If IsInvalid(txtAccount) = True Then
         MsgBox REG_MSG_ACCOUNT_INVALID, vbInformation
         txtAccount.SetFocus
         Exit Sub

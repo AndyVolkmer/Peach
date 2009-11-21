@@ -280,7 +280,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Check1_Click()
-If Check1 = vbChecked Then
+If Check1.Value = 1 Then
     txtPassword1.PasswordChar = vbNullString
     txtPassword2.PasswordChar = vbNullString
 Else
@@ -311,7 +311,7 @@ If Len(txtAccount) < 4 Then
 End If
 
 'Check for spaces and other signs in the account.
-If CheckString(txtAccount) = True Then
+If IsInvalid(txtAccount) = True Then
     MsgBox REG_MSG_ACCOUNT_INVALID, vbInformation
     txtAccount.SetFocus
     Exit Sub
@@ -420,19 +420,19 @@ End Sub
 
 Private Sub txtPassword1_Change()
 Select Case Len(txtPassword1)
-Case Is < 7
+Case Is < 5
     Picture1.BackColor = vbRed
     Picture1.BorderStyle = 1
     Label5.BackColor = vbRed
     Label5.ForeColor = vbWhite
     Label5.Caption = REG_LABEL_PASSWORD_WEAK
-Case 7, 8, 9
+Case 5, 6, 7
     Picture1.BackColor = vbYellow
     Picture1.BorderStyle = 1
     Label5.BackColor = vbYellow
     Label5.ForeColor = vbBlack
     Label5.Caption = REG_LABEL_PASSWORD_NORMAL
-Case Is > 10
+Case Is > 8
     Picture1.BackColor = vbGreen
     Picture1.BorderStyle = 1
     Label5.BackColor = vbGreen

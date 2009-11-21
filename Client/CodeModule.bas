@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const pRev       As String = "1.1.8.7"
+Public Const pRev       As String = "1.1.8.8"
 Public Const pAuthor    As String = "Andy"
 
 Public Const aPort      As Long = 6123
@@ -204,30 +204,11 @@ End Sub
 Public Sub Disconnect()
 Dim WiSk As Winsock
 
-'Reset RunOnce variable
-frmMain.RunOnce = False
-
-SwitchButtons True
 'Clear the online user list
-With frmSociety
-    .ListView1.ListItems.Clear
-    .ListView2.ListItems.Clear
-End With
-
+frmSociety.ListView1.ListItems.Clear
+frmSociety.ListView2.ListItems.Clear
 frmSendFile.Combo1.Clear
 
-'Close and unload this sockets also
-With frmMain
-    For Each WiSk In .FSocket2
-        If WiSk.State = 7 Then
-            WiSk.Close
-            Unload WiSk
-        End If
-    Next
-    .FSocket2(0).Close
-End With
-
-'Close and unload all connected winsocks
 With frmSendFile2
     For Each WiSk In .SckReceiveFile
         If WiSk.State = 7 Then
@@ -237,16 +218,37 @@ With frmSendFile2
     Next
     .SckReceiveFile(0).Close
 End With
+
+With frmMain
+    For Each WiSk In .FSocket2
+        If WiSk.State = 7 Then
+            WiSk.Close
+            Unload WiSk
+        End If
+    Next
+    
+    .FSocket2(0).Close
+    .Winsock1.Close
+    
+    'Reset RunOnce variable
+    .RunOnce = False
+    
+    .StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
+End With
+
+frmConfig.cmdConnect.Caption = CONFIG_COMMAND_CONNECT
+
+SwitchButtons True
 End Sub
 
+'If an error occurs, this function returns False
 Public Function FileExists(FileName As String) As Boolean
 On Error GoTo ErrorHandler
 FileExists = (GetAttr(FileName) And vbDirectory) = 0
 ErrorHandler:
-'If an error occurs, this function returns False
 End Function
 
-Public Function CheckString(pString As String) As Boolean
+Public Function IsInvalid(pString As String) As Boolean
 Dim CHAR As String
 Dim SIGN_STRING As String
 Dim SIGN_ARRAY() As String
@@ -256,7 +258,7 @@ SIGN_ARRAY = Split(SIGN_STRING, "1F")
 
 For i = LBound(SIGN_ARRAY) To UBound(SIGN_ARRAY)
     If InStr(1, pString, SIGN_ARRAY(i)) <> 0 Then
-        CheckString = True
+        IsInvalid = True
         Exit Function
     End If
 Next i

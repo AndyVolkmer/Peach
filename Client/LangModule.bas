@@ -41,6 +41,7 @@ Public CONFIG_MSG_IP                    As String
 Public CONFIG_MSG_NAME                  As String
 Public CONFIG_MSG_NAME_SHORT            As String
 Public CONFIG_MSG_NAME_INVALID          As String
+Public CONFIG_MSG_UPDATE_FILE           As String
 
 Public CHAT_COMMAND_SEND                As String
 Public CHAT_COMMAND_CLEAR               As String
@@ -202,6 +203,7 @@ CONFIG_MSG_NAME = "Du hast keinen Namen eingegeben."
 CONFIG_MSG_IP = "Du hast keine IP eingegeben."
 CONFIG_MSG_NAME_SHORT = "Du hast einen zu kurzen Namen eingegeben."
 CONFIG_MSG_NAME_INVALID = "Du hast einen ungültigen Namen eingegeben."
+CONFIG_MSG_UPDATE_FILE = "Sie brauchen den Peach Updater um ihr Peach zu updaten." & vbCrLf & vbCrLf & "Sie können es hier downloaden:  http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 CHAT_COMMAND_SEND = "&Senden"
 CHAT_COMMAND_CLEAR = "&Löschen"
@@ -354,6 +356,7 @@ CONFIG_MSG_NAME = "You didn't introduce a name."
 CONFIG_MSG_IP = "You didn't introduce a IP."
 CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
 CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
+CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 ' Chat form ..
 CHAT_COMMAND_SEND = "&Send"
@@ -505,6 +508,7 @@ CONFIG_MSG_NAME = "No has introducido un nombre."
 CONFIG_MSG_IP = "No has introducido una direccion."
 CONFIG_MSG_NAME_SHORT = "El nombre que has introducido es corto."
 CONFIG_MSG_NAME_INVALID = "El nombre que has introducido es invalido."
+CONFIG_MSG_UPDATE_FILE = "Necesitas el Peach Updater para actualizar tu Peach." & vbCrLf & vbCrLf & "Descargalo aqui http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 CHAT_COMMAND_SEND = "&Enviar"
 CHAT_COMMAND_CLEAR = "&Limpiar"
@@ -653,6 +657,7 @@ CONFIG_MSG_IP = "Du angav inte ett IP."
 CONFIG_MSG_NAME = "Du angav inte ett namn."
 CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
 CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
+CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 ' Chat form ..
 CHAT_COMMAND_SEND = "&Sänd"
@@ -804,6 +809,7 @@ CONFIG_MSG_IP = "Non hai immesso un IP."
 CONFIG_MSG_NAME = "Non hai immesso un Nome utente."
 CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
 CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
+CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 ' Chat form ..
 CHAT_COMMAND_SEND = "&Invia"
@@ -956,6 +962,7 @@ CONFIG_MSG_IP = "Niste uneli IP"
 CONFIG_MSG_NAME = "Niste uneli ime"
 CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
 CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
+CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 'Chat form ..
 CHAT_COMMAND_SEND = "&Posalji"
@@ -1106,6 +1113,7 @@ CONFIG_MSG_IP = "U hebt geen IP gegoven."
 CONFIG_MSG_NAME = "U hebt geen naam gegoven."
 CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
 CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
+CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 CHAT_COMMAND_SEND = "&Zend"
 CHAT_COMMAND_CLEAR = "&Leegmaken"
@@ -1260,6 +1268,7 @@ CONFIG_MSG_IP = "Tu n'as pas innecté un IP."
 CONFIG_MSG_NAME = "Tu n'as pas innecté un Nom utilizateur."
 CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
 CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
+CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 CHAT_COMMAND_SEND = "&Envoi"
 CHAT_COMMAND_CLEAR = "&Clear"
