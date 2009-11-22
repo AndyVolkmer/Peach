@@ -416,7 +416,7 @@ Else
 End If
 
 lblSendSpeed.Caption = Format$(DataSent / 1024#, "###,###,##0.00") & " KBytes Sent, " & _
-    Format(CDbl(BSentPerSec) / 1024#, "#0.00") & " Kb/Sec, " & _
+    Format(CDbl(BSentPerSec) / 1024#, "#0.00 ") & " Kb/Sec, " & _
     "Time left: " & Format$(SecondsLeft \ 3600, "00") & ":" & Format$(SecondsLeft \ 60, "00") & ":" & Format$(SecondsLeft Mod 60, "00")
 End Sub
 

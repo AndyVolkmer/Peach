@@ -318,7 +318,6 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     SwitchButtons False
     
     frmMain.StatusBar1.Panels(1).Text = MDI_STAT_CONNECTING
-    cmdConnect.Caption = CONFIG_COMMAND_DISCONNECT
 Else
     Disconnect
 End If

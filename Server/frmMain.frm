@@ -630,7 +630,11 @@ End With
 With frmPanel.ListView1.ListItems
     .Add , , vbNullString
     i = .Count
-    .Item(i).SubItems(1) = Winsock1(j).RemoteHostIP
+    If Winsock1(j).RemoteHostIP = "127.0.0.1" Then
+        .Item(i).SubItems(1) = Winsock1(0).LocalIP
+    Else
+        .Item(i).SubItems(1) = Winsock1(j).RemoteHostIP
+    End If
     .Item(i).SubItems(2) = j
     .Item(i).SubItems(3) = vbNullString
     .Item(i).SubItems(4) = "False"
