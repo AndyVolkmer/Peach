@@ -33,7 +33,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   873
       _Version        =   393217
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin RichTextLib.RichTextBox txtToSend 
@@ -249,61 +248,59 @@ End Sub
 
 Public Sub Create_Smileys(RTF As Control)
 Dim Smileys() As String
-Dim SmileysFile() As String
+Dim SmileyResID(0 To 13) As Long
 Dim Smilestring As String
 Dim SmileFileString As String
 Dim Start As Long
-Dim IconPath As String
+'Dim IconPath As String
 
 Screen.MousePointer = vbHourglass
 
 Start = 1
 
-IconPath = App.Path & "\smileys\"
+'IconPath = App.Path & "\smileys\"
 
 Smilestring = _
-    ":) " & _
-    ":-) " & _
-    ":( " & _
-    ":-( " & _
-    ";) " & _
-    ";-) " & _
-    ":O " & _
-    ":o " & _
-    ":D " & _
-    ":P " & _
-    ":p " & _
-    "*cool* " & _
-    "*rolleyes* " & _
-    ":["
-    
-SmileFileString = _
-    "smiley1.gif," & _
-    "smiley1.gif," & _
-    "smiley2.gif," & _
-    "smiley2.gif," & _
-    "smiley3.gif," & _
-    "smiley3.gif," & _
-    "smiley4.gif," & _
-    "smiley4.gif," & _
-    "smiley5.gif," & _
-    "smiley6.gif," & _
-    "smiley6.gif," & _
-    "smiley7.gif," & _
-    "smiley8.gif," & _
-    "smiley9.gif"
+    ":)," & _
+    ":-)," & _
+    ":(," & _
+    ":-(," & _
+    ";)," & _
+    ";-)," & _
+    ":O," & _
+    ":o," & _
+    ":D," & _
+    ":P," & _
+    ":p," & _
+    "*cool*," & _
+    "*rolleyes*," & _
+    "*angry*"
 
-Smileys = Split(Smilestring, " ")
-SmileysFile = Split(SmileFileString, ",")
+SmileyResID(0) = 101
+SmileyResID(1) = 101
+SmileyResID(2) = 102
+SmileyResID(3) = 102
+SmileyResID(4) = 103
+SmileyResID(5) = 103
+SmileyResID(6) = 104
+SmileyResID(7) = 104
+SmileyResID(8) = 105
+SmileyResID(9) = 106
+SmileyResID(10) = 106
+SmileyResID(11) = 107
+SmileyResID(12) = 108
+SmileyResID(13) = 109
 
-If UBound(Smileys) <> UBound(SmileysFile) Then
-    Debug.Print "Failure in array."
+Smileys = Split(Smilestring, ",")
+
+If UBound(Smileys) <> UBound(SmileyResID) Then
+    MsgBox "Failure in array.", vbInformation
     Exit Sub
 End If
 
 For i = LBound(Smileys) To UBound(Smileys)
     While RTF.Find(Smileys(i), Start - 1) >= 0
-        Picture1.Picture = LoadPicture(Trim$(IconPath & SmileysFile(i)))
+        Picture1.Picture = LoadResPicture(SmileyResID(i), vbResBitmap)
         RTF.SelStart = RTF.Find(Smileys(i), Start - 1)
         RTF.SelLength = Len(Smileys(i))
         Start = RTF.SelStart + RTF.SelLength + 1

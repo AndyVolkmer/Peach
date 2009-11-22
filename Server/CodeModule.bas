@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev            As String = "1.1.9.2"
+Public Const Rev            As String = "1.1.9.3"
 Public Const rPort          As Long = 6222
 
 Public VarTime              As Long    'Time counter variable
@@ -48,7 +48,7 @@ End Type
 
 Public Database             As DB
 Public Emotes()             As EMT
-Public DeclinedNames()     As String
+Public DeclinedNames()      As String
 
 'Tray Constants
 Public Const NIM_ADD = &H0
@@ -117,7 +117,7 @@ End With
 If GetList <> "!update_online#" Then SendMessage GetList
 End Sub
 
-Public Sub UPDATE_FRIEND(pName As String)
+Public Sub UPDATE_FRIEND(pName As String, pIndex As Integer)
 Dim buffer As String
 Dim a_array() As String
 
@@ -137,7 +137,7 @@ With frmFriendList.ListView1.ListItems
     Next i
 End With
 
-SendSingle buffer, frmMain.Winsock1(GetWinsockID(pName))
+SendSingle buffer, frmMain.Winsock1(pIndex)
 End Sub
 
 Private Function GetAccountStatus(pAccount As String) As String
@@ -156,55 +156,45 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Private Function GetWinsockID(pAccount As String) As Integer
-With frmPanel.ListView1.ListItems
-    For i = 1 To .Count
-        If .Item(i).SubItems(5) = pAccount Then
-            GetWinsockID = .Item(i).SubItems(2)
-            Exit For
-        End If
-    Next i
-End With
-End Function
-
 Public Sub CMSG(Command As String, Optional Name As String, Optional Message As String, Optional ForWho As String)
 Dim TimePrefix As String
 TimePrefix = "[" & Format(Time, "hh:nn:ss") & "] "
 With frmChat.txtConver
     .SelStart = Len(.Text)
+    .SelRTF = vbCrLf & TimePrefix
     Select Case Command
     Case "!msg"
-        .SelRTF = vbCrLf & TimePrefix & "[" & Name & "]: " & Message
+        .SelRTF = "[" & Name & "]: " & Message
     Case "!w"
-        .SelRTF = vbCrLf & TimePrefix & "[" & Name & " - " & ForWho & "]: " & Message
+        .SelRTF = "[" & Name & " - " & ForWho & "]: " & Message
     Case "!namerequest"
-        .SelRTF = vbCrLf & TimePrefix & "'" & Name & "' is requesting Name."
+        .SelRTF = "'" & Name & "' is requesting Name."
     Case "!connected"
-        .SelRTF = vbCrLf & TimePrefix & "'" & Name & "' connected succesfully."
+        .SelRTF = "'" & Name & "' connected succesfully."
     Case "!login"
-        .SelRTF = vbCrLf & TimePrefix & "Account: '" & Name & "' Password: '" & Message & "' is logging in."
+        .SelRTF = "Account: '" & Name & "' Password: '" & Message & "' is logging in."
     Case "!nameisfree"
-        .SelRTF = vbCrLf & TimePrefix & "Send answer that '" & Name & "' is free to take."
+        .SelRTF = "Send answer that '" & Name & "' is free to take."
     Case "!nametaken"
-        .SelRTF = vbCrLf & TimePrefix & "User '" & Name & "'. tryed to login but failed. (Name already taken)."
+        .SelRTF = "User '" & Name & "'. tryed to login but failed. (Name already taken)."
     Case "!account"
-        .SelRTF = vbCrLf & TimePrefix & "Account '" & Name & "' tryed to login but failed. (Account doesnt exist)."
+        .SelRTF = "Account '" & Name & "' tryed to login but failed. (Account doesnt exist)."
     Case "!password"
-        .SelRTF = vbCrLf & TimePrefix & "Account '" & Name & "' tryed to login but failed. (Wrong Password)."
+        .SelRTF = "Account '" & Name & "' tryed to login but failed. (Wrong Password)."
     Case "!badname"
-        .SelRTF = vbCrLf & TimePrefix & "User '" & Name & "' tryed to login but failed . (Badname)."
+        .SelRTF = "User '" & Name & "' tryed to login but failed . (Badname)."
     Case "!muted"
-        .SelRTF = vbCrLf & TimePrefix & "[Muted][" & Name & "]: " & Message
+        .SelRTF = "[Muted][" & Name & "]: " & Message
     Case "!repeat"
-        .SelRTF = vbCrLf & TimePrefix & "[" & Name & "] activated flood control."
+        .SelRTF = "[" & Name & "] activated flood control."
     Case "!long"
-        .SelRTF = vbCrLf & TimePrefix & "[" & Name & "] wrote a too long message. (Kicked)"
+        .SelRTF = "[" & Name & "] wrote a too long message. (Kicked)"
     Case "!banned"
-        .SelRTF = vbCrLf & TimePrefix & "'" & Name & "' tryed to login but failed. (Account banned)."
+        .SelRTF = "'" & Name & "' tryed to login but failed. (Account banned)."
     Case "!disconnected"
-        .SelRTF = vbCrLf & TimePrefix & "[System]: Disconnected due connection problem."
+        .SelRTF = "[System]: Disconnected due connection problem."
     Case Else
-        .SelRTF = vbCrLf & TimePrefix & "[" & Command & "] [" & Name & "] [" & ForWho & "] [" & Message & "]"
+        .SelRTF = "[" & Command & "] [" & Name & "] [" & ForWho & "] [" & Message & "]"
     End Select
 End With
 End Sub

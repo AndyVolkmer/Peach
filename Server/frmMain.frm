@@ -334,7 +334,6 @@ StatusBar1.Panels(1).Text = "Status : Disconnected"
 SetupForms frmConfig
 
 If HasError = False Then WriteLog "Correctly loaded."
-
 End Sub
 
 Public Sub CONNECT_MYSQL(pDatabase As String, pUser As String, pPassword As String, pIP As String)
@@ -734,7 +733,7 @@ Case "!server_info"
     
 'Update Friend list
 Case "!friend_get"
-    UPDATE_FRIEND pGetTarget
+    UPDATE_FRIEND pGetTarget, Index
     
 'Check if friends exist and save
 Case "!friend_add"
@@ -869,7 +868,7 @@ Case "!msg"
         End If
     End If
     
-    'Check first position of the text for an slash indicating emote
+    'Check first position of the text for a slash indicating emote
     If Left$(GetConver, 1) = Chr(47) Then
         IsSlash = True
     End If
@@ -1376,7 +1375,7 @@ Private Function GetCommands() As String
 GetCommands = vbCrLf & _
 "*********************************************" & vbCrLf & _
 "* List of all avaible commands:" & vbCrLf & _
-"* .announce 'Text' ( Send an server side tagged announced )" & vbCrLf & _
+"* .announce 'Text' ( Send a server side tagged announced )" & vbCrLf & _
 "* .banuser 'Name' ( Bans users account )" & vbCrLf & _
 "* .banaccount 'Account' ( Bans the account )" & vbCrLf & _
 "* .unbanuser 'Name' ( Removes ban from 'Name' )" & vbCrLf & _

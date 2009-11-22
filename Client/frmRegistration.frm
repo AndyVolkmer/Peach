@@ -37,7 +37,7 @@ Begin VB.Form frmRegistration
       Left            =   240
       MaxLength       =   15
       PasswordChar    =   "*"
-      TabIndex        =   15
+      TabIndex        =   2
       Top             =   1320
       Visible         =   0   'False
       Width           =   1935
@@ -57,7 +57,7 @@ Begin VB.Form frmRegistration
       Left            =   240
       MaxLength       =   15
       PasswordChar    =   "*"
-      TabIndex        =   14
+      TabIndex        =   3
       Top             =   1920
       Visible         =   0   'False
       Width           =   1935
@@ -75,7 +75,7 @@ Begin VB.Form frmRegistration
       Height          =   285
       Left            =   240
       MaxLength       =   15
-      TabIndex        =   13
+      TabIndex        =   1
       Top             =   720
       Visible         =   0   'False
       Width           =   3255
@@ -84,7 +84,7 @@ Begin VB.Form frmRegistration
       Height          =   315
       Left            =   240
       Style           =   2  'Dropdown List
-      TabIndex        =   12
+      TabIndex        =   4
       Top             =   2520
       Visible         =   0   'False
       Width           =   3255
@@ -92,7 +92,7 @@ Begin VB.Form frmRegistration
    Begin VB.TextBox txtSecretAnswer 
       Height          =   285
       Left            =   240
-      TabIndex        =   11
+      TabIndex        =   5
       Top             =   3240
       Visible         =   0   'False
       Width           =   3255
@@ -111,7 +111,7 @@ Begin VB.Form frmRegistration
       EndProperty
       Height          =   255
       Left            =   120
-      TabIndex        =   8
+      TabIndex        =   6
       Top             =   3840
       Visible         =   0   'False
       Width           =   1815
@@ -130,7 +130,7 @@ Begin VB.Form frmRegistration
       EndProperty
       Height          =   375
       Left            =   2040
-      TabIndex        =   1
+      TabIndex        =   7
       Top             =   3840
       Visible         =   0   'False
       Width           =   1695
@@ -162,14 +162,14 @@ Begin VB.Form frmRegistration
          Left            =   2160
          ScaleHeight     =   855
          ScaleWidth      =   1215
-         TabIndex        =   6
+         TabIndex        =   12
          Top             =   1200
          Width           =   1215
          Begin VB.Label Label5 
             BackColor       =   &H00F4F4F4&
             Height          =   615
             Left            =   120
-            TabIndex        =   7
+            TabIndex        =   13
             Top             =   120
             Width           =   975
          End
@@ -188,7 +188,7 @@ Begin VB.Form frmRegistration
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   10
+         TabIndex        =   15
          Top             =   2160
          Width           =   3255
       End
@@ -206,7 +206,7 @@ Begin VB.Form frmRegistration
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   9
+         TabIndex        =   14
          Top             =   2880
          Width           =   3255
       End
@@ -224,7 +224,7 @@ Begin VB.Form frmRegistration
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   4
+         TabIndex        =   10
          Top             =   1560
          Width           =   1935
       End
@@ -242,7 +242,7 @@ Begin VB.Form frmRegistration
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   3
+         TabIndex        =   9
          Top             =   960
          Width           =   1335
       End
@@ -260,7 +260,7 @@ Begin VB.Form frmRegistration
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   2
+         TabIndex        =   8
          Top             =   360
          Width           =   1335
       End
@@ -269,7 +269,7 @@ Begin VB.Form frmRegistration
       BackColor       =   &H00F4F4F4&
       Height          =   615
       Left            =   240
-      TabIndex        =   5
+      TabIndex        =   11
       Top             =   120
       Width           =   3255
    End

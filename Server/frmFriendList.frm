@@ -79,7 +79,7 @@ Public Sub AddFriend(pUser As String, pFriend As String, pIndex As Integer)
 Dim IsValid    As Boolean
 Dim j          As Long
 
-'Check if ur trying to add urself
+'Check if you are trying to add urself
 If LCase$(pUser) = LCase$(pFriend) Then
     SendSingle "!msgbox#You can't add yourself.#", frmMain.Winsock1(pIndex)
     Exit Sub
@@ -134,8 +134,11 @@ If IsValid Then
         .Item(i).SubItems(1) = pUser
         .Item(i).SubItems(2) = pFriend
     End With
-    UPDATE_FRIEND pUser
-Else 'Send message that the accoutn doesnt exist
+    
+    UPDATE_FRIEND pUser, pIndex
+    
+Else
+    'Send message that the account doesn't exist
     SendSingle "!msgbox#" & "The account '" & pFriend & "' doesnt exist.#", frmMain.Winsock1(pIndex)
 End If
 End Sub
@@ -160,7 +163,7 @@ With frmMain
     .xCommand.Execute
 End With
 
-UPDATE_FRIEND pUser
+UPDATE_FRIEND pUser, pIndex
 End Sub
 
 Public Sub DeleteFriend(pUser As String)
