@@ -576,7 +576,7 @@ Case "!msgbox"
 Case Else
     With frmChat.txtConver
         .SelStart = Len(.Text)
-        .SelRTF = vbCrLf & Space(1) & Prefix & Space(1) & GetMessage & " "
+        .SelRTF = vbCrLf & Space(1) & Prefix & Space(1) & GetMessage
     End With
     
 End Select

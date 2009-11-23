@@ -33,7 +33,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   873
       _Version        =   393217
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin RichTextLib.RichTextBox txtToSend 
@@ -493,7 +492,7 @@ L = Len(Text$)
 Pos1 = 1
 
 Do
-    Pos2 = InStr(Pos1, Text$, " ", 1)
+    Pos2 = InStr(Pos1, Text$ & " ", " ", 1)
     If Pos2 > Pos1 Then
         Test = Mid$(Text, Pos1, (Pos2 - Pos1))
         br = RemoveBrackets(Test)
@@ -506,7 +505,7 @@ Do
             
             Select Case lnk
                 Case 1 To 10
-                    NRTB.SelColor = vbBlue
+                    NRTB.SelColor = RGB(34, 0, 204)
                 Case 11 To 20
                     NRTB.SelColor = RGB(0, 127, 0)
                 Case Is > 100
