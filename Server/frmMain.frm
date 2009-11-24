@@ -649,11 +649,11 @@ Private Function socketFree() As Long
 On Error GoTo HandleErrorFreeSocket
 
 With Winsock1
-    For i = .LBound + 1 To .UBound
+    For i = .LBound + 1 To .ubound
         If Winsock1(i).LocalIP Then
         End If
     Next i
-    socketFree = .UBound + 1
+    socketFree = .ubound + 1
 End With
 
 Exit Function
@@ -856,7 +856,10 @@ Case "!msg"
     Dim IsSlash     As Boolean  'Controls emote / user command handling
     Dim ANN_MSG     As String   'A chosen part of the text
     Dim Reason      As String   'The third part of the text
+    Dim Reason2     As String   'Variable
     Dim GetTarget   As String   'We save the second word from the array2 here (target)
+    Dim GetTarget2  As String   'Variable
+    Dim pGetTarget2 As String   'Variable
         
     'Split the conversation text by spaces
     array2 = Split(GetConver, " ")
@@ -878,6 +881,11 @@ Case "!msg"
         GetTarget = StrConv(array2(1), vbProperCase)
     End If
     
+    'Capture target
+    If UBound(array2) > 1 Then
+        GetTarget2 = StrConv(array2(2), vbProperCase)
+    End If
+    
     'If a command is used check out which
     If IsCommand Then
         'Save the reason
@@ -885,10 +893,20 @@ Case "!msg"
             Reason = Reason & array2(i) & " "
         Next i
         
+        'Save the second reason
+        For i = 3 To UBound(array2)
+            Reason2 = Reason2 & array2(i) & " "
+        Next i
+        
         'Capture non propercase name and announce message
         If UBound(array2) > 0 Then
             pGetTarget = array2(1)
             ANN_MSG = Mid$(GetConver, Len(array2(0)) + 2, Len(GetConver))
+        End If
+        
+        'Capture non propercase name
+        If UBound(array2) > 1 Then
+            pGetTarget2 = array2(2)
         End If
         
         Select Case LCase$(array2(0))
@@ -910,18 +928,32 @@ Case "!msg"
         
         Case ".kick"
             KickUser GetTarget, Index
-        
-        Case ".banaccount"
-            BanAccount pGetTarget, GetUser, True, Index, Trim$(Reason)
-        
-        Case ".banuser"
-            BanUser GetTarget, GetUser, True, Index, Trim$(Reason)
-        
-        Case ".unbanuser"
-            BanUser GetTarget, GetUser, False, Index, Trim$(Reason)
-        
-        Case ".unbanaccount"
-            BanAccount pGetTarget, GetUser, False, Index, Trim$(Reason)
+            
+        Case ".ban"
+            Select Case LCase$(GetTarget)
+            Case "user", "use", "us", "u"
+                BanUser GetTarget2, GetUser, True, Index, Trim$(Reason2)
+                
+            Case "account", "accoun", "accou", "acco", "acc", "ac", "a"
+                BanAccount pGetTarget2, GetUser, True, Index, Trim$(Reason2)
+            
+            Case Else
+                SendSingle "Incorrect syntax, use the following format .ban User / Account 'Name' 'Reason'", frmMain.Winsock1(Index)
+                
+            End Select
+            
+        Case ".unban"
+            Select Case LCase$(GetTarget)
+            Case "user", "use", "us", "u"
+                BanUser GetTarget2, GetUser, False, Index, Trim$(Reason2)
+                
+            Case "account", "accoun", "accou", "acco", "acc", "ac", "a"
+                BanAccount pGetTarget2, GetUser, False, Index, Trim$(Reason2)
+                
+            Case Else
+                SendSingle "Incorrect syntax, use the following format .unban User / Account 'Name' 'Reason'", frmMain.Winsock1(Index)
+                
+            End Select
         
         Case ".mute"
             MuteUser GetTarget, GetUser, True, Index, Trim$(Reason)

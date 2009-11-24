@@ -195,13 +195,13 @@ Private Const WS_CAPTION = &HC00000
 Private Const WS_THICKFRAME = &H40000
 Private Const WS_MAXIMIZEBOX = &H10000
 Private Const WS_MINIMIZEBOX = &H20000
-Private Const SC_CLOSE As Long = &HF060&
+Private Const SC_CLOSE        As Long = &HF060&
 Private Const SC_MAXIMIZE = &HF030&
 Private Const SC_MINIMIZE = &HF020&
-Private Const MIIM_STATE As Long = &H1&
-Private Const MIIM_ID As Long = &H2&
-Private Const MFS_GRAYED As Long = &H3&
-Private Const WM_NCACTIVATE As Long = &H86
+Private Const MIIM_STATE      As Long = &H1&
+Private Const MIIM_ID         As Long = &H2&
+Private Const MFS_GRAYED      As Long = &H3&
+Private Const WM_NCACTIVATE   As Long = &H86
 Private Type MENUITEMINFO
     cbSize          As Long
     fMask           As Long

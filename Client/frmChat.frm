@@ -33,6 +33,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   873
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin RichTextLib.RichTextBox txtToSend 
@@ -430,7 +431,6 @@ If Pos > 0 Then
             ok = 0
         End If
     End If
-     
 Else
     If LCase(Left$(Test$, 4)) = "www." Then
         Pos = InStr(5, Test$, ".", 1)
@@ -438,7 +438,6 @@ Else
             ok = 5
         End If
     End If
-          
 End If
 
 If ok > 0 Then
@@ -476,8 +475,8 @@ Next i
 End Sub
 
 Private Sub Highlight(Rtb As RichTextBox)
-Dim Pos2    As Long
 Dim Pos1    As Long
+Dim Pos2    As Long
 Dim br      As Long
 Dim lnk     As Long
 Dim ret     As Long
@@ -514,10 +513,12 @@ Do
             
             NRTB.SelBold = True
         Else
-            NRTB.SelStart = Pos1 - 1
-            NRTB.SelLength = Len(Test$)
-            NRTB.SelColor = 0
-            NRTB.SelBold = False
+            With NRTB
+                .SelStart = Pos1 - 1
+                .SelLength = Len(Test$)
+                .SelColor = 0
+                .SelBold = False
+            End With
         End If
         
         Pos1 = Pos2 + 1
@@ -525,7 +526,6 @@ Do
         If Pos2 = Pos1 Then
             Pos1 = Pos2 + 1
         End If
-        
     End If
 Loop Until Pos2 = 0 Or Pos2 >= L
 
