@@ -649,11 +649,11 @@ Private Function socketFree() As Long
 On Error GoTo HandleErrorFreeSocket
 
 With Winsock1
-    For i = .LBound + 1 To .ubound
+    For i = .LBound + 1 To .UBound
         If Winsock1(i).LocalIP Then
         End If
     Next i
-    socketFree = .ubound + 1
+    socketFree = .UBound + 1
 End With
 
 Exit Function
@@ -1408,10 +1408,10 @@ GetCommands = vbCrLf & _
 "*********************************************" & vbCrLf & _
 "* List of all avaible commands:" & vbCrLf & _
 "* .announce 'Text' ( Send a server side tagged announced )" & vbCrLf & _
-"* .banuser 'Name' ( Bans users account )" & vbCrLf & _
-"* .banaccount 'Account' ( Bans the account )" & vbCrLf & _
-"* .unbanuser 'Name' ( Removes ban from 'Name' )" & vbCrLf & _
-"* .unbanaccount 'Account' ( Removes ban from 'Account )" & vbCrLf & _
+"* .ban user 'Name' 'Reason' ( Bans users account )" & vbCrLf & _
+"* .ban account 'Account' 'Reason' ( Bans the account )" & vbCrLf & _
+"* .unban user 'Name' 'Reason' ( Removes ban from 'Name' )" & vbCrLf & _
+"* .unban account 'Account' 'Reason' ( Removes ban from 'Account )" & vbCrLf & _
 "* .kick 'Name' ( Kicks 'Name' from Server )" & vbCrLf & _
 "* .mute 'Name' ( Mutes 'Name' until unmute )" & vbCrLf & _
 "* .unmute 'Name' ( Removes mute from 'Name' )" & vbCrLf & _

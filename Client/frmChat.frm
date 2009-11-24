@@ -33,7 +33,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   873
       _Version        =   393217
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin RichTextLib.RichTextBox txtToSend 
@@ -253,13 +252,10 @@ Dim SmileyResID(0 To 13) As Long
 Dim Smilestring As String
 Dim SmileFileString As String
 Dim Start As Long
-'Dim IconPath As String
 
 Screen.MousePointer = vbHourglass
 
 Start = 1
-
-'IconPath = App.Path & "\smileys\"
 
 Smilestring = _
     ":)," & _
@@ -274,7 +270,7 @@ Smilestring = _
     ":P," & _
     ":p," & _
     "*cool*," & _
-    "*rolleyes*," & _
+    "*roll*," & _
     "*angry*"
 
 SmileyResID(0) = 101
