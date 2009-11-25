@@ -195,9 +195,9 @@ Private Const WS_CAPTION = &HC00000
 Private Const WS_THICKFRAME = &H40000
 Private Const WS_MAXIMIZEBOX = &H10000
 Private Const WS_MINIMIZEBOX = &H20000
-Private Const SC_CLOSE        As Long = &HF060&
 Private Const SC_MAXIMIZE = &HF030&
 Private Const SC_MINIMIZE = &HF020&
+Private Const SC_CLOSE        As Long = &HF060&
 Private Const MIIM_STATE      As Long = &H1&
 Private Const MIIM_ID         As Long = &H2&
 Private Const MFS_GRAYED      As Long = &H3&
@@ -366,7 +366,7 @@ Case WM_LBUTTONDBLCLK
         .Show
         .WindowState = 0
     End With
-    Shell_NotifyIcon NIM_DELETE, nid     'Del tray icon
+    Shell_NotifyIcon NIM_DELETE, nid    'Del tray icon
 Case WM_RBUTTONDOWN
     frmMain.PopupMenu myPOP
 Case WM_RBUTTONUP
@@ -417,17 +417,6 @@ Private Sub Winsock1_Connect()
 SendMsg "!login#" & frmConfig.txtAccount & "#" & frmConfig.txtPassword & "#"
 End Sub
 
-Private Sub Connection(Args As Boolean)
-If Args = True Then
-    SetupForms frmChat
-    StatusBar1.Panels(1).Text = MDI_STAT_CONNECTED
-    SendMsg "!connected#" & frmConfig.txtNick & "#" & frmConfig.txtAccount & "#"
-Else
-    Disconnect
-    MsgBox MDI_MSG_NAME_TAKEN, vbInformation
-End If
-End Sub
-
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
 Prefix = "[" & Format$(Time, "hh:nn:ss") & "]"
 Dim GetCommand  As String
@@ -459,11 +448,14 @@ Case "!split_text"
    
 'We can't login
 Case "!decilined"
-    Connection False
+    Disconnect
+    MsgBox MDI_MSG_NAME_TAKEN, vbInformation
     
 'We can login
 Case "!accepted"
-    Connection True
+    SetupForms frmChat
+    StatusBar1.Panels(1).Text = MDI_STAT_CONNECTED
+    SendMsg "!connected#" & frmConfig.txtNick & "#" & frmConfig.txtAccount & "#"
     
 'Wipe out current friend list and insert new values
 Case "!update_friends"
@@ -506,7 +498,7 @@ Case "!update_online"
     frmSociety.ListView1.ListItems.Clear
     frmSendFile.Combo1.Clear
     
-    'Go through array and added users
+    'Go through array and add users
     For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
         frmSociety.ListView1.ListItems.Add , , StrArr(i)
         User = Left(StrArr(i), InStr(1, StrArr(i), " ") - 1)
@@ -585,8 +577,6 @@ End Sub
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Winsock1.Close
 Disconnect
-StatusBar1.Panels(1).Text = MDI_STAT_CONNECTION_ERROR
-
 frmConfig.Show
 End Sub
 

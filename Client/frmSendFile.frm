@@ -257,9 +257,9 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Const PacketSize As Long = 1024 * 4
-Private sFileName As String
-Private iFileNum As Integer
+Private Const PacketSize    As Long = 1024 * 4
+Private sFileName           As String
+Private iFileNum            As Integer
 
 Private Sub cmdBrowse_Click()
 On Error GoTo ErrCancel
@@ -282,6 +282,8 @@ End Sub
 
 Private Sub cmdSendFile_Click()
 If cmdSendFile.Caption = SF_COMMAND_SENDFILE Then
+    tmrCalcSpeed.Enabled = True
+    
     'If no user selected then exit
     If Combo1.ListIndex < 0 Then
         MsgBox SF_MSG_USER, vbInformation
@@ -298,6 +300,7 @@ If cmdSendFile.Caption = SF_COMMAND_SENDFILE Then
     'Request IP
     SendMsg "!iprequest#" & Combo1.Text & "#"
 Else
+    tmrCalcSpeed.Enabled = False
     SckSendFile.Close
     cmdSendFile.Caption = SF_COMMAND_SENDFILE
 End If
@@ -306,9 +309,11 @@ End Sub
 Public Sub SendF(IP As String)
 If cmdSendFile.Caption = SF_COMMAND_SENDFILE Then
     If Len(txtFileName) > 0 Then
-        If Len(Dir(txtFileName, vbNormal + vbArchive)) > 0 Then
+        If FileExists(txtFileName) = True Then
             cmdSendFile.Caption = SF_COMMAND_CANCEL
             SendFile txtFileName, IP
+        Else
+            MsgBox "File doesn't exist.", vbInformation
         End If
     End If
 Else
@@ -359,10 +364,10 @@ End Sub
 Private Sub SckSendFile_Close()
 SckSendFile.Close
 
-With tmrSendFile
-    .Enabled = False
-    .Interval = 0
-End With
+tmrSendFile.Enabled = False
+tmrSendFile.Interval = 0
+tmrCalcSpeed.Enabled = False
+
 
 Close iFileNum  'Close file
 iFileNum = 0    'Set file number to 0, timer will exit if another timer event
@@ -388,6 +393,7 @@ SckSendFile.SendData Buffer                      ' send first packet
 End Sub
 
 Private Sub SckSendFile_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
+tmrCalcSpeed.Enabled = False
 SckSendFile_Close
 End Sub
 

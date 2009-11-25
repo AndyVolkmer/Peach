@@ -3,7 +3,7 @@ Option Explicit
 
 Public CURRENT_LANG                     As Long
 'Start variable support for languages
-' MDI form ..
+'MDI form ..
 Public MDI_COMMAND_CHAT                 As String
 Public MDI_COMMAND_SENDFILE             As String
 Public MDI_COMMAND_SOCIETY              As String
@@ -11,7 +11,6 @@ Public MDI_COMMAND_SOCIETY              As String
 Public MDI_STAT_DISCONNECTED            As String
 Public MDI_STAT_DISCONNECT              As String
 Public MDI_STAT_CONNECTED               As String
-Public MDI_STAT_CONNECTION_ERROR        As String
 Public MDI_STAT_CONNECTING              As String
 
 Public MDI_MSG_ERROR_FORM_LOAD          As String
@@ -168,7 +167,6 @@ MDI_COMMAND_SOCIETY = "&Online Liste"
 MDI_STAT_DISCONNECTED = "Status: Getrennt"
 MDI_STAT_DISCONNECT = "Status: Getrennt vom Server"
 MDI_STAT_CONNECTED = "Status: Verbunden"
-MDI_STAT_CONNECTION_ERROR = "Status: Getrennt aufgrund eines Verbindungsfehlers"
 MDI_STAT_CONNECTING = "Status: Verbindung wird aufgebaut .."
 
 MDI_MSG_NAME_TAKEN = "Der Name ist bereits vergeben."
@@ -321,7 +319,6 @@ MDI_COMMAND_SOCIETY = "&Online List"
 MDI_STAT_DISCONNECTED = "Status: Disconnected"
 MDI_STAT_DISCONNECT = "Status: Disconnected from Server"
 MDI_STAT_CONNECTED = "Status: Connected"
-MDI_STAT_CONNECTION_ERROR = "Status: Can't connect to server."
 MDI_STAT_CONNECTING = "Status: Connecting .."
 
 'MDImsgbox_errorHandlerFormLoad
@@ -477,7 +474,6 @@ MDI_COMMAND_SOCIETY = "&Lista Online"
 MDI_STAT_DISCONNECTED = "Estado: Desconectado"
 MDI_STAT_DISCONNECT = "Estado: Desconectado del servidor"
 MDI_STAT_CONNECTED = "Estado: Disponible"
-MDI_STAT_CONNECTION_ERROR = "Estado: Desconectado por problemas de conexión"
 MDI_STAT_CONNECTING = "Estado: Conectando .."
 
 MDI_MSG_NAME_TAKEN = "Este nombre ya esta cogido."
@@ -630,7 +626,6 @@ MDI_COMMAND_SOCIETY = "&Online Lista"
 MDI_STAT_DISCONNECTED = "Status: Frånkopplad"
 MDI_STAT_DISCONNECT = "Status: Koppla ifrån servern"
 MDI_STAT_CONNECTED = "Status: Anslut"
-MDI_STAT_CONNECTION_ERROR = "Status: Avkopplad på grund av anslutningsproblem"
 MDI_STAT_CONNECTING = "Status: Ansluter .."
 
 'MDImsgbox_errorHandlerFormLoad
@@ -782,7 +777,6 @@ MDI_COMMAND_SOCIETY = "&Lista contatti Online"
 MDI_STAT_DISCONNECTED = "Stato: Disconnesso"
 MDI_STAT_DISCONNECT = "Stato: Disconnesso dal Server"
 MDI_STAT_CONNECTED = "Stato: Connesso"
-MDI_STAT_CONNECTION_ERROR = "Stato: Disconnesso a causa di problemi di connessione"
 MDI_STAT_CONNECTING = "Stato: Connessione .."
 
 'MDImsgbox_errorHandlerFormLoad
@@ -937,7 +931,6 @@ MDI_COMMAND_SOCIETY = "&Onlajn lista"
 MDI_STAT_DISCONNECTED = "Status: Veza je prekinuta"
 MDI_STAT_DISCONNECT = "Status: Veza sa serverom je prekinuta"
 MDI_STAT_CONNECTED = "Status: Povezi"
-MDI_STAT_CONNECTION_ERROR = "Status: Problem sa konekcijom veza je prekinuta "
 MDI_STAT_CONNECTING = "Status: Povezi .."
 
 'MDImsgbox_errorHandlerFormLoad
@@ -1091,7 +1084,6 @@ MDI_COMMAND_SOCIETY = "&Online List"
 MDI_STAT_DISCONNECTED = "Status: Verbinding verbroken"
 MDI_STAT_DISCONNECT = "Status: Verbinding verbroken met de server"
 MDI_STAT_CONNECTED = "Status: Verbonden"
-MDI_STAT_CONNECTION_ERROR = "Status: Verbinding verbroken wegens connectie problemen"
 MDI_STAT_CONNECTING = "Status: Verbinden .."
 
 'MDImsgbox_errorHandlerFormLoad
@@ -1251,7 +1243,6 @@ MDI_COMMAND_SOCIETY = "&Liste contact Online"
 MDI_STAT_DISCONNECTED = "Etat: Deconnecté"
 MDI_STAT_DISCONNECT = "Etat: Deconnecté du Server"
 MDI_STAT_CONNECTED = "Etat: Connecté"
-MDI_STAT_CONNECTION_ERROR = "Etat: Deconnecté à cause de problèmes do connection"
 MDI_STAT_CONNECTING = "Etat: Connection .."
 
 MDI_MSG_NAME_TAKEN = "Le nom inséré est déjà utilizé."

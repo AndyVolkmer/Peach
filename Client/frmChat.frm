@@ -33,6 +33,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   873
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin RichTextLib.RichTextBox txtToSend 
@@ -191,8 +192,10 @@ txtConver.Locked = False
 'Create smileys
 Call Create_Smileys(txtConver)
 
+'Set the signs to highlight
 Call InitSigns
 
+'Highlight links, emails and ftp links
 Call Highlight(txtConver)
 
 'If window doenst have focus then flash
@@ -247,11 +250,11 @@ If KeyAscii = vbKeyReturn Then cmdSend_Click
 End Sub
 
 Public Sub Create_Smileys(RTF As Control)
-Dim Smileys() As String
-Dim SmileyResID(0 To 13) As Long
-Dim Smilestring As String
+Dim Smileys()       As String
+Dim SmileyResID(13) As Long
+Dim Smilestring     As String
 Dim SmileFileString As String
-Dim Start As Long
+Dim Start           As Long
 
 Screen.MousePointer = vbHourglass
 
@@ -315,9 +318,9 @@ Dim Buf As Variant
 Dim Text As String
 
 If Clipboard.GetFormat(vbCFText) = True Then
-  Text = Clipboard.GetText
+    Text = Clipboard.GetText
 Else
-  Buf = Clipboard.GetData
+    Buf = Clipboard.GetData
 End If
 
 Clipboard.Clear
@@ -326,7 +329,7 @@ DoEvents
 
 SendMessage RTF.hwnd, WM_PASTE, 0, 0
 DoEvents
-Sleep 30
+'Sleep 30
 
 Clipboard.Clear
 On Error Resume Next

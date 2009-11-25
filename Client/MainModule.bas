@@ -48,6 +48,7 @@ End Sub
 Private Sub LoadIniValue()
 Dim Path As String
 Path = App.Path & "\Config.ini"
+
 'Open Settings variable
 With Setting
 
@@ -141,7 +142,7 @@ End If
 
 'Load scheme color
 If Len(Trim$(ReadIniValue(Path, "Private", "SchemeColor"))) = 0 Then
-    Setting.SCHEME_COLOR = &HF4F4F4
+    Setting.SCHEME_COLOR = 15724527 '&HF4F4F4
 Else
     Setting.SCHEME_COLOR = ReadIniValue(Path, "Private", "SchemeColor")
 End If
@@ -198,6 +199,7 @@ If IsFirst = False Then
         .lblMinimizeTray.BackColor = SC
     End With
 End If
+
 With frmSociety
     .BackColor = SC
     .SSTab1.BackColor = SC

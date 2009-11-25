@@ -26,7 +26,7 @@ Begin VB.Form frmConfig
       Caption         =   "cmdConnect"
       Height          =   375
       Left            =   2880
-      TabIndex        =   11
+      TabIndex        =   4
       Top             =   2640
       Width           =   1935
    End
@@ -44,7 +44,7 @@ Begin VB.Form frmConfig
       EndProperty
       Height          =   375
       Left            =   120
-      TabIndex        =   5
+      TabIndex        =   8
       Top             =   2760
       Width           =   1335
    End
@@ -62,7 +62,7 @@ Begin VB.Form frmConfig
       EndProperty
       Height          =   375
       Left            =   120
-      TabIndex        =   3
+      TabIndex        =   7
       Top             =   2400
       Width           =   1335
    End
@@ -80,7 +80,7 @@ Begin VB.Form frmConfig
       Height          =   285
       Left            =   2880
       MaxLength       =   15
-      TabIndex        =   2
+      TabIndex        =   3
       Top             =   2160
       Width           =   1935
    End
@@ -98,7 +98,7 @@ Begin VB.Form frmConfig
       Height          =   285
       Left            =   2880
       MaxLength       =   15
-      TabIndex        =   0
+      TabIndex        =   1
       Top             =   720
       Width           =   1935
    End
@@ -118,7 +118,7 @@ Begin VB.Form frmConfig
       Left            =   2880
       MaxLength       =   15
       PasswordChar    =   "*"
-      TabIndex        =   1
+      TabIndex        =   2
       Top             =   1440
       Width           =   1935
    End
@@ -136,7 +136,7 @@ Begin VB.Form frmConfig
       EndProperty
       Height          =   255
       Left            =   2880
-      TabIndex        =   12
+      TabIndex        =   6
       Top             =   3600
       Width           =   1935
    End
@@ -154,7 +154,7 @@ Begin VB.Form frmConfig
       EndProperty
       Height          =   255
       Left            =   2880
-      TabIndex        =   10
+      TabIndex        =   5
       Top             =   3240
       Width           =   1935
    End
@@ -173,7 +173,7 @@ Begin VB.Form frmConfig
       ForeColor       =   &H00000000&
       Height          =   255
       Left            =   2850
-      TabIndex        =   9
+      TabIndex        =   12
       Top             =   1920
       Width           =   975
    End
@@ -192,7 +192,7 @@ Begin VB.Form frmConfig
       ForeColor       =   &H00000000&
       Height          =   255
       Left            =   2880
-      TabIndex        =   8
+      TabIndex        =   0
       Top             =   480
       Width           =   1935
    End
@@ -211,7 +211,7 @@ Begin VB.Form frmConfig
       ForeColor       =   &H00000000&
       Height          =   255
       Left            =   2880
-      TabIndex        =   7
+      TabIndex        =   11
       Top             =   1200
       Width           =   1935
    End
@@ -229,7 +229,7 @@ Begin VB.Form frmConfig
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
-      TabIndex        =   6
+      TabIndex        =   10
       Top             =   3720
       Width           =   1455
    End
@@ -247,7 +247,7 @@ Begin VB.Form frmConfig
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
-      TabIndex        =   4
+      TabIndex        =   9
       Top             =   3480
       Width           =   1455
    End
