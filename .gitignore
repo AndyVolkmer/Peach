@@ -1,0 +1,11 @@
+.vbw
+.ini
+
+*.vbw
+*.ini
+
+Client/Config.ini
+Server/Config.ini
+
+Client/*.ini
+Server/*.ini
