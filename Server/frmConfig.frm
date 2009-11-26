@@ -34,6 +34,7 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -202,26 +203,17 @@ connCounter.Enabled = False
 VarTime = 0
 Label2.Caption = "Offline"
 
-With frmMain
-    For Each WiSk In .Winsock1
-        If WiSk.State = 7 Then
-            WiSk.Close
-            Unload WiSk
-        End If
-    Next
-    .Winsock1(0).Close
-    .StatusBar1.Panels(1).Text = "Status: Disconnected"
-End With
+For Each WiSk In frmMain.Winsock1
+    Unload WiSk
+Next
 
-With frmAccountPanel
-    For Each WiSk In .RegSock
-        If WiSk.State = 7 Then
-            WiSk.Close
-            Unload WiSk
-        End If
-    Next
-    .RegSock(0).Close
-End With
+frmMain.Winsock1(0).Close
+frmMain.StatusBar1.Panels(1).Text = "Status: Disconnected"
+
+For Each WiSk In frmAccountPanel.RegSock
+    Unload WiSk
+Next
+frmAccountPanel.RegSock(0).Close
         
 'Clear frmPanel ListView
 frmPanel.ListView1.ListItems.Clear

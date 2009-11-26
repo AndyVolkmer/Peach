@@ -25,6 +25,7 @@ Begin VB.MDIForm frmMain
       BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
          NumPanels       =   1
          BeginProperty Panel1 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
+            Bevel           =   0
             Object.Width           =   7938
             MinWidth        =   7938
          EndProperty
@@ -686,7 +687,7 @@ Case "!friend"
     Dim p_ProperAccount As String
     
     'Get the proper written account name
-    p_ProperAccount = GetProperAccountName(p_MainArray(2))
+    p_ProperAccount = GetProperAccountName(p_MainArray(3))
         
     Select Case p_MainArray(1)
     'Update Friend list
@@ -695,11 +696,11 @@ Case "!friend"
         
     'Add friend to list
     Case "-add"
-        frmFriendList.AddFriend p_ProperAccount, "", Index
+        frmFriendList.AddFriend p_MainArray(2), p_ProperAccount, Index
         
     'Remove friend from list
     Case "-remove"
-        frmFriendList.RemoveFriend p_ProperAccount, "", Index
+        frmFriendList.RemoveFriend p_MainArray(2), p_ProperAccount, Index
         
     End Select
     
@@ -795,7 +796,7 @@ Case "!message"
     Dim Reason2     As String   'Variable
     Dim GetTarget   As String   'We save the second word from the array2 here (target)
     Dim GetTarget2  As String   'Variable
-    Dim pGetTarget  As String
+    Dim pGetTarget  As String   'Variable
     Dim pGetTarget2 As String   'Variable
         
     'Split the conversation text by spaces
@@ -850,7 +851,7 @@ Case "!message"
         'Capture non propercase name and announce message
         If UBound(array2) > 0 Then
             pGetTarget = array2(1)
-            ANN_MSG = Mid$("", Len(array2(0)) + 2, Len(""))
+            ANN_MSG = Mid$(p_MainArray(2), Len(array2(0)) + 2, Len(p_MainArray(2)))
         End If
         
         'Capture non propercase name
@@ -861,9 +862,9 @@ Case "!message"
         Select Case LCase$(array2(0))
         Case ".show"
             Select Case LCase$(GetTarget)
-            Case "accounts", "account", "a"
+            Case "accounts", "account", "accoun", "accou", "acco", "acc", "ac", "a"
                 SendSingle "!split_text#" & GetAccountList, frmMain.Winsock1(Index)
-            Case "users", "user", "u"
+            Case "users", "user", "use", "us", "u"
                 SendSingle "!split_text#" & GetUserList, frmMain.Winsock1(Index)
             Case Else
                 SendSingle "Incorrect Syntax, use the following format .show 'account'/'user'.", frmMain.Winsock1(Index)
@@ -998,6 +999,10 @@ Case "!message"
         Case Else
             For i = LBound(Emotes) To UBound(Emotes)
                 If Emotes(i).Command = LCase(array2(0)) Then
+                    If p_MainArray(1) = GetTarget Then
+                        IsUser = False
+                    End If
+                    
                     If IsUser Then
                         SendMessage p_MainArray(1) & Emotes(i).IsUserText1 & GetTarget & Emotes(i).IsUserText2
                     Else
@@ -1021,11 +1026,14 @@ Case "!message"
         Exit Sub
     End If
     
-    Dim S1 As Long
-    Dim E As String
+    Dim S1  As Long
+    Dim E   As String
     
+    'Only level 2 accounts can by pass special rules
     If GetLevel(p_MainArray(1)) <> 2 Then
+        'We just bother checking if the text is longer then 5 characters
         If Len(p_MainArray(2)) > 5 Then
+            'If the text is just made of numbers we don't check
             If IsNumeric(p_MainArray(2)) = False Then
                 If IsAlphaCharacter(p_MainArray(2)) Then
                     S1 = 0
@@ -1057,7 +1065,7 @@ Case "!message"
         End With
     End If
     
-    'Send Message
+    'Send Message and print in chat
     SendMessage "[" & p_MainArray(1) & "]: " & p_MainArray(2)
     CMSG p_Command, p_MainArray(1), p_MainArray(2)
     
@@ -1113,6 +1121,10 @@ With frmAccountPanel.ListView1.ListItems
         If LCase(.Item(i).SubItems(1)) = LCase(pAccount) Then
             GetProperAccountName = .Item(i).SubItems(1)
             Exit For
+        Else
+            If i = .Count Then
+                GetProperAccountName = pAccount
+            End If
         End If
     Next i
 End With
@@ -1421,12 +1433,10 @@ End With
 End Function
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-With frmPanel.ListView1.ListItems
-    For i = 1 To .Count
-        Unload frmMain.Winsock1(Index)
-        .Remove (i)
-    Next i
-End With
+Dim Sock As Winsock
+For Each Sock In frmMain.Winsock1
+    Unload Sock
+Next
 
 With frmChat.txtConver
     .SelStart = Len(.Text)
