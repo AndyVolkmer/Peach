@@ -692,7 +692,7 @@ Case "!friend"
     Select Case p_MainArray(1)
     'Update Friend list
     Case "-get"
-        UPDATE_FRIEND p_ProperAccount, Index
+        UPDATE_FRIEND p_MainArray(2), Index
         
     'Add friend to list
     Case "-add"

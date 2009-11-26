@@ -4,8 +4,8 @@
 *.vbw
 *.ini
 
-client/Config.ini
-server/Config.ini
+Client/Config.ini
+Server/Config.ini
 
-client/*.ini
-server/*.ini
+Client/*.ini
+Server/*.ini
