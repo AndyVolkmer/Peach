@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev            As String = "1.1.9.8"
+Public Const Rev            As String = "1.1.9.9"
 Public Const rPort          As Long = 6222
 
 Public VarTime              As Long    'Time counter variable
@@ -138,6 +138,10 @@ With frmFriendList.ListView1.ListItems
 End With
 
 SendSingle buffer, frmMain.Winsock1(pIndex)
+End Sub
+
+Public Sub UPDATE_STATUS_BAR()
+frmMain.StatusBar1.Panels(1).Text = "Status: Connected with " & frmMain.Winsock1.Count - 1 & " Client(s)."
 End Sub
 
 Private Function GetAccountStatus(pAccount As String) As String

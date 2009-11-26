@@ -414,11 +414,12 @@ SetupForms frmConfig
 End Sub
 
 Private Sub Winsock1_Connect()
-SendMsg "!login#" & frmConfig.txtAccount & "#" & frmConfig.txtPassword & "#"
+With frmConfig
+    SendMsg "!login#" & .txtAccount & "#" & .txtPassword & "#" & .txtNick & "#"
+End With
 End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
-Prefix = "[" & Format$(Time, "hh:nn:ss") & "]"
 Dim GetCommand  As String
 Dim StrArr()    As String
 Dim StrArr2()   As String
@@ -455,7 +456,7 @@ Case "!decilined"
 Case "!accepted"
     SetupForms frmChat
     StatusBar1.Panels(1).Text = MDI_STAT_CONNECTED
-    SendMsg "!connected#" & frmConfig.txtNick & "#" & frmConfig.txtAccount & "#"
+    SendMsg "!connected#"
     
 'Wipe out current friend list and insert new values
 Case "!update_friends"
@@ -511,10 +512,6 @@ Case "!update_online"
 'We get login answer here
 Case "!login"
     Select Case StrArr(1)
-    Case "Yes"
-        frmMain.StatusBar1.Panels(1).Text = "Status : Authenticating.."
-        SendMsg "!namerequest#" & frmConfig.txtNick & "#"
-        
     Case "Password"
         With frmConfig
             .cmdConnect_Click
@@ -568,7 +565,7 @@ Case "!msgbox"
 Case Else
     With frmChat.txtConver
         .SelStart = Len(.Text)
-        .SelRTF = vbCrLf & Space(1) & Prefix & Space(1) & GetMessage
+        .SelRTF = vbCrLf & Space(1) & "[" & Format$(Time, "hh:nn:ss") & "]" & Space(1) & GetMessage
     End With
     
 End Select

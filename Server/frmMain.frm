@@ -330,15 +330,13 @@ LoadDeclinedNames .Declined_Name_Table
 'Close Database variable
 End With
 
-StatusBar1.Panels(1).Text = "Status : Disconnected"
+UPDATE_STATUS_BAR
 SetupForms frmConfig
 
 If HasError = False Then WriteLog "Correctly loaded."
 End Sub
 
 Public Sub CONNECT_MYSQL(pDatabase As String, pUser As String, pPassword As String, pIP As String)
-StatusBar1.Panels(1).Text = "Status : Connecting to database .."
-
 On Error GoTo HandleErrorConnection
 
 'Connect with Database (MySQL)
@@ -381,8 +379,6 @@ If HasError Then Exit Sub
 SQL = "SELECT * FROM " & pTable
 Counter = 0
 
-StatusBar1.Panels(1).Text = "Status : Loading declined names .."
-
 On Error GoTo HandleErrorEmotes
 xCommand.CommandText = SQL
 Set xRecordSet = xCommand.Execute
@@ -419,8 +415,6 @@ If HasError Then Exit Sub
 
 SQL = "SELECT * FROM " & pTable
 Counter = 0
-
-StatusBar1.Panels(1).Text = "Status : Loading emotes .."
 
 On Error GoTo HandleErrorEmotes
 xCommand.CommandText = SQL
@@ -464,8 +458,6 @@ If HasError Then Exit Sub
 SQL = "SELECT * FROM " & pTable
 Counter = 0
 
-StatusBar1.Panels(1).Text = "Status : Loading friends .."
-
 On Error GoTo HandleErrorFriends
 xCommand.CommandText = SQL
 Set xRecordSet = xCommand.Execute
@@ -503,8 +495,6 @@ If HasError Then Exit Sub
 
 SQL = "SELECT * FROM " & pTable
 Counter = 0
-
-StatusBar1.Panels(1).Text = "Status : Loading accounts .."
 
 On Error GoTo HandleErrorTable
 xCommand.CommandText = SQL
@@ -598,7 +588,7 @@ WriteIniValue App.Path & "\Config.ini", "Position", "Left", Me.Left
 
 'Close Database variable
 End With
-Shell_NotifyIcon NIM_DELETE, nid  'del tray icon
+Shell_NotifyIcon NIM_DELETE, nid    'Del tray icon
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
@@ -613,7 +603,7 @@ With frmPanel.ListView1.ListItems
 End With
 
 UPDATE_ONLINE
-StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
+UPDATE_STATUS_BAR
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
@@ -642,7 +632,7 @@ With frmPanel.ListView1.ListItems
     .Item(i).SubItems(7) = "False"
 End With
 
-StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
+UPDATE_STATUS_BAR
 End Sub
 
 Private Function socketFree() As Long
@@ -690,11 +680,13 @@ DoEvents
 array1 = Split(GetMessage, "#")
 
 'Assign the variables to the array
-GetCommand = array1(0)
-If UBound(array1) > 0 Then
-    GetUser = array1(1)
-    If UBound(array1) > 1 Then
-        GetConver = array1(2)
+If UBound(array1) > -1 Then
+    GetCommand = array1(0)
+    If UBound(array1) > 0 Then
+        GetUser = array1(1)
+        If UBound(array1) > 1 Then
+            GetConver = array1(2)
+        End If
     End If
 End If
 
@@ -742,21 +734,64 @@ Case "!friend_add"
 'Remove friend from list
 Case "!friend_remove"
     frmFriendList.RemoveFriend pGetTarget, GetConver, Index
-   
-'Add Name & Account to frmPanel ListView
+    
 Case "!connected"
+    UPDATE_ONLINE
+   
+Case "!login"
     Dim GetOriginalAccount As String
     
-    'If the account is already beeing used kick first instance
-    With frmPanel.ListView1.ListItems
+    With frmAccountPanel.ListView1.ListItems
         For i = 1 To .Count
-            If .Item(i).SubItems(5) = GetConver Then
-                CMSG "!dinstance", GetConver
-                Winsock1(.Item(i).SubItems(2)).Close
+            If LCase(.Item(i).SubItems(1)) = LCase(GetUser) Then
+                'Ban Check
+                If .Item(i).SubItems(5) = "True" Then
+                    SendSingle "!login#Banned#", frmMain.Winsock1(Index)
+                    CMSG "!banned", GetUser
+                    Exit Sub
+                End If
+                
+                'Password Check
+                If Not .Item(i).SubItems(2) = GetConver Then
+                    SendSingle "!login#Password#", frmMain.Winsock1(Index)
+                    CMSG "!password", GetUser
+                    Exit Sub
+                End If
+                Exit For
+            Else
+                If i = .Count Then
+                    SendSingle "!login#Account#", frmMain.Winsock1(Index)
+                    CMSG "!account", GetUser, GetConver
+                    Exit Sub
+                End If
+            End If
+        Next i
+    End With
+    
+    'Check badname list
+    For i = LBound(DeclinedNames) To UBound(DeclinedNames)
+        If DeclinedNames(i) = array1(3) Then
+            SendSingle "!decilined", frmMain.Winsock1(Index)
+            CMSG "!badname", array1(3)
+            Exit Sub
+        End If
+    Next i
+    
+    With frmPanel.ListView1.ListItems
+        'Check current online list
+        For i = 1 To .Count
+            If .Item(i) = array1(3) Then
+                SendSingle "!decilined", frmMain.Winsock1(Index)
+                CMSG "!nametaken", array1(3)
+                Exit Sub
+            End If
+        Next i
+                
+        'If the account is already beeing used kick first instance
+        For i = 1 To .Count
+            If .Item(i).SubItems(5) = GetUser Then
                 Unload Winsock1(.Item(i).SubItems(2))
                 .Remove (i)
-                
-                StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
                 Exit For
             End If
         Next i
@@ -765,81 +800,22 @@ Case "!connected"
     'Get the proper written account name
     With frmAccountPanel.ListView1.ListItems
         For i = 1 To .Count
-            If LCase(.Item(i).SubItems(1)) = LCase(GetConver) Then
+            If LCase(.Item(i).SubItems(1)) = LCase(GetUser) Then
                 GetOriginalAccount = .Item(i).SubItems(1)
                 Exit For
             End If
         Next i
     End With
     
-    CMSG GetCommand, GetUser
     With frmPanel.ListView1.ListItems
         i = .Count
-        .Item(i).Text = GetUser
+        .Item(i).Text = array1(3)
         .Item(i).SubItems(5) = GetOriginalAccount
     End With
     
-    UPDATE_ONLINE
-
-Case "!namerequest"
-    CMSG GetCommand, GetUser
-    'Check badname list
-    For i = LBound(DeclinedNames) To UBound(DeclinedNames)
-        If DeclinedNames(i) = GetUser Then
-            bMatch = True
-            CMSG "!badname", GetUser
-            Exit For
-        End If
-    Next i
-    
-    'Check current online list
-    With frmPanel.ListView1.ListItems
-        For i = 1 To .Count
-            If .Item(i) = GetUser Then
-                bMatch = True
-                CMSG "!nametaken", GetUser
-                Exit For
-            End If
-        Next i
-    End With
-    
-    'Return answer to client
-    If bMatch Then
-        SendSingle "!decilined", frmMain.Winsock1(Index)
-    Else
-        SendSingle "!accepted", frmMain.Winsock1(Index)
-        CMSG "!nameisfree", GetUser
-    End If
-    
-Case "!login"
-    With frmAccountPanel.ListView1.ListItems
-        For i = 1 To .Count
-            If LCase(.Item(i).SubItems(1)) = LCase(GetUser) Then
-                'Ban Check
-                If .Item(i).SubItems(5) = "True" Then
-                    SendSingle "!login#Banned#", frmMain.Winsock1(Index)
-                    CMSG "!banned", GetUser
-                End If
-                
-                'Password Check
-                If .Item(i).SubItems(2) = GetConver Then
-                    'Send back confirmation
-                    SendSingle "!login#Yes#", frmMain.Winsock1(Index)
-                    CMSG GetCommand, GetUser, GetConver
-                Else
-                    SendSingle "!login#Password#", frmMain.Winsock1(Index)
-                    CMSG "!password", GetUser
-                End If
-                Exit Sub
-            Else
-                If i = .Count Then
-                    SendSingle "!login#Account#", frmMain.Winsock1(Index)
-                    CMSG "!account", GetUser, GetConver
-                End If
-            End If
-        Next i
-    End With
-    
+    UPDATE_STATUS_BAR
+    SendSingle "!accepted#", frmMain.Winsock1(Index)
+        
 'We get ip request and send ip back
 Case "!iprequest"
     With frmPanel.ListView1.ListItems
@@ -1350,7 +1326,7 @@ With frmPanel.ListView1.ListItems
             
             'Update userlist and statusbar
             UPDATE_ONLINE
-            StatusBar1.Panels(1).Text = "Status: Connected with " & frmMain.Winsock1.Count - 1 & " Client(s)."
+            UPDATE_STATUS_BAR
             Exit For
         Else
             If i = .Count Then
@@ -1454,18 +1430,22 @@ End With
 End Function
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(2) = Index Then
-            .Remove (i)
-            Exit For
-        End If
+        Unload frmMain.Winsock1(Index)
+        .Remove (i)
     Next i
 End With
 
-UPDATE_ONLINE
-StatusBar1.Panels(1).Text = "Status: Connected with " & Winsock1.Count - 1 & " Client(s)."
+With frmChat.txtConver
+    .SelStart = Len(.Text)
+    .SelRTF = vbCrLf & " -> " & Description & vbCrLf & " -> All current connections got unloaded, server is now avaible under '" & Winsock1(0).LocalIP & "'."
+End With
+
+frmConfig.connCounter.Enabled = False
+VarTime = 0
+
+UPDATE_STATUS_BAR
 End Sub
 
 Public Sub DisableFormResize(frm As Form)
