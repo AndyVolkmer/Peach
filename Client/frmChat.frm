@@ -33,7 +33,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   873
       _Version        =   393217
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin RichTextLib.RichTextBox txtToSend 
@@ -165,7 +164,7 @@ txtToSend.Text = vbNullString
 If Len(Trim$(TTS)) = 0 Then Exit Sub
 
 'Send public message
-SendMsg "!msg#" & frmConfig.txtNick & "#" & Trim$(TTS) & "#"
+SendMsg "!message#" & frmConfig.txtNick & "#" & Trim$(TTS) & "#"
 End Sub
 
 Private Sub Form_Load()

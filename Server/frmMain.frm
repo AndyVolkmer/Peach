@@ -662,106 +662,76 @@ loadSocket = theFreeSocket
 End Function
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-Dim array1()        As String   'Whole message string is saved here and split up
-Dim GetUser         As String   'The second string from array1 used to be the username
-Dim GetMessage      As String   'We save message from bytes here to split it in array1
-Dim GetConver       As String   'The third string from array1 used to be the conversation
-Dim GetCommand      As String   'The first string from array1 used to be the command
-Dim pGetTarget      As String   'We save here the account propercased or the username
-Dim GetLastMessage  As String   'We save here the latest message from that user
+Dim p_Message       As String
+Dim p_MainArray()   As String   'Whole message string is saved here and split up by # sign
+Dim p_Command       As String   'First part of main array ( always the command )
 Dim bMatch          As Boolean  'bMatch controls the login
 Dim IsMuted         As Boolean  'Mute explains itself
 
 'Get Message
-frmMain.Winsock1(Index).GetData GetMessage
+frmMain.Winsock1(Index).GetData p_Message
 DoEvents
 
 'We decode (split) the message into an array
-array1 = Split(GetMessage, "#")
+p_MainArray = Split(p_Message, "#")
 
-'Assign the variables to the array
-If UBound(array1) > -1 Then
-    GetCommand = array1(0)
-    If UBound(array1) > 0 Then
-        GetUser = array1(1)
-        If UBound(array1) > 1 Then
-            GetConver = array1(2)
-        End If
-    End If
+'Assign the variable to the array
+If UBound(p_MainArray) > -1 Then
+    p_Command = p_MainArray(0)
 End If
 
-With frmPanel.ListView1.ListItems
-    'Get the latest message
-    For i = 1 To .Count
-        If .Item(i) = GetUser Then
-            GetLastMessage = .Item(i).SubItems(3)
-            Exit For
-        End If
-    Next i
-
-    'Check if user is muted
-    For i = 1 To .Count
-        If .Item(i) = GetUser Then
-            If .Item(i).SubItems(4) = "True" Then
-                IsMuted = True
-                Exit For
-            End If
-        End If
-    Next i
+Select Case p_Command
+'Select action and execute command
+Case "!friend"
+    Dim p_ProperAccount As String
     
-    'Get proper account name
-    For i = 1 To .Count
-        If LCase(.Item(i).SubItems(5)) = LCase(GetUser) Then
-            pGetTarget = .Item(i).SubItems(5)
-            Exit For
-        End If
-    Next i
-End With
-
-Select Case GetCommand
+    'Get the proper written account name
+    p_ProperAccount = GetProperAccountName(p_MainArray(2))
+        
+    Select Case p_MainArray(1)
+    'Update Friend list
+    Case "-get"
+        UPDATE_FRIEND p_ProperAccount, Index
+        
+    'Add friend to list
+    Case "-add"
+        frmFriendList.AddFriend p_ProperAccount, "", Index
+        
+    'Remove friend from list
+    Case "-remove"
+        frmFriendList.RemoveFriend p_ProperAccount, "", Index
+        
+    End Select
+    
+Case "!connected"
+    UPDATE_ONLINE
+    
 'Send Server information
 Case "!server_info"
     SendSingle "!split_text#" & GetServerInformation, frmMain.Winsock1(Index)
     
-'Update Friend list
-Case "!friend_get"
-    UPDATE_FRIEND pGetTarget, Index
-    
-'Check if friends exist and save
-Case "!friend_add"
-    frmFriendList.AddFriend pGetTarget, GetConver, Index
-
-'Remove friend from list
-Case "!friend_remove"
-    frmFriendList.RemoveFriend pGetTarget, GetConver, Index
-    
-Case "!connected"
-    UPDATE_ONLINE
-   
 Case "!login"
-    Dim GetOriginalAccount As String
-    
     With frmAccountPanel.ListView1.ListItems
         For i = 1 To .Count
-            If LCase(.Item(i).SubItems(1)) = LCase(GetUser) Then
+            If LCase(.Item(i).SubItems(1)) = LCase(p_MainArray(1)) Then
                 'Ban Check
                 If .Item(i).SubItems(5) = "True" Then
                     SendSingle "!login#Banned#", frmMain.Winsock1(Index)
-                    CMSG "!banned", GetUser
+                    CMSG "!banned", p_MainArray(1)
                     Exit Sub
                 End If
                 
                 'Password Check
-                If Not .Item(i).SubItems(2) = GetConver Then
+                If Not .Item(i).SubItems(2) = p_MainArray(2) Then
                     SendSingle "!login#Password#", frmMain.Winsock1(Index)
-                    CMSG "!password", GetUser
+                    CMSG "!password", p_MainArray(1)
                     Exit Sub
                 End If
                 Exit For
             Else
                 If i = .Count Then
                     SendSingle "!login#Account#", frmMain.Winsock1(Index)
-                    CMSG "!account", GetUser, GetConver
+                    CMSG "!account", p_MainArray(1), p_MainArray(2)
                     Exit Sub
                 End If
             End If
@@ -770,9 +740,9 @@ Case "!login"
     
     'Check badname list
     For i = LBound(DeclinedNames) To UBound(DeclinedNames)
-        If DeclinedNames(i) = array1(3) Then
+        If DeclinedNames(i) = p_MainArray(3) Then
             SendSingle "!decilined", frmMain.Winsock1(Index)
-            CMSG "!badname", array1(3)
+            CMSG "!badname", p_MainArray(3)
             Exit Sub
         End If
     Next i
@@ -780,16 +750,16 @@ Case "!login"
     With frmPanel.ListView1.ListItems
         'Check current online list
         For i = 1 To .Count
-            If .Item(i) = array1(3) Then
+            If .Item(i) = p_MainArray(3) Then
                 SendSingle "!decilined", frmMain.Winsock1(Index)
-                CMSG "!nametaken", array1(3)
+                CMSG "!nametaken", p_MainArray(3)
                 Exit Sub
             End If
         Next i
                 
         'If the account is already beeing used kick first instance
         For i = 1 To .Count
-            If .Item(i).SubItems(5) = GetUser Then
+            If .Item(i).SubItems(5) = p_MainArray(1) Then
                 Unload Winsock1(.Item(i).SubItems(2))
                 .Remove (i)
                 Exit For
@@ -797,20 +767,10 @@ Case "!login"
         Next i
     End With
     
-    'Get the proper written account name
-    With frmAccountPanel.ListView1.ListItems
-        For i = 1 To .Count
-            If LCase(.Item(i).SubItems(1)) = LCase(GetUser) Then
-                GetOriginalAccount = .Item(i).SubItems(1)
-                Exit For
-            End If
-        Next i
-    End With
-    
     With frmPanel.ListView1.ListItems
         i = .Count
-        .Item(i).Text = array1(3)
-        .Item(i).SubItems(5) = GetOriginalAccount
+        .Item(i).Text = p_MainArray(3)
+        .Item(i).SubItems(5) = GetProperAccountName(p_MainArray(1))
     End With
     
     UPDATE_STATUS_BAR
@@ -820,13 +780,13 @@ Case "!login"
 Case "!iprequest"
     With frmPanel.ListView1.ListItems
         For i = 1 To .Count
-            If .Item(i) = GetUser Then
+            If .Item(i) = p_MainArray(1) Then
                 SendSingle "!iprequest#" & .Item(i).SubItems(1) & "#", frmMain.Winsock1(Index)
             End If
         Next i
     End With
     
-Case "!msg"
+Case "!message"
     Dim array2()    As String   'Client textbox split by spaces is saved here
     Dim IsCommand   As Boolean  'Controls the command handling
     Dim IsSlash     As Boolean  'Controls emote / user command handling
@@ -835,20 +795,21 @@ Case "!msg"
     Dim Reason2     As String   'Variable
     Dim GetTarget   As String   'We save the second word from the array2 here (target)
     Dim GetTarget2  As String   'Variable
+    Dim pGetTarget  As String
     Dim pGetTarget2 As String   'Variable
         
     'Split the conversation text by spaces
-    array2 = Split(GetConver, " ")
+    array2 = Split(p_MainArray(2), " ")
         
     'Check first position of the text for a point indicating command
-    If Left$(GetConver, 1) = Chr(46) Then
-        If GetLevel(GetUser) <> 0 Then
+    If Left$(p_MainArray(2), 1) = Chr(46) Then
+        If GetLevel(p_MainArray(1)) <> 0 Then
             IsCommand = True
         End If
     End If
     
     'Check first position of the text for a slash indicating emote
-    If Left$(GetConver, 1) = Chr(47) Then
+    If Left$(p_MainArray(2), 1) = Chr(47) Then
         IsSlash = True
     End If
     
@@ -861,6 +822,18 @@ Case "!msg"
     If UBound(array2) > 1 Then
         GetTarget2 = StrConv(array2(2), vbProperCase)
     End If
+    
+    With frmPanel.ListView1.ListItems
+        'Check if user is muted
+        For i = 1 To .Count
+            If .Item(i) = p_MainArray(1) Then
+                If .Item(i).SubItems(4) = "True" Then
+                    IsMuted = True
+                    Exit For
+                End If
+            End If
+        Next i
+    End With
     
     'If a command is used check out which
     If IsCommand Then
@@ -877,7 +850,7 @@ Case "!msg"
         'Capture non propercase name and announce message
         If UBound(array2) > 0 Then
             pGetTarget = array2(1)
-            ANN_MSG = Mid$(GetConver, Len(array2(0)) + 2, Len(GetConver))
+            ANN_MSG = Mid$("", Len(array2(0)) + 2, Len(""))
         End If
         
         'Capture non propercase name
@@ -908,10 +881,10 @@ Case "!msg"
         Case ".ban"
             Select Case LCase$(GetTarget)
             Case "user", "use", "us", "u"
-                BanUser GetTarget2, GetUser, True, Index, Trim$(Reason2)
+                BanUser GetTarget2, p_MainArray(1), True, Index, Trim$(Reason2)
                 
             Case "account", "accoun", "accou", "acco", "acc", "ac", "a"
-                BanAccount pGetTarget2, GetUser, True, Index, Trim$(Reason2)
+                BanAccount pGetTarget2, p_MainArray(1), True, Index, Trim$(Reason2)
             
             Case Else
                 SendSingle "Incorrect syntax, use the following format .ban User / Account 'Name' 'Reason'", frmMain.Winsock1(Index)
@@ -921,10 +894,10 @@ Case "!msg"
         Case ".unban"
             Select Case LCase$(GetTarget)
             Case "user", "use", "us", "u"
-                BanUser GetTarget2, GetUser, False, Index, Trim$(Reason2)
+                BanUser GetTarget2, p_MainArray(1), False, Index, Trim$(Reason2)
                 
             Case "account", "accoun", "accou", "acco", "acc", "ac", "a"
-                BanAccount pGetTarget2, GetUser, False, Index, Trim$(Reason2)
+                BanAccount pGetTarget2, p_MainArray(1), False, Index, Trim$(Reason2)
                 
             Case Else
                 SendSingle "Incorrect syntax, use the following format .unban User / Account 'Name' 'Reason'", frmMain.Winsock1(Index)
@@ -932,16 +905,16 @@ Case "!msg"
             End Select
         
         Case ".mute"
-            MuteUser GetTarget, GetUser, True, Index, Trim$(Reason)
+            MuteUser GetTarget, p_MainArray(1), True, Index, Trim$(Reason)
         
         Case ".unmute"
-            MuteUser GetTarget, GetUser, False, Index, Trim$(Reason)
+            MuteUser GetTarget, p_MainArray(1), False, Index, Trim$(Reason)
         
         Case ".announce", ".ann", ".broadcast"
             If Len(Trim$(ANN_MSG)) = 0 Then
                 SendSingle "Incorrect syntax, use the following format .announce 'Text to announce'.", frmMain.Winsock1(Index)
             Else
-                SendMessage "[" & GetUser & " announces]: " & ANN_MSG
+                SendMessage "[" & p_MainArray(1) & " announces]: " & ANN_MSG
             End If
         
         Case ".help", ".command", ".commands"
@@ -976,12 +949,12 @@ Case "!msg"
             'Whisper
             If IsUser Then
                 If UBound(array2) > 1 Then
-                    Whisper GetUser, GetTarget, array2(2), Index
+                    Whisper p_MainArray(1), GetTarget, array2(2), Index
                     'Set last message
                     With frmPanel.ListView1.ListItems
                         For i = 1 To .Count
-                            If GetUser = .Item(i) Then
-                                frmPanel.ListView1.ListItems.Item(i).SubItems(3) = GetConver
+                            If .Item(i) = p_MainArray(1) Then
+                                .Item(i).SubItems(3) = p_MainArray(2)
                                 Exit For
                             End If
                         Next i
@@ -1001,7 +974,7 @@ Case "!msg"
             'Set AFK Flag
             With frmPanel.ListView1.ListItems
                 For i = 1 To .Count
-                    If .Item(i) = GetUser Then
+                    If .Item(i) = p_MainArray(1) Then
                         If .Item(i).SubItems(7) = "True" Then
                             .Item(i).SubItems(7) = "False"
                         Else
@@ -1017,18 +990,18 @@ Case "!msg"
             SendSingle GetEmotesHelp, frmMain.Winsock1(Index)
         
         Case "/online"
-            SendSingle "You are online for " & GetOnlineTime(GetUser) & ".", frmMain.Winsock1(Index)
+            SendSingle "You are online for " & GetOnlineTime(p_MainArray(1)) & ".", frmMain.Winsock1(Index)
         
         Case "/logout"
-            KickUser GetUser, Index
+            KickUser p_MainArray(1), Index
         
         Case Else
             For i = LBound(Emotes) To UBound(Emotes)
                 If Emotes(i).Command = LCase(array2(0)) Then
                     If IsUser Then
-                        SendMessage GetUser & Emotes(i).IsUserText1 & GetTarget & Emotes(i).IsUserText2
+                        SendMessage p_MainArray(1) & Emotes(i).IsUserText1 & GetTarget & Emotes(i).IsUserText2
                     Else
-                        SendMessage GetUser & Emotes(i).IsNotUser
+                        SendMessage p_MainArray(1) & Emotes(i).IsNotUser
                     End If
                     Exit For
                 Else
@@ -1037,31 +1010,31 @@ Case "!msg"
             Next i
         
         End Select
-        CMSG "!emote", GetUser, GetConver
+        CMSG "!emote", p_MainArray(1), p_MainArray(2)
         Exit Sub
     End If
     
     'Check if user is muted
     If IsMuted Then
         SendSingle "You are muted.", frmMain.Winsock1(Index)
-        CMSG "!muted", GetUser, GetConver
+        CMSG "!muted", p_MainArray(1), p_MainArray(2)
         Exit Sub
     End If
     
     Dim S1 As Long
     Dim E As String
     
-    If GetLevel(GetUser) <> 2 Then
-        If Len(GetConver) > 5 Then
-            If IsNumeric(GetConver) = False Then
-                If IsAlphaCharacter(GetConver) Then
+    If GetLevel(p_MainArray(1)) <> 2 Then
+        If Len(p_MainArray(2)) > 5 Then
+            If IsNumeric(p_MainArray(2)) = False Then
+                If IsAlphaCharacter(p_MainArray(2)) Then
                     S1 = 0
-                    For i = 1 To Len(GetConver)
-                        E = Mid$(GetConver, i, 1)
+                    For i = 1 To Len(p_MainArray(2))
+                        E = Mid$(p_MainArray(2), i, 1)
                         If UCase$(E) = E Then S1 = S1 + 1
                     Next i
                     E = vbNullString
-                    If Format$(100 * S1 / Len(GetConver), "0.00") > 75 Then
+                    If Format$(100 * S1 / Len(p_MainArray(2)), "0.00") > 75 Then
                         SendSingle "Message blocked. Please do not write more then 75% in caps.", frmMain.Winsock1(Index)
                         Exit Sub
                     End If
@@ -1069,23 +1042,30 @@ Case "!msg"
             End If
         End If
         
-        'Check if user is repeating
-        If GetConver = GetLastMessage Then
-            SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", frmMain.Winsock1(Index)
-            CMSG "!repeat", GetUser
-            Exit Sub
-        End If
+        With frmPanel.ListView1.ListItems
+            'Get the latest message
+            For i = 1 To .Count
+                If .Item(i) = p_MainArray(1) Then
+                    If .Item(i).SubItems(3) = p_MainArray(2) Then
+                         SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", frmMain.Winsock1(Index)
+                         CMSG "!repeat", p_MainArray(1)
+                         Exit Sub
+                    End If
+                    Exit For
+                End If
+            Next i
+        End With
     End If
     
     'Send Message
-    SendMessage "[" & GetUser & "]: " & GetConver
-    CMSG GetCommand, GetUser, GetConver
+    SendMessage "[" & p_MainArray(1) & "]: " & p_MainArray(2)
+    CMSG p_Command, p_MainArray(1), p_MainArray(2)
     
     'Set last message
     With frmPanel.ListView1.ListItems
         For i = 1 To .Count
-            If .Item(i) = GetUser Then
-                .Item(i).SubItems(3) = GetConver
+            If .Item(i) = p_MainArray(1) Then
+                .Item(i).SubItems(3) = p_MainArray(2)
                 Exit For
             End If
         Next i
@@ -1122,6 +1102,17 @@ With frmPanel.ListView1.ListItems
             Next j
             
             GetOnlineTime = TD
+        End If
+    Next i
+End With
+End Function
+
+Private Function GetProperAccountName(pAccount As String) As String
+With frmAccountPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If LCase(.Item(i).SubItems(1)) = LCase(pAccount) Then
+            GetProperAccountName = .Item(i).SubItems(1)
+            Exit For
         End If
     Next i
 End With
@@ -1190,9 +1181,9 @@ With frmPanel.ListView1.ListItems
                 End If
             Else
                 If IsMuted Then
-                    SendMessage User & " got muted by " & AdminName & ". [Reason: " & Reason & "]"
+                    SendMessage User & " got muted by " & AdminName & ". Reason: " & Reason
                 Else
-                    SendMessage User & " got unmuted by " & AdminName & ". [Reason: " & Reason & "]"
+                    SendMessage User & " got unmuted by " & AdminName & ". Reason: " & Reason
                 End If
             End If
             Exit For

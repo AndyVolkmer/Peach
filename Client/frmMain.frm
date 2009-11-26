@@ -507,7 +507,7 @@ Case "!update_online"
     Next i
     
     'Ask for friendlist
-    SendMsg "!friend_get#" & frmConfig.txtAccount & "#"
+    SendMsg "!friend#-get#" & frmConfig.txtAccount & "#"
     
 'We get login answer here
 Case "!login"

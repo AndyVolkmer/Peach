@@ -60,9 +60,9 @@ Begin VB.Form frmSociety
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Command4"
+      Tab(2).Control(0)=   "ListView3"
       Tab(2).Control(1)=   "Command3"
-      Tab(2).Control(2)=   "ListView3"
+      Tab(2).Control(2)=   "Command4"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton Command4 
          Caption         =   "&Remove"
@@ -213,7 +213,7 @@ Dim Val As String
 Val = InputBox("Please enter the account of your friend in the text box below.", "Adding a friend", "Friends Account") & "#"
 If Trim$(Val) = "#" Then Exit Sub
 
-SendMsg "!friend_add#" & frmConfig.txtAccount & "#" & Val & "#"
+SendMsg "!friend#-add#" & frmConfig.txtAccount & "#" & Val & "#"
 End Sub
 
 Private Sub Command2_Click()
@@ -236,7 +236,7 @@ With ListView2
         Name = Left$(.SelectedItem.Text, MPos - 1)
     End If
     
-    SendMsg "!friend_remove#" & frmConfig.txtAccount.Text & "#" & Name & "#"
+    SendMsg "!friend#-remove#" & frmConfig.txtAccount.Text & "#" & Name & "#"
 End With
 End Sub
 
