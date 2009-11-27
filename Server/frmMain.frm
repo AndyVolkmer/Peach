@@ -443,7 +443,7 @@ WriteLog "Loaded " & Counter & " emote(s)."
 Exit Sub
 HandleErrorEmotes:
 'Print error
-WriteLog Err.Description & "."
+WriteLog Err.Description
 
 'Set error flag
 HasError = True
@@ -481,7 +481,7 @@ WriteLog "Loaded " & Counter & " relation(s)."
 Exit Sub
 HandleErrorFriends:
 'Print error
-WriteLog Err.Description & "."
+WriteLog Err.Description
 
 'Set error flag
 HasError = True
@@ -540,7 +540,7 @@ WriteLog "Loaded " & Counter & " account(s)."
 Exit Sub
 HandleErrorTable:
 'Print error
-WriteLog Err.Description & "."
+WriteLog Err.Description
 
 'Set error flag
 HasError = True
@@ -769,9 +769,8 @@ Case "!login"
     End With
     
     With frmPanel.ListView1.ListItems
-        i = .Count
-        .Item(i).Text = p_MainArray(3)
-        .Item(i).SubItems(5) = GetProperAccountName(p_MainArray(1))
+        .Item(.Count).Text = p_MainArray(3)
+        .Item(.Count).SubItems(5) = GetProperAccountName(p_MainArray(1))
     End With
     
     UPDATE_STATUS_BAR
@@ -946,8 +945,21 @@ Case "!message"
         End With
         
         Select Case LCase(array2(0))
+'        Case "/roll"
+'            If UBound(array2) > 0 Then
+'                If UBound(array2) > 1 Then
+'
+'                Else
+'
+'                End If
+'            Else
+'
+'            End If
+'            Debug.Print GetTarget
+'            Debug.Print array2(1)
+'            Debug.Print array2(2)
+        'Whisper
         Case "/w", "/whisper"
-            'Whisper
             If IsUser Then
                 If UBound(array2) > 1 Then
                     Whisper p_MainArray(1), GetTarget, array2(2), Index
@@ -971,8 +983,8 @@ Case "!message"
                 End If
             End If
         
+        'Set AFK Flag
         Case "/afk"
-            'Set AFK Flag
             With frmPanel.ListView1.ListItems
                 For i = 1 To .Count
                     If .Item(i) = p_MainArray(1) Then
@@ -1402,13 +1414,14 @@ GetCommands = vbCrLf & _
 End Function
 
 Private Function GetEmotesHelp() As String
-GetEmotesHelp = vbCrLf & " All avaible emotes:"
 For i = LBound(Emotes) To UBound(Emotes) - 1
     GetEmotesHelp = GetEmotesHelp & vbCrLf & " " & Emotes(i).Command & " - " & Emotes(i).Description
 Next i
 
 If Len(Trim$(GetEmotesHelp)) = 0 Then
-    GetEmotesHelp = vbCrLf & " No emotes avaible on this server."
+    GetEmotesHelp = vbCrLf & "No emotes avaible on this server."
+Else
+    GetEmotesHelp = vbCrLf & " All avaible emotes:" & GetEmotesHelp
 End If
 End Function
 
@@ -1435,7 +1448,9 @@ End Function
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Dim Sock As Winsock
 For Each Sock In frmMain.Winsock1
-    Unload Sock
+    If Sock.Index <> 0 Then
+        Unload Sock
+    End If
 Next
 
 With frmChat.txtConver
@@ -1443,7 +1458,6 @@ With frmChat.txtConver
     .SelRTF = vbCrLf & " -> " & Description & vbCrLf & " -> All current connections got unloaded, server is now avaible under '" & Winsock1(0).LocalIP & "'."
 End With
 
-frmConfig.connCounter.Enabled = False
 VarTime = 0
 
 UPDATE_STATUS_BAR
