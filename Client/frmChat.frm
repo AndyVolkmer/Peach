@@ -33,6 +33,7 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   873
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin RichTextLib.RichTextBox txtToSend 
@@ -164,7 +165,7 @@ txtToSend.Text = vbNullString
 If Len(Trim$(TTS)) = 0 Then Exit Sub
 
 'Send public message
-SendMsg "!message#" & frmConfig.txtNick & "#" & Trim$(TTS) & "#"
+SendMSG "!message#" & frmConfig.txtNick & "#" & Trim$(TTS) & "#"
 End Sub
 
 Private Sub Form_Load()
@@ -273,7 +274,7 @@ Smilestring = _
     ":p," & _
     "*cool*," & _
     "*roll*," & _
-    "*angry*"
+    "*mad*"
 
 SmileyResID(0) = 101
 SmileyResID(1) = 101
@@ -333,11 +334,11 @@ DoEvents
 Clipboard.Clear
 On Error Resume Next
 If Text <> "" Then
-  Clipboard.SetText Text
+    Clipboard.SetText Text
 Else
-  If Buf <> 0 Then
-    Clipboard.SetData Buf
-  End If
+    If Buf <> 0 Then
+        Clipboard.SetData Buf
+    End If
 End If
 End Sub
 

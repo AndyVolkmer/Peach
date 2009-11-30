@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const pRev       As String = "1.2.0.3"
+Public Const pRev       As String = "1.2.0.4"
 Public Const pAuthor    As String = "Andy"
 
 Public Const aPort      As Long = 6123
@@ -106,10 +106,13 @@ Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
 Public nid As NOTIFYICONDATA ' trayicon variable
 
-Public Sub SendMsg(iMessage As String)
-If frmMain.Winsock1.State <> 7 Then Exit Sub
-frmMain.Winsock1.SendData iMessage
-DoEvents
+Public Sub SendMSG(pMessage As String)
+With frmMain.Winsock1
+    If .State = 7 Then
+        .SendData pMessage
+        DoEvents
+    End If
+End With
 End Sub
 
 Public Sub FlashTitle(Handle As Long, ReturnOrig As Boolean)

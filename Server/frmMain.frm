@@ -233,6 +233,9 @@ Call InitCommonControls
 End Sub
 
 Private Sub MDIForm_Load()
+Dim pPath As String
+pPath = App.Path & "\Config.ini"
+
 DisableFormResize Me
 Dim L As Long
     L = GetWindowLong(Me.hwnd, GWL_STYLE)
@@ -243,74 +246,81 @@ Dim L As Long
 'Open Database variable
 With Database
 
-'Assign Variables to the .ini strings
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "Database"))) <> 0 Then
-    .Database = ReadIniValue(App.Path & "\Config.ini", "Database", "Database")
+'== Database ==
+If Len(Trim$(ReadIniValue(pPath, "Database", "Database"))) <> 0 Then
+    .Database = ReadIniValue(pPath, "Database", "Database")
 Else
     WriteLog "No Database value found."
     .Database = InputBox("The configuration file does not cotain a valid database, please insert one in the textbox below.", "Database error ..", "Database Name")
 End If
 
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "User"))) <> 0 Then
-    .User = ReadIniValue(App.Path & "\Config.ini", "Database", "User")
+If Len(Trim$(ReadIniValue(pPath, "Database", "User"))) <> 0 Then
+    .User = ReadIniValue(pPath, "Database", "User")
 Else
     WriteLog "No User value found."
     .User = InputBox("The configuration file does not cotain a valid user name, please insert one in the textbox below.", "Database error ..", "User Name")
 End If
 
-If Len(Trim$(DeCode(ReadIniValue(App.Path & "\Config.ini", "Database", "Password")))) <> 0 Then
-    .Password = DeCode(ReadIniValue(App.Path & "\Config.ini", "Database", "Password"))
+If Len(Trim$(DeCode(ReadIniValue(pPath, "Database", "Password")))) <> 0 Then
+    .Password = DeCode(ReadIniValue(pPath, "Database", "Password"))
 Else
     WriteLog "No Password value found."
     .Password = InputBox("The configuration file does not cotain a valid password, please insert one in the textbox below.", "Database error ..", "Password")
 End If
 
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "Host"))) <> 0 Then
-    .Host = ReadIniValue(App.Path & "\Config.ini", "Database", "Host")
+If Len(Trim$(ReadIniValue(pPath, "Database", "Host"))) <> 0 Then
+    .Host = ReadIniValue(pPath, "Database", "Host")
 Else
     WriteLog "No Host value found."
     .Host = InputBox("The configuration file does not cotain a host adress, please insert one in the textbox below.", "Database error ..", "Host Adress")
 End If
 
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table"))) <> 0 Then
-    .Account_Table = ReadIniValue(App.Path & "\Config.ini", "Database", "A_Table")
+If Len(Trim$(ReadIniValue(pPath, "Database", "AccountTable"))) <> 0 Then
+    .Account_Table = ReadIniValue(pPath, "Database", "AccountTable")
 Else
     WriteLog "No Account-Table found."
     .Account_Table = InputBox("The configuration file does not contain a account table, please insert one in the textbox below.", "Database error ..", "Account Table")
 End If
 
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table"))) <> 0 Then
-    .Friend_Table = ReadIniValue(App.Path & "\Config.ini", "Database", "F_Table")
+If Len(Trim$(ReadIniValue(pPath, "Database", "FriendTable"))) <> 0 Then
+    .Friend_Table = ReadIniValue(pPath, "Database", "FriendTable")
 Else
     WriteLog "No Friends-Table found."
     .Friend_Table = InputBox("The configuration file does not contain a friend table, please insert one in the textbox below.", "Database error ..", "Friend Table")
 End If
 
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "E_Table"))) <> 0 Then
-    .Emote_Table = ReadIniValue(App.Path & "\Config.ini", "Database", "E_Table")
+If Len(Trim$(ReadIniValue(pPath, "Database", "EmoteTable"))) <> 0 Then
+    .Emote_Table = ReadIniValue(pPath, "Database", "EmoteTable")
 Else
     WriteLog "No Emotes-Table found."
     .Emote_Table = InputBox("The configuration file does not contain a emote table, please insert one in the textbox below.", "Database error ..", "Emote Table")
 End If
 
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Database", "D_N_Table"))) <> 0 Then
-    .Declined_Name_Table = ReadIniValue(App.Path & "\Config.ini", "Database", "D_N_Table")
+If Len(Trim$(ReadIniValue(pPath, "Database", "DeclinedNameTable"))) <> 0 Then
+    .Declined_Name_Table = ReadIniValue(pPath, "Database", "DeclinedNameTable")
 Else
     WriteLog "No Declined-Names-Table found."
     .Declined_Name_Table = InputBox("The configuration file does not contain a declined name table, please insert one in the textbox below.", "Database error ..", "Declined Name Table")
 End If
 
-'Load position
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Position", "Top"))) <> 0 Then
-    Me.Top = ReadIniValue(App.Path & "\Config.ini", "Position", "Top")
+'== Position ==
+If Len(Trim$(ReadIniValue(pPath, "Position", "Top"))) <> 0 Then
+    Me.Top = ReadIniValue(pPath, "Position", "Top")
 Else
     Me.Top = 1200
 End If
 
-If Len(Trim$(ReadIniValue(App.Path & "\Config.ini", "Position", "Left"))) <> 0 Then
-    Me.Left = ReadIniValue(App.Path & "\Config.ini", "Position", "Left")
+If Len(Trim$(ReadIniValue(pPath, "Position", "Left"))) <> 0 Then
+    Me.Left = ReadIniValue(pPath, "Position", "Left")
 Else
     Me.Left = 1200
+End If
+
+'== Options ==
+If Len(Trim$(ReadIniValue(pPath, "Option", "ChatLevel"))) <> 0 Then
+    Options.ChatLevel = ReadIniValue(pPath, "Option", "ChatLevel")
+Else
+    Options.ChatLevel = 0
 End If
 
 'Connect to MySQL Database
@@ -331,7 +341,7 @@ LoadDeclinedNames .Declined_Name_Table
 'Close Database variable
 End With
 
-UPDATE_STATUS_BAR
+frmMain.StatusBar1.Panels(1) = "Status: Disconnected"
 SetupForms frmConfig
 
 If HasError = False Then WriteLog "Correctly loaded."
@@ -572,24 +582,35 @@ End If
 End Sub
 
 Private Sub MDIForm_Unload(Cancel As Integer)
+Dim pPath As String
+pPath = App.Path & "\Config.ini"
+
+'Remove tray icon
+Shell_NotifyIcon NIM_DELETE, nid
+
 'Open Database variable
 With Database
 
-'Write values into .ini file
-WriteIniValue App.Path & "\Config.ini", "Database", "Database", .Database
-WriteIniValue App.Path & "\Config.ini", "Database", "User", .User
-WriteIniValue App.Path & "\Config.ini", "Database", "Password", .Password
-WriteIniValue App.Path & "\Config.ini", "Database", "Host", .Host
-WriteIniValue App.Path & "\Config.ini", "Database", "A_Table", .Account_Table
-WriteIniValue App.Path & "\Config.ini", "Database", "F_Table", .Friend_Table
-WriteIniValue App.Path & "\Config.ini", "Database", "E_Table", .Emote_Table
-WriteIniValue App.Path & "\Config.ini", "Database", "D_N_Table", .Declined_Name_Table
-WriteIniValue App.Path & "\Config.ini", "Position", "Top", Me.Top
-WriteIniValue App.Path & "\Config.ini", "Position", "Left", Me.Left
+'== Database ==
+WriteIniValue pPath, "Database", "Database", .Database
+WriteIniValue pPath, "Database", "User", .User
+WriteIniValue pPath, "Database", "Password", .Password
+WriteIniValue pPath, "Database", "Host", .Host
+WriteIniValue pPath, "Database", "AccountTable", .Account_Table
+WriteIniValue pPath, "Database", "FriendTable", .Friend_Table
+WriteIniValue pPath, "Database", "EmoteTable", .Emote_Table
+WriteIniValue pPath, "Database", "DeclinedNameTable", .Declined_Name_Table
 
 'Close Database variable
 End With
-Shell_NotifyIcon NIM_DELETE, nid    'Del tray icon
+
+'== Position ==
+WriteIniValue pPath, "Position", "Top", Me.Top
+WriteIniValue pPath, "Position", "Left", Me.Left
+
+'== Options ==
+WriteIniValue pPath, "Option", "ChatLevel", Options.ChatLevel
+
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
@@ -701,7 +722,7 @@ Case "!friend"
     'Remove friend from list
     Case "-remove"
         frmFriendList.RemoveFriend p_MainArray(2), p_ProperAccount, Index
-        
+                
     End Select
     
 Case "!connected"
@@ -863,10 +884,13 @@ Case "!message"
             Select Case LCase$(GetTarget)
             Case "accounts", "account", "accoun", "accou", "acco", "acc", "ac", "a"
                 SendSingle "!split_text#" & GetAccountList, frmMain.Winsock1(Index)
+                
             Case "users", "user", "use", "us", "u"
                 SendSingle "!split_text#" & GetUserList, frmMain.Winsock1(Index)
+                
             Case Else
                 SendSingle "Incorrect Syntax, use the following format .show 'account'/'user'.", frmMain.Winsock1(Index)
+                
             End Select
         
         Case ".userinfo", ".uinfo"
@@ -945,19 +969,48 @@ Case "!message"
         End With
         
         Select Case LCase(array2(0))
-'        Case "/roll"
-'            If UBound(array2) > 0 Then
-'                If UBound(array2) > 1 Then
-'
-'                Else
-'
-'                End If
-'            Else
-'
-'            End If
-'            Debug.Print GetTarget
-'            Debug.Print array2(1)
-'            Debug.Print array2(2)
+        Case "/roll"
+            On Error Resume Next
+            Dim pRoll       As Long
+            Dim pMinRoll    As Long
+            Dim pMaxRoll    As Long
+            
+            If UBound(array2) > 0 Then
+                If UBound(array2) > 1 Then
+                    If IsNumeric(array2(1)) Then
+                        If IsNumeric(array2(2)) Then
+                            pRoll = GetRandomNumber(array2(1), array2(2))
+                            pMinRoll = array2(1)
+                            pMaxRoll = array2(2)
+                        Else
+                            pRoll = GetRandomNumber(, array2(1))
+                            pMinRoll = 1
+                            pMaxRoll = array2(1)
+                        End If
+                    Else
+                        pRoll = GetRandomNumber()
+                        pMinRoll = 1
+                        pMaxRoll = 100
+                    End If
+                Else
+                    If IsNumeric(array2(1)) Then
+                        pRoll = GetRandomNumber(, array2(1))
+                        pMinRoll = 1
+                        pMaxRoll = array2(1)
+                    Else
+                        pRoll = GetRandomNumber()
+                        pMinRoll = 1
+                        pMaxRoll = 100
+                    End If
+                End If
+            Else
+                pRoll = GetRandomNumber()
+                pMinRoll = 1
+                pMaxRoll = 100
+            End If
+            
+            SendSingle p_MainArray(1) & " rolls " & pRoll & ". (" & pMinRoll & "-" & pMaxRoll & ")", frmMain.Winsock1(Index)
+           
         'Whisper
         Case "/w", "/whisper"
             If IsUser Then
@@ -1042,7 +1095,7 @@ Case "!message"
     Dim E   As String
     
     'Only level 2 accounts can by pass special rules
-    If GetLevel(p_MainArray(1)) <> 2 Then
+    If GetLevel(p_MainArray(1)) = Options.ChatLevel Then
         'We just bother checking if the text is longer then 5 characters
         If Len(p_MainArray(2)) > 5 Then
             'If the text is just made of numbers we don't check
@@ -1328,12 +1381,11 @@ With frmAccountPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub KickUser(User As String, SIndex As Integer)
+Private Sub KickUser(pUser As String, pIndex As Integer)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i) = User Then
+        If .Item(i) = pUser Then
             'Disconnect and unload the socket
-            frmMain.Winsock1(.Item(i).SubItems(2)).Close
             Unload frmMain.Winsock1(.Item(i).SubItems(2))
             
             'Remove from userlist
@@ -1345,10 +1397,10 @@ With frmPanel.ListView1.ListItems
             Exit For
         Else
             If i = .Count Then
-                If Len(Trim$(User)) = 0 Then
-                    SendSingle "Incorrect syntax, use following format .kick 'User'.", frmMain.Winsock1(SIndex)
+                If Len(Trim$(pUser)) = 0 Then
+                    SendSingle "Incorrect syntax, use following format .kick 'User'.", frmMain.Winsock1(pIndex)
                 Else
-                    SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
+                    SendSingle "User '" & pUser & "' not found.", Winsock1(pIndex)
                 End If
             End If
         End If

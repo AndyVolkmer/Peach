@@ -60,9 +60,9 @@ Begin VB.Form frmSociety
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Command4"
+      Tab(2).Control(0)=   "ListView3"
       Tab(2).Control(1)=   "Command3"
-      Tab(2).Control(2)=   "ListView3"
+      Tab(2).Control(2)=   "Command4"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton Command4 
          Caption         =   "&Remove"

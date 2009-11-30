@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev            As String = "1.2.0.3"
+Public Const Rev            As String = "1.2.0.4"
 Public Const rPort          As Long = 6222
 
 Public VarTime              As Long    'Time counter variable
@@ -38,6 +38,10 @@ Type DB
     Declined_Name_Table     As String
 End Type
 
+Type OPT
+    ChatLevel               As String
+End Type
+
 Type EMT
     Command                 As String
     IsUserText1             As String
@@ -46,6 +50,7 @@ Type EMT
     Description             As String
 End Type
 
+Public Options              As OPT
 Public Database             As DB
 Public Emotes()             As EMT
 Public DeclinedNames()      As String
@@ -205,6 +210,13 @@ End Sub
 
 Public Function IsAlphaCharacter(sChar As String) As Boolean
     IsAlphaCharacter = (Not (UCase(sChar) = LCase(sChar))) Or (sChar = " ")
+End Function
+
+Public Function GetRandomNumber(Optional ByVal MIN As Long = 1, Optional ByVal MAX As Long = 100) As Long
+Randomize
+Do
+    GetRandomNumber = Int(Rnd * MAX) + MIN
+Loop Until GetRandomNumber <= MAX 'And GetRandomNumber > MIN
 End Function
 
 Public Sub minimize_to_tray()
