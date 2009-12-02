@@ -298,7 +298,7 @@ If cmdSendFile.Caption = SF_COMMAND_SENDFILE Then
     End If
     
     'Request IP
-    SendMsg "!iprequest#" & Combo1.Text & "#"
+    SendMSG "!iprequest#" & Combo1.Text & "#"
 Else
     tmrCalcSpeed.Enabled = False
     SckSendFile.Close
@@ -432,9 +432,9 @@ Dim Buffer() As Byte, BuffSize As Long
 tmrSendFile.Enabled = False
 If iFileNum <= 0 Or SckSendFile.State <> sckConnected Then Exit Sub
 
-If Loc(iFileNum) >= LOF(iFileNum) Then ' FILE COMPLETE
-    Close iFileNum ' close file
-    iFileNum = 0 ' set file number to 0, timer will exit if another timer event
+If Loc(iFileNum) >= LOF(iFileNum) Then 'FILE COMPLETE
+    Close iFileNum  'Close file
+    iFileNum = 0    'Set file number to 0, timer will exit if another timer event
     
     Exit Sub
 End If

@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.MDIForm frmMain 
    Appearance      =   0  'Flat
@@ -730,7 +730,7 @@ Case "!connected"
     
 'Send Server information
 Case "!server_info"
-    SendSingle "!split_text#" & GetServerInformation, frmMain.Winsock1(Index)
+    SendSingle "!split_text#" & GetServerInformation, Index
     
 Case "!login"
     With frmAccountPanel.ListView1.ListItems
@@ -745,14 +745,14 @@ Case "!login"
                 
                 'Password Check
                 If Not .Item(i).SubItems(2) = p_MainArray(2) Then
-                    SendSingle "!login#Password#", frmMain.Winsock1(Index)
+                    SendSingle "!login#Password#", Index
                     CMSG "!password", p_MainArray(1)
                     Exit Sub
                 End If
                 Exit For
             Else
                 If i = .Count Then
-                    SendSingle "!login#Account#", frmMain.Winsock1(Index)
+                    SendSingle "!login#Account#", Index
                     CMSG "!account", p_MainArray(1), p_MainArray(2)
                     Exit Sub
                 End If
@@ -763,7 +763,7 @@ Case "!login"
     'Check badname list
     For i = LBound(DeclinedNames) To UBound(DeclinedNames)
         If DeclinedNames(i) = p_MainArray(3) Then
-            SendSingle "!decilined", frmMain.Winsock1(Index)
+            SendSingle "!decilined", Index
             CMSG "!badname", p_MainArray(3)
             Exit Sub
         End If
@@ -773,7 +773,7 @@ Case "!login"
         'Check current online list
         For i = 1 To .Count
             If .Item(i) = p_MainArray(3) Then
-                SendSingle "!decilined", frmMain.Winsock1(Index)
+                SendSingle "!decilined", Index
                 CMSG "!nametaken", p_MainArray(3)
                 Exit Sub
             End If
@@ -795,14 +795,14 @@ Case "!login"
     End With
     
     UPDATE_STATUS_BAR
-    SendSingle "!accepted#", frmMain.Winsock1(Index)
+    SendSingle "!accepted#", Index
         
 'We get ip request and send ip back
 Case "!iprequest"
     With frmPanel.ListView1.ListItems
         For i = 1 To .Count
             If .Item(i) = p_MainArray(1) Then
-                SendSingle "!iprequest#" & .Item(i).SubItems(1) & "#", frmMain.Winsock1(Index)
+                SendSingle "!iprequest#" & .Item(i).SubItems(1) & "#", Index
             End If
         Next i
     End With
@@ -883,13 +883,13 @@ Case "!message"
         Case ".show"
             Select Case LCase$(GetTarget)
             Case "accounts", "account", "accoun", "accou", "acco", "acc", "ac", "a"
-                SendSingle "!split_text#" & GetAccountList, frmMain.Winsock1(Index)
+                SendSingle "!split_text#" & GetAccountList, Index
                 
             Case "users", "user", "use", "us", "u"
-                SendSingle "!split_text#" & GetUserList, frmMain.Winsock1(Index)
+                SendSingle "!split_text#" & GetUserList, Index
                 
             Case Else
-                SendSingle "Incorrect Syntax, use the following format .show 'account'/'user'.", frmMain.Winsock1(Index)
+                SendSingle "Incorrect Syntax, use the following format .show 'account'/'user'.", Index
                 
             End Select
         
@@ -911,7 +911,7 @@ Case "!message"
                 BanAccount pGetTarget2, p_MainArray(1), True, Index, Trim$(Reason2)
             
             Case Else
-                SendSingle "Incorrect syntax, use the following format .ban User / Account 'Name' 'Reason'", frmMain.Winsock1(Index)
+                SendSingle "Incorrect syntax, use the following format .ban User / Account 'Name' 'Reason'", Index
                 
             End Select
             
@@ -924,7 +924,7 @@ Case "!message"
                 BanAccount pGetTarget2, p_MainArray(1), False, Index, Trim$(Reason2)
                 
             Case Else
-                SendSingle "Incorrect syntax, use the following format .unban User / Account 'Name' 'Reason'", frmMain.Winsock1(Index)
+                SendSingle "Incorrect syntax, use the following format .unban User / Account 'Name' 'Reason'", Index
                 
             End Select
         
@@ -936,16 +936,16 @@ Case "!message"
         
         Case ".announce", ".ann", ".broadcast"
             If Len(Trim$(ANN_MSG)) = 0 Then
-                SendSingle "Incorrect syntax, use the following format .announce 'Text to announce'.", frmMain.Winsock1(Index)
+                SendSingle "Incorrect syntax, use the following format .announce 'Text to announce'.", Index
             Else
                 SendMessage "[" & p_MainArray(1) & " announces]: " & ANN_MSG
             End If
         
         Case ".help", ".command", ".commands"
-            SendSingle GetCommands, frmMain.Winsock1(Index)
+            SendSingle GetCommands, Index
                     
         Case Else
-            SendSingle "Unknown command used. Check .help for more information about commands.", frmMain.Winsock1(Index)
+            SendSingle "Unknown command used. Check .help for more information about commands.", Index
         
         End Select
         Exit Sub
@@ -953,7 +953,7 @@ Case "!message"
     
     If IsSlash Then
         If IsMuted Then
-            SendSingle "You are muted.", frmMain.Winsock1(Index)
+            SendSingle "You are muted.", Index
             Exit Sub
         End If
         
@@ -1009,7 +1009,7 @@ Case "!message"
                 pMaxRoll = 100
             End If
             
-            SendSingle p_MainArray(1) & " rolls " & pRoll & ". (" & pMinRoll & "-" & pMaxRoll & ")", frmMain.Winsock1(Index)
+            SendSingle p_MainArray(1) & " rolls " & pRoll & ". (" & pMinRoll & "-" & pMaxRoll & ")", Index
            
         'Whisper
         Case "/w", "/whisper"
@@ -1032,7 +1032,7 @@ Case "!message"
                 If Len(Trim$(GetTarget)) = 0 Then
                     Exit Sub
                 Else
-                    SendSingle "No user named '" & GetTarget & "' is currently online.", frmMain.Winsock1(Index)
+                    SendSingle "No user named '" & GetTarget & "' is currently online.", Index
                 End If
             End If
         
@@ -1053,10 +1053,10 @@ Case "!message"
             End With
             
         Case "/help"
-            SendSingle GetEmotesHelp, frmMain.Winsock1(Index)
+            SendSingle GetEmotesHelp, Index
         
         Case "/online"
-            SendSingle "You are online for " & GetOnlineTime(p_MainArray(1)) & ".", frmMain.Winsock1(Index)
+            SendSingle "You are online for " & GetOnlineTime(p_MainArray(1)) & ".", Index
         
         Case "/logout"
             KickUser p_MainArray(1), Index
@@ -1075,7 +1075,7 @@ Case "!message"
                     End If
                     Exit For
                 Else
-                    If i = UBound(Emotes) Then SendSingle "Unknown command used.", frmMain.Winsock1(Index)
+                    If i = UBound(Emotes) Then SendSingle "Unknown command used.", Index
                 End If
             Next i
         
@@ -1086,7 +1086,7 @@ Case "!message"
     
     'Check if user is muted
     If IsMuted Then
-        SendSingle "You are muted.", frmMain.Winsock1(Index)
+        SendSingle "You are muted.", Index
         CMSG "!muted", p_MainArray(1), p_MainArray(2)
         Exit Sub
     End If
@@ -1107,8 +1107,8 @@ Case "!message"
                         If UCase$(E) = E Then S1 = S1 + 1
                     Next i
                     E = vbNullString
-                    If Format$(100 * S1 / Len(p_MainArray(2)), "0.00") > 75 Then
-                        SendSingle "Message blocked. Please do not write more then 75% in caps.", frmMain.Winsock1(Index)
+                    If Format$(100 * S1 / Len(p_MainArray(2)), "0") > 75 Then
+                        SendSingle "Message blocked. Please do not write more then 75% in caps.", Index
                         Exit Sub
                     End If
                 End If
@@ -1120,7 +1120,7 @@ Case "!message"
             For i = 1 To .Count
                 If .Item(i) = p_MainArray(1) Then
                     If .Item(i).SubItems(3) = p_MainArray(2) Then
-                         SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", frmMain.Winsock1(Index)
+                         SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
                          CMSG "!repeat", p_MainArray(1)
                          Exit Sub
                     End If
@@ -1207,7 +1207,7 @@ Private Sub Whisper(User As String, Target As String, Conversation As String, In
 'Check if user is whispering itself
 Select Case User
 Case Target, "<AFK>" & User
-    SendSingle "You can't whisper yourself.", frmMain.Winsock1(Index)
+    SendSingle "You can't whisper yourself.", Index
     Exit Sub
 End Select
 
@@ -1216,11 +1216,11 @@ With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         Select Case Target
         Case .Item(i)
-            SendSingle "[You whisper to " & Target & "]: " & Conversation, frmMain.Winsock1(Index)
+            SendSingle "[You whisper to " & Target & "]: " & Conversation, Index
             SendSingle "[" & User & " whispers]: " & Conversation, frmMain.Winsock1(.Item(i).SubItems(2))
             Exit For
         Case "<AFK>" & .Item(i)
-            SendSingle .Item(i) & " is away from keyboard.", frmMain.Winsock1(Index)
+            SendSingle .Item(i) & " is away from keyboard.", Index
             SendSingle "[" & User & " whispers]: " & Conversation, frmMain.Winsock1(.Item(i).SubItems(2))
             Exit For
         End Select
@@ -1229,19 +1229,19 @@ With frmPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub MuteUser(User As String, AdminName As String, IsMuted As Boolean, SIndex As Integer, Reason As String)
+Private Sub MuteUser(User As String, AdminName As String, IsMuted As Boolean, pIndex As Integer, Reason As String)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             If IsMuted Then
                 'If the user is already muted then return feedback
                 If .Item(i).SubItems(4) = "True" Then
-                    SendSingle User & " is already muted.", frmMain.Winsock1(SIndex)
+                    SendSingle User & " is already muted.", pIndex
                     Exit Sub
                 End If
             Else
                 If .Item(i).SubItems(4) = "False" Then
-                    SendSingle User & " is not muted.", frmMain.Winsock1(SIndex)
+                    SendSingle User & " is not muted.", pIndex
                     Exit Sub
                 End If
             End If
@@ -1267,9 +1267,9 @@ With frmPanel.ListView1.ListItems
         Else
             If i = .Count Then
                 If Len(Trim$(User)) = 0 Then
-                    SendSingle "Incorrect syntax, use the following format .mute 'User' 'Reason'.", frmMain.Winsock1(SIndex)
+                    SendSingle "Incorrect syntax, use the following format .mute 'User' 'Reason'.", pIndex
                 Else
-                    SendSingle "User '" & User & "' was not found.", Winsock1(SIndex)
+                    SendSingle "User '" & User & "' was not found.", pIndex
                 End If
             End If
         End If
@@ -1295,18 +1295,18 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Private Sub BanUser(User As String, AdminName As String, Ban As Boolean, SIndex As Integer, Reason As String)
+Private Sub BanUser(User As String, AdminName As String, Ban As Boolean, pIndex As Integer, Reason As String)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(User, vbProperCase) Then
-            BanAccount .Item(i).SubItems(5), AdminName, Ban, SIndex, Reason
+            BanAccount .Item(i).SubItems(5), AdminName, Ban, pIndex, Reason
             Exit For
         Else
             If i = .Count Then
                 If Len(Trim$(User)) = 0 Then
-                    SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
+                    SendSingle "Incorrect syntax, use .help for more information.", pIndex
                 Else
-                    SendSingle "User '" & User & "' not found.", Winsock1(SIndex)
+                    SendSingle "User '" & User & "' not found.", pIndex
                 End If
             End If
         End If
@@ -1314,7 +1314,7 @@ With frmPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub BanAccount(Account As String, AdminName As String, Ban As Boolean, SIndex As Integer, Reason As String)
+Private Sub BanAccount(Account As String, AdminName As String, Ban As Boolean, pIndex As Integer, Reason As String)
 Dim User As String
 Dim j    As Long
 
@@ -1326,12 +1326,12 @@ With frmAccountPanel.ListView1.ListItems
             
             If Ban Then
                 If .Item(i).SubItems(5) = "True" Then
-                    SendSingle "Account '" & Account & "' is already banned.", frmMain.Winsock1(SIndex)
+                    SendSingle "Account '" & Account & "' is already banned.", pIndex
                     Exit Sub
                 End If
             Else
                 If .Item(i).SubItems(5) = "False" Then
-                    SendSingle "Account '" & Account & "' is not banned.", frmMain.Winsock1(SIndex)
+                    SendSingle "Account '" & Account & "' is not banned.", pIndex
                     Exit Sub
                 End If
             End If
@@ -1371,9 +1371,9 @@ With frmAccountPanel.ListView1.ListItems
         Else
             If i = .Count Then
                 If Len(Trim$(Account)) = 0 Then
-                    SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
+                    SendSingle "Incorrect syntax, use .help for more information.", pIndex
                 Else
-                    SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
+                    SendSingle "Account '" & Account & "' not found.", pIndex
                 End If
             End If
         End If
@@ -1398,9 +1398,9 @@ With frmPanel.ListView1.ListItems
         Else
             If i = .Count Then
                 If Len(Trim$(pUser)) = 0 Then
-                    SendSingle "Incorrect syntax, use following format .kick 'User'.", frmMain.Winsock1(pIndex)
+                    SendSingle "Incorrect syntax, use following format .kick 'User'.", pIndex
                 Else
-                    SendSingle "User '" & pUser & "' not found.", Winsock1(pIndex)
+                    SendSingle "User '" & pUser & "' not found.", pIndex
                 End If
             End If
         End If
@@ -1408,18 +1408,18 @@ With frmPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub GetAccountInfo(Account As String, SIndex As Integer)
+Private Sub GetAccountInfo(Account As String, pIndex As Integer)
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(1)) = LCase(Account) Then
-            SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " Name: " & .Item(i).SubItems(1) & vbCrLf & " Password: " & .Item(i).SubItems(2) & vbCrLf & " Registration Time: " & .Item(i).SubItems(3) & vbCrLf & " Registration Date: " & .Item(i).SubItems(4) & vbCrLf & " Banned: " & .Item(i).SubItems(5) & vbCrLf & " Level: " & .Item(i).SubItems(6), Winsock1(SIndex)
+            SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " Name: " & .Item(i).SubItems(1) & vbCrLf & " Password: " & .Item(i).SubItems(2) & vbCrLf & " Registration Time: " & .Item(i).SubItems(3) & vbCrLf & " Registration Date: " & .Item(i).SubItems(4) & vbCrLf & " Banned: " & .Item(i).SubItems(5) & vbCrLf & " Level: " & .Item(i).SubItems(6), pIndex
             Exit For
         Else
             If i = .Count Then
                 If Len(Trim$(Account)) = 0 Then
-                    SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
+                    SendSingle "Incorrect syntax, use .help for more information.", pIndex
                 Else
-                    SendSingle "Account '" & Account & "' not found.", Winsock1(SIndex)
+                    SendSingle "Account '" & Account & "' not found.", pIndex
                 End If
             End If
         End If
@@ -1427,18 +1427,18 @@ With frmAccountPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub GetUserInfo(User As String, SIndex As Integer)
+Private Sub GetUserInfo(User As String, pIndex As Integer)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(User, vbProperCase) Then
-            SendSingle vbCrLf & "User information about '" & User & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Last Message: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5) & vbCrLf & " Login Time: " & .Item(i).SubItems(6) & vbCrLf & " AFK: " & .Item(i).SubItems(7), Winsock1(SIndex)
+            SendSingle vbCrLf & "User information about '" & User & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Last Message: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5) & vbCrLf & " Login Time: " & .Item(i).SubItems(6) & vbCrLf & " AFK: " & .Item(i).SubItems(7), pIndex
             Exit For
         Else
             If i = .Count Then
                 If Len(Trim$(User)) = 0 Then
-                    SendSingle "Incorrect syntax, use .help for more information.", frmMain.Winsock1(SIndex)
+                    SendSingle "Incorrect syntax, use .help for more information.", pIndex
                 Else
-                    SendSingle "User '" & User & "' was not found.", Winsock1(SIndex)
+                    SendSingle "User '" & User & "' was not found.", pIndex
                 End If
             End If
         End If

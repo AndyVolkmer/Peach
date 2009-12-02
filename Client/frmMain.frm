@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.MDIForm frmMain 
    Appearance      =   0  'Flat
@@ -177,7 +177,10 @@ Begin VB.MDIForm frmMain
       Begin VB.Menu Show 
          Caption         =   "&Show"
       End
-      Begin VB.Menu Close 
+      Begin VB.Menu Connect 
+         Caption         =   "&Connect"
+      End
+      Begin VB.Menu ExitC 
          Caption         =   "&Exit"
       End
    End
@@ -228,10 +231,6 @@ Private Declare Sub InitCommonControls Lib "comctl32" ()
 Dim Vali        As Boolean
 Public RunOnce  As Boolean
 
-Private Sub Close_Click()
-End
-End Sub
-
 Private Sub Command1_Click()
 SetupForms frmConfig
 End Sub
@@ -256,9 +255,12 @@ Private Sub Command4_Click()
 SetupForms frmSociety
 End Sub
 
-Public Sub LoadMDIForm()
-Command2.Caption = MDI_COMMAND_CHAT
-Command3.Caption = MDI_COMMAND_SENDFILE
+Private Sub Connect_Click()
+frmConfig.cmdConnect_Click
+End Sub
+
+Private Sub ExitC_Click()
+End
 End Sub
 
 Private Sub FSocket_Close()
@@ -353,6 +355,13 @@ Me.Left = Setting.MAIN_LEFT
 SetupForms frmConfig
 End Sub
 
+Public Sub LoadMDIForm()
+Connect.Caption = CONFIG_COMMAND_CONNECT
+ExitC.Caption = REG_COMMAND_CLOSE
+Command2.Caption = MDI_COMMAND_CHAT
+Command3.Caption = MDI_COMMAND_SENDFILE
+End Sub
+
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim Msg As Long
 Dim sFilter As String
@@ -415,7 +424,7 @@ End Sub
 
 Private Sub Winsock1_Connect()
 With frmConfig
-    SendMsg "!login#" & .txtAccount & "#" & .txtPassword & "#" & .txtNick & "#"
+    SendMSG "!login#" & .txtAccount & "#" & .txtPassword & "#" & .txtNick & "#"
 End With
 End Sub
 
@@ -456,7 +465,7 @@ Case "!decilined"
 Case "!accepted"
     SetupForms frmChat
     StatusBar1.Panels(1).Text = MDI_STAT_CONNECTED
-    SendMsg "!connected#"
+    SendMSG "!connected#"
     
 'Wipe out current friend list and insert new values
 Case "!update_friends"
@@ -487,7 +496,7 @@ Case "!update_friends"
         'Ask for server information
         If RunOnce = False Then
             RunOnce = True
-            SendMsg "!server_info#"
+            SendMSG "!server_info#"
         End If
     End With
     
@@ -507,7 +516,7 @@ Case "!update_online"
     Next i
     
     'Ask for friendlist
-    SendMsg "!friend#-get#" & frmConfig.txtAccount & "#"
+    SendMSG "!friend#-get#" & frmConfig.txtAccount & "#"
     
 'We get login answer here
 Case "!login"

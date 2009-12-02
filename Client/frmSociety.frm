@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
 Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Begin VB.Form frmSociety 
    BackColor       =   &H00F4F4F4&
@@ -213,7 +213,7 @@ Dim Val As String
 Val = InputBox("Please enter the account of your friend in the text box below.", "Adding a friend", "Friends Account") & "#"
 If Trim$(Val) = "#" Then Exit Sub
 
-SendMsg "!friend#-add#" & frmConfig.txtAccount & "#" & Val & "#"
+SendMSG "!friend#-add#" & frmConfig.txtAccount & "#" & Val & "#"
 End Sub
 
 Private Sub Command2_Click()
@@ -236,7 +236,7 @@ With ListView2
         Name = Left$(.SelectedItem.Text, MPos - 1)
     End If
     
-    SendMsg "!friend#-remove#" & frmConfig.txtAccount.Text & "#" & Name & "#"
+    SendMSG "!friend#-remove#" & frmConfig.txtAccount.Text & "#" & Name & "#"
 End With
 End Sub
 

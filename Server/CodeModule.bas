@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev            As String = "1.2.0.4"
+Public Const Rev            As String = "1.2.0.5"
 Public Const rPort          As Long = 6222
 
 Public VarTime              As Long    'Time counter variable
@@ -100,9 +100,9 @@ For Each WinSk In frmMain.Winsock1
 Next
 End Sub
 
-Public Sub SendSingle(Message As String, Wsk As Winsock)
-If Wsk.State = 7 Then
-    Wsk.SendData Message
+Public Sub SendSingle(Message As String, pIndex As Integer)
+If frmMain.Winsock1(pIndex).State = 7 Then
+    frmMain.Winsock1(pIndex).SendData Message
     DoEvents
 End If
 End Sub
@@ -142,7 +142,7 @@ With frmFriendList.ListView1.ListItems
     Next i
 End With
 
-SendSingle buffer, frmMain.Winsock1(pIndex)
+SendSingle buffer, pIndex
 End Sub
 
 Public Sub UPDATE_STATUS_BAR()
@@ -208,8 +208,8 @@ With frmChat.txtConver
 End With
 End Sub
 
-Public Function IsAlphaCharacter(sChar As String) As Boolean
-    IsAlphaCharacter = (Not (UCase(sChar) = LCase(sChar))) Or (sChar = " ")
+Public Function IsAlphaCharacter(pChar As String) As Boolean
+    IsAlphaCharacter = (Not (UCase(pChar) = LCase(pChar))) Or (pChar = " ")
 End Function
 
 Public Function GetRandomNumber(Optional ByVal MIN As Long = 1, Optional ByVal MAX As Long = 100) As Long

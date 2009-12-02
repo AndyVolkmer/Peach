@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
 Begin VB.Form frmFriendList 
    BorderStyle     =   0  'None
    Caption         =   "Friend List Overview"
@@ -81,7 +81,7 @@ Dim j          As Long
 
 'Check if you are trying to add urself
 If LCase$(pUser) = LCase$(pFriend) Then
-    SendSingle "!msgbox#You can't add yourself.#", frmMain.Winsock1(pIndex)
+    SendSingle "!msgbox#You can't add yourself.#", pIndex
     Exit Sub
 End If
 
@@ -101,7 +101,7 @@ With ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = pUser Then
             If .Item(i).SubItems(2) = pFriend Then
-                SendSingle "!msgbox#" & pFriend & " is already in you friendlist.#", frmMain.Winsock1(pIndex)
+                SendSingle "!msgbox#" & pFriend & " is already in you friendlist.#", pIndex
                 Exit Sub
             End If
         End If
@@ -139,7 +139,7 @@ If IsValid Then
     
 Else
     'Send message that the account doesn't exist
-    SendSingle "!msgbox#" & "The account '" & pFriend & "' doesnt exist.#", frmMain.Winsock1(pIndex)
+    SendSingle "!msgbox#" & "The account '" & pFriend & "' doesnt exist.#", pIndex
 End If
 End Sub
 

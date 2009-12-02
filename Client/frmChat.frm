@@ -33,7 +33,6 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   873
       _Version        =   393217
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin RichTextLib.RichTextBox txtToSend 
@@ -329,11 +328,11 @@ DoEvents
 
 SendMessage RTF.hwnd, WM_PASTE, 0, 0
 DoEvents
-'Sleep 30
 
 Clipboard.Clear
 On Error Resume Next
-If Text <> "" Then
+'If Text <> "" Then
+If Len(Text) <> 0 Then
     Clipboard.SetText Text
 Else
     If Buf <> 0 Then

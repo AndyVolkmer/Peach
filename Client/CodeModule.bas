@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const pRev       As String = "1.2.0.4"
+Public Const pRev       As String = "1.2.0.5"
 Public Const pAuthor    As String = "Andy"
 
 Public Const aPort      As Long = 6123
@@ -185,8 +185,10 @@ With frmConfig
 
     If pSwitch = True Then
         .cmdConnect.Caption = CONFIG_COMMAND_CONNECT
+        frmMain.Connect.Caption = CONFIG_COMMAND_CONNECT
     Else
         .cmdConnect.Caption = CONFIG_COMMAND_DISCONNECT
+        frmMain.Connect.Caption = CONFIG_COMMAND_DISCONNECT
     End If
     
 End With
@@ -240,6 +242,7 @@ With frmMain
 End With
 
 frmConfig.cmdConnect.Caption = CONFIG_COMMAND_CONNECT
+frmMain.Connect.Caption = CONFIG_COMMAND_CONNECT
 
 SwitchButtons True
 End Sub
