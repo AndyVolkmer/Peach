@@ -28,6 +28,17 @@ CREATE TABLE `friends` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for `ignores`
+-- ----------------------------
+DROP TABLE IF EXISTS `ignores`;
+CREATE TABLE `ignores` (
+  `ID` int(11) NOT NULL DEFAULT '0',
+  `Name` varchar(20) NOT NULL DEFAULT '',
+  `IgnoredName` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for `emotes`
 -- ----------------------------
 DROP TABLE IF EXISTS `emotes`;

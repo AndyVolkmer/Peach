@@ -304,9 +304,9 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     End With
     
     'Set Recieve-Request-Winsock to listen
-    With frmMain
-        .FSocket2(0).LocalPort = aPort
-        .FSocket2(0).Listen
+    With frmMain.FSocket2(0)
+        .LocalPort = aPort
+        .Listen
     End With
 
     'Set Recieve-File-Winsock to listen

@@ -56,13 +56,17 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "ListView1"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "ListView3"
+      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "Command3"
+      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "Command4"
+      Tab(2).Control(2).Enabled=   0   'False
       Tab(2).ControlCount=   3
       Begin VB.CommandButton Command4 
          Caption         =   "&Remove"
@@ -247,6 +251,38 @@ Command1.Caption = SOC_COMMAND_ADD
 Command2.Caption = SOC_COMMAND_REMOVE
 Command3.Caption = SOC_COMMAND_ADD
 Command4.Caption = SOC_COMMAND_REMOVE
+End Sub
+
+Private Sub Command3_Click()
+Dim Val As String
+Val = InputBox("Please enter the account you would like to ignore in the text box below.", "Adding a friend", "Friends Account") & "#"
+If Trim$(Val) = "#" Then Exit Sub
+
+SendMSG "!ignore#-add#" & frmConfig.txtAccount & "#" & Val & "#"
+End Sub
+
+Private Sub Command4_Click()
+Dim Name As String
+Dim MPos As Integer
+Dim Temp() As String
+
+With ListView3
+    If .SelectedItem Is Nothing Then Exit Sub
+    
+    Temp = Split(.SelectedItem.Text, " ")
+    If MsgBox(SOC_ASK_DEL_1 & Temp(0) & SOC_ASK_DEL_2, vbQuestion + vbYesNo, "Deleting '" & Temp(0) & "'") = vbNo Then
+        Exit Sub
+    End If
+    
+    MPos = InStr(1, .SelectedItem.Text, " ")
+    If MPos = 0 Then
+        Name = .SelectedItem.Text
+    Else
+        Name = Left$(.SelectedItem.Text, MPos - 1)
+    End If
+    
+    SendMSG "!ignore#-remove#" & frmConfig.txtAccount.Text & "#" & Name & "#"
+End With
 End Sub
 
 Private Sub Form_Load()

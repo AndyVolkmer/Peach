@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev            As String = "1.2.0.5"
+Public Const Rev            As String = "1.2.0.6"
 Public Const rPort          As Long = 6222
 
 Public VarTime              As Long    'Time counter variable
@@ -32,10 +32,11 @@ Type DB
     User                    As String
     Host                    As String
     Password                As String
-    Friend_Table            As String
-    Account_Table           As String
-    Emote_Table             As String
-    Declined_Name_Table     As String
+    FriendTable             As String
+    IgnoreTable             As String
+    AccountTable            As String
+    EmoteTable              As String
+    DeclinedNameTable       As String
 End Type
 
 Type OPT
@@ -90,19 +91,31 @@ With frmConfig
 End With
 End Sub
 
-Public Sub SendMessage(Message As String)
+Public Sub SendProtectedMessage(pMessage As String)
+'/////////////////////////////
+'
+
+'/////////////////////////////
+'
+
+'/////////////////////////////
+'
+
+End Sub
+
+Public Sub SendMessage(pMessage As String)
 Dim WinSk As Winsock
 For Each WinSk In frmMain.Winsock1
     If WinSk.State = 7 Then
-        WinSk.SendData Message
+        WinSk.SendData pMessage
         DoEvents
     End If
 Next
 End Sub
 
-Public Sub SendSingle(Message As String, pIndex As Integer)
+Public Sub SendSingle(pMessage As String, pIndex As Integer)
 If frmMain.Winsock1(pIndex).State = 7 Then
-    frmMain.Winsock1(pIndex).SendData Message
+    frmMain.Winsock1(pIndex).SendData pMessage
     DoEvents
 End If
 End Sub
@@ -123,21 +136,36 @@ If GetList <> "!update_online#" Then SendMessage GetList
 End Sub
 
 Public Sub UPDATE_FRIEND(pName As String, pIndex As Integer)
-Dim buffer As String
-Dim a_array() As String
+Dim buffer      As String
+Dim p_Array()   As String
 
 buffer = "!update_friends#"
-With frmFriendList.ListView1.ListItems
+With frmFriendIgnoreList.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = pName Then
-            a_array = Split(GetAccountStatus(.Item(i).SubItems(2)), "#")
+            p_Array = Split(GetAccountStatus(.Item(i).SubItems(2)), "#")
             
-            Select Case a_array(0)
+            Select Case p_Array(0)
             Case "!online"
-                buffer = buffer & .Item(i).SubItems(2) & " - " & a_array(1) & "$Online#"
+                buffer = buffer & .Item(i).SubItems(2) & " - " & p_Array(1) & "$Online#"
             Case "!offline"
                 buffer = buffer & .Item(i).SubItems(2) & "$Offline#"
             End Select
+        End If
+    Next i
+End With
+
+SendSingle buffer, pIndex
+End Sub
+
+Public Sub UPDATE_IGNORE(pName As String, pIndex As Integer)
+Dim buffer As String
+
+buffer = "!update_ignore#"
+With frmFriendIgnoreList.ListView2.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(1) = pName Then
+            buffer = buffer & .Item(i).SubItems(2) & "#"
         End If
     Next i
 End With

@@ -160,7 +160,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
 Option Explicit
 
 Private Const GWL_STYLE = (-16)
@@ -225,7 +224,7 @@ SetupForms frmPanel
 End Sub
 
 Private Sub Command5_Click()
-SetupForms frmFriendList
+SetupForms frmFriendIgnoreList
 End Sub
 
 Private Sub MDIForm_Initialize()
@@ -276,31 +275,38 @@ Else
 End If
 
 If Len(Trim$(ReadIniValue(pPath, "Database", "AccountTable"))) <> 0 Then
-    .Account_Table = ReadIniValue(pPath, "Database", "AccountTable")
+    .AccountTable = ReadIniValue(pPath, "Database", "AccountTable")
 Else
     WriteLog "No Account-Table found."
-    .Account_Table = InputBox("The configuration file does not contain a account table, please insert one in the textbox below.", "Database error ..", "Account Table")
+    .AccountTable = InputBox("The configuration file does not contain a account table, please insert one in the textbox below.", "Database error ..", "Account Table")
 End If
 
 If Len(Trim$(ReadIniValue(pPath, "Database", "FriendTable"))) <> 0 Then
-    .Friend_Table = ReadIniValue(pPath, "Database", "FriendTable")
+    .FriendTable = ReadIniValue(pPath, "Database", "FriendTable")
 Else
     WriteLog "No Friends-Table found."
-    .Friend_Table = InputBox("The configuration file does not contain a friend table, please insert one in the textbox below.", "Database error ..", "Friend Table")
+    .FriendTable = InputBox("The configuration file does not contain a friend table, please insert one in the textbox below.", "Database error ..", "Friend Table")
+End If
+
+If Len(Trim$(ReadIniValue(pPath, "Database", "IgnoreTable"))) <> 0 Then
+    .IgnoreTable = ReadIniValue(pPath, "Database", "IgnoreTable")
+Else
+    WriteLog "No Ignore-Table found."
+    .IgnoreTable = InputBox("The configuration file does not contain a ignore table, please insert one in the textbox below.", "Database error ..", "Ignore Table")
 End If
 
 If Len(Trim$(ReadIniValue(pPath, "Database", "EmoteTable"))) <> 0 Then
-    .Emote_Table = ReadIniValue(pPath, "Database", "EmoteTable")
+    .EmoteTable = ReadIniValue(pPath, "Database", "EmoteTable")
 Else
     WriteLog "No Emotes-Table found."
-    .Emote_Table = InputBox("The configuration file does not contain a emote table, please insert one in the textbox below.", "Database error ..", "Emote Table")
+    .EmoteTable = InputBox("The configuration file does not contain a emote table, please insert one in the textbox below.", "Database error ..", "Emote Table")
 End If
 
 If Len(Trim$(ReadIniValue(pPath, "Database", "DeclinedNameTable"))) <> 0 Then
-    .Declined_Name_Table = ReadIniValue(pPath, "Database", "DeclinedNameTable")
+    .DeclinedNameTable = ReadIniValue(pPath, "Database", "DeclinedNameTable")
 Else
     WriteLog "No Declined-Names-Table found."
-    .Declined_Name_Table = InputBox("The configuration file does not contain a declined name table, please insert one in the textbox below.", "Database error ..", "Declined Name Table")
+    .DeclinedNameTable = InputBox("The configuration file does not contain a declined name table, please insert one in the textbox below.", "Database error ..", "Declined Name Table")
 End If
 
 '== Position ==
@@ -327,16 +333,19 @@ End If
 CONNECT_MYSQL .Database, .User, .Password, .Host
 
 'Load Accounts
-LoadAccounts .Account_Table
+LoadAccounts .AccountTable
 
 'Load Emotes
-LoadEmotes .Emote_Table
+LoadEmotes .EmoteTable
 
 'Load Friends
-LoadFriends .Friend_Table
+LoadFriends .FriendTable
+
+'Load Ignores
+LoadIgnores .IgnoreTable
 
 'Load Declined Names
-LoadDeclinedNames .Declined_Name_Table
+LoadDeclinedNames .DeclinedNameTable
 
 'Close Database variable
 End With
@@ -475,7 +484,7 @@ Set xRecordSet = xCommand.Execute
 
 With xRecordSet
     Do Until .EOF
-        Set LItem = frmFriendList.ListView1.ListItems.Add(, , !ID)
+        Set LItem = frmFriendIgnoreList.ListView1.ListItems.Add(, , !ID)
         LItem.SubItems(1) = !Name
         LItem.SubItems(2) = !Friend
         .MoveNext
@@ -487,6 +496,44 @@ Set LItem = Nothing
 Set xRecordSet = Nothing
 
 WriteLog "Loaded " & Counter & " relation(s)."
+
+Exit Sub
+HandleErrorFriends:
+'Print error
+WriteLog Err.Description
+
+'Set error flag
+HasError = True
+End Sub
+
+Private Sub LoadIgnores(pTable As String)
+Dim SQL     As String
+Dim LItem   As ListItem
+Dim Counter As Long
+
+If HasError Then Exit Sub
+
+SQL = "SELECT * FROM " & pTable
+Counter = 0
+
+On Error GoTo HandleErrorFriends
+xCommand.CommandText = SQL
+Set xRecordSet = xCommand.Execute
+
+With xRecordSet
+    Do Until .EOF
+        Set LItem = frmFriendIgnoreList.ListView2.ListItems.Add(, , !ID)
+        LItem.SubItems(1) = !Name
+        LItem.SubItems(2) = !IgnoredName
+        .MoveNext
+        Counter = Counter + 1
+    Loop
+End With
+
+Set LItem = Nothing
+Set xRecordSet = Nothing
+
+WriteLog "Loaded " & Counter & " ignore(s)."
 
 Exit Sub
 HandleErrorFriends:
@@ -596,10 +643,11 @@ WriteIniValue pPath, "Database", "Database", .Database
 WriteIniValue pPath, "Database", "User", .User
 WriteIniValue pPath, "Database", "Password", .Password
 WriteIniValue pPath, "Database", "Host", .Host
-WriteIniValue pPath, "Database", "AccountTable", .Account_Table
-WriteIniValue pPath, "Database", "FriendTable", .Friend_Table
-WriteIniValue pPath, "Database", "EmoteTable", .Emote_Table
-WriteIniValue pPath, "Database", "DeclinedNameTable", .Declined_Name_Table
+WriteIniValue pPath, "Database", "AccountTable", .AccountTable
+WriteIniValue pPath, "Database", "FriendTable", .FriendTable
+WriteIniValue pPath, "Database", "IgnoreTable", .IgnoreTable
+WriteIniValue pPath, "Database", "EmoteTable", .EmoteTable
+WriteIniValue pPath, "Database", "DeclinedNameTable", .DeclinedNameTable
 
 'Close Database variable
 End With
@@ -689,6 +737,7 @@ Dim p_MainArray()   As String   'Whole message string is saved here and split up
 Dim p_Command       As String   'First part of main array ( always the command )
 Dim bMatch          As Boolean  'bMatch controls the login
 Dim IsMuted         As Boolean  'Mute explains itself
+Dim p_ProperAccount As String
 
 'Get Message
 frmMain.Winsock1(Index).GetData p_Message
@@ -705,8 +754,6 @@ End If
 Select Case p_Command
 'Select action and execute command
 Case "!friend"
-    Dim p_ProperAccount As String
-    
     'Get the proper written account name
     p_ProperAccount = GetProperAccountName(p_MainArray(3))
         
@@ -717,12 +764,31 @@ Case "!friend"
         
     'Add friend to list
     Case "-add"
-        frmFriendList.AddFriend p_MainArray(2), p_ProperAccount, Index
+        frmFriendIgnoreList.AddFriend p_MainArray(2), p_ProperAccount, Index
         
     'Remove friend from list
     Case "-remove"
-        frmFriendList.RemoveFriend p_MainArray(2), p_ProperAccount, Index
+        frmFriendIgnoreList.RemoveFriend p_MainArray(2), p_ProperAccount, Index
                 
+    End Select
+    
+Case "!ignore"
+    'Get the proper written account name
+    p_ProperAccount = GetProperAccountName(p_MainArray(3))
+    
+    Select Case p_MainArray(1)
+    'Update Ignore list
+    Case "-get"
+        UPDATE_IGNORE p_MainArray(2), Index
+        
+    'Add ignore to list
+    Case "-add"
+        frmFriendIgnoreList.AddIgnore p_MainArray(2), p_ProperAccount, Index
+        
+    'Remove ignore from list
+    Case "-remove"
+        frmFriendIgnoreList.RemoveIgnore p_MainArray(2), p_ProperAccount, Index
+        
     End Select
     
 Case "!connected"
@@ -730,7 +796,7 @@ Case "!connected"
     
 'Send Server information
 Case "!server_info"
-    SendSingle "!split_text#" & GetServerInformation, Index
+    SendSingle "!server_info#" & GetServerInformation, Index
     
 Case "!login"
     With frmAccountPanel.ListView1.ListItems
@@ -1563,7 +1629,7 @@ End Sub
 
 Public Sub SetupForms(pForm As Form)
 frmChat.Hide
-frmFriendList.Hide
+frmFriendIgnoreList.Hide
 frmConfig.Hide
 frmAccountPanel.Hide
 frmPanel.Hide

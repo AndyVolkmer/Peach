@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const pRev       As String = "1.2.0.5"
+Public Const pRev       As String = "1.2.0.6"
 Public Const pAuthor    As String = "Andy"
 
 Public Const aPort      As Long = 6123
@@ -203,6 +203,8 @@ End With
 With frmSociety
     .Command1.Enabled = Not pSwitch
     .Command2.Enabled = Not pSwitch
+    .Command3.Enabled = Not pSwitch
+    .Command4.Enabled = Not pSwitch
 End With
 End Sub
 
@@ -210,8 +212,12 @@ Public Sub Disconnect()
 Dim WiSk As Winsock
 
 'Clear the online user list
-frmSociety.ListView1.ListItems.Clear
-frmSociety.ListView2.ListItems.Clear
+With frmSociety
+    .ListView1.ListItems.Clear
+    .ListView2.ListItems.Clear
+    .ListView3.ListItems.Clear
+End With
+
 frmSendFile.Combo1.Clear
 
 With frmSendFile2

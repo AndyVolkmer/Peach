@@ -455,7 +455,18 @@ Case "!split_text"
         .SelStart = Len(.Text)
         .SelRTF = Buffer
     End With
-   
+    
+'Show server information
+Case "!server_info"
+    For i = 1 To UBound(StrArr)
+        Buffer = Buffer & vbCrLf & " " & StrArr(i)
+    Next i
+    With frmChat.txtConver
+        .SelStart = Len(.Text)
+        .SelRTF = Buffer
+    End With
+    SendMSG "!ignore#-get#" & frmConfig.txtAccount & "#"
+        
 'We can't login
 Case "!decilined"
     Disconnect
@@ -466,6 +477,15 @@ Case "!accepted"
     SetupForms frmChat
     StatusBar1.Panels(1).Text = MDI_STAT_CONNECTED
     SendMSG "!connected#"
+    
+'Wipe out current ignore list and insert new values
+Case "!update_ignore"
+    With frmSociety.ListView3.ListItems
+        .Clear
+        For i = 1 To UBound(StrArr) - 1
+            .Add , , StrArr(i)
+        Next i
+    End With
     
 'Wipe out current friend list and insert new values
 Case "!update_friends"

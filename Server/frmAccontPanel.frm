@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmAccountPanel 
    BackColor       =   &H00F4F4F4&
@@ -245,12 +245,12 @@ SetData ListView1.SelectedItem
 End Sub
 
 Private Sub cmdDel_Click()
-Dim strName         As String
-Dim lngID           As Long
-Dim NewIndex  As Long
+Dim strName     As String
+Dim lngID       As Long
+Dim NewIndex    As Long
 
 If ListView1.ListItems.Count = 0 Then
-    MsgBox "No account selected to delete.", vbInformation, "Delete"
+    MsgBox "No accounts avaible to delete.", vbInformation, "Delete"
     Exit Sub
 End If
     
@@ -262,11 +262,14 @@ End With
 If MsgBox("Are you sure that you want to delete account '" & strName & "' ?", vbYesNo + vbQuestion, "Confirm Delete") = vbNo Then Exit Sub
 
 With frmMain.xCommand
-    .CommandText = "DELETE FROM " & Database.Account_Table & " WHERE ID = " & lngID
+    .CommandText = "DELETE FROM " & Database.AccountTable & " WHERE ID = " & lngID
     .Execute
 End With
 
-frmFriendList.DeleteFriend strName
+With frmFriendIgnoreList
+    .RemoveAllFriendsFromUser strName
+    .RemoveAllIgnoresFromUser strName
+End With
 
 With ListView1
     If .SelectedItem.Index = .ListItems.Count Then
@@ -385,7 +388,7 @@ j = j + 1
 
 'Add new account to database
 With frmMain.xCommand
-    .CommandText = "INSERT INTO " & Database.Account_Table & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', 'False', '0', '" & pSecretQuestion & "', '" & pSecretAnswer & "')"
+    .CommandText = "INSERT INTO " & Database.AccountTable & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', 'False', '0', '" & pSecretQuestion & "', '" & pSecretAnswer & "')"
     .Execute
 End With
 
