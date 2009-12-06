@@ -1136,10 +1136,8 @@ Case "!message"
                     
                     If IsUser Then
                         SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsUserText1 & GetTarget & Emotes(i).IsUserText2
-                        'SendMessage p_MainArray(1) & Emotes(i).IsUserText1 & GetTarget & Emotes(i).IsUserText2
                     Else
                         SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsNotUser
-                        'SendMessage p_MainArray(1) & Emotes(i).IsNotUser
                     End If
                     Exit For
                 Else
@@ -1162,7 +1160,7 @@ Case "!message"
     Dim S1  As Long
     Dim E   As String
     
-    'Only level 2 accounts can by pass special rules
+    'Only certain level accounts can by pass special rules
     If GetLevel(p_MainArray(1)) = Options.ChatLevel Then
         'We just bother checking if the text is longer then 5 characters
         If Len(p_MainArray(2)) > 5 Then
@@ -1271,10 +1269,10 @@ GetServerInformation = _
 frmConfig.Label2.Caption & "#"
 End Function
 
-Private Sub Whisper(User As String, Target As String, Conversation As String, Index As Integer)
+Private Sub Whisper(pUser As String, Target As String, Conversation As String, Index As Integer)
 'Check if user is whispering itself
-Select Case User
-Case Target, "<AFK>" & User
+Select Case pUser
+Case Target, "<AFK>" & pUser
     SendSingle "You can't whisper yourself.", Index
     Exit Sub
 End Select
@@ -1285,15 +1283,15 @@ With frmPanel.ListView1.ListItems
         Select Case Target
         Case .Item(i)
             SendSingle "[You whisper to " & Target & "]: " & Conversation, Index
-            SendSingle "[" & User & " whispers]: " & Conversation, frmMain.Winsock1(.Item(i).SubItems(2))
+            SendSingle "[" & pUser & " whispers]: " & Conversation, frmMain.Winsock1(.Item(i).SubItems(2))
             Exit For
         Case "<AFK>" & .Item(i)
             SendSingle .Item(i) & " is away from keyboard.", Index
-            SendSingle "[" & User & " whispers]: " & Conversation, frmMain.Winsock1(.Item(i).SubItems(2))
+            SendSingle "[" & pUser & " whispers]: " & Conversation, frmMain.Winsock1(.Item(i).SubItems(2))
             Exit For
         End Select
     Next i
-    CMSG "!w", User, Conversation, Target
+    CMSG "!w", pUser, Conversation, Target
 End With
 End Sub
 
@@ -1578,6 +1576,7 @@ With frmChat.txtConver
     .SelRTF = vbCrLf & " -> " & Description & vbCrLf & " -> All current connections got unloaded, server is now avaible under '" & Winsock1(0).LocalIP & "'."
 End With
 
+frmPanel.ListView1.ListItems.Clear
 VarTime = 0
 
 UPDATE_STATUS_BAR

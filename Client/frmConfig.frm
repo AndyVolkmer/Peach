@@ -364,8 +364,8 @@ End If
 End Function
 
 Private Sub Form_Unload(Cancel As Integer)
-Dim Path As String
-Path = App.Path & "\Config.ini"
+Dim Path As String: Path = App.Path & "\Config.ini"
+
 'Write data entries to .ini file
 WriteIniValue Path, "Private", "Password", Encode(Encode(txtPassword))
 WriteIniValue Path, "Private", "Account", txtAccount

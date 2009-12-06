@@ -34,6 +34,7 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -154,6 +155,7 @@ If HasError Then
     Exit Sub
 End If
 
+Label2.Caption = "Server Uptime : 00:00:00"
 connCounter.Enabled = True
 'Do the buttons
 txtPort.Enabled = False

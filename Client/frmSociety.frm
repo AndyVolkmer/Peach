@@ -31,6 +31,7 @@ Begin VB.Form frmSociety
       _ExtentX        =   12885
       _ExtentY        =   7011
       _Version        =   393216
+      Tab             =   2
       TabHeight       =   520
       BackColor       =   16053492
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -44,23 +45,19 @@ Begin VB.Form frmSociety
       EndProperty
       TabCaption(0)   =   "Friend List"
       TabPicture(0)   =   "frmSociety.frx":0000
-      Tab(0).ControlEnabled=   -1  'True
+      Tab(0).ControlEnabled=   0   'False
       Tab(0).Control(0)=   "ListView2"
-      Tab(0).Control(0).Enabled=   0   'False
       Tab(0).Control(1)=   "Command1"
-      Tab(0).Control(1).Enabled=   0   'False
       Tab(0).Control(2)=   "Command2"
-      Tab(0).Control(2).Enabled=   0   'False
       Tab(0).ControlCount=   3
       TabCaption(1)   =   "Online List"
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "ListView1"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
-      Tab(2).ControlEnabled=   0   'False
+      Tab(2).ControlEnabled=   -1  'True
       Tab(2).Control(0)=   "ListView3"
       Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "Command3"
@@ -72,7 +69,7 @@ Begin VB.Form frmSociety
          Caption         =   "&Remove"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   -69600
+         Left            =   5400
          TabIndex        =   6
          Top             =   3360
          Width           =   1695
@@ -81,7 +78,7 @@ Begin VB.Form frmSociety
          Caption         =   "&Add"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   -71280
+         Left            =   3720
          TabIndex        =   5
          Top             =   3360
          Width           =   1695
@@ -90,7 +87,7 @@ Begin VB.Form frmSociety
          Caption         =   "&Remove"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   5400
+         Left            =   -69600
          TabIndex        =   2
          Top             =   3360
          Width           =   1695
@@ -99,14 +96,14 @@ Begin VB.Form frmSociety
          Caption         =   "&Add"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   3720
+         Left            =   -71280
          TabIndex        =   1
          Top             =   3360
          Width           =   1695
       End
       Begin MSComctlLib.ListView ListView2 
          Height          =   2775
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   0
          Top             =   480
          Width           =   7095
@@ -175,7 +172,7 @@ Begin VB.Form frmSociety
       End
       Begin MSComctlLib.ListView ListView3 
          Height          =   2775
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   7
          Top             =   480
          Width           =   7095
@@ -213,11 +210,11 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Command1_Click()
-Dim Val As String
-Val = InputBox("Please enter the account of your friend in the text box below.", "Adding a friend", "Friends Account") & "#"
-If Trim$(Val) = "#" Then Exit Sub
+Dim pBuffer As String
+pBuffer = InputBox("Please enter the account of your friend in the text box below.", "Adding a friend", "Friends Account") & "#"
 
-SendMSG "!friend#-add#" & frmConfig.txtAccount & "#" & Val & "#"
+If Trim$(pBuffer) = "#" Then Exit Sub
+SendMSG "!friend#-add#" & frmConfig.txtAccount & "#" & pBuffer & "#"
 End Sub
 
 Private Sub Command2_Click()
@@ -239,7 +236,6 @@ With ListView2
     Else
         Name = Left$(.SelectedItem.Text, MPos - 1)
     End If
-    
     SendMSG "!friend#-remove#" & frmConfig.txtAccount.Text & "#" & Name & "#"
 End With
 End Sub
@@ -256,8 +252,8 @@ End Sub
 Private Sub Command3_Click()
 Dim Val As String
 Val = InputBox("Please enter the account you would like to ignore in the text box below.", "Adding a friend", "Friends Account") & "#"
-If Trim$(Val) = "#" Then Exit Sub
 
+If Trim$(Val) = "#" Then Exit Sub
 SendMSG "!ignore#-add#" & frmConfig.txtAccount & "#" & Val & "#"
 End Sub
 
@@ -280,7 +276,6 @@ With ListView3
     Else
         Name = Left$(.SelectedItem.Text, MPos - 1)
     End If
-    
     SendMSG "!ignore#-remove#" & frmConfig.txtAccount.Text & "#" & Name & "#"
 End With
 End Sub

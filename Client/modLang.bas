@@ -237,7 +237,7 @@ SOC_COMMAND_ADD = "&Hinzufügen"
 SOC_COMMAND_REMOVE = "&Entfernen"
 
 SOC_ASK_DEL_1 = "Möchten Sie '"
-SOC_ASK_DEL_2 = "' von ihrer Freundesliste löschen?"
+SOC_ASK_DEL_2 = "' von der Liste löschen?"
 
 REG_CAPTION = "Peach - Registration"
 
@@ -393,7 +393,7 @@ SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
-SOC_ASK_DEL_2 = "' from your friendlist?"
+SOC_ASK_DEL_2 = "' from the list?"
 
 REG_CAPTION = "Peach - Registration"
 
@@ -544,7 +544,7 @@ SOC_COMMAND_ADD = "&Añadir"
 SOC_COMMAND_REMOVE = "&Quitar"
 
 SOC_ASK_DEL_1 = "¿Estas seguro que quieres borrar a '"
-SOC_ASK_DEL_2 = "' de tu lista de amigos?"
+SOC_ASK_DEL_2 = "' de la lista?"
 
 REG_CAPTION = "Peach - Registración"
 
@@ -697,7 +697,7 @@ SOC_COMMAND_ADD = "&Tillägg"
 SOC_COMMAND_REMOVE = "&Ta bort"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
-SOC_ASK_DEL_2 = "' from your friendlist?"
+SOC_ASK_DEL_2 = "' from the list?"
 
 REG_CAPTION = "Peach - Registration"
 
@@ -849,7 +849,7 @@ SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
-SOC_ASK_DEL_2 = "' from your friendlist?"
+SOC_ASK_DEL_2 = "' from the list?"
 
 REG_CAPTION = "Peach - Registration"
 
@@ -1003,7 +1003,7 @@ SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
-SOC_ASK_DEL_2 = "' from your friendlist?"
+SOC_ASK_DEL_2 = "' from the list?"
 
 REG_CAPTION = "Peach - Registration"
 
@@ -1153,7 +1153,7 @@ SOC_COMMAND_ADD = "&Toevoegen"
 SOC_COMMAND_REMOVE = "&Verwijderen"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
-SOC_ASK_DEL_2 = "' from your friendlist?"
+SOC_ASK_DEL_2 = "' from the list?"
 
 REG_CAPTION = "Peach - Registration"
 
@@ -1311,7 +1311,7 @@ SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
-SOC_ASK_DEL_2 = "' from your friendlist?"
+SOC_ASK_DEL_2 = "' from the list?"
 
 REG_CAPTION = "Peach - Registration"
 

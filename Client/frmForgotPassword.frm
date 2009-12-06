@@ -102,6 +102,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 Private Sub cmdRequest_Click()
 If cmdRequest.Caption = FP_COMMAND_REQUEST Then
     'Can't request if account empty
