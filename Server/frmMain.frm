@@ -1283,11 +1283,11 @@ With frmPanel.ListView1.ListItems
         Select Case Target
         Case .Item(i)
             SendSingle "[You whisper to " & Target & "]: " & Conversation, Index
-            SendSingle "[" & pUser & " whispers]: " & Conversation, frmMain.Winsock1(.Item(i).SubItems(2))
+            SendSingle "[" & pUser & " whispers]: " & Conversation, .Item(i).SubItems(2)
             Exit For
         Case "<AFK>" & .Item(i)
             SendSingle .Item(i) & " is away from keyboard.", Index
-            SendSingle "[" & pUser & " whispers]: " & Conversation, frmMain.Winsock1(.Item(i).SubItems(2))
+            SendSingle "[" & pUser & " whispers]: " & Conversation, .Item(i).SubItems(2)
             Exit For
         End Select
     Next i

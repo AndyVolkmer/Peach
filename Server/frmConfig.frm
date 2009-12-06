@@ -34,7 +34,6 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -176,7 +175,6 @@ With frmAccountPanel
 End With
 
 frmMain.SetupForms frmChat
-
 frmChat.txtToSend.SetFocus
 
 Exit Sub
