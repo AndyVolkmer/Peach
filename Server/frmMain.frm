@@ -622,7 +622,7 @@ End Sub
 Private Sub MDIForm_Resize()
 If Me.WindowState = 1 Then
     If Vali = False Then
-        minimize_to_tray
+        MinimizeToTray
     End If
     Vali = False
 End If
@@ -1135,9 +1135,11 @@ Case "!message"
                     End If
                     
                     If IsUser Then
-                        SendMessage p_MainArray(1) & Emotes(i).IsUserText1 & GetTarget & Emotes(i).IsUserText2
+                        SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsUserText1 & GetTarget & Emotes(i).IsUserText2
+                        'SendMessage p_MainArray(1) & Emotes(i).IsUserText1 & GetTarget & Emotes(i).IsUserText2
                     Else
-                        SendMessage p_MainArray(1) & Emotes(i).IsNotUser
+                        SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsNotUser
+                        'SendMessage p_MainArray(1) & Emotes(i).IsNotUser
                     End If
                     Exit For
                 Else
@@ -1197,7 +1199,7 @@ Case "!message"
     End If
     
     'Send Message and print in chat
-    SendProtectedMessage p_MainArray(1), p_MainArray(2)
+    SendProtectedMessage p_MainArray(1), "[" & p_MainArray(1) & "]: " & p_MainArray(2)
     CMSG p_Command, p_MainArray(1), p_MainArray(2)
     
     'Set last message
