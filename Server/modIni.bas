@@ -1,4 +1,4 @@
-Attribute VB_Name = "IniModule"
+Attribute VB_Name = "modIni"
 Option Explicit
 
 '** Read function
