@@ -358,7 +358,7 @@ End Sub
 Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Boolean, pLevel As String, MOD_ID As Long, LST_ID As Long)
 'Update the database
 With frmMain.xCommand
-    .CommandText = "UPDATE " & Database.Account_Table & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & CStr(pBanned) & "', Level1 = '" & pLevel & "' WHERE ID = " & MOD_ID
+    .CommandText = "UPDATE " & Database.AccountTable & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & CStr(pBanned) & "', Level1 = '" & pLevel & "' WHERE ID = " & MOD_ID
     .Execute
 End With
 

@@ -1,7 +1,7 @@
 Attribute VB_Name = "CodeModule"
 Option Explicit
 
-Public Const Rev            As String = "1.2.0.6"
+Public Const Rev            As String = "1.2.0.7"
 Public Const rPort          As Long = 6222
 
 Public VarTime              As Long    'Time counter variable
@@ -83,41 +83,67 @@ Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal
 Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long
 Declare Function GetActiveWindow Lib "user32" () As Long
 
-Public nid As NOTIFYICONDATA 'trayicon variable
+Public nid As NOTIFYICONDATA    'Trayicon variable
 
-Public Sub WriteLog(Data As String)
+Public Sub WriteLog(pData As String)
 With frmConfig
-    .txt_log.Text = .txt_log.Text & vbCrLf & "[" & Format$(Time, "hh:mm:ss") & "] " & Data
+    .txt_log.Text = .txt_log.Text & vbCrLf & "[" & Format$(Time, "hh:mm:ss") & "] " & pData
 End With
 End Sub
 
-Public Sub SendProtectedMessage(pMessage As String)
-'/////////////////////////////
-'
+Public Function IsIgnoring(pUser As String, pTarget As String) As Boolean
+Dim j As Long
+With frmFriendIgnoreList.ListView2.ListItems
+    For j = 1 To .Count
+        If .Item(j).SubItems(1) = pUser Then
+            If .Item(j).SubItems(2) = pTarget Then
+                IsIgnoring = True
+            End If
+        End If
+    Next j
+End With
+End Function
 
-'/////////////////////////////
-'
+Public Sub SendProtectedMessage(pUser As String, pMessage As String)
+Dim pAccount As String
 
-'/////////////////////////////
-'
-
+'Get account name to interact better with frmFriendIgnoreList
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i) = pUser Then
+            pAccount = .Item(i).SubItems(5)
+            Exit For
+        End If
+    Next i
+    
+    For i = 1 To .Count
+        If IsIgnoring(.Item(i).SubItems(5), pAccount) = False Then
+            SendSingle "[" & pUser & "]: " & pMessage, .Item(i).SubItems(2)
+            DoEvents
+        End If
+    Next i
+End With
 End Sub
 
 Public Sub SendMessage(pMessage As String)
 Dim WinSk As Winsock
 For Each WinSk In frmMain.Winsock1
-    If WinSk.State = 7 Then
-        WinSk.SendData pMessage
-        DoEvents
-    End If
+    With WinSk
+        If .State = 7 Then
+            .SendData pMessage
+            DoEvents
+        End If
+    End With
 Next
 End Sub
 
 Public Sub SendSingle(pMessage As String, pIndex As Integer)
-If frmMain.Winsock1(pIndex).State = 7 Then
-    frmMain.Winsock1(pIndex).SendData pMessage
-    DoEvents
-End If
+With frmMain.Winsock1(pIndex)
+    If .State = 7 Then
+        .SendData pMessage
+        DoEvents
+    End If
+End With
 End Sub
 
 Public Sub UPDATE_ONLINE()

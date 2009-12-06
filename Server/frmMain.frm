@@ -1197,7 +1197,7 @@ Case "!message"
     End If
     
     'Send Message and print in chat
-    SendMessage "[" & p_MainArray(1) & "]: " & p_MainArray(2)
+    SendProtectedMessage p_MainArray(1), p_MainArray(2)
     CMSG p_Command, p_MainArray(1), p_MainArray(2)
     
     'Set last message
