@@ -278,8 +278,10 @@ array1 = Split(GetMessage, "#")
 Select Case array1(0)
 Case "!acceptfile"
     frmSendFile.SendF FSocket.RemoteHost
+    
 Case "!denyfile"
     MsgBox SF_MSG_DECILINED, vbInformation
+    
 End Select
 End Sub
 
@@ -387,7 +389,7 @@ Private Sub MDIForm_Resize()
 If Me.WindowState = 1 Then
     If Vali = False Then
         If Setting.MIN_TICK = True Then
-            minimize_to_tray
+            MinimizeToTray
         End If
     End If
     Vali = False
@@ -774,4 +776,3 @@ Else
 End If
 Screen.MousePointer = vbDefault
 End Sub
-

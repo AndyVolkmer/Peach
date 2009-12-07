@@ -37,7 +37,7 @@ If Setting.VALIDATE = 0 Then
     frmMain.Show
     SetScheme True
 Else
-    'Set language default -> english
+    'Set language default ( english )
     SET_LANG_ENGLISH
     frmLanguage.Show
 End If

@@ -1,4 +1,4 @@
-Attribute VB_Name = "ModCrypt"
+Attribute VB_Name = "modCrypt"
 Option Explicit
 
 Public Function DeCode(vText As String) As String

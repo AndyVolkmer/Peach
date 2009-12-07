@@ -853,9 +853,7 @@ Case "!login"
                 Exit For
             End If
         Next i
-    End With
-    
-    With frmPanel.ListView1.ListItems
+        
         .Item(.Count).Text = p_MainArray(3)
         .Item(.Count).SubItems(5) = GetProperAccountName(p_MainArray(1))
     End With
@@ -1018,12 +1016,18 @@ Case "!message"
     End If
     
     If IsSlash Then
+        Dim IsUser As Boolean
+        
         If IsMuted Then
             SendSingle "You are muted.", Index
             Exit Sub
         End If
         
-        Dim IsUser As Boolean
+        If IsRepeating(p_MainArray(1), p_MainArray(2)) = True Then
+            SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
+            CMSG "!repeat", p_MainArray(1)
+            Exit Sub
+        End If
         
         With frmPanel.ListView1.ListItems
             For i = 1 To .Count
@@ -1035,6 +1039,8 @@ Case "!message"
         End With
         
         Select Case LCase(array2(0))
+        
+        'Roll function
         Case "/roll"
             On Error Resume Next
             Dim pRoll       As Long
@@ -1077,20 +1083,12 @@ Case "!message"
             
             SendSingle p_MainArray(1) & " rolls " & pRoll & ". (" & pMinRoll & "-" & pMaxRoll & ")", Index
            
-        'Whisper
+        'Whisper X to Z from Y
         Case "/w", "/whisper"
             If IsUser Then
                 If UBound(array2) > 1 Then
                     Whisper p_MainArray(1), GetTarget, array2(2), Index
-                    'Set last message
-                    With frmPanel.ListView1.ListItems
-                        For i = 1 To .Count
-                            If .Item(i) = p_MainArray(1) Then
-                                .Item(i).SubItems(3) = p_MainArray(2)
-                                Exit For
-                            End If
-                        Next i
-                    End With
+                    SetLastMessage p_MainArray(1), p_MainArray(2)
                 Else
                     Exit Sub
                 End If
@@ -1144,7 +1142,9 @@ Case "!message"
                     If i = UBound(Emotes) Then SendSingle "Unknown command used.", Index
                 End If
             Next i
-        
+            
+            SetLastMessage p_MainArray(1), p_MainArray(2)
+            
         End Select
         CMSG "!emote", p_MainArray(1), p_MainArray(2)
         Exit Sub
@@ -1181,19 +1181,11 @@ Case "!message"
             End If
         End If
         
-        With frmPanel.ListView1.ListItems
-            'Get the latest message
-            For i = 1 To .Count
-                If .Item(i) = p_MainArray(1) Then
-                    If .Item(i).SubItems(3) = p_MainArray(2) Then
-                         SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
-                         CMSG "!repeat", p_MainArray(1)
-                         Exit Sub
-                    End If
-                    Exit For
-                End If
-            Next i
-        End With
+        If IsRepeating(p_MainArray(1), p_MainArray(2)) = True Then
+            SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
+            CMSG "!repeat", p_MainArray(1)
+            Exit Sub
+        End If
     End If
     
     'Send Message and print in chat
@@ -1201,20 +1193,37 @@ Case "!message"
     CMSG p_Command, p_MainArray(1), p_MainArray(2)
     
     'Set last message
-    With frmPanel.ListView1.ListItems
-        For i = 1 To .Count
-            If .Item(i) = p_MainArray(1) Then
-                .Item(i).SubItems(3) = p_MainArray(2)
-                Exit For
-            End If
-        Next i
-    End With
+    SetLastMessage p_MainArray(1), p_MainArray(2)
     
 Case Else
     SendMessage "Error."
     
 End Select
 End Sub
+
+Private Sub SetLastMessage(pUser As String, pMessage As String)
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i) = pUser Then
+            .Item(i).SubItems(3) = pMessage
+            Exit For
+        End If
+    Next i
+End With
+End Sub
+
+Private Function IsRepeating(pUser As String, pMessage As String) As Boolean
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i) = pUser Then
+            If .Item(i).SubItems(3) = pMessage Then
+                 IsRepeating = True
+            End If
+            Exit For
+        End If
+    Next i
+End With
+End Function
 
 Private Function GetOnlineTime(pUser As String) As String
 Dim TD      As String

@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const pRev       As String = "1.2.1.2"
+Public Const pRev       As String = "1.2.1.3"
 Public Const pAuthor    As String = "Andy"
 
 Public Const aPort      As Long = 6123
@@ -119,7 +119,7 @@ Public Sub FlashTitle(Handle As Long, ReturnOrig As Boolean)
 Call FlashWindow(Handle, ReturnOrig)
 End Sub
 
-Public Sub minimize_to_tray()
+Public Sub MinimizeToTray()
 frmMain.Hide
 nid.cbSize = Len(nid)
 nid.hwnd = frmMain.hwnd
@@ -162,7 +162,7 @@ ErrHandler:
 End Function
 
 Public Function GetNextWindow(ByVal lhWnd As Long) As Long
-    GetNextWindow = GetWindow(lhWnd, GW_HWNDNEXT)
+GetNextWindow = GetWindow(lhWnd, GW_HWNDNEXT)
 End Function
 
 Public Sub SwitchButtons(pSwitch As Boolean)
