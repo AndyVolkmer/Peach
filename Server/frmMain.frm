@@ -1291,7 +1291,7 @@ End Function
 Private Function GetServerInformation() As String
 GetServerInformation = _
 "Welcome to Peach Servers." & "#" & _
-"Server: Peach r " & Rev & "/" & GetOS & "#" & _
+"Server: Peach r " & pRev & "/" & GetOS & "#" & _
 "Online User: " & frmMain.Winsock1.Count - 1 & "#" & _
 frmConfig.Label2.Caption & "#"
 End Function

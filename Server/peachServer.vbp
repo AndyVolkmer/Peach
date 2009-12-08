@@ -13,6 +13,7 @@ Module=modFunctions; modFunctions.bas
 Module=modIni; modIni.bas
 Module=modCrypt; modCrypt.bas
 Form=frmFriendIgnoreList.frm
+Module=modShared; ..\Shared\modShared.bas
 IconForm="frmMain"
 Startup="frmMain"
 HelpFile=""

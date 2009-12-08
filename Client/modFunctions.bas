@@ -1,7 +1,6 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const pRev       As String = "1.2.1.5"
 Public Const pAuthor    As String = "Andy"
 
 Public Const aPort      As Long = 6123
@@ -216,7 +215,7 @@ Dim WiSk As Winsock
 With frmSociety
     .lvFriendList.ListItems.Clear
     .lvIgnoreList.ListItems.Clear
-    .lvOnlineList.ListItems.Clear
+    .lvOnlineLIst.ListItems.Clear
 End With
 
 frmSendFile.Combo1.Clear

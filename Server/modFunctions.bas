@@ -1,7 +1,6 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const Rev            As String = "1.2.1.5"
 Public Const rPort          As Long = 6222
 
 Public VarTime              As Long    'Time counter variable

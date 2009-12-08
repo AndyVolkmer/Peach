@@ -21,6 +21,7 @@ Object={BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0; TABCTL32.OCX
 Module=modMain; modMain.bas
 Form=frmSettings.frm
 Form=frmForgotPassword.frm
+Module=modShared; ..\Shared\modShared.bas
 ResFile32="peachClient.RES"
 IconForm="frmMain"
 Startup="Sub Main"
