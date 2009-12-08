@@ -218,44 +218,10 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Public Sub CMSG(Command As String, Optional Name As String, Optional Message As String, Optional ForWho As String)
-Dim TimePrefix As String
-TimePrefix = "[" & Format(Time, "hh:nn:ss") & "] "
+Public Sub CMSG(pData As String)
 With frmChat.txtConver
     .SelStart = Len(.Text)
-    .SelRTF = vbCrLf & TimePrefix
-    Select Case Command
-    Case "!message"
-        .SelRTF = "[" & Name & "]: " & Message
-    Case "!w"
-        .SelRTF = "[" & Name & " - " & ForWho & "]: " & Message
-    Case "!namerequest"
-        .SelRTF = "'" & Name & "' is requesting Name."
-    Case "!connected"
-        .SelRTF = "'" & Name & "' connected succesfully."
-    Case "!login"
-        .SelRTF = "Account: '" & Name & "' Password: '" & Message & "' is logging in."
-    Case "!nameisfree"
-        .SelRTF = "Send answer that '" & Name & "' is free to take."
-    Case "!nametaken"
-        .SelRTF = "User '" & Name & "'. tryed to login but failed. (Name already taken)."
-    Case "!account"
-        .SelRTF = "Account '" & Name & "' tryed to login but failed. (Account doesnt exist)."
-    Case "!password"
-        .SelRTF = "Account '" & Name & "' tryed to login but failed. (Wrong Password)."
-    Case "!badname"
-        .SelRTF = "User '" & Name & "' tryed to login but failed . (Badname)."
-    Case "!muted"
-        .SelRTF = "[Muted][" & Name & "]: " & Message
-    Case "!repeat"
-        .SelRTF = "[" & Name & "] activated flood control."
-    Case "!banned"
-        .SelRTF = "'" & Name & "' tryed to login but failed. (Account banned)."
-    Case "!disconnected"
-        .SelRTF = "[System]: Disconnected due connection problem."
-    Case Else
-        .SelRTF = "[" & Command & "] [" & Name & "] [" & ForWho & "] [" & Message & "]"
-    End Select
+    .SelRTF = vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & pData
 End With
 End Sub
 

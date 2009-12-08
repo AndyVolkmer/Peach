@@ -743,6 +743,9 @@ Dim p_ProperAccount As String
 frmMain.Winsock1(Index).GetData p_Message
 DoEvents
 
+'Print the message
+CMSG p_Message & " | Index: " & Index
+
 'We decode (split) the message into an array
 p_MainArray = Split(p_Message, "#")
 
@@ -804,22 +807,19 @@ Case "!login"
             If LCase(.Item(i).SubItems(1)) = LCase(p_MainArray(1)) Then
                 'Ban Check
                 If .Item(i).SubItems(5) = "True" Then
-                    SendSingle "!login#Banned#", frmMain.Winsock1(Index)
-                    CMSG "!banned", p_MainArray(1)
+                    SendSingle "!login#Banned#", Index
                     Exit Sub
                 End If
                 
                 'Password Check
                 If Not .Item(i).SubItems(2) = p_MainArray(2) Then
                     SendSingle "!login#Password#", Index
-                    CMSG "!password", p_MainArray(1)
                     Exit Sub
                 End If
                 Exit For
             Else
                 If i = .Count Then
                     SendSingle "!login#Account#", Index
-                    CMSG "!account", p_MainArray(1), p_MainArray(2)
                     Exit Sub
                 End If
             End If
@@ -830,7 +830,6 @@ Case "!login"
     For i = LBound(DeclinedNames) To UBound(DeclinedNames)
         If DeclinedNames(i) = p_MainArray(3) Then
             SendSingle "!decilined", Index
-            CMSG "!badname", p_MainArray(3)
             Exit Sub
         End If
     Next i
@@ -840,7 +839,6 @@ Case "!login"
         For i = 1 To .Count
             If .Item(i) = p_MainArray(3) Then
                 SendSingle "!decilined", Index
-                CMSG "!nametaken", p_MainArray(3)
                 Exit Sub
             End If
         Next i
@@ -1025,7 +1023,6 @@ Case "!message"
         
         If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
             SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
-            CMSG "!repeat", p_MainArray(1)
             Exit Sub
         End If
         
@@ -1148,14 +1145,12 @@ Case "!message"
             SetLastMessage p_MainArray(1), p_MainArray(2)
             
         End Select
-        CMSG "!emote", p_MainArray(1), p_MainArray(2)
         Exit Sub
     End If
     
     'Check if user is muted
     If IsMuted Then
         SendSingle "You are muted.", Index
-        CMSG "!muted", p_MainArray(1), p_MainArray(2)
         Exit Sub
     End If
     
@@ -1187,14 +1182,12 @@ Case "!message"
         
         If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
             SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
-            CMSG "!repeat", p_MainArray(1)
             Exit Sub
         End If
     End If
     
     'Send Message and print in chat
     SendProtectedMessage p_MainArray(1), "[" & p_MainArray(1) & "]: " & p_MainArray(2)
-    CMSG p_Command, p_MainArray(1), p_MainArray(2)
     
     'Set last message
     SetLastMessage p_MainArray(1), p_MainArray(2)
@@ -1318,7 +1311,6 @@ With frmPanel.ListView1.ListItems
             Exit For
         End Select
     Next i
-    CMSG "!w", pUser, Conversation, Target
 End With
 End Sub
 

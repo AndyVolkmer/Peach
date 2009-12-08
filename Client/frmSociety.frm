@@ -62,8 +62,11 @@ Begin VB.Form frmSociety
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "lvIgnoreList"
+      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "cmdAddIgnore"
+      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "cmdRemoveIgnore"
+      Tab(2).Control(2).Enabled=   0   'False
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToFriend 
          Caption         =   "&Add to Friends"
@@ -240,7 +243,7 @@ End Sub
 
 Private Sub cmdAddIgnore_Click()
 Dim Val As String
-Val = InputBox("Please enter the account you would like to ignore in the text box below.", "Adding a friend", "Friends Account") & "#"
+Val = InputBox("Please enter the account you would like to ignore in the text box below.", "Adding a ignore", "Ignored User Account") & "#"
 
 If Trim$(Val) = "#" Then Exit Sub
 SendMSG "!ignore#-add#" & frmConfig.txtAccount & "#" & Val & "#"
