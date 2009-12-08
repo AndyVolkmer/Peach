@@ -1129,7 +1129,7 @@ Case "!message"
             For i = LBound(Emotes) To UBound(Emotes)
 '               // Hackfix, this is a very bad way of checking and may slow down .. needs testing
 '               If Emotes(i).Command = LCase(array2(0)) Then
-                If IsPartOf(array2(0), Emotes(i).Command) Then
+                If IsPartOf(LCase(array2(0)), Emotes(i).Command) Then
                     If p_MainArray(1) = GetTarget Then
                         IsUser = False
                     End If
