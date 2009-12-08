@@ -83,6 +83,7 @@ Public SOC_ONLINE_LIST
 
 Public SOC_COMMAND_ADD                  As String
 Public SOC_COMMAND_REMOVE               As String
+Public SOC_COMMAND_FRIEND               As String
 
 Public SOC_ASK_DEL_1                    As String
 Public SOC_ASK_DEL_2                    As String
@@ -235,6 +236,7 @@ SOC_ONLINE_LIST = "Online Liste"
 
 SOC_COMMAND_ADD = "&Hinzufügen"
 SOC_COMMAND_REMOVE = "&Entfernen"
+SOC_COMMAND_FRIEND = "&Als Freund hinzufügen"
 
 SOC_ASK_DEL_1 = "Möchten Sie '"
 SOC_ASK_DEL_2 = "' von der Liste löschen?"
@@ -391,6 +393,7 @@ SOC_ONLINE_LIST = "Online List"
 
 SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
+SOC_COMMAND_FRIEND = "&Add to Friends"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"
@@ -542,6 +545,7 @@ SOC_ONLINE_LIST = "Lista de online"
 
 SOC_COMMAND_ADD = "&Añadir"
 SOC_COMMAND_REMOVE = "&Quitar"
+SOC_COMMAND_FRIEND = "&Añardir a amigos"
 
 SOC_ASK_DEL_1 = "¿Estas seguro que quieres borrar a '"
 SOC_ASK_DEL_2 = "' de la lista?"
@@ -695,6 +699,7 @@ SOC_ONLINE_LIST = "Online Lista"
 
 SOC_COMMAND_ADD = "&Tillägg"
 SOC_COMMAND_REMOVE = "&Ta bort"
+SOC_COMMAND_FRIEND = "&Add to Friends"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"
@@ -847,6 +852,7 @@ SOC_ONLINE_LIST = "Online List"
 
 SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
+SOC_COMMAND_FRIEND = "&Add to Friends"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"
@@ -1001,6 +1007,7 @@ SOC_ONLINE_LIST = "Online List"
 
 SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
+SOC_COMMAND_FRIEND = "&Add to Friends"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"
@@ -1151,6 +1158,7 @@ SOC_ONLINE_LIST = "Online List"
 
 SOC_COMMAND_ADD = "&Toevoegen"
 SOC_COMMAND_REMOVE = "&Verwijderen"
+SOC_COMMAND_FRIEND = "&Add to Friends"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"
@@ -1309,6 +1317,7 @@ SOC_ONLINE_LIST = "Online List"
 
 SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
+SOC_COMMAND_FRIEND = "&Add to Friends"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"

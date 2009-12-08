@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const Rev            As String = "1.2.1.3"
+Public Const Rev            As String = "1.2.1.4"
 Public Const rPort          As Long = 6222
 
 Public VarTime              As Long    'Time counter variable
@@ -66,17 +66,17 @@ Public Const NIF_ICON = &H2
 Public Const NIF_TIP = &H4
 
 'Mouseclick constants
-Public Const WM_LBUTTONDBLCLK = &H203 'Double-click
-Public Const WM_LBUTTONDOWN = &H201 'Button down
-Public Const WM_LBUTTONUP = &H202 'Button up
-Public Const WM_RBUTTONDBLCLK = &H206 'Double-click
-Public Const WM_RBUTTONDOWN = &H204 'Button down
-Public Const WM_RBUTTONUP = &H205 'Button up
+Public Const WM_LBUTTONDBLCLK = &H203       'Double-click
+Public Const WM_LBUTTONDOWN = &H201         'Button down
+Public Const WM_LBUTTONUP = &H202           'Button up
+Public Const WM_RBUTTONDBLCLK = &H206       'Double-click
+Public Const WM_RBUTTONDOWN = &H204         'Button down
+Public Const WM_RBUTTONUP = &H205           'Button up
 
 'Windows version constant
-Public Const VER_PLATFORM_WIN32s = 0        ' Win32s on Windows 3.1
-Public Const VER_PLATFORM_WIN32_WINDOWS = 1 ' Windows 95, Windows 98, or Windows Me
-Public Const VER_PLATFORM_WIN32_NT = 2      ' Windows NT, Windows 2000, Windows XP, or Windows Server 2003 family.
+Public Const VER_PLATFORM_WIN32s = 0        'Win32s on Windows 3.1
+Public Const VER_PLATFORM_WIN32_WINDOWS = 1 'Windows 95, Windows 98, or Windows Me
+Public Const VER_PLATFORM_WIN32_NT = 2      'Windows NT, Windows 2000, Windows XP, or Windows Server 2003 family.
 
 Declare Function GetVersionExA Lib "kernel32" (lpVersionInformation As OSVERSIONINFO) As Integer
 Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal dwMessage As Long, pnid As NOTIFYICONDATA) As Boolean
@@ -250,8 +250,6 @@ With frmChat.txtConver
         .SelRTF = "[Muted][" & Name & "]: " & Message
     Case "!repeat"
         .SelRTF = "[" & Name & "] activated flood control."
-    Case "!long"
-        .SelRTF = "[" & Name & "] wrote a too long message. (Kicked)"
     Case "!banned"
         .SelRTF = "'" & Name & "' tryed to login but failed. (Account banned)."
     Case "!disconnected"

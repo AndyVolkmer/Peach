@@ -482,7 +482,7 @@ Case "!accepted"
     
 'Wipe out current ignore list and insert new values
 Case "!update_ignore"
-    With frmSociety.ListView3.ListItems
+    With frmSociety.lvIgnoreList.ListItems
         .Clear
         For i = 1 To UBound(StrArr) - 1
             .Add , , StrArr(i)
@@ -494,7 +494,7 @@ Case "!update_friends"
     Dim f_array() As String
     Dim j As Long
     
-    With frmSociety.ListView2.ListItems
+    With frmSociety.lvFriendList.ListItems
         .Clear
         For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
             f_array = Split(StrArr(i), "$")
@@ -527,12 +527,12 @@ Case "!update_online"
     Dim User As String
     
     'Clear the current list so we don't get multiply entries
-    frmSociety.ListView1.ListItems.Clear
+    frmSociety.lvOnlineLIst.ListItems.Clear
     frmSendFile.Combo1.Clear
     
     'Go through array and add users
     For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
-        frmSociety.ListView1.ListItems.Add , , StrArr(i)
+        frmSociety.lvOnlineLIst.ListItems.Add , , StrArr(i)
         User = Left(StrArr(i), InStr(1, StrArr(i), " ") - 1)
         frmSendFile.Combo1.AddItem User
     Next i

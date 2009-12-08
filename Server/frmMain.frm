@@ -1023,7 +1023,7 @@ Case "!message"
             Exit Sub
         End If
         
-        If IsRepeating(p_MainArray(1), p_MainArray(2)) = True Then
+        If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
             SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
             CMSG "!repeat", p_MainArray(1)
             Exit Sub
@@ -1127,11 +1127,13 @@ Case "!message"
         
         Case Else
             For i = LBound(Emotes) To UBound(Emotes)
-                If Emotes(i).Command = LCase(array2(0)) Then
+'               // Hackfix, this is a very bad way of checking and may slow down .. needs testing
+'               If Emotes(i).Command = LCase(array2(0)) Then
+                If IsPartOf(array2(0), Emotes(i).Command) Then
                     If p_MainArray(1) = GetTarget Then
                         IsUser = False
                     End If
-                    
+
                     If IsUser Then
                         SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsUserText1 & GetTarget & Emotes(i).IsUserText2
                     Else
@@ -1166,6 +1168,7 @@ Case "!message"
         If Len(p_MainArray(2)) > 5 Then
             'If the text is just made of numbers we don't check
             If IsNumeric(p_MainArray(2)) = False Then
+                'If there are letters and not just signs then check
                 If IsAlphaCharacter(p_MainArray(2)) Then
                     S1 = 0
                     For i = 1 To Len(p_MainArray(2))
@@ -1173,6 +1176,7 @@ Case "!message"
                         If UCase$(E) = E Then S1 = S1 + 1
                     Next i
                     E = vbNullString
+                    'Exit if there are more then 75% of caps
                     If Format$(100 * S1 / Len(p_MainArray(2)), "0") > 75 Then
                         SendSingle "Message blocked. Please do not write more then 75% in caps.", Index
                         Exit Sub
@@ -1181,7 +1185,7 @@ Case "!message"
             End If
         End If
         
-        If IsRepeating(p_MainArray(1), p_MainArray(2)) = True Then
+        If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
             SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
             CMSG "!repeat", p_MainArray(1)
             Exit Sub
@@ -1223,6 +1227,20 @@ With frmPanel.ListView1.ListItems
         End If
     Next i
 End With
+End Function
+
+Private Function IsPartOf(pPart As String, pCommand As String) As Boolean
+Dim pTemp1  As String
+Dim j       As Long
+
+For j = 2 To Len(pPart)
+    pTemp1 = Mid(pPart, 1, j)
+    If pTemp1 = Left(pCommand, Len(pTemp1)) Then
+        IsPartOf = True
+    Else
+        IsPartOf = False
+    End If
+Next j
 End Function
 
 Private Function GetOnlineTime(pUser As String) As String

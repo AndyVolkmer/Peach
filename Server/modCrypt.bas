@@ -211,11 +211,7 @@ Loop
 DeCode = varFin
 Exit Function
 ErrHandler:
-    Dim ErrNum, ErrDesc, ErrSource
-    ErrNum = Err.Number
-    ErrDesc = Err.Description
-    ErrSource = Err.Source
-    MsgBox "Error# = " & ErrNum & vbCrLf & "Description = " & ErrDesc & vbCrLf & "Source = " & ErrSource, vbCritical + vbOKOnly, "Program Error!"
+    MsgBox "Error# = " & Err.Number & vbCrLf & "Description = " & Err.Description & vbCrLf & "Source = " & Err.Source, vbCritical + vbOKOnly
     Err.Clear
     Exit Function
 End Function
@@ -429,11 +425,7 @@ Loop
 Encode = varFin
 Exit Function
 ErrHandler:
-    Dim ErrNum, ErrDesc, ErrSource
-    ErrNum = Err.Number
-    ErrDesc = Err.Description
-    ErrSource = Err.Source
-    MsgBox "Error# = " & ErrNum & vbCrLf & "Description = " & ErrDesc & vbCrLf & "Source = " & ErrSource, vbCritical + vbOKOnly, "Program Error!"
+    MsgBox "Error# = " & Err.Number & vbCrLf & "Description = " & Err.Description & vbCrLf & "Source = " & Err.Source, vbCritical + vbOKOnly
     Err.Clear
     Exit Function
 End Function

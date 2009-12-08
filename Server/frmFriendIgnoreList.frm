@@ -16,7 +16,7 @@ Begin VB.Form frmFriendIgnoreList
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
-   Icon            =   "frmFriendList.frx":0000
+   Icon            =   "frmFriendIgnoreList.frx":0000
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    ScaleHeight     =   5220

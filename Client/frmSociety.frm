@@ -45,29 +45,36 @@ Begin VB.Form frmSociety
       TabCaption(0)   =   "Friend List"
       TabPicture(0)   =   "frmSociety.frx":0000
       Tab(0).ControlEnabled=   -1  'True
-      Tab(0).Control(0)=   "ListView2"
+      Tab(0).Control(0)=   "lvFriendList"
       Tab(0).Control(0).Enabled=   0   'False
-      Tab(0).Control(1)=   "Command1"
+      Tab(0).Control(1)=   "cmdAddFriend"
       Tab(0).Control(1).Enabled=   0   'False
-      Tab(0).Control(2)=   "Command2"
+      Tab(0).Control(2)=   "cmdRemoveFriend"
       Tab(0).Control(2).Enabled=   0   'False
       Tab(0).ControlCount=   3
       TabCaption(1)   =   "Online List"
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "ListView1"
-      Tab(1).ControlCount=   1
+      Tab(1).Control(0)=   "cmdAddToFriend"
+      Tab(1).Control(1)=   "lvOnlineList"
+      Tab(1).ControlCount=   2
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "ListView3"
-      Tab(2).Control(0).Enabled=   0   'False
-      Tab(2).Control(1)=   "Command3"
-      Tab(2).Control(1).Enabled=   0   'False
-      Tab(2).Control(2)=   "Command4"
-      Tab(2).Control(2).Enabled=   0   'False
+      Tab(2).Control(0)=   "lvIgnoreList"
+      Tab(2).Control(1)=   "cmdAddIgnore"
+      Tab(2).Control(2)=   "cmdRemoveIgnore"
       Tab(2).ControlCount=   3
-      Begin VB.CommandButton Command4 
+      Begin VB.CommandButton cmdAddToFriend 
+         Caption         =   "&Add to Friends"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   -70320
+         TabIndex        =   8
+         Top             =   3360
+         Width           =   2415
+      End
+      Begin VB.CommandButton cmdRemoveIgnore 
          Caption         =   "&Remove"
          Enabled         =   0   'False
          Height          =   375
@@ -76,7 +83,7 @@ Begin VB.Form frmSociety
          Top             =   3360
          Width           =   1695
       End
-      Begin VB.CommandButton Command3 
+      Begin VB.CommandButton cmdAddIgnore 
          Caption         =   "&Add"
          Enabled         =   0   'False
          Height          =   375
@@ -85,7 +92,7 @@ Begin VB.Form frmSociety
          Top             =   3360
          Width           =   1695
       End
-      Begin VB.CommandButton Command2 
+      Begin VB.CommandButton cmdRemoveFriend 
          Caption         =   "&Remove"
          Enabled         =   0   'False
          Height          =   375
@@ -94,7 +101,7 @@ Begin VB.Form frmSociety
          Top             =   3360
          Width           =   1695
       End
-      Begin VB.CommandButton Command1 
+      Begin VB.CommandButton cmdAddFriend 
          Caption         =   "&Add"
          Enabled         =   0   'False
          Height          =   375
@@ -103,7 +110,7 @@ Begin VB.Form frmSociety
          Top             =   3360
          Width           =   1695
       End
-      Begin MSComctlLib.ListView ListView2 
+      Begin MSComctlLib.ListView lvFriendList 
          Height          =   2775
          Left            =   120
          TabIndex        =   0
@@ -140,7 +147,7 @@ Begin VB.Form frmSociety
             Object.Width           =   2540
          EndProperty
       End
-      Begin MSComctlLib.ListView ListView1 
+      Begin MSComctlLib.ListView lvOnlineList 
          Height          =   2775
          Left            =   -74880
          TabIndex        =   3
@@ -172,7 +179,7 @@ Begin VB.Form frmSociety
             Object.Width           =   12409
          EndProperty
       End
-      Begin MSComctlLib.ListView ListView3 
+      Begin MSComctlLib.ListView lvIgnoreList 
          Height          =   2775
          Left            =   -74880
          TabIndex        =   7
@@ -211,7 +218,19 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Private Sub Command1_Click()
+Option Explicit
+
+Public Sub LoadSocietyForm()
+SSTab1.TabCaption(0) = SOC_FRIEND_LIST
+SSTab1.TabCaption(1) = SOC_ONLINE_LIST
+cmdAddFriend.Caption = SOC_COMMAND_ADD
+cmdRemoveFriend.Caption = SOC_COMMAND_REMOVE
+cmdAddIgnore.Caption = SOC_COMMAND_ADD
+cmdRemoveIgnore.Caption = SOC_COMMAND_REMOVE
+cmdAddToFriend.Caption = SOC_COMMAND_FRIEND
+End Sub
+
+Private Sub cmdAddFriend_Click()
 Dim pBuffer As String
 pBuffer = InputBox("Please enter the account of your friend in the text box below.", "Adding a friend", "Friends Account") & "#"
 
@@ -219,13 +238,35 @@ If Trim$(pBuffer) = "#" Then Exit Sub
 SendMSG "!friend#-add#" & frmConfig.txtAccount & "#" & pBuffer & "#"
 End Sub
 
-Private Sub Command2_Click()
-Dim Name As String
-Dim MPos As Integer
-Dim Temp() As String
+Private Sub cmdAddIgnore_Click()
+Dim Val As String
+Val = InputBox("Please enter the account you would like to ignore in the text box below.", "Adding a friend", "Friends Account") & "#"
 
-With ListView2
-    If .SelectedItem Is Nothing Then Exit Sub
+If Trim$(Val) = "#" Then Exit Sub
+SendMSG "!ignore#-add#" & frmConfig.txtAccount & "#" & Val & "#"
+End Sub
+
+Private Sub cmdAddToFriend_Click()
+Dim Name    As String
+Dim Full    As String
+Dim MPos    As Integer
+
+If lvOnlineList.ListItems.Count = 0 Then Exit Sub
+
+Full = lvOnlineList.SelectedItem
+MPos = InStr(1, Full, "(")
+Name = Mid(Full, MPos + 2, Len(Full) - MPos - 3)
+
+SendMSG "!friend#-add#" & frmConfig.txtAccount & "#" & Name & "#"
+End Sub
+
+Private Sub cmdRemoveFriend_Click()
+Dim Name    As String
+Dim MPos    As Integer
+Dim Temp()  As String
+
+With lvFriendList
+    If .ListItems.Count = 0 Then Exit Sub
     
     Temp = Split(.SelectedItem.Text, " ")
     If MsgBox(SOC_ASK_DEL_1 & Temp(0) & SOC_ASK_DEL_2, vbQuestion + vbYesNo, "Deleting '" & Temp(0) & "'") = vbNo Then
@@ -242,30 +283,13 @@ With ListView2
 End With
 End Sub
 
-Public Sub LoadSocietyForm()
-SSTab1.TabCaption(0) = SOC_FRIEND_LIST
-SSTab1.TabCaption(1) = SOC_ONLINE_LIST
-Command1.Caption = SOC_COMMAND_ADD
-Command2.Caption = SOC_COMMAND_REMOVE
-Command3.Caption = SOC_COMMAND_ADD
-Command4.Caption = SOC_COMMAND_REMOVE
-End Sub
-
-Private Sub Command3_Click()
-Dim Val As String
-Val = InputBox("Please enter the account you would like to ignore in the text box below.", "Adding a friend", "Friends Account") & "#"
-
-If Trim$(Val) = "#" Then Exit Sub
-SendMSG "!ignore#-add#" & frmConfig.txtAccount & "#" & Val & "#"
-End Sub
-
-Private Sub Command4_Click()
+Private Sub cmdRemoveIgnore_Click()
 Dim Name As String
 Dim MPos As Integer
 Dim Temp() As String
 
-With ListView3
-    If .SelectedItem Is Nothing Then Exit Sub
+With lvIgnoreList
+    If .ListItems.Count = 0 Then Exit Sub
     
     Temp = Split(.SelectedItem.Text, " ")
     If MsgBox(SOC_ASK_DEL_1 & Temp(0) & SOC_ASK_DEL_2, vbQuestion + vbYesNo, "Deleting '" & Temp(0) & "'") = vbNo Then
@@ -293,19 +317,5 @@ If Setting.ASK_TICK = True Then
         Cancel = 1
         Exit Sub
     End If
-End If
-End Sub
-
-Private Sub ListView2_ItemCheck(ByVal Item As MSComctlLib.ListItem)
-If Item.Checked = True Then
-    With ListView2.ListItems
-        For i = 1 To .Count
-            .Item(i).Checked = False
-        Next i
-        ListView2.SelectedItem = Item
-    End With
-    Item.Checked = True
-Else
-    Item.Checked = False
 End If
 End Sub

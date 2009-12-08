@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const pRev       As String = "1.2.1.3"
+Public Const pRev       As String = "1.2.1.4"
 Public Const pAuthor    As String = "Andy"
 
 Public Const aPort      As Long = 6123
@@ -201,10 +201,11 @@ With frmChat
 End With
 
 With frmSociety
-    .Command1.Enabled = Not pSwitch
-    .Command2.Enabled = Not pSwitch
-    .Command3.Enabled = Not pSwitch
-    .Command4.Enabled = Not pSwitch
+    .cmdAddFriend.Enabled = Not pSwitch
+    .cmdAddIgnore.Enabled = Not pSwitch
+    .cmdRemoveFriend.Enabled = Not pSwitch
+    .cmdRemoveIgnore.Enabled = Not pSwitch
+    .cmdAddToFriend.Enabled = Not pSwitch
 End With
 End Sub
 
@@ -213,9 +214,9 @@ Dim WiSk As Winsock
 
 'Clear the online user list
 With frmSociety
-    .ListView1.ListItems.Clear
-    .ListView2.ListItems.Clear
-    .ListView3.ListItems.Clear
+    .lvFriendList.ListItems.Clear
+    .lvIgnoreList.ListItems.Clear
+    .lvOnlineList.ListItems.Clear
 End With
 
 frmSendFile.Combo1.Clear
