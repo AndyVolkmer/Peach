@@ -79,7 +79,8 @@ Public LANG_DUTCH                       As String
 Public LANG_FRENCH                      As String
 
 Public SOC_FRIEND_LIST                  As String
-Public SOC_ONLINE_LIST
+Public SOC_ONLINE_LIST                  As String
+Public SOC_IGNORE_LIST                  As String
 
 Public SOC_COMMAND_ADD                  As String
 Public SOC_COMMAND_REMOVE               As String
@@ -163,7 +164,7 @@ CURRENT_LANG = 0
 ' MDI form ..
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Sende Datei"
-MDI_COMMAND_SOCIETY = "&Online Liste"
+MDI_COMMAND_SOCIETY = "&Gesellschaft"
 
 MDI_STAT_DISCONNECTED = "Status: Getrennt"
 MDI_STAT_DISCONNECT = "Status: Getrennt vom Server"
@@ -233,6 +234,7 @@ LANG_LABEL_SELLANG = "Wähle deine Sprache aus:"
 
 SOC_FRIEND_LIST = "Freundes Liste"
 SOC_ONLINE_LIST = "Online Liste"
+SOC_IGNORE_LIST = "Ignorier Liste"
 
 SOC_COMMAND_ADD = "&Hinzufügen"
 SOC_COMMAND_REMOVE = "&Entfernen"
@@ -316,7 +318,7 @@ CURRENT_LANG = 1
 'MDI form
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Send File"
-MDI_COMMAND_SOCIETY = "&Online List"
+MDI_COMMAND_SOCIETY = "&Society"
 
 MDI_STAT_DISCONNECTED = "Status: Disconnected"
 MDI_STAT_DISCONNECT = "Status: Disconnected from Server"
@@ -358,7 +360,7 @@ CONFIG_MSG_PORT = "You didn't introduce a port."
 CONFIG_MSG_NAME = "You didn't introduce a name."
 CONFIG_MSG_IP = "You didn't introduce a IP."
 CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
-CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
+CONFIG_MSG_NAME_INVALID = "The name you have entered is not valid."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 ' Chat form ..
@@ -376,7 +378,7 @@ SF_MSG_FILE = "No file selected."
 SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
 SF_MSG_INCOMMING_FILE_2 = "' from "
 SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
-SF_MSG_DECILINED = "File transfer was decilined."
+SF_MSG_DECILINED = "The file transfer has been refused."
 
 SF_COMMAND_BROWSE = "&Search .."
 SF_COMMAND_SENDFILE = "Send"
@@ -390,6 +392,7 @@ LANG_LABEL_SELLANG = "Select your language:"
 
 SOC_FRIEND_LIST = "Friend List"
 SOC_ONLINE_LIST = "Online List"
+SOC_IGNORE_LIST = "Ignore List"
 
 SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
@@ -418,7 +421,7 @@ REG_CHECK_PASSWORD_SHOW = "&Show Password."
 
 REG_MSG_ACCOUNT_EXIST = "The account name already exists."
 REG_MSG_ACCOUNT_INVALID = "Invalid account name."
-REG_MSG_ACCOUNT_NUMERIC = "Account can't be made of numeric characters."
+REG_MSG_ACCOUNT_NUMERIC = "Account can not be composed of numeric characters."
 REG_MSG_ACCOUNT_EMPTY = "No account entered."
 REG_MSG_ACCOUNT_SHORT = "Account name to short, it requieres at least 4 characters."
 
@@ -472,7 +475,7 @@ CURRENT_LANG = 2
 
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Enviar Archivo"
-MDI_COMMAND_SOCIETY = "&Lista Online"
+MDI_COMMAND_SOCIETY = "&Sociedad"
 
 MDI_STAT_DISCONNECTED = "Estado: Desconectado"
 MDI_STAT_DISCONNECT = "Estado: Desconectado del servidor"
@@ -542,6 +545,7 @@ LANG_LABEL_SELLANG = "Elige tu idioma:"
 
 SOC_FRIEND_LIST = "Lista de contactos"
 SOC_ONLINE_LIST = "Lista de online"
+SOC_IGNORE_LIST = "Lista de ignorados"
 
 SOC_COMMAND_ADD = "&Añadir"
 SOC_COMMAND_REMOVE = "&Quitar"
@@ -625,7 +629,7 @@ CURRENT_LANG = 3
 ' MDI form ..
 MDI_COMMAND_CHAT = "Ch&att"
 MDI_COMMAND_SENDFILE = "&Sänd fil"
-MDI_COMMAND_SOCIETY = "&Online Lista"
+MDI_COMMAND_SOCIETY = "&Samhälle"
 
 MDI_STAT_DISCONNECTED = "Status: Frånkopplad"
 MDI_STAT_DISCONNECT = "Status: Koppla ifrån servern"
@@ -663,7 +667,7 @@ CONFIG_MSG_PORT = "Du angav inget portnummer."
 CONFIG_MSG_IP = "Du angav inte ett IP."
 CONFIG_MSG_NAME = "Du angav inte ett namn."
 CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
-CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
+CONFIG_MSG_NAME_INVALID = "The name you have entered is not valid."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 ' Chat form ..
@@ -696,6 +700,7 @@ LANG_LABEL_SELLANG = "Välj språk:"
 
 SOC_FRIEND_LIST = "Kompis Lista"
 SOC_ONLINE_LIST = "Online Lista"
+SOC_IGNORE_LIST = "ignoreringslista"
 
 SOC_COMMAND_ADD = "&Tillägg"
 SOC_COMMAND_REMOVE = "&Ta bort"
@@ -777,7 +782,7 @@ CURRENT_LANG = 4
 ' Mdi form
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Invia File"
-MDI_COMMAND_SOCIETY = "&Lista contatti Online"
+MDI_COMMAND_SOCIETY = "&Società"
 
 MDI_STAT_DISCONNECTED = "Stato: Disconnesso"
 MDI_STAT_DISCONNECT = "Stato: Disconnesso dal Server"
@@ -810,14 +815,14 @@ LANG_SERBIAN = "Serbo"
 LANG_DUTCH = "Olandese"
 LANG_FRENCH = "Francese"
 
-CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
-CONFIG_MSG_PASSWORD = "You did'nt introduce a password."
+CONFIG_MSG_ACCOUNT = "You have not entered an account."
+CONFIG_MSG_PASSWORD = "You have not entered a password."
 CONFIG_MSG_NUMERIC = "Non puoi immettere nomi composti da numeri."
 CONFIG_MSG_PORT = "Non hai selezionato una porta valida."
 CONFIG_MSG_IP = "Non hai immesso un IP."
 CONFIG_MSG_NAME = "Non hai immesso un Nome utente."
 CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
-CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
+CONFIG_MSG_NAME_INVALID = "The name you have entered is not valid."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 ' Chat form ..
@@ -835,7 +840,7 @@ SF_MSG_FILE = "No file selected."
 SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
 SF_MSG_INCOMMING_FILE_2 = "' from "
 SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
-SF_MSG_DECILINED = "File transfer was decilined."
+SF_MSG_DECILINED = "The file transfer has been refused."
 
 SF_COMMAND_BROWSE = "&Cerca .."
 SF_COMMAND_SENDFILE = "Invia"
@@ -849,6 +854,7 @@ LANG_LABEL_SELLANG = "Seleziona la tua lingua:"
 
 SOC_FRIEND_LIST = "Friend List"
 SOC_ONLINE_LIST = "Online List"
+SOC_IGNORE_LIST = "Ignore List"
 
 SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
@@ -877,7 +883,7 @@ REG_CHECK_PASSWORD_SHOW = "&Show Password."
 
 REG_MSG_ACCOUNT_EXIST = "The account name already exists."
 REG_MSG_ACCOUNT_INVALID = "Invalid account name."
-REG_MSG_ACCOUNT_NUMERIC = "Account can't be made of numeric characters."
+REG_MSG_ACCOUNT_NUMERIC = "Account can not be composed of numeric characters."
 REG_MSG_ACCOUNT_EMPTY = "No account entered."
 REG_MSG_ACCOUNT_SHORT = "Account name to short, it requieres at least 4 characters."
 
@@ -926,167 +932,12 @@ FP_MSG_SUCCESSFULL = "Your password is "
 FP_MSG_WRONG_ANSWER = "The answer is wrong."
 End Sub
 
-Public Sub SET_LANG_SERBIAN()
-CURRENT_LANG = 6
-
-' Mdi form ..
-MDI_COMMAND_CHAT = "Ch&at"
-MDI_COMMAND_SENDFILE = "&Slanje fajla"
-MDI_COMMAND_SOCIETY = "&Onlajn lista"
-
-MDI_STAT_DISCONNECTED = "Status: Veza je prekinuta"
-MDI_STAT_DISCONNECT = "Status: Veza sa serverom je prekinuta"
-MDI_STAT_CONNECTED = "Status: Povezi"
-MDI_STAT_CONNECTING = "Status: Povezi .."
-
-'MDImsgbox_errorHandlerFormLoad
-MDI_MSG_NAME_TAKEN = "Ime je vec zauzeto."
-MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
-MDI_MSG_WRONG_PASSWORD = "The password is wrong."
-MDI_MSG_BANNED = "This account is banned."
-MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
-
-' Config form ..
-CONFIG_COMMAND_CONNECT = "&Povezi se"
-CONFIG_COMMAND_DISCONNECT = "&Veza je prekinuta"
-CONFIG_COMMAND_SETTINGS = "&Settings"
-CONFIG_COMMAND_UPDATE = "&Update"
-CONFIG_COMMAND_REGISTER = "&Register Account"
-CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
-
-CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
-
-LANG_GERMAN = "Nemacki"
-LANG_ENGLISH = "Engleski"
-LANG_SPANISH = "Spanski"
-LANG_SWEDISH = "Svedski"
-LANG_ITALIAN = "Italijanski"
-LANG_SERBIAN = "Srpski"
-LANG_DUTCH = "Holandski"
-LANG_FRENCH = "Francuski"
-
-CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
-CONFIG_MSG_PASSWORD = "You did'nt introduce a password."
-CONFIG_MSG_NUMERIC = "Ne mozete uzeti numericka imena."
-CONFIG_MSG_PORT = "Niste uneli port."
-CONFIG_MSG_IP = "Niste uneli IP"
-CONFIG_MSG_NAME = "Niste uneli ime"
-CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
-CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
-CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
-
-'Chat form ..
-CHAT_COMMAND_SEND = "&Posalji"
-CHAT_COMMAND_CLEAR = "&Obrisi"
-
-'Send file form ..
-SF_LABEL_FILENAME = " Ime  arhive:"
-SF_LABEL_SENDING_FILE = "Slanje:"
-SF_LABEL_SENT = "0.0% Poslato"
-SF_LABEL_SEND_TO = "Send to:"
-
-SF_MSG_USER = "No user selected."
-SF_MSG_FILE = "No file selected."
-SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
-SF_MSG_INCOMMING_FILE_2 = "' from "
-SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
-SF_MSG_DECILINED = "File transfer was decilined."
-
-SF_COMMAND_BROWSE = "Trazi .."
-SF_COMMAND_SENDFILE = "Posalji"
-SF_COMMAND_CANCEL = "Otkazhi .."
-
-DESP_TEXT_NEW_MSG = "New Message!"
-DESP_TEXT_DC_SERVER = "Veza sa serverom je prekinuta!"
-
-LANG_COMMAND_ENTER = "&Otvori"
-LANG_LABEL_SELLANG = "Dodaj svoj jezik:"
-
-SOC_FRIEND_LIST = "Friend List"
-SOC_ONLINE_LIST = "Online List"
-
-SOC_COMMAND_ADD = "&Add"
-SOC_COMMAND_REMOVE = "&Remove"
-SOC_COMMAND_FRIEND = "&Add to Friends"
-
-SOC_ASK_DEL_1 = "Do you want to delete '"
-SOC_ASK_DEL_2 = "' from the list?"
-
-REG_CAPTION = "Peach - Registration"
-
-REG_FRAME_DETAIL = "Enter your details"
-
-REG_LABEL_ACCOUNT_NAME = " Account Name:"
-REG_LABEL_PASSWORD = " Password:"
-REG_LABEL_PASSWORD_CONFIRM = " Confirm the Password:"
-REG_LABEL_PASSWORD_WEAK = "The password is weak."
-REG_LABEL_PASSWORD_NORMAL = "The password is normal."
-REG_LABEL_PASSWORD_STRONG = "The password is strong."
-REG_LABEL_SECRET_QUESTION = "Secret question:"
-REG_LABEL_SECRET_ANSWER = "Secret answer:"
-
-REG_COMMAND_SUBMIT = "&Submit"
-REG_COMMAND_CLOSE = "&Close"
-
-REG_CHECK_PASSWORD_SHOW = "&Show Password."
-
-REG_MSG_ACCOUNT_EXIST = "The account name already exists."
-REG_MSG_ACCOUNT_INVALID = "Invalid account name."
-REG_MSG_ACCOUNT_NUMERIC = "Account can't be made of numeric characters."
-REG_MSG_ACCOUNT_EMPTY = "No account entered."
-REG_MSG_ACCOUNT_SHORT = "Account name to short, it requieres at least 4 characters."
-
-REG_MSG_PASSWORD_MATCH = "The passwords dont match."
-REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
-REG_MSG_PASSWORD_EMPTY = "No Password entered."
-
-REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
-
-REG_MSG_SUCCESSFULLY = "The account was successfully registered."
-REG_MSG_ERROR = "An error has occured please try later again."
-REG_MSG_ERROR_OCCURED = "Error has occured ..."
-REG_MSG_LOADING = " Loading .."
-REG_MSG_CONNECTION_BROKEN = "Connection is broken please try again later."
-
-REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
-REG_CMB_SECRET_QUESTION_1 = "Your favorite book?"
-REG_CMB_SECRET_QUESTION_2 = "Your favorite movie?"
-REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
-REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
-REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
-
-SET_LABEL_COLOR = "Current Color:"
-
-SET_FRAME_OPTIONS = "Options"
-SET_FRAME_CONNECTION = "Connection Settings"
-
-SET_CHECK_SAVE_ACCOUNT = "Save Account"
-SET_CHECK_SAVE_PASSWORD = "Save Password"
-SET_CHECK_ASK_CLOSING = "Ask before closing"
-SET_CHECK_MINIMIZE = "Minimize Peach window to system tray"
-
-SET_COMMAND_LANGUAGE = "&Language"
-SET_COMMAND_SAVE = "&Save"
-
-SF2_COMMAND_OPEN_FILE = "&Open File Folder"
-
-FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
-FP_LABEL_ACCOUNT = " Enter your account name:"
-FP_LABEL_SECRET_QUESTION = " Secret Question:"
-FP_LABEL_SECRET_ANSWER = " Secret Answer:"
-FP_COMMAND_REQUEST = "&Request"
-FP_CAPTION = "Peach - Forgot Password"
-
-FP_MSG_SUCCESSFULL = "Your password is "
-FP_MSG_WRONG_ANSWER = "The answer is wrong."
-End Sub
-
 Public Sub SET_LANG_DUTCH()
 CURRENT_LANG = 5
 
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Bestand Verzenden"
-MDI_COMMAND_SOCIETY = "&Online List"
+MDI_COMMAND_SOCIETY = "&Gezelschap"
 
 MDI_STAT_DISCONNECTED = "Status: Verbinding verbroken"
 MDI_STAT_DISCONNECT = "Status: Verbinding verbroken met de server"
@@ -1125,7 +976,7 @@ CONFIG_MSG_PORT = "U hebt geen poort ingesteld."
 CONFIG_MSG_IP = "U hebt geen IP gegoven."
 CONFIG_MSG_NAME = "U hebt geen naam gegoven."
 CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
-CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
+CONFIG_MSG_NAME_INVALID = "The name you have entered is not valid."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 CHAT_COMMAND_SEND = "&Zend"
@@ -1141,7 +992,7 @@ SF_MSG_FILE = "No file selected."
 SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
 SF_MSG_INCOMMING_FILE_2 = "' from "
 SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
-SF_MSG_DECILINED = "File transfer was decilined."
+SF_MSG_DECILINED = "The file transfer has been refused."
 
 SF_COMMAND_BROWSE = "&Zoeken .."
 SF_COMMAND_SENDFILE = "&Stuur"
@@ -1154,11 +1005,12 @@ LANG_COMMAND_ENTER = "&Openen"
 LANG_LABEL_SELLANG = "Selecteer jou taal:"
 
 SOC_FRIEND_LIST = "Vriendenlijst"
-SOC_ONLINE_LIST = "Online List"
+SOC_ONLINE_LIST = "Onlinelijst"
+SOC_IGNORE_LIST = "Negeerlijst"
 
 SOC_COMMAND_ADD = "&Toevoegen"
 SOC_COMMAND_REMOVE = "&Verwijderen"
-SOC_COMMAND_FRIEND = "&Add to Friends"
+SOC_COMMAND_FRIEND = "&Voeg toe aan vrienden"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"
@@ -1241,26 +1093,29 @@ FP_MSG_SUCCESSFULL = "Your password is "
 FP_MSG_WRONG_ANSWER = "The answer is wrong."
 End Sub
 
-Public Sub SET_LANG_FRENCH()
-CURRENT_LANG = 7
+Public Sub SET_LANG_SERBIAN()
+CURRENT_LANG = 6
 
+' Mdi form ..
 MDI_COMMAND_CHAT = "Ch&at"
-MDI_COMMAND_SENDFILE = "&Envoi File"
-MDI_COMMAND_SOCIETY = "&Liste contact Online"
+MDI_COMMAND_SENDFILE = "&Slanje fajla"
+MDI_COMMAND_SOCIETY = "&Onlajn lista"
 
-MDI_STAT_DISCONNECTED = "Etat: Deconnecté"
-MDI_STAT_DISCONNECT = "Etat: Deconnecté du Server"
-MDI_STAT_CONNECTED = "Etat: Connecté"
-MDI_STAT_CONNECTING = "Etat: Connection .."
+MDI_STAT_DISCONNECTED = "Status: Veza je prekinuta"
+MDI_STAT_DISCONNECT = "Status: Veza sa serverom je prekinuta"
+MDI_STAT_CONNECTED = "Status: Povezi"
+MDI_STAT_CONNECTING = "Status: Povezi .."
 
-MDI_MSG_NAME_TAKEN = "Le nom inséré est déjà utilizé."
+'MDImsgbox_errorHandlerFormLoad
+MDI_MSG_NAME_TAKEN = "Ime je vec zauzeto."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
 MDI_MSG_BANNED = "This account is banned."
 MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
-CONFIG_COMMAND_CONNECT = "&Connecté"
-CONFIG_COMMAND_DISCONNECT = "&Deconnecté"
+' Config form ..
+CONFIG_COMMAND_CONNECT = "&Povezi se"
+CONFIG_COMMAND_DISCONNECT = "&Veza je prekinuta"
 CONFIG_COMMAND_SETTINGS = "&Settings"
 CONFIG_COMMAND_UPDATE = "&Update"
 CONFIG_COMMAND_REGISTER = "&Register Account"
@@ -1268,31 +1123,33 @@ CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
-LANG_GERMAN = "Alleman"
-LANG_ENGLISH = "Anglais"
-LANG_SPANISH = "Espagnol"
-LANG_SWEDISH = "Suédois"
-LANG_ITALIAN = "Italien"
-LANG_SERBIAN = "Serbois"
-LANG_DUTCH = "Hollandais"
-LANG_FRENCH = "Français"
+LANG_GERMAN = "Nemacki"
+LANG_ENGLISH = "Engleski"
+LANG_SPANISH = "Spanski"
+LANG_SWEDISH = "Svedski"
+LANG_ITALIAN = "Italijanski"
+LANG_SERBIAN = "Srpski"
+LANG_DUTCH = "Holandski"
+LANG_FRENCH = "Francuski"
 
-CONFIG_MSG_ACCOUNT = "You did'nt introduce an account."
-CONFIG_MSG_PASSWORD = "You did'nt introduce a password."
-CONFIG_MSG_NUMERIC = "Tu ne peut pas insérer noms composé de numeros."
-CONFIG_MSG_PORT = "Tu n'as pas selectionner une porte valide."
-CONFIG_MSG_IP = "Tu n'as pas innecté un IP."
-CONFIG_MSG_NAME = "Tu n'as pas innecté un Nom utilizateur."
+CONFIG_MSG_ACCOUNT = "You have not entered an account."
+CONFIG_MSG_PASSWORD = "You have not entered a password."
+CONFIG_MSG_NUMERIC = "Ne mozete uzeti numericka imena."
+CONFIG_MSG_PORT = "Niste uneli port."
+CONFIG_MSG_IP = "Niste uneli IP"
+CONFIG_MSG_NAME = "Niste uneli ime"
 CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
-CONFIG_MSG_NAME_INVALID = "The name you introduced is invalid."
+CONFIG_MSG_NAME_INVALID = "The name you have entered is not valid."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
-CHAT_COMMAND_SEND = "&Envoi"
-CHAT_COMMAND_CLEAR = "&Clear"
+'Chat form ..
+CHAT_COMMAND_SEND = "&Posalji"
+CHAT_COMMAND_CLEAR = "&Obrisi"
 
-SF_LABEL_FILENAME = " Nom file:"
-SF_LABEL_SENDING_FILE = "Envoyant:"
-SF_LABEL_SENT = "0.0% Envoyé"
+'Send file form ..
+SF_LABEL_FILENAME = " Ime  arhive:"
+SF_LABEL_SENDING_FILE = "Slanje:"
+SF_LABEL_SENT = "0.0% Poslato"
 SF_LABEL_SEND_TO = "Send to:"
 
 SF_MSG_USER = "No user selected."
@@ -1300,17 +1157,17 @@ SF_MSG_FILE = "No file selected."
 SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
 SF_MSG_INCOMMING_FILE_2 = "' from "
 SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
-SF_MSG_DECILINED = "File transfer was decilined."
+SF_MSG_DECILINED = "The file transfer has been refused."
 
-SF_COMMAND_BROWSE = "&Cherche .."
-SF_COMMAND_SENDFILE = "Envoi"
-SF_COMMAND_CANCEL = "Annuler .."
+SF_COMMAND_BROWSE = "Trazi .."
+SF_COMMAND_SENDFILE = "Posalji"
+SF_COMMAND_CANCEL = "Otkazhi .."
 
 DESP_TEXT_NEW_MSG = "New Message!"
-DESP_TEXT_DC_SERVER = "Deconnecté du Server"
+DESP_TEXT_DC_SERVER = "Veza sa serverom je prekinuta!"
 
-LANG_COMMAND_ENTER = "&Ouvrir"
-LANG_LABEL_SELLANG = "Choisissez votre langue:"
+LANG_COMMAND_ENTER = "&Otvori"
+LANG_LABEL_SELLANG = "Dodaj svoj jezik:"
 
 SOC_FRIEND_LIST = "Friend List"
 SOC_ONLINE_LIST = "Online List"
@@ -1342,7 +1199,7 @@ REG_CHECK_PASSWORD_SHOW = "&Show Password."
 
 REG_MSG_ACCOUNT_EXIST = "The account name already exists."
 REG_MSG_ACCOUNT_INVALID = "Invalid account name."
-REG_MSG_ACCOUNT_NUMERIC = "Account can't be made of numeric characters."
+REG_MSG_ACCOUNT_NUMERIC = "Account can not be composed of numeric characters."
 REG_MSG_ACCOUNT_EMPTY = "No account entered."
 REG_MSG_ACCOUNT_SHORT = "Account name to short, it requieres at least 4 characters."
 
@@ -1357,6 +1214,154 @@ REG_MSG_ERROR = "An error has occured please try later again."
 REG_MSG_ERROR_OCCURED = "Error has occured ..."
 REG_MSG_LOADING = " Loading .."
 REG_MSG_CONNECTION_BROKEN = "Connection is broken please try again later."
+
+REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
+REG_CMB_SECRET_QUESTION_1 = "Your favorite book?"
+REG_CMB_SECRET_QUESTION_2 = "Your favorite movie?"
+REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
+REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
+REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
+
+SET_LABEL_COLOR = "Current Color:"
+
+SET_FRAME_OPTIONS = "Options"
+SET_FRAME_CONNECTION = "Connection Settings"
+
+SET_CHECK_SAVE_ACCOUNT = "Save Account"
+SET_CHECK_SAVE_PASSWORD = "Save Password"
+SET_CHECK_ASK_CLOSING = "Ask before closing"
+SET_CHECK_MINIMIZE = "Minimize Peach window to system tray"
+
+SET_COMMAND_LANGUAGE = "&Language"
+SET_COMMAND_SAVE = "&Save"
+
+SF2_COMMAND_OPEN_FILE = "&Open File Folder"
+
+FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
+FP_LABEL_ACCOUNT = " Enter your account name:"
+FP_LABEL_SECRET_QUESTION = " Secret Question:"
+FP_LABEL_SECRET_ANSWER = " Secret Answer:"
+FP_COMMAND_REQUEST = "&Request"
+FP_CAPTION = "Peach - Forgot Password"
+
+FP_MSG_SUCCESSFULL = "Your password is "
+FP_MSG_WRONG_ANSWER = "The answer is wrong."
+End Sub
+
+Public Sub SET_LANG_FRENCH()
+CURRENT_LANG = 7
+
+MDI_COMMAND_CHAT = "Ch&at"
+MDI_COMMAND_SENDFILE = "&Envoi File"
+MDI_COMMAND_SOCIETY = "&Société"
+
+MDI_STAT_DISCONNECTED = "Etat: Deconnecté"
+MDI_STAT_DISCONNECT = "Etat: Deconnecté du Server"
+MDI_STAT_CONNECTED = "Etat: Connecté"
+MDI_STAT_CONNECTING = "Etat: Connection .."
+
+MDI_MSG_NAME_TAKEN = "Le nom inséré est déjà utilizé."
+MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
+MDI_MSG_WRONG_PASSWORD = "The password is wrong."
+MDI_MSG_BANNED = "This account is banned."
+MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
+
+CONFIG_COMMAND_CONNECT = "&Connecté"
+CONFIG_COMMAND_DISCONNECT = "&Deconnecté"
+CONFIG_COMMAND_SETTINGS = "&Settings"
+CONFIG_COMMAND_UPDATE = "&Update"
+CONFIG_COMMAND_REGISTER = "&Register Account"
+CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
+
+CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
+
+LANG_GERMAN = "Alleman"
+LANG_ENGLISH = "Anglais"
+LANG_SPANISH = "Espagnol"
+LANG_SWEDISH = "Suédois"
+LANG_ITALIAN = "Italien"
+LANG_SERBIAN = "Serbois"
+LANG_DUTCH = "Hollandais"
+LANG_FRENCH = "Français"
+
+CONFIG_MSG_ACCOUNT = "Vous n'avez pas introduit un compte."
+CONFIG_MSG_PASSWORD = "Vous n'avez pas introduit un mot de passe."
+CONFIG_MSG_NUMERIC = "Tu ne peut pas insérer noms composé de numeros."
+CONFIG_MSG_PORT = "Tu n'as pas selectionner une porte valide."
+CONFIG_MSG_IP = "Tu n'as pas innecté un IP."
+CONFIG_MSG_NAME = "Tu n'as pas innecté un Nom utilizateur."
+CONFIG_MSG_NAME_SHORT = "Le nom que vous avez introduit est trop court."
+CONFIG_MSG_NAME_INVALID = "Le nom que vous avez introduit n'est pas valide."
+CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
+
+CHAT_COMMAND_SEND = "&Envoi"
+CHAT_COMMAND_CLEAR = "&Clair"
+
+SF_LABEL_FILENAME = " Nom file:"
+SF_LABEL_SENDING_FILE = "Envoyant:"
+SF_LABEL_SENT = "0.0% Envoyé"
+SF_LABEL_SEND_TO = "Send to:"
+
+SF_MSG_USER = "Pas d'utilisateur sélectionné."
+SF_MSG_FILE = "Aucun fichier sélectionné."
+SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
+SF_MSG_INCOMMING_FILE_2 = "' from "
+SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
+SF_MSG_DECILINED = "Le transfert de fichier a été refusée."
+
+SF_COMMAND_BROWSE = "&Cherche .."
+SF_COMMAND_SENDFILE = "Envoi"
+SF_COMMAND_CANCEL = "Annuler .."
+
+LANG_COMMAND_ENTER = "&Ouvrir"
+LANG_LABEL_SELLANG = "Choisissez votre langue:"
+
+SOC_FRIEND_LIST = "Liste D'amis"
+SOC_ONLINE_LIST = "Liste des onlines"
+SOC_IGNORE_LIST = "Stop-Liste"
+
+SOC_COMMAND_ADD = "&Ajouter"
+SOC_COMMAND_REMOVE = "&Supprimer"
+SOC_COMMAND_FRIEND = "&Ajouter aux amis"
+
+SOC_ASK_DEL_1 = "Do you want to delete '"
+SOC_ASK_DEL_2 = "' from the list?"
+
+REG_CAPTION = "Peach - D'enregistrement"
+
+REG_FRAME_DETAIL = "Entrez vos coordonnées"
+
+REG_LABEL_ACCOUNT_NAME = " Nom du compte:"
+REG_LABEL_PASSWORD = " Mot de passe:"
+REG_LABEL_PASSWORD_CONFIRM = " Confirmer le mot de passe:"
+REG_LABEL_PASSWORD_WEAK = "Le mot de passe est faible."
+REG_LABEL_PASSWORD_NORMAL = "Le mot de passe est normal."
+REG_LABEL_PASSWORD_STRONG = "Le mot de passe est forte."
+REG_LABEL_SECRET_QUESTION = "Question secrète:"
+REG_LABEL_SECRET_ANSWER = "Réponse secrète:"
+
+REG_COMMAND_SUBMIT = "&Envoyer"
+REG_COMMAND_CLOSE = "&Fermer"
+
+REG_CHECK_PASSWORD_SHOW = "&Afficher mot de passe."
+
+REG_MSG_ACCOUNT_EXIST = "Le nom du compte qui existe déjà."
+REG_MSG_ACCOUNT_INVALID = "Nom de compte non valide."
+REG_MSG_ACCOUNT_NUMERIC = "Compte ne peut pas être composé de caractères numériques."
+REG_MSG_ACCOUNT_EMPTY = "Pas de compte soumis."
+REG_MSG_ACCOUNT_SHORT = "Nom du compte à court."
+
+REG_MSG_PASSWORD_MATCH = "Les mots de passe ne correspondent pas."
+REG_MSG_PASSWORD_SHORT = "Mot de passe à court."
+REG_MSG_PASSWORD_EMPTY = "Aucun mot de passe soumis."
+
+REG_MSG_SECRET_ANSWER_EMPTY = "Pas de secret répondu ajouté."
+
+REG_MSG_SUCCESSFULLY = "Le compte a été enregistré avec succès."
+REG_MSG_ERROR = "Une erreur s'est produite, s'il vous plaît essayer à nouveau plus tard.."
+REG_MSG_ERROR_OCCURED = "Une erreur s'est produite ..."
+REG_MSG_LOADING = " Charge .."
+REG_MSG_CONNECTION_BROKEN = "La connexion est perdue, s'il vous plaît essayer à nouveau plus tard."
 
 REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
 REG_CMB_SECRET_QUESTION_1 = "Your favorite book?"

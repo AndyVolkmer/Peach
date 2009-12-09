@@ -19,6 +19,7 @@ Begin VB.Form frmRegistration
    Icon            =   "frmRegistration.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
+   MinButton       =   0   'False
    ScaleHeight     =   4365
    ScaleWidth      =   3870
    StartUpPosition =   1  'CenterOwner
@@ -109,7 +110,7 @@ Begin VB.Form frmRegistration
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   255
+      Height          =   375
       Left            =   120
       TabIndex        =   6
       Top             =   3840

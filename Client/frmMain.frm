@@ -362,6 +362,7 @@ Connect.Caption = CONFIG_COMMAND_CONNECT
 ExitC.Caption = REG_COMMAND_CLOSE
 Command2.Caption = MDI_COMMAND_CHAT
 Command3.Caption = MDI_COMMAND_SENDFILE
+Command4.Caption = MDI_COMMAND_SOCIETY
 End Sub
 
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -527,12 +528,12 @@ Case "!update_online"
     Dim User As String
     
     'Clear the current list so we don't get multiply entries
-    frmSociety.lvOnlineLIst.ListItems.Clear
+    frmSociety.lvOnlineList.ListItems.Clear
     frmSendFile.Combo1.Clear
     
     'Go through array and add users
     For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
-        frmSociety.lvOnlineLIst.ListItems.Add , , StrArr(i)
+        frmSociety.lvOnlineList.ListItems.Add , , StrArr(i)
         User = Left(StrArr(i), InStr(1, StrArr(i), " ") - 1)
         frmSendFile.Combo1.AddItem User
     Next i
