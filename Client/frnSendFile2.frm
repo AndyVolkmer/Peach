@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmSendFile2 
    BackColor       =   &H00F4F4F4&
@@ -28,10 +28,10 @@ Begin VB.Form frmSendFile2
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Open File Folder"
       Height          =   375
-      Left            =   5520
+      Left            =   5040
       TabIndex        =   1
       Top             =   3360
-      Width           =   1695
+      Width           =   2175
    End
    Begin MSWinsockLib.Winsock SckReceiveFile 
       Index           =   0

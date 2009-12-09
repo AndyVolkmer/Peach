@@ -223,6 +223,7 @@ Option Explicit
 Public Sub LoadSocietyForm()
 SSTab1.TabCaption(0) = SOC_FRIEND_LIST
 SSTab1.TabCaption(1) = SOC_ONLINE_LIST
+SSTab1.TabCaption(2) = SOC_IGNORE_LIST
 cmdAddFriend.Caption = SOC_COMMAND_ADD
 cmdRemoveFriend.Caption = SOC_COMMAND_REMOVE
 cmdAddIgnore.Caption = SOC_COMMAND_ADD

@@ -89,7 +89,7 @@ Public SOC_COMMAND_FRIEND               As String
 Public SOC_ASK_DEL_1                    As String
 Public SOC_ASK_DEL_2                    As String
 
-'Register account form
+'Create an account form
 Public REG_CAPTION                      As String
 
 Public REG_FRAME_DETAIL                 As String
@@ -337,7 +337,7 @@ CONFIG_COMMAND_CONNECT = "&Connect"
 CONFIG_COMMAND_DISCONNECT = "&Disconnect"
 CONFIG_COMMAND_SETTINGS = "&Settings"
 CONFIG_COMMAND_UPDATE = "&Update"
-CONFIG_COMMAND_REGISTER = "&Register Account"
+CONFIG_COMMAND_REGISTER = "&Create an account"
 CONFIG_COMMAND_FORGOT_PASSWORD = "&Forgot Password"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
@@ -459,7 +459,7 @@ SET_COMMAND_SAVE = "&Save"
 
 SF2_COMMAND_OPEN_FILE = "&Open File Folder"
 
-FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
+FP_FRAME_FORGOT_PASSWORD = "Forgot Password"
 FP_LABEL_ACCOUNT = " Enter your account name:"
 FP_LABEL_SECRET_QUESTION = " Secret Question:"
 FP_LABEL_SECRET_ANSWER = " Secret Answer:"
@@ -638,10 +638,10 @@ MDI_STAT_CONNECTING = "Status: Ansluter .."
 
 'MDImsgbox_errorHandlerFormLoad
 MDI_MSG_NAME_TAKEN = "Namnet är upptaget."
-MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
-MDI_MSG_WRONG_PASSWORD = "The password is wrong."
-MDI_MSG_BANNED = "This account is banned."
-MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
+MDI_MSG_WRONG_ACCOUNT = "Kontot finns inte eller är felaktig."
+MDI_MSG_WRONG_PASSWORD = "Lösenordet är fel."
+MDI_MSG_BANNED = "Detta konto är förbjuden."
+MDI_MSG_UNLOAD = "Är du säker på att du vill stänga Peach?"
 
 ' Config form
 CONFIG_COMMAND_CONNECT = "&Anslut"
@@ -649,7 +649,7 @@ CONFIG_COMMAND_DISCONNECT = "&Frånkoppla"
 CONFIG_COMMAND_SETTINGS = "&Inställningar"
 CONFIG_COMMAND_REGISTER = "&Skapa konto"
 CONFIG_COMMAND_UPDATE = "&Updatering"
-CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
+CONFIG_COMMAND_FORGOT_PASSWORD = "Glömt lösenord"
 
 LANG_GERMAN = "Tyska"
 LANG_ENGLISH = "Engelska"
@@ -666,8 +666,8 @@ CONFIG_MSG_NUMERIC = "Du kan inte använda siffror i namnet."
 CONFIG_MSG_PORT = "Du angav inget portnummer."
 CONFIG_MSG_IP = "Du angav inte ett IP."
 CONFIG_MSG_NAME = "Du angav inte ett namn."
-CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
-CONFIG_MSG_NAME_INVALID = "The name you have entered is not valid."
+CONFIG_MSG_NAME_SHORT = "Namnet du infört är för kort."
+CONFIG_MSG_NAME_INVALID = "Det namn du har angivit är inte giltigt."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 ' Chat form ..
@@ -692,24 +692,21 @@ SF_COMMAND_SENDFILE = "Sänd"
 
 SF2_COMMAND_OPEN_FILE = "&Öppna fil map"
 
-DESP_TEXT_NEW_MSG = "Nytt meddelande!"
-DESP_TEXT_DC_SERVER = "Koppla ifrån servern!"
-
 LANG_COMMAND_ENTER = "&Öppna"
 LANG_LABEL_SELLANG = "Välj språk:"
 
 SOC_FRIEND_LIST = "Kompis Lista"
 SOC_ONLINE_LIST = "Online Lista"
-SOC_IGNORE_LIST = "ignoreringslista"
+SOC_IGNORE_LIST = "Ignorerings Lista"
 
 SOC_COMMAND_ADD = "&Tillägg"
 SOC_COMMAND_REMOVE = "&Ta bort"
-SOC_COMMAND_FRIEND = "&Add to Friends"
+SOC_COMMAND_FRIEND = "&Lägg till vänner"
 
-SOC_ASK_DEL_1 = "Do you want to delete '"
-SOC_ASK_DEL_2 = "' from the list?"
+SOC_ASK_DEL_1 = "Vill du ta bort '"
+SOC_ASK_DEL_2 = "' från listan?"
 
-REG_CAPTION = "Peach - Registration"
+REG_CAPTION = "Peach - Registrering"
 
 REG_FRAME_DETAIL = "Ange dina detaljer"
 
@@ -719,8 +716,8 @@ REG_LABEL_PASSWORD_CONFIRM = " Bekräfta lösenord:"
 REG_LABEL_PASSWORD_WEAK = "Lösenordet är lätt."
 REG_LABEL_PASSWORD_NORMAL = "Lösenordet är normalt."
 REG_LABEL_PASSWORD_STRONG = "Lösenordet är svårt."
-REG_LABEL_SECRET_QUESTION = "Secret question:"
-REG_LABEL_SECRET_ANSWER = "Secret answer:"
+REG_LABEL_SECRET_QUESTION = "Säkerhetsfråga:"
+REG_LABEL_SECRET_ANSWER = "Säkerhet besvara:"
 
 REG_COMMAND_SUBMIT = "&Acceptera"
 REG_COMMAND_CLOSE = "&Ständ"
@@ -737,7 +734,7 @@ REG_MSG_PASSWORD_MATCH = "Ogiltigt lösenord."
 REG_MSG_PASSWORD_SHORT = "För kort lösenord, det kräver åtminstone 6 bokstäver."
 REG_MSG_PASSWORD_EMPTY = "Inget lösenord angivet."
 
-REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
+REG_MSG_SECRET_ANSWER_EMPTY = "Inga hemliga svaret infördes."
 
 REG_MSG_SUCCESSFULLY = "Kontot har skapats."
 REG_MSG_ERROR = "Ett fel har uppstått var snäll och försök igen."
@@ -745,12 +742,12 @@ REG_MSG_ERROR_OCCURED = "Ett fel har uppstått ..."
 REG_MSG_LOADING = " Laddar .."
 REG_MSG_CONNECTION_BROKEN = "Anslutnings fel, var snäll och försök igen."
 
-REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
-REG_CMB_SECRET_QUESTION_1 = "Your favorite book?"
-REG_CMB_SECRET_QUESTION_2 = "Your favorite movie?"
-REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
-REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
-REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
+REG_CMB_SECRET_QUESTION_0 = "Vad heter ditt husdjur?"
+REG_CMB_SECRET_QUESTION_1 = "Vilken är din favoritbok?"
+REG_CMB_SECRET_QUESTION_2 = "Vilken är din favoritfilm?"
+REG_CMB_SECRET_QUESTION_3 = "Vilket är ditt favoritspel?"
+REG_CMB_SECRET_QUESTION_4 = "Vilken är din favorit sångare?"
+REG_CMB_SECRET_QUESTION_5 = "Var är den plats där din mor föddes?"
 
 SET_LABEL_COLOR = "Nuvarande färg:"
 
@@ -759,21 +756,21 @@ SET_FRAME_CONNECTION = "Anslutnings inställningar"
 
 SET_CHECK_SAVE_ACCOUNT = "Spara konto"
 SET_CHECK_SAVE_PASSWORD = "Spara lösenord"
-SET_CHECK_ASK_CLOSING = "Ask before closing"
+SET_CHECK_ASK_CLOSING = "Fråga innan stäng"
 SET_CHECK_MINIMIZE = "Minimera Peach-fönstret till Aktivitetsfältet"
 
 SET_COMMAND_LANGUAGE = "&Språk"
 SET_COMMAND_SAVE = "&Spara"
 
-FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
-FP_LABEL_ACCOUNT = " Enter your account name:"
-FP_LABEL_SECRET_QUESTION = " Secret Question:"
-FP_LABEL_SECRET_ANSWER = " Secret Answer:"
-FP_COMMAND_REQUEST = "&Request"
-FP_CAPTION = "Peach - Forgot Password"
+FP_FRAME_FORGOT_PASSWORD = "Glömt lösenord"
+FP_LABEL_ACCOUNT = " Ange ditt kontonamn:"
+FP_LABEL_SECRET_QUESTION = " Säkerhetsfråga:"
+FP_LABEL_SECRET_ANSWER = " Säkerhet besvara:"
+FP_COMMAND_REQUEST = "&Begära"
+FP_CAPTION = "Peach - Glömt lösenord"
 
-FP_MSG_SUCCESSFULL = "Your password is "
-FP_MSG_WRONG_ANSWER = "The answer is wrong."
+FP_MSG_SUCCESSFULL = "Ditt lösenord är "
+FP_MSG_WRONG_ANSWER = "Svaret är fel."
 End Sub
 
 Public Sub SET_LANG_ITALIAN()
@@ -791,20 +788,20 @@ MDI_STAT_CONNECTING = "Stato: Connessione .."
 
 'MDImsgbox_errorHandlerFormLoad
 MDI_MSG_NAME_TAKEN = "Il nome immesso e' gia' in uso."
-MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
-MDI_MSG_WRONG_PASSWORD = "The password is wrong."
-MDI_MSG_BANNED = "This account is banned."
-MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
+MDI_MSG_WRONG_ACCOUNT = "L'account non esiste o è sbagliato."
+MDI_MSG_WRONG_PASSWORD = "La password è errata."
+MDI_MSG_BANNED = "Questo account è vietata.."
+MDI_MSG_UNLOAD = "Sei sicuro di voler chiudere Peach?"
 
 ' Config form ..
 CONFIG_COMMAND_CONNECT = "&Connesso"
 CONFIG_COMMAND_DISCONNECT = "&Disconnesso"
-CONFIG_COMMAND_SETTINGS = "&Settings"
-CONFIG_COMMAND_UPDATE = "&Update"
-CONFIG_COMMAND_REGISTER = "&Register Account"
-CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
+CONFIG_COMMAND_SETTINGS = "&Impostazioni    "
+CONFIG_COMMAND_UPDATE = "&Aggiornamento"
+CONFIG_COMMAND_REGISTER = "&Crea un account"
+CONFIG_COMMAND_FORGOT_PASSWORD = "Hai dimenticato la password"
 
-CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
+CONFIG_CHECK_SAVE_PASSWORD = "&Salva password"
 
 LANG_GERMAN = "Tedesco"
 LANG_ENGLISH = "Inglese"
@@ -815,19 +812,19 @@ LANG_SERBIAN = "Serbo"
 LANG_DUTCH = "Olandese"
 LANG_FRENCH = "Francese"
 
-CONFIG_MSG_ACCOUNT = "You have not entered an account."
-CONFIG_MSG_PASSWORD = "You have not entered a password."
+CONFIG_MSG_ACCOUNT = "Non hai inserito un account."
+CONFIG_MSG_PASSWORD = "Non hai inserito una password."
 CONFIG_MSG_NUMERIC = "Non puoi immettere nomi composti da numeri."
 CONFIG_MSG_PORT = "Non hai selezionato una porta valida."
 CONFIG_MSG_IP = "Non hai immesso un IP."
 CONFIG_MSG_NAME = "Non hai immesso un Nome utente."
-CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
-CONFIG_MSG_NAME_INVALID = "The name you have entered is not valid."
+CONFIG_MSG_NAME_SHORT = "Il nome che si è introdotto troppo breve."
+CONFIG_MSG_NAME_INVALID = "Il nome che hai inserito non è valido."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 ' Chat form ..
 CHAT_COMMAND_SEND = "&Invia"
-CHAT_COMMAND_CLEAR = "&Clear"
+CHAT_COMMAND_CLEAR = "&Chiaro"
 
 ' Send file form ..
 SF_LABEL_FILENAME = " Nome file:"
@@ -835,101 +832,98 @@ SF_LABEL_SENDING_FILE = "Inviando:"
 SF_LABEL_SENT = "0.0% Inviato"
 SF_LABEL_SEND_TO = "Send to:"
 
-SF_MSG_USER = "No user selected."
-SF_MSG_FILE = "No file selected."
+SF_MSG_USER = "Nessun utente selezionato."
+SF_MSG_FILE = "Nessun file selezionato."
 SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
 SF_MSG_INCOMMING_FILE_2 = "' from "
 SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
-SF_MSG_DECILINED = "The file transfer has been refused."
+SF_MSG_DECILINED = "Il trasferimento file è stato rifiutato."
 
 SF_COMMAND_BROWSE = "&Cerca .."
 SF_COMMAND_SENDFILE = "Invia"
 SF_COMMAND_CANCEL = "Annulla .."
 
-DESP_TEXT_NEW_MSG = "New Message!"
-DESP_TEXT_DC_SERVER = "Disconnesso dal Server!"
-
 LANG_COMMAND_ENTER = "&Apri"
 LANG_LABEL_SELLANG = "Seleziona la tua lingua:"
 
-SOC_FRIEND_LIST = "Friend List"
-SOC_ONLINE_LIST = "Online List"
-SOC_IGNORE_LIST = "Ignore List"
+SOC_FRIEND_LIST = "Lista di amici"
+SOC_ONLINE_LIST = "Elenco di persone online"
+SOC_IGNORE_LIST = "Elenco degli utenti ignorati"
 
-SOC_COMMAND_ADD = "&Add"
-SOC_COMMAND_REMOVE = "&Remove"
-SOC_COMMAND_FRIEND = "&Add to Friends"
+SOC_COMMAND_ADD = "&Aggiungere"
+SOC_COMMAND_REMOVE = "&Rimuovere"
+SOC_COMMAND_FRIEND = "&Aggiungi ai tuoi amici"
 
-SOC_ASK_DEL_1 = "Do you want to delete '"
-SOC_ASK_DEL_2 = "' from the list?"
+SOC_ASK_DEL_1 = "Vuoi eliminare '"
+SOC_ASK_DEL_2 = "' dalla lista?"
 
-REG_CAPTION = "Peach - Registration"
+REG_CAPTION = "Peach - Registrazione"
 
-REG_FRAME_DETAIL = "Enter your details"
+REG_FRAME_DETAIL = "Inserisci i tuoi dati"
 
-REG_LABEL_ACCOUNT_NAME = " Account Name:"
+REG_LABEL_ACCOUNT_NAME = " Nome account:"
 REG_LABEL_PASSWORD = " Password:"
-REG_LABEL_PASSWORD_CONFIRM = " Confirm the Password:"
-REG_LABEL_PASSWORD_WEAK = "The password is weak."
-REG_LABEL_PASSWORD_NORMAL = "The password is normal."
-REG_LABEL_PASSWORD_STRONG = "The password is strong."
-REG_LABEL_SECRET_QUESTION = "Secret question:"
-REG_LABEL_SECRET_ANSWER = "Secret answer:"
+REG_LABEL_PASSWORD_CONFIRM = " Confermare la password:"
+REG_LABEL_PASSWORD_WEAK = "La password è debole."
+REG_LABEL_PASSWORD_NORMAL = "La password è normale."
+REG_LABEL_PASSWORD_STRONG = "La password è forte."
+REG_LABEL_SECRET_QUESTION = "Domanda segreta:"
+REG_LABEL_SECRET_ANSWER = "Risposta segreta:"
 
-REG_COMMAND_SUBMIT = "&Submit"
-REG_COMMAND_CLOSE = "&Close"
+REG_COMMAND_SUBMIT = "&Inoltrare"
+REG_COMMAND_CLOSE = "&Chiudere"
 
-REG_CHECK_PASSWORD_SHOW = "&Show Password."
+REG_CHECK_PASSWORD_SHOW = "&Visualizzare Password"
 
-REG_MSG_ACCOUNT_EXIST = "The account name already exists."
-REG_MSG_ACCOUNT_INVALID = "Invalid account name."
-REG_MSG_ACCOUNT_NUMERIC = "Account can not be composed of numeric characters."
-REG_MSG_ACCOUNT_EMPTY = "No account entered."
-REG_MSG_ACCOUNT_SHORT = "Account name to short, it requieres at least 4 characters."
+REG_MSG_ACCOUNT_EXIST = "Il nome di account già esistente."
+REG_MSG_ACCOUNT_INVALID = "Nome non valido account."
+REG_MSG_ACCOUNT_NUMERIC = "Conto non può essere composta da caratteri numerici."
+REG_MSG_ACCOUNT_EMPTY = "Nessun account è stato inserito."
+REG_MSG_ACCOUNT_SHORT = "Il nome dell'account è troppo breve."
 
-REG_MSG_PASSWORD_MATCH = "The passwords dont match."
-REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
-REG_MSG_PASSWORD_EMPTY = "No Password entered."
+REG_MSG_PASSWORD_MATCH = "Le password non corrispondono."
+REG_MSG_PASSWORD_SHORT = "La password è troppo corta."
+REG_MSG_PASSWORD_EMPTY = "Nessuna password è stata inserita."
 
-REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
+REG_MSG_SECRET_ANSWER_EMPTY = "Risposta segreta non è stato iscritto."
 
-REG_MSG_SUCCESSFULLY = "The account was successfully registered."
-REG_MSG_ERROR = "An error has occured please try later again."
-REG_MSG_ERROR_OCCURED = "Error has occured ..."
-REG_MSG_LOADING = " Loading .."
-REG_MSG_CONNECTION_BROKEN = "Connection is broken please try again later."
+REG_MSG_SUCCESSFULLY = "L'account è stato registrato con successo."
+REG_MSG_ERROR = "Un errore si è verificato per favore riprova più tardi di nuovo."
+REG_MSG_ERROR_OCCURED = "È verificato un errore ..."
+REG_MSG_LOADING = " Carico .."
+REG_MSG_CONNECTION_BROKEN = "Connessione viene interrotta per favore riprova più tardi."
 
-REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
-REG_CMB_SECRET_QUESTION_1 = "Your favorite book?"
-REG_CMB_SECRET_QUESTION_2 = "Your favorite movie?"
-REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
-REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
-REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
+REG_CMB_SECRET_QUESTION_0 = "Qual è il nome del vostro animale domestico?"
+REG_CMB_SECRET_QUESTION_1 = "Qual è il tuo libro preferito?"
+REG_CMB_SECRET_QUESTION_2 = "Qual è il vostro film preferito?"
+REG_CMB_SECRET_QUESTION_3 = "Qual è il tuo gioco preferito?"
+REG_CMB_SECRET_QUESTION_4 = "Qual è il vostro cantante preferito?"
+REG_CMB_SECRET_QUESTION_5 = "Dove si trova il luogo in cui tua madre è nata?"
 
-SET_LABEL_COLOR = "Current Color:"
+SET_LABEL_COLOR = "Colore corrente:"
 
-SET_FRAME_OPTIONS = "Options"
-SET_FRAME_CONNECTION = "Connection Settings"
+SET_FRAME_OPTIONS = "Opzioni"
+SET_FRAME_CONNECTION = "Impostazioni di connessione"
 
-SET_CHECK_SAVE_ACCOUNT = "Save Account"
-SET_CHECK_SAVE_PASSWORD = "Save Password"
-SET_CHECK_ASK_CLOSING = "Ask before closing"
+SET_CHECK_SAVE_ACCOUNT = "Salva conto"
+SET_CHECK_SAVE_PASSWORD = "Salva password"
+SET_CHECK_ASK_CLOSING = "Chiedi prima di chiudere"
 SET_CHECK_MINIMIZE = "Contrai la finestra di Peach nella barra delle applicazioni"
 
-SET_COMMAND_LANGUAGE = "&Language"
-SET_COMMAND_SAVE = "&Save"
+SET_COMMAND_LANGUAGE = "&Lingua"
+SET_COMMAND_SAVE = "&Salva"
 
-SF2_COMMAND_OPEN_FILE = "&Open File Folder"
+SF2_COMMAND_OPEN_FILE = "&Aprire la cartella File"
 
-FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
-FP_LABEL_ACCOUNT = " Enter your account name:"
-FP_LABEL_SECRET_QUESTION = " Secret Question:"
-FP_LABEL_SECRET_ANSWER = " Secret Answer:"
-FP_COMMAND_REQUEST = "&Request"
-FP_CAPTION = "Peach - Forgot Password"
+FP_FRAME_FORGOT_PASSWORD = "Dimenticato la password"
+FP_LABEL_ACCOUNT = " Inserisci il tuo nome account:"
+FP_LABEL_SECRET_QUESTION = " Domanda segreta:"
+FP_LABEL_SECRET_ANSWER = " Risposta segreta:"
+FP_COMMAND_REQUEST = "&Richiesta"
+FP_CAPTION = "Peach - Dimenticato la password"
 
-FP_MSG_SUCCESSFULL = "Your password is "
-FP_MSG_WRONG_ANSWER = "The answer is wrong."
+FP_MSG_SUCCESSFULL = "La password è "
+FP_MSG_WRONG_ANSWER = "La risposta è sbagliata."
 End Sub
 
 Public Sub SET_LANG_DUTCH()
@@ -946,19 +940,19 @@ MDI_STAT_CONNECTING = "Status: Verbinden .."
 
 'MDImsgbox_errorHandlerFormLoad
 MDI_MSG_NAME_TAKEN = "Deze naam is niet beschikbaar."
-MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
-MDI_MSG_WRONG_PASSWORD = "The password is wrong."
-MDI_MSG_BANNED = "This account is banned."
-MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
+MDI_MSG_WRONG_ACCOUNT = "De account bestaat niet of is verkeerd."
+MDI_MSG_WRONG_PASSWORD = "Het wachtwoord is onjuist."
+MDI_MSG_BANNED = "Deze account is verboden."
+MDI_MSG_UNLOAD = "Weet u zeker dat u wilt Peach sluiten?"
 
 CONFIG_COMMAND_CONNECT = "&Verbind"
 CONFIG_COMMAND_DISCONNECT = "&Verbinding verbreken"
 CONFIG_COMMAND_SETTINGS = "&Instellingen"
 CONFIG_COMMAND_REGISTER = "&Account aanmaken"
 CONFIG_COMMAND_UPDATE = "&Update"
-CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
+CONFIG_COMMAND_FORGOT_PASSWORD = "Wachtwoord vergeten"
 
-CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
+CONFIG_CHECK_SAVE_PASSWORD = "&Wachtwoord opslaan"
 
 LANG_GERMAN = "Duits"
 LANG_ENGLISH = "Engels"
@@ -987,19 +981,16 @@ SF_LABEL_SENDING_FILE = "verZenden:"
 SF_LABEL_SENT = "0.0% verzonden"
 SF_LABEL_SEND_TO = "Send to:"
 
-SF_MSG_USER = "No user selected."
-SF_MSG_FILE = "No file selected."
+SF_MSG_USER = "Geen gebruiker geselecteerd."
+SF_MSG_FILE = "Geen bestand geselecteerd."
 SF_MSG_INCOMMING_FILE_1 = "You are receiving '"
 SF_MSG_INCOMMING_FILE_2 = "' from "
 SF_MSG_INCOMMING_FILE_3 = ". Do you want to accept?"
-SF_MSG_DECILINED = "The file transfer has been refused."
+SF_MSG_DECILINED = "De bestandsoverdracht is geweigerd."
 
 SF_COMMAND_BROWSE = "&Zoeken .."
 SF_COMMAND_SENDFILE = "&Stuur"
 SF_COMMAND_CANCEL = "&Annuleren .."
-
-DESP_TEXT_NEW_MSG = "Nieuw bericht!"
-DESP_TEXT_DC_SERVER = "Verbinding verbroken met de server"
 
 LANG_COMMAND_ENTER = "&Openen"
 LANG_LABEL_SELLANG = "Selecteer jou taal:"
@@ -1012,10 +1003,10 @@ SOC_COMMAND_ADD = "&Toevoegen"
 SOC_COMMAND_REMOVE = "&Verwijderen"
 SOC_COMMAND_FRIEND = "&Voeg toe aan vrienden"
 
-SOC_ASK_DEL_1 = "Do you want to delete '"
-SOC_ASK_DEL_2 = "' from the list?"
+SOC_ASK_DEL_1 = "Wilt u '"
+SOC_ASK_DEL_2 = "' verwijderen uit de lijst?"
 
-REG_CAPTION = "Peach - Registration"
+REG_CAPTION = "Peach - Registratie"
 
 REG_FRAME_DETAIL = "Voeg je gegevens in"
 
@@ -1025,8 +1016,8 @@ REG_LABEL_PASSWORD_CONFIRM = " Bevestig Wachtwoord:"
 REG_LABEL_PASSWORD_WEAK = "Dit wachtwoord is zwak."
 REG_LABEL_PASSWORD_NORMAL = "Dit wachtwoord is redelijk."
 REG_LABEL_PASSWORD_STRONG = "Dit wachtwoord is goed."
-REG_LABEL_SECRET_QUESTION = "Secret question:"
-REG_LABEL_SECRET_ANSWER = "Secret answer:"
+REG_LABEL_SECRET_QUESTION = "Geheime vraag:"
+REG_LABEL_SECRET_ANSWER = "Geheim antwoord:"
 
 REG_CHECK_PASSWORD_SHOW = "Laat wachtwoord zien"
 
@@ -1043,7 +1034,7 @@ REG_MSG_PASSWORD_MATCH = "Wachtwoorden komen niet overeen."
 REG_MSG_PASSWORD_SHORT = "Wachtwoord te kort, minstens 4 tekens."
 REG_MSG_PASSWORD_EMPTY = "Geen wachtwoord ingevoerd."
 
-REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
+REG_MSG_SECRET_ANSWER_EMPTY = "Geen geheim beantwoord opgenomen."
 
 REG_MSG_SUCCESSFULLY = "Account succesvol aangemaakt."
 REG_MSG_ERROR = "Er is een fout opgetreden, probeer het later opnieuw."
@@ -1051,12 +1042,12 @@ REG_MSG_ERROR_OCCURED = "Fout opgetreden ..."
 REG_MSG_LOADING = " Laden.. "
 REG_MSG_CONNECTION_BROKEN = "Verbinding verbroken."
 
-REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
-REG_CMB_SECRET_QUESTION_1 = "Your favorite book?"
-REG_CMB_SECRET_QUESTION_2 = "Your favorite movie?"
-REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
-REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
-REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
+REG_CMB_SECRET_QUESTION_0 = "Wat is de naam van uw huisdier?"
+REG_CMB_SECRET_QUESTION_1 = "Wat is uw favoriete boek?"
+REG_CMB_SECRET_QUESTION_2 = "Wat is je favoriete film?"
+REG_CMB_SECRET_QUESTION_3 = "Wat is je favoriete spel?"
+REG_CMB_SECRET_QUESTION_4 = "Wat is uw favoriete zanger?"
+REG_CMB_SECRET_QUESTION_5 = "Waar is de plaats waar je moeder is geboren?"
 
 SET_LABEL_COLOR = "Momenteel gebruikte kleur:"
 
@@ -1065,8 +1056,8 @@ SET_FRAME_CONNECTION = "Verbinding Instellingen"
 
 SET_CHECK_SAVE_ACCOUNT = "Gebruiker opslaan"
 SET_CHECK_SAVE_PASSWORD = "Wachtwoord opslaan"
-SET_CHECK_ASK_CLOSING = "Ask before closing"
-SET_CHECK_MINIMIZE = "Minimize Peach window to system tray"
+SET_CHECK_ASK_CLOSING = "Vraag voordat sluiten"
+SET_CHECK_MINIMIZE = "Peach venster minimaliseren naar het systeemvak"
 
 SET_COMMAND_LANGUAGE = "&Taal"
 SET_COMMAND_SAVE = "&Opslaan"
@@ -1082,15 +1073,15 @@ SF_MSG_DECILINED = "Gegevensoverdracht geweigerd."
 
 SF2_COMMAND_OPEN_FILE = "&Open bestandsmap"
 
-FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
-FP_LABEL_ACCOUNT = " Enter your account name:"
-FP_LABEL_SECRET_QUESTION = " Secret Question:"
-FP_LABEL_SECRET_ANSWER = " Secret Answer:"
-FP_COMMAND_REQUEST = "&Request"
-FP_CAPTION = "Peach - Forgot Password"
+FP_FRAME_FORGOT_PASSWORD = "Wachtwoord vergeten"
+FP_LABEL_ACCOUNT = " Voer uw accountnaam:"
+FP_LABEL_SECRET_QUESTION = " Geheime vraag:"
+FP_LABEL_SECRET_ANSWER = " Geheim antwoord:"
+FP_COMMAND_REQUEST = "&Verzoeken"
+FP_CAPTION = "Peach - Wachtwoord vergeten"
 
-FP_MSG_SUCCESSFULL = "Your password is "
-FP_MSG_WRONG_ANSWER = "The answer is wrong."
+FP_MSG_SUCCESSFULL = "Uw wachtwoord is "
+FP_MSG_WRONG_ANSWER = "Het antwoord is fout."
 End Sub
 
 Public Sub SET_LANG_SERBIAN()
@@ -1118,7 +1109,7 @@ CONFIG_COMMAND_CONNECT = "&Povezi se"
 CONFIG_COMMAND_DISCONNECT = "&Veza je prekinuta"
 CONFIG_COMMAND_SETTINGS = "&Settings"
 CONFIG_COMMAND_UPDATE = "&Update"
-CONFIG_COMMAND_REGISTER = "&Register Account"
+CONFIG_COMMAND_REGISTER = "&Create an account"
 CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
@@ -1252,7 +1243,7 @@ Public Sub SET_LANG_FRENCH()
 CURRENT_LANG = 7
 
 MDI_COMMAND_CHAT = "Ch&at"
-MDI_COMMAND_SENDFILE = "&Envoi File"
+MDI_COMMAND_SENDFILE = "&Envoyer un fichier"
 MDI_COMMAND_SOCIETY = "&Société"
 
 MDI_STAT_DISCONNECTED = "Etat: Deconnecté"
@@ -1268,12 +1259,12 @@ MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
 CONFIG_COMMAND_CONNECT = "&Connecté"
 CONFIG_COMMAND_DISCONNECT = "&Deconnecté"
-CONFIG_COMMAND_SETTINGS = "&Settings"
-CONFIG_COMMAND_UPDATE = "&Update"
-CONFIG_COMMAND_REGISTER = "&Register Account"
-CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
+CONFIG_COMMAND_SETTINGS = "&Paramètres"
+CONFIG_COMMAND_UPDATE = "&Mettre à jour"
+CONFIG_COMMAND_REGISTER = "&Créer un compte"
+CONFIG_COMMAND_FORGOT_PASSWORD = "&Mot de passe perdu"
 
-CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
+CONFIG_CHECK_SAVE_PASSWORD = "&Sauvegarder mot de passe"
 
 LANG_GERMAN = "Alleman"
 LANG_ENGLISH = "Anglais"
@@ -1324,8 +1315,8 @@ SOC_COMMAND_ADD = "&Ajouter"
 SOC_COMMAND_REMOVE = "&Supprimer"
 SOC_COMMAND_FRIEND = "&Ajouter aux amis"
 
-SOC_ASK_DEL_1 = "Do you want to delete '"
-SOC_ASK_DEL_2 = "' from the list?"
+SOC_ASK_DEL_1 = "Voulez-vous supprimer '"
+SOC_ASK_DEL_2 = "' de la liste?"
 
 REG_CAPTION = "Peach - D'enregistrement"
 
@@ -1363,35 +1354,35 @@ REG_MSG_ERROR_OCCURED = "Une erreur s'est produite ..."
 REG_MSG_LOADING = " Charge .."
 REG_MSG_CONNECTION_BROKEN = "La connexion est perdue, s'il vous plaît essayer à nouveau plus tard."
 
-REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
-REG_CMB_SECRET_QUESTION_1 = "Your favorite book?"
-REG_CMB_SECRET_QUESTION_2 = "Your favorite movie?"
-REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
-REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
-REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
+REG_CMB_SECRET_QUESTION_0 = "Quel est le nom de votre animal de compagnie?"
+REG_CMB_SECRET_QUESTION_1 = "Quel est votre livre préféré?"
+REG_CMB_SECRET_QUESTION_2 = "Quel est votre film préféré?"
+REG_CMB_SECRET_QUESTION_3 = "Quel est votre jeu préféré?"
+REG_CMB_SECRET_QUESTION_4 = "Quel est votre chanteur préféré?"
+REG_CMB_SECRET_QUESTION_5 = "Quel est l'endroit où votre mère est née?"
 
-SET_LABEL_COLOR = "Current Color:"
+SET_LABEL_COLOR = "Couleur Courante:"
 
 SET_FRAME_OPTIONS = "Options"
-SET_FRAME_CONNECTION = "Connection Settings"
+SET_FRAME_CONNECTION = "Paramètres de connexion"
 
-SET_CHECK_SAVE_ACCOUNT = "Save Account"
-SET_CHECK_SAVE_PASSWORD = "Save Password"
-SET_CHECK_ASK_CLOSING = "Ask before closing"
-SET_CHECK_MINIMIZE = "Minimize Peach window to system tray"
+SET_CHECK_SAVE_ACCOUNT = "Sauvegarder le compte"
+SET_CHECK_SAVE_PASSWORD = "Sauvegarder mot de passe"
+SET_CHECK_ASK_CLOSING = "Demander, avant fermeture"
+SET_CHECK_MINIMIZE = "Réduire la fenêtre de barre d'état système"
 
-SET_COMMAND_LANGUAGE = "&Language"
-SET_COMMAND_SAVE = "&Save"
+SET_COMMAND_LANGUAGE = "&Langue"
+SET_COMMAND_SAVE = "&Sauvegarder"
 
-SF2_COMMAND_OPEN_FILE = "&Open File Folder"
+SF2_COMMAND_OPEN_FILE = "&Ouvrez le dossier de fichiers"
 
-FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
-FP_LABEL_ACCOUNT = " Enter your account name:"
-FP_LABEL_SECRET_QUESTION = " Secret Question:"
-FP_LABEL_SECRET_ANSWER = " Secret Answer:"
-FP_COMMAND_REQUEST = "&Request"
-FP_CAPTION = "Peach - Forgot Password"
+FP_FRAME_FORGOT_PASSWORD = "Mot de passe oublié"
+FP_LABEL_ACCOUNT = " Entrez votre nom de compte:"
+FP_LABEL_SECRET_QUESTION = " Question secrète:"
+FP_LABEL_SECRET_ANSWER = " Réponse secrète:"
+FP_COMMAND_REQUEST = "&Demande"
+FP_CAPTION = "Peach - Mot de passe oublié"
 
-FP_MSG_SUCCESSFULL = "Your password is "
-FP_MSG_WRONG_ANSWER = "The answer is wrong."
+FP_MSG_SUCCESSFULL = "Votre mot de passe est "
+FP_MSG_WRONG_ANSWER = "La réponse est fausse."
 End Sub
