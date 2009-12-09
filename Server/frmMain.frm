@@ -699,7 +699,6 @@ With frmPanel.ListView1.ListItems
     .Item(i).SubItems(4) = "False"
     .Item(i).SubItems(5) = vbNullString
     .Item(i).SubItems(6) = Format$(Time, "hh:mm:ss")
-    .Item(i).SubItems(7) = "False"
 End With
 
 UPDATE_STATUS_BAR
@@ -1097,22 +1096,6 @@ Case "!message"
                 End If
             End If
         
-        'Set AFK Flag
-        Case "/afk"
-            With frmPanel.ListView1.ListItems
-                For i = 1 To .Count
-                    If .Item(i) = p_MainArray(1) Then
-                        If .Item(i).SubItems(7) = "True" Then
-                            .Item(i).SubItems(7) = "False"
-                        Else
-                            .Item(i).SubItems(7) = "True"
-                        End If
-                        Exit For
-                    End If
-                Next i
-                UPDATE_ONLINE
-            End With
-            
         Case "/help"
             SendSingle GetEmotesHelp, Index
         
@@ -1284,7 +1267,7 @@ End Function
 Private Function GetServerInformation() As String
 GetServerInformation = _
 "Welcome to Peach Servers." & "#" & _
-"Server: Peach r " & pRev & "/" & GetOS & "#" & _
+"Server: Peach r" & pRev & "/" & GetOS & "#" & _
 "Online User: " & frmMain.Winsock1.Count - 1 & "#" & _
 frmConfig.Label2.Caption & "#"
 End Function
@@ -1293,7 +1276,7 @@ Private Sub Whisper(pUser As String, pTarget As String, pConv As String, Index A
 Dim pAccount As String
 
 'Check if user is whispering itself
-If pUser = pTarget Or pUser = "<AFK>" & pTarget Then
+If pUser = pTarget Then
     SendSingle "You can't whisper yourself.", Index
     Exit Sub
 End If
@@ -1310,14 +1293,6 @@ With frmPanel.ListView1.ListItems
     'Search target in list and send message
     For i = 1 To .Count
         If pTarget = .Item(i) Then
-            If IsIgnoring(.Item(i).SubItems(5), pAccount) = True Then
-                SendSingle pTarget & " is ignoring you.", Index
-            Else
-                SendSingle "[You whisper to " & pTarget & "]: " & pConv, Index
-                SendSingle "[" & pUser & " whispers]: " & pConv, .Item(i).SubItems(2)
-            End If
-            Exit For
-        ElseIf pTarget = "<AFK>" & .Item(i) Then
             If IsIgnoring(.Item(i).SubItems(5), pAccount) = True Then
                 SendSingle pTarget & " is ignoring you.", Index
             Else
@@ -1532,7 +1507,7 @@ Private Sub GetUserInfo(User As String, pIndex As Integer)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(User, vbProperCase) Then
-            SendSingle vbCrLf & "User information about '" & User & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Last Message: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5) & vbCrLf & " Login Time: " & .Item(i).SubItems(6) & vbCrLf & " AFK: " & .Item(i).SubItems(7), pIndex
+            SendSingle vbCrLf & "User information about '" & User & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Last Message: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5) & vbCrLf & " Login Time: " & .Item(i).SubItems(6), pIndex
             Exit For
         Else
             If i = .Count Then

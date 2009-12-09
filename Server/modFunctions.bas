@@ -149,11 +149,7 @@ Dim GetList As String
 With frmPanel.ListView1.ListItems
     GetList = "!update_online#"
     For i = 1 To .Count
-        If .Item(i).SubItems(7) = "True" Then
-            GetList = GetList & "<AFK>" & .Item(i) & " ( " & .Item(i).SubItems(5) & " )#"
-        Else
-            GetList = GetList & .Item(i) & " ( " & .Item(i).SubItems(5) & " )#"
-        End If
+        GetList = GetList & .Item(i) & " ( " & .Item(i).SubItems(5) & " )#"
     Next i
 End With
 If GetList <> "!update_online#" Then SendMessage GetList

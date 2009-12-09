@@ -338,13 +338,14 @@ End Sub
 Private Sub Combo1_Click()
 If Combo1.ListCount = 0 Then
     cmdSendFile.Enabled = False
+    Exit Sub
 End If
-Select Case Combo1.Text
-Case frmConfig.txtNick, "<AFK>" & frmConfig.txtNick
+
+If Combo1.Text = frmConfig.txtNick Then
     cmdSendFile.Enabled = False
-Case Else
+Else
     cmdSendFile.Enabled = True
-End Select
+End If
 End Sub
 
 Private Sub Form_Load()
