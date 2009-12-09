@@ -221,11 +221,12 @@ Public Sub CMSG(pData As String)
 With frmChat.txtConver
     .SelStart = Len(.Text)
     .SelRTF = vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & pData
+    .SelStart = Len(.Text)
 End With
 End Sub
 
 Public Function IsAlphaCharacter(pChar As String) As Boolean
-    IsAlphaCharacter = (Not (UCase(pChar) = LCase(pChar))) Or (pChar = " ")
+IsAlphaCharacter = (Not (UCase(pChar) = LCase(pChar))) Or (pChar = " ")
 End Function
 
 Public Function GetRandomNumber(Optional ByVal MIN As Long = 1, Optional ByVal MAX As Long = 100) As Long

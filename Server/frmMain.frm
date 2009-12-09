@@ -1289,27 +1289,43 @@ GetServerInformation = _
 frmConfig.Label2.Caption & "#"
 End Function
 
-Private Sub Whisper(pUser As String, Target As String, Conversation As String, Index As Integer)
+Private Sub Whisper(pUser As String, pTarget As String, pConv As String, Index As Integer)
+Dim pAccount As String
+
 'Check if user is whispering itself
-Select Case pUser
-Case Target, "<AFK>" & pUser
+If pUser = pTarget Or pUser = "<AFK>" & pTarget Then
     SendSingle "You can't whisper yourself.", Index
     Exit Sub
-End Select
+End If
 
-'Search target in list and send message
 With frmPanel.ListView1.ListItems
+    'Get user account name
     For i = 1 To .Count
-        Select Case Target
-        Case .Item(i)
-            SendSingle "[You whisper to " & Target & "]: " & Conversation, Index
-            SendSingle "[" & pUser & " whispers]: " & Conversation, .Item(i).SubItems(2)
+        If .Item(i) = pUser Then
+            pAccount = .Item(i).SubItems(5)
             Exit For
-        Case "<AFK>" & .Item(i)
-            SendSingle .Item(i) & " is away from keyboard.", Index
-            SendSingle "[" & pUser & " whispers]: " & Conversation, .Item(i).SubItems(2)
+        End If
+    Next i
+
+    'Search target in list and send message
+    For i = 1 To .Count
+        If pTarget = .Item(i) Then
+            If IsIgnoring(.Item(i).SubItems(5), pAccount) = True Then
+                SendSingle pTarget & " is ignoring you.", Index
+            Else
+                SendSingle "[You whisper to " & pTarget & "]: " & pConv, Index
+                SendSingle "[" & pUser & " whispers]: " & pConv, .Item(i).SubItems(2)
+            End If
             Exit For
-        End Select
+        ElseIf pTarget = "<AFK>" & .Item(i) Then
+            If IsIgnoring(.Item(i).SubItems(5), pAccount) = True Then
+                SendSingle pTarget & " is ignoring you.", Index
+            Else
+                SendSingle "[You whisper to " & pTarget & "]: " & pConv, Index
+                SendSingle "[" & pUser & " whispers]: " & pConv, .Item(i).SubItems(2)
+            End If
+            Exit For
+        End If
     Next i
 End With
 End Sub
