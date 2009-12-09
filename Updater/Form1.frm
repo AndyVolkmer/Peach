@@ -33,6 +33,7 @@ Begin VB.Form Form1
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"Form1.frx":08CA
@@ -96,7 +97,7 @@ Private Sub Form_Load()
 'Read current revision from .ini file.
 CurRev = ReadIniValue(App.Path & "\Config.ini", "Revision", "Number")
 
-CurRev = Left(CurRev, 7)
+CurRev = Left(CurRev, 3)
 
 'Download new revision text file.
 StartDownload "http://riplegion.ri.funpic.de/Peach/update.conf", App.Path & "\update.conf"
