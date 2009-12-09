@@ -9,7 +9,6 @@ Public Const rPort      As Long = 6222
 
 Public ACC_SWITCH       As String
 Public Prefix           As String  'Time Prefix vairbale
-Public i                As Long    'Global 'FOR-clause' variable
 
 Private Type CONFIG
     'frmMain values
@@ -215,7 +214,7 @@ Dim WiSk As Winsock
 With frmSociety
     .lvFriendList.ListItems.Clear
     .lvIgnoreList.ListItems.Clear
-    .lvOnlineLIst.ListItems.Clear
+    .lvOnlineList.ListItems.Clear
 End With
 
 frmSendFile.Combo1.Clear

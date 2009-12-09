@@ -1,4 +1,5 @@
 Attribute VB_Name = "modShared"
 Option Explicit
 
-Public Const pRev As String = "1.2.1.9"
+Global Const pRev   As String = "1.2.2.0"
+Global i            As Long     'Global "FOR" variable

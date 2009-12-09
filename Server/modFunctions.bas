@@ -1,11 +1,10 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const rPort          As Long = 6222
+Global Const rPort          As Long = 6222
 
-Public VarTime              As Long    'Time counter variable
-Public i                    As Long    'Global "FOR" variable
-Public HasError             As Boolean 'Used in frmMain and frmConfig
+Global VarTime              As Long    'Time counter variable
+Global HasError             As Boolean 'Used in frmMain and frmConfig
 
 Type NOTIFYICONDATA
     cbSize                  As Long
