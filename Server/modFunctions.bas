@@ -46,7 +46,6 @@ Type EMT
     IsUserText1             As String
     IsUserText2             As String
     IsNotUser               As String
-    Description             As String
 End Type
 
 Public Options              As OPT

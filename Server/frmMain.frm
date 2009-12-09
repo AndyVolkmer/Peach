@@ -449,7 +449,6 @@ With xRecordSet
         Emotes(Counter).IsNotUser = !is_not_user
         Emotes(Counter).IsUserText1 = !is_user_text_1
         Emotes(Counter).IsUserText2 = !is_user_text_2
-        Emotes(Counter).Description = !Description
         .MoveNext
         Counter = Counter + 1
     Loop
@@ -1096,9 +1095,6 @@ Case "!message"
                 End If
             End If
         
-        Case "/help"
-            SendSingle GetEmotesHelp, Index
-        
         Case "/online"
             SendSingle "You are online for " & GetOnlineTime(p_MainArray(1)) & ".", Index
         
@@ -1539,18 +1535,6 @@ GetCommands = vbCrLf & _
 "* .show accounts / users ( Shows a list of all accounts / user )" & vbCrLf & _
 "* .help ( shows this list of all avaible commands )" & vbCrLf & _
 "*********************************************"
-End Function
-
-Private Function GetEmotesHelp() As String
-For i = LBound(Emotes) To UBound(Emotes) - 1
-    GetEmotesHelp = GetEmotesHelp & vbCrLf & " " & Emotes(i).Command & " - " & Emotes(i).Description
-Next i
-
-If Len(Trim$(GetEmotesHelp)) = 0 Then
-    GetEmotesHelp = vbCrLf & "No emotes avaible on this server."
-Else
-    GetEmotesHelp = vbCrLf & " All avaible emotes:" & GetEmotesHelp
-End If
 End Function
 
 Private Function GetLevel(ByVal Name As String) As Long

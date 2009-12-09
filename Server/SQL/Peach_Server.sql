@@ -47,7 +47,6 @@ CREATE TABLE `emotes` (
   `is_user_text_1` varchar(255) DEFAULT '',
   `is_user_text_2` varchar(255) DEFAULT '',
   `is_not_user` varchar(255) DEFAULT '',
-  `description` varchar(255) DEFAULT '',
   PRIMARY KEY (`command`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
