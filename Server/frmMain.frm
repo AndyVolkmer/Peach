@@ -868,16 +868,14 @@ Case "!iprequest"
     End With
     
 Case "!message"
-    Dim array2()    As String   'Client textbox split by spaces is saved here
-    Dim IsCommand   As Boolean  'Controls the command handling
-    Dim IsSlash     As Boolean  'Controls emote / user command handling
-    Dim ANN_MSG     As String   'A chosen part of the text
-    Dim Reason      As String   'The third part of the text
-    Dim Reason2     As String   'Variable
-    Dim GetTarget   As String   'We save the second word from the array2 here (target)
-    Dim GetTarget2  As String   'Variable
-    Dim pGetTarget  As String   'Variable
-    Dim pGetTarget2 As String   'Variable
+    Dim array2()            As String
+    Dim ANN_MSG             As String
+    Dim p_TEXT_FIRST        As String
+    Dim p_TEXT_FIRST_PROP   As String
+    Dim p_TEXT_SECOND       As String
+    Dim p_TEXT_SECOND_PROP  As String
+    Dim IsCommand           As Boolean
+    Dim IsSlash             As Boolean
         
     'Split the conversation text by spaces
     array2 = Split(p_MainArray(2), " ")
@@ -894,14 +892,16 @@ Case "!message"
         IsSlash = True
     End If
     
-    'Capture target
+    'Capture first part of the text
     If UBound(array2) > 0 Then
-        GetTarget = StrConv(array2(1), vbProperCase)
+        p_TEXT_FIRST = array2(1)
+        p_TEXT_FIRST_PROP = StrConv(array2(1), vbProperCase)
     End If
     
-    'Capture target
+    'Capture second part
     If UBound(array2) > 1 Then
-        GetTarget2 = StrConv(array2(2), vbProperCase)
+        p_TEXT_SECOND = array2(2)
+        p_TEXT_SECOND_PROP = StrConv(array2(2), vbProperCase)
     End If
     
     With frmPanel.ListView1.ListItems
@@ -918,6 +918,9 @@ Case "!message"
     
     'If a command is used check out which
     If IsCommand Then
+        Dim Reason          As String
+        Dim Reason2         As String
+        
         'Save the reason
         For i = 2 To UBound(array2)
             Reason = Reason & array2(i) & " "
@@ -928,23 +931,17 @@ Case "!message"
             Reason2 = Reason2 & array2(i) & " "
         Next i
         
-        'Capture non propercase name and announce message
+        'Capture announce message
         If UBound(array2) > 0 Then
-            pGetTarget = array2(1)
             ANN_MSG = Mid$(p_MainArray(2), Len(array2(0)) + 2, Len(p_MainArray(2)))
-        End If
-        
-        'Capture non propercase name
-        If UBound(array2) > 1 Then
-            pGetTarget2 = array2(2)
         End If
         
         Select Case LCase$(array2(0))
         Case ".show"
-            If IsPartOf(GetTarget, "accounts") Then
+            If IsPartOf(p_TEXT_FIRST, "accounts") Then
                 SendSingle "!split_text#" & GetAccountList, Index
                 
-            ElseIf IsPartOf(GetTarget, "users") Then
+            ElseIf IsPartOf(p_TEXT_FIRST, "users") Then
                 SendSingle "!split_text#" & GetUserList, Index
             
             Else
@@ -953,49 +950,47 @@ Case "!message"
             End If
         
         Case ".userinfo", ".uinfo"
-            GetUserInfo GetTarget, Index
+            GetUserInfo p_TEXT_FIRST_PROP, array2(0), Index
         
         Case ".accountinfo", ".accinfo", ".ainfo"
-            GetAccountInfo pGetTarget, Index
+            GetAccountInfo p_TEXT_FIRST, array2(0), Index
         
         Case ".kick"
-            KickUser GetTarget, Index
+            KickUser p_TEXT_FIRST_PROP, Index
             
         Case ".ban"
-            Select Case LCase$(GetTarget)
-            Case "user", "use", "us", "u"
-                BanUser GetTarget2, p_MainArray(1), True, Index, Trim$(Reason2)
+            If IsPartOf(p_TEXT_FIRST, "user") Then
+                BanUser p_TEXT_SECOND_PROP, p_MainArray(1), True, Index, Trim$(Reason2)
                 
-            Case "account", "accoun", "accou", "acco", "acc", "ac", "a"
-                BanAccount pGetTarget2, p_MainArray(1), True, Index, Trim$(Reason2)
+            ElseIf IsPartOf(p_TEXT_FIRST, "account") Then
+                BanAccount p_TEXT_SECOND, p_MainArray(1), True, Index, Trim$(Reason2)
             
-            Case Else
+            Else
                 SendSingle "Incorrect syntax, use the following format .ban User / Account 'Name' 'Reason'", Index
                 
-            End Select
+            End If
             
         Case ".unban"
-            Select Case LCase$(GetTarget)
-            Case "user", "use", "us", "u"
-                BanUser GetTarget2, p_MainArray(1), False, Index, Trim$(Reason2)
+            If IsPartOf(p_TEXT_FIRST, "user") Then
+                BanUser p_TEXT_SECOND_PROP, p_MainArray(1), False, Index, Trim$(Reason2)
                 
-            Case "account", "accoun", "accou", "acco", "acc", "ac", "a"
-                BanAccount pGetTarget2, p_MainArray(1), False, Index, Trim$(Reason2)
+            ElseIf IsPartOf(p_TEXT_FIRST, "account") Then
+                BanAccount p_TEXT_SECOND, p_MainArray(1), False, Index, Trim$(Reason2)
                 
-            Case Else
+            Else
                 SendSingle "Incorrect syntax, use the following format .unban User / Account 'Name' 'Reason'", Index
                 
-            End Select
+            End If
         
         Case ".mute"
-            MuteUser GetTarget, p_MainArray(1), True, Index, Trim$(Reason)
+            MuteUser p_TEXT_FIRST_PROP, p_MainArray(1), True, Index, Trim$(Reason)
         
         Case ".unmute"
-            MuteUser GetTarget, p_MainArray(1), False, Index, Trim$(Reason)
+            MuteUser p_TEXT_FIRST_PROP, p_MainArray(1), False, Index, Trim$(Reason)
         
         Case ".announce", ".ann", ".broadcast"
             If Len(Trim$(ANN_MSG)) = 0 Then
-                SendSingle "Incorrect syntax, use the following format .announce 'Text to announce'.", Index
+                SendSingle "Incorrect syntax, use the following format " & array2(0) & " 'Text to announce'.", Index
             Else
                 SendMessage "[" & p_MainArray(1) & " announces]: " & ANN_MSG
             End If
@@ -1025,7 +1020,7 @@ Case "!message"
         
         With frmPanel.ListView1.ListItems
             For i = 1 To .Count
-                If .Item(i) = GetTarget Then
+                If .Item(i) = p_TEXT_FIRST_PROP Then
                     IsUser = True
                     Exit For
                 End If
@@ -1081,16 +1076,16 @@ Case "!message"
         Case "/w", "/whisper"
             If IsUser Then
                 If UBound(array2) > 1 Then
-                    Whisper p_MainArray(1), GetTarget, array2(2), Index
+                    Whisper p_MainArray(1), p_TEXT_FIRST_PROP, array2(2), Index
                     SetLastMessage p_MainArray(1), p_MainArray(2)
                 Else
                     Exit Sub
                 End If
             Else
-                If Len(Trim$(GetTarget)) = 0 Then
+                If Len(Trim$(p_TEXT_FIRST_PROP)) = 0 Then
                     Exit Sub
                 Else
-                    SendSingle "No user named '" & GetTarget & "' is currently online.", Index
+                    SendSingle "No user named '" & p_TEXT_FIRST_PROP & "' is currently online.", Index
                 End If
             End If
         
@@ -1105,12 +1100,12 @@ Case "!message"
 '               // Hackfix, this is a very bad way of checking and may slow down .. needs testing
 '               If Emotes(i).Command = LCase(array2(0)) Then
                 If IsPartOf(LCase(array2(0)), Emotes(i).Command) Then
-                    If p_MainArray(1) = GetTarget Then
+                    If p_MainArray(1) = p_TEXT_FIRST_PROP Then
                         IsUser = False
                     End If
 
                     If IsUser Then
-                        SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsUserText1 & GetTarget & Emotes(i).IsUserText2
+                        SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsUserText1 & p_TEXT_FIRST_PROP & Emotes(i).IsUserText2
                     Else
                         SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsNotUser
                     End If
@@ -1483,7 +1478,7 @@ With frmPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub GetAccountInfo(Account As String, pIndex As Integer)
+Private Sub GetAccountInfo(Account As String, pUsedSyntax As String, pIndex As Integer)
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(1)) = LCase(Account) Then
@@ -1492,7 +1487,7 @@ With frmAccountPanel.ListView1.ListItems
         Else
             If i = .Count Then
                 If Len(Trim$(Account)) = 0 Then
-                    SendSingle "Incorrect syntax, use .help for more information.", pIndex
+                    SendSingle "Incorrect syntax, use following format " & pUsedSyntax & " 'Account'.", pIndex
                 Else
                     SendSingle "Account '" & Account & "' not found.", pIndex
                 End If
@@ -1502,18 +1497,18 @@ With frmAccountPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub GetUserInfo(User As String, pIndex As Integer)
+Private Sub GetUserInfo(pUser As String, pUsedSyntax As String, pIndex As Integer)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i) = StrConv(User, vbProperCase) Then
-            SendSingle vbCrLf & "User information about '" & User & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Last Message: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5) & vbCrLf & " Login Time: " & .Item(i).SubItems(6), pIndex
+        If .Item(i) = StrConv(pUser, vbProperCase) Then
+            SendSingle vbCrLf & "User information about '" & pUser & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Last Message: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5) & vbCrLf & " Login Time: " & .Item(i).SubItems(6), pIndex
             Exit For
         Else
             If i = .Count Then
-                If Len(Trim$(User)) = 0 Then
-                    SendSingle "Incorrect syntax, use .help for more information.", pIndex
+                If Len(Trim$(pUser)) = 0 Then
+                    SendSingle "Incorrect syntax, use following format " & pUsedSyntax & " 'User'.", pIndex
                 Else
-                    SendSingle "User '" & User & "' was not found.", pIndex
+                    SendSingle "User '" & pUser & "' was not found.", pIndex
                 End If
             End If
         End If
@@ -1573,6 +1568,7 @@ With frmChat.txtConver
     .SelRTF = vbCrLf & " -> " & Description & vbCrLf & " -> All current connections got unloaded, server is now avaible under '" & Winsock1(0).LocalIP & "'."
 End With
 
+'Reset values
 frmPanel.ListView1.ListItems.Clear
 VarTime = 0
 
