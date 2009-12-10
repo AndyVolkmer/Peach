@@ -1013,9 +1013,11 @@ Case "!message"
             Exit Sub
         End If
         
-        If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
-            SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
-            Exit Sub
+        If GetLevel(p_MainArray(1)) = Options.ChatLevel Then
+            If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
+                SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
+                Exit Sub
+            End If
         End If
         
         With frmPanel.ListView1.ListItems
@@ -1097,8 +1099,8 @@ Case "!message"
         
         Case Else
             For i = LBound(Emotes) To UBound(Emotes)
-'               // Hackfix, this is a very bad way of checking and may slow down .. needs testing
-'               If Emotes(i).Command = LCase(array2(0)) Then
+               '// Hackfix, this is a very bad way of checking and may slow down .. needs testing
+               'If Emotes(i).Command = LCase(array2(0)) Then
                 If IsPartOf(LCase(array2(0)), Emotes(i).Command) Then
                     If p_MainArray(1) = p_TEXT_FIRST_PROP Then
                         IsUser = False
@@ -1115,9 +1117,8 @@ Case "!message"
                 End If
             Next i
             
-            SetLastMessage p_MainArray(1), p_MainArray(2)
-            
         End Select
+        SetLastMessage p_MainArray(1), p_MainArray(2)
         Exit Sub
     End If
     
