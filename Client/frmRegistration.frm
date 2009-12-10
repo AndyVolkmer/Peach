@@ -280,6 +280,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 Private Sub Check1_Click()
 If Check1.Value = 1 Then
     txtPassword1.PasswordChar = vbNullString
@@ -387,7 +389,6 @@ With frmMain.RegSock
     .Connect
 End With
 Screen.MousePointer = vbArrowHourglass
-Me.Caption = REG_MSG_LOADING
 ACC_SWITCH = "REG"
 End Sub
 
@@ -409,6 +410,7 @@ With cmbSecretQuestion
 End With
 Label7.Caption = REG_LABEL_SECRET_QUESTION
 Label8.Caption = REG_LABEL_SECRET_ANSWER
+Me.Caption = REG_MSG_LOADING
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

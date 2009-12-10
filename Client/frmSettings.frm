@@ -175,6 +175,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 Private Sub CheckAsk_Click()
 Command2.Enabled = True
 End Sub

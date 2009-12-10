@@ -941,17 +941,16 @@ Case "!message"
         
         Select Case LCase$(array2(0))
         Case ".show"
-            Select Case LCase$(GetTarget)
-            Case "accounts", "account", "accoun", "accou", "acco", "acc", "ac", "a"
+            If IsPartOf(GetTarget, "accounts") Then
                 SendSingle "!split_text#" & GetAccountList, Index
                 
-            Case "users", "user", "use", "us", "u"
+            ElseIf IsPartOf(GetTarget, "users") Then
                 SendSingle "!split_text#" & GetUserList, Index
-                
-            Case Else
+            
+            Else
                 SendSingle "Incorrect Syntax, use the following format .show 'account'/'user'.", Index
                 
-            End Select
+            End If
         
         Case ".userinfo", ".uinfo"
             GetUserInfo GetTarget, Index
@@ -1205,9 +1204,9 @@ Private Function IsPartOf(pPart As String, pCommand As String) As Boolean
 Dim pTemp1  As String
 Dim j       As Long
 
-For j = 2 To Len(pPart)
+For j = 1 To Len(pPart)
     pTemp1 = Mid(pPart, 1, j)
-    If pTemp1 = Left(pCommand, Len(pTemp1)) Then
+    If LCase(pTemp1) = LCase(Left(pCommand, Len(pTemp1))) Then
         IsPartOf = True
     Else
         IsPartOf = False
@@ -1375,8 +1374,12 @@ With frmPanel.ListView1.ListItems
             Exit For
         Else
             If i = .Count Then
-                If Len(Trim$(User)) = 0 Then
-                    SendSingle "Incorrect syntax, use .help for more information.", pIndex
+                If Len(User) = 0 Then
+                    If Ban Then
+                        SendSingle "Incorrect syntax, use the following format .ban user 'Name' [Reason]. Arguments between brackets are optional.", pIndex
+                    Else
+                        SendSingle "Incorrect syntax, use the following format .unban user 'Name' [Reason]. Arguments between brackets are optional.", pIndex
+                    End If
                 Else
                     SendSingle "User '" & User & "' not found.", pIndex
                 End If
