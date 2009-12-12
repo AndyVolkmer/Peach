@@ -997,7 +997,30 @@ Case "!message"
         
         Case ".help", ".command", ".commands"
             SendSingle GetCommands, Index
+            
+        Case ".reload"
+            With Database
+                Select Case LCase$(p_TEXT_FIRST)
+                
+                Case LCase$(.AccountTable), LCase$(.FriendTable), LCase$(.IgnoreTable)
+                    SendSingle "This table can't be reloaded.", Index
                     
+                Case LCase$(.DeclinedNameTable)
+                    Erase DeclinedNames
+                    LoadDeclinedNames .DeclinedNameTable
+                    SendMessage p_MainArray(1) & " initiated the reload of " & .DeclinedNameTable & "."
+                    
+                Case LCase$(.EmoteTable)
+                    Erase Emotes
+                    LoadEmotes .EmoteTable
+                    SendMessage p_MainArray(1) & " initiated the reload of " & .EmoteTable & " table."
+                
+                Case Else
+                    SendSingle "This table does not exist.", Index
+                    
+                End Select
+            End With
+            
         Case Else
             SendSingle "Unknown command used. Check .help for more information about commands.", Index
         
@@ -1557,22 +1580,17 @@ End With
 End Function
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-Dim Sock As Winsock
-For Each Sock In frmMain.Winsock1
-    If Sock.Index <> 0 Then
-        Unload Sock
-    End If
-Next
-
-With frmChat.txtConver
-    .SelStart = Len(.Text)
-    .SelRTF = vbCrLf & " -> " & Description & vbCrLf & " -> All current connections got unloaded, server is now avaible under '" & Winsock1(0).LocalIP & "'."
+Unload Winsock1(Index)
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(2) = Index Then
+            .Remove (i)
+            Exit For
+        End If
+    Next i
 End With
 
-'Reset values
-frmPanel.ListView1.ListItems.Clear
-VarTime = 0
-
+UPDATE_ONLINE
 UPDATE_STATUS_BAR
 End Sub
 

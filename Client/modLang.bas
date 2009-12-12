@@ -97,6 +97,8 @@ Public SOC_ASK_IGNORE_TEXT              As String
 Public SOC_ASK_IGNORE_TITLE             As String
 Public SOC_ASK_IGNORE_DEFAULT           As String
 
+Public SOC_FRIEND_LIST_STATUS           As String
+
 'Create an account form
 Public REG_CAPTION                      As String
 
@@ -258,6 +260,8 @@ SOC_ASK_FRIEND_DEFAULT = "Account hier eingeben"
 SOC_ASK_IGNORE_TEXT = "Gebe bitte den Account Namen des Benutzer die du ignorieren möchtest ein."
 SOC_ASK_IGNORE_TITLE = "Benutzer ignorieren"
 SOC_ASK_IGNORE_DEFAULT = "Account hier eingeben"
+
+SOC_FRIEND_LIST_STATUS = "Status"
 
 REG_CAPTION = "Peach - Registration"
 
@@ -425,6 +429,8 @@ SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in 
 SOC_ASK_IGNORE_TITLE = "Ignore a user"
 SOC_ASK_IGNORE_DEFAULT = "Enter account here"
 
+SOC_FRIEND_LIST_STATUS = "Status"
+
 REG_CAPTION = "Peach - Registration"
 
 REG_FRAME_DETAIL = "Enter your details"
@@ -586,6 +592,8 @@ SOC_ASK_IGNORE_TEXT = "Inserta el nombre del usuario que quieres ignorar aqui."
 SOC_ASK_IGNORE_TITLE = "Ignorar a usuario"
 SOC_ASK_IGNORE_DEFAULT = "Cuenta de la persona que quieres ignorar"
 
+SOC_FRIEND_LIST_STATUS = "Estatus"
+
 REG_CAPTION = "Peach - Registración"
 
 REG_FRAME_DETAIL = "Enter your details"
@@ -746,6 +754,8 @@ SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in 
 SOC_ASK_IGNORE_TITLE = "Ignore a user"
 SOC_ASK_IGNORE_DEFAULT = "Enter account here"
 
+SOC_FRIEND_LIST_STATUS = "Status"
+
 REG_CAPTION = "Peach - Registrering"
 
 REG_FRAME_DETAIL = "Ange dina detaljer"
@@ -905,6 +915,8 @@ SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in 
 SOC_ASK_IGNORE_TITLE = "Ignore a user"
 SOC_ASK_IGNORE_DEFAULT = "Enter account here"
 
+SOC_FRIEND_LIST_STATUS = "Stato"
+
 REG_CAPTION = "Peach - Registrazione"
 
 REG_FRAME_DETAIL = "Inserisci i tuoi dati"
@@ -1061,6 +1073,8 @@ SOC_ASK_FRIEND_DEFAULT = "Enter account here"
 SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in the text box below."
 SOC_ASK_IGNORE_TITLE = "Ignore a user"
 SOC_ASK_IGNORE_DEFAULT = "Enter account here"
+
+SOC_FRIEND_LIST_STATUS = "Staat"
 
 REG_CAPTION = "Peach - Registratie"
 
@@ -1234,6 +1248,8 @@ SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in 
 SOC_ASK_IGNORE_TITLE = "Ignore a user"
 SOC_ASK_IGNORE_DEFAULT = "Enter account here"
 
+SOC_FRIEND_LIST_STATUS = "Status"
+
 REG_CAPTION = "Peach - Registration"
 
 REG_FRAME_DETAIL = "Enter your details"
@@ -1389,6 +1405,8 @@ SOC_ASK_FRIEND_DEFAULT = "Enter account here"
 SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in the text box below."
 SOC_ASK_IGNORE_TITLE = "Ignore a user"
 SOC_ASK_IGNORE_DEFAULT = "Enter account here"
+
+SOC_FRIEND_LIST_STATUS = "État"
 
 REG_CAPTION = "Peach - D'enregistrement"
 

@@ -55,15 +55,15 @@ Begin VB.Form frmSociety
       TabCaption(1)   =   "Online List"
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "cmdAddToFriend"
-      Tab(1).Control(1)=   "lvOnlineList"
+      Tab(1).Control(0)=   "lvOnlineList"
+      Tab(1).Control(1)=   "cmdAddToFriend"
       Tab(1).ControlCount=   2
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "lvIgnoreList"
+      Tab(2).Control(0)=   "cmdRemoveIgnore"
       Tab(2).Control(1)=   "cmdAddIgnore"
-      Tab(2).Control(2)=   "cmdRemoveIgnore"
+      Tab(2).Control(2)=   "lvIgnoreList"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToFriend 
          Caption         =   "&Add to Friends"
@@ -229,6 +229,7 @@ cmdRemoveFriend.Caption = SOC_COMMAND_REMOVE
 cmdAddIgnore.Caption = SOC_COMMAND_ADD
 cmdRemoveIgnore.Caption = SOC_COMMAND_REMOVE
 cmdAddToFriend.Caption = SOC_COMMAND_FRIEND
+lvFriendList.ColumnHeaders(2).Text = SOC_FRIEND_LIST_STATUS
 End Sub
 
 Private Sub cmdAddFriend_Click()
