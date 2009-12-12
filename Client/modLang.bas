@@ -89,6 +89,14 @@ Public SOC_COMMAND_FRIEND               As String
 Public SOC_ASK_DEL_1                    As String
 Public SOC_ASK_DEL_2                    As String
 
+Public SOC_ASK_FRIEND_TEXT              As String
+Public SOC_ASK_FRIEND_TITLE             As String
+Public SOC_ASK_FRIEND_DEFAULT           As String
+
+Public SOC_ASK_IGNORE_TEXT              As String
+Public SOC_ASK_IGNORE_TITLE             As String
+Public SOC_ASK_IGNORE_DEFAULT           As String
+
 'Create an account form
 Public REG_CAPTION                      As String
 
@@ -242,6 +250,14 @@ SOC_COMMAND_FRIEND = "&Als Freund hinzufügen"
 
 SOC_ASK_DEL_1 = "Möchten Sie '"
 SOC_ASK_DEL_2 = "' von der Liste löschen?"
+
+SOC_ASK_FRIEND_TEXT = "Gebe bitte den Account Namen deines Freundes ein."
+SOC_ASK_FRIEND_TITLE = "Freund hinzufügen"
+SOC_ASK_FRIEND_DEFAULT = "Account hier eingeben"
+
+SOC_ASK_IGNORE_TEXT = "Gebe bitte den Account Namen des Benutzer die du ignorieren möchtest ein."
+SOC_ASK_IGNORE_TITLE = "Benutzer ignorieren"
+SOC_ASK_IGNORE_DEFAULT = "Account hier eingeben"
 
 REG_CAPTION = "Peach - Registration"
 
@@ -401,6 +417,14 @@ SOC_COMMAND_FRIEND = "&Add to Friends"
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"
 
+SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
+SOC_ASK_FRIEND_TITLE = "Adding a friend"
+SOC_ASK_FRIEND_DEFAULT = "Enter account here"
+
+SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in the text box below."
+SOC_ASK_IGNORE_TITLE = "Ignore a user"
+SOC_ASK_IGNORE_DEFAULT = "Enter account here"
+
 REG_CAPTION = "Peach - Registration"
 
 REG_FRAME_DETAIL = "Enter your details"
@@ -554,6 +578,14 @@ SOC_COMMAND_FRIEND = "&Añardir a amigos"
 SOC_ASK_DEL_1 = "¿Estas seguro que quieres borrar a '"
 SOC_ASK_DEL_2 = "' de la lista?"
 
+SOC_ASK_FRIEND_TEXT = "Inserta el nombre de la cuenta de tu amigo aqui."
+SOC_ASK_FRIEND_TITLE = "Añadir amigo"
+SOC_ASK_FRIEND_DEFAULT = "Cuenta de tu amigo"
+
+SOC_ASK_IGNORE_TEXT = "Inserta el nombre del usuario que quieres ignorar aqui."
+SOC_ASK_IGNORE_TITLE = "Ignorar a usuario"
+SOC_ASK_IGNORE_DEFAULT = "Cuenta de la persona que quieres ignorar"
+
 REG_CAPTION = "Peach - Registración"
 
 REG_FRAME_DETAIL = "Enter your details"
@@ -706,6 +738,14 @@ SOC_COMMAND_FRIEND = "&Lägg till vänner"
 SOC_ASK_DEL_1 = "Vill du ta bort '"
 SOC_ASK_DEL_2 = "' från listan?"
 
+SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
+SOC_ASK_FRIEND_TITLE = "Adding a friend"
+SOC_ASK_FRIEND_DEFAULT = "Enter account here"
+
+SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in the text box below."
+SOC_ASK_IGNORE_TITLE = "Ignore a user"
+SOC_ASK_IGNORE_DEFAULT = "Enter account here"
+
 REG_CAPTION = "Peach - Registrering"
 
 REG_FRAME_DETAIL = "Ange dina detaljer"
@@ -857,6 +897,14 @@ SOC_COMMAND_FRIEND = "&Aggiungi ai tuoi amici"
 SOC_ASK_DEL_1 = "Vuoi eliminare '"
 SOC_ASK_DEL_2 = "' dalla lista?"
 
+SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
+SOC_ASK_FRIEND_TITLE = "Adding a friend"
+SOC_ASK_FRIEND_DEFAULT = "Enter account here"
+
+SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in the text box below."
+SOC_ASK_IGNORE_TITLE = "Ignore a user"
+SOC_ASK_IGNORE_DEFAULT = "Enter account here"
+
 REG_CAPTION = "Peach - Registrazione"
 
 REG_FRAME_DETAIL = "Inserisci i tuoi dati"
@@ -1005,6 +1053,14 @@ SOC_COMMAND_FRIEND = "&Voeg toe aan vrienden"
 
 SOC_ASK_DEL_1 = "Wilt u '"
 SOC_ASK_DEL_2 = "' verwijderen uit de lijst?"
+
+SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
+SOC_ASK_FRIEND_TITLE = "Adding a friend"
+SOC_ASK_FRIEND_DEFAULT = "Enter account here"
+
+SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in the text box below."
+SOC_ASK_IGNORE_TITLE = "Ignore a user"
+SOC_ASK_IGNORE_DEFAULT = "Enter account here"
 
 REG_CAPTION = "Peach - Registratie"
 
@@ -1170,6 +1226,14 @@ SOC_COMMAND_FRIEND = "&Add to Friends"
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"
 
+SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
+SOC_ASK_FRIEND_TITLE = "Adding a friend"
+SOC_ASK_FRIEND_DEFAULT = "Enter account here"
+
+SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in the text box below."
+SOC_ASK_IGNORE_TITLE = "Ignore a user"
+SOC_ASK_IGNORE_DEFAULT = "Enter account here"
+
 REG_CAPTION = "Peach - Registration"
 
 REG_FRAME_DETAIL = "Enter your details"
@@ -1317,6 +1381,14 @@ SOC_COMMAND_FRIEND = "&Ajouter aux amis"
 
 SOC_ASK_DEL_1 = "Voulez-vous supprimer '"
 SOC_ASK_DEL_2 = "' de la liste?"
+
+SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
+SOC_ASK_FRIEND_TITLE = "Adding a friend"
+SOC_ASK_FRIEND_DEFAULT = "Enter account here"
+
+SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in the text box below."
+SOC_ASK_IGNORE_TITLE = "Ignore a user"
+SOC_ASK_IGNORE_DEFAULT = "Enter account here"
 
 REG_CAPTION = "Peach - D'enregistrement"
 

@@ -232,19 +232,19 @@ cmdAddToFriend.Caption = SOC_COMMAND_FRIEND
 End Sub
 
 Private Sub cmdAddFriend_Click()
-Dim pBuffer As String
-pBuffer = InputBox("Please enter the account of your friend in the text box below.", "Adding a friend", "Friends Account")
+Dim pVal As String
+pVal = InputBox(SOC_ASK_FRIEND_TEXT, SOC_ASK_FRIEND_DEFAULT, SOC_ASK_FRIEND_DEFAULT)
 
-If Len(Trim$(pBuffer)) = 0 Then Exit Sub
-SendMSG "!friend#-add#" & frmConfig.txtAccount & "#" & pBuffer & "#"
+If Len(Trim$(pVal)) = 0 Then Exit Sub
+SendMSG "!friend#-add#" & frmConfig.txtAccount & "#" & pVal & "#"
 End Sub
 
 Private Sub cmdAddIgnore_Click()
-Dim Val As String
-Val = InputBox("Please enter the account you would like to ignore in the text box below.", "Adding a ignore", "Ignored User Account")
+Dim pVal As String
+pVal = InputBox(SOC_ASK_IGNORE_TEXT, SOC_ASK_IGNORE_TITLE, SOC_ASK_IGNORE_DEFAULT)
 
-If Len(Trim$(Val)) = 0 Then Exit Sub
-SendMSG "!ignore#-add#" & frmConfig.txtAccount & "#" & Val & "#"
+If Len(Trim$(pVal)) = 0 Then Exit Sub
+SendMSG "!ignore#-add#" & frmConfig.txtAccount & "#" & pVal & "#"
 End Sub
 
 Private Sub cmdAddToFriend_Click()

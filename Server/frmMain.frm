@@ -330,7 +330,7 @@ Else
 End If
 
 'Connect to MySQL Database
-CONNECT_MYSQL .Database, .User, .Password, .Host
+ConnectMySQL .Database, .User, .Password, .Host
 
 'Load Accounts
 LoadAccounts .AccountTable
@@ -356,7 +356,7 @@ SetupForms frmConfig
 If HasError = False Then WriteLog "Correctly loaded."
 End Sub
 
-Public Sub CONNECT_MYSQL(pDatabase As String, pUser As String, pPassword As String, pIP As String)
+Public Sub ConnectMySQL(pDatabase As String, pUser As String, pPassword As String, pIP As String)
 On Error GoTo HandleErrorConnection
 
 'Connect with Database (MySQL)
@@ -904,8 +904,8 @@ Case "!message"
         p_TEXT_SECOND_PROP = StrConv(array2(2), vbProperCase)
     End If
     
+    'Check if user is muted
     With frmPanel.ListView1.ListItems
-        'Check if user is muted
         For i = 1 To .Count
             If .Item(i) = p_MainArray(1) Then
                 If .Item(i).SubItems(4) = "True" Then

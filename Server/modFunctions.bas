@@ -228,7 +228,7 @@ Public Function GetRandomNumber(Optional ByVal MIN As Long = 1, Optional ByVal M
 Randomize
 Do
     GetRandomNumber = Int(Rnd * MAX) + MIN
-Loop Until GetRandomNumber <= MAX 'And GetRandomNumber > MIN
+Loop Until GetRandomNumber <= MAX
 End Function
 
 Public Sub MinimizeToTray()
@@ -306,7 +306,7 @@ With OSInfo
     End Select
 
 Case Else
-    GetOS = "Failed"
+    GetOS = "UnknownOS"
 End Select
 End With
 End Function
