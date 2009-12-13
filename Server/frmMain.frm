@@ -1551,20 +1551,20 @@ Private Function GetCommands() As String
 GetCommands = vbCrLf & _
 "*********************************************" & vbCrLf & _
 "* List of all avaible commands:" & vbCrLf & _
+"* .accountinfo / .accinfo ( Shows all information about that account )" & vbCrLf & _
 "* .announce 'Text' ( Send a server side tagged announced )" & vbCrLf & _
 "* .ban user 'Name' 'Reason' ( Bans users account )" & vbCrLf & _
 "* .ban account 'Account' 'Reason' ( Bans the account )" & vbCrLf & _
-"* .unban user 'Name' 'Reason' ( Removes ban from 'Name' )" & vbCrLf & _
-"* .unban account 'Account' 'Reason' ( Removes ban from 'Account )" & vbCrLf & _
+"* .clear ( Clears the chatbox of all users )" & vbCrLf & _
+"* .help / .command ( Shows this list of all avaible commands )" & vbCrLf & _
 "* .kick 'Name' ( Kicks 'Name' from Server )" & vbCrLf & _
 "* .mute 'Name' ( Mutes 'Name' until unmute )" & vbCrLf & _
+"* .reload 'TABLE' ( Reloads the table )" & vbCrLf & _
+"* .show accounts / users ( Shows a list of all accounts / user )" & vbCrLf & _
+"* .unban user 'Name' 'Reason' ( Removes ban from 'Name' )" & vbCrLf & _
+"* .unban account 'Account' 'Reason' ( Removes ban from 'Account )" & vbCrLf & _
 "* .unmute 'Name' ( Removes mute from 'Name' )" & vbCrLf & _
 "* .userinfo 'Name' ( Shows all information about 'Name' )" & vbCrLf & _
-"* .accountinfo / .accinfo ( Shows all information about that account )" & vbCrLf & _
-"* .show accounts / users ( Shows a list of all accounts / user )" & vbCrLf & _
-"* .help / .command ( shows this list of all avaible commands )" & vbCrLf & _
-"* .reload 'TABLE' ( reloads the table )" & vbCrLf & _
-"* .clear ( clears the chatbox of all users )" & vbCrLf & _
 "*********************************************"
 End Function
 
