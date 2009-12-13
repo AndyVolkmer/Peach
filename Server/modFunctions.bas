@@ -35,6 +35,7 @@ Type DB
     AccountTable            As String
     EmoteTable              As String
     DeclinedNameTable       As String
+    CommandsTable           As String
 End Type
 
 Type OPT
@@ -48,8 +49,14 @@ Type EMT
     IsNotUser               As String
 End Type
 
+Type GC
+    Syntax                  As String
+    Description             As String
+End Type
+
 Public Options              As OPT
 Public Database             As DB
+Public Commands()           As GC
 Public Emotes()             As EMT
 Public DeclinedNames()      As String
 

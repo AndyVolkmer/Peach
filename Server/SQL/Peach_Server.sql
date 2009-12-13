@@ -55,5 +55,33 @@ CREATE TABLE `emotes` (
 -- ----------------------------
 DROP TABLE IF EXISTS `declinednames`;
 CREATE TABLE `declinednames` (
-  `Name` varchar(15) DEFAULT NULL
+  `Name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `commands`
+-- ----------------------------
+DROP TABLE IF EXISTS `commands`;
+CREATE TABLE `commands` (
+  `Syntax` varchar(255) NOT NULL DEFAULT '',
+  `Description` varchar(255) DEFAULT '',
+  PRIMARY KEY (`Syntax`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of commands
+-- ----------------------------
+INSERT INTO `commands` VALUES ('.accountinfo / .accinfo \'Account\'', 'Shows all information about that account.');
+INSERT INTO `commands` VALUES ('.announce \'Text\'', 'Send a server side tagged message.');
+INSERT INTO `commands` VALUES ('.ban account \'Account\' [Reason]', 'Bans the account permanently.');
+INSERT INTO `commands` VALUES ('.ban user \'Name\' [Reason]', 'Bans the users account permanently.');
+INSERT INTO `commands` VALUES ('.clear', 'Clears the chatbox of all users.');
+INSERT INTO `commands` VALUES ('.help / .command', 'Shows a list of all avaible commands.');
+INSERT INTO `commands` VALUES ('.kick \'Name\'', 'Disconnectes the user with \'Name\' from server.');
+INSERT INTO `commands` VALUES ('.mute \'Name\' [Reason]', 'Mutes the user with \'Name\' permanently.');
+INSERT INTO `commands` VALUES ('.reload \'Table\'', 'Reloads the \'Table\'.');
+INSERT INTO `commands` VALUES ('.show accounts / users', 'Shows a list of all accounts / users avaible.');
+INSERT INTO `commands` VALUES ('.unban account \'Account [Reason]', 'Unbans the account.');
+INSERT INTO `commands` VALUES ('.unban user \'Name\' [Reason]', 'Unbans the users account.');
+INSERT INTO `commands` VALUES ('.unmute \'Name\' [Reason]', 'Removes the mute from \'Name\' if muted.');
+INSERT INTO `commands` VALUES ('.userinfo \'Name\'', 'Shows a list with all information about \'Name\'.');

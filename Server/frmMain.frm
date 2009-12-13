@@ -309,6 +309,13 @@ Else
     .DeclinedNameTable = InputBox("The configuration file does not contain a declined name table, please insert one in the textbox below.", "Database error ..", "Declined Name Table")
 End If
 
+If Len(Trim$(ReadIniValue(pPath, "Database", "CommandsTable"))) <> 0 Then
+    .CommandsTable = ReadIniValue(pPath, "Database", "CommandsTable")
+Else
+    WriteLog "No Command-Table found."
+    .CommandsTable = InputBox("The configuration file does not contain a command table, please insert one in the textbox below.", "Database error ..", "Commands Table")
+End If
+
 '== Position ==
 If Len(Trim$(ReadIniValue(pPath, "Position", "Top"))) <> 0 Then
     Me.Top = ReadIniValue(pPath, "Position", "Top")
@@ -346,6 +353,9 @@ LoadIgnores .IgnoreTable
 
 'Load Declined Names
 LoadDeclinedNames .DeclinedNameTable
+
+'Load commands
+LoadCommands .CommandsTable
 
 'Close Database variable
 End With
@@ -388,6 +398,44 @@ Screen.MousePointer = vbDefault
 'Set error flag
 HasError = True
 
+End Sub
+
+Private Sub LoadCommands(pTable As String)
+Dim SQL     As String
+Dim Counter As Long
+
+If HasError Then Exit Sub
+
+SQL = "SELECT * FROM " & pTable
+Counter = 0
+
+On Error GoTo HandleErrorEmotes
+xCommand.CommandText = SQL
+Set xRecordSet = xCommand.Execute
+
+ReDim Commands(0)
+
+With xRecordSet
+    Do Until .EOF
+        ReDim Preserve Commands(Counter + 1)
+        Commands(Counter).Syntax = !Syntax
+        Commands(Counter).Description = !Description
+        Counter = Counter + 1
+        .MoveNext
+    Loop
+End With
+
+Set xRecordSet = Nothing
+
+WriteLog "Loaded " & Counter & " command(s)."
+
+Exit Sub
+HandleErrorEmotes:
+'Print error
+WriteLog Err.Description & "."
+
+'Set error flag
+HasError = True
 End Sub
 
 Private Sub LoadDeclinedNames(pTable As String)
@@ -647,6 +695,7 @@ WriteIniValue pPath, "Database", "FriendTable", .FriendTable
 WriteIniValue pPath, "Database", "IgnoreTable", .IgnoreTable
 WriteIniValue pPath, "Database", "EmoteTable", .EmoteTable
 WriteIniValue pPath, "Database", "DeclinedNameTable", .DeclinedNameTable
+WriteIniValue pPath, "Database", "CommandsTable", .CommandsTable
 
 'Close Database variable
 End With
@@ -1004,6 +1053,11 @@ Case "!message"
                 
                 Case LCase$(.AccountTable), LCase$(.FriendTable), LCase$(.IgnoreTable)
                     SendSingle "This table can't be reloaded.", Index
+                
+                Case LCase$(.CommandsTable)
+                    Erase Commands
+                    LoadCommands .CommandsTable
+                    SendMessage p_MainArray(1) & " initiated the reload of '" & .CommandsTable & "' table."
                     
                 Case LCase$(.DeclinedNameTable)
                     Erase DeclinedNames
@@ -1017,7 +1071,7 @@ Case "!message"
                 
                 Case Else
                     If Len(p_TEXT_FIRST) = 0 Then
-                        SendSingle "Incorrect Syntax. Use the following format .reload TABLE.", Index
+                        SendSingle "Incorrect Syntax. Use the following format .reload Table.", Index
                     Else
                         SendSingle "This table does not exist.", Index
                     End If
@@ -1114,7 +1168,7 @@ Case "!message"
                     Exit Sub
                 End If
             Else
-                If Len(Trim$(p_TEXT_FIRST_PROP)) = 0 Then
+                If Len(p_TEXT_FIRST_PROP) = 0 Then
                     Exit Sub
                 Else
                     SendSingle "No user named '" & p_TEXT_FIRST_PROP & "' is currently online.", Index
@@ -1232,7 +1286,7 @@ Dim j       As Long
 
 For j = 1 To Len(pPart)
     pTemp1 = Mid(pPart, 1, j)
-    If LCase(pTemp1) = LCase(Left(pCommand, Len(pTemp1))) Then
+    If LCase$(pTemp1) = LCase$(Left(pCommand, Len(pTemp1))) Then
         IsPartOf = True
     Else
         IsPartOf = False
@@ -1273,7 +1327,7 @@ End Function
 Private Function GetProperAccountName(pAccount As String) As String
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
-        If LCase(.Item(i).SubItems(1)) = LCase(pAccount) Then
+        If LCase$(.Item(i).SubItems(1)) = LCase$(pAccount) Then
             GetProperAccountName = .Item(i).SubItems(1)
             Exit For
         Else
@@ -1455,7 +1509,7 @@ With frmAccountPanel.ListView1.ListItems
             End If
             
             'Announce the action
-            If Len(Trim$(Reason)) = 0 Then
+            If Len(Reason) = 0 Then
                 If Ban Then
                     SendMessage User & " was account banned by " & AdminName & "."
                 Else
@@ -1498,7 +1552,7 @@ With frmPanel.ListView1.ListItems
             Exit For
         Else
             If i = .Count Then
-                If Len(Trim$(pUser)) = 0 Then
+                If Len(pUser) = 0 Then
                     SendSingle "Incorrect syntax, use following format .kick 'User'.", pIndex
                 Else
                     SendSingle "User '" & pUser & "' not found.", pIndex
@@ -1536,7 +1590,7 @@ With frmPanel.ListView1.ListItems
             Exit For
         Else
             If i = .Count Then
-                If Len(Trim$(pUser)) = 0 Then
+                If Len(pUser) = 0 Then
                     SendSingle "Incorrect syntax, use following format " & pUsedSyntax & " 'User'.", pIndex
                 Else
                     SendSingle "User '" & pUser & "' was not found.", pIndex
@@ -1548,24 +1602,11 @@ End With
 End Sub
 
 Private Function GetCommands() As String
-GetCommands = vbCrLf & _
-"*********************************************" & vbCrLf & _
-"* List of all avaible commands:" & vbCrLf & _
-"* .accountinfo / .accinfo ( Shows all information about that account )" & vbCrLf & _
-"* .announce 'Text' ( Send a server side tagged announced )" & vbCrLf & _
-"* .ban user 'Name' 'Reason' ( Bans users account )" & vbCrLf & _
-"* .ban account 'Account' 'Reason' ( Bans the account )" & vbCrLf & _
-"* .clear ( Clears the chatbox of all users )" & vbCrLf & _
-"* .help / .command ( Shows this list of all avaible commands )" & vbCrLf & _
-"* .kick 'Name' ( Kicks 'Name' from Server )" & vbCrLf & _
-"* .mute 'Name' ( Mutes 'Name' until unmute )" & vbCrLf & _
-"* .reload 'TABLE' ( Reloads the table )" & vbCrLf & _
-"* .show accounts / users ( Shows a list of all accounts / user )" & vbCrLf & _
-"* .unban user 'Name' 'Reason' ( Removes ban from 'Name' )" & vbCrLf & _
-"* .unban account 'Account' 'Reason' ( Removes ban from 'Account )" & vbCrLf & _
-"* .unmute 'Name' ( Removes mute from 'Name' )" & vbCrLf & _
-"* .userinfo 'Name' ( Shows all information about 'Name' )" & vbCrLf & _
-"*********************************************"
+GetCommands = vbCrLf & "*********************************************" & vbCrLf & "* List of all avaible commands:" & vbCrLf
+For i = 0 To UBound(Commands) - 1
+    GetCommands = GetCommands & "* " & Commands(i).Syntax & " (" & Commands(i).Description & ")" & vbCrLf
+Next i
+GetCommands = GetCommands & "*********************************************"
 End Function
 
 Private Function GetLevel(ByVal Name As String) As Long
