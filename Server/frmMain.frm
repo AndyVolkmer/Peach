@@ -989,8 +989,8 @@ Case "!message"
             MuteUser p_TEXT_FIRST_PROP, p_MainArray(1), False, Index, Trim$(Reason)
         
         Case ".announce", ".ann", ".broadcast"
-            If Len(Trim$(ANN_MSG)) = 0 Then
-                SendSingle "Incorrect syntax, use the following format " & array2(0) & " 'Text to announce'.", Index
+            If Len(ANN_MSG) = 0 Then
+                SendSingle "Incorrect syntax, use the following format " & array2(0) & " 'text to announce'.", Index
             Else
                 SendMessage "[" & p_MainArray(1) & " announces]: " & ANN_MSG
             End If
@@ -1008,15 +1008,19 @@ Case "!message"
                 Case LCase$(.DeclinedNameTable)
                     Erase DeclinedNames
                     LoadDeclinedNames .DeclinedNameTable
-                    SendMessage p_MainArray(1) & " initiated the reload of " & .DeclinedNameTable & "."
+                    SendMessage p_MainArray(1) & " initiated the reload of '" & .DeclinedNameTable & "' table."
                     
                 Case LCase$(.EmoteTable)
                     Erase Emotes
                     LoadEmotes .EmoteTable
-                    SendMessage p_MainArray(1) & " initiated the reload of " & .EmoteTable & " table."
+                    SendMessage p_MainArray(1) & " initiated the reload of '" & .EmoteTable & "' table."
                 
                 Case Else
-                    SendSingle "This table does not exist.", Index
+                    If Len(p_TEXT_FIRST) = 0 Then
+                        SendSingle "Incorrect Syntax. Use the following format .reload TABLE.", Index
+                    Else
+                        SendSingle "This table does not exist.", Index
+                    End If
                     
                 End Select
             End With
