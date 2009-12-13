@@ -450,6 +450,9 @@ GetCommand = StrArr(0)
 
 Select Case GetCommand
 
+Case "!clear"
+    frmChat.txtConver.Text = vbNullString
+
 Case "!split_text"
     For i = 1 To UBound(StrArr)
         Buffer = Buffer & vbCrLf & " " & StrArr(i)

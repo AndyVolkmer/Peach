@@ -1024,6 +1024,9 @@ Case "!message"
                     
                 End Select
             End With
+        
+        Case ".clear"
+            SendMessage "!clear#"
             
         Case Else
             SendSingle "Unknown command used. Check .help for more information about commands.", Index
@@ -1559,7 +1562,9 @@ GetCommands = vbCrLf & _
 "* .userinfo 'Name' ( Shows all information about 'Name' )" & vbCrLf & _
 "* .accountinfo / .accinfo ( Shows all information about that account )" & vbCrLf & _
 "* .show accounts / users ( Shows a list of all accounts / user )" & vbCrLf & _
-"* .help ( shows this list of all avaible commands )" & vbCrLf & _
+"* .help / .command ( shows this list of all avaible commands )" & vbCrLf & _
+"* .reload 'TABLE' ( reloads the table )" & vbCrLf & _
+"* .clear ( clears the chatbox of all users )" & vbCrLf & _
 "*********************************************"
 End Function
 
