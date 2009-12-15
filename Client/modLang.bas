@@ -174,7 +174,7 @@ CURRENT_LANG = 0
 
 ' MDI form ..
 MDI_COMMAND_CHAT = "Ch&at"
-MDI_COMMAND_SENDFILE = "&Sende Datei"
+MDI_COMMAND_SENDFILE = "&Datei senden"
 MDI_COMMAND_SOCIETY = "&Gesellschaft"
 
 MDI_STAT_DISCONNECTED = "Status: Getrennt"

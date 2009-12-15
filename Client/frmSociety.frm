@@ -56,8 +56,11 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "lvOnlineList"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdAddToFriend"
+      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).Control(2)=   "cmdAddToIgnore"
+      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
@@ -73,6 +76,7 @@ Begin VB.Form frmSociety
          Left            =   -69960
          TabIndex        =   9
          Top             =   3360
+         Visible         =   0   'False
          Width           =   2055
       End
       Begin VB.CommandButton cmdAddToFriend 
@@ -82,6 +86,7 @@ Begin VB.Form frmSociety
          Left            =   -72000
          TabIndex        =   8
          Top             =   3360
+         Visible         =   0   'False
          Width           =   2055
       End
       Begin VB.CommandButton cmdRemoveIgnore 
@@ -436,32 +441,33 @@ End If
 End Sub
 
 '==== Friend List ===='
-Private Sub lvFriendList_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub lvFriendList_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 If lvFriendList.ListItems.Count = 0 Then Exit Sub
 If Button <> 2 Then Exit Sub
 
-Set pListItem = lvFriendList.HitTest(x, y)
+Set pListItem = lvFriendList.HitTest(X, Y)
 If pListItem Is Nothing Then Exit Sub
 
 PopupMenu lvFriendMenu
 End Sub
 
 '==== Online List ===='
-Private Sub lvOnlineList_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub lvOnlineList_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 If lvOnlineList.ListItems.Count = 0 Then Exit Sub
 If Button <> 2 Then Exit Sub
 
-Set pListItem = lvOnlineList.HitTest(x, y)
+Set pListItem = lvOnlineList.HitTest(X, Y)
 If pListItem Is Nothing Then Exit Sub
 
 PopupMenu lvOnlineMenu
 End Sub
 
-Private Sub lvIgnoreList_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+'==== Ignore List ===='
+Private Sub lvIgnoreList_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 If lvIgnoreList.ListItems.Count = 0 Then Exit Sub
 If Button <> 2 Then Exit Sub
 
-Set pListItem = lvIgnoreList.HitTest(x, y)
+Set pListItem = lvIgnoreList.HitTest(X, Y)
 If pListItem Is Nothing Then Exit Sub
 
 PopupMenu lvIgnoreMenu

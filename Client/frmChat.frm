@@ -41,7 +41,8 @@ Begin VB.Form frmChat
       _ExtentX        =   12726
       _ExtentY        =   873
       _Version        =   393217
-      Enabled         =   -1  'True
+      BorderStyle     =   0
+      Appearance      =   0
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
