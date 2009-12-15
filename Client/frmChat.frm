@@ -10,7 +10,7 @@ Begin VB.Form frmChat
    ClientTop       =   0
    ClientWidth     =   7485
    BeginProperty Font 
-      Name            =   "Tahoma"
+      Name            =   "Segoe UI"
       Size            =   8.25
       Charset         =   0
       Weight          =   400
@@ -23,43 +23,36 @@ Begin VB.Form frmChat
    ScaleHeight     =   3870
    ScaleWidth      =   7485
    ShowInTaskbar   =   0   'False
+   Begin VB.TextBox Text1 
+      Height          =   855
+      Left            =   120
+      TabIndex        =   5
+      Top             =   2760
+      Width           =   5535
+   End
    Begin RichTextLib.RichTextBox NRTB 
       Height          =   495
       Left            =   120
-      TabIndex        =   5
+      TabIndex        =   4
       Top             =   120
       Visible         =   0   'False
       Width           =   7215
       _ExtentX        =   12726
       _ExtentY        =   873
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
-   Begin RichTextLib.RichTextBox txtToSend 
-      Height          =   855
-      Left            =   120
-      TabIndex        =   4
-      Top             =   2760
-      Width           =   5535
-      _ExtentX        =   9763
-      _ExtentY        =   1508
-      _Version        =   393217
-      BorderStyle     =   0
-      Enabled         =   0   'False
-      MultiLine       =   0   'False
-      MaxLength       =   180
-      TextRTF         =   $"frmChat.frx":007B
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Segoe UI"
-         Size            =   9
+   Begin VB.PictureBox Picture1 
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-   End
-   Begin VB.PictureBox Picture1 
       Height          =   375
       Left            =   6840
       ScaleHeight     =   315
@@ -73,15 +66,6 @@ Begin VB.Form frmChat
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Clear"
       Enabled         =   0   'False
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   375
       Left            =   5760
       TabIndex        =   1
@@ -92,15 +76,6 @@ Begin VB.Form frmChat
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Send"
       Enabled         =   0   'False
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   375
       Left            =   5760
       TabIndex        =   0
@@ -120,7 +95,31 @@ Begin VB.Form frmChat
       Enabled         =   0   'False
       ReadOnly        =   -1  'True
       ScrollBars      =   3
-      TextRTF         =   $"frmChat.frx":00F8
+      TextRTF         =   $"frmChat.frx":007D
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Segoe UI"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin RichTextLib.RichTextBox txtToSend 
+      Height          =   855
+      Left            =   120
+      TabIndex        =   6
+      Top             =   2760
+      Width           =   5535
+      _ExtentX        =   9763
+      _ExtentY        =   1508
+      _Version        =   393217
+      BorderStyle     =   0
+      Enabled         =   0   'False
+      MultiLine       =   0   'False
+      MaxLength       =   180
+      TextRTF         =   $"frmChat.frx":00FA
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI"
          Size            =   9

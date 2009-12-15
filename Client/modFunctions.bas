@@ -191,15 +191,12 @@ With frmConfig
     End If
 End With
 
-If pSwitch = False And IsConnecting = True Then
+If Not pSwitch And IsConnecting Then
     pBool = False
-    
-ElseIf pSwitch = False And IsConnecting = False Then
+ElseIf Not pSwitch And Not IsConnecting Then
     pBool = True
-
 Else
     pBool = False
-    
 End If
 
 With frmChat
