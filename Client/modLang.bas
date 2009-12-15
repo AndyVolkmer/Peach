@@ -260,7 +260,7 @@ SOC_ASK_FRIEND_TEXT = "Gebe bitte den Konto-Namen deines Freundes ein."
 SOC_ASK_FRIEND_TITLE = "Freund hinzufügen"
 SOC_ASK_FRIEND_DEFAULT = "Konto hier eingeben"
 
-SOC_ASK_IGNORE_TEXT = "Gebe bitte den Konto-amen des Benutzer die du ignorieren möchtest ein."
+SOC_ASK_IGNORE_TEXT = "Gebe bitte den Konto-Namen des Benutzer die du ignorieren möchtest ein."
 SOC_ASK_IGNORE_TITLE = "Benutzer ignorieren"
 SOC_ASK_IGNORE_DEFAULT = "Konto hier eingeben"
 
