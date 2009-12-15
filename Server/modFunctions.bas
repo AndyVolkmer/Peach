@@ -221,8 +221,7 @@ End Function
 
 Public Sub CMSG(pData As String)
 With frmChat.txtConver
-    .SelStart = Len(.Text)
-    .SelRTF = vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & pData
+    .Text = .Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] Server Notice: " & pData
     .SelStart = Len(.Text)
 End With
 End Sub

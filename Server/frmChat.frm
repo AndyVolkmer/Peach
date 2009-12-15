@@ -1,5 +1,4 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
 Begin VB.Form frmChat 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
@@ -22,11 +21,26 @@ Begin VB.Form frmChat
    ScaleHeight     =   5220
    ScaleWidth      =   7635
    ShowInTaskbar   =   0   'False
+   Begin VB.TextBox txtToSend 
+      Height          =   855
+      Left            =   120
+      TabIndex        =   3
+      Top             =   2760
+      Width           =   5535
+   End
+   Begin VB.TextBox txtConver 
+      Height          =   2535
+      Left            =   120
+      MultiLine       =   -1  'True
+      TabIndex        =   2
+      Top             =   120
+      Width           =   7215
+   End
    Begin VB.CommandButton txtClear 
       Caption         =   "&Clear"
       Height          =   375
       Left            =   5760
-      TabIndex        =   3
+      TabIndex        =   1
       Top             =   3240
       Width           =   1575
    End
@@ -34,53 +48,9 @@ Begin VB.Form frmChat
       Caption         =   "&Send"
       Height          =   375
       Left            =   5760
-      TabIndex        =   2
+      TabIndex        =   0
       Top             =   2760
       Width           =   1575
-   End
-   Begin RichTextLib.RichTextBox txtToSend 
-      Height          =   855
-      Left            =   120
-      TabIndex        =   1
-      Top             =   2760
-      Width           =   5535
-      _ExtentX        =   9763
-      _ExtentY        =   1508
-      _Version        =   393217
-      MultiLine       =   0   'False
-      TextRTF         =   $"frmChat.frx":0000
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-   End
-   Begin RichTextLib.RichTextBox txtConver 
-      Height          =   2535
-      Left            =   120
-      TabIndex        =   0
-      Top             =   120
-      Width           =   7215
-      _ExtentX        =   12726
-      _ExtentY        =   4471
-      _Version        =   393217
-      BorderStyle     =   0
-      ReadOnly        =   -1  'True
-      ScrollBars      =   2
-      TextRTF         =   $"frmChat.frx":007B
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
    End
 End
 Attribute VB_Name = "frmChat"
@@ -91,14 +61,14 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdSend_Click()
-If Len(Trim$(txtToSend.Text)) = 0 Then
-    txtToSend.Text = vbNullString
+If Len(Trim$(txtToSend)) = 0 Then
+    txtToSend = vbNullString
     Exit Sub
 End If
 
-SendMessage "Server Notice: " & txtToSend.Text
-CMSG txtToSend.Text
-txtToSend.Text = vbNullString
+SendMessage "Server Notice: " & txtToSend
+CMSG txtToSend
+txtToSend = vbNullString
 End Sub
 
 Private Sub Form_Load()
@@ -106,7 +76,7 @@ Me.Top = 0: Me.Left = 0
 End Sub
 
 Private Sub txtClear_Click()
-txtConver.Text = vbNullString
+txtConver = vbNullString
 End Sub
 
 Private Sub txtToSend_KeyPress(KeyAscii As Integer)

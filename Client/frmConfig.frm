@@ -396,15 +396,17 @@ frmAbout.Show
 End Sub
 
 Private Sub txtAccount_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then cmdConnect_Click
-End Sub
-
-Private Sub txtIP_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then cmdConnect_Click
+If KeyAscii = vbKeyReturn Then
+    cmdConnect_Click
+    KeyAscii = 0
+End If
 End Sub
 
 Private Sub txtNick_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then cmdConnect_Click
+If KeyAscii = vbKeyReturn Then
+    cmdConnect_Click
+    KeyAscii = 0
+End If
 End Sub
 
 Private Sub txtNick_LostFocus()
@@ -412,9 +414,8 @@ txtNick = StrConv(txtNick, vbProperCase)
 End Sub
 
 Private Sub txtPassword_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then cmdConnect_Click
-End Sub
-
-Private Sub txtPort_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then cmdConnect_Click
+If KeyAscii = vbKeyReturn Then
+    cmdConnect_Click
+    KeyAscii = 0
+End If
 End Sub
