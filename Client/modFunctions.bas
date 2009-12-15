@@ -163,9 +163,10 @@ Public Function GetNextWindow(ByVal lhWnd As Long) As Long
 GetNextWindow = GetWindow(lhWnd, GW_HWNDNEXT)
 End Function
 
-Public Sub SwitchButtons(pSwitch As Boolean)
-'True = Disconnected
-'False = Connected
+Public Sub SwitchButtons(pSwitch As Boolean, IsConnecting As Boolean)
+Dim pBool As Boolean
+'pSwitch - True     = Disconnected
+'pSwitch - False    = Connected
 With frmConfig
     .lblAccount.Enabled = pSwitch
     .txtAccount.Enabled = pSwitch
@@ -181,29 +182,52 @@ With frmConfig
     .Label1.Enabled = pSwitch
     .Label2.Enabled = pSwitch
 
-    If pSwitch = True Then
+    If pSwitch Then
         .cmdConnect.Caption = CONFIG_COMMAND_CONNECT
         frmMain.Connect.Caption = CONFIG_COMMAND_CONNECT
     Else
         .cmdConnect.Caption = CONFIG_COMMAND_DISCONNECT
         frmMain.Connect.Caption = CONFIG_COMMAND_DISCONNECT
     End If
-    
 End With
 
+If pSwitch = False And IsConnecting = True Then
+    pBool = False
+    
+ElseIf pSwitch = False And IsConnecting = False Then
+    pBool = True
+
+Else
+    pBool = False
+    
+End If
+
 With frmChat
-    .cmdSend.Enabled = Not pSwitch
-    .cmdClear.Enabled = Not pSwitch
-    .txtToSend.Enabled = Not pSwitch
-    .txtConver.Enabled = Not pSwitch
+    .cmdSend.Enabled = pBool
+    .cmdClear.Enabled = pBool
+    .txtToSend.Enabled = pBool
+    .txtConver.Enabled = pBool
+End With
+
+With frmSendFile
+    .Label1.Enabled = pBool
+    .Label4.Enabled = pBool
+    .txtFileName.Enabled = pBool
+    .Combo1.Enabled = pBool
+    .cmdSendFile.Enabled = pBool
+    .lblFileToSend.Enabled = pBool
+    .lblProgress.Enabled = pBool
+    .lblSendSpeed.Enabled = pBool
+    .picProgress.Enabled = pBool
 End With
 
 With frmSociety
-    .cmdAddFriend.Enabled = Not pSwitch
-    .cmdAddIgnore.Enabled = Not pSwitch
-    .cmdRemoveFriend.Enabled = Not pSwitch
-    .cmdRemoveIgnore.Enabled = Not pSwitch
-    .cmdAddToFriend.Enabled = Not pSwitch
+    .cmdAddFriend.Enabled = pBool
+    .cmdAddIgnore.Enabled = pBool
+    .cmdRemoveFriend.Enabled = pBool
+    .cmdRemoveIgnore.Enabled = pBool
+    .cmdAddToFriend.Enabled = pBool
+    .cmdAddToIgnore.Enabled = pBool
 End With
 End Sub
 
@@ -249,7 +273,7 @@ End With
 frmConfig.cmdConnect.Caption = CONFIG_COMMAND_CONNECT
 frmMain.Connect.Caption = CONFIG_COMMAND_CONNECT
 
-SwitchButtons True
+SwitchButtons True, False
 End Sub
 
 'If an error occurs, this function returns False

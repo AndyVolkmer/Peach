@@ -25,6 +25,7 @@ Begin VB.Form frmSendFile
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
    Begin VB.ComboBox Combo1 
+      Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "Segoe UI"
          Size            =   8.25
@@ -42,6 +43,7 @@ Begin VB.Form frmSendFile
       Width           =   1935
    End
    Begin VB.TextBox txtFileName 
+      Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "Segoe UI"
          Size            =   8.25
@@ -71,6 +73,7 @@ Begin VB.Form frmSendFile
    Begin VB.PictureBox picProgress 
       AutoRedraw      =   -1  'True
       BackColor       =   &H00F4F4F4&
+      Enabled         =   0   'False
       FillColor       =   &H00C00000&
       BeginProperty Font 
          Name            =   "MS Sans Serif"
@@ -93,6 +96,7 @@ Begin VB.Form frmSendFile
    Begin VB.CommandButton cmdBrowse 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Browse"
+      Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "Segoe UI"
          Size            =   8.25
@@ -146,6 +150,7 @@ Begin VB.Form frmSendFile
    Begin VB.Label Label4 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Send to :"
+      Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "Segoe UI"
          Size            =   8.25
@@ -165,6 +170,7 @@ Begin VB.Form frmSendFile
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "File Name:"
+      Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "Segoe UI"
          Size            =   8.25
@@ -192,6 +198,7 @@ Begin VB.Form frmSendFile
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "Sending File:"
+      Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "Segoe UI"
          Size            =   8.25
@@ -212,6 +219,7 @@ Begin VB.Form frmSendFile
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "0.0% Sent"
+      Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "Segoe UI"
          Size            =   8.25
@@ -233,6 +241,7 @@ Begin VB.Form frmSendFile
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "0.00 Kb/Sec"
+      Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "Segoe UI"
          Size            =   8.25

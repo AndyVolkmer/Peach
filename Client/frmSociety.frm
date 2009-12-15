@@ -56,23 +56,36 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "lvOnlineList"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdAddToFriend"
-      Tab(1).ControlCount=   2
+      Tab(1).Control(1).Enabled=   0   'False
+      Tab(1).Control(2)=   "cmdAddToIgnore"
+      Tab(1).Control(2).Enabled=   0   'False
+      Tab(1).ControlCount=   3
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "cmdRemoveIgnore"
+      Tab(2).Control(0)=   "lvIgnoreList"
       Tab(2).Control(1)=   "cmdAddIgnore"
-      Tab(2).Control(2)=   "lvIgnoreList"
+      Tab(2).Control(2)=   "cmdRemoveIgnore"
       Tab(2).ControlCount=   3
+      Begin VB.CommandButton cmdAddToIgnore 
+         Caption         =   "&Add to Ignore"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   -69960
+         TabIndex        =   9
+         Top             =   3360
+         Width           =   2055
+      End
       Begin VB.CommandButton cmdAddToFriend 
          Caption         =   "&Add to Friends"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   -70320
+         Left            =   -72000
          TabIndex        =   8
          Top             =   3360
-         Width           =   2415
+         Width           =   2055
       End
       Begin VB.CommandButton cmdRemoveIgnore 
          Caption         =   "&Remove"
@@ -229,7 +242,11 @@ cmdRemoveFriend.Caption = SOC_COMMAND_REMOVE
 cmdAddIgnore.Caption = SOC_COMMAND_ADD
 cmdRemoveIgnore.Caption = SOC_COMMAND_REMOVE
 cmdAddToFriend.Caption = SOC_COMMAND_FRIEND
+cmdAddToIgnore.Caption = SOC_COMMAND_IGNORE
+lvFriendList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
 lvFriendList.ColumnHeaders(2).Text = SOC_FRIEND_LIST_STATUS
+lvOnlineList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
+lvIgnoreList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
 End Sub
 
 Private Sub cmdAddFriend_Click()
@@ -260,6 +277,20 @@ MPos = InStr(1, Full, "(")
 Name = Mid(Full, MPos + 2, Len(Full) - MPos - 3)
 
 SendMSG "!friend#-add#" & frmConfig.txtAccount & "#" & Name & "#"
+End Sub
+
+Private Sub cmdAddToIgnore_Click()
+Dim Name    As String
+Dim Full    As String
+Dim MPos    As Integer
+
+If lvOnlineList.ListItems.Count = 0 Then Exit Sub
+
+Full = lvOnlineList.SelectedItem
+MPos = InStr(1, Full, "(")
+Name = Mid(Full, MPos + 2, Len(Full) - MPos - 3)
+
+SendMSG "!ignore#-add#" & frmConfig.txtAccount & "#" & Name & "#"
 End Sub
 
 Private Sub cmdRemoveFriend_Click()

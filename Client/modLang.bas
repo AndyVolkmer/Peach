@@ -21,6 +21,10 @@ Public MDI_MSG_BANNED                   As String
 Public MDI_MSG_UNLOAD                   As String
 
 ' Configuration form ..
+Public CONFIG_LABEL_ACCOUNT             As String
+Public CONFIG_LABEL_PASSWORD            As String
+Public CONFIG_LABEL_NAME                As String
+
 Public CONFIG_COMMAND_CONNECT           As String
 Public CONFIG_COMMAND_DISCONNECT        As String
 Public CONFIG_COMMAND_SETTINGS          As String
@@ -61,10 +65,6 @@ Public SF_MSG_INCOMMING_FILE_2          As String
 Public SF_MSG_INCOMMING_FILE_3          As String
 Public SF_MSG_DECILINED                 As String
 
-'Desp form ..
-Public DESP_TEXT_NEW_MSG                As String
-Public DESP_TEXT_DC_SERVER              As String
-
 'Language form ..
 Public LANG_COMMAND_ENTER               As String
 Public LANG_LABEL_SELLANG               As String
@@ -85,6 +85,7 @@ Public SOC_IGNORE_LIST                  As String
 Public SOC_COMMAND_ADD                  As String
 Public SOC_COMMAND_REMOVE               As String
 Public SOC_COMMAND_FRIEND               As String
+Public SOC_COMMAND_IGNORE               As String
 
 Public SOC_ASK_DEL_1                    As String
 Public SOC_ASK_DEL_2                    As String
@@ -182,16 +183,20 @@ MDI_STAT_CONNECTED = "Status: Verbunden"
 MDI_STAT_CONNECTING = "Status: Verbindung wird aufgebaut .."
 
 MDI_MSG_NAME_TAKEN = "Der Name ist bereits vergeben."
-MDI_MSG_WRONG_ACCOUNT = "Der Account ist nicht vorhanden oder falsch."
+MDI_MSG_WRONG_ACCOUNT = "Dieser Konto-Namen ist nicht vorhanden oder falsch."
 MDI_MSG_WRONG_PASSWORD = "Das Passwort ist falsch."
-MDI_MSG_BANNED = "Dieser Account wurde gebannt."
+MDI_MSG_BANNED = "Dieses Konto wurde gebannt."
 MDI_MSG_UNLOAD = "Sind Sie sicher, dass Sie Peach schliessen wollen?"
+
+CONFIG_LABEL_ACCOUNT = " Konto"
+CONFIG_LABEL_PASSWORD = " Passwort"
+CONFIG_LABEL_NAME = " Name"
 
 CONFIG_COMMAND_CONNECT = "&Verbinden"
 CONFIG_COMMAND_DISCONNECT = "&Verbindung trenn."
 CONFIG_COMMAND_SETTINGS = "&Einstellungen"
 CONFIG_COMMAND_UPDATE = "&Aktualisieren"
-CONFIG_COMMAND_REGISTER = "&Account erstellen"
+CONFIG_COMMAND_REGISTER = "&Konto erstellen"
 CONFIG_COMMAND_FORGOT_PASSWORD = "&Password vergessen"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Password Speichern"
@@ -207,7 +212,7 @@ LANG_SERBIAN = "Serbisch"
 LANG_DUTCH = "Niederländisch"
 LANG_FRENCH = "Französisch"
 
-CONFIG_MSG_ACCOUNT = "Du hast keinen Account eingegeben."
+CONFIG_MSG_ACCOUNT = "Du hast keinen Konto-Namen eingegeben."
 CONFIG_MSG_PASSWORD = "Du hast kein Passwort eingegeben."
 CONFIG_MSG_NUMERIC = "Du kannst keine Ziffern in deinem Namen haben."
 CONFIG_MSG_PORT = "Du hast keinen Port eingegeben."
@@ -223,7 +228,7 @@ CHAT_COMMAND_CLEAR = "&Löschen"
 SF_LABEL_FILENAME = " Datei Name:"
 SF_LABEL_SENDING_FILE = "Sende:"
 SF_LABEL_SENT = "0.0% Gesendet"
-SF_LABEL_SEND_TO = "Sende an:"
+SF_LABEL_SEND_TO = " Sende an:"
 
 SF_MSG_USER = "Kein Benutzer ausgewählt."
 SF_MSG_FILE = "Keine Datei ausgewählt."
@@ -236,30 +241,28 @@ SF_COMMAND_BROWSE = "&Suchen .."
 SF_COMMAND_SENDFILE = "Senden"
 SF_COMMAND_CANCEL = "Abbrechen .."
 
-DESP_TEXT_NEW_MSG = "Neue Nachricht!"
-DESP_TEXT_DC_SERVER = "Verbindung unterbrochen!"
-
 LANG_COMMAND_ENTER = "&Auswählen"
 LANG_LABEL_SELLANG = "Wähle deine Sprache aus:"
 
 SOC_FRIEND_LIST = "Freundes Liste"
 SOC_ONLINE_LIST = "Online Liste"
-SOC_IGNORE_LIST = "Ignorier Liste"
+SOC_IGNORE_LIST = "Ignorier-Liste"
 
 SOC_COMMAND_ADD = "&Hinzufügen"
 SOC_COMMAND_REMOVE = "&Entfernen"
 SOC_COMMAND_FRIEND = "&Als Freund hinzufügen"
+SOC_COMMAND_IGNORE = "&Benutzer ignorieren"
 
 SOC_ASK_DEL_1 = "Möchten Sie '"
 SOC_ASK_DEL_2 = "' von der Liste löschen?"
 
-SOC_ASK_FRIEND_TEXT = "Gebe bitte den Account Namen deines Freundes ein."
+SOC_ASK_FRIEND_TEXT = "Gebe bitte den Konto-Namen deines Freundes ein."
 SOC_ASK_FRIEND_TITLE = "Freund hinzufügen"
-SOC_ASK_FRIEND_DEFAULT = "Account hier eingeben"
+SOC_ASK_FRIEND_DEFAULT = "Konto hier eingeben"
 
-SOC_ASK_IGNORE_TEXT = "Gebe bitte den Account Namen des Benutzer die du ignorieren möchtest ein."
+SOC_ASK_IGNORE_TEXT = "Gebe bitte den Konto-amen des Benutzer die du ignorieren möchtest ein."
 SOC_ASK_IGNORE_TITLE = "Benutzer ignorieren"
-SOC_ASK_IGNORE_DEFAULT = "Account hier eingeben"
+SOC_ASK_IGNORE_DEFAULT = "Konto hier eingeben"
 
 SOC_FRIEND_LIST_STATUS = "Status"
 
@@ -267,7 +270,7 @@ REG_CAPTION = "Peach - Registration"
 
 REG_FRAME_DETAIL = "Gebe deine Daten an"
 
-REG_LABEL_ACCOUNT_NAME = " Benutzer Name:"
+REG_LABEL_ACCOUNT_NAME = " Konto-Name:"
 REG_LABEL_PASSWORD = " Passwort:"
 REG_LABEL_PASSWORD_CONFIRM = " Passwort bestätigen:"
 REG_LABEL_PASSWORD_WEAK = "Das Passwort ist schwach."
@@ -281,11 +284,11 @@ REG_COMMAND_CLOSE = "&Schliessen"
 
 REG_CHECK_PASSWORD_SHOW = "&Passwort anzeigen"
 
-REG_MSG_ACCOUNT_EXIST = "Der Account Name ist bereits vergeben."
-REG_MSG_ACCOUNT_INVALID = "Ungültiger Account Name."
-REG_MSG_ACCOUNT_NUMERIC = "Der Account Name darf nicht aus ziffern bestehen."
-REG_MSG_ACCOUNT_EMPTY = "Kein Account angegeben."
-REG_MSG_ACCOUNT_SHORT = "Der Account Name ist zu kurz, muss aus wenigstens 4 Zeichen bestehen."
+REG_MSG_ACCOUNT_EXIST = "Dieser Konto-Name ist bereits vergeben."
+REG_MSG_ACCOUNT_INVALID = "Ungültiger Konto-Name."
+REG_MSG_ACCOUNT_NUMERIC = "Dieser Konto-Name darf nicht aus ziffern bestehen."
+REG_MSG_ACCOUNT_EMPTY = "Kein Konto angegeben."
+REG_MSG_ACCOUNT_SHORT = "Dieser Konto-Name ist zu kurz, muss aus wenigstens 4 Zeichen bestehen."
 
 REG_MSG_PASSWORD_MATCH = "Die Passwörter stimmen nicht überein."
 REG_MSG_PASSWORD_SHORT = "Das Passwort ist zu kurz, muss aus wenigstens 6 Zeichen bestehen."
@@ -293,7 +296,7 @@ REG_MSG_PASSWORD_EMPTY = "Kein Passwort angegeben."
 
 REG_MSG_SECRET_ANSWER_EMPTY = "Keine geheime Antwort angegeben."
 
-REG_MSG_SUCCESSFULLY = "Der Account wurde erfolgreich erstellt."
+REG_MSG_SUCCESSFULLY = "Ihr Konto wurde erfolgreich erstellt."
 REG_MSG_ERROR = "Ein Fehler ist aufgetreten bitte versuchen sie es später nochmal."
 REG_MSG_ERROR_OCCURED = "Fehler aufgetreten ..."
 REG_MSG_LOADING = " Lädt .."
@@ -311,7 +314,7 @@ SET_LABEL_COLOR = "Jetzige Farbe:"
 SET_FRAME_OPTIONS = "Optionen"
 SET_FRAME_CONNECTION = "Verbindungs Einstellungen"
 
-SET_CHECK_SAVE_ACCOUNT = "Account speichern"
+SET_CHECK_SAVE_ACCOUNT = "Konto-Namen speichern"
 SET_CHECK_SAVE_PASSWORD = "Passwort speichern"
 SET_CHECK_ASK_CLOSING = "Abfragen bevor schliessen"
 SET_CHECK_MINIMIZE = "Peach-Fenster in die Taskleiste minimieren"
@@ -322,7 +325,7 @@ SET_COMMAND_SAVE = "&Speichern"
 SF2_COMMAND_OPEN_FILE = "&Datei Ordner öffnen"
 
 FP_FRAME_FORGOT_PASSWORD = "Password vergessen"
-FP_LABEL_ACCOUNT = " Gebe deinen Account ein:"
+FP_LABEL_ACCOUNT = " Gebe deinen Konto-Namen ein:"
 FP_LABEL_SECRET_QUESTION = " Geheime Frage:"
 FP_LABEL_SECRET_ANSWER = " Geheime Antwort:"
 FP_COMMAND_REQUEST = "&Abfragen"
@@ -352,7 +355,11 @@ MDI_MSG_WRONG_PASSWORD = "The password is wrong."
 MDI_MSG_BANNED = "This account is banned."
 MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
-' Configuration form ..
+'Configuration form ..
+CONFIG_LABEL_ACCOUNT = " Account"
+CONFIG_LABEL_PASSWORD = " Password"
+CONFIG_LABEL_NAME = " Name"
+
 CONFIG_COMMAND_CONNECT = "&Connect"
 CONFIG_COMMAND_DISCONNECT = "&Disconnect"
 CONFIG_COMMAND_SETTINGS = "&Settings"
@@ -404,9 +411,6 @@ SF_COMMAND_BROWSE = "&Search .."
 SF_COMMAND_SENDFILE = "Send"
 SF_COMMAND_CANCEL = "Cancel .."
 
-DESP_TEXT_NEW_MSG = "New Message!"
-DESP_TEXT_DC_SERVER = "Disconnected from Server!"
-
 LANG_COMMAND_ENTER = "&Select"
 LANG_LABEL_SELLANG = "Select your language:"
 
@@ -417,6 +421,7 @@ SOC_IGNORE_LIST = "Ignore List"
 SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
 SOC_COMMAND_FRIEND = "&Add to Friends"
+SOC_COMMAND_IGNORE = "&Ignore user"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"
@@ -518,6 +523,10 @@ MDI_MSG_WRONG_PASSWORD = "La contraseña es incorrecta."
 MDI_MSG_BANNED = "Esta cuenta esta baneada."
 MDI_MSG_UNLOAD = "¿Esta seguro que quiere cerrar a Peach?"
 
+CONFIG_LABEL_ACCOUNT = " Cuenta"
+CONFIG_LABEL_PASSWORD = " Contraseña"
+CONFIG_LABEL_NAME = " Nombre"
+
 CONFIG_COMMAND_CONNECT = "&Conectar"
 CONFIG_COMMAND_DISCONNECT = "&Desconectar"
 CONFIG_COMMAND_SETTINGS = "&Ajustes"
@@ -567,9 +576,6 @@ SF_COMMAND_BROWSE = "&Buscar .."
 SF_COMMAND_SENDFILE = "Enviar"
 SF_COMMAND_CANCEL = "Cancelar .."
 
-DESP_TEXT_NEW_MSG = "Nuevo mensaje!"
-DESP_TEXT_DC_SERVER = "Desconectado del servidor!"
-
 LANG_COMMAND_ENTER = "&Seleccionar"
 LANG_LABEL_SELLANG = "Elige tu idioma:"
 
@@ -580,6 +586,7 @@ SOC_IGNORE_LIST = "Lista de ignorados"
 SOC_COMMAND_ADD = "&Añadir"
 SOC_COMMAND_REMOVE = "&Quitar"
 SOC_COMMAND_FRIEND = "&Añardir a amigos"
+SOC_COMMAND_IGNORE = "&Ignorar al usuario"
 
 SOC_ASK_DEL_1 = "¿Estas seguro que quieres borrar a '"
 SOC_ASK_DEL_2 = "' de la lista?"
@@ -684,6 +691,10 @@ MDI_MSG_BANNED = "Detta konto är förbjuden."
 MDI_MSG_UNLOAD = "Är du säker på att du vill stänga Peach?"
 
 ' Config form
+CONFIG_LABEL_ACCOUNT = " Konto"
+CONFIG_LABEL_PASSWORD = " Lösenord"
+CONFIG_LABEL_NAME = " Namn"
+
 CONFIG_COMMAND_CONNECT = "&Anslut"
 CONFIG_COMMAND_DISCONNECT = "&Frånkoppla"
 CONFIG_COMMAND_SETTINGS = "&Inställningar"
@@ -742,6 +753,7 @@ SOC_IGNORE_LIST = "Ignorerings Lista"
 SOC_COMMAND_ADD = "&Tillägg"
 SOC_COMMAND_REMOVE = "&Ta bort"
 SOC_COMMAND_FRIEND = "&Lägg till vänner"
+SOC_COMMAND_IGNORE = "&Ignore user"
 
 SOC_ASK_DEL_1 = "Vill du ta bort '"
 SOC_ASK_DEL_2 = "' från listan?"
@@ -843,7 +855,11 @@ MDI_MSG_WRONG_PASSWORD = "La password è errata."
 MDI_MSG_BANNED = "Questo account è vietata.."
 MDI_MSG_UNLOAD = "Sei sicuro di voler chiudere Peach?"
 
-' Config form ..
+'Config form ..
+CONFIG_LABEL_ACCOUNT = " Conto"
+CONFIG_LABEL_PASSWORD = " Password"
+CONFIG_LABEL_NAME = " Nome"
+
 CONFIG_COMMAND_CONNECT = "&Connesso"
 CONFIG_COMMAND_DISCONNECT = "&Disconnesso"
 CONFIG_COMMAND_SETTINGS = "&Impostazioni    "
@@ -903,6 +919,7 @@ SOC_IGNORE_LIST = "Elenco degli utenti ignorati"
 SOC_COMMAND_ADD = "&Aggiungere"
 SOC_COMMAND_REMOVE = "&Rimuovere"
 SOC_COMMAND_FRIEND = "&Aggiungi ai tuoi amici"
+SOC_COMMAND_IGNORE = "&Ignore user"
 
 SOC_ASK_DEL_1 = "Vuoi eliminare '"
 SOC_ASK_DEL_2 = "' dalla lista?"
@@ -1005,6 +1022,10 @@ MDI_MSG_WRONG_PASSWORD = "Het wachtwoord is onjuist."
 MDI_MSG_BANNED = "Deze account is verboden."
 MDI_MSG_UNLOAD = "Weet u zeker dat u wilt Peach sluiten?"
 
+CONFIG_LABEL_ACCOUNT = " Account"
+CONFIG_LABEL_PASSWORD = " Wachtwoord"
+CONFIG_LABEL_NAME = " Naam"
+
 CONFIG_COMMAND_CONNECT = "&Verbind"
 CONFIG_COMMAND_DISCONNECT = "&Verbinding verbreken"
 CONFIG_COMMAND_SETTINGS = "&Instellingen"
@@ -1062,6 +1083,7 @@ SOC_IGNORE_LIST = "Negeerlijst"
 SOC_COMMAND_ADD = "&Toevoegen"
 SOC_COMMAND_REMOVE = "&Verwijderen"
 SOC_COMMAND_FRIEND = "&Voeg toe aan vrienden"
+SOC_COMMAND_IGNORE = "&Ignore user"
 
 SOC_ASK_DEL_1 = "Wilt u '"
 SOC_ASK_DEL_2 = "' verwijderen uit de lijst?"
@@ -1174,7 +1196,11 @@ MDI_MSG_WRONG_PASSWORD = "The password is wrong."
 MDI_MSG_BANNED = "This account is banned."
 MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
-' Config form ..
+'Config form ..
+CONFIG_LABEL_ACCOUNT = " Account"
+CONFIG_LABEL_PASSWORD = " Password"
+CONFIG_LABEL_NAME = " Name"
+
 CONFIG_COMMAND_CONNECT = "&Povezi se"
 CONFIG_COMMAND_DISCONNECT = "&Veza je prekinuta"
 CONFIG_COMMAND_SETTINGS = "&Settings"
@@ -1224,9 +1250,6 @@ SF_COMMAND_BROWSE = "Trazi .."
 SF_COMMAND_SENDFILE = "Posalji"
 SF_COMMAND_CANCEL = "Otkazhi .."
 
-DESP_TEXT_NEW_MSG = "New Message!"
-DESP_TEXT_DC_SERVER = "Veza sa serverom je prekinuta!"
-
 LANG_COMMAND_ENTER = "&Otvori"
 LANG_LABEL_SELLANG = "Dodaj svoj jezik:"
 
@@ -1236,6 +1259,7 @@ SOC_ONLINE_LIST = "Online List"
 SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
 SOC_COMMAND_FRIEND = "&Add to Friends"
+SOC_COMMAND_IGNORE = "&Ignore user"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"
@@ -1337,6 +1361,10 @@ MDI_MSG_WRONG_PASSWORD = "The password is wrong."
 MDI_MSG_BANNED = "This account is banned."
 MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
+CONFIG_LABEL_ACCOUNT = " Compte"
+CONFIG_LABEL_PASSWORD = " Mot de passe"
+CONFIG_LABEL_NAME = " Nom"
+
 CONFIG_COMMAND_CONNECT = "&Connecté"
 CONFIG_COMMAND_DISCONNECT = "&Deconnecté"
 CONFIG_COMMAND_SETTINGS = "&Paramètres"
@@ -1394,6 +1422,7 @@ SOC_IGNORE_LIST = "Stop-Liste"
 SOC_COMMAND_ADD = "&Ajouter"
 SOC_COMMAND_REMOVE = "&Supprimer"
 SOC_COMMAND_FRIEND = "&Ajouter aux amis"
+SOC_COMMAND_IGNORE = "&Ignore user"
 
 SOC_ASK_DEL_1 = "Voulez-vous supprimer '"
 SOC_ASK_DEL_2 = "' de la liste?"

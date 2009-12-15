@@ -160,7 +160,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label lblNickname 
       BackColor       =   &H00F4F4F4&
-      Caption         =   " Nickname:"
+      Caption         =   " Name"
       BeginProperty Font 
          Name            =   "Segoe UI"
          Size            =   8.25
@@ -179,7 +179,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label lblAccount 
       BackColor       =   &H00F4F4F4&
-      Caption         =   " Account:"
+      Caption         =   " Account"
       BeginProperty Font 
          Name            =   "Segoe UI"
          Size            =   8.25
@@ -198,7 +198,7 @@ Begin VB.Form frmConfig
    End
    Begin VB.Label lblPassword 
       BackColor       =   &H00F4F4F4&
-      Caption         =   " Password:"
+      Caption         =   " Password"
       BeginProperty Font 
          Name            =   "Segoe UI"
          Size            =   8.25
@@ -315,7 +315,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
         .Listen
     End With
     
-    SwitchButtons False
+    SwitchButtons False, True
     
     frmMain.StatusBar1.Panels(1).Text = MDI_STAT_CONNECTING
 Else
@@ -353,6 +353,9 @@ Command4.Caption = CONFIG_COMMAND_UPDATE
 Label1.Caption = CONFIG_COMMAND_REGISTER
 Label2.Caption = CONFIG_COMMAND_FORGOT_PASSWORD
 cmdConnect.Caption = CONFIG_COMMAND_CONNECT
+lblAccount.Caption = CONFIG_LABEL_ACCOUNT
+lblPassword.Caption = CONFIG_LABEL_PASSWORD
+lblNickname.Caption = CONFIG_LABEL_NAME
 End Sub
 
 Private Function CheckTx(txtBox As TextBox, mBox As String) As Boolean

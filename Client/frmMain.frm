@@ -429,6 +429,7 @@ Private Sub Winsock1_Connect()
 With frmConfig
     SendMSG "!login#" & .txtAccount & "#" & .txtPassword & "#" & .txtNick & "#"
 End With
+SwitchButtons False, False
 End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
