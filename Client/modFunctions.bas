@@ -9,6 +9,7 @@ Public Const rPort      As Long = 6222
 
 Public ACC_SWITCH       As String
 Public Prefix           As String  'Time Prefix vairbale
+Public pListItem        As ListItem
 
 Private Type CONFIG
     'frmMain values
