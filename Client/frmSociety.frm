@@ -65,9 +65,9 @@ Begin VB.Form frmSociety
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "lvIgnoreList"
+      Tab(2).Control(0)=   "cmdRemoveIgnore"
       Tab(2).Control(1)=   "cmdAddIgnore"
-      Tab(2).Control(2)=   "cmdRemoveIgnore"
+      Tab(2).Control(2)=   "lvIgnoreList"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToIgnore 
          Caption         =   "&Add to Ignore"
@@ -76,7 +76,6 @@ Begin VB.Form frmSociety
          Left            =   -69960
          TabIndex        =   9
          Top             =   3360
-         Visible         =   0   'False
          Width           =   2055
       End
       Begin VB.CommandButton cmdAddToFriend 
@@ -86,7 +85,6 @@ Begin VB.Form frmSociety
          Left            =   -72000
          TabIndex        =   8
          Top             =   3360
-         Visible         =   0   'False
          Width           =   2055
       End
       Begin VB.CommandButton cmdRemoveIgnore 
