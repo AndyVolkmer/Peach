@@ -1094,7 +1094,7 @@ Case "!message"
                     Next i
                 End With
             End If
-                
+            
         Case Else
             SendSingle "Unknown command used. Check .help for more information about commands.", Index
         
