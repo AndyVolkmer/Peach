@@ -178,12 +178,11 @@ With frmSendFile
     .picProgress.BackColor = SC
     .Label1.BackColor = SC
     .Label4.BackColor = SC
-    .lblFileToSend.BackColor = SC
-    .lblProgress.BackColor = SC
+    .lblSendStatus.BackColor = SC
     .lblSendSpeed.BackColor = SC
 End With
 
-If IsFirst = False Then
+If Not IsFirst Then
     With frmSettings
         .BackColor = SC
         .Frame1.BackColor = SC

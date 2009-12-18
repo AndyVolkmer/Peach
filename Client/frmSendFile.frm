@@ -11,7 +11,7 @@ Begin VB.Form frmSendFile
    ClientTop       =   1365
    ClientWidth     =   7500
    BeginProperty Font 
-      Name            =   "Tahoma"
+      Name            =   "Segoe UI"
       Size            =   8.25
       Charset         =   0
       Weight          =   400
@@ -26,37 +26,19 @@ Begin VB.Form frmSendFile
    ShowInTaskbar   =   0   'False
    Begin VB.ComboBox Combo1 
       Enabled         =   0   'False
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   315
       Left            =   120
       Style           =   2  'Dropdown List
-      TabIndex        =   9
+      TabIndex        =   7
       Top             =   1080
       Width           =   1935
    End
    Begin VB.TextBox txtFileName 
       Enabled         =   0   'False
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   285
       Left            =   120
       Locked          =   -1  'True
-      TabIndex        =   6
+      TabIndex        =   4
       Top             =   405
       Width           =   7185
    End
@@ -97,15 +79,6 @@ Begin VB.Form frmSendFile
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Browse"
       Enabled         =   0   'False
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   375
       Left            =   5640
       TabIndex        =   1
@@ -117,15 +90,6 @@ Begin VB.Form frmSendFile
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Send File"
       Enabled         =   0   'False
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   375
       Left            =   5640
       TabIndex        =   0
@@ -147,22 +111,23 @@ Begin VB.Form frmSendFile
       _Version        =   393216
       CancelError     =   -1  'True
    End
+   Begin VB.Label lblSendStatus 
+      BackColor       =   &H00E0E0E0&
+      Caption         =   "0.0%"
+      Enabled         =   0   'False
+      Height          =   255
+      Left            =   120
+      TabIndex        =   8
+      Top             =   2280
+      Width           =   735
+   End
    Begin VB.Label Label4 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Send to :"
       Enabled         =   0   'False
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   255
       Left            =   120
-      TabIndex        =   8
+      TabIndex        =   6
       Top             =   840
       Width           =   1335
    End
@@ -171,19 +136,10 @@ Begin VB.Form frmSendFile
       BackColor       =   &H00F4F4F4&
       Caption         =   "File Name:"
       Enabled         =   0   'False
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   120
-      TabIndex        =   7
+      TabIndex        =   5
       Top             =   165
       Width           =   795
    End
@@ -194,63 +150,12 @@ Begin VB.Form frmSendFile
       Y1              =   2160
       Y2              =   2160
    End
-   Begin VB.Label lblFileToSend 
-      AutoSize        =   -1  'True
-      BackColor       =   &H00F4F4F4&
-      Caption         =   "Sending File:"
-      Enabled         =   0   'False
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Left            =   120
-      TabIndex        =   5
-      Top             =   2280
-      Width           =   1005
-   End
-   Begin VB.Label lblProgress 
-      AutoSize        =   -1  'True
-      BackColor       =   &H00F4F4F4&
-      Caption         =   "0.0% Sent"
-      Enabled         =   0   'False
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Left            =   1080
-      TabIndex        =   4
-      Top             =   2280
-      Width           =   750
-   End
    Begin VB.Label lblSendSpeed 
       Alignment       =   1  'Right Justify
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "0.00 Kb/Sec"
       Enabled         =   0   'False
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   6405
@@ -364,8 +269,6 @@ End Sub
 
 Public Sub LoadSendFileForm()
 Label1.Caption = SF_LABEL_FILENAME
-lblFileToSend.Caption = SF_LABEL_SENDING_FILE
-lblProgress.Caption = SF_LABEL_SENT
 cmdBrowse.Caption = SF_COMMAND_BROWSE
 cmdSendFile.Caption = SF_COMMAND_SENDFILE
 Label4.Caption = SF_LABEL_SEND_TO
@@ -384,7 +287,7 @@ iFileNum = 0    'Set file number to 0, timer will exit if another timer event
 
 cmdSendFile.Caption = SF_COMMAND_SENDFILE
 PicShowPercentage Me.picProgress, 0
-lblProgress.Caption = "0.00% " & SF_LABEL_SENT
+lblSendStatus.Caption = "0.0%"
 End Sub
 
 Private Sub SckSendFile_Connect()
@@ -431,9 +334,9 @@ Else
     PrevSent = 0
 End If
 
-lblSendSpeed.Caption = Format$(DataSent / 1024#, "###,###,##0.00") & " KBytes Sent, " & _
-    Format(CDbl(BSentPerSec) / 1024#, "#0.00 ") & " Kb/Sec, " & _
-    "Time left: " & Format$(SecondsLeft \ 3600, "00") & ":" & Format$(SecondsLeft \ 60, "00") & ":" & Format$(SecondsLeft Mod 60, "00")
+lblSendSpeed.Caption = Format$(DataSent / 1024#, "###,###,##0.00") & SF_LABEL_KBSS & _
+    Format(CDbl(BSentPerSec) / 1024#, "#0.00 ") & SF_LABEL_KBS & _
+    SF_LABEL_TIME & Format$(SecondsLeft \ 3600, "00") & ":" & Format$(SecondsLeft \ 60, "00") & ":" & Format$(SecondsLeft Mod 60, "00")
 End Sub
 
 Private Sub tmrSendFile_Timer()
@@ -452,16 +355,16 @@ End If
 'if the remaining size in the file is smaller then PacketSize, the read only whatever is left
 BuffSize = lngMIN(LOF(iFileNum) - Loc(iFileNum), PacketSize)
 
-ReDim Buffer(BuffSize - 1) ' resize buffer
-Get iFileNum, , Buffer ' read data
-SckSendFile.SendData Buffer ' send data
+ReDim Buffer(BuffSize - 1)  'resize buffer
+Get iFileNum, , Buffer      'read data
+SckSendFile.SendData Buffer 'send data
 
-' Show progress
-lblProgress.Caption = Format$(Loc(iFileNum) / CDbl(LOF(iFileNum)), "Percent") & " Done"
+'Show progress
+lblProgress.Caption = Format$(Loc(iFileNum) / CDbl(LOF(iFileNum)), "Percent")
 PicShowPercentage picProgress, Loc(iFileNum) / CDbl(LOF(iFileNum))
 End Sub
 
-Public Function lngMIN(ByVal L1 As Long, ByVal L2 As Long) As Long
+Private Function lngMIN(ByVal L1 As Long, ByVal L2 As Long) As Long
 If L1 < L2 Then
     lngMIN = L1
 Else

@@ -1,5 +1,5 @@
 Attribute VB_Name = "modFunctions"
-Option Explicit
+'Option Explicit
 
 Public Const pAuthor    As String = "Andy"
 
@@ -213,9 +213,8 @@ With frmSendFile
     .txtFileName.Enabled = pBool
     .Combo1.Enabled = pBool
     .cmdSendFile.Enabled = pBool
-    .lblFileToSend.Enabled = pBool
-    .lblProgress.Enabled = pBool
     .lblSendSpeed.Enabled = pBool
+    .lblSendStatus.Enabled = pBool
     .picProgress.Enabled = pBool
 End With
 

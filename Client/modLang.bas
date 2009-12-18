@@ -50,9 +50,10 @@ Public CHAT_COMMAND_SEND                As String
 Public CHAT_COMMAND_CLEAR               As String
 
 Public SF_LABEL_FILENAME                As String
-Public SF_LABEL_SENDING_FILE            As String
-Public SF_LABEL_SENT                    As String
 Public SF_LABEL_SEND_TO                 As String
+Public SF_LABEL_TIME                    As String
+Public SF_LABEL_KBS                     As String
+Public SF_LABEL_KBSS                    As String
 
 Public SF_COMMAND_BROWSE                As String
 Public SF_COMMAND_SENDFILE              As String
@@ -226,9 +227,10 @@ CHAT_COMMAND_SEND = "&Senden"
 CHAT_COMMAND_CLEAR = "&Löschen"
 
 SF_LABEL_FILENAME = " Datei Name:"
-SF_LABEL_SENDING_FILE = "Sende:"
-SF_LABEL_SENT = "0.0% Gesendet"
 SF_LABEL_SEND_TO = " Sende an:"
+SF_LABEL_TIME = " Verbleibende Zeit: "
+SF_LABEL_KBS = " Kb/Sek, "
+SF_LABEL_KBSS = " KBytes gesendet, "
 
 SF_MSG_USER = "Kein Benutzer ausgewählt."
 SF_MSG_FILE = "Keine Datei ausgewählt."
@@ -242,7 +244,7 @@ SF_COMMAND_SENDFILE = "Senden"
 SF_COMMAND_CANCEL = "Abbrechen .."
 
 LANG_COMMAND_ENTER = "&Auswählen"
-LANG_LABEL_SELLANG = "Wählen Sie ihre Sprache aus:"
+LANG_LABEL_SELLANG = "Wählen Sie Ihre Sprache aus:"
 
 SOC_FRIEND_LIST = "Freundesliste"
 SOC_ONLINE_LIST = "Online-Liste"
@@ -256,11 +258,11 @@ SOC_COMMAND_IGNORE = "&Benutzer ignorieren"
 SOC_ASK_DEL_1 = "Möchten Sie '"
 SOC_ASK_DEL_2 = "' von der Liste löschen?"
 
-SOC_ASK_FRIEND_TEXT = "Geben Sie bitte den Konto-Namen ihres Freundes ein."
+SOC_ASK_FRIEND_TEXT = "Geben Sie bitte den Konto-Namen Ihres Freundes ein."
 SOC_ASK_FRIEND_TITLE = "Freund hinzufügen"
 SOC_ASK_FRIEND_DEFAULT = "Konto hier eingeben"
 
-SOC_ASK_IGNORE_TEXT = "Geben Sie bitte den Konto-Namen des Benutzer ein den sie ignorieren möchten."
+SOC_ASK_IGNORE_TEXT = "Geben Sie bitte den Konto-Namen des Benutzer ein den Sie ignorieren möchten."
 SOC_ASK_IGNORE_TITLE = "Benutzer ignorieren"
 SOC_ASK_IGNORE_DEFAULT = "Konto hier eingeben"
 
@@ -268,7 +270,7 @@ SOC_FRIEND_LIST_STATUS = "Status"
 
 REG_CAPTION = "Peach - Registration"
 
-REG_FRAME_DETAIL = "Geben Sie ihre Daten an"
+REG_FRAME_DETAIL = "Geben Sie Ihre Daten an"
 
 REG_LABEL_ACCOUNT_NAME = " Konto-Name:"
 REG_LABEL_PASSWORD = " Passwort:"
@@ -302,12 +304,12 @@ REG_MSG_ERROR_OCCURED = "Fehler aufgetreten ..."
 REG_MSG_LOADING = " Lädt .."
 REG_MSG_CONNECTION_BROKEN = "Die Verbindung wurde unterbrochen bitte versuchen Sie es später nochmal."
 
-REG_CMB_SECRET_QUESTION_0 = "Wie heißt ihr Haustier?"
+REG_CMB_SECRET_QUESTION_0 = "Wie heißt Ihr Haustier?"
 REG_CMB_SECRET_QUESTION_1 = "Ihr Lieblings-Buch?"
 REG_CMB_SECRET_QUESTION_2 = "Ihr Lieblings-Film?"
 REG_CMB_SECRET_QUESTION_3 = "Ihr Lieblings-Spiel?"
 REG_CMB_SECRET_QUESTION_4 = "Ihr Lieblings-Sänger?"
-REG_CMB_SECRET_QUESTION_5 = "Geburtsort ihrer Mutter?"
+REG_CMB_SECRET_QUESTION_5 = "Geburtsort Ihrer Mutter?"
 
 SET_LABEL_COLOR = "Jetzige Farbe:"
 
@@ -396,9 +398,10 @@ CHAT_COMMAND_CLEAR = "&Clear"
 
 ' Send File form ..
 SF_LABEL_FILENAME = " File Name:"
-SF_LABEL_SENDING_FILE = "Sending:"
-SF_LABEL_SENT = "0.0% Sent"
 SF_LABEL_SEND_TO = "Send to:"
+SF_LABEL_TIME = " Time left: "
+SF_LABEL_KBS = " Kb/Sec, "
+SF_LABEL_KBSS = " KBytes sent, "
 
 SF_MSG_USER = "No user selected."
 SF_MSG_FILE = "No file selected."
@@ -460,7 +463,7 @@ REG_MSG_ACCOUNT_NUMERIC = "Account can not be composed of numeric characters."
 REG_MSG_ACCOUNT_EMPTY = "No account entered."
 REG_MSG_ACCOUNT_SHORT = "Account name to short, it requieres at least 4 characters."
 
-REG_MSG_PASSWORD_MATCH = "The passwords dont match."
+REG_MSG_PASSWORD_MATCH = "The passwords don't match."
 REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
 REG_MSG_PASSWORD_EMPTY = "No Password entered."
 
@@ -561,9 +564,10 @@ CHAT_COMMAND_SEND = "&Enviar"
 CHAT_COMMAND_CLEAR = "&Limpiar"
 
 SF_LABEL_FILENAME = " Nombre del archivo:"
-SF_LABEL_SENDING_FILE = "Enviando:"
-SF_LABEL_SENT = "0.0% Enviado"
 SF_LABEL_SEND_TO = "Enviar a:"
+SF_LABEL_TIME = " Time left: "
+SF_LABEL_KBS = " Kb/Sec, "
+SF_LABEL_KBSS = " KBytes sent, "
 
 SF_MSG_USER = "No has seleccionado a una persona."
 SF_MSG_FILE = "No has seleccionado a un archivo."
@@ -727,9 +731,10 @@ CHAT_COMMAND_CLEAR = "&Rensa"
 
 ' Send file form ..
 SF_LABEL_FILENAME = " Fil Namn:"
-SF_LABEL_SENDING_FILE = "Sänder:"
-SF_LABEL_SENT = "0.0% Sänt"
 SF_LABEL_SEND_TO = "Skicka till:"
+SF_LABEL_TIME = " Time left: "
+SF_LABEL_KBS = " Kb/Sec, "
+SF_LABEL_KBSS = " KBytes sent, "
 
 SF_MSG_USER = "Ingen användare vald."
 SF_MSG_FILE = "Ingen fil vald."
@@ -894,9 +899,10 @@ CHAT_COMMAND_CLEAR = "&Chiaro"
 
 ' Send file form ..
 SF_LABEL_FILENAME = " Nome file:"
-SF_LABEL_SENDING_FILE = "Inviando:"
-SF_LABEL_SENT = "0.0% Inviato"
 SF_LABEL_SEND_TO = "Send to:"
+SF_LABEL_TIME = " Time left: "
+SF_LABEL_KBS = " Kb/Sec, "
+SF_LABEL_KBSS = " KBytes sent, "
 
 SF_MSG_USER = "Nessun utente selezionato."
 SF_MSG_FILE = "Nessun file selezionato."
@@ -1058,9 +1064,10 @@ CHAT_COMMAND_SEND = "&Zend"
 CHAT_COMMAND_CLEAR = "&Leegmaken"
 
 SF_LABEL_FILENAME = " Bestandsnaam:"
-SF_LABEL_SENDING_FILE = "verZenden:"
-SF_LABEL_SENT = "0.0% verzonden"
 SF_LABEL_SEND_TO = "Send to:"
+SF_LABEL_TIME = " Time left: "
+SF_LABEL_KBS = " Kb/Sec, "
+SF_LABEL_KBSS = " KBytes sent, "
 
 SF_MSG_USER = "Geen gebruiker geselecteerd."
 SF_MSG_FILE = "Geen bestand geselecteerd."
@@ -1235,9 +1242,10 @@ CHAT_COMMAND_CLEAR = "&Obrisi"
 
 'Send file form ..
 SF_LABEL_FILENAME = " Ime  arhive:"
-SF_LABEL_SENDING_FILE = "Slanje:"
-SF_LABEL_SENT = "0.0% Poslato"
 SF_LABEL_SEND_TO = "Send to:"
+SF_LABEL_TIME = " Time left: "
+SF_LABEL_KBS = " Kb/Sec, "
+SF_LABEL_KBSS = " KBytes sent, "
 
 SF_MSG_USER = "No user selected."
 SF_MSG_FILE = "No file selected."
@@ -1397,9 +1405,10 @@ CHAT_COMMAND_SEND = "&Envoi"
 CHAT_COMMAND_CLEAR = "&Clair"
 
 SF_LABEL_FILENAME = " Nom file:"
-SF_LABEL_SENDING_FILE = "Envoyant:"
-SF_LABEL_SENT = "0.0% Envoyé"
 SF_LABEL_SEND_TO = "Send to:"
+SF_LABEL_TIME = " Time left: "
+SF_LABEL_KBS = " Kb/Sec, "
+SF_LABEL_KBSS = " KBytes sent, "
 
 SF_MSG_USER = "Pas d'utilisateur sélectionné."
 SF_MSG_FILE = "Aucun fichier sélectionné."
