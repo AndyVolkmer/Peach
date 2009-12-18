@@ -1080,8 +1080,21 @@ Case "!message"
             End With
         
         Case ".clear"
-            SendMessage "!clear#"
-            
+            If Len(p_TEXT_FIRST) = 0 Then
+                SendSingle "Incorrect Syntax. Use the following format .clear Name", Index
+            Else
+                With frmPanel.ListView1.ListItems
+                    For i = 1 To .Count
+                        If .Item(i) = p_TEXT_FIRST_PROP Then
+                            SendSingle "!clear#", .Item(i).SubItems(2)
+                            Exit For
+                        Else
+                            If i = .Count Then SendSingle "User '" & p_TEXT_FIRST & "' was not found.", Index
+                        End If
+                    Next i
+                End With
+            End If
+                
         Case Else
             SendSingle "Unknown command used. Check .help for more information about commands.", Index
         
