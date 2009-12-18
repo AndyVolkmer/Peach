@@ -56,11 +56,8 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "lvOnlineList"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdAddToFriend"
-      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).Control(2)=   "cmdAddToIgnore"
-      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
@@ -447,6 +444,23 @@ Set pListItem = lvFriendList.HitTest(X, Y)
 If pListItem Is Nothing Then Exit Sub
 
 PopupMenu lvFriendMenu
+End Sub
+
+Private Sub lvFriendList_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnHeader)
+With lvFriendList
+    .Sorted = True
+    
+    If .SortOrder = lvwDescending Then
+        .SortOrder = lvwAscending
+    Else
+        .SortOrder = lvwDescending
+    End If
+    .Sorted = False
+    
+    If .ListItems.Count <> 0 Then
+        Set .SelectedItem = .ListItems.Item(1)
+    End If
+End With
 End Sub
 
 '==== Online List ===='
