@@ -134,7 +134,7 @@ Dim WinSk As Winsock
 For Each WinSk In frmMain.Winsock1
     With WinSk
         If .State = 7 Then
-            .SendData pMessage
+            .SendData pMessage & Chr(24) & Chr(25)
             DoEvents
         End If
     End With
@@ -144,7 +144,7 @@ End Sub
 Public Sub SendSingle(pMessage As String, pIndex As Integer)
 With frmMain.Winsock1(pIndex)
     If .State = 7 Then
-        .SendData pMessage
+        .SendData pMessage & Chr(24) & Chr(25)
         DoEvents
     End If
 End With
@@ -221,7 +221,7 @@ End Function
 
 Public Sub CMSG(pData As String)
 With frmChat.txtConver
-    .Text = .Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] Server Notice: " & pData
+    .Text = .Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & pData
     .SelStart = Len(.Text)
 End With
 End Sub

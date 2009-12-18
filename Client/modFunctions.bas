@@ -108,7 +108,7 @@ Public nid As NOTIFYICONDATA ' trayicon variable
 Public Sub SendMSG(pMessage As String)
 With frmMain.Winsock1
     If .State = 7 Then
-        .SendData pMessage
+        .SendData pMessage & Chr(24) & Chr(25)
         DoEvents
     End If
 End With

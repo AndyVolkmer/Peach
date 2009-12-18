@@ -779,6 +779,9 @@ loadSocket = theFreeSocket
 End Function
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
+Dim p_PreArray()    As String
+Dim k               As Long
+
 Dim p_Message       As String
 Dim p_MainArray()   As String   'Whole message string is saved here and split up by # sign
 Dim p_Command       As String   'First part of main array ( always the command )
@@ -790,11 +793,17 @@ Dim p_ProperAccount As String
 frmMain.Winsock1(Index).GetData p_Message
 DoEvents
 
+'Do first array to avoid spam
+p_PreArray = Split(p_Message, Chr(24) & Chr(25))
+
+'Start looping through
+For k = 0 To UBound(p_PreArray) - 1
+
 'Print the message
-CMSG p_Message & " | Index: " & Index
+CMSG p_PreArray(k) & " | Index: " & Index
 
 'We decode (split) the message into an array
-p_MainArray = Split(p_Message, "#")
+p_MainArray = Split(p_PreArray(k), "#")
 
 'Assign the variable to the array
 If UBound(p_MainArray) > -1 Then
@@ -1267,6 +1276,7 @@ Case Else
     SendMessage "Error."
     
 End Select
+Next k
 End Sub
 
 Private Sub SetLastMessage(pUser As String, pMessage As String)

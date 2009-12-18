@@ -433,18 +433,27 @@ SwitchButtons False, False
 End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
-Dim GetCommand  As String
-Dim StrArr()    As String
-Dim StrArr2()   As String
-Dim GetMessage  As String
-Dim Buffer      As String
+Dim p_PreArray()    As String
+Dim k               As Long
+
+Dim GetCommand      As String
+Dim StrArr()        As String
+Dim StrArr2()       As String
+Dim GetMessage      As String
+Dim Buffer          As String
 
 'We get the message
 Winsock1.GetData GetMessage
 DoEvents
 
+'Do first array to avoid spam
+p_PreArray = Split(GetMessage, Chr(24) & Chr(25))
+
+'Start looping through
+For k = 0 To UBound(p_PreArray) - 1
+
 'We split the message into an array
-StrArr = Split(GetMessage, "#")
+StrArr = Split(p_PreArray(k), "#")
     
 'Assign the variables to the array
 GetCommand = StrArr(0)
@@ -601,10 +610,11 @@ Case "!msgbox"
 Case Else
     With frmChat.txtConver
         .SelStart = Len(.Text)
-        .SelRTF = vbCrLf & Space(1) & "[" & Format$(Time, "hh:nn:ss") & "]" & Space(1) & GetMessage
+        .SelRTF = vbCrLf & Space(1) & "[" & Format$(Time, "hh:nn:ss") & "]" & Space(1) & p_PreArray(k)
     End With
     
 End Select
+Next k
 End Sub
 
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
