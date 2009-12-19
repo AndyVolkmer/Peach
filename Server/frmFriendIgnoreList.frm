@@ -142,7 +142,7 @@ Dim j          As Long
 
 'Check if you are trying to add urself
 If LCase$(pUser) = LCase$(pFriend) Then
-    SendSingle "!msgbox#You can't add yourself.#", pIndex
+    SendSingle "!msgbox#MSG_CANT_ADD_YOU#", pIndex
     Exit Sub
 End If
 
@@ -162,7 +162,7 @@ With ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = pUser Then
             If .Item(i).SubItems(2) = pFriend Then
-                SendSingle "!msgbox#" & pFriend & " is already in you friendlist.#", pIndex
+                SendSingle "!msgbox#MSG_ALREADY_IN_FRIEND_LIST#" & pFriend & "#", pIndex
                 Exit Sub
             End If
         End If
@@ -199,7 +199,7 @@ If IsValid Then
     UPDATE_FRIEND pUser, pIndex
 Else
     'Send message that the account doesn't exist
-    SendSingle "!msgbox#The account '" & pFriend & "' doesnt exist.#", pIndex
+    SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#" & pFriend & "#", pIndex
 End If
 End Sub
 
@@ -262,7 +262,7 @@ Dim j          As Long
 
 'Check if you are trying to add urself
 If LCase$(pUser) = LCase$(pIgnore) Then
-    SendSingle "!msgbox#You can't add yourself.#", pIndex
+    SendSingle "!msgbox#MSG_CANT_ADD_YOU#", pIndex
     Exit Sub
 End If
 
@@ -282,7 +282,7 @@ With ListView2.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = pUser Then
             If .Item(i).SubItems(2) = pIgnore Then
-                SendSingle "!msgbox#" & pIgnore & " is already in you ignore-list.#", pIndex
+                SendSingle "!msgbox#MSG_ALREADY_IN_IGNORE_LIST#" & pIgnore & "#", pIndex
                 Exit Sub
             End If
         End If
@@ -319,7 +319,7 @@ If IsValid Then
     UPDATE_IGNORE pUser, pIndex
 Else
     'Send message that the account doesn't exist
-    SendSingle "!msgbox#The account '" & pIgnore & "' doesnt exist.#", pIndex
+    SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#" & pIgnore & "#", pIndex
 End If
 End Sub
 

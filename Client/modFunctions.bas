@@ -1,5 +1,5 @@
 Attribute VB_Name = "modFunctions"
-'Option Explicit
+Option Explicit
 
 Public Const pAuthor    As String = "Andy"
 
@@ -212,6 +212,7 @@ With frmSendFile
     .Label4.Enabled = pBool
     .txtFileName.Enabled = pBool
     .Combo1.Enabled = pBool
+    .cmdBrowse.Enabled = pBool
     .cmdSendFile.Enabled = pBool
     .lblSendSpeed.Enabled = pBool
     .lblSendStatus.Enabled = pBool

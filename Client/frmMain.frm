@@ -605,8 +605,24 @@ Case "!iprequest"
 
 'Function to display information messageboxes
 Case "!msgbox"
-    MsgBox StrArr(1), vbInformation
-
+    Select Case StrArr(1)
+    Case "MSG_CANT_ADD_YOU"
+        MsgBox MDI_MSG_CANT_ADD_YOU, vbInformation
+        
+    Case "MSG_ALREADY_IN_IGNORE_LIST"
+        MsgBox StrArr(2) & MDI_MSG_ALREADY_IN_IGNORE_LIST, vbInformation
+        
+    Case "MSG_ALREADY_IN_FRIEND_LIST"
+        MsgBox StrArr(2) & MDI_MSG_ALREADY_IN_FRIEND_LIST, vbInformation
+        
+    Case "MSG_ACCOUNT_NOT_EXIST"
+        MsgBox StrArr(2) & MDI_MSG_ACCOUNT_NOT_EXIST, vbInformation
+        
+    Case Else
+        MsgBox StrArr(1), vbInformation
+        
+    End Select
+    
 Case Else
     With frmChat.txtConver
         .SelStart = Len(.Text)

@@ -360,7 +360,7 @@ Get iFileNum, , Buffer      'read data
 SckSendFile.SendData Buffer 'send data
 
 'Show progress
-lblProgress.Caption = Format$(Loc(iFileNum) / CDbl(LOF(iFileNum)), "Percent")
+lblSendStatus.Caption = Format$(Loc(iFileNum) / CDbl(LOF(iFileNum)), "Percent")
 PicShowPercentage picProgress, Loc(iFileNum) / CDbl(LOF(iFileNum))
 End Sub
 
