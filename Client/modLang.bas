@@ -195,9 +195,9 @@ MDI_MSG_BANNED = "Dieses Konto wurde gebannt."
 MDI_MSG_UNLOAD = "Sind Sie sicher, dass Sie Peach schließen wollen?"
 
 MDI_MSG_CANT_ADD_YOU = "Sie können sich nicht selbst hinzufügen."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = " ist bereits in deiner Ignorier-Liste."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = " ist bereits in deiner Freundesliste."
-MDI_MSG_ACCOUNT_NOT_EXIST = " existiert nicht."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "' ist bereits in deiner Ignorier-Liste."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "' ist bereits in deiner Freundesliste."
+MDI_MSG_ACCOUNT_NOT_EXIST = "' existiert nicht."
 
 CONFIG_LABEL_ACCOUNT = " Konto"
 CONFIG_LABEL_PASSWORD = " Passwort"
@@ -368,9 +368,9 @@ MDI_MSG_BANNED = "This account is banned."
 MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
 MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = " is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = " is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = " does not exist."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
+MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
 
 'Configuration form ..
 CONFIG_LABEL_ACCOUNT = " Account"
@@ -542,9 +542,9 @@ MDI_MSG_BANNED = "Esta cuenta esta baneada."
 MDI_MSG_UNLOAD = "¿Esta seguro que quiere cerrar a Peach?"
 
 MDI_MSG_CANT_ADD_YOU = "No te puedes agregar a ti mismo."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = " ya esta en tu lista de ignorados."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = " ya esta en tu lista de amigos."
-MDI_MSG_ACCOUNT_NOT_EXIST = " no existe."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "' ya esta en tu lista de ignorados."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "' ya esta en tu lista de amigos."
+MDI_MSG_ACCOUNT_NOT_EXIST = "' no existe."
 
 CONFIG_LABEL_ACCOUNT = " Cuenta"
 CONFIG_LABEL_PASSWORD = " Contraseña"
@@ -715,9 +715,9 @@ MDI_MSG_BANNED = "Detta konto är förbjuden."
 MDI_MSG_UNLOAD = "Är du säker på att du vill stänga Peach?"
 
 MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = " is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = " is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = " does not exist."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
+MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
 
 ' Config form
 CONFIG_LABEL_ACCOUNT = " Konto"
@@ -886,9 +886,9 @@ MDI_MSG_BANNED = "Questo account è vietata.."
 MDI_MSG_UNLOAD = "Sei sicuro di voler chiudere Peach?"
 
 MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = " is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = " is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = " does not exist."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
+MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
 
 'Config form ..
 CONFIG_LABEL_ACCOUNT = " Conto"
@@ -1059,9 +1059,9 @@ MDI_MSG_BANNED = "Deze account is verboden."
 MDI_MSG_UNLOAD = "Weet u zeker dat u wilt Peach sluiten?"
 
 MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = " is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = " is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = " does not exist."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
+MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
 
 CONFIG_LABEL_ACCOUNT = " Account"
 CONFIG_LABEL_PASSWORD = " Wachtwoord"
@@ -1239,9 +1239,9 @@ MDI_MSG_BANNED = "This account is banned."
 MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
 MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = " is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = " is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = " does not exist."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
+MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
 
 'Config form ..
 CONFIG_LABEL_ACCOUNT = " Account"
@@ -1410,9 +1410,9 @@ MDI_MSG_BANNED = "This account is banned."
 MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
 MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = " is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = " is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = " does not exist."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
+MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
 
 CONFIG_LABEL_ACCOUNT = " Compte"
 CONFIG_LABEL_PASSWORD = " Mot de passe"

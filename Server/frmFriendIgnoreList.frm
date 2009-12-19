@@ -162,7 +162,7 @@ With ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = pUser Then
             If .Item(i).SubItems(2) = pFriend Then
-                SendSingle "!msgbox#MSG_ALREADY_IN_FRIEND_LIST#" & pFriend & "#", pIndex
+                SendSingle "!msgbox#'MSG_ALREADY_IN_FRIEND_LIST#" & pFriend & "#", pIndex
                 Exit Sub
             End If
         End If
@@ -199,7 +199,7 @@ If IsValid Then
     UPDATE_FRIEND pUser, pIndex
 Else
     'Send message that the account doesn't exist
-    SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#" & pFriend & "#", pIndex
+    SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#'" & pFriend & "#", pIndex
 End If
 End Sub
 
@@ -282,7 +282,7 @@ With ListView2.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = pUser Then
             If .Item(i).SubItems(2) = pIgnore Then
-                SendSingle "!msgbox#MSG_ALREADY_IN_IGNORE_LIST#" & pIgnore & "#", pIndex
+                SendSingle "!msgbox#MSG_ALREADY_IN_IGNORE_LIST#'" & pIgnore & "#", pIndex
                 Exit Sub
             End If
         End If
@@ -319,7 +319,7 @@ If IsValid Then
     UPDATE_IGNORE pUser, pIndex
 Else
     'Send message that the account doesn't exist
-    SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#" & pIgnore & "#", pIndex
+    SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#'" & pIgnore & "#", pIndex
 End If
 End Sub
 
