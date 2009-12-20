@@ -172,10 +172,11 @@ With frmFriendIgnoreList.ListView1.ListItems
             p_Array = Split(GetAccountStatus(.Item(i).SubItems(2)), "#")
             
             Select Case p_Array(0)
-            Case "!online"
-                buffer = buffer & .Item(i).SubItems(2) & " - " & p_Array(1) & "$Online#"
-            Case "!offline"
-                buffer = buffer & .Item(i).SubItems(2) & "$Offline#"
+                Case "!online"
+                    buffer = buffer & .Item(i).SubItems(2) & " - " & p_Array(1) & "$Online#"
+                    
+                Case "!offline"
+                    buffer = buffer & .Item(i).SubItems(2) & "$Offline#"
             End Select
         End If
     Next i
@@ -270,49 +271,49 @@ retvalue = GetVersionExA(OSInfo)
   
 With OSInfo
     Select Case .dwPlatformId
-    Case VER_PLATFORM_WIN32s           ' Win32s on Windows 3.1
-        GetOS = "WinDOS_3.1"
-
-    Case VER_PLATFORM_WIN32_WINDOWS    ' Windows 95, Windows 98,
-        Select Case .dwMinorVersion    ' or Windows Me
-        Case 0
-            GetOS = "Win95"
-        Case 10
-            If (OSInfo.dwBuildNumber And &HFFFF&) = 2222 Then
-                GetOS = "Win98SE"
-            Else
-                GetOS = "Win98"
-            End If
-        Case 90
-            GetOS = "Windows Me"
-        End Select
-
-    Case VER_PLATFORM_WIN32_NT         ' Windows NT, Windows 2000, Windows XP,
-        Select Case .dwMajorVersion    ' or Windows Server 2003 family.
-        Case 3
-            GetOS = "WinNT3.51"
-        Case 4
-            GetOS = "WinNT4"
-        Case 5
-            Select Case .dwMinorVersion
-            Case 0
-                GetOS = "Win2000"
-            Case 1
-                GetOS = "WinXP"
-            Case 2
-                GetOS = "Windows Server 2003"
+        Case VER_PLATFORM_WIN32s           ' Win32s on Windows 3.1
+            GetOS = "WinDOS_3.1"
+    
+        Case VER_PLATFORM_WIN32_WINDOWS    ' Windows 95, Windows 98,
+            Select Case .dwMinorVersion    ' or Windows Me
+                Case 0
+                    GetOS = "Win95"
+                Case 10
+                    If (OSInfo.dwBuildNumber And &HFFFF&) = 2222 Then
+                        GetOS = "Win98SE"
+                    Else
+                        GetOS = "Win98"
+                    End If
+                Case 90
+                    GetOS = "Windows Me"
             End Select
-        Case 6
-            Select Case .dwMinorVersion
-            Case 0
-                GetOS = "WinVista"
-            Case 1
-                GetOS = "Win7"
+    
+        Case VER_PLATFORM_WIN32_NT         ' Windows NT, Windows 2000, Windows XP,
+            Select Case .dwMajorVersion    ' or Windows Server 2003 family.
+                Case 3
+                    GetOS = "WinNT3.51"
+                Case 4
+                    GetOS = "WinNT4"
+                Case 5
+                    Select Case .dwMinorVersion
+                        Case 0
+                            GetOS = "Win2000"
+                        Case 1
+                            GetOS = "WinXP"
+                        Case 2
+                            GetOS = "Windows Server 2003"
+                    End Select
+                Case 6
+                    Select Case .dwMinorVersion
+                        Case 0
+                            GetOS = "WinVista"
+                        Case 1
+                            GetOS = "Win7"
+                    End Select
             End Select
+
+        Case Else
+            GetOS = "UnknownOS"
     End Select
-
-Case Else
-    GetOS = "UnknownOS"
-End Select
 End With
 End Function

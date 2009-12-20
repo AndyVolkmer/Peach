@@ -34,6 +34,7 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -180,18 +181,18 @@ frmChat.txtToSend.SetFocus
 Exit Sub
 ErrListen:
 Select Case Err.Number
-Case 10048
-    MsgBox "This adress is already in use, please select another port.", vbInformation
-    txtPort.Enabled = True
-    Command1.Enabled = True
-    Command2.Enabled = False
-    txtPort.SetFocus
-    txtPort.SelStart = Len(txtPort.Text)
-    connCounter.Enabled = False
-    Label2.Caption = "Offline"
-Case Else
-    MsgBox "Error: " & Err.Number & vbCrLf & Err.Description & vbCrLf & "Report the number above to developement.", vbInformation
-    Unload Me
+    Case 10048
+        MsgBox "This adress is already in use, please select another port.", vbInformation
+        txtPort.Enabled = True
+        Command1.Enabled = True
+        Command2.Enabled = False
+        txtPort.SetFocus
+        txtPort.SelStart = Len(txtPort.Text)
+        connCounter.Enabled = False
+        Label2.Caption = "Offline"
+    Case Else
+        MsgBox "Error: " & Err.Number & vbCrLf & Err.Description & vbCrLf & "Report the number above to developement.", vbInformation
+        Unload Me
 End Select
 End Sub
 

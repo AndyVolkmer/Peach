@@ -324,33 +324,33 @@ End Sub
 
 Private Sub cmdSave_Click()
 Select Case Switch
-Case "ADD"
-    For i = 1 To ListView1.ListItems.Count
-        If txtName.Text = ListView1.ListItems.Item(i).SubItems(1) Then
-            MsgBox "Name already given.", vbInformation
-            ClearTxBoxes
+    Case "ADD"
+        For i = 1 To ListView1.ListItems.Count
+            If txtName.Text = ListView1.ListItems.Item(i).SubItems(1) Then
+                MsgBox "Name already given.", vbInformation
+                ClearTxBoxes
+                txtName.SetFocus
+                Exit Sub
+            End If
+        Next i
+        RegisterAccount txtName.Text, txtPassword.Text, vbNullString, vbNullString
+        
+    Case "MOD"
+        'Name can't be modified to nothing
+        If Len(Trim$(txtName.Text)) = 0 Then
+            MsgBox "The name can't be empty.", vbInformation
             txtName.SetFocus
             Exit Sub
         End If
-    Next i
-    RegisterAccount txtName.Text, txtPassword.Text, vbNullString, vbNullString
-    
-Case "MOD"
-    'Name can't be modified to nothing
-    If Len(Trim$(txtName.Text)) = 0 Then
-        MsgBox "The name can't be empty.", vbInformation
-        txtName.SetFocus
-        Exit Sub
-    End If
-    
-    'Password can't be modified to nothing
-    If Len(Trim$(txtPassword.Text)) = 0 Then
-        MsgBox "The password can't be empty.", vbInformation
-        txtPassword.SetFocus
-        Exit Sub
-    End If
-    
-    ModifyAccount txtName.Text, txtPassword.Text, CBool(cmbBanned.Text), cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index
+        
+        'Password can't be modified to nothing
+        If Len(Trim$(txtPassword.Text)) = 0 Then
+            MsgBox "The password can't be empty.", vbInformation
+            txtPassword.SetFocus
+            Exit Sub
+        End If
+        
+        ModifyAccount txtName.Text, txtPassword.Text, CBool(cmbBanned.Text), cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index
 End Select
 DoButtons False
 End Sub
@@ -484,36 +484,40 @@ GetSecretQuestion = array1(3)
 GetSecretAnswer = array1(4)
 
 Select Case array1(0)
-
-'Regster an account
-Case "!register"
-    With ListView1.ListItems
-        'Check if the account already exists
-        For i = 1 To .Count
-            If UCase$(GetName) = UCase$(.Item(i).SubItems(1)) Then
-                If RegSock(Index).State = 7 Then
-                    RegSock(Index).SendData "!nameexist#"
-                    Exit Sub
+    'Regster an account
+    Case "!register"
+        With ListView1.ListItems
+            'Check if the account already exists
+            For i = 1 To .Count
+                If UCase$(GetName) = UCase$(.Item(i).SubItems(1)) Then
+                    If RegSock(Index).State = 7 Then
+                        RegSock(Index).SendData "!nameexist#"
+                        Exit Sub
+                    End If
                 End If
-            End If
-        Next i
-    End With
-
-    RegisterAccount GetName, GetPassword, GetSecretQuestion, GetSecretAnswer
-    RegSock(Index).SendData "!done#"
+            Next i
+        End With
     
-'Check the secret question and send password
-Case "!request_password"
-    With ListView1.ListItems
-        For i = 1 To .Count
-            'Check if the account exists
-            If UCase$(GetName) = UCase$(.Item(i).SubItems(1)) Then
-                'Check if the question chosen is the same
-                If .Item(i).SubItems(7) = GetPassword Then
-                    'Check if the answer is the same
-                    If .Item(i).SubItems(8) = GetSecretQuestion Then
-                        If RegSock(Index).State = 7 Then
-                            RegSock(Index).SendData "!successfull#" & .Item(i).SubItems(2) & ".#"
+        RegisterAccount GetName, GetPassword, GetSecretQuestion, GetSecretAnswer
+        RegSock(Index).SendData "!done#"
+        
+    'Check the secret question and send password
+    Case "!request_password"
+        With ListView1.ListItems
+            For i = 1 To .Count
+                'Check if the account exists
+                If UCase$(GetName) = UCase$(.Item(i).SubItems(1)) Then
+                    'Check if the question chosen is the same
+                    If .Item(i).SubItems(7) = GetPassword Then
+                        'Check if the answer is the same
+                        If .Item(i).SubItems(8) = GetSecretQuestion Then
+                            If RegSock(Index).State = 7 Then
+                                RegSock(Index).SendData "!successfull#" & .Item(i).SubItems(2) & ".#"
+                            End If
+                        Else
+                            If RegSock(Index).State = 7 Then
+                                RegSock(Index).SendData "!error_fp#"
+                            End If
                         End If
                     Else
                         If RegSock(Index).State = 7 Then
@@ -521,19 +525,14 @@ Case "!request_password"
                         End If
                     End If
                 Else
-                    If RegSock(Index).State = 7 Then
-                        RegSock(Index).SendData "!error_fp#"
+                    If i = .Count Then
+                        If RegSock(Index).State = 7 Then
+                            RegSock(Index).SendData "!account_not_exist#"
+                        End If
                     End If
                 End If
-            Else
-                If i = .Count Then
-                    If RegSock(Index).State = 7 Then
-                        RegSock(Index).SendData "!account_not_exist#"
-                    End If
-                End If
-            End If
-        Next i
-    End With
+            Next i
+        End With
 End Select
 Exit Sub
 

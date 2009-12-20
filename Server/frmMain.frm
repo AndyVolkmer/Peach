@@ -655,14 +655,14 @@ Dim msg As Long
 Dim sFilter As String
 msg = X / Screen.TwipsPerPixelX
 Select Case msg
-Case WM_LBUTTONDOWN
-Case WM_LBUTTONUP
-Case WM_LBUTTONDBLCLK
-    Vali = True
-    frmMain.Show 'show form
-Case WM_RBUTTONDOWN
-Case WM_RBUTTONUP
-Case WM_RBUTTONDBLCLK
+    Case WM_LBUTTONDOWN
+    Case WM_LBUTTONUP
+    Case WM_LBUTTONDBLCLK
+        Vali = True
+        frmMain.Show 'show form
+    Case WM_RBUTTONDOWN
+    Case WM_RBUTTONUP
+    Case WM_RBUTTONDBLCLK
 End Select
 End Sub
 
@@ -798,484 +798,476 @@ p_PreArray = Split(p_Message, Chr(24) & Chr(25))
 
 'Start looping through
 For k = 0 To UBound(p_PreArray) - 1
-
-'Print the message
-CMSG p_PreArray(k) & " | Index: " & Index
-
-'We decode (split) the message into an array
-p_MainArray = Split(p_PreArray(k), "#")
-
-'Assign the variable to the array
-If UBound(p_MainArray) > -1 Then
-    p_Command = p_MainArray(0)
-End If
-
-Select Case p_Command
-'Select action and execute command
-Case "!friend"
-    'Get the proper written account name
-    p_ProperAccount = GetProperAccountName(p_MainArray(3))
-        
-    Select Case p_MainArray(1)
-    'Update Friend list
-    Case "-get"
-        UPDATE_FRIEND p_MainArray(2), Index
-        
-    'Add friend to list
-    Case "-add"
-        frmFriendIgnoreList.AddFriend p_MainArray(2), p_ProperAccount, Index
-        
-    'Remove friend from list
-    Case "-remove"
-        frmFriendIgnoreList.RemoveFriend p_MainArray(2), p_ProperAccount, Index
-                
-    End Select
+    'Print the message
+    CMSG p_PreArray(k) & " | Index: " & Index
     
-Case "!ignore"
-    'Get the proper written account name
-    p_ProperAccount = GetProperAccountName(p_MainArray(3))
+    'We decode (split) the message into an array
+    p_MainArray = Split(p_PreArray(k), "#")
     
-    Select Case p_MainArray(1)
-    'Update Ignore list
-    Case "-get"
-        UPDATE_IGNORE p_MainArray(2), Index
-        
-    'Add ignore to list
-    Case "-add"
-        frmFriendIgnoreList.AddIgnore p_MainArray(2), p_ProperAccount, Index
-        
-    'Remove ignore from list
-    Case "-remove"
-        frmFriendIgnoreList.RemoveIgnore p_MainArray(2), p_ProperAccount, Index
-        
-    End Select
-    
-Case "!connected"
-    UPDATE_ONLINE
-    
-'Send Server information
-Case "!server_info"
-    SendSingle "!server_info#" & GetServerInformation, Index
-    
-Case "!login"
-    With frmAccountPanel.ListView1.ListItems
-        For i = 1 To .Count
-            If LCase(.Item(i).SubItems(1)) = LCase(p_MainArray(1)) Then
-                'Ban Check
-                If .Item(i).SubItems(5) = "True" Then
-                    SendSingle "!login#Banned#", Index
-                    Exit Sub
-                End If
-                
-                'Password Check
-                If Not .Item(i).SubItems(2) = p_MainArray(2) Then
-                    SendSingle "!login#Password#", Index
-                    Exit Sub
-                End If
-                Exit For
-            Else
-                If i = .Count Then
-                    SendSingle "!login#Account#", Index
-                    Exit Sub
-                End If
-            End If
-        Next i
-    End With
-    
-    'Check badname list
-    For i = LBound(DeclinedNames) To UBound(DeclinedNames)
-        If DeclinedNames(i) = p_MainArray(3) Then
-            SendSingle "!decilined", Index
-            Exit Sub
-        End If
-    Next i
-    
-    With frmPanel.ListView1.ListItems
-        'Check current online list
-        For i = 1 To .Count
-            If .Item(i) = p_MainArray(3) Then
-                SendSingle "!decilined", Index
-                Exit Sub
-            End If
-        Next i
-                
-        'If the account is already beeing used kick first instance
-        For i = 1 To .Count
-            If .Item(i).SubItems(5) = p_MainArray(1) Then
-                Unload Winsock1(.Item(i).SubItems(2))
-                .Remove (i)
-                Exit For
-            End If
-        Next i
-        
-        .Item(.Count).Text = p_MainArray(3)
-        .Item(.Count).SubItems(5) = GetProperAccountName(p_MainArray(1))
-    End With
-    
-    UPDATE_STATUS_BAR
-    SendSingle "!accepted#", Index
-        
-'We get ip request and send ip back
-Case "!iprequest"
-    With frmPanel.ListView1.ListItems
-        For i = 1 To .Count
-            If .Item(i) = p_MainArray(1) Then
-                SendSingle "!iprequest#" & .Item(i).SubItems(1) & "#", Index
-            End If
-        Next i
-    End With
-    
-Case "!message"
-    Dim array2()            As String
-    Dim ANN_MSG             As String
-    Dim p_TEXT_FIRST        As String
-    Dim p_TEXT_FIRST_PROP   As String
-    Dim p_TEXT_SECOND       As String
-    Dim p_TEXT_SECOND_PROP  As String
-    Dim IsCommand           As Boolean
-    Dim IsSlash             As Boolean
-        
-    'Split the conversation text by spaces
-    array2 = Split(p_MainArray(2), " ")
-        
-    'Check first position of the text for a point indicating command
-    If Left$(p_MainArray(2), 1) = Chr(46) Then
-        If GetLevel(p_MainArray(1)) <> 0 Then
-            IsCommand = True
-        End If
+    'Assign the variable to the array
+    If UBound(p_MainArray) > -1 Then
+        p_Command = p_MainArray(0)
     End If
     
-    'Check first position of the text for a slash indicating emote
-    If Left$(p_MainArray(2), 1) = Chr(47) Then
-        IsSlash = True
-    End If
-    
-    'Capture first part of the text
-    If UBound(array2) > 0 Then
-        p_TEXT_FIRST = array2(1)
-        p_TEXT_FIRST_PROP = StrConv(array2(1), vbProperCase)
-    End If
-    
-    'Capture second part
-    If UBound(array2) > 1 Then
-        p_TEXT_SECOND = array2(2)
-        p_TEXT_SECOND_PROP = StrConv(array2(2), vbProperCase)
-    End If
-    
-    'Check if user is muted
-    With frmPanel.ListView1.ListItems
-        For i = 1 To .Count
-            If .Item(i) = p_MainArray(1) Then
-                If .Item(i).SubItems(4) = "True" Then
-                    IsMuted = True
-                    Exit For
-                End If
-            End If
-        Next i
-    End With
-    
-    'If a command is used check out which
-    If IsCommand Then
-        Dim Reason          As String
-        Dim Reason2         As String
-        
-        'Save the reason
-        For i = 2 To UBound(array2)
-            Reason = Reason & array2(i) & " "
-        Next i
-        
-        'Save the second reason
-        For i = 3 To UBound(array2)
-            Reason2 = Reason2 & array2(i) & " "
-        Next i
-        
-        'Capture announce message
-        If UBound(array2) > 0 Then
-            ANN_MSG = Mid$(p_MainArray(2), Len(array2(0)) + 2, Len(p_MainArray(2)))
-        End If
-        
-        Select Case LCase$(array2(0))
-        Case ".show"
-            If IsPartOf(p_TEXT_FIRST, "accounts") Then
-                SendSingle "!split_text#" & GetAccountList, Index
+    Select Case p_Command
+        'Select action and execute command
+        Case "!friend"
+            'Get the proper written account name
+            p_ProperAccount = GetProperAccountName(p_MainArray(3))
                 
-            ElseIf IsPartOf(p_TEXT_FIRST, "users") Then
-                SendSingle "!split_text#" & GetUserList, Index
-            
-            Else
-                SendSingle "Incorrect Syntax, use the following format .show 'account'/'user'.", Index
-                
-            End If
-        
-        Case ".userinfo", ".uinfo"
-            GetUserInfo p_TEXT_FIRST_PROP, array2(0), Index
-        
-        Case ".accountinfo", ".accinfo", ".ainfo"
-            GetAccountInfo p_TEXT_FIRST, array2(0), Index
-        
-        Case ".kick"
-            KickUser p_TEXT_FIRST_PROP, Index
-            
-        Case ".ban"
-            If IsPartOf(p_TEXT_FIRST, "user") Then
-                BanUser p_TEXT_SECOND_PROP, p_MainArray(1), True, Index, Trim$(Reason2)
-                
-            ElseIf IsPartOf(p_TEXT_FIRST, "account") Then
-                BanAccount p_TEXT_SECOND, p_MainArray(1), True, Index, Trim$(Reason2)
-            
-            Else
-                SendSingle "Incorrect syntax, use the following format .ban User / Account 'Name' 'Reason'", Index
-                
-            End If
-            
-        Case ".unban"
-            If IsPartOf(p_TEXT_FIRST, "user") Then
-                BanUser p_TEXT_SECOND_PROP, p_MainArray(1), False, Index, Trim$(Reason2)
-                
-            ElseIf IsPartOf(p_TEXT_FIRST, "account") Then
-                BanAccount p_TEXT_SECOND, p_MainArray(1), False, Index, Trim$(Reason2)
-                
-            Else
-                SendSingle "Incorrect syntax, use the following format .unban User / Account 'Name' 'Reason'", Index
-                
-            End If
-        
-        Case ".mute"
-            MuteUser p_TEXT_FIRST_PROP, p_MainArray(1), True, Index, Trim$(Reason)
-        
-        Case ".unmute"
-            MuteUser p_TEXT_FIRST_PROP, p_MainArray(1), False, Index, Trim$(Reason)
-        
-        Case ".announce", ".ann", ".broadcast"
-            If Len(ANN_MSG) = 0 Then
-                SendSingle "Incorrect syntax, use the following format " & array2(0) & " 'text to announce'.", Index
-            Else
-                SendMessage "[" & p_MainArray(1) & " announces]: " & ANN_MSG
-            End If
-        
-        Case ".help", ".command", ".commands"
-            SendSingle GetCommands, Index
-            
-        Case ".reload"
-            With Database
-                Select Case LCase$(p_TEXT_FIRST)
-                
-                Case LCase$(.AccountTable), LCase$(.FriendTable), LCase$(.IgnoreTable)
-                    SendSingle "This table can't be reloaded.", Index
-                
-                Case LCase$(.CommandsTable)
-                    Erase Commands
-                    LoadCommands .CommandsTable
-                    SendMessage p_MainArray(1) & " initiated the reload of '" & .CommandsTable & "' table."
+            Select Case p_MainArray(1)
+                'Update Friend list
+                Case "-get"
+                    UPDATE_FRIEND p_MainArray(2), Index
                     
-                Case LCase$(.DeclinedNameTable)
-                    Erase DeclinedNames
-                    LoadDeclinedNames .DeclinedNameTable
-                    SendMessage p_MainArray(1) & " initiated the reload of '" & .DeclinedNameTable & "' table."
+                'Add friend to list
+                Case "-add"
+                    frmFriendIgnoreList.AddFriend p_MainArray(2), p_ProperAccount, Index
                     
-                Case LCase$(.EmoteTable)
-                    Erase Emotes
-                    LoadEmotes .EmoteTable
-                    SendMessage p_MainArray(1) & " initiated the reload of '" & .EmoteTable & "' table."
-                
-                Case Else
-                    If Len(p_TEXT_FIRST) = 0 Then
-                        SendSingle "Incorrect Syntax. Use the following format .reload Table.", Index
+                'Remove friend from list
+                Case "-remove"
+                    frmFriendIgnoreList.RemoveFriend p_MainArray(2), p_ProperAccount, Index
+            End Select
+            
+        Case "!ignore"
+            'Get the proper written account name
+            p_ProperAccount = GetProperAccountName(p_MainArray(3))
+            
+            Select Case p_MainArray(1)
+                'Update Ignore list
+                Case "-get"
+                    UPDATE_IGNORE p_MainArray(2), Index
+                    
+                'Add ignore to list
+                Case "-add"
+                    frmFriendIgnoreList.AddIgnore p_MainArray(2), p_ProperAccount, Index
+                    
+                'Remove ignore from list
+                Case "-remove"
+                    frmFriendIgnoreList.RemoveIgnore p_MainArray(2), p_ProperAccount, Index
+            End Select
+            
+        Case "!connected"
+            UPDATE_ONLINE
+            
+        'Send Server information
+        Case "!server_info"
+            SendSingle "!server_info#" & GetServerInformation, Index
+            
+        Case "!login"
+            With frmAccountPanel.ListView1.ListItems
+                For i = 1 To .Count
+                    If LCase(.Item(i).SubItems(1)) = LCase(p_MainArray(1)) Then
+                        'Ban Check
+                        If .Item(i).SubItems(5) = "True" Then
+                            SendSingle "!login#Banned#", Index
+                            Exit Sub
+                        End If
+                        
+                        'Password Check
+                        If Not .Item(i).SubItems(2) = p_MainArray(2) Then
+                            SendSingle "!login#Password#", Index
+                            Exit Sub
+                        End If
+                        Exit For
                     Else
-                        SendSingle "This table does not exist.", Index
+                        If i = .Count Then
+                            SendSingle "!login#Account#", Index
+                            Exit Sub
+                        End If
                     End If
-                    
-                End Select
+                Next i
             End With
-        
-        Case ".clear"
-            If Len(p_TEXT_FIRST) = 0 Then
-                SendSingle "Incorrect Syntax. Use the following format .clear Name", Index
-            Else
-                With frmPanel.ListView1.ListItems
-                    For i = 1 To .Count
-                        If .Item(i) = p_TEXT_FIRST_PROP Then
-                            SendSingle "!clear#", .Item(i).SubItems(2)
-                            Exit For
-                        Else
-                            If i = .Count Then SendSingle "User '" & p_TEXT_FIRST & "' was not found.", Index
-                        End If
-                    Next i
-                End With
+            
+            'Check badname list
+            For i = LBound(DeclinedNames) To UBound(DeclinedNames)
+                If DeclinedNames(i) = p_MainArray(3) Then
+                    SendSingle "!decilined", Index
+                    Exit Sub
+                End If
+            Next i
+            
+            With frmPanel.ListView1.ListItems
+                'Check current online list
+                For i = 1 To .Count
+                    If .Item(i) = p_MainArray(3) Then
+                        SendSingle "!decilined", Index
+                        Exit Sub
+                    End If
+                Next i
+                        
+                'If the account is already beeing used kick first instance
+                For i = 1 To .Count
+                    If .Item(i).SubItems(5) = p_MainArray(1) Then
+                        Unload Winsock1(.Item(i).SubItems(2))
+                        .Remove (i)
+                        Exit For
+                    End If
+                Next i
+                
+                .Item(.Count).Text = p_MainArray(3)
+                .Item(.Count).SubItems(5) = GetProperAccountName(p_MainArray(1))
+            End With
+            
+            UPDATE_STATUS_BAR
+            SendSingle "!accepted#", Index
+                
+        'We get ip request and send ip back
+        Case "!iprequest"
+            With frmPanel.ListView1.ListItems
+                For i = 1 To .Count
+                    If .Item(i) = p_MainArray(1) Then
+                        SendSingle "!iprequest#" & .Item(i).SubItems(1) & "#", Index
+                    End If
+                Next i
+            End With
+            
+        Case "!message"
+            Dim array2()            As String
+            Dim ANN_MSG             As String
+            Dim p_TEXT_FIRST        As String
+            Dim p_TEXT_FIRST_PROP   As String
+            Dim p_TEXT_SECOND       As String
+            Dim p_TEXT_SECOND_PROP  As String
+            Dim IsCommand           As Boolean
+            Dim IsSlash             As Boolean
+                
+            'Split the conversation text by spaces
+            array2 = Split(p_MainArray(2), " ")
+                
+            'Check first position of the text for a point indicating command
+            If Left$(p_MainArray(2), 1) = Chr(46) Then
+                If GetLevel(p_MainArray(1)) <> 0 Then
+                    IsCommand = True
+                End If
             End If
             
-        Case Else
-            SendSingle "Unknown command used. Check .help for more information about commands.", Index
-        
-        End Select
-        Exit Sub
-    End If
-    
-    If IsSlash Then
-        Dim IsUser As Boolean
-        
-        If IsMuted Then
-            SendSingle "You are muted.", Index
-            Exit Sub
-        End If
-        
-        If GetLevel(p_MainArray(1)) = Options.ChatLevel Then
-            If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
-                SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
+            'Check first position of the text for a slash indicating emote
+            If Left$(p_MainArray(2), 1) = Chr(47) Then
+                IsSlash = True
+            End If
+            
+            'Capture first part of the text
+            If UBound(array2) > 0 Then
+                p_TEXT_FIRST = array2(1)
+                p_TEXT_FIRST_PROP = StrConv(array2(1), vbProperCase)
+            End If
+            
+            'Capture second part
+            If UBound(array2) > 1 Then
+                p_TEXT_SECOND = array2(2)
+                p_TEXT_SECOND_PROP = StrConv(array2(2), vbProperCase)
+            End If
+            
+            'Check if user is muted
+            With frmPanel.ListView1.ListItems
+                For i = 1 To .Count
+                    If .Item(i) = p_MainArray(1) Then
+                        If .Item(i).SubItems(4) = "True" Then
+                            IsMuted = True
+                            Exit For
+                        End If
+                    End If
+                Next i
+            End With
+            
+            'If a command is used check out which
+            If IsCommand Then
+                Dim Reason          As String
+                Dim Reason2         As String
+                
+                'Save the reason
+                For i = 2 To UBound(array2)
+                    Reason = Reason & array2(i) & " "
+                Next i
+                
+                'Save the second reason
+                For i = 3 To UBound(array2)
+                    Reason2 = Reason2 & array2(i) & " "
+                Next i
+                
+                'Capture announce message
+                If UBound(array2) > 0 Then
+                    ANN_MSG = Mid$(p_MainArray(2), Len(array2(0)) + 2, Len(p_MainArray(2)))
+                End If
+                
+                Select Case LCase$(array2(0))
+                    Case ".show"
+                        If IsPartOf(p_TEXT_FIRST, "accounts") Then
+                            SendSingle "!split_text#" & GetAccountList, Index
+                            
+                        ElseIf IsPartOf(p_TEXT_FIRST, "users") Then
+                            SendSingle "!split_text#" & GetUserList, Index
+                        
+                        Else
+                            SendSingle "Incorrect Syntax, use the following format .show 'account'/'user'.", Index
+                            
+                        End If
+                    
+                    Case ".userinfo", ".uinfo"
+                        GetUserInfo p_TEXT_FIRST_PROP, array2(0), Index
+                    
+                    Case ".accountinfo", ".accinfo", ".ainfo"
+                        GetAccountInfo p_TEXT_FIRST, array2(0), Index
+                    
+                    Case ".kick"
+                        KickUser p_TEXT_FIRST_PROP, Index
+                        
+                    Case ".ban"
+                        If IsPartOf(p_TEXT_FIRST, "user") Then
+                            BanUser p_TEXT_SECOND_PROP, p_MainArray(1), True, Index, Trim$(Reason2)
+                            
+                        ElseIf IsPartOf(p_TEXT_FIRST, "account") Then
+                            BanAccount p_TEXT_SECOND, p_MainArray(1), True, Index, Trim$(Reason2)
+                        
+                        Else
+                            SendSingle "Incorrect syntax, use the following format .ban User / Account 'Name' 'Reason'", Index
+                            
+                        End If
+                        
+                    Case ".unban"
+                        If IsPartOf(p_TEXT_FIRST, "user") Then
+                            BanUser p_TEXT_SECOND_PROP, p_MainArray(1), False, Index, Trim$(Reason2)
+                            
+                        ElseIf IsPartOf(p_TEXT_FIRST, "account") Then
+                            BanAccount p_TEXT_SECOND, p_MainArray(1), False, Index, Trim$(Reason2)
+                            
+                        Else
+                            SendSingle "Incorrect syntax, use the following format .unban User / Account 'Name' 'Reason'", Index
+                            
+                        End If
+                    
+                    Case ".mute"
+                        MuteUser p_TEXT_FIRST_PROP, p_MainArray(1), True, Index, Trim$(Reason)
+                    
+                    Case ".unmute"
+                        MuteUser p_TEXT_FIRST_PROP, p_MainArray(1), False, Index, Trim$(Reason)
+                    
+                    Case ".announce", ".ann", ".broadcast"
+                        If Len(ANN_MSG) = 0 Then
+                            SendSingle "Incorrect syntax, use the following format " & array2(0) & " 'text to announce'.", Index
+                        Else
+                            SendMessage "[" & p_MainArray(1) & " announces]: " & ANN_MSG
+                        End If
+                    
+                    Case ".help", ".command", ".commands"
+                        SendSingle GetCommands, Index
+                        
+                    Case ".reload"
+                        With Database
+                            Select Case LCase$(p_TEXT_FIRST)
+                                Case LCase$(.AccountTable), LCase$(.FriendTable), LCase$(.IgnoreTable)
+                                    SendSingle "This table can't be reloaded.", Index
+                                
+                                Case LCase$(.CommandsTable)
+                                    Erase Commands
+                                    LoadCommands .CommandsTable
+                                    SendMessage p_MainArray(1) & " initiated the reload of '" & .CommandsTable & "' table."
+                                    
+                                Case LCase$(.DeclinedNameTable)
+                                    Erase DeclinedNames
+                                    LoadDeclinedNames .DeclinedNameTable
+                                    SendMessage p_MainArray(1) & " initiated the reload of '" & .DeclinedNameTable & "' table."
+                                    
+                                Case LCase$(.EmoteTable)
+                                    Erase Emotes
+                                    LoadEmotes .EmoteTable
+                                    SendMessage p_MainArray(1) & " initiated the reload of '" & .EmoteTable & "' table."
+                                
+                                Case Else
+                                    If Len(p_TEXT_FIRST) = 0 Then
+                                        SendSingle "Incorrect Syntax. Use the following format .reload Table.", Index
+                                    Else
+                                        SendSingle "This table does not exist.", Index
+                                    End If
+                            End Select
+                        End With
+                    
+                    Case ".clear"
+                        If Len(p_TEXT_FIRST) = 0 Then
+                            SendSingle "Incorrect Syntax. Use the following format .clear Name", Index
+                        Else
+                            With frmPanel.ListView1.ListItems
+                                For i = 1 To .Count
+                                    If .Item(i) = p_TEXT_FIRST_PROP Then
+                                        SendSingle "!clear#", .Item(i).SubItems(2)
+                                        Exit For
+                                    Else
+                                        If i = .Count Then SendSingle "User '" & p_TEXT_FIRST & "' was not found.", Index
+                                    End If
+                                Next i
+                            End With
+                        End If
+                        
+                    Case Else
+                        SendSingle "Unknown command used. Check .help for more information about commands.", Index
+                End Select
                 Exit Sub
             End If
-        End If
-        
-        With frmPanel.ListView1.ListItems
-            For i = 1 To .Count
-                If .Item(i) = p_TEXT_FIRST_PROP Then
-                    IsUser = True
-                    Exit For
-                End If
-            Next i
-        End With
-        
-        Select Case LCase(array2(0))
-        
-        'Roll function
-        Case "/roll"
-            On Error Resume Next
-            Dim pRoll       As Long
-            Dim pMinRoll    As Long
-            Dim pMaxRoll    As Long
             
-            If UBound(array2) > 0 Then
-                If UBound(array2) > 1 Then
-                    If IsNumeric(array2(1)) Then
-                        If IsNumeric(array2(2)) Then
-                            pRoll = GetRandomNumber(array2(1), array2(2))
-                            pMinRoll = array2(1)
-                            pMaxRoll = array2(2)
-                        Else
-                            pRoll = GetRandomNumber(, array2(1))
-                            pMinRoll = 1
-                            pMaxRoll = array2(1)
-                        End If
-                    Else
-                        pRoll = GetRandomNumber()
-                        pMinRoll = 1
-                        pMaxRoll = 100
-                    End If
-                Else
-                    If IsNumeric(array2(1)) Then
-                        pRoll = GetRandomNumber(, array2(1))
-                        pMinRoll = 1
-                        pMaxRoll = array2(1)
-                    Else
-                        pRoll = GetRandomNumber()
-                        pMinRoll = 1
-                        pMaxRoll = 100
-                    End If
-                End If
-            Else
-                pRoll = GetRandomNumber()
-                pMinRoll = 1
-                pMaxRoll = 100
-            End If
-            
-            SendSingle p_MainArray(1) & " rolls " & pRoll & ". (" & pMinRoll & "-" & pMaxRoll & ")", Index
-           
-        'Whisper X to Z from Y
-        Case "/w", "/whisper"
-            If IsUser Then
-                If UBound(array2) > 1 Then
-                    Whisper p_MainArray(1), p_TEXT_FIRST_PROP, array2(2), Index
-                    SetLastMessage p_MainArray(1), p_MainArray(2)
-                Else
+            If IsSlash Then
+                Dim IsUser As Boolean
+                
+                If IsMuted Then
+                    SendSingle "You are muted.", Index
                     Exit Sub
                 End If
-            Else
-                If Len(p_TEXT_FIRST_PROP) = 0 Then
-                    Exit Sub
-                Else
-                    SendSingle "No user named '" & p_TEXT_FIRST_PROP & "' is currently online.", Index
-                End If
-            End If
-        
-        Case "/online"
-            SendSingle "You are online for " & GetOnlineTime(p_MainArray(1)) & ".", Index
-        
-        Case "/logout"
-            KickUser p_MainArray(1), Index
-        
-        Case Else
-            For i = LBound(Emotes) To UBound(Emotes)
-               '// Hackfix, this is a very bad way of checking and may slow down .. needs testing
-               'If Emotes(i).Command = LCase(array2(0)) Then
-                If IsPartOf(LCase(array2(0)), Emotes(i).Command) Then
-                    If p_MainArray(1) = p_TEXT_FIRST_PROP Then
-                        IsUser = False
-                    End If
-
-                    If IsUser Then
-                        SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsUserText1 & p_TEXT_FIRST_PROP & Emotes(i).IsUserText2
-                    Else
-                        SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsNotUser
-                    End If
-                    Exit For
-                Else
-                    If i = UBound(Emotes) Then SendSingle "Unknown command used.", Index
-                End If
-            Next i
-            
-        End Select
-        SetLastMessage p_MainArray(1), p_MainArray(2)
-        Exit Sub
-    End If
-    
-    'Check if user is muted
-    If IsMuted Then
-        SendSingle "You are muted.", Index
-        Exit Sub
-    End If
-    
-    Dim S1  As Long
-    Dim E   As String
-    
-    'Only certain level accounts can by pass special rules
-    If GetLevel(p_MainArray(1)) = Options.ChatLevel Then
-        'We just bother checking if the text is longer then 5 characters
-        If Len(p_MainArray(2)) > 5 Then
-            'If the text is just made of numbers we don't check
-            If IsNumeric(p_MainArray(2)) = False Then
-                'If there are letters and not just signs then check
-                If IsAlphaCharacter(p_MainArray(2)) Then
-                    S1 = 0
-                    For i = 1 To Len(p_MainArray(2))
-                        E = Mid$(p_MainArray(2), i, 1)
-                        If UCase$(E) = E Then S1 = S1 + 1
-                    Next i
-                    E = vbNullString
-                    'Exit if there are more then 75% of caps
-                    If Format$(100 * S1 / Len(p_MainArray(2)), "0") > 75 Then
-                        SendSingle "Message blocked. Please do not write more then 75% in caps.", Index
+                
+                If GetLevel(p_MainArray(1)) = Options.ChatLevel Then
+                    If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
+                        SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
                         Exit Sub
                     End If
                 End If
+                
+                With frmPanel.ListView1.ListItems
+                    For i = 1 To .Count
+                        If .Item(i) = p_TEXT_FIRST_PROP Then
+                            IsUser = True
+                            Exit For
+                        End If
+                    Next i
+                End With
+                
+                Select Case LCase(array2(0))
+                    'Roll function
+                    Case "/roll"
+                        On Error Resume Next
+                        Dim pRoll       As Long
+                        Dim pMinRoll    As Long
+                        Dim pMaxRoll    As Long
+                        
+                        If UBound(array2) > 0 Then
+                            If UBound(array2) > 1 Then
+                                If IsNumeric(array2(1)) Then
+                                    If IsNumeric(array2(2)) Then
+                                        pRoll = GetRandomNumber(array2(1), array2(2))
+                                        pMinRoll = array2(1)
+                                        pMaxRoll = array2(2)
+                                    Else
+                                        pRoll = GetRandomNumber(, array2(1))
+                                        pMinRoll = 1
+                                        pMaxRoll = array2(1)
+                                    End If
+                                Else
+                                    pRoll = GetRandomNumber()
+                                    pMinRoll = 1
+                                    pMaxRoll = 100
+                                End If
+                            Else
+                                If IsNumeric(array2(1)) Then
+                                    pRoll = GetRandomNumber(, array2(1))
+                                    pMinRoll = 1
+                                    pMaxRoll = array2(1)
+                                Else
+                                    pRoll = GetRandomNumber()
+                                    pMinRoll = 1
+                                    pMaxRoll = 100
+                                End If
+                            End If
+                        Else
+                            pRoll = GetRandomNumber()
+                            pMinRoll = 1
+                            pMaxRoll = 100
+                        End If
+                        
+                        SendSingle p_MainArray(1) & " rolls " & pRoll & ". (" & pMinRoll & "-" & pMaxRoll & ")", Index
+                       
+                    'Whisper X to Z from Y
+                    Case "/w", "/whisper"
+                        If IsUser Then
+                            If UBound(array2) > 1 Then
+                                Whisper p_MainArray(1), p_TEXT_FIRST_PROP, array2(2), Index
+                                SetLastMessage p_MainArray(1), p_MainArray(2)
+                            Else
+                                Exit Sub
+                            End If
+                        Else
+                            If Len(p_TEXT_FIRST_PROP) = 0 Then
+                                SendSingle "Incorrect Syntax, use the following format /w 'Name' 'Text'", Index
+                                Exit Sub
+                            Else
+                                SendSingle "No user named '" & p_TEXT_FIRST_PROP & "' is currently online.", Index
+                            End If
+                        End If
+                    
+                    Case "/online"
+                        SendSingle "You are online for " & Trim$(GetOnlineTime(p_MainArray(1))) & ".", Index
+                    
+                    Case "/logout"
+                        KickUser p_MainArray(1), Index
+                    
+                    Case Else
+                        For i = LBound(Emotes) To UBound(Emotes)
+                           '// Hackfix, this is a very bad way of checking and may slow down .. needs testing
+                           'If Emotes(i).Command = LCase(array2(0)) Then
+                            If IsPartOf(LCase(array2(0)), Emotes(i).Command) Then
+                                If p_MainArray(1) = p_TEXT_FIRST_PROP Then
+                                    IsUser = False
+                                End If
+            
+                                If IsUser Then
+                                    SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsUserText1 & p_TEXT_FIRST_PROP & Emotes(i).IsUserText2
+                                Else
+                                    SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsNotUser
+                                End If
+                                Exit For
+                            Else
+                                If i = UBound(Emotes) Then SendSingle "Unknown command used.", Index
+                            End If
+                        Next i
+                End Select
+                SetLastMessage p_MainArray(1), p_MainArray(2)
+                Exit Sub
             End If
-        End If
-        
-        If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
-            SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
-            Exit Sub
-        End If
-    End If
-    
-    'Send Message and print in chat
-    SendProtectedMessage p_MainArray(1), "[" & p_MainArray(1) & "]: " & p_MainArray(2)
-    
-    'Set last message
-    SetLastMessage p_MainArray(1), p_MainArray(2)
-    
-Case Else
-    SendMessage "Error."
-    
-End Select
+            
+            'Check if user is muted
+            If IsMuted Then
+                SendSingle "You are muted.", Index
+                Exit Sub
+            End If
+            
+            Dim S1  As Long
+            Dim E   As String
+            
+            'Only certain level accounts can by pass special rules
+            If GetLevel(p_MainArray(1)) = Options.ChatLevel Then
+                'We just bother checking if the text is longer then 5 characters
+                If Len(p_MainArray(2)) > 5 Then
+                    'If the text is just made of numbers we don't check
+                    If IsNumeric(p_MainArray(2)) = False Then
+                        'If there are letters and not just signs then check
+                        If IsAlphaCharacter(p_MainArray(2)) Then
+                            S1 = 0
+                            For i = 1 To Len(p_MainArray(2))
+                                E = Mid$(p_MainArray(2), i, 1)
+                                If UCase$(E) = E Then S1 = S1 + 1
+                            Next i
+                            E = vbNullString
+                            'Exit if there are more then 75% of caps
+                            If Format$(100 * S1 / Len(p_MainArray(2)), "0") > 75 Then
+                                SendSingle "Message blocked. Please do not write more then 75% in caps.", Index
+                                Exit Sub
+                            End If
+                        End If
+                    End If
+                End If
+                
+                If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
+                    SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
+                    Exit Sub
+                End If
+            End If
+            
+            'Send Message and print in chat
+            SendProtectedMessage p_MainArray(1), "[" & p_MainArray(1) & "]: " & p_MainArray(2)
+            
+            'Set last message
+            SetLastMessage p_MainArray(1), p_MainArray(2)
+            
+        Case Else
+            SendMessage "Error."
+    End Select
 Next k
 End Sub
 
@@ -1332,12 +1324,30 @@ With frmPanel.ListView1.ListItems
             
             For j = LBound(TD1) To UBound(TD1)
                 Select Case j
-                Case 0
-                    TD = TD & TD1(j) & " hours "
-                Case 1
-                    TD = TD & TD1(j) & " minutes "
-                Case 2
-                    TD = TD & TD1(j) & " seconds"
+                    Case 0
+                        If TD1(j) <> 0 Then
+                            If Left$(TD1(j), 1) = 0 Then
+                                TD = TD & Left$(TD1(j), 1) & " hours"
+                            Else
+                                TD = TD & TD1(j) & " hours "
+                            End If
+                        End If
+                    Case 1
+                        If TD1(j) <> 0 Then
+                            If Left$(TD1(j), 1) = 0 Then
+                                TD = TD & Right$(TD1(j), 1) & " minutes "
+                            Else
+                                TD = TD & TD1(j) & " minutes "
+                            End If
+                        End If
+                    Case 2
+                        If TD1(j) <> 0 Then
+                            If Left$(TD1(j), 1) = 0 Then
+                                TD = TD & Right$(TD1(j), 1) & " seconds"
+                            Else
+                                TD = TD & TD1(j) & " seconds"
+                            End If
+                        End If
                 End Select
             Next j
             
