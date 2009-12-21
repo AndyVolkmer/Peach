@@ -25,7 +25,7 @@ Public MDI_MSG_ALREADY_IN_IGNORE_LIST   As String
 Public MDI_MSG_ALREADY_IN_FRIEND_LIST   As String
 Public MDI_MSG_ACCOUNT_NOT_EXIST        As String
 
-' Configuration form ..
+'Configuration form ..
 Public CONFIG_LABEL_ACCOUNT             As String
 Public CONFIG_LABEL_PASSWORD            As String
 Public CONFIG_LABEL_NAME                As String

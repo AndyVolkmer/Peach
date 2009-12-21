@@ -235,12 +235,12 @@ Private Sub SckReceiveFile_DataArrival(Index As Integer, ByVal bytesTotal As Lon
 Exit Sub
 handleErrorSendFile:
 Select Case Err.Number
-Case 75
-    MsgBox "The file you are trying to get already exists in this location and is ReadOnly. Rename it and try to send again." & vbCrLf & "Current action aborted due to ReadOnly file.", vbInformation
-    Exit Sub
-Case Else
-    MsgBox "Error : " & Err.Number & vbCrLf & "Description : " & Err.Description & vbCrLf & "Current action aborted because of an unkown error!", vbCritical
-    Exit Sub
+    Case 75
+        MsgBox "The file you are trying to get already exists in this location and is ReadOnly. Rename it and try to send again." & vbCrLf & "Current action aborted due to ReadOnly file.", vbInformation
+        Exit Sub
+    Case Else
+        MsgBox "Error : " & Err.Number & vbCrLf & "Description : " & Err.Description & vbCrLf & "Current action aborted because of an unkown error!", vbCritical
+        Exit Sub
 End Select
 End Sub
 
