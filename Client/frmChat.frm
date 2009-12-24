@@ -27,6 +27,7 @@ Begin VB.Form frmChat
       Enabled         =   0   'False
       Height          =   855
       Left            =   120
+      MaxLength       =   180
       TabIndex        =   5
       Top             =   2760
       Width           =   5535
@@ -42,6 +43,7 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       Appearance      =   0
       TextRTF         =   $"frmChat.frx":0000
    End

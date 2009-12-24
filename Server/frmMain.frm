@@ -397,7 +397,6 @@ Screen.MousePointer = vbDefault
 
 'Set error flag
 HasError = True
-
 End Sub
 
 Private Sub LoadCommands(pTable As String)
@@ -494,9 +493,8 @@ With xRecordSet
     Do Until .EOF
         ReDim Preserve Emotes(Counter + 1)
         Emotes(Counter).Command = !Command
-        Emotes(Counter).IsNotUser = !is_not_user
-        Emotes(Counter).IsUserText1 = !is_user_text_1
-        Emotes(Counter).IsUserText2 = !is_user_text_2
+        Emotes(Counter).SingleEmote = !single_emote
+        Emotes(Counter).TargetEmote = !target_emote
         .MoveNext
         Counter = Counter + 1
     Loop
@@ -659,7 +657,7 @@ Select Case msg
     Case WM_LBUTTONUP
     Case WM_LBUTTONDBLCLK
         Vali = True
-        frmMain.Show 'show form
+        frmMain.Show
     Case WM_RBUTTONDOWN
     Case WM_RBUTTONUP
     Case WM_RBUTTONDBLCLK
@@ -1172,7 +1170,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         End If
                         
                         SendSingle p_MainArray(1) & " rolls " & pRoll & ". (" & pMinRoll & "-" & pMaxRoll & ")", Index
-                       
+                        
                     'Whisper X to Z from Y
                     Case "/w", "/whisper"
                         If IsUser Then
@@ -1190,32 +1188,38 @@ For k = 0 To UBound(p_PreArray) - 1
                                 SendSingle "No user named '" & p_TEXT_FIRST_PROP & "' is currently online.", Index
                             End If
                         End If
-                    
+                        
                     Case "/online"
                         SendSingle "You are online for " & Trim$(GetOnlineTime(p_MainArray(1))) & ".", Index
-                    
+                        
                     Case "/logout"
                         KickUser p_MainArray(1), Index
-                    
+                        
                     Case Else
                         For i = LBound(Emotes) To UBound(Emotes)
                            '// Hackfix, this is a very bad way of checking and may slow down .. needs testing
-                           'If Emotes(i).Command = LCase(array2(0)) Then
                             If IsPartOf(LCase(array2(0)), Emotes(i).Command) Then
                                 If p_MainArray(1) = p_TEXT_FIRST_PROP Then
                                     IsUser = False
                                 End If
-            
+                                
+                                Dim pTemp As String
+                                
                                 If IsUser Then
-                                    SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsUserText1 & p_TEXT_FIRST_PROP & Emotes(i).IsUserText2
+                                    pTemp = Replace(Emotes(i).TargetEmote, "%u", p_MainArray(1))
+                                    pTemp = Replace(pTemp, "%g", "his / her")
+                                    pTemp = Replace(pTemp, "%t", p_TEXT_FIRST_PROP)
                                 Else
-                                    SendProtectedMessage p_MainArray(1), p_MainArray(1) & Emotes(i).IsNotUser
+                                    pTemp = Replace(Emotes(i).SingleEmote, "%u", p_MainArray(1))
+                                    pTemp = Replace(pTemp, "%g", "his / her")
                                 End If
+                                SendProtectedMessage p_MainArray(1), pTemp
                                 Exit For
                             Else
                                 If i = UBound(Emotes) Then SendSingle "Unknown command used.", Index
                             End If
                         Next i
+                        
                 End Select
                 SetLastMessage p_MainArray(1), p_MainArray(2)
                 Exit Sub
@@ -1305,6 +1309,7 @@ For j = 1 To Len(pPart)
         IsPartOf = True
     Else
         IsPartOf = False
+        Exit For
     End If
 Next j
 End Function
@@ -1417,19 +1422,17 @@ Private Sub MuteUser(User As String, AdminName As String, IsMuted As Boolean, pI
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            If IsMuted Then
-                'If the user is already muted then return feedback
-                If .Item(i).SubItems(4) = "True" Then
-                    SendSingle User & " is already muted.", pIndex
-                    Exit Sub
-                End If
-            Else
-                If .Item(i).SubItems(4) = "False" Then
-                    SendSingle User & " is not muted.", pIndex
-                    Exit Sub
-                End If
+            
+            If IsMuted And .Item(i).SubItems(4) = "True" Then
+                SendSingle User & " is already muted.", pIndex
+                Exit Sub
+                
+            ElseIf Not IsMuted And .Item(i).SubItems(4) = "False" Then
+                SendSingle User & " is not muted.", pIndex
+                Exit Sub
+                
             End If
-        
+            
             'Set flag in userlist
             .Item(i).SubItems(4) = CStr(IsMuted)
             

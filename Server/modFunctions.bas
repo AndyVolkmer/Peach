@@ -44,9 +44,8 @@ End Type
 
 Type EMT
     Command                 As String
-    IsUserText1             As String
-    IsUserText2             As String
-    IsNotUser               As String
+    SingleEmote             As String
+    TargetEmote             As String
 End Type
 
 Type GC

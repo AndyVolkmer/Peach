@@ -80,5 +80,8 @@ txtConver = vbNullString
 End Sub
 
 Private Sub txtToSend_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then cmdSend_Click
+If KeyAscii = vbKeyReturn Then
+    cmdSend_Click
+    KeyAscii = 0
+End If
 End Sub

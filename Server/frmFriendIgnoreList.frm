@@ -162,7 +162,7 @@ With ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = pUser Then
             If .Item(i).SubItems(2) = pFriend Then
-                SendSingle "!msgbox#'MSG_ALREADY_IN_FRIEND_LIST#" & pFriend & "#", pIndex
+                SendSingle "!msgbox#MSG_ALREADY_IN_FRIEND_LIST#'" & pFriend & "#", pIndex
                 Exit Sub
             End If
         End If
@@ -357,7 +357,7 @@ With ListView2.ListItems
         End If
     Next i
 
-    'Search for the user in Friend row
+    'Search for the user in Ignore row
     For i = 1 To .Count
         If i > .Count Then Exit For
         If .Item(i).SubItems(2) = pUser Then

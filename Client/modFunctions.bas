@@ -192,9 +192,7 @@ With frmConfig
     End If
 End With
 
-If Not pSwitch And IsConnecting Then
-    pBool = False
-ElseIf Not pSwitch And Not IsConnecting Then
+If Not pSwitch And Not IsConnecting Then
     pBool = True
 Else
     pBool = False
