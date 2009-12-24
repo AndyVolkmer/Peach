@@ -94,6 +94,25 @@ Begin VB.Form frmAccountPanel
       TabIndex        =   4
       Top             =   2400
       Width           =   7215
+      Begin VB.ComboBox cmbGender 
+         Enabled         =   0   'False
+         Height          =   315
+         Left            =   5760
+         Style           =   2  'Dropdown List
+         TabIndex        =   16
+         Top             =   480
+         Width           =   975
+      End
+      Begin VB.Label lblGender 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   " Gender:"
+         Enabled         =   0   'False
+         Height          =   255
+         Left            =   5760
+         TabIndex        =   15
+         Top             =   240
+         Width           =   975
+      End
       Begin VB.Label lblLevel 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Level:"
@@ -102,7 +121,7 @@ Begin VB.Form frmAccountPanel
          Left            =   4560
          TabIndex        =   10
          Top             =   240
-         Width           =   1215
+         Width           =   975
       End
       Begin VB.Label lblBanned 
          BackColor       =   &H00F4F4F4&
@@ -177,7 +196,7 @@ Begin VB.Form frmAccountPanel
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
       Appearance      =   1
-      NumItems        =   9
+      NumItems        =   10
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID"
          Object.Width           =   882
@@ -220,6 +239,11 @@ Begin VB.Form frmAccountPanel
       BeginProperty ColumnHeader(9) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   8
          Text            =   "Secret Answer"
+         Object.Width           =   2540
+      EndProperty
+      BeginProperty ColumnHeader(10) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   9
+         Text            =   "Gender"
          Object.Width           =   2540
       EndProperty
    End
@@ -287,21 +311,23 @@ With ListView1
 End With
 End Sub
 
-Private Sub DoButtons(Wind As Boolean)
-cmdAdd.Enabled = Not Wind
-cmdDel.Enabled = Not Wind
-cmdMod.Enabled = Not Wind
-cmdSave.Enabled = Wind
-cmdCancel.Enabled = Wind
-txtName.Enabled = Wind
-txtPassword.Enabled = Wind
-cmbBanned.Enabled = Wind
-cmbLevel.Enabled = Wind
-lblName.Enabled = Wind
-lblPassword.Enabled = Wind
-lblBanned.Enabled = Wind
-lblLevel.Enabled = Wind
-Frame1.Enabled = Wind
+Private Sub DoButtons(Args As Boolean)
+cmdAdd.Enabled = Not Args
+cmdDel.Enabled = Not Args
+cmdMod.Enabled = Not Args
+cmdSave.Enabled = Args
+cmdCancel.Enabled = Args
+txtName.Enabled = Args
+txtPassword.Enabled = Args
+cmbBanned.Enabled = Args
+cmbLevel.Enabled = Args
+cmbGender.Enabled = Args
+lblName.Enabled = Args
+lblPassword.Enabled = Args
+lblBanned.Enabled = Args
+lblLevel.Enabled = Args
+lblGender.Enabled = Args
+Frame1.Enabled = Args
 End Sub
 
 Private Sub ClearTxBoxes()
@@ -333,7 +359,7 @@ Select Case Switch
                 Exit Sub
             End If
         Next i
-        RegisterAccount txtName.Text, txtPassword.Text, vbNullString, vbNullString
+        RegisterAccount txtName.Text, txtPassword.Text, vbNullString, vbNullString, cmbGender.Text
         
     Case "MOD"
         'Name can't be modified to nothing
@@ -350,15 +376,15 @@ Select Case Switch
             Exit Sub
         End If
         
-        ModifyAccount txtName.Text, txtPassword.Text, CBool(cmbBanned.Text), cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index
+        ModifyAccount txtName.Text, txtPassword.Text, CBool(cmbBanned.Text), cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index, cmbGender.Text
 End Select
 DoButtons False
 End Sub
 
-Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Boolean, pLevel As String, MOD_ID As Long, LST_ID As Long)
+Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Boolean, pLevel As String, MOD_ID As Long, LST_ID As Long, pGender As String)
 'Update the database
 With frmMain.xCommand
-    .CommandText = "UPDATE " & Database.AccountTable & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & CStr(pBanned) & "', Level1 = '" & pLevel & "' WHERE ID = " & MOD_ID
+    .CommandText = "UPDATE " & Database.AccountTable & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & CStr(pBanned) & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID
     .Execute
 End With
 
@@ -368,10 +394,11 @@ With ListView1.ListItems
     .Item(LST_ID).SubItems(2) = pPassword
     .Item(LST_ID).SubItems(5) = CStr(pBanned)
     .Item(LST_ID).SubItems(6) = pLevel
+    .Item(LST_ID).SubItems(9) = pGender
 End With
 End Sub
 
-Private Sub RegisterAccount(pName As String, pPassword As String, pSecretQuestion As String, pSecretAnswer As String)
+Private Sub RegisterAccount(pName As String, pPassword As String, pSecretQuestion As String, pSecretAnswer As String, pGender As String)
 Dim j As Long
 
 'Check list for biggest value
@@ -388,7 +415,7 @@ j = j + 1
 
 'Add new account to database
 With frmMain.xCommand
-    .CommandText = "INSERT INTO " & Database.AccountTable & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', 'False', '0', '" & pSecretQuestion & "', '" & pSecretAnswer & "')"
+    .CommandText = "INSERT INTO " & Database.AccountTable & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', 'False', '0', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "')"
     .Execute
 End With
 
@@ -406,6 +433,7 @@ With ListView1.ListItems
     .Item(i).SubItems(6) = "0"
     .Item(i).SubItems(7) = pSecretQuestion
     .Item(i).SubItems(8) = pSecretAnswer
+    .Item(i).SubItems(9) = pGender
 End With
 End Sub
 
@@ -440,6 +468,7 @@ If ListView1.ListItems.Count <> 0 Then
         txtPassword.Text = .SubItems(2)
         cmbBanned.Text = .SubItems(5)
         cmbLevel.ListIndex = .SubItems(6)
+        cmbGender.Text = .SubItems(9)
     End With
 End If
 End Sub
@@ -473,6 +502,7 @@ Dim GetName             As String
 Dim GetPassword         As String
 Dim GetSecretQuestion   As String
 Dim GetSecretAnswer     As String
+Dim GetGender           As String
 
 On Error GoTo HandleError
 RegSock(Index).GetData GetMessage
@@ -482,6 +512,7 @@ GetName = array1(1)
 GetPassword = array1(2)
 GetSecretQuestion = array1(3)
 GetSecretAnswer = array1(4)
+GetGender = array1(5)
 
 Select Case array1(0)
     'Regster an account
@@ -498,7 +529,7 @@ Select Case array1(0)
             Next i
         End With
     
-        RegisterAccount GetName, GetPassword, GetSecretQuestion, GetSecretAnswer
+        RegisterAccount GetName, GetPassword, GetSecretQuestion, GetSecretAnswer, GetGender
         RegSock(Index).SendData "!done#"
         
     'Check the secret question and send password

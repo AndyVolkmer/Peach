@@ -689,6 +689,7 @@ If ACC_SWITCH = "REG" Then
         .Frame1.Visible = False
         .Check1.Visible = False
         .cmbSecretQuestion.Visible = False
+        .cmbGender.Visible = False
         .txtSecretAnswer.Visible = False
     End With
 Else
@@ -716,6 +717,7 @@ If ACC_SWITCH = "REG" Then
         .txtPassword1.Visible = True
         .txtPassword2.Visible = True
         .cmbSecretQuestion.Visible = True
+        .cmbGender.Visible = True
         .txtSecretAnswer.Visible = True
         .Command1.Visible = True
         .Command1.Caption = REG_COMMAND_SUBMIT
@@ -784,6 +786,7 @@ If ACC_SWITCH = "REG" Then
         .Frame1.Visible = False
         .Check1.Visible = False
         .cmbSecretQuestion.Visible = False
+        .cmbGender.Visible = False
         .txtSecretAnswer.Visible = False
     End With
 Else

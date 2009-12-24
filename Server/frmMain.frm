@@ -616,6 +616,11 @@ With frmAccountPanel
         .AddItem "1"
         .AddItem "2"
     End With
+    With .cmbGender
+        .Clear
+        .AddItem "Male"
+        .AddItem "Female"
+    End With
 End With
 
 With xRecordSet
@@ -629,6 +634,7 @@ With xRecordSet
         LItem.SubItems(6) = !Level1
         LItem.SubItems(7) = !SecretQuestion1
         LItem.SubItems(8) = !SecretAnswer1
+        LItem.SubItems(9) = !gender1
         .MoveNext
         Counter = Counter + 1
     Loop
@@ -855,7 +861,7 @@ For k = 0 To UBound(p_PreArray) - 1
         Case "!login"
             With frmAccountPanel.ListView1.ListItems
                 For i = 1 To .Count
-                    If LCase(.Item(i).SubItems(1)) = LCase(p_MainArray(1)) Then
+                    If LCase$(.Item(i).SubItems(1)) = LCase$(p_MainArray(1)) Then
                         'Ban Check
                         If .Item(i).SubItems(5) = "True" Then
                             SendSingle "!login#Banned#", Index
@@ -1130,7 +1136,6 @@ For k = 0 To UBound(p_PreArray) - 1
                 Select Case LCase(array2(0))
                     'Roll function
                     Case "/roll"
-                        On Error Resume Next
                         Dim pRoll       As Long
                         Dim pMinRoll    As Long
                         Dim pMaxRoll    As Long
@@ -1202,16 +1207,41 @@ For k = 0 To UBound(p_PreArray) - 1
                                 If p_MainArray(1) = p_TEXT_FIRST_PROP Then
                                     IsUser = False
                                 End If
+                                                                
+                                Dim pTemp   As String
+                                Dim pGenT   As String
+                                Dim j       As Long
+                                                                
+                                With frmPanel.ListView1.ListItems
+                                    For j = 1 To .Count
+                                        If .Item(j) = p_MainArray(1) Then
+                                            pTemp = .Item(j).SubItems(5)
+                                            Exit For
+                                        End If
+                                    Next j
+                                End With
                                 
-                                Dim pTemp As String
-                                
+                                With frmAccountPanel.ListView1.ListItems
+                                    For j = 1 To .Count
+                                        If .Item(j).SubItems(1) = pTemp Then
+                                            Select Case .Item(j).SubItems(9)
+                                                Case "Male"
+                                                    pGenT = "his"
+                                                Case "Female"
+                                                    pGenT = "her"
+                                            End Select
+                                            Exit For
+                                        End If
+                                    Next j
+                                End With
+                                                                
                                 If IsUser Then
                                     pTemp = Replace(Emotes(i).TargetEmote, "%u", p_MainArray(1))
-                                    pTemp = Replace(pTemp, "%g", "his / her")
+                                    pTemp = Replace(pTemp, "%g", pGenT)
                                     pTemp = Replace(pTemp, "%t", p_TEXT_FIRST_PROP)
                                 Else
                                     pTemp = Replace(Emotes(i).SingleEmote, "%u", p_MainArray(1))
-                                    pTemp = Replace(pTemp, "%g", "his / her")
+                                    pTemp = Replace(pTemp, "%g", pGenT)
                                 End If
                                 SendProtectedMessage p_MainArray(1), pTemp
                                 Exit For
@@ -1305,7 +1335,7 @@ Dim j       As Long
 
 For j = 1 To Len(pPart)
     pTemp1 = Mid(pPart, 1, j)
-    If LCase$(pTemp1) = LCase$(Left(pCommand, Len(pTemp1))) Then
+    If LCase$(pTemp1) = LCase$(Left$(pCommand, Len(pTemp1))) Then
         IsPartOf = True
     Else
         IsPartOf = False
@@ -1322,7 +1352,7 @@ Dim j       As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
-            TD = TimeSerial(0, 0, DateDiff("s", .Item(i).SubItems(6), Time))
+            TD = TimeSerial(0, 0, DateDiff$("s", .Item(i).SubItems(6), Time))
             
             TD1 = Split(TD, ":")
             TD = vbNullString

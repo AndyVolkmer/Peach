@@ -149,6 +149,11 @@ Public REG_CMB_SECRET_QUESTION_3        As String
 Public REG_CMB_SECRET_QUESTION_4        As String
 Public REG_CMB_SECRET_QUESTION_5        As String
 
+Public REG_LABEL_GENDER                 As String
+
+Public REG_CMB_GENDER_MALE              As String
+Public REG_CMB_GENDER_FEMALE            As String
+
 'Settings form
 Public SET_LABEL_COLOR                  As String
 
@@ -320,6 +325,11 @@ REG_CMB_SECRET_QUESTION_2 = "Ihr Lieblings-Film?"
 REG_CMB_SECRET_QUESTION_3 = "Ihr Lieblings-Spiel?"
 REG_CMB_SECRET_QUESTION_4 = "Ihr Lieblings-Sänger?"
 REG_CMB_SECRET_QUESTION_5 = "Geburtsort Ihrer Mutter?"
+
+REG_LABEL_GENDER = " Geschlecht:"
+
+REG_CMB_GENDER_MALE = "Männlich"
+REG_CMB_GENDER_FEMALE = "Weiblich"
 
 SET_LABEL_COLOR = "Jetzige Farbe:"
 
@@ -497,6 +507,11 @@ REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
 REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
 REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
 
+REG_LABEL_GENDER = " Gender:"
+
+REG_CMB_GENDER_MALE = "Male"
+REG_CMB_GENDER_FEMALE = "Female"
+
 SET_LABEL_COLOR = "Current Color:"
 
 SET_FRAME_OPTIONS = "Options"
@@ -667,6 +682,11 @@ REG_CMB_SECRET_QUESTION_2 = "¿Tu pelicula favorita?"
 REG_CMB_SECRET_QUESTION_3 = "¿Tu juego favorito?"
 REG_CMB_SECRET_QUESTION_4 = "¿Tu cantante favorito?"
 REG_CMB_SECRET_QUESTION_5 = "¿El lugar de nacimiento de tu madre?"
+
+REG_LABEL_GENDER = " Sexo:"
+
+REG_CMB_GENDER_MALE = "Masculino"
+REG_CMB_GENDER_FEMALE = "Femenino"
 
 SET_LABEL_COLOR = "Color activo:"
 
@@ -841,6 +861,11 @@ REG_CMB_SECRET_QUESTION_3 = "Vilket är ditt favoritspel?"
 REG_CMB_SECRET_QUESTION_4 = "Vilken är din favorit sångare?"
 REG_CMB_SECRET_QUESTION_5 = "Var är den plats där din mor föddes?"
 
+REG_LABEL_GENDER = " Gender:"
+
+REG_CMB_GENDER_MALE = "Male"
+REG_CMB_GENDER_FEMALE = "Female"
+
 SET_LABEL_COLOR = "Nuvarande färg:"
 
 SET_FRAME_OPTIONS = "Alternativ"
@@ -1013,6 +1038,11 @@ REG_CMB_SECRET_QUESTION_3 = "Qual è il tuo gioco preferito?"
 REG_CMB_SECRET_QUESTION_4 = "Qual è il vostro cantante preferito?"
 REG_CMB_SECRET_QUESTION_5 = "Dove si trova il luogo in cui tua madre è nata?"
 
+REG_LABEL_GENDER = " Gender:"
+
+REG_CMB_GENDER_MALE = "Male"
+REG_CMB_GENDER_FEMALE = "Female"
+
 SET_LABEL_COLOR = "Colore corrente:"
 
 SET_FRAME_OPTIONS = "Opzioni"
@@ -1182,6 +1212,11 @@ REG_CMB_SECRET_QUESTION_2 = "Wat is je favoriete film?"
 REG_CMB_SECRET_QUESTION_3 = "Wat is je favoriete spel?"
 REG_CMB_SECRET_QUESTION_4 = "Wat is uw favoriete zanger?"
 REG_CMB_SECRET_QUESTION_5 = "Waar is de plaats waar je moeder is geboren?"
+
+REG_LABEL_GENDER = " Gender:"
+
+REG_CMB_GENDER_MALE = "Male"
+REG_CMB_GENDER_FEMALE = "Female"
 
 SET_LABEL_COLOR = "Momenteel gebruikte kleur:"
 
@@ -1365,6 +1400,11 @@ REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
 REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
 REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
 
+REG_LABEL_GENDER = " Gender:"
+
+REG_CMB_GENDER_MALE = "Male"
+REG_CMB_GENDER_FEMALE = "Female"
+
 SET_LABEL_COLOR = "Current Color:"
 
 SET_FRAME_OPTIONS = "Options"
@@ -1533,6 +1573,11 @@ REG_CMB_SECRET_QUESTION_2 = "Quel est votre film préféré?"
 REG_CMB_SECRET_QUESTION_3 = "Quel est votre jeu préféré?"
 REG_CMB_SECRET_QUESTION_4 = "Quel est votre chanteur préféré?"
 REG_CMB_SECRET_QUESTION_5 = "Quel est l'endroit où votre mère est née?"
+
+REG_LABEL_GENDER = " Gender:"
+
+REG_CMB_GENDER_MALE = "Male"
+REG_CMB_GENDER_FEMALE = "Female"
 
 SET_LABEL_COLOR = "Couleur Courante:"
 

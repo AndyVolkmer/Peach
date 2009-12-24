@@ -3,7 +3,7 @@ Begin VB.Form frmRegistration
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Peach - Registration"
-   ClientHeight    =   4365
+   ClientHeight    =   4950
    ClientLeft      =   45
    ClientTop       =   435
    ClientWidth     =   3870
@@ -20,9 +20,18 @@ Begin VB.Form frmRegistration
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4365
+   ScaleHeight     =   4950
    ScaleWidth      =   3870
    StartUpPosition =   1  'CenterOwner
+   Begin VB.ComboBox cmbGender 
+      Height          =   315
+      Left            =   240
+      Style           =   2  'Dropdown List
+      TabIndex        =   16
+      Top             =   3840
+      Visible         =   0   'False
+      Width           =   1935
+   End
    Begin VB.TextBox txtPassword1 
       BeginProperty Font 
          Name            =   "Segoe UI"
@@ -113,7 +122,7 @@ Begin VB.Form frmRegistration
       Height          =   375
       Left            =   120
       TabIndex        =   6
-      Top             =   3840
+      Top             =   4440
       Visible         =   0   'False
       Width           =   1815
    End
@@ -132,7 +141,7 @@ Begin VB.Form frmRegistration
       Height          =   375
       Left            =   2040
       TabIndex        =   7
-      Top             =   3840
+      Top             =   4440
       Visible         =   0   'False
       Width           =   1695
    End
@@ -148,7 +157,7 @@ Begin VB.Form frmRegistration
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   3615
+      Height          =   4215
       Left            =   120
       TabIndex        =   0
       Top             =   120
@@ -174,6 +183,24 @@ Begin VB.Form frmRegistration
             Top             =   120
             Width           =   975
          End
+      End
+      Begin VB.Label Label9 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   " Gender:"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   120
+         TabIndex        =   17
+         Top             =   3480
+         Width           =   3255
       End
       Begin VB.Label Label7 
          BackColor       =   &H00F4F4F4&
@@ -361,7 +388,17 @@ If frmMain.RegSock.State <> 7 Then
     Exit Sub
 End If
 
-frmMain.RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#"
+Dim pGender As String
+Select Case cmbGender.ListIndex
+    Case 0
+        pGender = "Male"
+        
+    Case 1
+        pGender = "Female"
+    
+End Select
+
+frmMain.RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#" & pGender & "#"
 End Sub
 
 Private Sub Form_Activate()
@@ -377,6 +414,7 @@ Label4.BackColor = SC
 Label5.BackColor = SC
 Label7.BackColor = SC
 Label8.BackColor = SC
+Label9.BackColor = SC
 Picture1.BackColor = SC
 End Sub
 
@@ -411,6 +449,12 @@ End With
 Label7.Caption = REG_LABEL_SECRET_QUESTION
 Label8.Caption = REG_LABEL_SECRET_ANSWER
 Me.Caption = REG_MSG_LOADING
+Label9.Caption = REG_LABEL_GENDER
+With cmbGender
+    .List(0) = REG_CMB_GENDER_MALE
+    .List(1) = REG_CMB_GENDER_FEMALE
+    .ListIndex = 0
+End With
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

@@ -211,7 +211,6 @@ With frmSendFile
     .txtFileName.Enabled = pBool
     .Combo1.Enabled = pBool
     .cmdBrowse.Enabled = pBool
-    .cmdSendFile.Enabled = pBool
     .lblSendSpeed.Enabled = pBool
     .lblSendStatus.Enabled = pBool
     .picProgress.Enabled = pBool
