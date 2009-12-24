@@ -1352,7 +1352,7 @@ Dim j       As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
-            TD = TimeSerial(0, 0, DateDiff$("s", .Item(i).SubItems(6), Time))
+            TD = TimeSerial(0, 0, DateDiff("s", .Item(i).SubItems(6), Time))
             
             TD1 = Split(TD, ":")
             TD = vbNullString
@@ -1558,7 +1558,7 @@ With frmAccountPanel.ListView1.ListItems
             End If
             
             'Ban account in database
-            frmAccountPanel.ModifyAccount Account, .Item(i).SubItems(2), Ban, .Item(i).SubItems(6), .Item(i), .Item(i).Index
+            frmAccountPanel.ModifyAccount Account, .Item(i).SubItems(2), Ban, .Item(i).SubItems(6), .Item(i), .Item(i).Index, .Item(i).SubItems(9)
             
             'Determine user from account
             With frmPanel.ListView1.ListItems
