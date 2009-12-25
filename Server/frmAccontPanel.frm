@@ -23,6 +23,15 @@ Begin VB.Form frmAccountPanel
    ScaleHeight     =   5220
    ScaleWidth      =   7635
    ShowInTaskbar   =   0   'False
+   Begin VB.ComboBox cmbGender 
+      Enabled         =   0   'False
+      Height          =   315
+      Left            =   5880
+      Style           =   2  'Dropdown List
+      TabIndex        =   16
+      Top             =   2880
+      Width           =   975
+   End
    Begin VB.CommandButton cmdCancel 
       Caption         =   "&Cancel"
       Enabled         =   0   'False
@@ -94,15 +103,6 @@ Begin VB.Form frmAccountPanel
       TabIndex        =   4
       Top             =   2400
       Width           =   7215
-      Begin VB.ComboBox cmbGender 
-         Enabled         =   0   'False
-         Height          =   315
-         Left            =   5760
-         Style           =   2  'Dropdown List
-         TabIndex        =   16
-         Top             =   480
-         Width           =   975
-      End
       Begin VB.Label lblGender 
          BackColor       =   &H00F4F4F4&
          Caption         =   " Gender:"

@@ -927,8 +927,7 @@ For k = 0 To UBound(p_PreArray) - 1
             End With
             
         Case "!message"
-            Dim array2()            As String
-            Dim ANN_MSG             As String
+            Dim p_CHAT_ARRAY()      As String
             Dim p_TEXT_FIRST        As String
             Dim p_TEXT_FIRST_PROP   As String
             Dim p_TEXT_SECOND       As String
@@ -937,30 +936,30 @@ For k = 0 To UBound(p_PreArray) - 1
             Dim IsSlash             As Boolean
                 
             'Split the conversation text by spaces
-            array2 = Split(p_MainArray(2), " ")
-                
+            p_CHAT_ARRAY = Split(p_MainArray(2), " ")
+            
             'Check first position of the text for a point indicating command
-            If Left$(p_MainArray(2), 1) = Chr(46) Then
+            If Left$(p_CHAT_ARRAY(0), 1) = Chr(46) Then
                 If GetLevel(p_MainArray(1)) <> 0 Then
                     IsCommand = True
                 End If
             End If
             
             'Check first position of the text for a slash indicating emote
-            If Left$(p_MainArray(2), 1) = Chr(47) Then
+            If Left$(p_CHAT_ARRAY(0), 1) = Chr(47) Then
                 IsSlash = True
             End If
             
             'Capture first part of the text
-            If UBound(array2) > 0 Then
-                p_TEXT_FIRST = array2(1)
-                p_TEXT_FIRST_PROP = StrConv(array2(1), vbProperCase)
+            If UBound(p_CHAT_ARRAY) > 0 Then
+                p_TEXT_FIRST = p_CHAT_ARRAY(1)
+                p_TEXT_FIRST_PROP = StrConv(p_CHAT_ARRAY(1), vbProperCase)
             End If
             
             'Capture second part
-            If UBound(array2) > 1 Then
-                p_TEXT_SECOND = array2(2)
-                p_TEXT_SECOND_PROP = StrConv(array2(2), vbProperCase)
+            If UBound(p_CHAT_ARRAY) > 1 Then
+                p_TEXT_SECOND = p_CHAT_ARRAY(2)
+                p_TEXT_SECOND_PROP = StrConv(p_CHAT_ARRAY(2), vbProperCase)
             End If
             
             'Check if user is muted
@@ -981,21 +980,16 @@ For k = 0 To UBound(p_PreArray) - 1
                 Dim Reason2         As String
                 
                 'Save the reason
-                For i = 2 To UBound(array2)
-                    Reason = Reason & array2(i) & " "
+                For i = 2 To UBound(p_CHAT_ARRAY)
+                    Reason = Reason & p_CHAT_ARRAY(i) & " "
                 Next i
                 
                 'Save the second reason
-                For i = 3 To UBound(array2)
-                    Reason2 = Reason2 & array2(i) & " "
+                For i = 3 To UBound(p_CHAT_ARRAY)
+                    Reason2 = Reason2 & p_CHAT_ARRAY(i) & " "
                 Next i
                 
-                'Capture announce message
-                If UBound(array2) > 0 Then
-                    ANN_MSG = Mid$(p_MainArray(2), Len(array2(0)) + 2, Len(p_MainArray(2)))
-                End If
-                
-                Select Case LCase$(array2(0))
+                Select Case LCase$(p_CHAT_ARRAY(0))
                     Case ".show"
                         If IsPartOf(p_TEXT_FIRST, "accounts") Then
                             SendSingle "!split_text#" & GetAccountList, Index
@@ -1009,10 +1003,10 @@ For k = 0 To UBound(p_PreArray) - 1
                         End If
                     
                     Case ".userinfo", ".uinfo"
-                        GetUserInfo p_TEXT_FIRST_PROP, array2(0), Index
+                        GetUserInfo p_TEXT_FIRST_PROP, p_CHAT_ARRAY(0), Index
                     
                     Case ".accountinfo", ".accinfo", ".ainfo"
-                        GetAccountInfo p_TEXT_FIRST, array2(0), Index
+                        GetAccountInfo p_TEXT_FIRST, p_CHAT_ARRAY(0), Index
                     
                     Case ".kick"
                         KickUser p_TEXT_FIRST_PROP, Index
@@ -1048,10 +1042,17 @@ For k = 0 To UBound(p_PreArray) - 1
                         MuteUser p_TEXT_FIRST_PROP, p_MainArray(1), False, Index, Trim$(Reason)
                     
                     Case ".announce", ".ann", ".broadcast"
-                        If Len(ANN_MSG) = 0 Then
-                            SendSingle "Incorrect syntax, use the following format " & array2(0) & " 'text to announce'.", Index
+                        Dim p_ANN_MSG As String
+                        
+                        'Capture announce message
+                        If UBound(p_CHAT_ARRAY) > 0 Then
+                            p_ANN_MSG = Mid$(p_MainArray(2), Len(p_CHAT_ARRAY(0)) + 2, Len(p_MainArray(2)))
+                        End If
+                        
+                        If Len(p_ANN_MSG) = 0 Then
+                            SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & " 'text to announce'.", Index
                         Else
-                            SendMessage "[" & p_MainArray(1) & " announces]: " & ANN_MSG
+                            SendMessage "[" & p_MainArray(1) & " announces]: " & p_ANN_MSG
                         End If
                     
                     Case ".help", ".command", ".commands"
@@ -1133,24 +1134,24 @@ For k = 0 To UBound(p_PreArray) - 1
                     Next i
                 End With
                 
-                Select Case LCase(array2(0))
+                Select Case LCase(p_CHAT_ARRAY(0))
                     'Roll function
                     Case "/roll"
                         Dim pRoll       As Long
                         Dim pMinRoll    As Long
                         Dim pMaxRoll    As Long
                         
-                        If UBound(array2) > 0 Then
-                            If UBound(array2) > 1 Then
-                                If IsNumeric(array2(1)) Then
-                                    If IsNumeric(array2(2)) Then
-                                        pRoll = GetRandomNumber(array2(1), array2(2))
-                                        pMinRoll = array2(1)
-                                        pMaxRoll = array2(2)
+                        If UBound(p_CHAT_ARRAY) > 0 Then
+                            If UBound(p_CHAT_ARRAY) > 1 Then
+                                If IsNumeric(p_CHAT_ARRAY(1)) Then
+                                    If IsNumeric(p_CHAT_ARRAY(2)) Then
+                                        pRoll = GetRandomNumber(p_CHAT_ARRAY(1), p_CHAT_ARRAY(2))
+                                        pMinRoll = p_CHAT_ARRAY(1)
+                                        pMaxRoll = p_CHAT_ARRAY(2)
                                     Else
-                                        pRoll = GetRandomNumber(, array2(1))
+                                        pRoll = GetRandomNumber(, p_CHAT_ARRAY(1))
                                         pMinRoll = 1
-                                        pMaxRoll = array2(1)
+                                        pMaxRoll = p_CHAT_ARRAY(1)
                                     End If
                                 Else
                                     pRoll = GetRandomNumber()
@@ -1158,10 +1159,10 @@ For k = 0 To UBound(p_PreArray) - 1
                                     pMaxRoll = 100
                                 End If
                             Else
-                                If IsNumeric(array2(1)) Then
-                                    pRoll = GetRandomNumber(, array2(1))
+                                If IsNumeric(p_CHAT_ARRAY(1)) Then
+                                    pRoll = GetRandomNumber(, p_CHAT_ARRAY(1))
                                     pMinRoll = 1
-                                    pMaxRoll = array2(1)
+                                    pMaxRoll = p_CHAT_ARRAY(1)
                                 Else
                                     pRoll = GetRandomNumber()
                                     pMinRoll = 1
@@ -1179,8 +1180,8 @@ For k = 0 To UBound(p_PreArray) - 1
                     'Whisper X to Z from Y
                     Case "/w", "/whisper"
                         If IsUser Then
-                            If UBound(array2) > 1 Then
-                                Whisper p_MainArray(1), p_TEXT_FIRST_PROP, array2(2), Index
+                            If UBound(p_CHAT_ARRAY) > 1 Then
+                                Whisper p_MainArray(1), p_TEXT_FIRST_PROP, p_CHAT_ARRAY(2), Index
                                 SetLastMessage p_MainArray(1), p_MainArray(2)
                             Else
                                 Exit Sub
@@ -1202,14 +1203,13 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                     Case Else
                         For i = LBound(Emotes) To UBound(Emotes)
-                           '// Hackfix, this is a very bad way of checking and may slow down .. needs testing
-                            If IsPartOf(LCase(array2(0)), Emotes(i).Command) Then
+                            If LCase$(Emotes(i).Command) = LCase$(p_CHAT_ARRAY(0)) Then
                                 If p_MainArray(1) = p_TEXT_FIRST_PROP Then
                                     IsUser = False
                                 End If
                                                                 
                                 Dim pTemp   As String
-                                Dim pGenT   As String
+                                Dim pGen   As String
                                 Dim j       As Long
                                                                 
                                 With frmPanel.ListView1.ListItems
@@ -1226,9 +1226,9 @@ For k = 0 To UBound(p_PreArray) - 1
                                         If .Item(j).SubItems(1) = pTemp Then
                                             Select Case .Item(j).SubItems(9)
                                                 Case "Male"
-                                                    pGenT = "his"
+                                                    pGen = "his"
                                                 Case "Female"
-                                                    pGenT = "her"
+                                                    pGen = "her"
                                             End Select
                                             Exit For
                                         End If
@@ -1237,11 +1237,11 @@ For k = 0 To UBound(p_PreArray) - 1
                                                                 
                                 If IsUser Then
                                     pTemp = Replace(Emotes(i).TargetEmote, "%u", p_MainArray(1))
-                                    pTemp = Replace(pTemp, "%g", pGenT)
+                                    pTemp = Replace(pTemp, "%g", pGen)
                                     pTemp = Replace(pTemp, "%t", p_TEXT_FIRST_PROP)
                                 Else
                                     pTemp = Replace(Emotes(i).SingleEmote, "%u", p_MainArray(1))
-                                    pTemp = Replace(pTemp, "%g", pGenT)
+                                    pTemp = Replace(pTemp, "%g", pGen)
                                 End If
                                 SendProtectedMessage p_MainArray(1), pTemp
                                 Exit For
