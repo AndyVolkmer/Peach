@@ -92,6 +92,7 @@ Public SOC_COMMAND_ADD                  As String
 Public SOC_COMMAND_REMOVE               As String
 Public SOC_COMMAND_FRIEND               As String
 Public SOC_COMMAND_IGNORE               As String
+Public SOC_COMMAND_WHISPER              As String
 
 Public SOC_ASK_DEL_1                    As String
 Public SOC_ASK_DEL_2                    As String
@@ -105,6 +106,8 @@ Public SOC_ASK_IGNORE_TITLE             As String
 Public SOC_ASK_IGNORE_DEFAULT           As String
 
 Public SOC_FRIEND_LIST_STATUS           As String
+
+Public SOC_MSG_CANT_WHISPER             As String
 
 'Create an account form
 Public REG_CAPTION                      As String
@@ -269,6 +272,7 @@ SOC_COMMAND_ADD = "&Hinzufügen"
 SOC_COMMAND_REMOVE = "&Entfernen"
 SOC_COMMAND_FRIEND = "&Als Freund hinzufügen"
 SOC_COMMAND_IGNORE = "&Benutzer ignorieren"
+SOC_COMMAND_WHISPER = "&Anflüstern"
 
 SOC_ASK_DEL_1 = "Möchten Sie '"
 SOC_ASK_DEL_2 = "' von der Liste löschen?"
@@ -282,6 +286,8 @@ SOC_ASK_IGNORE_TITLE = "Benutzer ignorieren"
 SOC_ASK_IGNORE_DEFAULT = "Konto hier eingeben"
 
 SOC_FRIEND_LIST_STATUS = "Status"
+
+SOC_MSG_CANT_WHISPER = "Sie können diesen Benutzer nicht anflüstern."
 
 REG_CAPTION = "Peach - Registration"
 
@@ -450,6 +456,7 @@ SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
 SOC_COMMAND_FRIEND = "&Add to Friends"
 SOC_COMMAND_IGNORE = "&Ignore user"
+SOC_COMMAND_WHISPER = "&Whisper"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"
@@ -463,6 +470,8 @@ SOC_ASK_IGNORE_TITLE = "Ignore a user"
 SOC_ASK_IGNORE_DEFAULT = "Enter account here"
 
 SOC_FRIEND_LIST_STATUS = "Status"
+
+SOC_MSG_CANT_WHISPER = "You can't whisper this user."
 
 REG_CAPTION = "Peach - Registration"
 
@@ -626,6 +635,7 @@ SOC_COMMAND_ADD = "&Añadir"
 SOC_COMMAND_REMOVE = "&Quitar"
 SOC_COMMAND_FRIEND = "&Añardir a amigos"
 SOC_COMMAND_IGNORE = "&Ignorar al usuario"
+SOC_COMMAND_WHISPER = "&Susurrar"
 
 SOC_ASK_DEL_1 = "¿Estas seguro que quieres borrar a '"
 SOC_ASK_DEL_2 = "' de la lista?"
@@ -639,6 +649,8 @@ SOC_ASK_IGNORE_TITLE = "Ignorar a usuario"
 SOC_ASK_IGNORE_DEFAULT = "Cuenta de la persona que quieres ignorar"
 
 SOC_FRIEND_LIST_STATUS = "Estatus"
+
+SOC_MSG_CANT_WHISPER "No puedes susurrar a este usuario."
 
 REG_CAPTION = "Peach - Registración"
 
@@ -804,6 +816,7 @@ SOC_COMMAND_ADD = "&Tillägg"
 SOC_COMMAND_REMOVE = "&Ta bort"
 SOC_COMMAND_FRIEND = "&Lägg till vänner"
 SOC_COMMAND_IGNORE = "&Ignore user"
+SOC_COMMAND_WHISPER = "&Whisper"
 
 SOC_ASK_DEL_1 = "Vill du ta bort '"
 SOC_ASK_DEL_2 = "' från listan?"
@@ -817,6 +830,8 @@ SOC_ASK_IGNORE_TITLE = "Ignore a user"
 SOC_ASK_IGNORE_DEFAULT = "Enter account here"
 
 SOC_FRIEND_LIST_STATUS = "Status"
+
+SOC_MSG_CANT_WHISPER = "You can't whisper this user."
 
 REG_CAPTION = "Peach - Registrering"
 
@@ -981,6 +996,7 @@ SOC_COMMAND_ADD = "&Aggiungere"
 SOC_COMMAND_REMOVE = "&Rimuovere"
 SOC_COMMAND_FRIEND = "&Aggiungi ai tuoi amici"
 SOC_COMMAND_IGNORE = "&Ignore user"
+SOC_COMMAND_WHISPER = "&Whisper"
 
 SOC_ASK_DEL_1 = "Vuoi eliminare '"
 SOC_ASK_DEL_2 = "' dalla lista?"
@@ -994,6 +1010,8 @@ SOC_ASK_IGNORE_TITLE = "Ignore a user"
 SOC_ASK_IGNORE_DEFAULT = "Enter account here"
 
 SOC_FRIEND_LIST_STATUS = "Stato"
+
+SOC_MSG_CANT_WHISPER = "You can't whisper this user."
 
 REG_CAPTION = "Peach - Registrazione"
 
@@ -1156,6 +1174,7 @@ SOC_COMMAND_ADD = "&Toevoegen"
 SOC_COMMAND_REMOVE = "&Verwijderen"
 SOC_COMMAND_FRIEND = "&Voeg toe aan vrienden"
 SOC_COMMAND_IGNORE = "&Ignore user"
+SOC_COMMAND_WHISPER = "&Whisper"
 
 SOC_ASK_DEL_1 = "Wilt u '"
 SOC_ASK_DEL_2 = "' verwijderen uit de lijst?"
@@ -1169,6 +1188,8 @@ SOC_ASK_IGNORE_TITLE = "Ignore a user"
 SOC_ASK_IGNORE_DEFAULT = "Enter account here"
 
 SOC_FRIEND_LIST_STATUS = "Staat"
+
+SOC_MSG_CANT_WHISPER = "You can't whisper this user."
 
 REG_CAPTION = "Peach - Registratie"
 
@@ -1343,6 +1364,7 @@ SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
 SOC_COMMAND_FRIEND = "&Add to Friends"
 SOC_COMMAND_IGNORE = "&Ignore user"
+SOC_COMMAND_WHISPER = "&Whisper"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"
@@ -1356,6 +1378,8 @@ SOC_ASK_IGNORE_TITLE = "Ignore a user"
 SOC_ASK_IGNORE_DEFAULT = "Enter account here"
 
 SOC_FRIEND_LIST_STATUS = "Status"
+
+SOC_MSG_CANT_WHISPER = "You can't whisper this user."
 
 REG_CAPTION = "Peach - Registration"
 
@@ -1517,6 +1541,7 @@ SOC_COMMAND_ADD = "&Ajouter"
 SOC_COMMAND_REMOVE = "&Supprimer"
 SOC_COMMAND_FRIEND = "&Ajouter aux amis"
 SOC_COMMAND_IGNORE = "&Ignore user"
+SOC_COMMAND_WHISPER = "&Whisper"
 
 SOC_ASK_DEL_1 = "Voulez-vous supprimer '"
 SOC_ASK_DEL_2 = "' de la liste?"
@@ -1530,6 +1555,8 @@ SOC_ASK_IGNORE_TITLE = "Ignore a user"
 SOC_ASK_IGNORE_DEFAULT = "Enter account here"
 
 SOC_FRIEND_LIST_STATUS = "État"
+
+SOC_MSG_CANT_WHISPER = "You can't whisper this user."
 
 REG_CAPTION = "Peach - D'enregistrement"
 

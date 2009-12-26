@@ -56,18 +56,15 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "lvOnlineList"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdAddToFriend"
-      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).Control(2)=   "cmdAddToIgnore"
-      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "cmdRemoveIgnore"
+      Tab(2).Control(0)=   "lvIgnoreList"
       Tab(2).Control(1)=   "cmdAddIgnore"
-      Tab(2).Control(2)=   "lvIgnoreList"
+      Tab(2).Control(2)=   "cmdRemoveIgnore"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToIgnore 
          Caption         =   "&Add to Ignore"
@@ -128,8 +125,8 @@ Begin VB.Form frmSociety
          Left            =   120
          TabIndex        =   0
          Top             =   480
-         Width           =   7095
-         _ExtentX        =   12515
+         Width           =   7050
+         _ExtentX        =   12435
          _ExtentY        =   4895
          View            =   3
          LabelEdit       =   1
@@ -152,7 +149,7 @@ Begin VB.Form frmSociety
          NumItems        =   2
          BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
             Text            =   "Name"
-            Object.Width           =   9878
+            Object.Width           =   9790
          EndProperty
          BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
             SubItemIndex    =   1
@@ -165,8 +162,8 @@ Begin VB.Form frmSociety
          Left            =   -74880
          TabIndex        =   3
          Top             =   480
-         Width           =   7095
-         _ExtentX        =   12515
+         Width           =   7055
+         _ExtentX        =   12435
          _ExtentY        =   4895
          View            =   3
          LabelEdit       =   1
@@ -189,7 +186,7 @@ Begin VB.Form frmSociety
          NumItems        =   1
          BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
             Text            =   "Name"
-            Object.Width           =   12409
+            Object.Width           =   12321
          EndProperty
       End
       Begin MSComctlLib.ListView lvIgnoreList 
@@ -197,8 +194,8 @@ Begin VB.Form frmSociety
          Left            =   -74880
          TabIndex        =   7
          Top             =   480
-         Width           =   7095
-         _ExtentX        =   12515
+         Width           =   7055
+         _ExtentX        =   12435
          _ExtentY        =   4895
          View            =   3
          LabelEdit       =   1
@@ -221,13 +218,16 @@ Begin VB.Form frmSociety
          NumItems        =   1
          BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
             Text            =   "Name"
-            Object.Width           =   12418
+            Object.Width           =   12330
          EndProperty
       End
    End
    Begin VB.Menu lvFriendMenu 
       Caption         =   "lvFriendMenu"
       Visible         =   0   'False
+      Begin VB.Menu mWhisper 
+         Caption         =   "&Whisper"
+      End
       Begin VB.Menu mRemoveFriend 
          Caption         =   "&Remove"
       End
@@ -235,6 +235,9 @@ Begin VB.Form frmSociety
    Begin VB.Menu lvOnlineMenu 
       Caption         =   "lvOnlineMenu"
       Visible         =   0   'False
+      Begin VB.Menu mWhisperT 
+         Caption         =   "&Whisper"
+      End
       Begin VB.Menu mAddToFriend 
          Caption         =   "&Add to Friends"
       End
@@ -274,6 +277,8 @@ lvFriendList.ColumnHeaders(2).Text = SOC_FRIEND_LIST_STATUS
 lvOnlineList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
 lvIgnoreList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
 
+mWhisper.Caption = SOC_COMMAND_WHISPER
+mWhisperT.Caption = SOC_COMMAND_WHISPER
 mAddToFriend.Caption = SOC_COMMAND_FRIEND
 mIgnoreUser.Caption = SOC_COMMAND_IGNORE
 mRemoveFriend.Caption = SOC_COMMAND_REMOVE
@@ -298,6 +303,10 @@ With lvFriendList
     If .ListItems.Count = 0 Then Exit Sub
     pRemoveFriend .SelectedItem.Text
 End With
+End Sub
+
+Private Sub Command1_Click()
+
 End Sub
 
 '======= PopUp Menu ======='
@@ -477,4 +486,40 @@ If lvIgnoreList.ListItems.Count = 0 Then Exit Sub
 If Button <> 2 Then Exit Sub
 
 PopupMenu lvIgnoreMenu
+End Sub
+
+Private Sub mWhisper_Click()
+With lvFriendList.SelectedItem
+    If .SubItems(1) = "Offline" Or .Text = frmConfig.txtNick Then
+        MsgBox SOC_MSG_CANT_WHISPER, vbInformation
+        Exit Sub
+    End If
+End With
+
+frmMain.SetupForms frmChat
+With frmChat
+    .txtToSend = "/whisper " & lvFriendList.SelectedItem.Text & " "
+    .txtToSend.SelStart = Len(.txtToSend.Text)
+    .txtToSend.SetFocus
+End With
+End Sub
+
+Private Sub mWhisperT_Click()
+Dim pMiddle     As Long
+Dim pName       As String
+
+pMiddle = InStr(1, lvOnlineList.SelectedItem.Text, " ")
+pName = Left$(lvOnlineList.SelectedItem.Text, pMiddle - 1)
+
+If pName = frmConfig.txtNick Then
+    MsgBox SOC_MSG_CANT_WHISPER, vbInformation
+    Exit Sub
+End If
+
+frmMain.SetupForms frmChat
+With frmChat
+    .txtToSend = "/whisper " & pName & " "
+    .txtToSend.SelStart = Len(.txtToSend.Text)
+    .txtToSend.SetFocus
+End With
 End Sub

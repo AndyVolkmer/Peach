@@ -239,7 +239,7 @@ Private Sub Command2_Click()
 SetupForms frmChat
 End Sub
 
-Private Sub SetupForms(Nix As Form)
+Public Sub SetupForms(Nix As Form)
 frmSociety.Hide
 frmChat.Hide
 frmConfig.Hide

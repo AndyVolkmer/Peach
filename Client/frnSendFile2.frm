@@ -152,86 +152,86 @@ Clients(Index).FileName = vbNullString
 End Sub
 
 Private Sub FitTextInListView(LV As ListView, ByVal Column As Integer, Optional ByVal Text As String, Optional ByVal ItemIndex As Long = -1)
-    Dim TLen As Single, CapLen As Single
-    
-    CapLen = Me.TextWidth(LV.ColumnHeaders(Column + 1).Text) + 195
-    
-    If ItemIndex >= 0 Then
-        If ItemIndex = 0 Then
-            TLen = Me.TextWidth(LV.ListItems(ItemIndex).Text)
-        Else
-            TLen = Me.TextWidth(LV.ListItems(ItemIndex).SubItems(Column))
-        End If
+Dim TLen As Single, CapLen As Single
+
+CapLen = Me.TextWidth(LV.ColumnHeaders(Column + 1).Text) + 195
+
+If ItemIndex >= 0 Then
+    If ItemIndex = 0 Then
+        TLen = Me.TextWidth(LV.ListItems(ItemIndex).Text)
     Else
-        TLen = Me.TextWidth(Text)
+        TLen = Me.TextWidth(LV.ListItems(ItemIndex).SubItems(Column))
     End If
-    
-    TLen = TLen + 195
-    
-    If CapLen > TLen Then TLen = CapLen
-    
-    If LV.ColumnHeaders(Column + 1).Width < TLen Then LV.ColumnHeaders(Column + 1).Width = TLen
+Else
+    TLen = Me.TextWidth(Text)
+End If
+
+TLen = TLen + 195
+
+If CapLen > TLen Then TLen = CapLen
+
+If LV.ColumnHeaders(Column + 1).Width < TLen Then LV.ColumnHeaders(Column + 1).Width = TLen
 End Sub
 
 Private Sub SckReceiveFile_ConnectionRequest(Index As Integer, ByVal requestID As Long)
-    Dim K As Integer, LI As ListItem
+Dim K As Integer, LI As ListItem
+
+For K = 1 To SckReceiveFile.UBound
+    If SckReceiveFile(K).State = sckClosed Then Exit For
+Next K
+
+If K = SckReceiveFile.UBound + 1 Then
+    Load SckReceiveFile(SckReceiveFile.UBound + 1)
+    ReDim Preserve Clients(SckReceiveFile.UBound)
     
-    For K = 1 To SckReceiveFile.UBound
-        If SckReceiveFile(K).State = sckClosed Then Exit For
-    Next K
-    
-    If K = SckReceiveFile.UBound + 1 Then
-        Load SckReceiveFile(SckReceiveFile.UBound + 1)
-        ReDim Preserve Clients(SckReceiveFile.UBound)
-        
-        K = SckReceiveFile.UBound
-        lstConnections.ListItems.Add , , CStr(K)
-    End If
-    
-    SckReceiveFile(K).Accept requestID
-    
-    If Len(SckReceiveFile(K).RemoteHost) = 0 Then
-        Me.lstConnections.ListItems(K + 1).SubItems(2) = SckReceiveFile(K).RemoteHostIP
-    Else
-        Me.lstConnections.ListItems(K + 1).SubItems(2) = SckReceiveFile(K).RemoteHost
-    End If
-    
-    FitTextInListView Me.lstConnections, 2, , K + 1
+    K = SckReceiveFile.UBound
+    lstConnections.ListItems.Add , , CStr(K)
+End If
+
+SckReceiveFile(K).Accept requestID
+
+If Len(SckReceiveFile(K).RemoteHost) = 0 Then
+    Me.lstConnections.ListItems(K + 1).SubItems(2) = SckReceiveFile(K).RemoteHostIP
+Else
+    Me.lstConnections.ListItems(K + 1).SubItems(2) = SckReceiveFile(K).RemoteHost
+End If
+
+FitTextInListView Me.lstConnections, 2, , K + 1
 End Sub
 
 Private Sub SckReceiveFile_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-    Dim sData As String, Pos As Long, Pos2 As Long
+Dim sData As String, Pos As Long, Pos2 As Long
+
+SckReceiveFile(Index).GetData sData, vbString
+
+If Clients(Index).FileSize = 0 And InStr(1, sData, ":") > 0 Then
+    Pos = InStr(1, sData, ",")
     
-    SckReceiveFile(Index).GetData sData, vbString
+    Clients(Index).FileSize = Val(Left(sData, Pos - 1))
+    Pos2 = InStr(Pos, sData, ":")
+    Clients(Index).FileName = Mid(sData, Pos + 1, (Pos2 - Pos) - 1)
     
-    If Clients(Index).FileSize = 0 And InStr(1, sData, ":") > 0 Then
-        Pos = InStr(1, sData, ",")
-        
-        Clients(Index).FileSize = Val(Left(sData, Pos - 1))
-        Pos2 = InStr(Pos, sData, ":")
-        Clients(Index).FileName = Mid(sData, Pos + 1, (Pos2 - Pos) - 1)
-        
-        Clients(Index).FileNum = FreeFile
-        On Error GoTo handleErrorSendFile:
-        Open App.Path & "\" & Clients(Index).FileName For Binary Access Write Lock Write As Clients(Index).FileNum
-        
-        sData = Mid(sData, Pos2 + 1)
-        
-        Me.lstConnections.ListItems(Index + 1).SubItems(3) = Clients(Index).FileName
-        FitTextInListView Me.lstConnections, 3, , Index + 1
+    Clients(Index).FileNum = FreeFile
+    On Error GoTo handleErrorSendFile:
+    Open App.Path & "\" & Clients(Index).FileName For Binary Access Write Lock Write As Clients(Index).FileNum
+    
+    sData = Mid(sData, Pos2 + 1)
+    
+    Me.lstConnections.ListItems(Index + 1).SubItems(3) = Clients(Index).FileName
+    FitTextInListView Me.lstConnections, 3, , Index + 1
+End If
+
+If Len(sData) > 0 Then
+    Clients(Index).BytesReceived = Clients(Index).BytesReceived + Len(sData)
+    Put Clients(Index).FileNum, , sData
+    
+    Me.lstConnections.ListItems(Index + 1).SubItems(4) = Format$(Clients(Index).BytesReceived / Clients(Index).FileSize * 100#, "#0.00") & " %"
+    FitTextInListView Me.lstConnections, 4, , Index + 1
+    
+    If Clients(Index).BytesReceived >= Clients(Index).FileSize Then
+        SckReceiveFile_Close Index
     End If
-    
-    If Len(sData) > 0 Then
-        Clients(Index).BytesReceived = Clients(Index).BytesReceived + Len(sData)
-        Put Clients(Index).FileNum, , sData
-        
-        Me.lstConnections.ListItems(Index + 1).SubItems(4) = Format$(Clients(Index).BytesReceived / Clients(Index).FileSize * 100#, "#0.00") & " %"
-        FitTextInListView Me.lstConnections, 4, , Index + 1
-        
-        If Clients(Index).BytesReceived >= Clients(Index).FileSize Then
-            SckReceiveFile_Close Index
-        End If
-    End If
+End If
 Exit Sub
 handleErrorSendFile:
 Select Case Err.Number
@@ -245,14 +245,14 @@ End Select
 End Sub
 
 Private Sub tmrStatus_Timer()
-    Dim K As Long, TmpStr As String
+Dim K As Long, TmpStr As String
+
+For K = 0 To SckReceiveFile.UBound
+    TmpStr = Choose(SckReceiveFile(K).State + 1, "Closed", "Open", "Listening", "Connection pending", "Resolving host", "Host resolved", "Connecting", "Connected", "Server is disconnecting", "Error")
     
-    For K = 0 To SckReceiveFile.UBound
-        TmpStr = Choose(SckReceiveFile(K).State + 1, "Closed", "Open", "Listening", "Connection pending", "Resolving host", "Host resolved", "Connecting", "Connected", "Server is disconnecting", "Error")
-        
-        If Me.lstConnections.ListItems(K + 1).SubItems(1) <> TmpStr Then
-            Me.lstConnections.ListItems(K + 1).SubItems(1) = TmpStr
-            FitTextInListView Me.lstConnections, 1, , K + 1
-        End If
-    Next K
+    If Me.lstConnections.ListItems(K + 1).SubItems(1) <> TmpStr Then
+        Me.lstConnections.ListItems(K + 1).SubItems(1) = TmpStr
+        FitTextInListView Me.lstConnections, 1, , K + 1
+    End If
+Next K
 End Sub
