@@ -718,6 +718,7 @@ Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(2) = Index Then
+            SendMessage "[" & .Item(i) & "] has gone offline."
             .Remove (i)
             Exit For
         End If
@@ -818,7 +819,7 @@ For k = 0 To UBound(p_PreArray) - 1
         Case "!friend"
             'Get the proper written account name
             p_ProperAccount = GetProperAccountName(p_MainArray(3))
-                
+            
             Select Case p_MainArray(1)
                 'Update Friend list
                 Case "-get"
@@ -853,6 +854,15 @@ For k = 0 To UBound(p_PreArray) - 1
             
         Case "!connected"
             UPDATE_ONLINE
+            Dim pSocket As Winsock
+            For Each pSocket In frmMain.Winsock1
+                With pSocket
+                    If .State = 7 And .Index <> Index Then
+                        .SendData p_MainArray(1) & " has come online." & Chr(24) & Chr(25)
+                        DoEvents
+                    End If
+                End With
+            Next
             
         'Send Server information
         Case "!server_info"
@@ -1009,7 +1019,21 @@ For k = 0 To UBound(p_PreArray) - 1
                         GetAccountInfo p_TEXT_FIRST, p_CHAT_ARRAY(0), Index
                     
                     Case ".kick"
-                        KickUser p_TEXT_FIRST_PROP, Index
+                        With frmPanel.ListView1.ListItems
+                            For i = 1 To .Count
+                                If .Item(i) = p_TEXT_FIRST_PROP Then
+                                    KickUser p_TEXT_FIRST_PROP
+                                Else
+                                    If i = .Count Then
+                                        If Len(p_TEXT_FIRST_PROP) = 0 Then
+                                            SendSingle "Incorrect syntax, use following format .kick 'User'.", Index
+                                        Else
+                                            SendSingle "User '" & p_TEXT_FIRST_PROP & "' not found.", Index
+                                        End If
+                                    End If
+                                End If
+                            Next i
+                        End With
                         
                     Case ".ban"
                         If IsPartOf(p_TEXT_FIRST, "user") Then
@@ -1199,7 +1223,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         SendSingle "You are online for " & Trim$(GetOnlineTime(p_MainArray(1))) & ".", Index
                         
                     Case "/logout"
-                        KickUser p_MainArray(1), Index
+                        KickUser p_MainArray(1)
                         
                     Case Else
                         For i = LBound(Emotes) To UBound(Emotes)
@@ -1522,9 +1546,9 @@ With frmPanel.ListView1.ListItems
             If i = .Count Then
                 If Len(User) = 0 Then
                     If Ban Then
-                        SendSingle "Incorrect syntax, use the following format .ban user 'Name' [Reason]. Arguments between brackets are optional.", pIndex
+                        SendSingle "Incorrect syntax, use the following format .ban user 'Name' [Reason].", pIndex
                     Else
-                        SendSingle "Incorrect syntax, use the following format .unban user 'Name' [Reason]. Arguments between brackets are optional.", pIndex
+                        SendSingle "Incorrect syntax, use the following format .unban user 'Name' [Reason].", pIndex
                     End If
                 Else
                     SendSingle "User '" & User & "' not found.", pIndex
@@ -1602,28 +1626,17 @@ With frmAccountPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub KickUser(pUser As String, pIndex As Integer)
+Private Sub KickUser(pUser As String)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
-            'Disconnect and unload the socket
             Unload frmMain.Winsock1(.Item(i).SubItems(2))
-            
-            'Remove from userlist
+            SendMessage "[" & .Item(i) & " ] has gone offline."
             .Remove (i)
             
-            'Update userlist and statusbar
             UPDATE_ONLINE
             UPDATE_STATUS_BAR
             Exit For
-        Else
-            If i = .Count Then
-                If Len(pUser) = 0 Then
-                    SendSingle "Incorrect syntax, use following format .kick 'User'.", pIndex
-                Else
-                    SendSingle "User '" & pUser & "' not found.", pIndex
-                End If
-            End If
         End If
     Next i
 End With
@@ -1700,6 +1713,7 @@ Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(2) = Index Then
+            SendMessage "[" & .Item(i) & "] has gone offline."
             .Remove (i)
             Exit For
         End If

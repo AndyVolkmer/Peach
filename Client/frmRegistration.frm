@@ -341,14 +341,14 @@ If Len(txtAccount) < 4 Then
 End If
 
 'Check for spaces and other signs in the account.
-If IsInvalid(txtAccount) = True Then
+If IsInvalid(txtAccount) Then
     MsgBox REG_MSG_ACCOUNT_INVALID, vbInformation
     txtAccount.SetFocus
     Exit Sub
 End If
 
 'Can't register if the Account is made out of numbers.
-If IsNumeric(txtAccount) = True Then
+If IsNumeric(txtAccount) Then
     MsgBox REG_MSG_ACCOUNT_NUMERIC, vbInformation
     txtAccount.SetFocus
     Exit Sub
@@ -395,7 +395,6 @@ Select Case cmbGender.ListIndex
         
     Case 1
         pGender = "Female"
-    
 End Select
 
 frmMain.RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#" & pGender & "#"

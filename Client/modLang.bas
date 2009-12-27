@@ -650,7 +650,7 @@ SOC_ASK_IGNORE_DEFAULT = "Cuenta de la persona que quieres ignorar"
 
 SOC_FRIEND_LIST_STATUS = "Estatus"
 
-SOC_MSG_CANT_WHISPER "No puedes susurrar a este usuario."
+SOC_MSG_CANT_WHISPER = "No puedes susurrar a este usuario."
 
 REG_CAPTION = "Peach - Registración"
 

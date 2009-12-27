@@ -459,7 +459,7 @@ For K = 0 To UBound(p_PreArray) - 1
     Select Case GetCommand
         Case "!clear"
             frmChat.txtConver.Text = vbNullString
-        
+            
         Case "!split_text"
             For i = 1 To UBound(StrArr)
                 Buffer = Buffer & vbCrLf & " " & StrArr(i)
@@ -479,7 +479,7 @@ For K = 0 To UBound(p_PreArray) - 1
                 .SelRTF = Buffer
             End With
             SendMSG "!ignore#-get#" & frmConfig.txtAccount & "#"
-                
+            
         'We can't login
         Case "!decilined"
             Disconnect
@@ -489,7 +489,7 @@ For K = 0 To UBound(p_PreArray) - 1
         Case "!accepted"
             SetupForms frmChat
             StatusBar1.Panels(1).Text = MDI_STAT_CONNECTED
-            SendMSG "!connected#"
+            SendMSG "!connected#" & frmConfig.txtNick.Text & "#"
             
         'Wipe out current ignore list and insert new values
         Case "!update_ignore"
@@ -582,7 +582,7 @@ For K = 0 To UBound(p_PreArray) - 1
                     End With
                     MsgBox MDI_MSG_BANNED, vbInformation
             End Select
-        
+            
         'We get ip here
         Case "!iprequest"
             'Connect new winsock to client
@@ -598,7 +598,7 @@ For K = 0 To UBound(p_PreArray) - 1
                 .Interval = 5
                 .Enabled = True
             End With
-        
+            
         'Function to display information messageboxes
         Case "!msgbox"
             Select Case StrArr(1)
