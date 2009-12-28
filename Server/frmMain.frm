@@ -859,8 +859,8 @@ For k = 0 To UBound(p_PreArray) - 1
             Dim pSocket As Winsock
             For Each pSocket In frmMain.Winsock1
                 With pSocket
-                    If .State = 7 And .Index <> Index Then
-                        .SendData p_MainArray(1) & " has come online." & Chr(24) & Chr(25)
+                    If .State = 7 And Not .Index = Index Then
+                        .SendData "[" & p_MainArray(1) & "] has come online." & Chr(24) & Chr(25)
                         DoEvents
                     End If
                 End With
@@ -1241,7 +1241,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                 End If
                                                                 
                                 Dim pTemp   As String
-                                Dim pGen   As String
+                                Dim pGen    As String
                                 Dim j       As Long
                                                                 
                                 With frmPanel.ListView1.ListItems

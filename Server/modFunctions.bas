@@ -101,6 +101,7 @@ With frmFriendIgnoreList.ListView2.ListItems
         If .Item(j).SubItems(1) = pUser Then
             If .Item(j).SubItems(2) = pTarget Then
                 IsIgnoring = True
+                Exit For
             End If
         End If
     Next j
