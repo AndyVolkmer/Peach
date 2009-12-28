@@ -43,7 +43,6 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       Appearance      =   0
       TextRTF         =   $"frmChat.frx":0000
    End
@@ -143,7 +142,12 @@ txtToSend.Text = vbNullString
 If Len(Trim$(TTS)) = 0 Then Exit Sub
 
 'Send public message
-SendMSG "!message#" & frmConfig.txtNick & "#" & Trim$(TTS) & "#"
+SendMSG "!message#" & frmConfig.txtNick & "#" & RTrim$(TTS) & "#"
+End Sub
+
+Private Sub Form_Activate()
+frmMain.Command2.Caption = MDI_COMMAND_CHAT
+frmMain.ChatNotifyTimer.Enabled = False
 End Sub
 
 Private Sub Form_Load()

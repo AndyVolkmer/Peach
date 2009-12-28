@@ -13,6 +13,12 @@ Begin VB.MDIForm frmMain
    LinkTopic       =   "MDIForm1"
    LockControls    =   -1  'True
    ScrollBars      =   0   'False
+   Begin VB.Timer ChatNotifyTimer 
+      Enabled         =   0   'False
+      Interval        =   1000
+      Left            =   480
+      Top             =   1080
+   End
    Begin MSWinsockLib.Winsock FSocket2 
       Index           =   0
       Left            =   960
@@ -230,6 +236,20 @@ Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Dim Vali        As Boolean
 Public RunOnce  As Boolean
+
+Private Sub ChatNotifyTimer_Timer()
+Static onORoff As Boolean
+
+With frmMain.Command2
+    If Not onORoff Then
+        .Caption = MDI_COMMAND_CHAT & " - !"
+        onORoff = True
+    Else
+        .Caption = MDI_COMMAND_CHAT
+        onORoff = False
+    End If
+End With
+End Sub
 
 Private Sub Command1_Click()
 SetupForms frmConfig
@@ -619,6 +639,9 @@ For K = 0 To UBound(p_PreArray) - 1
             End Select
             
         Case Else
+            If Not ActiveForm.Name = frmChat.Name Then
+                ChatNotifyTimer.Enabled = True
+            End If
             With frmChat.txtConver
                 .SelStart = Len(.Text)
                 .SelRTF = vbCrLf & Space(1) & "[" & Format$(Time, "hh:nn:ss") & "]" & Space(1) & p_PreArray(K)

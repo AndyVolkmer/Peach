@@ -1206,8 +1206,14 @@ For k = 0 To UBound(p_PreArray) - 1
                     'Whisper X to Z from Y
                     Case "/w", "/whisper"
                         If IsUser Then
+                            Dim pMes As String
+                            
                             If UBound(p_CHAT_ARRAY) > 1 Then
-                                Whisper p_MainArray(1), p_TEXT_FIRST_PROP, p_CHAT_ARRAY(2), Index
+                                For i = 2 To UBound(p_CHAT_ARRAY)
+                                    pMes = pMes & p_CHAT_ARRAY(i) & " "
+                                Next i
+                                
+                                Whisper p_MainArray(1), p_TEXT_FIRST_PROP, Trim$(pMes), Index
                                 SetLastMessage p_MainArray(1), p_MainArray(2)
                             Else
                                 Exit Sub
@@ -1501,9 +1507,9 @@ With frmPanel.ListView1.ListItems
                 End If
             Else
                 If IsMuted Then
-                    SendMessage User & " got muted by " & AdminName & ". Reason: " & Reason
+                    SendMessage User & " got muted by " & AdminName & ". (" & Reason & ")"
                 Else
-                    SendMessage User & " got unmuted by " & AdminName & ". Reason: " & Reason
+                    SendMessage User & " got unmuted by " & AdminName & ". (" & Reason & ")"
                 End If
             End If
             Exit For
@@ -1609,9 +1615,9 @@ With frmAccountPanel.ListView1.ListItems
                 End If
             Else
                 If Ban Then
-                    SendMessage User & " was account banned by " & AdminName & ". Reason: " & Reason
+                    SendMessage User & " was account banned by " & AdminName & ". (" & Reason & ")"
                 Else
-                    SendMessage User & " was account unbanned by " & AdminName & ". Reason: " & Reason
+                    SendMessage User & " was account unbanned by " & AdminName & ". (" & Reason & ")"
                 End If
             End If
             Exit For
