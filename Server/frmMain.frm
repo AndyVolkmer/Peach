@@ -718,7 +718,9 @@ Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(2) = Index Then
-            SendMessage "[" & .Item(i) & "] has gone offline."
+            If Not Len(.Item(i)) = 0 Then
+                SendMessage "[" & .Item(i) & "] has gone offline."
+            End If
             .Remove (i)
             Exit For
         End If
