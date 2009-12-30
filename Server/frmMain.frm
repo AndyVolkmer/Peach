@@ -1201,7 +1201,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             pMaxRoll = 100
                         End If
                         
-                        SendSingle p_MainArray(1) & " rolls " & pRoll & ". (" & pMinRoll & "-" & pMaxRoll & ")", Index
+                        SendProtectedMessage p_MainArray(1), p_MainArray(1) & " rolls " & pRoll & ". (" & pMinRoll & "-" & pMaxRoll & ")"
                         
                     'Whisper X to Z from Y
                     Case "/w", "/whisper"

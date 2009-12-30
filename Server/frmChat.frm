@@ -32,6 +32,7 @@ Begin VB.Form frmChat
       Height          =   2535
       Left            =   120
       MultiLine       =   -1  'True
+      ScrollBars      =   2  'Vertical
       TabIndex        =   2
       Top             =   120
       Width           =   7215
