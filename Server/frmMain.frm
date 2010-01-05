@@ -719,7 +719,7 @@ With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(2) = Index Then
             If Not Len(.Item(i)) = 0 Then
-                SendMessage "[" & .Item(i) & "] has gone offline."
+                SendMessage "[" & .Item(i) & " has gone offline.]"
             End If
             .Remove (i)
             Exit For
@@ -860,7 +860,7 @@ For k = 0 To UBound(p_PreArray) - 1
             For Each pSocket In frmMain.Winsock1
                 With pSocket
                     If .State = 7 And Not .Index = Index Then
-                        .SendData "[" & p_MainArray(1) & "] has come online." & Chr(24) & Chr(25)
+                        .SendData "[" & p_MainArray(1) & " has come online.]" & Chr(24) & Chr(25)
                         DoEvents
                     End If
                 End With
@@ -1010,7 +1010,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             SendSingle "!split_text#" & GetUserList, Index
                         
                         Else
-                            SendSingle "Incorrect Syntax, use the following format .show 'account'/'user'.", Index
+                            SendSingle "Incorrect Syntax, use the following format .show [accounts, users].", Index
                             
                         End If
                     
@@ -1028,7 +1028,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                 Else
                                     If i = .Count Then
                                         If Len(p_TEXT_FIRST_PROP) = 0 Then
-                                            SendSingle "Incorrect syntax, use following format .kick 'User'.", Index
+                                            SendSingle "Incorrect syntax, use following format .kick [User].", Index
                                         Else
                                             SendSingle "User '" & p_TEXT_FIRST_PROP & "' not found.", Index
                                         End If
@@ -1057,7 +1057,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             BanAccount p_TEXT_SECOND, p_MainArray(1), False, Index, Trim$(Reason2)
                             
                         Else
-                            SendSingle "Incorrect syntax, use the following format .unban User / Account 'Name' 'Reason'", Index
+                            SendSingle "Incorrect syntax, use the following format .unban [User, Account] [Name] [Reason]", Index
                             
                         End If
                     
@@ -1076,7 +1076,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         End If
                         
                         If Len(p_ANN_MSG) = 0 Then
-                            SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & " 'text to announce'.", Index
+                            SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & " [Text].", Index
                         Else
                             SendMessage "[" & p_MainArray(1) & " announces]: " & p_ANN_MSG
                         End If
@@ -1116,7 +1116,7 @@ For k = 0 To UBound(p_PreArray) - 1
                     
                     Case ".clear"
                         If Len(p_TEXT_FIRST) = 0 Then
-                            SendSingle "Incorrect Syntax. Use the following format .clear Name", Index
+                            SendSingle "Incorrect Syntax. Use the following format .clear [User]", Index
                         Else
                             With frmPanel.ListView1.ListItems
                                 For i = 1 To .Count
@@ -1220,10 +1220,10 @@ For k = 0 To UBound(p_PreArray) - 1
                             End If
                         Else
                             If Len(p_TEXT_FIRST_PROP) = 0 Then
-                                SendSingle "Incorrect Syntax, use the following format /w 'Name' 'Text'", Index
+                                SendSingle "Please use the following format /whisper [Name] [Text]", Index
                                 Exit Sub
                             Else
-                                SendSingle "No user named '" & p_TEXT_FIRST_PROP & "' is currently online.", Index
+                                SendSingle "No user named '" & p_TEXT_FIRST & "' is currently online.", Index
                             End If
                         End If
                         
@@ -1399,6 +1399,7 @@ With frmPanel.ListView1.ListItems
                                 TD = TD & TD1(j) & " hours "
                             End If
                         End If
+                        
                     Case 1
                         If TD1(j) <> 0 Then
                             If Left$(TD1(j), 1) = 0 Then
@@ -1407,6 +1408,7 @@ With frmPanel.ListView1.ListItems
                                 TD = TD & TD1(j) & " minutes "
                             End If
                         End If
+                        
                     Case 2
                         If TD1(j) <> 0 Then
                             If Left$(TD1(j), 1) = 0 Then
@@ -1516,7 +1518,7 @@ With frmPanel.ListView1.ListItems
         Else
             If i = .Count Then
                 If Len(Trim$(User)) = 0 Then
-                    SendSingle "Incorrect syntax, use the following format .mute 'User' 'Reason'.", pIndex
+                    SendSingle "Incorrect syntax, use the following format .mute [User] [Reason].", pIndex
                 Else
                     SendSingle "User '" & User & "' was not found.", pIndex
                 End If
@@ -1554,9 +1556,9 @@ With frmPanel.ListView1.ListItems
             If i = .Count Then
                 If Len(User) = 0 Then
                     If Ban Then
-                        SendSingle "Incorrect syntax, use the following format .ban user 'Name' [Reason].", pIndex
+                        SendSingle "Incorrect syntax, use the following format .ban user [User] [Reason].", pIndex
                     Else
-                        SendSingle "Incorrect syntax, use the following format .unban user 'Name' [Reason].", pIndex
+                        SendSingle "Incorrect syntax, use the following format .unban user [User] [Reason].", pIndex
                     End If
                 Else
                     SendSingle "User '" & User & "' not found.", pIndex
@@ -1624,7 +1626,7 @@ With frmAccountPanel.ListView1.ListItems
         Else
             If i = .Count Then
                 If Len(Trim$(Account)) = 0 Then
-                    SendSingle "Incorrect syntax, use .help for more information.", pIndex
+                    SendSingle "Incorrect syntax, use the following format .ban account [Account] [Reason].", pIndex
                 Else
                     SendSingle "Account '" & Account & "' not found.", pIndex
                 End If
@@ -1639,7 +1641,7 @@ With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
             Unload frmMain.Winsock1(.Item(i).SubItems(2))
-            SendMessage "[" & .Item(i) & " ] has gone offline."
+            SendMessage "[" & .Item(i) & " has gone offline.]"
             .Remove (i)
             
             UPDATE_ONLINE
@@ -1659,7 +1661,7 @@ With frmAccountPanel.ListView1.ListItems
         Else
             If i = .Count Then
                 If Len(Trim$(Account)) = 0 Then
-                    SendSingle "Incorrect syntax, use following format " & pUsedSyntax & " 'Account'.", pIndex
+                    SendSingle "Incorrect syntax, use following format " & pUsedSyntax & " [Account].", pIndex
                 Else
                     SendSingle "Account '" & Account & "' not found.", pIndex
                 End If
@@ -1678,7 +1680,7 @@ With frmPanel.ListView1.ListItems
         Else
             If i = .Count Then
                 If Len(pUser) = 0 Then
-                    SendSingle "Incorrect syntax, use following format " & pUsedSyntax & " 'User'.", pIndex
+                    SendSingle "Incorrect syntax, use following format " & pUsedSyntax & " [User].", pIndex
                 Else
                     SendSingle "User '" & pUser & "' was not found.", pIndex
                 End If
@@ -1721,7 +1723,7 @@ Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(2) = Index Then
-            SendMessage "[" & .Item(i) & "] has gone offline."
+            SendMessage "[" & .Item(i) & " has gone offline.]"
             .Remove (i)
             Exit For
         End If

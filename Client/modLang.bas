@@ -821,17 +821,17 @@ SOC_COMMAND_WHISPER = "&Whisper"
 SOC_ASK_DEL_1 = "Vill du ta bort '"
 SOC_ASK_DEL_2 = "' från listan?"
 
-SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
-SOC_ASK_FRIEND_TITLE = "Adding a friend"
-SOC_ASK_FRIEND_DEFAULT = "Enter account here"
+SOC_ASK_FRIEND_TEXT = "Ange kontonamn på din vän i textrutan nedan."
+SOC_ASK_FRIEND_TITLE = "Lägg till en vän"
+SOC_ASK_FRIEND_DEFAULT = "Ange konto här"
 
-SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in the text box below."
-SOC_ASK_IGNORE_TITLE = "Ignore a user"
-SOC_ASK_IGNORE_DEFAULT = "Enter account here"
+SOC_ASK_IGNORE_TEXT = "Skriv in kontonamnet för användaren som du vill ignorera i textrutan nedan."
+SOC_ASK_IGNORE_TITLE = "Ignorera en användare"
+SOC_ASK_IGNORE_DEFAULT = "Ange konto här"
 
 SOC_FRIEND_LIST_STATUS = "Status"
 
-SOC_MSG_CANT_WHISPER = "You can't whisper this user."
+SOC_MSG_CANT_WHISPER = "Du kan inte viska här användaren."
 
 REG_CAPTION = "Peach - Registrering"
 
@@ -849,9 +849,9 @@ REG_LABEL_SECRET_ANSWER = "Säkerhet besvara:"
 REG_COMMAND_SUBMIT = "&Acceptera"
 REG_COMMAND_CLOSE = "&Ständ"
 
-REG_CHECK_PASSWORD_SHOW = "&Show Password."
+REG_CHECK_PASSWORD_SHOW = "&Visa lösenord."
 
-REG_MSG_ACCOUNT_EXIST = "Namnet är upptaget."
+REG_MSG_ACCOUNT_EXIST = "Namnet är upptagvet."
 REG_MSG_ACCOUNT_INVALID = "Ogiltigt namn."
 REG_MSG_ACCOUNT_NUMERIC = "Namnet kan inte bestå av number."
 REG_MSG_ACCOUNT_EMPTY = "Inget namn angivet."
@@ -876,10 +876,10 @@ REG_CMB_SECRET_QUESTION_3 = "Vilket är ditt favoritspel?"
 REG_CMB_SECRET_QUESTION_4 = "Vilken är din favorit sångare?"
 REG_CMB_SECRET_QUESTION_5 = "Var är den plats där din mor föddes?"
 
-REG_LABEL_GENDER = " Gender:"
+REG_LABEL_GENDER = " Kön:"
 
-REG_CMB_GENDER_MALE = "Male"
-REG_CMB_GENDER_FEMALE = "Female"
+REG_CMB_GENDER_MALE = "Manlig"
+REG_CMB_GENDER_FEMALE = "Kvinna"
 
 SET_LABEL_COLOR = "Nuvarande färg:"
 
@@ -1139,16 +1139,16 @@ CONFIG_MSG_NUMERIC = "U kan geen naam nemen dat nummers bevat."
 CONFIG_MSG_PORT = "U hebt geen poort ingesteld."
 CONFIG_MSG_IP = "U hebt geen IP gegoven."
 CONFIG_MSG_NAME = "U hebt geen naam gegoven."
-CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
-CONFIG_MSG_NAME_INVALID = "The name you have entered is not valid."
+CONFIG_MSG_NAME_SHORT = "De naam die u hebt ingevoerd is te kort."
+CONFIG_MSG_NAME_INVALID = "De naam die je hebt ingevoerd is niet correct."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 CHAT_COMMAND_SEND = "&Zend"
 CHAT_COMMAND_CLEAR = "&Leegmaken"
 
 SF_LABEL_FILENAME = " Bestandsnaam:"
-SF_LABEL_SEND_TO = "Send to:"
-SF_LABEL_TIME = " Time left: "
+SF_LABEL_SEND_TO = "Stuur naar:"
+SF_LABEL_TIME = " Resterende tijd: "
 SF_LABEL_KBS = " Kb/Sec, "
 SF_LABEL_KBSS = " KBytes sent, "
 
