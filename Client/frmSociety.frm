@@ -55,16 +55,19 @@ Begin VB.Form frmSociety
       TabCaption(1)   =   "Online List"
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "cmdAddToIgnore"
+      Tab(1).Control(0)=   "lvOnlineList"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdAddToFriend"
-      Tab(1).Control(2)=   "lvOnlineList"
+      Tab(1).Control(1).Enabled=   0   'False
+      Tab(1).Control(2)=   "cmdAddToIgnore"
+      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "cmdRemoveIgnore"
+      Tab(2).Control(0)=   "lvIgnoreList"
       Tab(2).Control(1)=   "cmdAddIgnore"
-      Tab(2).Control(2)=   "lvIgnoreList"
+      Tab(2).Control(2)=   "cmdRemoveIgnore"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToIgnore 
          Caption         =   "&Add to Ignore"
@@ -451,6 +454,7 @@ End Sub
 Private Sub lvFriendList_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 If lvFriendList.ListItems.Count = 0 Then Exit Sub
 If Button <> 2 Then Exit Sub
+If lvFriendList.HitTest(X, Y) Is Nothing Then Exit Sub
 
 PopupMenu lvFriendMenu
 End Sub
@@ -476,6 +480,7 @@ End Sub
 Private Sub lvOnlineList_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 If lvOnlineList.ListItems.Count = 0 Then Exit Sub
 If Button <> 2 Then Exit Sub
+If lvOnlineList.HitTest(X, Y) Is Nothing Then Exit Sub
 
 PopupMenu lvOnlineMenu
 End Sub
@@ -484,21 +489,28 @@ End Sub
 Private Sub lvIgnoreList_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 If lvIgnoreList.ListItems.Count = 0 Then Exit Sub
 If Button <> 2 Then Exit Sub
+If lvIgnoreList.HitTest(X, Y) Is Nothing Then Exit Sub
 
 PopupMenu lvIgnoreMenu
 End Sub
 
 Private Sub mWhisper_Click()
+Dim pMiddle As Long
+Dim pName   As String
+
 With lvFriendList.SelectedItem
-    If .SubItems(1) = "Offline" Or .Text = frmConfig.txtNick Then
+    If .SubItems(1) = "Offline" Then
         MsgBox SOC_MSG_CANT_WHISPER, vbInformation
         Exit Sub
     End If
+    
+    pMiddle = InStr(1, .Text, "-")
+    pName = Mid(.Text, pMiddle + 2, Len(.Text) - pMiddle)
 End With
 
 frmMain.SetupForms frmChat
 With frmChat
-    .txtToSend = "/whisper " & lvFriendList.SelectedItem.Text & " "
+    .txtToSend = "/whisper " & pName & " "
     .txtToSend.SelStart = Len(.txtToSend.Text)
     .txtToSend.SetFocus
 End With
@@ -508,8 +520,10 @@ Private Sub mWhisperT_Click()
 Dim pMiddle     As Long
 Dim pName       As String
 
-pMiddle = InStr(1, lvOnlineList.SelectedItem.Text, " ")
-pName = Left$(lvOnlineList.SelectedItem.Text, pMiddle - 1)
+With lvOnlineList.SelectedItem
+    pMiddle = InStr(1, .Text, " ")
+    pName = Left$(.Text, pMiddle - 1)
+End With
 
 If pName = frmConfig.txtNick Then
     MsgBox SOC_MSG_CANT_WHISPER, vbInformation
@@ -517,9 +531,10 @@ If pName = frmConfig.txtNick Then
 End If
 
 frmMain.SetupForms frmChat
-With frmChat
-    .txtToSend = "/whisper " & pName & " "
-    .txtToSend.SelStart = Len(.txtToSend.Text)
-    .txtToSend.SetFocus
+With frmChat.txtToSend
+    .Text = "/whisper " & pName & " "
+    .SelStart = Len(.Text)
+    .SetFocus
 End With
 End Sub
+
