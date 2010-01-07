@@ -651,7 +651,6 @@ Next K
 End Sub
 
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-Winsock1.Close
 Disconnect
 frmConfig.Show
 End Sub

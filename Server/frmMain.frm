@@ -661,9 +661,10 @@ msg = X / Screen.TwipsPerPixelX
 Select Case msg
     Case WM_LBUTTONDOWN
     Case WM_LBUTTONUP
-    Case WM_LBUTTONDBLCLK
         Vali = True
         frmMain.Show
+        frmMain.WindowState = 0
+    Case WM_LBUTTONDBLCLK
     Case WM_RBUTTONDOWN
     Case WM_RBUTTONUP
     Case WM_RBUTTONDBLCLK
@@ -719,7 +720,7 @@ With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(2) = Index Then
             If Not Len(.Item(i)) = 0 Then
-                SendMessage "[" & .Item(i) & " has gone offline.]"
+                SendMessage .Item(i) & " has gone offline."
             End If
             .Remove (i)
             Exit For
@@ -860,7 +861,7 @@ For k = 0 To UBound(p_PreArray) - 1
             For Each pSocket In frmMain.Winsock1
                 With pSocket
                     If .State = 7 And Not .Index = Index Then
-                        .SendData "[" & p_MainArray(1) & " has come online.]" & Chr(24) & Chr(25)
+                        .SendData p_MainArray(1) & " has come online." & Chr(24) & Chr(25)
                         DoEvents
                     End If
                 End With
@@ -950,17 +951,15 @@ For k = 0 To UBound(p_PreArray) - 1
             'Split the conversation text by spaces
             p_CHAT_ARRAY = Split(p_MainArray(2), " ")
             
-            'Check first position of the text for a point indicating command
-            If Left$(p_CHAT_ARRAY(0), 1) = Chr(46) Then
-                If GetLevel(p_MainArray(1)) <> 0 Then
-                    IsCommand = True
-                End If
-            End If
-            
-            'Check first position of the text for a slash indicating emote
-            If Left$(p_CHAT_ARRAY(0), 1) = Chr(47) Then
-                IsSlash = True
-            End If
+            'Check first position of the text for a point indicating command or emote
+            Select Case Left$(p_CHAT_ARRAY(0), 1)
+                Case Chr(46)
+                    If GetLevel(p_MainArray(1)) > 0 Then IsCommand = True
+                        
+                Case Chr(47)
+                    IsSlash = True
+                    
+            End Select
             
             'Capture first part of the text
             If UBound(p_CHAT_ARRAY) > 0 Then
@@ -1641,7 +1640,7 @@ With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
             Unload frmMain.Winsock1(.Item(i).SubItems(2))
-            SendMessage "[" & .Item(i) & " has gone offline.]"
+            SendMessage .Item(i) & " has gone offline."
             .Remove (i)
             
             UPDATE_ONLINE
@@ -1723,7 +1722,7 @@ Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(2) = Index Then
-            SendMessage "[" & .Item(i) & " has gone offline.]"
+            SendMessage .Item(i) & " has gone offline."
             .Remove (i)
             Exit For
         End If
