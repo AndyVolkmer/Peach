@@ -795,7 +795,6 @@ Dim p_MainArray()   As String   'Whole message string is saved here and split up
 Dim p_Command       As String   'First part of main array ( always the command )
 Dim bMatch          As Boolean  'bMatch controls the login
 Dim IsMuted         As Boolean  'Mute explains itself
-Dim p_ProperAccount As String
 
 'Get Message
 frmMain.Winsock1(Index).GetData p_Message
@@ -820,39 +819,49 @@ For k = 0 To UBound(p_PreArray) - 1
     Select Case p_Command
         'Select action and execute command
         Case "!friend"
-            'Get the proper written account name
-            p_ProperAccount = GetProperAccountName(p_MainArray(3))
-            
             Select Case p_MainArray(1)
                 'Update Friend list
                 Case "-get"
                     UPDATE_FRIEND p_MainArray(2), Index
                     
-                'Add friend to list
-                Case "-add"
-                    frmFriendIgnoreList.AddFriend p_MainArray(2), p_ProperAccount, Index
+                'Add friend to list by user name
+                Case "-add-user"
+                    frmFriendIgnoreList.AddFriend p_MainArray(2), GetProperAccountNameByUser(p_MainArray(3)), Index
                     
-                'Remove friend from list
-                Case "-remove"
-                    frmFriendIgnoreList.RemoveFriend p_MainArray(2), p_ProperAccount, Index
+                'Add friend to list by account name
+                Case "-add-account"
+                    frmFriendIgnoreList.AddFriend p_MainArray(2), GetProperAccountName(p_MainArray(3)), Index
+                    
+                'Remove friend from list by user name
+                Case "-remove-user"
+                    frmFriendIgnoreList.RemoveFriend p_MainArray(2), GetProperAccountNameByUser(p_MainArray(3)), Index
+                    
+                'Remove friend from list by account name
+                Case "-remove-account"
+                    frmFriendIgnoreList.RemoveFriend p_MainArray(2), GetProperAccountName(p_MainArray(3)), Index
             End Select
             
         Case "!ignore"
-            'Get the proper written account name
-            p_ProperAccount = GetProperAccountName(p_MainArray(3))
-            
             Select Case p_MainArray(1)
                 'Update Ignore list
                 Case "-get"
                     UPDATE_IGNORE p_MainArray(2), Index
                     
-                'Add ignore to list
-                Case "-add"
-                    frmFriendIgnoreList.AddIgnore p_MainArray(2), p_ProperAccount, Index
+                'Add ignore to list by user name
+                Case "-add-user"
+                    frmFriendIgnoreList.AddIgnore p_MainArray(2), GetProperAccountNameByUser(p_MainArray(3)), Index
                     
-                'Remove ignore from list
-                Case "-remove"
-                    frmFriendIgnoreList.RemoveIgnore p_MainArray(2), p_ProperAccount, Index
+                'Add ignore to list by account name
+                Case "-add-account"
+                    frmFriendIgnoreList.AddIgnore p_MainArray(2), GetProperAccountName(p_MainArray(3)), Index
+                    
+                'Remove ignore from list by user name
+                Case "-remove-user"
+                    frmFriendIgnoreList.RemoveIgnore p_MainArray(2), GetProperAccountNameByUser(p_MainArray(3)), Index
+                    
+                'Remove ignore from list by account name
+                Case "-remove-account"
+                    frmFriendIgnoreList.RemoveIgnore p_MainArray(2), GetProperAccountName(p_MainArray(3)), Index
             End Select
             
         Case "!connected"
@@ -1435,6 +1444,19 @@ With frmAccountPanel.ListView1.ListItems
             If i = .Count Then
                 GetProperAccountName = pAccount
             End If
+        End If
+    Next i
+End With
+End Function
+
+Private Function GetProperAccountNameByUser(pUser As String) As String
+Dim pAccount As String
+
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i) = pUser Then
+            GetProperAccountNameByUser = .Item(i).SubItems(5)
+            Exit For
         End If
     Next i
 End With

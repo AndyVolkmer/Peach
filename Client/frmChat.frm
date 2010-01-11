@@ -109,6 +109,19 @@ Begin VB.Form frmChat
          Strikethrough   =   0   'False
       EndProperty
    End
+   Begin VB.Menu UserPop 
+      Caption         =   "UserPop"
+      Visible         =   0   'False
+      Begin VB.Menu pWhisper 
+         Caption         =   "Whisper"
+      End
+      Begin VB.Menu pAddToFriendlist 
+         Caption         =   "Add to Friendlist"
+      End
+      Begin VB.Menu pIgnoreUser 
+         Caption         =   "Ignore User"
+      End
+   End
 End
 Attribute VB_Name = "frmChat"
 Attribute VB_GlobalNameSpace = False
@@ -127,7 +140,9 @@ Private Type POINTAPI
     Y As Long
 End Type
 
-Private Sign(255) As Integer
+Private Sign(255)   As Integer
+Private menuUser    As String
+Private menuAccount As String
 
 Private Sub cmdSend_Click()
 Dim TTS As String
@@ -158,11 +173,31 @@ End Sub
 Public Sub LoadChatForm()
 cmdSend.Caption = CHAT_COMMAND_SEND
 cmdClear.Caption = CHAT_COMMAND_CLEAR
+pAddToFriendlist.Caption = SOC_COMMAND_FRIEND
+pIgnoreUser.Caption = SOC_COMMAND_IGNORE
+pWhisper.Caption = SOC_COMMAND_WHISPER
 End Sub
 
 Private Sub cmdClear_Click()
 txtConver.Text = vbNullString
 txtToSend.Text = vbNullString
+End Sub
+
+Private Sub pAddToFriendlist_Click()
+SendMSG "!friend#-add-user#" & frmConfig.txtAccount & "#" & menuUser & "#"
+End Sub
+
+Private Sub pIgnoreUser_Click()
+SendMSG "!ignore#-add-user#" & frmConfig.txtAccount & "#" & menuUser & "#"
+End Sub
+
+Private Sub pWhisper_Click()
+frmMain.SetupForms frmChat
+With frmChat
+    .txtToSend = "/whisper " & menuUser & " "
+    .txtToSend.SelStart = Len(.txtToSend.Text)
+    .txtToSend.SetFocus
+End With
 End Sub
 
 Private Sub txtConver_Change()
@@ -195,9 +230,11 @@ txtConver.Locked = True
 End Sub
 
 Private Sub txtConver_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Dim Text As String
-Dim lnk As Long
-Dim ret As Long
+Dim Text    As String
+Dim lnk     As Long
+Dim ret     As Long
+Dim j       As Long
+Dim pTemp   As String
 
 Text = GetWord(txtConver, X, Y)
 
@@ -212,19 +249,63 @@ If lnk > 0 Then
     End If
     
     Call SendLink(Text)
-End If
-End Sub
-
-Private Sub txtConver_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Dim Text As String
-
-Text = GetWord(txtConver, X, Y)
-
-If IsUrlOrMail(Text) Then
-    txtConver.MousePointer = 99
 Else
-    txtConver.MousePointer = 0
+    'Proceed only if the button pressed is right button
+    If Button = 2 Then
+        With frmSociety.lvOnlineList.ListItems
+            For i = 1 To .Count
+                'Get the name of the user from string and account
+                menuUser = Left$(.Item(i), InStr(1, .Item(i), " ") - 1)
+                menuAccount = Mid(.Item(i), InStr(1, .Item(i), "(") + 2, Len(.Item(i)) - InStr(1, .Item(i), "(") - 3)
+                
+                'Add brackets for better GetWord check
+                pTemp = "[" & menuUser & "]:"
+                                
+                'If the it is the user and not your self then proceed
+                If pTemp = Text And Not menuUser = frmConfig.txtNick Then
+                    'Check if the user is already added in friend list ( to disable control )
+                    With frmSociety.lvFriendList.ListItems
+                        For j = 1 To .Count
+                            If Not InStr(1, .Item(j), " ") = 0 Then
+                                If Left$(.Item(j), InStr(1, .Item(j), " ") - 1) = menuAccount Then
+                                    pAddToFriendlist.Enabled = False
+                                    Exit For
+                                Else
+                                    If j = .Count Then
+                                        pAddToFriendlist.Enabled = True
+                                    End If
+                                End If
+                            Else
+                                If j = .Count Then
+                                    pAddToFriendlist.Enabled = True
+                                End If
+                            End If
+                        Next j
+                    End With
+                    
+                    'Check if user is already beeing ignored ( to disable control )
+                    With frmSociety.lvIgnoreList.ListItems
+                        For j = 1 To .Count
+                            If .Item(j) = menuAccount Then
+                                pIgnoreUser.Enabled = False
+                            Else
+                                If j = .Count Then
+                                    pIgnoreUser.Enabled = True
+                                End If
+                            End If
+                        Next j
+                    End With
+                                        
+                    PopupMenu UserPop
+                    Exit For
+                End If
+            Next i
+        End With
+    End If
 End If
+pAddToFriendlist.Enabled = True
+pIgnoreUser.Enabled = True
+pWhisper.Enabled = True
 End Sub
 
 Private Sub txtToSend_KeyPress(KeyAscii As Integer)
@@ -278,11 +359,6 @@ SmileyResID(13) = 109
 
 Smileys = Split(Smilestring, ",")
 
-If UBound(Smileys) <> UBound(SmileyResID) Then
-    MsgBox "Failure in array.", vbInformation
-    Exit Sub
-End If
-
 For i = LBound(Smileys) To UBound(Smileys)
     While RTF.Find(Smileys(i), Start - 1) >= 0
         Picture1.Picture = LoadResPicture(SmileyResID(i), vbResBitmap)
@@ -317,7 +393,6 @@ DoEvents
 
 Clipboard.Clear
 On Error Resume Next
-'If Text <> "" Then
 If Len(Text) <> 0 Then
     Clipboard.SetText Text
 Else
@@ -515,3 +590,4 @@ Loop Until Pos2 = 0 Or Pos2 >= L
 
 Rtb.TextRTF = NRTB.TextRTF
 End Sub
+

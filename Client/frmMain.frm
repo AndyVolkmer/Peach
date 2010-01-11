@@ -391,13 +391,13 @@ Msg = X / Screen.TwipsPerPixelX
 Select Case Msg
 Case WM_LBUTTONDOWN
 Case WM_LBUTTONUP
-Case WM_LBUTTONDBLCLK
     Vali = True
     With frmMain
         .Show
         .WindowState = 0
     End With
     Shell_NotifyIcon NIM_DELETE, nid    'Del tray icon
+Case WM_LBUTTONDBLCLK
 Case WM_RBUTTONDOWN
     frmMain.PopupMenu myPOP
 Case WM_RBUTTONUP
