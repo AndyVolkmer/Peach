@@ -43,7 +43,6 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
-      Appearance      =   0
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -237,6 +236,7 @@ Dim j       As Long
 Dim pTemp   As String
 
 Text = GetWord(txtConver, X, Y)
+menuUser = GetRichWordOver(txtConver, X, Y)
 
 lnk = IsUrlOrMail(Text)
 
@@ -255,14 +255,11 @@ Else
         With frmSociety.lvOnlineList.ListItems
             For i = 1 To .Count
                 'Get the name of the user from string and account
-                menuUser = Left$(.Item(i), InStr(1, .Item(i), " ") - 1)
+                pTemp = Left$(.Item(i), InStr(1, .Item(i), " ") - 1)
                 menuAccount = Mid(.Item(i), InStr(1, .Item(i), "(") + 2, Len(.Item(i)) - InStr(1, .Item(i), "(") - 3)
                 
-                'Add brackets for better GetWord check
-                pTemp = "[" & menuUser & "]:"
-                                
                 'If the it is the user and not your self then proceed
-                If pTemp = Text And Not menuUser = frmConfig.txtNick Then
+                If pTemp = menuUser And Not menuUser = frmConfig.txtNick Then
                     'Check if the user is already added in friend list ( to disable control )
                     With frmSociety.lvFriendList.ListItems
                         For j = 1 To .Count
@@ -288,6 +285,7 @@ Else
                         For j = 1 To .Count
                             If .Item(j) = menuAccount Then
                                 pIgnoreUser.Enabled = False
+                                Exit For
                             Else
                                 If j = .Count Then
                                     pIgnoreUser.Enabled = True
@@ -406,6 +404,57 @@ Private Sub SendLink(ByVal Link As String)
 Dim Success As Long
 Success = ShellExecute(0&, vbNullString, Link, vbNullString, "C:\", 1)
 End Sub
+
+Public Function GetRichWordOver(rch As RichTextBox, X As Single, Y As Single) As String
+Dim pAPI            As POINTAPI
+Dim pPosition       As Integer
+Dim p_START_POS     As Integer
+Dim p_END_POS       As Integer
+Dim ch              As String
+Dim pText           As String
+Dim txtlen          As Integer
+
+'Convert the position to pixels.
+pAPI.X = X \ Screen.TwipsPerPixelX
+pAPI.Y = Y \ Screen.TwipsPerPixelY
+
+    
+pPosition = SendMessage(rch.hwnd, EM_CHARFROMPOS, 0&, pAPI)
+If pPosition <= 0 Then Exit Function
+        
+pText = rch.Text
+
+For p_START_POS = pPosition To 1 Step -1
+    ch = Mid$(rch.Text, p_START_POS, 1)
+        
+    If Not ( _
+        (ch >= "0" And ch <= "9") Or _
+        (ch >= "a" And ch <= "z") Or _
+        (ch >= "A" And ch <= "Z") Or _
+        ch = "_" _
+    ) Then Exit For
+Next p_START_POS
+    
+p_START_POS = p_START_POS + 1
+    
+txtlen = Len(pText)
+    
+For p_END_POS = pPosition To txtlen
+    ch = Mid$(pText, p_END_POS, 1)
+    If Not ( _
+        (ch >= "0" And ch <= "9") Or _
+        (ch >= "a" And ch <= "z") Or _
+        (ch >= "A" And ch <= "Z") Or _
+        ch = "_" _
+    ) Then Exit For
+Next p_END_POS
+
+p_END_POS = p_END_POS - 1
+
+If p_START_POS <= p_END_POS Then
+    GetRichWordOver = Mid$(pText, p_START_POS, p_END_POS - p_START_POS + 1)
+End If
+End Function
 
 Private Function GetWord(Rich As RichTextBox, ByVal X&, ByVal Y&) As String
 Dim Pos As Long, P1 As Long, P2 As Long

@@ -262,16 +262,16 @@ Option Explicit
 Public Sub cmdConnect_Click()
 If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     'Account can't be empty
-    If CheckTx(txtAccount, CONFIG_MSG_ACCOUNT) = True Then Exit Sub
+    If CheckTx(txtAccount, CONFIG_MSG_ACCOUNT) Then Exit Sub
     
     'Password can't be empty
-    If CheckTx(txtPassword, CONFIG_MSG_PASSWORD) = True Then Exit Sub
+    If CheckTx(txtPassword, CONFIG_MSG_PASSWORD) Then Exit Sub
      
     'Nick can't be empty
-    If CheckTx(txtNick, CONFIG_MSG_NAME) = True Then Exit Sub
+    If CheckTx(txtNick, CONFIG_MSG_NAME) Then Exit Sub
      
     'Nick can't be numeric
-    If IsNumeric(txtNick) = True Then
+    If IsNumeric(txtNick) Then
         MsgBox CONFIG_MSG_NUMERIC, vbInformation
         txtNick.SetFocus
         Exit Sub
@@ -286,7 +286,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     End If
     
     'Nick can't contain invalid characters
-    If IsInvalid(txtNick) = True Then
+    If IsInvalid(txtNick) Then
         MsgBox CONFIG_MSG_NAME_INVALID, vbInformation
         txtNick.SelStart = Len(txtNick)
         txtNick.SetFocus
