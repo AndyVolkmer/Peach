@@ -460,9 +460,20 @@ PopupMenu lvFriendMenu
 End Sub
 
 Private Sub lvFriendList_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnHeader)
-With ColumnHeader
-    If .Text = SOC_FRIEND_LIST_STATUS Then
-        
+With lvFriendList
+    .Sorted = True
+    .SortKey = ColumnHeader.SubItemIndex
+    
+    If .SortOrder = lvwDescending Then
+        .SortOrder = lvwAscending
+    Else
+        .SortOrder = lvwDescending
+    End If
+
+    .Sorted = False
+
+    If .ListItems.Count <> 0 Then
+        Set .SelectedItem = .ListItems.Item(1)
     End If
 End With
 End Sub
