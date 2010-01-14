@@ -20,6 +20,7 @@ Begin VB.Form frmSendFile2
    EndProperty
    Icon            =   "frnSendFile2.frx":0000
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MaxButton       =   0   'False
    ScaleHeight     =   3870
    ScaleWidth      =   7425

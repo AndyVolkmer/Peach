@@ -18,6 +18,7 @@ Begin VB.Form frmPanel
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False

@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
-Begin VB.Form Form1 
+Begin VB.Form frmMain 
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Peach Updater"
    ClientHeight    =   2820
@@ -33,7 +33,6 @@ Begin VB.Form Form1
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"Form1.frx":08CA
@@ -69,7 +68,7 @@ Begin VB.Form Form1
       Width           =   2655
    End
 End
-Attribute VB_Name = "Form1"
+Attribute VB_Name = "frmMain"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -94,8 +93,8 @@ Call InitCommonControls
 End Sub
 
 Private Sub Form_Load()
-'Read current revision from .ini file.
-CurRev = ReadIniValue(App.Path & "\Config.ini", "Revision", "Number")
+'Read current revision from registry
+CurRev = ReadFromRegistry("Number")
 
 CurRev = Left(CurRev, 3)
 
@@ -146,8 +145,8 @@ StartDownload "http://riplegion.ri.funpic.de/Peach/peachClient.exe", App.Path & 
 'Delete current file
 Kill App.Path & "\update.conf"
 
-'Rewrite .ini file
-WriteIniValue App.Path & "\Config.ini", "Revision", "Number", NewRev
+'Rewrite into registry
+InsertIntoRegistry "Number", NewRev
 
 'Update label
 Label2.Caption = "Your Peach has updated from [" & CurRev & "] to [" & NewRev & "]"

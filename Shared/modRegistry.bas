@@ -82,9 +82,7 @@ End If
 
 Select Case KeyDateType
     Case 1, 3:
-        If strTempVal = String$(1023, 0) Then
-            GetKeyDataValue = vbNullString
-        Else
+        If Not strTempVal = String$(1023, 0) Then
             GetKeyDataValue = strTempVal
         End If
         

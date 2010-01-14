@@ -18,6 +18,7 @@ Begin VB.Form frmConfig
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
@@ -34,7 +35,6 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000

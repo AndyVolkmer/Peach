@@ -17,6 +17,7 @@ Begin VB.Form frmChat
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MDIChild        =   -1  'True
    ScaleHeight     =   5220
    ScaleWidth      =   7635

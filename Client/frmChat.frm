@@ -19,6 +19,7 @@ Begin VB.Form frmChat
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MDIChild        =   -1  'True
    ScaleHeight     =   3870
    ScaleWidth      =   7485
@@ -43,6 +44,7 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 

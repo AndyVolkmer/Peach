@@ -11,6 +11,7 @@ Begin VB.MDIForm frmMain
    ClientWidth     =   7395
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "MDIForm1"
+   LockControls    =   -1  'True
    ScrollBars      =   0   'False
    Begin MSComctlLib.StatusBar StatusBar1 
       Align           =   2  'Align Bottom
@@ -232,9 +233,6 @@ Call InitCommonControls
 End Sub
 
 Private Sub MDIForm_Load()
-Dim pPath As String
-pPath = App.Path & "\Config.ini"
-
 DisableFormResize Me
 Dim L As Long
     L = GetWindowLong(Me.hwnd, GWL_STYLE)
@@ -246,92 +244,92 @@ Dim L As Long
 With Database
 
 '== Database ==
-If Len(Trim$(ReadIniValue(pPath, "Database", "Database"))) <> 0 Then
-    .Database = ReadIniValue(pPath, "Database", "Database")
+If Len(ReadFromRegistry("DB_Name")) <> 0 Then
+    .Database = ReadFromRegistry("DB_Name")
 Else
     WriteLog "No Database value found."
     .Database = InputBox("The configuration file does not cotain a valid database, please insert one in the textbox below.", "Database error ..", "Database Name")
 End If
 
-If Len(Trim$(ReadIniValue(pPath, "Database", "User"))) <> 0 Then
-    .User = ReadIniValue(pPath, "Database", "User")
+If Len(ReadFromRegistry("DB_User")) <> 0 Then
+    .User = ReadFromRegistry("DB_User")
 Else
     WriteLog "No User value found."
     .User = InputBox("The configuration file does not cotain a valid user name, please insert one in the textbox below.", "Database error ..", "User Name")
 End If
 
-If Len(Trim$(DeCode(ReadIniValue(pPath, "Database", "Password")))) <> 0 Then
-    .Password = DeCode(ReadIniValue(pPath, "Database", "Password"))
+If Len(DeCode(ReadFromRegistry("DB_Password"))) <> 0 Then
+    .Password = DeCode(ReadFromRegistry("DB_Password"))
 Else
     WriteLog "No Password value found."
     .Password = InputBox("The configuration file does not cotain a valid password, please insert one in the textbox below.", "Database error ..", "Password")
 End If
 
-If Len(Trim$(ReadIniValue(pPath, "Database", "Host"))) <> 0 Then
-    .Host = ReadIniValue(pPath, "Database", "Host")
+If Len(ReadFromRegistry("DB_Host")) <> 0 Then
+    .Host = ReadFromRegistry("DB_Host")
 Else
     WriteLog "No Host value found."
     .Host = InputBox("The configuration file does not cotain a host adress, please insert one in the textbox below.", "Database error ..", "Host Adress")
 End If
 
-If Len(Trim$(ReadIniValue(pPath, "Database", "AccountTable"))) <> 0 Then
-    .AccountTable = ReadIniValue(pPath, "Database", "AccountTable")
+If Len(ReadFromRegistry("DB_Account_Table")) <> 0 Then
+    .AccountTable = ReadFromRegistry("DB_Account_Table")
 Else
     WriteLog "No Account-Table found."
     .AccountTable = InputBox("The configuration file does not contain a account table, please insert one in the textbox below.", "Database error ..", "Account Table")
 End If
 
-If Len(Trim$(ReadIniValue(pPath, "Database", "FriendTable"))) <> 0 Then
-    .FriendTable = ReadIniValue(pPath, "Database", "FriendTable")
+If Len(ReadFromRegistry("DB_Friend_Table")) <> 0 Then
+    .FriendTable = ReadFromRegistry("DB_Friend_Table")
 Else
     WriteLog "No Friends-Table found."
     .FriendTable = InputBox("The configuration file does not contain a friend table, please insert one in the textbox below.", "Database error ..", "Friend Table")
 End If
 
-If Len(Trim$(ReadIniValue(pPath, "Database", "IgnoreTable"))) <> 0 Then
-    .IgnoreTable = ReadIniValue(pPath, "Database", "IgnoreTable")
+If Len(ReadFromRegistry("DB_Ignore_Table")) <> 0 Then
+    .IgnoreTable = ReadFromRegistry("DB_Ignore_Table")
 Else
     WriteLog "No Ignore-Table found."
     .IgnoreTable = InputBox("The configuration file does not contain a ignore table, please insert one in the textbox below.", "Database error ..", "Ignore Table")
 End If
 
-If Len(Trim$(ReadIniValue(pPath, "Database", "EmoteTable"))) <> 0 Then
-    .EmoteTable = ReadIniValue(pPath, "Database", "EmoteTable")
+If Len(ReadFromRegistry("DB_Emote_Table")) <> 0 Then
+    .EmoteTable = ReadFromRegistry("DB_Emote_Table")
 Else
     WriteLog "No Emotes-Table found."
     .EmoteTable = InputBox("The configuration file does not contain a emote table, please insert one in the textbox below.", "Database error ..", "Emote Table")
 End If
 
-If Len(Trim$(ReadIniValue(pPath, "Database", "DeclinedNameTable"))) <> 0 Then
-    .DeclinedNameTable = ReadIniValue(pPath, "Database", "DeclinedNameTable")
+If Len(ReadFromRegistry("DB_Declined_Name_Table")) <> 0 Then
+    .DeclinedNameTable = ReadFromRegistry("DB_Declined_Name_Table")
 Else
     WriteLog "No Declined-Names-Table found."
     .DeclinedNameTable = InputBox("The configuration file does not contain a declined name table, please insert one in the textbox below.", "Database error ..", "Declined Name Table")
 End If
 
-If Len(Trim$(ReadIniValue(pPath, "Database", "CommandsTable"))) <> 0 Then
-    .CommandsTable = ReadIniValue(pPath, "Database", "CommandsTable")
+If Len(ReadFromRegistry("DB_Command_Table")) <> 0 Then
+    .CommandsTable = ReadFromRegistry("DB_Command_Table")
 Else
     WriteLog "No Command-Table found."
     .CommandsTable = InputBox("The configuration file does not contain a command table, please insert one in the textbox below.", "Database error ..", "Commands Table")
 End If
 
 '== Position ==
-If Len(Trim$(ReadIniValue(pPath, "Position", "Top"))) <> 0 Then
-    Me.Top = ReadIniValue(pPath, "Position", "Top")
+If Len(ReadFromRegistry("Top")) <> 0 Then
+    Me.Top = ReadFromRegistry("Top")
 Else
     Me.Top = 1200
 End If
 
-If Len(Trim$(ReadIniValue(pPath, "Position", "Left"))) <> 0 Then
-    Me.Left = ReadIniValue(pPath, "Position", "Left")
+If Len(ReadFromRegistry("Left")) <> 0 Then
+    Me.Left = ReadFromRegistry("Left")
 Else
     Me.Left = 1200
 End If
 
 '== Options ==
-If Len(Trim$(ReadIniValue(pPath, "Option", "ChatLevel"))) <> 0 Then
-    Options.ChatLevel = ReadIniValue(pPath, "Option", "ChatLevel")
+If Len(ReadFromRegistry("ChatLevel")) <> 0 Then
+    Options.ChatLevel = ReadFromRegistry("ChatLevel")
 Else
     Options.ChatLevel = 0
 End If
@@ -681,9 +679,6 @@ End If
 End Sub
 
 Private Sub MDIForm_Unload(Cancel As Integer)
-Dim pPath As String
-pPath = App.Path & "\Config.ini"
-
 'Remove tray icon
 Shell_NotifyIcon NIM_DELETE, nid
 
@@ -691,27 +686,26 @@ Shell_NotifyIcon NIM_DELETE, nid
 With Database
 
 '== Database ==
-WriteIniValue pPath, "Database", "Database", .Database
-WriteIniValue pPath, "Database", "User", .User
-WriteIniValue pPath, "Database", "Password", .Password
-WriteIniValue pPath, "Database", "Host", .Host
-WriteIniValue pPath, "Database", "AccountTable", .AccountTable
-WriteIniValue pPath, "Database", "FriendTable", .FriendTable
-WriteIniValue pPath, "Database", "IgnoreTable", .IgnoreTable
-WriteIniValue pPath, "Database", "EmoteTable", .EmoteTable
-WriteIniValue pPath, "Database", "DeclinedNameTable", .DeclinedNameTable
-WriteIniValue pPath, "Database", "CommandsTable", .CommandsTable
+InsertIntoRegistry "DB_Name", .Database
+InsertIntoRegistry "DB_User", .User
+InsertIntoRegistry "DB_Password", Encode(.Password)
+InsertIntoRegistry "DB_Host", .Host
+InsertIntoRegistry "DB_Account_Table", .AccountTable
+InsertIntoRegistry "DB_Friend_Table", .FriendTable
+InsertIntoRegistry "DB_Ignore_Table", .IgnoreTable
+InsertIntoRegistry "DB_Emote_Table", .EmoteTable
+InsertIntoRegistry "DB_Declined_Name_Table", .DeclinedNameTable
+InsertIntoRegistry "DB_Command_Table", .CommandsTable
 
 'Close Database variable
 End With
 
 '== Position ==
-WriteIniValue pPath, "Position", "Top", Me.Top
-WriteIniValue pPath, "Position", "Left", Me.Left
+InsertIntoRegistry "Top", Me.Top
+InsertIntoRegistry "Left", Me.Left
 
 '== Options ==
-WriteIniValue pPath, "Option", "ChatLevel", Options.ChatLevel
-
+InsertIntoRegistry "ChatLevel", Options.ChatLevel
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)

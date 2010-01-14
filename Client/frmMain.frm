@@ -368,8 +368,6 @@ Dim L As Long
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(Me.hwnd, GWL_STYLE, L)
 
-StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
-
 Me.Top = Setting.MAIN_TOP
 Me.Left = Setting.MAIN_LEFT
 
@@ -382,6 +380,7 @@ ExitC.Caption = REG_COMMAND_CLOSE
 Command2.Caption = MDI_COMMAND_CHAT
 Command3.Caption = MDI_COMMAND_SENDFILE
 Command4.Caption = MDI_COMMAND_SOCIETY
+StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
 End Sub
 
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)

@@ -18,6 +18,7 @@ Begin VB.Form frmFriendIgnoreList
    EndProperty
    Icon            =   "frmFriendIgnoreList.frx":0000
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MDIChild        =   -1  'True
    ScaleHeight     =   5220
    ScaleWidth      =   7635

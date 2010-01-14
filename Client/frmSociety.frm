@@ -18,6 +18,7 @@ Begin VB.Form frmSociety
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MDIChild        =   -1  'True
    ScaleHeight     =   4290
    ScaleWidth      =   7665
@@ -31,6 +32,7 @@ Begin VB.Form frmSociety
       _ExtentX        =   12885
       _ExtentY        =   7011
       _Version        =   393216
+      Tab             =   1
       TabHeight       =   520
       BackColor       =   16053492
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -44,7 +46,7 @@ Begin VB.Form frmSociety
       EndProperty
       TabCaption(0)   =   "Friend List"
       TabPicture(0)   =   "frmSociety.frx":0000
-      Tab(0).ControlEnabled=   -1  'True
+      Tab(0).ControlEnabled=   0   'False
       Tab(0).Control(0)=   "lvFriendList"
       Tab(0).Control(0).Enabled=   0   'False
       Tab(0).Control(1)=   "cmdAddFriend"
@@ -54,23 +56,26 @@ Begin VB.Form frmSociety
       Tab(0).ControlCount=   3
       TabCaption(1)   =   "Online List"
       TabPicture(1)   =   "frmSociety.frx":001C
-      Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "cmdAddToIgnore"
+      Tab(1).ControlEnabled=   -1  'True
+      Tab(1).Control(0)=   "lvOnlineList"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdAddToFriend"
-      Tab(1).Control(2)=   "lvOnlineList"
+      Tab(1).Control(1).Enabled=   0   'False
+      Tab(1).Control(2)=   "cmdAddToIgnore"
+      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "lvIgnoreList"
+      Tab(2).Control(0)=   "cmdRemoveIgnore"
       Tab(2).Control(1)=   "cmdAddIgnore"
-      Tab(2).Control(2)=   "cmdRemoveIgnore"
+      Tab(2).Control(2)=   "lvIgnoreList"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToIgnore 
          Caption         =   "&Add to Ignore"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   -69960
+         Left            =   5040
          TabIndex        =   9
          Top             =   3360
          Width           =   2055
@@ -79,7 +84,7 @@ Begin VB.Form frmSociety
          Caption         =   "&Add to Friends"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   -72000
+         Left            =   3000
          TabIndex        =   8
          Top             =   3360
          Width           =   2055
@@ -106,7 +111,7 @@ Begin VB.Form frmSociety
          Caption         =   "&Remove"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   5400
+         Left            =   -69600
          TabIndex        =   2
          Top             =   3360
          Width           =   1695
@@ -115,14 +120,14 @@ Begin VB.Form frmSociety
          Caption         =   "&Add"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   3720
+         Left            =   -71280
          TabIndex        =   1
          Top             =   3360
          Width           =   1695
       End
       Begin MSComctlLib.ListView lvFriendList 
          Height          =   2775
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   0
          Top             =   480
          Width           =   7050
@@ -159,7 +164,7 @@ Begin VB.Form frmSociety
       End
       Begin MSComctlLib.ListView lvOnlineList 
          Height          =   2775
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   3
          Top             =   480
          Width           =   7055
