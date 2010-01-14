@@ -12,8 +12,8 @@ End If
 'Load Windows own style
 Call InitCommonControls
 
-'Start loading the ini values
-LoadIniValue
+'Start loading registry values
+LoadRegistryValue
 
 If Setting.VALIDATE = 0 Then
     Select Case Setting.LANGUAGE
@@ -42,112 +42,84 @@ Else
     frmLanguage.Show
 End If
 
-WriteIniValue App.Path & "\Config.ini", "Revision", "Number", pRev
+InsertIntoRegistry "Number", pRev
 End Sub
 
-Private Sub LoadIniValue()
-Dim Path As String
-Path = App.Path & "\Config.ini"
-
-'Open Settings variable
+Private Sub LoadRegistryValue()
 With Setting
-
-'Read 'IP' from .ini file
-If Len(Trim$(ReadIniValue(Path, "Connection", "IP"))) <> 0 Then
-    .SERVER_IP = ReadIniValue(Path, "Connection", "IP")
-Else
-    .SERVER_IP = "127.0.0.1"
-End If
- 
-'Read 'Port' from .ini file
-If Len(Trim$(ReadIniValue(Path, "Connection", "Port"))) <> 0 Then
-    .SERVER_PORT = ReadIniValue(Path, "Connection", "Port")
-Else
-    .SERVER_PORT = 4728
-End If
-
-'Read 'Nickname' from .ini file
-If Len(Trim$(ReadIniValue(Path, "Private", "Nickname"))) <> 0 Then
-    .NICKNAME = ReadIniValue(Path, "Private", "Nickname")
-End If
-
-'Account Tick
-If Len(Trim$(ReadIniValue(Path, "Private", "AccountTick"))) = 0 Then
-    .ACCOUNT_TICK = False
-Else
-    .ACCOUNT_TICK = CBool(ReadIniValue(Path, "Private", "AccountTick"))
-End If
-
-'If Account Tick = True then read account
-If .ACCOUNT_TICK = True Then
-    If Len(Trim$(ReadIniValue(Path, "Private", "Account"))) <> 0 Then
-        .ACCOUNT = ReadIniValue(Path, "Private", "Account")
+    If Len(ReadFromRegistry("IP")) = 0 Then
+        .SERVER_IP = "127.0.0.1"
+    Else
+        .SERVER_IP = ReadFromRegistry("IP")
     End If
-End If
-
-'Password Tick
-If Len(Trim$(ReadIniValue(Path, "Private", "PasswordTick"))) = 0 Then
-    .PASSWORD_TICK = False
-Else
-    .PASSWORD_TICK = CBool(ReadIniValue(Path, "Private", "PasswordTick"))
-End If
-
-'If Password Tick = True then read password
-If .PASSWORD_TICK = True Then
-    .PASSWORD = DeCode(DeCode(ReadIniValue(Path, "Private", "Password")))
-Else
-    .PASSWORD = vbNullString
-End If
-
-'CloseQuestion Tick
-If Len(Trim$(ReadIniValue(Path, "Private", "CloseQuestion"))) = 0 Then
-    .ASK_TICK = False
-Else
-    .ASK_TICK = CBool(ReadIniValue(Path, "Private", "CloseQuestion"))
-End If
-
-'MinimizeTray Tick
-If Len(Trim$(ReadIniValue(Path, "Private", "MinimizeTray"))) = 0 Then
-    .MIN_TICK = False
-Else
-    .MIN_TICK = CBool(ReadIniValue(Path, "Private", "MinimizeTray"))
-End If
-
-'Load configuration from .ini file into switch variables
-If Len(Trim$(ReadIniValue(Path, "Language", "Validate"))) = 0 Then
-    .VALIDATE = 1 'Default choose language
-Else
-    .VALIDATE = ReadIniValue(Path, "Language", "Validate")
-End If
-
-If Len(Trim$(ReadIniValue(Path, "Language", "Language"))) = 0 Then
-    .LANGUAGE = 1 'Default language english
-Else
-    .LANGUAGE = ReadIniValue(Path, "Language", "Language")
-End If
-
-'Load 'Top' position from ini, if there is non take default value ( 1200 )
-If Len(Trim$(ReadIniValue(Path, "Position", "Top"))) = 0 Then
-    Setting.MAIN_TOP = 1200
-Else
-    Setting.MAIN_TOP = ReadIniValue(Path, "Position", "Top")
-End If
-
-'Load 'Left' position from ini, if there is non take default value ( 1200 )
-If Len(Trim$(ReadIniValue(Path, "Position", "Left"))) = 0 Then
-    Setting.MAIN_LEFT = 1200
-Else
-    Setting.MAIN_LEFT = ReadIniValue(Path, "Position", "Left")
-End If
-
-'Load scheme color
-If Len(Trim$(ReadIniValue(Path, "Private", "SchemeColor"))) = 0 Then
-    Setting.SCHEME_COLOR = 15724527 '&HF4F4F4
-Else
-    Setting.SCHEME_COLOR = ReadIniValue(Path, "Private", "SchemeColor")
-End If
-
-'Close Settings variable
+    
+    If Len(ReadFromRegistry("Port")) = 0 Then
+        .SERVER_PORT = 4728
+    Else
+        .SERVER_PORT = ReadFromRegistry("Port")
+    End If
+    
+    .NICKNAME = ReadFromRegistry("Nickname")
+    
+    If Len(ReadFromRegistry("AccountTick")) = 0 Then
+        .ACCOUNT_TICK = False
+    Else
+        .ACCOUNT_TICK = CBool(ReadFromRegistry("AccountTick"))
+    End If
+    
+    .ACCOUNT = ReadFromRegistry("Account")
+    
+    If Len(ReadFromRegistry("PasswordTick")) = 0 Then
+        .PASSWORD_TICK = False
+    Else
+        .PASSWORD_TICK = CBool(ReadFromRegistry("PasswordTick"))
+    End If
+    
+    If .PASSWORD_TICK Then
+        .PASSWORD = DeCode(DeCode(ReadFromRegistry("Password")))
+    End If
+    
+    If Len(ReadFromRegistry("AskTick")) = 0 Then
+        .ASK_TICK = False
+    Else
+        .ASK_TICK = CBool(ReadFromRegistry("AskTick"))
+    End If
+    
+    If Len(ReadFromRegistry("MinimizeTray")) = 0 Then
+        .MIN_TICK = False
+    Else
+        .MIN_TICK = CBool(ReadFromRegistry("MinimizeTray"))
+    End If
+    
+    If Len(ReadFromRegistry("Validate")) = 0 Then
+        .VALIDATE = 1
+    Else
+        .VALIDATE = ReadFromRegistry("Validate")
+    End If
+    
+    If Len(ReadFromRegistry("Language")) = 0 Then
+        .LANGUAGE = 1 'English as default
+    Else
+        .LANGUAGE = ReadFromRegistry("Language")
+    End If
+    
+    If Len(ReadFromRegistry("Top")) = 0 Then
+        .MAIN_TOP = 1200
+    Else
+        .MAIN_TOP = ReadFromRegistry("Top")
+    End If
+    
+    If Len(ReadFromRegistry("Left")) = 0 Then
+        .MAIN_LEFT = 1200
+    Else
+        .MAIN_LEFT = ReadFromRegistry("Left")
+    End If
+    
+    If Len(ReadFromRegistry("SchemeColor")) = 0 Then
+        .SCHEME_COLOR = 15724527
+    Else
+        .SCHEME_COLOR = ReadFromRegistry("SchemeColor")
+    End If
 End With
 End Sub
 

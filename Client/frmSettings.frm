@@ -200,17 +200,16 @@ frmLanguage.Show 1
 End Sub
 
 Private Sub Command2_Click()
-Dim Path As String: Path = App.Path & "\Config.ini"
-
 Command2.Enabled = False
 
-WriteIniValue Path, "Connection", "IP", txtIP
-WriteIniValue Path, "Connection", "Port", txtPort
-WriteIniValue Path, "Private", "SchemeColor", txtColor.BackColor
-WriteIniValue Path, "Private", "PasswordTick", SavePassword.Value
-WriteIniValue Path, "Private", "AccountTick", SaveAccount.Value
-WriteIniValue Path, "Private", "CloseQuestion", CheckAsk.Value
-WriteIniValue Path, "Private", "MinimizeTray", CheckMin.Value
+InsertIntoRegistry "IP", txtIP
+InsertIntoRegistry "IP", txtIP
+InsertIntoRegistry "Port", txtPort
+InsertIntoRegistry "SchemeColor", txtColor.BackColor
+InsertIntoRegistry "PasswordTick", SavePassword.Value
+InsertIntoRegistry "AccountTick", SaveAccount.Value
+InsertIntoRegistry "CloseQuestion", CheckAsk.Value
+InsertIntoRegistry "MinimizeTray", CheckMin.Value
 
 With Setting
     .SERVER_IP = txtIP

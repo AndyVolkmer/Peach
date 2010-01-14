@@ -367,16 +367,13 @@ End If
 End Function
 
 Private Sub Form_Unload(Cancel As Integer)
-Dim Path As String: Path = App.Path & "\Config.ini"
+'Write data entries into registry
+InsertIntoRegistry "Password", Encode(Encode(txtPassword))
+InsertIntoRegistry "Account", txtAccount
+InsertIntoRegistry "Nickname", txtNick
 
-'Write data entries to .ini file
-WriteIniValue Path, "Private", "Password", Encode(Encode(txtPassword))
-WriteIniValue Path, "Private", "Account", txtAccount
-WriteIniValue Path, "Private", "Nickname", txtNick
-
-'Write position entries to .ini file
-WriteIniValue Path, "Position", "Top", frmMain.Top
-WriteIniValue Path, "Position", "Left", frmMain.Left
+InsertIntoRegistry "Top", frmMain.Top
+InsertIntoRegistry "Left", frmMain.Left
 End Sub
 
 Private Sub Label1_Click()

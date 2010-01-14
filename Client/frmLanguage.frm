@@ -75,8 +75,8 @@ frmRegistration.LoadRegistrationForm
 frmSociety.LoadSocietyForm
 frmForgotPassword.LoadForgotPasswordForm
 
-WriteIniValue App.Path & "\Config.ini", "Language", "Validate", "0"
-WriteIniValue App.Path & "\Config.ini", "Language", "Language", frmLanguage.Combo1.ListIndex
+InsertIntoRegistry "Validate", "0"
+InsertIntoRegistry "Language", frmLanguage.Combo1.ListIndex
 frmLanguage.Hide
 End Sub
 
