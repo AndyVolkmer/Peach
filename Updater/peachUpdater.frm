@@ -17,8 +17,8 @@ Begin VB.Form frmMain
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
-   Icon            =   "Form1.frx":0000
-   LinkTopic       =   "Form1"
+   Icon            =   "peachUpdater.frx":0000
+   LinkTopic       =   "peachUpdater"
    MaxButton       =   0   'False
    ScaleHeight     =   2820
    ScaleWidth      =   6855
@@ -35,7 +35,7 @@ Begin VB.Form frmMain
       BorderStyle     =   0
       ReadOnly        =   -1  'True
       ScrollBars      =   2
-      TextRTF         =   $"Form1.frx":08CA
+      TextRTF         =   $"peachUpdater.frx":08CA
    End
    Begin InetCtlsObjects.Inet inetftp 
       Left            =   4440

@@ -44,7 +44,6 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -378,7 +377,7 @@ Private Sub CopyPictureToRTF(RTF As Control, Bild As Picture)
 Dim Buf As Variant
 Dim Text As String
 
-If Clipboard.GetFormat(vbCFText) = True Then
+If Clipboard.GetFormat(vbCFText) Then
     Text = Clipboard.GetText
 Else
     Buf = Clipboard.GetData

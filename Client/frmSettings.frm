@@ -258,22 +258,22 @@ Private Sub Form_Load()
 LoadSettingsForm
 With Setting
     txtColor.BackColor = .SCHEME_COLOR
-    If .ACCOUNT_TICK = True Then
+    If .ACCOUNT_TICK Then
         SaveAccount.Value = 1
     Else
         SaveAccount.Value = 0
     End If
-    If .PASSWORD_TICK = True Then
+    If .PASSWORD_TICK Then
         SavePassword.Value = 1
     Else
         SavePassword.Value = 0
     End If
-    If .ASK_TICK = True Then
+    If .ASK_TICK Then
         CheckAsk.Value = 1
     Else
         CheckAsk.Value = 0
     End If
-    If .MIN_TICK = True Then
+    If .MIN_TICK Then
         CheckMin.Value = 1
     Else
         CheckMin.Value = 0

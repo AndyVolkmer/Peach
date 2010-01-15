@@ -329,7 +329,7 @@ frmSettings.Show 1
 End Sub
 
 Private Sub Command4_Click()
-If FileExists(App.Path & "\peachUpdater.exe") = True Then
+If FileExists(App.Path & "\peachUpdater.exe") Then
     Shell App.Path & "\peachUpdater.exe", vbNormalFocus
 Else
     MsgBox CONFIG_MSG_UPDATE_FILE, vbInformation

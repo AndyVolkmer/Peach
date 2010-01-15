@@ -224,7 +224,7 @@ End Sub
 Public Sub SendF(IP As String)
 If cmdSendFile.Caption = SF_COMMAND_SENDFILE Then
     If Len(txtFileName) > 0 Then
-        If FileExists(txtFileName) = True Then
+        If FileExists(txtFileName) Then
             cmdSendFile.Caption = SF_COMMAND_CANCEL
             SendFile txtFileName, IP
         Else
