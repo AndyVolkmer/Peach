@@ -1169,39 +1169,39 @@ For k = 0 To UBound(p_PreArray) - 1
                         Dim pMinRoll    As Long
                         Dim pMaxRoll    As Long
                         
-                        If UBound(p_CHAT_ARRAY) > 0 Then
-                            If UBound(p_CHAT_ARRAY) > 1 Then
-                                If IsNumeric(p_CHAT_ARRAY(1)) Then
-                                    If IsNumeric(p_CHAT_ARRAY(2)) Then
-                                        pRoll = GetRandomNumber(p_CHAT_ARRAY(1), p_CHAT_ARRAY(2))
-                                        pMinRoll = p_CHAT_ARRAY(1)
-                                        pMaxRoll = p_CHAT_ARRAY(2)
-                                    Else
-                                        pRoll = GetRandomNumber(, p_CHAT_ARRAY(1))
-                                        pMinRoll = 1
-                                        pMaxRoll = p_CHAT_ARRAY(1)
-                                    End If
-                                Else
-                                    pRoll = GetRandomNumber()
-                                    pMinRoll = 1
-                                    pMaxRoll = 100
-                                End If
+                        If UBound(p_CHAT_ARRAY) > 1 Then
+                            If IsNumeric(p_CHAT_ARRAY(1)) Then
+                                pMinRoll = p_CHAT_ARRAY(1)
                             Else
-                                If IsNumeric(p_CHAT_ARRAY(1)) Then
-                                    pRoll = GetRandomNumber(, p_CHAT_ARRAY(1))
-                                    pMinRoll = 1
-                                    pMaxRoll = p_CHAT_ARRAY(1)
-                                Else
-                                    pRoll = GetRandomNumber()
-                                    pMinRoll = 1
-                                    pMaxRoll = 100
-                                End If
+                                pMinRoll = 1
                             End If
+                            
+                            If IsNumeric(p_CHAT_ARRAY(2)) Then
+                                pMaxRoll = p_CHAT_ARRAY(2)
+                            Else
+                                pMaxRoll = 100
+                            End If
+                                                        
+                        ElseIf UBound(p_CHAT_ARRAY) > 0 Then
+                            pMinRoll = 1
+                            
+                            If IsNumeric(p_CHAT_ARRAY(1)) Then
+                                pMaxRoll = p_CHAT_ARRAY(1)
+                            Else
+                                pMaxRoll = 100
+                            End If
+                            
                         Else
-                            pRoll = GetRandomNumber()
                             pMinRoll = 1
                             pMaxRoll = 100
+                            
                         End If
+                        
+                        If pMinRoll > pMaxRoll Then pMaxRoll = 100
+                        If pMinRoll = 0 Then pMinRoll = 1
+                        If pMaxRoll = 0 Then pMaxRoll = 100
+                        
+                        pRoll = GetRandomNumber(pMinRoll, pMaxRoll)
                         
                         SendProtectedMessage p_MainArray(1), p_MainArray(1) & " rolls " & pRoll & ". (" & pMinRoll & "-" & pMaxRoll & ")"
                         
