@@ -42,83 +42,83 @@ Else
     frmLanguage.Show
 End If
 
-InsertIntoRegistry "Number", pRev
+InsertIntoRegistry "Client\Revision", "Number", pRev
 End Sub
 
 Private Sub LoadRegistryValue()
 With Setting
-    If Len(ReadFromRegistry("IP")) = 0 Then
+    If Len(ReadFromRegistry("Client\Configuration", "IP")) = 0 Then
         .SERVER_IP = "127.0.0.1"
     Else
-        .SERVER_IP = ReadFromRegistry("IP")
+        .SERVER_IP = ReadFromRegistry("Client\Configuration", "IP")
     End If
     
-    If Len(ReadFromRegistry("Port")) = 0 Then
+    If Len(ReadFromRegistry("Client\Configuration", "Port")) = 0 Then
         .SERVER_PORT = 4728
     Else
-        .SERVER_PORT = ReadFromRegistry("Port")
+        .SERVER_PORT = ReadFromRegistry("Client\Configuration", "Port")
     End If
     
-    .NICKNAME = ReadFromRegistry("Nickname")
+    .NICKNAME = ReadFromRegistry("Client\Configuration", "Nickname")
     
-    If Len(ReadFromRegistry("AccountTick")) = 0 Then
+    If Len(ReadFromRegistry("Client\Configuration", "AccountTick")) = 0 Then
         .ACCOUNT_TICK = False
     Else
-        .ACCOUNT_TICK = CBool(ReadFromRegistry("AccountTick"))
+        .ACCOUNT_TICK = CBool(ReadFromRegistry("Client\Configuration", "AccountTick"))
     End If
     
-    .ACCOUNT = ReadFromRegistry("Account")
+    .ACCOUNT = ReadFromRegistry("Client\Configuration", "Account")
     
-    If Len(ReadFromRegistry("PasswordTick")) = 0 Then
+    If Len(ReadFromRegistry("Client\Configuration", "PasswordTick")) = 0 Then
         .PASSWORD_TICK = False
     Else
-        .PASSWORD_TICK = CBool(ReadFromRegistry("PasswordTick"))
+        .PASSWORD_TICK = CBool(ReadFromRegistry("Client\Configuration", "PasswordTick"))
     End If
     
     If .PASSWORD_TICK Then
-        .PASSWORD = DeCode(DeCode(ReadFromRegistry("Password")))
+        .PASSWORD = DeCode(DeCode(ReadFromRegistry("Client\Configuration", "Password")))
     End If
     
-    If Len(ReadFromRegistry("AskTick")) = 0 Then
+    If Len(ReadFromRegistry("Client\Configuration", "AskTick")) = 0 Then
         .ASK_TICK = False
     Else
-        .ASK_TICK = CBool(ReadFromRegistry("AskTick"))
+        .ASK_TICK = CBool(ReadFromRegistry("Client\Configuration", "AskTick"))
     End If
     
-    If Len(ReadFromRegistry("MinimizeTray")) = 0 Then
+    If Len(ReadFromRegistry("Client\Configuration", "MinimizeTray")) = 0 Then
         .MIN_TICK = False
     Else
-        .MIN_TICK = CBool(ReadFromRegistry("MinimizeTray"))
+        .MIN_TICK = CBool(ReadFromRegistry("Client\Configuration", "MinimizeTray"))
     End If
     
-    If Len(ReadFromRegistry("Validate")) = 0 Then
+    If Len(ReadFromRegistry("Client\Configuration", "Validate")) = 0 Then
         .VALIDATE = 1
     Else
-        .VALIDATE = ReadFromRegistry("Validate")
+        .VALIDATE = ReadFromRegistry("Client\Configuration", "Validate")
     End If
     
-    If Len(ReadFromRegistry("Language")) = 0 Then
+    If Len(ReadFromRegistry("Client\Configuration", "Language")) = 0 Then
         .LANGUAGE = 1 'English as default
     Else
-        .LANGUAGE = ReadFromRegistry("Language")
+        .LANGUAGE = ReadFromRegistry("Client\Configuration", "Language")
     End If
     
-    If Len(ReadFromRegistry("Top")) = 0 Then
+    If Len(ReadFromRegistry("Client\Configuration", "Top")) = 0 Then
         .MAIN_TOP = 1200
     Else
-        .MAIN_TOP = ReadFromRegistry("Top")
+        .MAIN_TOP = ReadFromRegistry("Client\Configuration", "Top")
     End If
     
-    If Len(ReadFromRegistry("Left")) = 0 Then
+    If Len(ReadFromRegistry("Client\Configuration", "Left")) = 0 Then
         .MAIN_LEFT = 1200
     Else
-        .MAIN_LEFT = ReadFromRegistry("Left")
+        .MAIN_LEFT = ReadFromRegistry("Client\Configuration", "Left")
     End If
     
-    If Len(ReadFromRegistry("SchemeColor")) = 0 Then
+    If Len(ReadFromRegistry("Client\Configuration", "SchemeColor")) = 0 Then
         .SCHEME_COLOR = 15724527
     Else
-        .SCHEME_COLOR = ReadFromRegistry("SchemeColor")
+        .SCHEME_COLOR = ReadFromRegistry("Client\Configuration", "SchemeColor")
     End If
 End With
 End Sub
@@ -160,7 +160,8 @@ If Not IsFirst Then
         .Frame1.BackColor = SC
         .Frame2.BackColor = SC
         .Frame3.BackColor = SC
-        .Label1.BackColor = SC
+        .lblColor.BackColor = SC
+        .lblFont.BackColor = SC
         .Label2.BackColor = SC
         .Label3.BackColor = SC
         .SaveAccount.BackColor = SC

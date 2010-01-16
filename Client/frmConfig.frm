@@ -369,12 +369,12 @@ End Function
 
 Private Sub Form_Unload(Cancel As Integer)
 'Write data entries into registry
-InsertIntoRegistry "Password", Encode(Encode(txtPassword))
-InsertIntoRegistry "Account", txtAccount
-InsertIntoRegistry "Nickname", txtNick
+InsertIntoRegistry "Client\Configuration", "Password", Encode(Encode(txtPassword))
+InsertIntoRegistry "Client\Configuration", "Account", txtAccount
+InsertIntoRegistry "Client\Configuration", "Nickname", txtNick
 
-InsertIntoRegistry "Top", frmMain.Top
-InsertIntoRegistry "Left", frmMain.Left
+InsertIntoRegistry "Client\Configuration", "Top", frmMain.Top
+InsertIntoRegistry "Client\Configuration", "Left", frmMain.Left
 End Sub
 
 Private Sub Label1_Click()

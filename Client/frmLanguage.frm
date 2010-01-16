@@ -75,8 +75,8 @@ frmRegistration.LoadRegistrationForm
 frmSociety.LoadSocietyForm
 frmForgotPassword.LoadForgotPasswordForm
 
-InsertIntoRegistry "Validate", "0"
-InsertIntoRegistry "Language", frmLanguage.Combo1.ListIndex
+InsertIntoRegistry "Client\Configuration", "Validate", "0"
+InsertIntoRegistry "Client\Configuration", "Language", frmLanguage.Combo1.ListIndex
 frmLanguage.Hide
 End Sub
 

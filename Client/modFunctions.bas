@@ -10,6 +10,9 @@ Public Const rPort      As Long = 6222
 Public ACC_SWITCH       As String
 Public Prefix           As String  'Time Prefix vairbale
 
+Public Setting          As CONFIG
+Public Fonts            As FNT
+
 Private Type CONFIG
     'frmMain values
     MAIN_TOP            As Long
@@ -38,7 +41,15 @@ Private Type CONFIG
     NICKNAME            As String
 End Type
 
-Public Setting As CONFIG
+Private Type FNT
+    FONT_NAME           As String
+    FONT_BOLD           As Boolean
+    FONT_ITALIC         As Boolean
+    FONT_SIZE           As Long
+    FONT_STRIKE         As Boolean
+    FONT_UNDER          As Boolean
+    FONT_COLOR          As Long
+End Type
 
 Public Type NOTIFYICONDATA
     cbSize              As Long

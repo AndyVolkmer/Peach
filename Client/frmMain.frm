@@ -1,6 +1,7 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.MDIForm frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H00F4F4F4&
@@ -176,6 +177,14 @@ Begin VB.MDIForm frmMain
       _ExtentX        =   741
       _ExtentY        =   741
       _Version        =   393216
+   End
+   Begin MSComDlg.CommonDialog CDialog 
+      Left            =   1440
+      Top             =   1080
+      _ExtentX        =   847
+      _ExtentY        =   847
+      _Version        =   393216
+      CancelError     =   -1  'True
    End
    Begin VB.Menu myPOP 
       Caption         =   "myPOP"
@@ -433,7 +442,7 @@ Private Sub STimer_Timer()
 With FSocket
     If .State = 7 Then
         STimer.Enabled = False
-        .SendData "!filerequest#" & frmSendFile.CDialog.FileTitle & "#" & frmConfig.txtNick & "#"
+        .SendData "!filerequest#" & frmMain.CDialog.FileTitle & "#" & frmConfig.txtNick & "#"
     End If
 End With
 End Sub

@@ -141,6 +141,27 @@ Begin VB.Form frmSettings
       TabIndex        =   0
       Top             =   120
       Width           =   4215
+      Begin VB.TextBox txtFont 
+         Alignment       =   2  'Center
+         Appearance      =   0  'Flat
+         Enabled         =   0   'False
+         Height          =   285
+         Left            =   2160
+         Locked          =   -1  'True
+         TabIndex        =   18
+         Text            =   "T E S T"
+         Top             =   480
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdFont 
+         Caption         =   "..."
+         Height          =   255
+         Left            =   3360
+         TabIndex        =   17
+         ToolTipText     =   "Click here to change the color."
+         Top             =   480
+         Width           =   375
+      End
       Begin VB.CommandButton cmdColor 
          Caption         =   "..."
          Height          =   255
@@ -161,7 +182,15 @@ Begin VB.Form frmSettings
          Top             =   480
          Width           =   1095
       End
-      Begin VB.Label Label1 
+      Begin VB.Label lblFont 
+         Caption         =   "Font:"
+         Height          =   255
+         Left            =   2160
+         TabIndex        =   19
+         Top             =   240
+         Width           =   1215
+      End
+      Begin VB.Label lblColor 
          Caption         =   "Current Color:"
          Height          =   255
          Left            =   240
@@ -188,12 +217,27 @@ End Sub
 
 Private Sub cmdColor_Click()
 On Error GoTo ErrCancel
-With frmSendFile.CDialog
+With frmMain.CDialog
     .ShowColor
     txtColor.BackColor = .Color
 End With
 Command2.Enabled = True
 ErrCancel:
+End Sub
+
+Private Sub cmdFont_Click()
+With frmMain.CDialog
+    .ShowFont
+    txtFont.Font = .FontName
+    txtFont.FontBold = .FontBold
+    txtFont.FontItalic = .FontItalic
+    txtFont.FontSize = .FontSize
+    txtFont.FontStrikethru = .FontStrikethru
+    txtFont.FontUnderline = .FontUnderline
+    txtFont.ForeColor = .Color
+End With
+
+Command2.Enabled = True
 End Sub
 
 Private Sub Command1_Click()
@@ -203,14 +247,23 @@ End Sub
 Private Sub Command2_Click()
 Command2.Enabled = False
 
-InsertIntoRegistry "IP", txtIP
-InsertIntoRegistry "IP", txtIP
-InsertIntoRegistry "Port", txtPort
-InsertIntoRegistry "SchemeColor", txtColor.BackColor
-InsertIntoRegistry "PasswordTick", SavePassword.Value
-InsertIntoRegistry "AccountTick", SaveAccount.Value
-InsertIntoRegistry "CloseQuestion", CheckAsk.Value
-InsertIntoRegistry "MinimizeTray", CheckMin.Value
+InsertIntoRegistry "Client\Configuration", "IP", txtIP
+InsertIntoRegistry "Client\Configuration", "Port", txtPort
+InsertIntoRegistry "Client\Configuration", "SchemeColor", txtColor.BackColor
+InsertIntoRegistry "Client\Configuration", "PasswordTick", SavePassword.Value
+InsertIntoRegistry "Client\Configuration", "AccountTick", SaveAccount.Value
+InsertIntoRegistry "Client\Configuration", "CloseQuestion", CheckAsk.Value
+InsertIntoRegistry "Client\Configuration", "MinimizeTray", CheckMin.Value
+
+With txtFont
+    InsertIntoRegistry "Client\Font", "FontName", .Font
+    InsertIntoRegistry "Client\Font", "FontBold", CStr(.FontBold)
+    InsertIntoRegistry "Client\Font", "FontItalic", CStr(.FontItalic)
+    InsertIntoRegistry "Client\Font", "FontSize", CStr(.FontSize)
+    InsertIntoRegistry "Client\Font", "FontStrike", CStr(.FontStrikethru)
+    InsertIntoRegistry "Client\Font", "FontUnder", CStr(.FontUnderline)
+    InsertIntoRegistry "Client\Font", "FontColor", CStr(.ForeColor)
+End With
 
 With Setting
     .SERVER_IP = txtIP
@@ -222,11 +275,21 @@ With Setting
     .MIN_TICK = CheckMin.Value
 End With
 
+With Fonts
+    .FONT_NAME = txtFont.Font
+    .FONT_BOLD = txtFont.FontBold
+    .FONT_ITALIC = txtFont.FontItalic
+    .FONT_SIZE = txtFont.FontSize
+    .FONT_STRIKE = txtFont.FontStrikethru
+    .FONT_UNDER = txtFont.FontUnderline
+    .FONT_COLOR = txtFont.ForeColor
+End With
+
 SetScheme False
 End Sub
 
 Public Sub LoadSettingsForm()
-Label1.Caption = SET_LABEL_COLOR
+lblColor.Caption = SET_LABEL_COLOR
 lblMinimizeTray = SET_CHECK_MINIMIZE
 Frame2.Caption = SET_FRAME_OPTIONS
 SaveAccount.Caption = SET_CHECK_SAVE_ACCOUNT
@@ -244,7 +307,8 @@ Me.BackColor = SC
 Frame1.BackColor = SC
 Frame2.BackColor = SC
 Frame3.BackColor = SC
-Label1.BackColor = SC
+lblColor.BackColor = SC
+lblFont.BackColor = SC
 Label2.BackColor = SC
 Label3.BackColor = SC
 SaveAccount.BackColor = SC

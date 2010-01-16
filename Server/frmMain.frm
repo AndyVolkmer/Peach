@@ -244,92 +244,92 @@ Dim L As Long
 With Database
 
 '== Database ==
-If Len(ReadFromRegistry("DB_Name")) <> 0 Then
-    .Database = ReadFromRegistry("DB_Name")
+If Len(ReadFromRegistry("Server\Database", "Name")) <> 0 Then
+    .Database = ReadFromRegistry("Server\Database", "Name")
 Else
     WriteLog "No Database value found."
     .Database = InputBox("The configuration file does not cotain a valid database, please insert one in the textbox below.", "Database error ..", "Database Name")
 End If
 
-If Len(ReadFromRegistry("DB_User")) <> 0 Then
-    .User = ReadFromRegistry("DB_User")
+If Len(ReadFromRegistry("Server\Database", "User")) <> 0 Then
+    .User = ReadFromRegistry("Server\Database", "User")
 Else
     WriteLog "No User value found."
     .User = InputBox("The configuration file does not cotain a valid user name, please insert one in the textbox below.", "Database error ..", "User Name")
 End If
 
-If Len(DeCode(ReadFromRegistry("DB_Password"))) <> 0 Then
-    .Password = DeCode(ReadFromRegistry("DB_Password"))
+If Len(DeCode(ReadFromRegistry("Server\Database", "Password"))) <> 0 Then
+    .Password = DeCode(ReadFromRegistry("Server\Database", "Password"))
 Else
     WriteLog "No Password value found."
     .Password = InputBox("The configuration file does not cotain a valid password, please insert one in the textbox below.", "Database error ..", "Password")
 End If
 
-If Len(ReadFromRegistry("DB_Host")) <> 0 Then
-    .Host = ReadFromRegistry("DB_Host")
+If Len(ReadFromRegistry("Server\Database", "Host")) <> 0 Then
+    .Host = ReadFromRegistry("Server\Database", "Host")
 Else
     WriteLog "No Host value found."
     .Host = InputBox("The configuration file does not cotain a host adress, please insert one in the textbox below.", "Database error ..", "Host Adress")
 End If
 
-If Len(ReadFromRegistry("DB_Account_Table")) <> 0 Then
-    .AccountTable = ReadFromRegistry("DB_Account_Table")
+If Len(ReadFromRegistry("Server\Database", "Account_Table")) <> 0 Then
+    .AccountTable = ReadFromRegistry("Server\Database", "Account_Table")
 Else
     WriteLog "No Account-Table found."
     .AccountTable = InputBox("The configuration file does not contain a account table, please insert one in the textbox below.", "Database error ..", "Account Table")
 End If
 
-If Len(ReadFromRegistry("DB_Friend_Table")) <> 0 Then
-    .FriendTable = ReadFromRegistry("DB_Friend_Table")
+If Len(ReadFromRegistry("Server\Database", "Friend_Table")) <> 0 Then
+    .FriendTable = ReadFromRegistry("Server\Database", "Friend_Table")
 Else
     WriteLog "No Friends-Table found."
     .FriendTable = InputBox("The configuration file does not contain a friend table, please insert one in the textbox below.", "Database error ..", "Friend Table")
 End If
 
-If Len(ReadFromRegistry("DB_Ignore_Table")) <> 0 Then
-    .IgnoreTable = ReadFromRegistry("DB_Ignore_Table")
+If Len(ReadFromRegistry("Server\Database", "Ignore_Table")) <> 0 Then
+    .IgnoreTable = ReadFromRegistry("Server\Database", "Ignore_Table")
 Else
     WriteLog "No Ignore-Table found."
     .IgnoreTable = InputBox("The configuration file does not contain a ignore table, please insert one in the textbox below.", "Database error ..", "Ignore Table")
 End If
 
-If Len(ReadFromRegistry("DB_Emote_Table")) <> 0 Then
-    .EmoteTable = ReadFromRegistry("DB_Emote_Table")
+If Len(ReadFromRegistry("Server\Database", "Emote_Table")) <> 0 Then
+    .EmoteTable = ReadFromRegistry("Server\Database", "Emote_Table")
 Else
     WriteLog "No Emotes-Table found."
     .EmoteTable = InputBox("The configuration file does not contain a emote table, please insert one in the textbox below.", "Database error ..", "Emote Table")
 End If
 
-If Len(ReadFromRegistry("DB_Declined_Name_Table")) <> 0 Then
-    .DeclinedNameTable = ReadFromRegistry("DB_Declined_Name_Table")
+If Len(ReadFromRegistry("Server\Database", "Declined_Name_Table")) <> 0 Then
+    .DeclinedNameTable = ReadFromRegistry("Server\Database", "Declined_Name_Table")
 Else
     WriteLog "No Declined-Names-Table found."
     .DeclinedNameTable = InputBox("The configuration file does not contain a declined name table, please insert one in the textbox below.", "Database error ..", "Declined Name Table")
 End If
 
-If Len(ReadFromRegistry("DB_Command_Table")) <> 0 Then
-    .CommandsTable = ReadFromRegistry("DB_Command_Table")
+If Len(ReadFromRegistry("Server\Database", "Command_Table")) <> 0 Then
+    .CommandsTable = ReadFromRegistry("Server\Database", "Command_Table")
 Else
     WriteLog "No Command-Table found."
     .CommandsTable = InputBox("The configuration file does not contain a command table, please insert one in the textbox below.", "Database error ..", "Commands Table")
 End If
 
 '== Position ==
-If Len(ReadFromRegistry("Top")) <> 0 Then
-    Me.Top = ReadFromRegistry("Top")
+If Len(ReadFromRegistry("Server\Configuration", "Top")) <> 0 Then
+    Me.Top = ReadFromRegistry("Server\Configuration", "Top")
 Else
     Me.Top = 1200
 End If
 
-If Len(ReadFromRegistry("Left")) <> 0 Then
-    Me.Left = ReadFromRegistry("Left")
+If Len(ReadFromRegistry("Server\Configuration", "Left")) <> 0 Then
+    Me.Left = ReadFromRegistry("Server\Configuration", "Left")
 Else
     Me.Left = 1200
 End If
 
 '== Options ==
-If Len(ReadFromRegistry("ChatLevel")) <> 0 Then
-    Options.ChatLevel = ReadFromRegistry("ChatLevel")
+If Len(ReadFromRegistry("Server\Configuration", "ChatLevel")) <> 0 Then
+    Options.ChatLevel = ReadFromRegistry("Server\Configuration", "ChatLevel")
 Else
     Options.ChatLevel = 0
 End If
@@ -686,26 +686,26 @@ Shell_NotifyIcon NIM_DELETE, nid
 With Database
 
 '== Database ==
-InsertIntoRegistry "DB_Name", .Database
-InsertIntoRegistry "DB_User", .User
-InsertIntoRegistry "DB_Password", Encode(.Password)
-InsertIntoRegistry "DB_Host", .Host
-InsertIntoRegistry "DB_Account_Table", .AccountTable
-InsertIntoRegistry "DB_Friend_Table", .FriendTable
-InsertIntoRegistry "DB_Ignore_Table", .IgnoreTable
-InsertIntoRegistry "DB_Emote_Table", .EmoteTable
-InsertIntoRegistry "DB_Declined_Name_Table", .DeclinedNameTable
-InsertIntoRegistry "DB_Command_Table", .CommandsTable
+InsertIntoRegistry "Server\Database", "Name", .Database
+InsertIntoRegistry "Server\Database", "User", .User
+InsertIntoRegistry "Server\Database", "Password", Encode(.Password)
+InsertIntoRegistry "Server\Database", "Host", .Host
+InsertIntoRegistry "Server\Database", "Account_Table", .AccountTable
+InsertIntoRegistry "Server\Database", "Friend_Table", .FriendTable
+InsertIntoRegistry "Server\Database", "Ignore_Table", .IgnoreTable
+InsertIntoRegistry "Server\Database", "Emote_Table", .EmoteTable
+InsertIntoRegistry "Server\Database", "Declined_Name_Table", .DeclinedNameTable
+InsertIntoRegistry "Server\Database", "Command_Table", .CommandsTable
 
 'Close Database variable
 End With
 
 '== Position ==
-InsertIntoRegistry "Top", Me.Top
-InsertIntoRegistry "Left", Me.Left
+InsertIntoRegistry "Server\Configuration", "Top", Me.Top
+InsertIntoRegistry "Server\Configuration", "Left", Me.Left
 
 '== Options ==
-InsertIntoRegistry "ChatLevel", Options.ChatLevel
+InsertIntoRegistry "Server\Configuration", "ChatLevel", Options.ChatLevel
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
