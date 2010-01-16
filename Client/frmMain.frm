@@ -354,7 +354,9 @@ array1 = Split(GetMessage, "#")
 
 Select Case array1(0)
     Case "!filerequest"
-        If MsgBox(SF_MSG_INCOMMING_FILE_1 & array1(1) & SF_MSG_INCOMMING_FILE_2 & array1(2) & SF_MSG_INCOMMING_FILE_3, vbYesNo + vbQuestion) = vbYes Then
+        SF_MSG_INCOMMING_FILE = Replace$(SF_MSG_INCOMMING_FILE, "%f", array1(1))
+        SF_MSG_INCOMMING_FILE = Replace$(SF_MSG_INCOMMING_FILE, "%u", array1(2))
+        If MsgBox(SF_MSG_INCOMMING_FILE, vbYesNo + vbQuestion) = vbYes Then
             FSocket2(Index).SendData "!acceptfile#"
             frmSendFile2.Show
         Else

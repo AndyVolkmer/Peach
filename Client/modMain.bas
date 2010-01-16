@@ -5,7 +5,7 @@ Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Sub Main()
 'If the application is already open then close it
-If App.PrevInstance Then
+If App.PrevInstance And Not App.EXEName = "peachClient_DEBUG" Then
     End
 End If
 

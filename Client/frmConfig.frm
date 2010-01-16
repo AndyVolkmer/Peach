@@ -304,17 +304,19 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
         .Connect
     End With
     
-    'Set Recieve-Request-Winsock to listen
-    With frmMain.FSocket2(0)
-        .LocalPort = aPort
-        .Listen
-    End With
-
-    'Set Recieve-File-Winsock to listen
-    With frmSendFile2.SckReceiveFile(0)
-        .LocalPort = bPort
-        .Listen
-    End With
+    If Not App.EXEName = "peachClient_DEBUG" Then
+        'Set Recieve-Request-Winsock to listen
+        With frmMain.FSocket2(0)
+            .LocalPort = aPort
+            .Listen
+        End With
+    
+        'Set Recieve-File-Winsock to listen
+        With frmSendFile2.SckReceiveFile(0)
+            .LocalPort = bPort
+            .Listen
+        End With
+    End If
     
     SwitchButtons False, True
     
