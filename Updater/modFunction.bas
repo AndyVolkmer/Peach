@@ -38,6 +38,7 @@ Private Const WINNT     As Integer = 2
 Private Const WIN98     As Integer = 1
 
 Public KillAppReturn    As Boolean
+Public i                As Long
 
 Public Function getVersion() As Integer
 Dim udtOSInfo As OSVERSIONINFO
@@ -146,7 +147,7 @@ Dim fnum As Integer
 
 ' Get the file's contents.
 On Error GoTo DownloadError
-bytes() = Form1.inetftp.OpenURL(source_file, icByteArray)
+bytes() = frmMain.inetftp.OpenURL(source_file, icByteArray)
 
 ' Remove the file if it exists.
 On Error Resume Next
@@ -176,6 +177,6 @@ End Function
 Public Sub StartDownload(SourceF As String, DestF As String)
 DoEvents
 If DownloadFile(SourceF, DestF) Then
-    Form1.Label2.Caption = "Status : Downloaded Patch files."
+    frmMain.Label2.Caption = "Status : Downloaded Patch files."
 End If
 End Sub
