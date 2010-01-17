@@ -2,6 +2,8 @@ Attribute VB_Name = "modFunctions"
 Option Explicit
 
 Global Const rPort          As Long = 6222
+Global Const MAX_INT_VALUE  As Long = 2147483647
+Global Const MIN_INT_VALUE  As Long = -2147483647
 
 Global VarTime              As Long    'Time counter variable
 Global HasError             As Boolean 'Used in frmMain and frmConfig

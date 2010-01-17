@@ -216,16 +216,17 @@ Command2.Enabled = True
 End Sub
 
 Private Sub cmdColor_Click()
-On Error GoTo ErrCancel
+On Error Resume Next
 With frmMain.CDialog
     .ShowColor
     txtColor.BackColor = .Color
 End With
+
 Command2.Enabled = True
-ErrCancel:
 End Sub
 
 Private Sub cmdFont_Click()
+On Error Resume Next
 With frmMain.CDialog
     .ShowFont
     txtFont.Font = .FontName

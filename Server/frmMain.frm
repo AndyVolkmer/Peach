@@ -1168,16 +1168,24 @@ For k = 0 To UBound(p_PreArray) - 1
                         Dim pRoll       As Long
                         Dim pMinRoll    As Long
                         Dim pMaxRoll    As Long
-                        
+                         
                         If UBound(p_CHAT_ARRAY) > 1 Then
                             If IsNumeric(p_CHAT_ARRAY(1)) Then
-                                pMinRoll = p_CHAT_ARRAY(1)
+                                If p_CHAT_ARRAY(1) > MAX_INT_VALUE Or p_CHAT_ARRAY(1) < MIN_INT_VALUE Then
+                                    pMinRoll = 1
+                                Else
+                                    pMinRoll = p_CHAT_ARRAY(1)
+                                End If
                             Else
                                 pMinRoll = 1
                             End If
                             
                             If IsNumeric(p_CHAT_ARRAY(2)) Then
-                                pMaxRoll = p_CHAT_ARRAY(2)
+                                If p_CHAT_ARRAY(2) > MAX_INT_VALUE Or p_CHAT_ARRAY(2) < MIN_INT_VALUE Then
+                                    pMaxRoll = 100
+                                Else
+                                    pMaxRoll = p_CHAT_ARRAY(2)
+                                End If
                             Else
                                 pMaxRoll = 100
                             End If
@@ -1186,7 +1194,11 @@ For k = 0 To UBound(p_PreArray) - 1
                             pMinRoll = 1
                             
                             If IsNumeric(p_CHAT_ARRAY(1)) Then
-                                pMaxRoll = p_CHAT_ARRAY(1)
+                                If p_CHAT_ARRAY(1) > MAX_INT_VALUE Or p_CHAT_ARRAY(2) < MIN_INT_VALUE Then
+                                    pMaxRoll = 100
+                                Else
+                                    pMaxRoll = p_CHAT_ARRAY(1)
+                                End If
                             Else
                                 pMaxRoll = 100
                             End If

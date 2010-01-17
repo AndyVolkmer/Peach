@@ -13,7 +13,7 @@ Public Prefix           As String  'Time Prefix vairbale
 Public Setting          As CONFIG
 Public Fonts            As FNT
 
-Private Type CONFIG
+Type CONFIG
     'frmMain values
     MAIN_TOP            As Long
     MAIN_LEFT           As Long
@@ -41,7 +41,7 @@ Private Type CONFIG
     NICKNAME            As String
 End Type
 
-Private Type FNT
+Type FNT
     FONT_NAME           As String
     FONT_BOLD           As Boolean
     FONT_ITALIC         As Boolean
@@ -75,16 +75,16 @@ Public Const WM_RBUTTONDBLCLK = &H206 'Double-click
 Public Const WM_RBUTTONDOWN = &H204 'Button down
 Public Const WM_RBUTTONUP = &H205 'Button up
 
-Private Type RECT
-    Left As Long
-    Top As Long
-    Right As Long
-    Bottom As Long
+Type RECT
+    Left    As Long
+    Top     As Long
+    Right   As Long
+    Bottom  As Long
 End Type
 
-Private Type POINTAPI
-    X As Long
-    Y As Long
+Type POINTAPI
+    X       As Long
+    Y       As Long
 End Type
 
 Public Const GWL_STYLE = (-16)
