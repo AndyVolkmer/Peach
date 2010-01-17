@@ -121,6 +121,44 @@ With Setting
         .SCHEME_COLOR = ReadFromRegistry("Client\Configuration", "SchemeColor")
     End If
 End With
+
+With Fonts
+    If Len(ReadFromRegistry("Client\Font", "FontBold")) = 0 Then
+        .FONT_BOLD = False
+    Else
+        .FONT_BOLD = CBool(ReadFromRegistry("Client\Font", "FontBold"))
+    End If
+    
+    If Len(ReadFromRegistry("Client\Font", "FontItalic")) = 0 Then
+        .FONT_ITALIC = False
+    Else
+        .FONT_ITALIC = CBool(ReadFromRegistry("Client\Font", "FontItalic"))
+    End If
+    
+    If Len(ReadFromRegistry("Client\Font", "FontName")) = 0 Then
+        .FONT_NAME = "Segoe UI"
+    Else
+        .FONT_NAME = ReadFromRegistry("Client\Font", "FontName")
+    End If
+    
+    If Len(ReadFromRegistry("Client\Font", "FontSize")) = 0 Then
+        .FONT_SIZE = 9
+    Else
+        .FONT_SIZE = CLng(ReadFromRegistry("Client\Font", "FontSize"))
+    End If
+    
+    If Len(ReadFromRegistry("Client\Font", "FontStrike")) = 0 Then
+        .FONT_STRIKE = False
+    Else
+        .FONT_STRIKE = CBool(ReadFromRegistry("Client\Font", "FontStrike"))
+    End If
+    
+    If Len(ReadFromRegistry("Client\Font", "FontUnder")) = 0 Then
+        .FONT_UNDER = False
+    Else
+        .FONT_UNDER = CBool(ReadFromRegistry("Client\Font", "FontStrike"))
+    End If
+End With
 End Sub
 
 Public Sub SetScheme(IsFirst As Boolean)
@@ -171,6 +209,15 @@ If Not IsFirst Then
         .lblMinimizeTray.BackColor = SC
     End With
 End If
+
+With frmChat.txtConver.Font
+    .Name = Fonts.FONT_NAME
+    .Bold = Fonts.FONT_BOLD
+    .Italic = Fonts.FONT_ITALIC
+    .Size = Fonts.FONT_SIZE
+    .Strikethrough = Fonts.FONT_STRIKE
+    .Underline = Fonts.FONT_UNDER
+End With
 
 With frmSociety
     .BackColor = SC

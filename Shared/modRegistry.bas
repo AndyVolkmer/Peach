@@ -3,7 +3,7 @@ Option Explicit
 
 Const KEY_ALL_ACCESS = &H2003F
 
-Public Const lngKeyDataType    As Long = 1 '1 = String, 2 = Binary, 4 = DWORD
+Public Const lngKeyDataType    As Long = 1                          '1 = String, 2 = Binary, 4 = DWORD
 Public Const lngRegKeyROOT     As Long = &H80000002
 '&H80000000 = HKEY_CLASSES_ROOT
 '&H80000001 = HKEY_CURRENT_USER
@@ -11,7 +11,7 @@ Public Const lngRegKeyROOT     As Long = &H80000002
 '&H80000003 = HKEY_USERS
 '&H80000005 = HKEY_CURRENT_CONFIG
 Public Const strRegKeyName     As String = "SOFTWARE\Peach\"        'Path inside the default root
-Public Const strTempRegKeyRoot As String = "HKEY_LOCAL_MACHINE"    'Name again?
+Public Const strTempRegKeyRoot As String = "HKEY_LOCAL_MACHINE"     'Name again?
 
 Private Declare Function GetComputerName Lib "kernel32" Alias "GetComputerNameA" (ByVal lpBuffer As String, nSize As Long) As Long
 Private Declare Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, nSize As Long) As Long

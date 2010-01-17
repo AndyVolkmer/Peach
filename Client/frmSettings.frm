@@ -145,7 +145,7 @@ Begin VB.Form frmSettings
          Alignment       =   2  'Center
          Appearance      =   0  'Flat
          Enabled         =   0   'False
-         Height          =   285
+         Height          =   375
          Left            =   2160
          Locked          =   -1  'True
          TabIndex        =   18
@@ -155,7 +155,7 @@ Begin VB.Form frmSettings
       End
       Begin VB.CommandButton cmdFont 
          Caption         =   "..."
-         Height          =   255
+         Height          =   375
          Left            =   3360
          TabIndex        =   17
          ToolTipText     =   "Click here to change the color."
@@ -164,7 +164,7 @@ Begin VB.Form frmSettings
       End
       Begin VB.CommandButton cmdColor 
          Caption         =   "..."
-         Height          =   255
+         Height          =   375
          Left            =   1440
          TabIndex        =   1
          ToolTipText     =   "Click here to change the color."
@@ -175,7 +175,7 @@ Begin VB.Form frmSettings
          Alignment       =   2  'Center
          Appearance      =   0  'Flat
          Enabled         =   0   'False
-         Height          =   285
+         Height          =   375
          Left            =   240
          Locked          =   -1  'True
          TabIndex        =   7
@@ -277,13 +277,12 @@ With Setting
 End With
 
 With Fonts
-    .FONT_NAME = txtFont.Font
-    .FONT_BOLD = txtFont.FontBold
-    .FONT_ITALIC = txtFont.FontItalic
-    .FONT_SIZE = txtFont.FontSize
-    .FONT_STRIKE = txtFont.FontStrikethru
-    .FONT_UNDER = txtFont.FontUnderline
-    .FONT_COLOR = txtFont.ForeColor
+    .FONT_BOLD = txtFont.Font.Bold
+    .FONT_ITALIC = txtFont.Font.Italic
+    .FONT_NAME = txtFont.Font.Name
+    .FONT_SIZE = txtFont.Font.Size
+    .FONT_STRIKE = txtFont.Font.Strikethrough
+    .FONT_UNDER = txtFont.Font.Underline
 End With
 
 SetScheme False
@@ -345,6 +344,15 @@ With Setting
     End If
     txtIP = .SERVER_IP
     txtPort = .SERVER_PORT
+End With
+
+With Fonts
+    txtFont.Font.Bold = .FONT_BOLD
+    txtFont.Font.Italic = .FONT_ITALIC
+    txtFont.Font.Name = .FONT_NAME
+    txtFont.Font.Size = .FONT_SIZE
+    txtFont.Font.Strikethrough = .FONT_STRIKE
+    txtFont.Font.Underline = .FONT_UNDER
 End With
 End Sub
 

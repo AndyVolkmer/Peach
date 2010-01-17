@@ -1,8 +1,6 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const pAuthor    As String = "Andy"
-
 Public Const aPort      As Long = 6123
 Public Const bPort      As Long = 6124
 Public Const rPort      As Long = 6222
@@ -48,7 +46,6 @@ Type FNT
     FONT_SIZE           As Long
     FONT_STRIKE         As Boolean
     FONT_UNDER          As Boolean
-    FONT_COLOR          As Long
 End Type
 
 Public Type NOTIFYICONDATA
