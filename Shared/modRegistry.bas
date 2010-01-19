@@ -3,18 +3,16 @@ Option Explicit
 
 Const KEY_ALL_ACCESS = &H2003F
 
-Public Const lngKeyDataType    As Long = 1                          '1 = String, 2 = Binary, 4 = DWORD
-Public Const lngRegKeyROOT     As Long = &H80000002
+Public Const RegistryDataType   As Long = 1                          '1 = String, 2 = Binary, 4 = DWORD
+Public Const RegistryKeyROOT    As Long = &H80000002
 '&H80000000 = HKEY_CLASSES_ROOT
 '&H80000001 = HKEY_CURRENT_USER
 '&H80000002 = HKEY_LOCAL_MACHINE <- Using this one
 '&H80000003 = HKEY_USERS
 '&H80000005 = HKEY_CURRENT_CONFIG
-Public Const strRegKeyName     As String = "SOFTWARE\Peach\"        'Path inside the default root
-Public Const strTempRegKeyRoot As String = "HKEY_LOCAL_MACHINE"     'Name again?
+Public Const RegistryPath       As String = "SOFTWARE\Peach\"        'Path inside the default root
+Public Const RegistryROOT       As String = "HKEY_LOCAL_MACHINE"     'Name again?
 
-Private Declare Function GetComputerName Lib "kernel32" Alias "GetComputerNameA" (ByVal lpBuffer As String, nSize As Long) As Long
-Private Declare Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, nSize As Long) As Long
 Private Declare Function RegOpenKeyEx Lib "advapi32" Alias "RegOpenKeyExA" (ByVal hKey As Long, ByVal lpSubKey As String, ByVal ulOptions As Long, ByVal samDesired As Long, ByRef phkResult As Long) As Long
 Private Declare Function RegCreateKey Lib "advapi32.dll" Alias "RegCreateKeyA" (ByVal hKey As Long, ByVal lpSubKey As String, phkResult As Long) As Long
 Private Declare Function RegSetValueEx Lib "advapi32.dll" Alias "RegSetValueExA" (ByVal hKey As Long, ByVal lpValueName As String, ByVal Reserved As Long, ByVal dwType As Long, lpData As Any, ByVal cbData As Long) As Long
@@ -24,15 +22,15 @@ Private Declare Function RegDeleteKey Lib "advapi32.dll" Alias "RegDeleteKeyA" (
 Private Declare Function RegCloseKey Lib "advapi32" (ByVal hKey As Long) As Long
 
 Public Sub InsertIntoRegistry(pFolder As String, pTitle As String, pValue As String)
-SetKeyDataValue lngRegKeyROOT, strRegKeyName & pFolder, lngKeyDataType, pTitle, pValue
+SetKeyDataValue RegistryKeyROOT, RegistryPath & pFolder, RegistryDataType, pTitle, pValue
 End Sub
 
 Public Function ReadFromRegistry(pFolder As String, pTitle As String) As String
-ReadFromRegistry = GetKeyDataValue(lngRegKeyROOT, strRegKeyName & pFolder, lngKeyDataType, pTitle)
+ReadFromRegistry = GetKeyDataValue(RegistryKeyROOT, RegistryPath & pFolder, RegistryDataType, pTitle)
 End Function
 
 Public Sub DeleteFromRegistry(pFolder As String, pTitle As String)
-DeleteRegValue lngRegKeyROOT, strRegKeyName & pFolder, pTitle
+DeleteRegValue RegistryKeyROOT, RegistryPath & pFolder, pTitle
 End Sub
 
 Private Sub SetKeyDataValue(RegKeyRoot As Long, RegKeyName As String, KeyDataType As Long, KeyValueName As String, KeyValueDate As Variant)

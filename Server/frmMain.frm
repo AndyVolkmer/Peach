@@ -653,9 +653,11 @@ HasError = True
 End Sub
 
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
-Dim msg As Long
-Dim sFilter As String
+Dim msg         As Long
+Dim sFilter     As String
+
 msg = X / Screen.TwipsPerPixelX
+
 Select Case msg
     Case WM_LBUTTONDOWN
     Case WM_LBUTTONUP
@@ -709,12 +711,21 @@ InsertIntoRegistry "Server\Configuration", "ChatLevel", Options.ChatLevel
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
+Dim pTemp As String
+Dim j     As Long
+
 Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(2) = Index Then
             If Not Len(.Item(i)) = 0 Then
-                SendMessage .Item(i) & " has gone offline."
+                For j = 1 To .Count
+                    If Not .Item(j).SubItems(2) = Index Then
+                        SetLanguageByID .Item(j).SubItems(7)
+                        pTemp = Replace(MSG_GONE_OFFLINE, "%u", .Item(i))
+                        SendSingle pTemp, .Item(j).SubItems(2)
+                    End If
+                Next j
             End If
             .Remove (i)
             Exit For
@@ -860,15 +871,15 @@ For k = 0 To UBound(p_PreArray) - 1
             
         Case "!connected"
             UPDATE_ONLINE
-            Dim pSocket As Winsock
-            For Each pSocket In frmMain.Winsock1
-                With pSocket
-                    If .State = 7 And Not .Index = Index Then
-                        .SendData p_MainArray(1) & " has come online." & Chr(24) & Chr(25)
-                        DoEvents
+            
+            With frmPanel.ListView1.ListItems
+                For i = 1 To .Count
+                    If Not .Item(i) = p_MainArray(1) Then
+                        SetLanguageByID .Item(i).SubItems(7)
+                        SendSingle Replace$(MSG_COME_ONLINE, "%u", p_MainArray(1)), .Item(i).SubItems(2)
                     End If
-                End With
-            Next
+                Next i
+            End With
             
         'Send Server information
         Case "!server_info"
@@ -927,6 +938,7 @@ For k = 0 To UBound(p_PreArray) - 1
                 
                 .Item(.Count).Text = p_MainArray(3)
                 .Item(.Count).SubItems(5) = GetProperAccountName(p_MainArray(1))
+                .Item(.Count).SubItems(7) = p_MainArray(4)
             End With
             
             UPDATE_STATUS_BAR
@@ -1080,7 +1092,12 @@ For k = 0 To UBound(p_PreArray) - 1
                         If Len(p_ANN_MSG) = 0 Then
                             SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & " [Text].", Index
                         Else
-                            SendMessage "[" & p_MainArray(1) & " announces]: " & p_ANN_MSG
+                            With frmPanel.ListView1.ListItems
+                                For i = 1 To .Count
+                                    SetLanguageByID .Item(i).SubItems(7)
+                                    SendSingle Replace$(MSG_ANNOUNCE, "%u", p_MainArray(1)) & p_ANN_MSG, .Item(i).SubItems(2)
+                                Next i
+                            End With
                         End If
                     
                     Case ".help", ".command", ".commands"
@@ -1194,7 +1211,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             pMinRoll = 1
                             
                             If IsNumeric(p_CHAT_ARRAY(1)) Then
-                                If p_CHAT_ARRAY(1) > MAX_INT_VALUE Or p_CHAT_ARRAY(2) < MIN_INT_VALUE Then
+                                If p_CHAT_ARRAY(1) > MAX_INT_VALUE Or p_CHAT_ARRAY(1) < MIN_INT_VALUE Then
                                     pMaxRoll = 100
                                 Else
                                     pMaxRoll = p_CHAT_ARRAY(1)
@@ -1215,7 +1232,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                         pRoll = GetRandomNumber(pMinRoll, pMaxRoll)
                         
-                        SendProtectedMessage p_MainArray(1), p_MainArray(1) & " rolls " & pRoll & ". (" & pMinRoll & "-" & pMaxRoll & ")"
+                        SendProtectedMessage p_MainArray(1), p_MainArray(1) & " rolls " & pRoll & ". (" & pMinRoll & " - " & pMaxRoll & ")"
                         
                     'Whisper X to Z from Y
                     Case "/w", "/whisper"
@@ -1664,11 +1681,22 @@ End With
 End Sub
 
 Private Sub KickUser(pUser As String)
+Dim j       As Long
+Dim pTemp   As String
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
             Unload frmMain.Winsock1(.Item(i).SubItems(2))
-            SendMessage .Item(i) & " has gone offline."
+            
+            For j = 1 To .Count
+                If Not .Item(j) = pUser Then
+                    SetLanguageByID .Item(j).SubItems(7)
+                    pTemp = Replace(MSG_GONE_OFFLINE, "%u", .Item(i))
+                    SendSingle pTemp, .Item(j).SubItems(2)
+                End If
+            Next j
+            
             .Remove (i)
             
             UPDATE_ONLINE
@@ -1750,7 +1778,15 @@ Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(2) = Index Then
-            SendMessage .Item(i) & " has gone offline."
+            If Not Len(.Item(i)) = 0 Then
+                For j = 1 To .Count
+                    If Not .Item(j).SubItems(2) = Index Then
+                        SetLanguageByID .Item(j).SubItems(7)
+                        pTemp = Replace(MSG_GONE_OFFLINE, "%u", .Item(i))
+                        SendSingle pTemp, .Item(j).SubItems(2)
+                    End If
+                Next j
+            End If
             .Remove (i)
             Exit For
         End If

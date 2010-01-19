@@ -220,6 +220,7 @@ Private Const MIIM_STATE      As Long = &H1&
 Private Const MIIM_ID         As Long = &H2&
 Private Const MFS_GRAYED      As Long = &H3&
 Private Const WM_NCACTIVATE   As Long = &H86
+
 Private Type MENUITEMINFO
     cbSize          As Long
     fMask           As Long
@@ -233,6 +234,7 @@ Private Type MENUITEMINFO
     dwTypeData      As String
     cch             As Long
 End Type
+
 Private Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Long, ByVal bRevert As Long) As Long
 Private Declare Function GetMenuItemInfo Lib "user32" Alias "GetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal b As Boolean, lpMenuItemInfo As MENUITEMINFO) As Long
 Private Declare Function SetMenuItemInfo Lib "user32" Alias "SetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal bool As Boolean, lpcMenuItemInfo As MENUITEMINFO) As Long
@@ -456,7 +458,7 @@ End Sub
 
 Private Sub Winsock1_Connect()
 With frmConfig
-    SendMSG "!login#" & .txtAccount & "#" & .txtPassword & "#" & .txtNick & "#"
+    SendMSG "!login#" & .txtAccount & "#" & .txtPassword & "#" & .txtNick & "#" & CURRENT_LANG & "#"
 End With
 SwitchButtons False, False
 End Sub
@@ -666,11 +668,11 @@ frmConfig.Show
 End Sub
 
 Public Sub DisableFormResize(frm As Form)
-Dim style As Long
-Dim hMenu As Long
-Dim MII As MENUITEMINFO
-Dim lngMenuID As Long
-Const xSC_MAXIMIZE As Long = -11
+Dim style               As Long
+Dim hMenu               As Long
+Dim MII                 As MENUITEMINFO
+Dim lngMenuID           As Long
+Const xSC_MAXIMIZE      As Long = -11
 
 style = GetWindowLong(frm.hwnd, GWL_STYLE)
 
