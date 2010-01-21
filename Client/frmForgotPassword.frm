@@ -108,14 +108,14 @@ Option Explicit
 Private Sub cmdRequest_Click()
 If cmdRequest.Caption = FP_COMMAND_REQUEST Then
     'Can't request if account empty
-    If Len(txtAccount) = 0 Then
+    If LenB(txtAccount) = 0 Then
         MsgBox REG_MSG_ACCOUNT_EMPTY, vbInformation
         txtAccount.SetFocus
         Exit Sub
     End If
     
     'Can't request if secret answer empty
-    If Len(txtSecretAnswer) = 0 Then
+    If LenB(txtSecretAnswer) = 0 Then
         MsgBox REG_MSG_SECRET_ANSWER_EMPTY, vbInformation
         txtSecretAnswer.SetFocus
         Exit Sub

@@ -279,7 +279,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     End If
 
     'Nick can't be shorter then 4 characters
-    If Len(txtNick) < 4 Then
+    If LenB(txtNick) < 4 Then
         MsgBox CONFIG_MSG_NAME_SHORT, vbInformation, "Error - Nickname"
         txtNick.SelStart = Len(txtNick)
         txtNick.SetFocus
@@ -362,7 +362,7 @@ lblNickname.Caption = CONFIG_LABEL_NAME
 End Sub
 
 Private Function CheckTx(txtBox As TextBox, mBox As String) As Boolean
-If Len(Trim$(txtBox)) = 0 Then
+If LenB(Trim$(txtBox)) = 0 Then
     MsgBox mBox, vbInformation
     txtBox.SetFocus
     CheckTx = True

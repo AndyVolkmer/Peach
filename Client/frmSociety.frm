@@ -57,15 +57,18 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "lvOnlineList"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdAddToFriend"
+      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).Control(2)=   "cmdAddToIgnore"
+      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "lvIgnoreList"
+      Tab(2).Control(0)=   "cmdRemoveIgnore"
       Tab(2).Control(1)=   "cmdAddIgnore"
-      Tab(2).Control(2)=   "cmdRemoveIgnore"
+      Tab(2).Control(2)=   "lvIgnoreList"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToIgnore 
          Caption         =   "&Add to Ignore"
@@ -297,7 +300,7 @@ Private Sub cmdAddFriend_Click()
 Dim pVal As String
 pVal = InputBox(SOC_ASK_FRIEND_TEXT, SOC_ASK_FRIEND_DEFAULT, SOC_ASK_FRIEND_DEFAULT)
 
-If Len(Trim$(pVal)) = 0 Then Exit Sub
+If LenB(Trim$(pVal)) = 0 Then Exit Sub
 SendMSG "!friend#-add-account#" & frmConfig.txtAccount & "#" & pVal & "#"
 End Sub
 
@@ -350,7 +353,7 @@ Private Sub cmdAddIgnore_Click()
 Dim pVal As String
 pVal = InputBox(SOC_ASK_IGNORE_TEXT, SOC_ASK_IGNORE_TITLE, SOC_ASK_IGNORE_DEFAULT)
 
-If Len(Trim$(pVal)) = 0 Then Exit Sub
+If LenB(Trim$(pVal)) = 0 Then Exit Sub
 SendMSG "!ignore#-add-account#" & frmConfig.txtAccount & "#" & pVal & "#"
 End Sub
 

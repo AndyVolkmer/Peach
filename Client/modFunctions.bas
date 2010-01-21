@@ -40,12 +40,12 @@ Type CONFIG
 End Type
 
 Type FNT
-    FONT_NAME           As String
-    FONT_BOLD           As Boolean
-    FONT_ITALIC         As Boolean
-    FONT_SIZE           As Long
-    FONT_STRIKE         As Boolean
-    FONT_UNDER          As Boolean
+    Name                As String
+    Bold                As Boolean
+    Italic              As Boolean
+    Size                As Long
+    Strike              As Boolean
+    Under               As Boolean
 End Type
 
 Public Type NOTIFYICONDATA

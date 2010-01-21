@@ -328,14 +328,14 @@ If Command1.Caption = REG_COMMAND_CLOSE Then
 End If
 
 'Can't register if there is no Account.
-If Len(Trim$(txtAccount)) = 0 Then
+If LenB(Trim$(txtAccount)) = 0 Then
     MsgBox REG_MSG_ACCOUNT_EMPTY, vbInformation
     txtAccount.SetFocus
     Exit Sub
 End If
 
 'Can't register if account is shorter then 4 chars.
-If Len(txtAccount) < 4 Then
+If LenB(txtAccount) < 4 Then
     MsgBox REG_MSG_ACCOUNT_SHORT, vbInformation
     txtAccount.SetFocus
     Exit Sub
@@ -356,14 +356,14 @@ If IsNumeric(txtAccount) Then
 End If
 
 'Can't register if there is no Password.
-If Len(txtPassword1) = 0 Then
+If LenB(txtPassword1) = 0 Then
     MsgBox REG_MSG_PASSWORD_EMPTY, vbInformation
     txtPassword1.SetFocus
     Exit Sub
 End If
 
 'Can't register if password is shorter then 6 chars.
-If Len(txtPassword1) < 6 Then
+If LenB(txtPassword1) < 6 Then
     MsgBox REG_MSG_PASSWORD_SHORT, vbInformation
     txtPassword1.SetFocus
     Exit Sub
@@ -377,7 +377,7 @@ If txtPassword1 <> txtPassword2 Then
 End If
 
 'Can't register if email is empty.
-If Len(Trim$(txtSecretAnswer)) = 0 Then
+If LenB(Trim$(txtSecretAnswer)) = 0 Then
     MsgBox REG_MSG_SECRET_ANSWER_EMPTY, vbInformation
     txtSecretAnswer.SetFocus
     Exit Sub
@@ -393,7 +393,6 @@ Dim pGender As String
 Select Case cmbGender.ListIndex
     Case 0
         pGender = "Male"
-        
     Case 1
         pGender = "Female"
 End Select

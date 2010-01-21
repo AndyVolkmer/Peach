@@ -47,13 +47,13 @@ End Sub
 
 Private Sub LoadRegistryValue()
 With Setting
-    If Len(ReadFromRegistry("Client\Configuration", "IP")) = 0 Then
+    If LenB(ReadFromRegistry("Client\Configuration", "IP")) = 0 Then
         .SERVER_IP = "127.0.0.1"
     Else
         .SERVER_IP = ReadFromRegistry("Client\Configuration", "IP")
     End If
     
-    If Len(ReadFromRegistry("Client\Configuration", "Port")) = 0 Then
+    If LenB(ReadFromRegistry("Client\Configuration", "Port")) = 0 Then
         .SERVER_PORT = 4728
     Else
         .SERVER_PORT = ReadFromRegistry("Client\Configuration", "Port")
@@ -61,7 +61,7 @@ With Setting
     
     .NICKNAME = ReadFromRegistry("Client\Configuration", "Nickname")
     
-    If Len(ReadFromRegistry("Client\Configuration", "AccountTick")) = 0 Then
+    If LenB(ReadFromRegistry("Client\Configuration", "AccountTick")) = 0 Then
         .ACCOUNT_TICK = False
     Else
         .ACCOUNT_TICK = CBool(ReadFromRegistry("Client\Configuration", "AccountTick"))
@@ -69,7 +69,7 @@ With Setting
     
     .ACCOUNT = ReadFromRegistry("Client\Configuration", "Account")
     
-    If Len(ReadFromRegistry("Client\Configuration", "PasswordTick")) = 0 Then
+    If LenB(ReadFromRegistry("Client\Configuration", "PasswordTick")) = 0 Then
         .PASSWORD_TICK = False
     Else
         .PASSWORD_TICK = CBool(ReadFromRegistry("Client\Configuration", "PasswordTick"))
@@ -79,43 +79,43 @@ With Setting
         .PASSWORD = DeCode(DeCode(ReadFromRegistry("Client\Configuration", "Password")))
     End If
     
-    If Len(ReadFromRegistry("Client\Configuration", "AskTick")) = 0 Then
+    If LenB(ReadFromRegistry("Client\Configuration", "AskTick")) = 0 Then
         .ASK_TICK = False
     Else
         .ASK_TICK = CBool(ReadFromRegistry("Client\Configuration", "AskTick"))
     End If
     
-    If Len(ReadFromRegistry("Client\Configuration", "MinimizeTray")) = 0 Then
+    If LenB(ReadFromRegistry("Client\Configuration", "MinimizeTray")) = 0 Then
         .MIN_TICK = False
     Else
         .MIN_TICK = CBool(ReadFromRegistry("Client\Configuration", "MinimizeTray"))
     End If
     
-    If Len(ReadFromRegistry("Client\Configuration", "Validate")) = 0 Then
+    If LenB(ReadFromRegistry("Client\Configuration", "Validate")) = 0 Then
         .VALIDATE = 1
     Else
         .VALIDATE = ReadFromRegistry("Client\Configuration", "Validate")
     End If
     
-    If Len(ReadFromRegistry("Client\Configuration", "Language")) = 0 Then
+    If LenB(ReadFromRegistry("Client\Configuration", "Language")) = 0 Then
         .LANGUAGE = 1 'English as default
     Else
         .LANGUAGE = ReadFromRegistry("Client\Configuration", "Language")
     End If
     
-    If Len(ReadFromRegistry("Client\Configuration", "Top")) = 0 Then
+    If LenB(ReadFromRegistry("Client\Configuration", "Top")) = 0 Then
         .MAIN_TOP = 1200
     Else
         .MAIN_TOP = ReadFromRegistry("Client\Configuration", "Top")
     End If
     
-    If Len(ReadFromRegistry("Client\Configuration", "Left")) = 0 Then
+    If LenB(ReadFromRegistry("Client\Configuration", "Left")) = 0 Then
         .MAIN_LEFT = 1200
     Else
         .MAIN_LEFT = ReadFromRegistry("Client\Configuration", "Left")
     End If
     
-    If Len(ReadFromRegistry("Client\Configuration", "SchemeColor")) = 0 Then
+    If LenB(ReadFromRegistry("Client\Configuration", "SchemeColor")) = 0 Then
         .SCHEME_COLOR = 15724527
     Else
         .SCHEME_COLOR = ReadFromRegistry("Client\Configuration", "SchemeColor")
@@ -123,40 +123,40 @@ With Setting
 End With
 
 With Fonts
-    If Len(ReadFromRegistry("Client\Font", "FontBold")) = 0 Then
-        .FONT_BOLD = False
+    If LenB(ReadFromRegistry("Client\Font", "FontBold")) = 0 Then
+        .Bold = False
     Else
-        .FONT_BOLD = CBool(ReadFromRegistry("Client\Font", "FontBold"))
+        .Bold = CBool(ReadFromRegistry("Client\Font", "FontBold"))
     End If
     
-    If Len(ReadFromRegistry("Client\Font", "FontItalic")) = 0 Then
-        .FONT_ITALIC = False
+    If LenB(ReadFromRegistry("Client\Font", "FontItalic")) = 0 Then
+        .Italic = False
     Else
-        .FONT_ITALIC = CBool(ReadFromRegistry("Client\Font", "FontItalic"))
+        .Italic = CBool(ReadFromRegistry("Client\Font", "FontItalic"))
     End If
     
-    If Len(ReadFromRegistry("Client\Font", "FontName")) = 0 Then
-        .FONT_NAME = "Segoe UI"
+    If LenB(ReadFromRegistry("Client\Font", "FontName")) = 0 Then
+        .Name = "Segoe UI"
     Else
-        .FONT_NAME = ReadFromRegistry("Client\Font", "FontName")
+        .Name = ReadFromRegistry("Client\Font", "FontName")
     End If
     
-    If Len(ReadFromRegistry("Client\Font", "FontSize")) = 0 Then
-        .FONT_SIZE = 9
+    If LenB(ReadFromRegistry("Client\Font", "FontSize")) = 0 Then
+        .Size = 9
     Else
-        .FONT_SIZE = CLng(ReadFromRegistry("Client\Font", "FontSize"))
+        .Size = CLng(ReadFromRegistry("Client\Font", "FontSize"))
     End If
     
-    If Len(ReadFromRegistry("Client\Font", "FontStrike")) = 0 Then
-        .FONT_STRIKE = False
+    If LenB(ReadFromRegistry("Client\Font", "FontStrike")) = 0 Then
+        .Strike = False
     Else
-        .FONT_STRIKE = CBool(ReadFromRegistry("Client\Font", "FontStrike"))
+        .Strike = CBool(ReadFromRegistry("Client\Font", "FontStrike"))
     End If
     
-    If Len(ReadFromRegistry("Client\Font", "FontUnder")) = 0 Then
-        .FONT_UNDER = False
+    If LenB(ReadFromRegistry("Client\Font", "FontUnder")) = 0 Then
+        .Under = False
     Else
-        .FONT_UNDER = CBool(ReadFromRegistry("Client\Font", "FontStrike"))
+        .Under = CBool(ReadFromRegistry("Client\Font", "FontStrike"))
     End If
 End With
 End Sub
@@ -211,12 +211,21 @@ If Not IsFirst Then
 End If
 
 With frmChat.txtConver.Font
-    .Name = Fonts.FONT_NAME
-    .Bold = Fonts.FONT_BOLD
-    .Italic = Fonts.FONT_ITALIC
-    .Size = Fonts.FONT_SIZE
-    .Strikethrough = Fonts.FONT_STRIKE
-    .Underline = Fonts.FONT_UNDER
+    .Name = Fonts.Name
+    .Bold = Fonts.Bold
+    .Italic = Fonts.Italic
+    .Size = Fonts.Size
+    .Strikethrough = Fonts.Strike
+    .Underline = Fonts.Under
+End With
+
+With frmChat.txtToSend.Font
+    .Name = Fonts.Name
+    .Bold = Fonts.Bold
+    .Italic = Fonts.Italic
+    .Size = Fonts.Size
+    .Strikethrough = Fonts.Strike
+    .Underline = Fonts.Under
 End With
 
 With frmSociety

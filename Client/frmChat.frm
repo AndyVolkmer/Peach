@@ -154,7 +154,7 @@ TTS = txtToSend.Text
 txtToSend.Text = vbNullString
 
 'No whitespaces
-If Len(Trim$(TTS)) = 0 Then Exit Sub
+If LenB(Trim$(TTS)) = 0 Then Exit Sub
 
 'Send public message
 SendMSG "!message#" & frmConfig.txtNick & "#" & RTrim$(TTS) & "#"
@@ -392,7 +392,7 @@ DoEvents
 
 Clipboard.Clear
 On Error Resume Next
-If Len(Text) <> 0 Then
+If LenB(Text) <> 0 Then
     Clipboard.SetText Text
 Else
     If Buf <> 0 Then

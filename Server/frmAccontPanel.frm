@@ -364,14 +364,14 @@ Select Case Switch
         
     Case "MOD"
         'Name can't be modified to nothing
-        If Len(Trim$(txtName.Text)) = 0 Then
+        If LenB(Trim$(txtName.Text)) = 0 Then
             MsgBox "The name can't be empty.", vbInformation
             txtName.SetFocus
             Exit Sub
         End If
         
         'Password can't be modified to nothing
-        If Len(Trim$(txtPassword.Text)) = 0 Then
+        If LenB(Trim$(txtPassword.Text)) = 0 Then
             MsgBox "The password can't be empty.", vbInformation
             txtPassword.SetFocus
             Exit Sub

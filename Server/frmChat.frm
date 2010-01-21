@@ -63,7 +63,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdSend_Click()
-If Len(Trim$(txtToSend)) = 0 Then
+If LenB(Trim$(txtToSend)) = 0 Then
     txtToSend = vbNullString
     Exit Sub
 End If

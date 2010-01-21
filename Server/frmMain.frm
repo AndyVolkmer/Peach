@@ -163,32 +163,32 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Const GWL_STYLE = (-16)
-Private Const WS_SYSMENU = &H80000
-Private Const WS_CAPTION = &HC00000
-Private Const WS_THICKFRAME = &H40000
-Private Const WS_MAXIMIZEBOX = &H10000
-Private Const WS_MINIMIZEBOX = &H20000
-Private Const SC_CLOSE As Long = &HF060&
-Private Const SC_MAXIMIZE = &HF030&
-Private Const SC_MINIMIZE = &HF020&
-Private Const MIIM_STATE As Long = &H1&
-Private Const MIIM_ID As Long = &H2&
-Private Const MFS_GRAYED As Long = &H3&
-Private Const WM_NCACTIVATE As Long = &H86
+Private Const GWL_STYLE         As Long = (-16)
+Private Const WS_SYSMENU        As Long = &H80000
+Private Const WS_CAPTION        As Long = &HC00000
+Private Const WS_THICKFRAME     As Long = &H40000
+Private Const WS_MAXIMIZEBOX    As Long = &H10000
+Private Const WS_MINIMIZEBOX    As Long = &H20000
+Private Const SC_MAXIMIZE       As Long = &HF030&
+Private Const SC_MINIMIZE       As Long = &HF020&
+Private Const SC_CLOSE          As Long = &HF060&
+Private Const MIIM_STATE        As Long = &H1&
+Private Const MIIM_ID           As Long = &H2&
+Private Const MFS_GRAYED        As Long = &H3&
+Private Const WM_NCACTIVATE     As Long = &H86
 
 Private Type MENUITEMINFO
-    cbSize As Long
-    fMask As Long
-    fType As Long
-    fState As Long
-    wID As Long
-    hSubMenu As Long
-    hbmpChecked As Long
-    hbmpUnchecked As Long
-    dwItemData As Long
-    dwTypeData As String
-    cch As Long
+    cbSize                      As Long
+    fMask                       As Long
+    fType                       As Long
+    fState                      As Long
+    wID                         As Long
+    hSubMenu                    As Long
+    hbmpChecked                 As Long
+    hbmpUnchecked               As Long
+    dwItemData                  As Long
+    dwTypeData                  As String
+    cch                         As Long
 End Type
 
 Private Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Long, ByVal bRevert As Long) As Long
@@ -202,11 +202,11 @@ Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPo
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
-Public xConnection     As New ADODB.Connection
-Public xCommand        As New ADODB.Command
-Public xRecordSet      As New ADODB.Recordset
+Public xConnection              As New ADODB.Connection
+Public xCommand                 As New ADODB.Command
+Public xRecordSet               As New ADODB.Recordset
 
-Dim Vali As Boolean
+Private Vali                    As Boolean
 
 Private Sub Command1_Click()
 SetupForms frmConfig
@@ -244,70 +244,70 @@ Dim L As Long
 With Database
 
 '== Database ==
-If Len(ReadFromRegistry("Server\Database", "Name")) <> 0 Then
+If LenB(ReadFromRegistry("Server\Database", "Name")) <> 0 Then
     .Database = ReadFromRegistry("Server\Database", "Name")
 Else
     WriteLog "No Database value found."
     .Database = InputBox("The configuration file does not cotain a valid database, please insert one in the textbox below.", "Database error ..", "Database Name")
 End If
 
-If Len(ReadFromRegistry("Server\Database", "User")) <> 0 Then
+If LenB(ReadFromRegistry("Server\Database", "User")) <> 0 Then
     .User = ReadFromRegistry("Server\Database", "User")
 Else
     WriteLog "No User value found."
     .User = InputBox("The configuration file does not cotain a valid user name, please insert one in the textbox below.", "Database error ..", "User Name")
 End If
 
-If Len(DeCode(ReadFromRegistry("Server\Database", "Password"))) <> 0 Then
+If LenB(DeCode(ReadFromRegistry("Server\Database", "Password"))) <> 0 Then
     .Password = DeCode(ReadFromRegistry("Server\Database", "Password"))
 Else
     WriteLog "No Password value found."
     .Password = InputBox("The configuration file does not cotain a valid password, please insert one in the textbox below.", "Database error ..", "Password")
 End If
 
-If Len(ReadFromRegistry("Server\Database", "Host")) <> 0 Then
+If LenB(ReadFromRegistry("Server\Database", "Host")) <> 0 Then
     .Host = ReadFromRegistry("Server\Database", "Host")
 Else
     WriteLog "No Host value found."
     .Host = InputBox("The configuration file does not cotain a host adress, please insert one in the textbox below.", "Database error ..", "Host Adress")
 End If
 
-If Len(ReadFromRegistry("Server\Database", "Account_Table")) <> 0 Then
+If LenB(ReadFromRegistry("Server\Database", "Account_Table")) <> 0 Then
     .AccountTable = ReadFromRegistry("Server\Database", "Account_Table")
 Else
     WriteLog "No Account-Table found."
     .AccountTable = InputBox("The configuration file does not contain a account table, please insert one in the textbox below.", "Database error ..", "Account Table")
 End If
 
-If Len(ReadFromRegistry("Server\Database", "Friend_Table")) <> 0 Then
+If LenB(ReadFromRegistry("Server\Database", "Friend_Table")) <> 0 Then
     .FriendTable = ReadFromRegistry("Server\Database", "Friend_Table")
 Else
     WriteLog "No Friends-Table found."
     .FriendTable = InputBox("The configuration file does not contain a friend table, please insert one in the textbox below.", "Database error ..", "Friend Table")
 End If
 
-If Len(ReadFromRegistry("Server\Database", "Ignore_Table")) <> 0 Then
+If LenB(ReadFromRegistry("Server\Database", "Ignore_Table")) <> 0 Then
     .IgnoreTable = ReadFromRegistry("Server\Database", "Ignore_Table")
 Else
     WriteLog "No Ignore-Table found."
     .IgnoreTable = InputBox("The configuration file does not contain a ignore table, please insert one in the textbox below.", "Database error ..", "Ignore Table")
 End If
 
-If Len(ReadFromRegistry("Server\Database", "Emote_Table")) <> 0 Then
+If LenB(ReadFromRegistry("Server\Database", "Emote_Table")) <> 0 Then
     .EmoteTable = ReadFromRegistry("Server\Database", "Emote_Table")
 Else
     WriteLog "No Emotes-Table found."
     .EmoteTable = InputBox("The configuration file does not contain a emote table, please insert one in the textbox below.", "Database error ..", "Emote Table")
 End If
 
-If Len(ReadFromRegistry("Server\Database", "Declined_Name_Table")) <> 0 Then
+If LenB(ReadFromRegistry("Server\Database", "Declined_Name_Table")) <> 0 Then
     .DeclinedNameTable = ReadFromRegistry("Server\Database", "Declined_Name_Table")
 Else
     WriteLog "No Declined-Names-Table found."
     .DeclinedNameTable = InputBox("The configuration file does not contain a declined name table, please insert one in the textbox below.", "Database error ..", "Declined Name Table")
 End If
 
-If Len(ReadFromRegistry("Server\Database", "Command_Table")) <> 0 Then
+If LenB(ReadFromRegistry("Server\Database", "Command_Table")) <> 0 Then
     .CommandsTable = ReadFromRegistry("Server\Database", "Command_Table")
 Else
     WriteLog "No Command-Table found."
@@ -315,20 +315,20 @@ Else
 End If
 
 '== Position ==
-If Len(ReadFromRegistry("Server\Configuration", "Top")) <> 0 Then
+If LenB(ReadFromRegistry("Server\Configuration", "Top")) <> 0 Then
     Me.Top = ReadFromRegistry("Server\Configuration", "Top")
 Else
     Me.Top = 1200
 End If
 
-If Len(ReadFromRegistry("Server\Configuration", "Left")) <> 0 Then
+If LenB(ReadFromRegistry("Server\Configuration", "Left")) <> 0 Then
     Me.Left = ReadFromRegistry("Server\Configuration", "Left")
 Else
     Me.Left = 1200
 End If
 
 '== Options ==
-If Len(ReadFromRegistry("Server\Configuration", "ChatLevel")) <> 0 Then
+If LenB(ReadFromRegistry("Server\Configuration", "ChatLevel")) <> 0 Then
     Options.ChatLevel = ReadFromRegistry("Server\Configuration", "ChatLevel")
 Else
     Options.ChatLevel = 0
@@ -374,7 +374,7 @@ xConnection.ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver};" _
     & "DATABASE=" & pDatabase & ";" _
     & "UID=" & pUser & ";" _
     & "PWD=" & pPassword & ";" _
-    & "OPTION=" & 1 + 2 + 8 + 32 + 2048 + 16384
+    & "OPTION=18475" '-> 1 + 2 + 8 + 32 + 2048 + 16384
 
 Screen.MousePointer = vbHourglass
 xConnection.Open
@@ -1041,7 +1041,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                     KickUser p_TEXT_FIRST_PROP
                                 Else
                                     If i = .Count Then
-                                        If Len(p_TEXT_FIRST_PROP) = 0 Then
+                                        If LenB(p_TEXT_FIRST_PROP) = 0 Then
                                             SendSingle "Incorrect syntax, use following format .kick [User].", Index
                                         Else
                                             SendSingle "User '" & p_TEXT_FIRST_PROP & "' not found.", Index
@@ -1089,7 +1089,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             p_ANN_MSG = Mid$(p_MainArray(2), Len(p_CHAT_ARRAY(0)) + 2, Len(p_MainArray(2)))
                         End If
                         
-                        If Len(p_ANN_MSG) = 0 Then
+                        If LenB(p_ANN_MSG) = 0 Then
                             SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & " [Text].", Index
                         Else
                             With frmPanel.ListView1.ListItems
@@ -1125,7 +1125,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                     SendMessage p_MainArray(1) & " initiated the reload of '" & .EmoteTable & "' table."
                                 
                                 Case Else
-                                    If Len(p_TEXT_FIRST) = 0 Then
+                                    If LenB(p_TEXT_FIRST) = 0 Then
                                         SendSingle "Incorrect Syntax. Use the following format .reload Table.", Index
                                     Else
                                         SendSingle "This table does not exist.", Index
@@ -1134,7 +1134,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         End With
                     
                     Case ".clear"
-                        If Len(p_TEXT_FIRST) = 0 Then
+                        If LenB(p_TEXT_FIRST) = 0 Then
                             SendSingle "Incorrect Syntax. Use the following format .clear [User]", Index
                         Else
                             With frmPanel.ListView1.ListItems
@@ -1250,7 +1250,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                 Exit Sub
                             End If
                         Else
-                            If Len(p_TEXT_FIRST_PROP) = 0 Then
+                            If LenB(p_TEXT_FIRST_PROP) = 0 Then
                                 SendSingle "Please use the following format /whisper [Name] [Text]", Index
                                 Exit Sub
                             Else
@@ -1545,7 +1545,7 @@ With frmPanel.ListView1.ListItems
             .Item(i).SubItems(4) = CStr(IsMuted)
             
             'Announce the action
-            If Len(Reason) = 0 Then
+            If LenB(Reason) = 0 Then
                 If IsMuted Then
                     SendMessage User & " got muted by " & AdminName & "."
                 Else
@@ -1561,7 +1561,7 @@ With frmPanel.ListView1.ListItems
             Exit For
         Else
             If i = .Count Then
-                If Len(Trim$(User)) = 0 Then
+                If LenB(Trim$(User)) = 0 Then
                     SendSingle "Incorrect syntax, use the following format .mute [User] [Reason].", pIndex
                 Else
                     SendSingle "User '" & User & "' was not found.", pIndex
@@ -1598,7 +1598,7 @@ With frmPanel.ListView1.ListItems
             Exit For
         Else
             If i = .Count Then
-                If Len(User) = 0 Then
+                If LenB(User) = 0 Then
                     If Ban Then
                         SendSingle "Incorrect syntax, use the following format .ban user [User] [Reason].", pIndex
                     Else
@@ -1648,12 +1648,12 @@ With frmAccountPanel.ListView1.ListItems
                 Next j
             End With
             
-            If Len(Trim$(User)) = 0 Then
+            If LenB(Trim$(User)) = 0 Then
                 User = Account
             End If
             
             'Announce the action
-            If Len(Reason) = 0 Then
+            If LenB(Reason) = 0 Then
                 If Ban Then
                     SendMessage User & " was account banned by " & AdminName & "."
                 Else
@@ -1669,7 +1669,7 @@ With frmAccountPanel.ListView1.ListItems
             Exit For
         Else
             If i = .Count Then
-                If Len(Trim$(Account)) = 0 Then
+                If LenB(Trim$(Account)) = 0 Then
                     SendSingle "Incorrect syntax, use the following format .ban account [Account] [Reason].", pIndex
                 Else
                     SendSingle "Account '" & Account & "' not found.", pIndex
@@ -1715,7 +1715,7 @@ With frmAccountPanel.ListView1.ListItems
             Exit For
         Else
             If i = .Count Then
-                If Len(Trim$(Account)) = 0 Then
+                If LenB(Trim$(Account)) = 0 Then
                     SendSingle "Incorrect syntax, use following format " & pUsedSyntax & " [Account].", pIndex
                 Else
                     SendSingle "Account '" & Account & "' not found.", pIndex
@@ -1734,7 +1734,7 @@ With frmPanel.ListView1.ListItems
             Exit For
         Else
             If i = .Count Then
-                If Len(pUser) = 0 Then
+                If LenB(pUser) = 0 Then
                     SendSingle "Incorrect syntax, use following format " & pUsedSyntax & " [User].", pIndex
                 Else
                     SendSingle "User '" & pUser & "' was not found.", pIndex
@@ -1774,6 +1774,9 @@ End With
 End Function
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
+Dim j       As Long
+Dim pTemp   As String
+
 Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count

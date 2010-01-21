@@ -149,7 +149,7 @@ Begin VB.Form frmSettings
          Left            =   2160
          Locked          =   -1  'True
          TabIndex        =   18
-         Text            =   "T E S T"
+         Text            =   "Example"
          Top             =   480
          Width           =   1095
       End
@@ -229,13 +229,21 @@ Private Sub cmdFont_Click()
 On Error Resume Next
 With frmMain.CDialog
     .ShowFont
-    txtFont.Font = .FontName
-    txtFont.FontBold = .FontBold
-    txtFont.FontItalic = .FontItalic
-    txtFont.FontSize = .FontSize
-    txtFont.FontStrikethru = .FontStrikethru
-    txtFont.FontUnderline = .FontUnderline
-    txtFont.ForeColor = .Color
+    Fonts.Bold = .FontBold
+    Fonts.Name = .FontName
+    Fonts.Italic = .FontItalic
+    Fonts.Size = .FontSize
+    Fonts.Strike = .FontStrikethru
+    Fonts.Under = .FontUnderline
+End With
+
+With Fonts
+    txtFont.Font.Bold = .Bold
+    txtFont.Font.Italic = .Italic
+    txtFont.Font.Name = .Name
+    txtFont.Font.Size = .Size
+    txtFont.Font.Strikethrough = .Strike
+    txtFont.Font.Underline = .Under
 End With
 
 Command2.Enabled = True
@@ -276,20 +284,12 @@ With Setting
     .MIN_TICK = CheckMin.Value
 End With
 
-With Fonts
-    .FONT_BOLD = txtFont.Font.Bold
-    .FONT_ITALIC = txtFont.Font.Italic
-    .FONT_NAME = txtFont.Font.Name
-    .FONT_SIZE = txtFont.Font.Size
-    .FONT_STRIKE = txtFont.Font.Strikethrough
-    .FONT_UNDER = txtFont.Font.Underline
-End With
-
 SetScheme False
 End Sub
 
 Public Sub LoadSettingsForm()
 lblColor.Caption = SET_LABEL_COLOR
+lblFont.Caption = SET_LABEL_FONT
 lblMinimizeTray = SET_CHECK_MINIMIZE
 Frame2.Caption = SET_FRAME_OPTIONS
 SaveAccount.Caption = SET_CHECK_SAVE_ACCOUNT
@@ -347,12 +347,12 @@ With Setting
 End With
 
 With Fonts
-    txtFont.Font.Bold = .FONT_BOLD
-    txtFont.Font.Italic = .FONT_ITALIC
-    txtFont.Font.Name = .FONT_NAME
-    txtFont.Font.Size = .FONT_SIZE
-    txtFont.Font.Strikethrough = .FONT_STRIKE
-    txtFont.Font.Underline = .FONT_UNDER
+    txtFont.Font.Bold = .Bold
+    txtFont.Font.Italic = .Italic
+    txtFont.Font.Name = .Name
+    txtFont.Font.Size = .Size
+    txtFont.Font.Strikethrough = .Strike
+    txtFont.Font.Underline = .Under
 End With
 End Sub
 

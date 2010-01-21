@@ -191,7 +191,7 @@ End If
 
 SckReceiveFile(K).Accept requestID
 
-If Len(SckReceiveFile(K).RemoteHost) = 0 Then
+If LenB(SckReceiveFile(K).RemoteHost) = 0 Then
     Me.lstConnections.ListItems(K + 1).SubItems(2) = SckReceiveFile(K).RemoteHostIP
 Else
     Me.lstConnections.ListItems(K + 1).SubItems(2) = SckReceiveFile(K).RemoteHost
@@ -222,7 +222,7 @@ If Clients(Index).FileSize = 0 And InStr(1, sData, ":") > 0 Then
     FitTextInListView Me.lstConnections, 3, , Index + 1
 End If
 
-If Len(sData) > 0 Then
+If LenB(sData) > 0 Then
     Clients(Index).BytesReceived = Clients(Index).BytesReceived + Len(sData)
     Put Clients(Index).FileNum, , sData
     

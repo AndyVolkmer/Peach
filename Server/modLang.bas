@@ -8,7 +8,7 @@ Public MSG_ANNOUNCE         As String
 Public Sub SetLanguageByID(pID As Long)
 Select Case pID
     Case 0 'German
-        MSG_COME_ONLINE = "u% ist online gekommen."
+        MSG_COME_ONLINE = "%u ist online gekommen."
         MSG_GONE_OFFLINE = "%u ist offline gegangen."
         MSG_ANNOUNCE = "[%u kündigt an]: "
         

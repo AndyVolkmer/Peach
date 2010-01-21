@@ -35,7 +35,6 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -229,7 +228,7 @@ Command2.Enabled = False
 End Sub
 
 Private Function CheckTx(TB As TextBox, MB As String) As Boolean
-If Len(TB.Text) = 0 Then
+If LenB(TB.Text) = 0 Then
     MsgBox MB, vbInformation
     TB.SetFocus
     CheckTx = True

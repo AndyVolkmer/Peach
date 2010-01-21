@@ -197,7 +197,7 @@ If cmdSendFile.Caption = SF_COMMAND_SENDFILE Then
         Exit Sub
     End If
     
-    If Len(txtFileName) = 0 Then
+    If LenB(txtFileName) = 0 Then
         MsgBox SF_MSG_FILE, vbInformation
         txtFileName.SetFocus
         Exit Sub
@@ -214,7 +214,7 @@ End Sub
 
 Public Sub SendF(IP As String)
 If cmdSendFile.Caption = SF_COMMAND_SENDFILE Then
-    If Len(txtFileName) > 0 Then
+    If LenB(txtFileName) > 0 Then
         If FileExists(txtFileName) Then
             cmdSendFile.Caption = SF_COMMAND_CANCEL
             SendFile txtFileName, IP
