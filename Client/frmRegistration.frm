@@ -335,7 +335,7 @@ If LenB(Trim$(txtAccount)) = 0 Then
 End If
 
 'Can't register if account is shorter then 4 chars.
-If LenB(txtAccount) < 4 Then
+If Len(txtAccount) < 4 Then
     MsgBox REG_MSG_ACCOUNT_SHORT, vbInformation
     txtAccount.SetFocus
     Exit Sub
@@ -363,7 +363,7 @@ If LenB(txtPassword1) = 0 Then
 End If
 
 'Can't register if password is shorter then 6 chars.
-If LenB(txtPassword1) < 6 Then
+If Len(txtPassword1) < 6 Then
     MsgBox REG_MSG_PASSWORD_SHORT, vbInformation
     txtPassword1.SetFocus
     Exit Sub

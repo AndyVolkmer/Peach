@@ -188,7 +188,7 @@ Begin VB.Form frmSettings
          Left            =   2160
          TabIndex        =   19
          Top             =   240
-         Width           =   1215
+         Width           =   1695
       End
       Begin VB.Label lblColor 
          Caption         =   "Current Color:"
@@ -196,7 +196,7 @@ Begin VB.Form frmSettings
          Left            =   240
          TabIndex        =   6
          Top             =   255
-         Width           =   1215
+         Width           =   1695
       End
    End
 End
@@ -228,6 +228,9 @@ End Sub
 Private Sub cmdFont_Click()
 On Error Resume Next
 With frmMain.CDialog
+    .Min = 9
+    .Max = 16
+    .Flags = cdlCFEffects + cdlCFForceFontExist + cdlCFPrinterFonts + cdlCFLimitSize
     .ShowFont
     Fonts.Bold = .FontBold
     Fonts.Name = .FontName
@@ -271,7 +274,6 @@ With txtFont
     InsertIntoRegistry "Client\Font", "FontSize", CStr(.FontSize)
     InsertIntoRegistry "Client\Font", "FontStrike", CStr(.FontStrikethru)
     InsertIntoRegistry "Client\Font", "FontUnder", CStr(.FontUnderline)
-    InsertIntoRegistry "Client\Font", "FontColor", CStr(.ForeColor)
 End With
 
 With Setting
@@ -302,7 +304,7 @@ End Sub
 
 Private Sub Form_Activate()
 Dim SC As String
-SC = Setting.SCHEME_COLOR
+    SC = Setting.SCHEME_COLOR
 Me.BackColor = SC
 Frame1.BackColor = SC
 Frame2.BackColor = SC

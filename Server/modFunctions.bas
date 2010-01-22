@@ -1,94 +1,90 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Global Const rPort              As Long = 6222
-Global Const MAX_INT_VALUE      As Long = 2147483647
-Global Const MIN_INT_VALUE      As Long = -2147483647
+Global Const rPort                          As Long = 6222
+Global Const MAX_INT_VALUE                  As Long = 2147483647
+Global Const MIN_INT_VALUE                  As Long = -2147483647
 
-Global VarTime                  As Long     'Time counter variable
-Global HasError                 As Boolean  'Used in frmMain and frmConfig
+Global VarTime                              As Long     'Time counter variable
+Global HasError                             As Boolean  'Used in frmMain and frmConfig
 
 Type NOTIFYICONDATA
-    cbSize                      As Long
-    hwnd                        As Long
-    uId                         As Long
-    uFlags                      As Long
-    uCallBackMessage            As Long
-    hIcon                       As Long
-    szTip                       As String * 64
+    cbSize                                  As Long
+    hwnd                                    As Long
+    uId                                     As Long
+    uFlags                                  As Long
+    uCallBackMessage                        As Long
+    hIcon                                   As Long
+    szTip                                   As String * 64
 End Type
 
 Type OSVERSIONINFO
-    dwOSVersionInfoSize         As Long
-    dwMajorVersion              As Long
-    dwMinorVersion              As Long
-    dwBuildNumber               As Long
-    dwPlatformId                As Long
-    szCSDVersion                As String * 128
+    dwOSVersionInfoSize                     As Long
+    dwMajorVersion                          As Long
+    dwMinorVersion                          As Long
+    dwBuildNumber                           As Long
+    dwPlatformId                            As Long
+    szCSDVersion                            As String * 128
 End Type
 
 Type DB
-    Database                    As String
-    User                        As String
-    Host                        As String
-    Password                    As String
-    FriendTable                 As String
-    IgnoreTable                 As String
-    AccountTable                As String
-    EmoteTable                  As String
-    DeclinedNameTable           As String
-    CommandsTable               As String
-End Type
-
-Type OPT
-    ChatLevel                   As String
+    Database                                As String
+    User                                    As String
+    Host                                    As String
+    Password                                As String
+    FriendTable                             As String
+    IgnoreTable                             As String
+    AccountTable                            As String
+    EmoteTable                              As String
+    DeclinedNameTable                       As String
+    CommandsTable                           As String
 End Type
 
 Type EMT
-    Command                     As String
-    SingleEmote                 As String
-    TargetEmote                 As String
+    Command                                 As String
+    SingleEmote                             As String
+    TargetEmote                             As String
 End Type
 
 Type GC
-    Syntax                      As String
-    Description                 As String
+    Syntax                                  As String
+    Description                             As String
 End Type
 
-Public Options                  As OPT
-Public Database                 As DB
-Public Commands()               As GC
-Public Emotes()                 As EMT
-Public DeclinedNames()          As String
+Public Options                              As OPT
+Public Database                             As DB
+Public Commands()                           As GC
+Public Emotes()                             As EMT
+Public DeclinedNames()                      As String
 
 'Tray Constants
-Public Const NIM_ADD = &H0
-Public Const NIM_MODIFY = &H1
-Public Const NIM_DELETE = &H2
-Public Const WM_MOUSEMOVE = &H200
-Public Const NIF_MESSAGE = &H1
-Public Const NIF_ICON = &H2
-Public Const NIF_TIP = &H4
+Public Const NIM_ADD                        As Long = &H0
+Public Const NIM_MODIFY                     As Long = &H1
+Public Const NIM_DELETE                     As Long = &H2
+Public Const WM_MOUSEMOVE                   As Long = &H200
+Public Const NIF_MESSAGE                    As Long = &H1
+Public Const NIF_ICON                       As Long = &H2
+Public Const NIF_TIP                        As Long = &H4
 
 'Mouseclick constants
-Public Const WM_LBUTTONDBLCLK   As Long = &H203     'Double-click
-Public Const WM_LBUTTONDOWN     As Long = &H201     'Button down
-Public Const WM_LBUTTONUP       As Long = &H202     'Button up
-Public Const WM_RBUTTONDBLCLK   As Long = &H206     'Double-click
-Public Const WM_RBUTTONDOWN     As Long = &H204     'Button down
-Public Const WM_RBUTTONUP       As Long = &H205     'Button up
+Public Const WM_LBUTTONDBLCLK               As Long = &H203     'Double-click
+Public Const WM_LBUTTONDOWN                 As Long = &H201     'Button down
+Public Const WM_LBUTTONUP                   As Long = &H202     'Button up
+Public Const WM_RBUTTONDBLCLK               As Long = &H206     'Double-click
+Public Const WM_RBUTTONDOWN                 As Long = &H204     'Button down
+Public Const WM_RBUTTONUP                   As Long = &H205     'Button up
 
 'Windows version constant
-Public Const VER_PLATFORM_WIN32s = 0                'Win32s on Windows 3.1
-Public Const VER_PLATFORM_WIN32_WINDOWS = 1         'Windows 95, Windows 98, or Windows Me
-Public Const VER_PLATFORM_WIN32_NT = 2              'Windows NT, Windows 2000, Windows XP, or Windows Server 2003 family.
+Public Const VER_PLATFORM_WIN32s            As Long = 0         'Win32s on Windows 3.1
+Public Const VER_PLATFORM_WIN32_WINDOWS     As Long = 1         'Windows 95, Windows 98, or Windows Me
+Public Const VER_PLATFORM_WIN32_NT          As Long = 2         'Windows NT, Windows 2000, Windows XP, Windows Vista, Windows 7 or Windows Server 2003 family.
+
+Public nid                                  As NOTIFYICONDATA   'Trayicon variable
 
 Declare Function GetVersionExA Lib "kernel32" (lpVersionInformation As OSVERSIONINFO) As Integer
 Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal dwMessage As Long, pnid As NOTIFYICONDATA) As Boolean
 Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long
 Declare Function GetActiveWindow Lib "user32" () As Long
-
-Public nid                      As NOTIFYICONDATA   'Trayicon variable
 
 Public Sub WriteLog(pData As String)
 With frmConfig

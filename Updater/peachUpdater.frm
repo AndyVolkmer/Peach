@@ -33,7 +33,6 @@ Begin VB.Form frmMain
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"peachUpdater.frx":08CA
@@ -147,7 +146,7 @@ StartDownload "http://riplegion.ri.funpic.de/Peach/peachClient.exe", App.Path & 
 Kill App.Path & "\update.conf"
 
 'Rewrite into registry
-InsertIntoRegistry "Client\Number", "Number", NewRev
+InsertIntoRegistry "Client\Revision", "Number", NewRev
 
 'Update label
 Label2.Caption = "Your Peach has updated from [" & CurRev & "] to [" & NewRev & "]"

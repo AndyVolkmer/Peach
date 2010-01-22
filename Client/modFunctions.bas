@@ -1,100 +1,102 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Public Const aPort      As Long = 6123
-Public Const bPort      As Long = 6124
-Public Const rPort      As Long = 6222
+Public Const aPort              As Long = 6123
+Public Const bPort              As Long = 6124
+Public Const rPort              As Long = 6222
 
-Public ACC_SWITCH       As String
-Public Prefix           As String  'Time Prefix vairbale
+Public ACC_SWITCH               As String
+Public Prefix                   As String  'Time Prefix vairbale
 
-Public Setting          As CONFIG
-Public Fonts            As FNT
+Public Setting                  As CONFIG
+Public Fonts                    As FNT
 
 Type CONFIG
     'frmMain values
-    MAIN_TOP            As Long
-    MAIN_LEFT           As Long
+    MAIN_TOP                    As Long
+    MAIN_LEFT                   As Long
     
     'Language values
-    VALIDATE            As Long
-    LANGUAGE            As Long
+    VALIDATE                    As Long
+    LANGUAGE                    As Long
         
     'Peach color scheme
-    SCHEME_COLOR        As String
+    SCHEME_COLOR                As String
     
     'Ticks
-    ACCOUNT_TICK        As Boolean
-    PASSWORD_TICK       As Boolean
-    ASK_TICK            As Boolean
-    MIN_TICK            As Boolean
+    ACCOUNT_TICK                As Boolean
+    PASSWORD_TICK               As Boolean
+    ASK_TICK                    As Boolean
+    MIN_TICK                    As Boolean
     
     'Server information
-    SERVER_IP           As String
-    SERVER_PORT         As String
+    SERVER_IP                   As String
+    SERVER_PORT                 As String
     
     'frmConfig information
-    ACCOUNT             As String
-    PASSWORD            As String
-    NICKNAME            As String
+    ACCOUNT                     As String
+    PASSWORD                    As String
+    NICKNAME                    As String
 End Type
 
 Type FNT
-    Name                As String
-    Bold                As Boolean
-    Italic              As Boolean
-    Size                As Long
-    Strike              As Boolean
-    Under               As Boolean
+    Name                        As String
+    Bold                        As Boolean
+    Italic                      As Boolean
+    Size                        As Long
+    Strike                      As Boolean
+    Under                       As Boolean
 End Type
 
 Public Type NOTIFYICONDATA
-    cbSize              As Long
-    hwnd                As Long
-    uId                 As Long
-    uFlags              As Long
-    uCallBackMessage    As Long
-    hIcon               As Long
-    szTip               As String * 64
+    cbSize                      As Long
+    hwnd                        As Long
+    uId                         As Long
+    uFlags                      As Long
+    uCallBackMessage            As Long
+    hIcon                       As Long
+    szTip                       As String * 64
 End Type
 
-Public Const NIM_ADD = &H0
-Public Const NIM_MODIFY = &H1
-Public Const NIM_DELETE = &H2
-Public Const WM_MOUSEMOVE = &H200
-Public Const NIF_MESSAGE = &H1
-Public Const NIF_ICON = &H2
-Public Const NIF_TIP = &H4
-Public Const WM_LBUTTONDBLCLK = &H203 'Double-click
-Public Const WM_LBUTTONDOWN = &H201 'Button down
-Public Const WM_LBUTTONUP = &H202 'Button up
-Public Const WM_RBUTTONDBLCLK = &H206 'Double-click
-Public Const WM_RBUTTONDOWN = &H204 'Button down
-Public Const WM_RBUTTONUP = &H205 'Button up
+Public Const NIM_ADD            As Long = &H0
+Public Const NIM_MODIFY         As Long = &H1
+Public Const NIM_DELETE         As Long = &H2
+Public Const WM_MOUSEMOVE       As Long = &H200
+Public Const NIF_MESSAGE        As Long = &H1
+Public Const NIF_ICON           As Long = &H2
+Public Const NIF_TIP            As Long = &H4
+Public Const WM_LBUTTONDBLCLK   As Long = &H203 'Double-click
+Public Const WM_LBUTTONDOWN     As Long = &H201 'Button down
+Public Const WM_LBUTTONUP       As Long = &H202 'Button up
+Public Const WM_RBUTTONDBLCLK   As Long = &H206 'Double-click
+Public Const WM_RBUTTONDOWN     As Long = &H204 'Button down
+Public Const WM_RBUTTONUP       As Long = &H205 'Button up
 
 Type RECT
-    Left    As Long
-    Top     As Long
-    Right   As Long
-    Bottom  As Long
+    Left                        As Long
+    Top                         As Long
+    Right                       As Long
+    Bottom                      As Long
 End Type
 
 Type POINTAPI
-    X       As Long
-    Y       As Long
+    X                           As Long
+    Y                           As Long
 End Type
 
-Public Const GWL_STYLE = (-16)
-Public Const WS_SYSMENU = &H80000
-Public Const WS_MINIMIZEBOX = &H20000
+Public Const GWL_STYLE          As Long = (-16)
+Public Const WS_SYSMENU         As Long = &H80000
+Public Const WS_MINIMIZEBOX     As Long = &H20000
     
-Private Const GWL_EXSTYLE = (-20)
-Private Const WS_EX_LAYERED = &H80000
+Private Const GWL_EXSTYLE       As Long = (-20)
+Private Const WS_EX_LAYERED     As Long = &H80000
     
-Private Const LWA_COLORKEY = &H1
-Private Const LWA_ALPHA = &H2
+Private Const LWA_COLORKEY      As Long = &H1
+Private Const LWA_ALPHA         As Long = &H2
 
-Private Const GW_HWNDNEXT = 2
+Private Const GW_HWNDNEXT       As Long = 2
+
+Public nid                      As NOTIFYICONDATA   'Trayicon variable
 
 Public Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long) As Long
 Public Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
@@ -108,9 +110,6 @@ Private Declare Function GetWindow Lib "user32" (ByVal hwnd As Long, ByVal wCmd 
 Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal dwMessage As Long, pnid As NOTIFYICONDATA) As Boolean
 Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long
 Declare Function GetActiveWindow Lib "user32" () As Long
-Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
-
-Public nid As NOTIFYICONDATA ' trayicon variable
 
 Public Sub SendMSG(pMessage As String)
 With frmMain.Winsock1

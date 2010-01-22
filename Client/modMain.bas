@@ -163,7 +163,7 @@ End Sub
 
 Public Sub SetScheme(IsFirst As Boolean)
 Dim SC As String
-SC = Setting.SCHEME_COLOR
+    SC = Setting.SCHEME_COLOR
 
 With frmMain
     .BackColor = SC
@@ -210,22 +210,22 @@ If Not IsFirst Then
     End With
 End If
 
-With frmChat.txtConver.Font
-    .Name = Fonts.Name
-    .Bold = Fonts.Bold
-    .Italic = Fonts.Italic
-    .Size = Fonts.Size
-    .Strikethrough = Fonts.Strike
-    .Underline = Fonts.Under
+With frmChat.txtConver
+    .Font.Name = Fonts.Name
+    .Font.Bold = Fonts.Bold
+    .Font.Italic = Fonts.Italic
+    .Font.Size = Fonts.Size
+    .Font.Strikethrough = Fonts.Strike
+    .Font.Underline = Fonts.Under
 End With
 
-With frmChat.txtToSend.Font
-    .Name = Fonts.Name
-    .Bold = Fonts.Bold
-    .Italic = Fonts.Italic
-    .Size = Fonts.Size
-    .Strikethrough = Fonts.Strike
-    .Underline = Fonts.Under
+With frmChat.txtToSend
+    .Font.Name = Fonts.Name
+    .Font.Bold = Fonts.Bold
+    .Font.Italic = Fonts.Italic
+    .Font.Size = Fonts.Size
+    .Font.Strikethrough = Fonts.Strike
+    .Font.Underline = Fonts.Under
 End With
 
 With frmSociety
