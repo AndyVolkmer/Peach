@@ -159,6 +159,7 @@ Public REG_CMB_GENDER_FEMALE            As String
 Public SET_LABEL_COLOR                  As String
 Public SET_LABEL_FONT                   As String
 
+Public SET_FRAME_STYLE                  As String
 Public SET_FRAME_OPTIONS                As String
 Public SET_FRAME_CONNECTION             As String
 
@@ -337,6 +338,7 @@ REG_CMB_GENDER_FEMALE = "Weiblich"
 SET_LABEL_COLOR = "Jetzige Farbe:"
 SET_LABEL_FONT = "Schriftart:"
 
+SET_FRAME_STYLE = "Stil"
 SET_FRAME_OPTIONS = "Optionen"
 SET_FRAME_CONNECTION = "Verbindungseinstellungen"
 
@@ -520,6 +522,7 @@ REG_CMB_GENDER_FEMALE = "Female"
 SET_LABEL_COLOR = "Current Color:"
 SET_LABEL_FONT = "Font:"
 
+SET_FRAME_STYLE = "Style"
 SET_FRAME_OPTIONS = "Options"
 SET_FRAME_CONNECTION = "Connection Settings"
 
@@ -698,6 +701,7 @@ REG_CMB_GENDER_FEMALE = "Femenino"
 SET_LABEL_COLOR = "Color activo:"
 SET_LABEL_FONT = "Fuente:"
 
+SET_FRAME_STYLE = "Estilo"
 SET_FRAME_OPTIONS = "Opciones"
 SET_FRAME_CONNECTION = "Confgiuración de conexión"
 
@@ -878,6 +882,7 @@ REG_CMB_GENDER_FEMALE = "Kvinna"
 SET_LABEL_COLOR = "Nuvarande färg:"
 SET_LABEL_FONT = "Textsnitt:"
 
+SET_FRAME_STYLE = "Stilart"
 SET_FRAME_OPTIONS = "Alternativ"
 SET_FRAME_CONNECTION = "Anslutnings inställningar"
 
@@ -1057,6 +1062,7 @@ REG_CMB_GENDER_FEMALE = "Female"
 SET_LABEL_COLOR = "Colore corrente:"
 SET_LABEL_FONT = "Fonte:"
 
+SET_FRAME_STYLE = "Stile"
 SET_FRAME_OPTIONS = "Opzioni"
 SET_FRAME_CONNECTION = "Impostazioni di connessione"
 
@@ -1234,6 +1240,7 @@ REG_CMB_GENDER_FEMALE = "Female"
 SET_LABEL_COLOR = "Momenteel gebruikte kleur:"
 SET_LABEL_FONT = "Doopvont:"
 
+SET_FRAME_STYLE = "Stijl"
 SET_FRAME_OPTIONS = "Instellingen"
 SET_FRAME_CONNECTION = "Verbinding Instellingen"
 
@@ -1421,6 +1428,7 @@ REG_CMB_GENDER_FEMALE = "Female"
 SET_LABEL_COLOR = "Current Color:"
 SET_LABEL_FONT = "Font:"
 
+SET_FRAME_STYLE = "Style"
 SET_FRAME_OPTIONS = "Options"
 SET_FRAME_CONNECTION = "Connection Settings"
 
@@ -1597,6 +1605,7 @@ REG_CMB_GENDER_FEMALE = "Female"
 SET_LABEL_COLOR = "Couleur Courante:"
 SET_LABEL_FONT = "Fonte:"
 
+SET_FRAME_STYLE = "Style"
 SET_FRAME_OPTIONS = "Options"
 SET_FRAME_CONNECTION = "Paramètres de connexion"
 

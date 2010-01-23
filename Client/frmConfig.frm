@@ -296,7 +296,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     
     'Make the name proper case
     txtNick = StrConv(txtNick, vbProperCase)
-
+    
     'Connect winsocks
     With frmMain.Winsock1
         .RemotePort = Setting.SERVER_PORT

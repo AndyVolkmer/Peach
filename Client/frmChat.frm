@@ -44,6 +44,7 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -132,17 +133,17 @@ Option Explicit
 
 Private Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (ByVal hwnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
 
-Private Const EM_CHARFROMPOS As Long = &HD7&
-Private Const WM_PASTE = &H302
+Private Const EM_CHARFROMPOS    As Long = &HD7&
+Private Const WM_PASTE          As Long = &H302
 
 Private Type POINTAPI
-    X                   As Long
-    Y                   As Long
+    X                           As Long
+    Y                           As Long
 End Type
 
-Private Sign(255)       As Integer
-Private menuUser        As String
-Private menuAccount     As String
+Private Sign(255)               As Integer
+Private menuUser                As String
+Private menuAccount             As String
 
 Private Sub cmdSend_Click()
 Dim TTS As String

@@ -293,11 +293,12 @@ Public Sub LoadSettingsForm()
 lblColor.Caption = SET_LABEL_COLOR
 lblFont.Caption = SET_LABEL_FONT
 lblMinimizeTray = SET_CHECK_MINIMIZE
+Frame1.Caption = SET_FRAME_STYLE
 Frame2.Caption = SET_FRAME_OPTIONS
+Frame3.Caption = SET_FRAME_CONNECTION
 SaveAccount.Caption = SET_CHECK_SAVE_ACCOUNT
 SavePassword.Caption = SET_CHECK_SAVE_PASSWORD
 CheckAsk.Caption = SET_CHECK_ASK_CLOSING
-Frame3.Caption = SET_FRAME_CONNECTION
 Command1.Caption = SET_COMMAND_LANGUAGE
 Command2.Caption = SET_COMMAND_SAVE
 End Sub
