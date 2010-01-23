@@ -51,7 +51,6 @@ Type GC
     Description                             As String
 End Type
 
-Public Options                              As OPT
 Public Database                             As DB
 Public Commands()                           As GC
 Public Emotes()                             As EMT

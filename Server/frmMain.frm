@@ -327,13 +327,6 @@ Else
     Me.Left = 1200
 End If
 
-'== Options ==
-If LenB(ReadFromRegistry("Server\Configuration", "ChatLevel")) <> 0 Then
-    Options.ChatLevel = ReadFromRegistry("Server\Configuration", "ChatLevel")
-Else
-    Options.ChatLevel = 0
-End If
-
 'Connect to MySQL Database
 ConnectMySQL .Database, .User, .Password, .Host
 
@@ -705,9 +698,6 @@ End With
 '== Position ==
 InsertIntoRegistry "Server\Configuration", "Top", Me.Top
 InsertIntoRegistry "Server\Configuration", "Left", Me.Left
-
-'== Options ==
-InsertIntoRegistry "Server\Configuration", "ChatLevel", Options.ChatLevel
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
@@ -1163,11 +1153,9 @@ For k = 0 To UBound(p_PreArray) - 1
                     Exit Sub
                 End If
                 
-                If GetLevel(p_MainArray(1)) = Options.ChatLevel Then
-                    If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
-                        SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
-                        Exit Sub
-                    End If
+                If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
+                    SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
+                    Exit Sub
                 End If
                 
                 With frmPanel.ListView1.ListItems
@@ -1327,33 +1315,30 @@ For k = 0 To UBound(p_PreArray) - 1
             Dim S1  As Long
             Dim E   As String
             
-            'Only certain level accounts can by pass special rules
-            If GetLevel(p_MainArray(1)) = Options.ChatLevel Then
-                'We just bother checking if the text is longer then 5 characters
-                If Len(p_MainArray(2)) > 5 Then
-                    'If the text is just made of numbers we don't check
-                    If IsNumeric(p_MainArray(2)) = False Then
-                        'If there are letters and not just signs then check
-                        If IsAlphaCharacter(p_MainArray(2)) Then
-                            S1 = 0
-                            For i = 1 To Len(p_MainArray(2))
-                                E = Mid$(p_MainArray(2), i, 1)
-                                If UCase$(E) = E Then S1 = S1 + 1
-                            Next i
-                            E = vbNullString
-                            'Exit if there are more then 75% of caps
-                            If Format$(100 * S1 / Len(p_MainArray(2)), "0") > 75 Then
-                                SendSingle "Message blocked. Please do not write more then 75% in caps.", Index
-                                Exit Sub
-                            End If
+            'We just bother checking if the text is longer then 5 characters
+            If Len(p_MainArray(2)) > 5 Then
+                'If the text is just made of numbers we don't check
+                If IsNumeric(p_MainArray(2)) = False Then
+                    'If there are letters and not just signs then check
+                    If IsAlphaCharacter(p_MainArray(2)) Then
+                        S1 = 0
+                        For i = 1 To Len(p_MainArray(2))
+                            E = Mid$(p_MainArray(2), i, 1)
+                            If UCase$(E) = E Then S1 = S1 + 1
+                        Next i
+                        E = vbNullString
+                        'Exit if there are more then 75% of caps
+                        If Format$(100 * S1 / Len(p_MainArray(2)), "0") > 75 Then
+                            SendSingle "Message blocked. Please do not write more then 75% in caps.", Index
+                            Exit Sub
                         End If
                     End If
                 End If
-                
-                If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
-                    SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
-                    Exit Sub
-                End If
+            End If
+            
+            If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
+                SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
+                Exit Sub
             End If
             
             'Send Message and print in chat
