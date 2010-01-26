@@ -383,7 +383,7 @@ End With
 End Sub
 
 Private Sub lblMinimizeTray_Click()
-With CheckMin
+With chkMinimize
     If .Value = 0 Then
         .Value = 1
     Else
