@@ -163,7 +163,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Const PacketSize    As Long = 1024 * 4
+Private Const PacketSize    As Long = 4096 '1024 * 4
 Private sFileName           As String
 Private iFileNum            As Integer
 

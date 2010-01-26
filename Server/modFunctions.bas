@@ -243,7 +243,7 @@ nid.hwnd = frmMain.hwnd
 nid.uId = vbNull
 nid.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
 nid.uCallBackMessage = WM_MOUSEMOVE
-nid.hIcon = frmMain.Icon ' the icon will be your Form1 project icon
+nid.hIcon = frmMain.Icon        'the icon will be your frmMain project icon
 nid.szTip = "Peach" & vbNullChar
 Shell_NotifyIcon NIM_ADD, nid
 End Sub

@@ -26,6 +26,7 @@ Type CONFIG
     'Ticks
     ACCOUNT_TICK                As Boolean
     PASSWORD_TICK               As Boolean
+    AUTO_LOGIN                  As Boolean
     ASK_TICK                    As Boolean
     MIN_TICK                    As Boolean
     

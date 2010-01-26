@@ -165,6 +165,7 @@ Public SET_FRAME_CONNECTION             As String
 
 Public SET_CHECK_SAVE_ACCOUNT           As String
 Public SET_CHECK_SAVE_PASSWORD          As String
+Public SET_CHECK_AUTO_LOGIN             As String
 Public SET_CHECK_ASK_CLOSING            As String
 Public SET_CHECK_MINIMIZE               As String
 
@@ -344,6 +345,7 @@ SET_FRAME_CONNECTION = "Verbindungseinstellungen"
 
 SET_CHECK_SAVE_ACCOUNT = "Konto-Namen speichern"
 SET_CHECK_SAVE_PASSWORD = "Passwort speichern"
+SET_CHECK_AUTO_LOGIN = "Automatisch einloggen"
 SET_CHECK_ASK_CLOSING = "Abfragen bevor schließen"
 SET_CHECK_MINIMIZE = "Peach-Fenster in die Taskleiste minimieren"
 
@@ -528,6 +530,7 @@ SET_FRAME_CONNECTION = "Connection Settings"
 
 SET_CHECK_SAVE_ACCOUNT = "Save Account"
 SET_CHECK_SAVE_PASSWORD = "Save Password"
+SET_CHECK_AUTO_LOGIN = "Login automatically"
 SET_CHECK_ASK_CLOSING = "Ask before closing"
 SET_CHECK_MINIMIZE = "Minimize Peach window to system tray"
 
@@ -707,6 +710,7 @@ SET_FRAME_CONNECTION = "Confgiuración de conexión"
 
 SET_CHECK_SAVE_ACCOUNT = "Guardar cuenta"
 SET_CHECK_SAVE_PASSWORD = "Guardar contraseña"
+SET_CHECK_AUTO_LOGIN = "Logear automáticamente"
 SET_CHECK_ASK_CLOSING = "Preguntar antes de cerrar"
 SET_CHECK_MINIMIZE = "Minimizar ventana de Peach en la bandeja del sistema"
 
@@ -888,6 +892,7 @@ SET_FRAME_CONNECTION = "Anslutnings inställningar"
 
 SET_CHECK_SAVE_ACCOUNT = "Spara konto"
 SET_CHECK_SAVE_PASSWORD = "Spara lösenord"
+SET_CHECK_AUTO_LOGIN = "Login automatically"
 SET_CHECK_ASK_CLOSING = "Fråga innan stäng"
 SET_CHECK_MINIMIZE = "Minimera Peach-fönstret till Aktivitetsfältet"
 
@@ -1068,6 +1073,7 @@ SET_FRAME_CONNECTION = "Impostazioni di connessione"
 
 SET_CHECK_SAVE_ACCOUNT = "Salva conto"
 SET_CHECK_SAVE_PASSWORD = "Salva password"
+SET_CHECK_AUTO_LOGIN = "Login automatically"
 SET_CHECK_ASK_CLOSING = "Chiedi prima di chiudere"
 SET_CHECK_MINIMIZE = "Contrai la finestra di Peach nella barra delle applicazioni"
 
@@ -1246,6 +1252,7 @@ SET_FRAME_CONNECTION = "Verbinding Instellingen"
 
 SET_CHECK_SAVE_ACCOUNT = "Gebruiker opslaan"
 SET_CHECK_SAVE_PASSWORD = "Wachtwoord opslaan"
+SET_CHECK_AUTO_LOGIN = "Login automatically"
 SET_CHECK_ASK_CLOSING = "Vraag voordat sluiten"
 SET_CHECK_MINIMIZE = "Peach venster minimaliseren naar het systeemvak"
 
@@ -1434,6 +1441,7 @@ SET_FRAME_CONNECTION = "Connection Settings"
 
 SET_CHECK_SAVE_ACCOUNT = "Save Account"
 SET_CHECK_SAVE_PASSWORD = "Save Password"
+SET_CHECK_AUTO_LOGIN = "Login automatically"
 SET_CHECK_ASK_CLOSING = "Ask before closing"
 SET_CHECK_MINIMIZE = "Minimize Peach window to system tray"
 
@@ -1611,6 +1619,7 @@ SET_FRAME_CONNECTION = "Paramètres de connexion"
 
 SET_CHECK_SAVE_ACCOUNT = "Sauvegarder le compte"
 SET_CHECK_SAVE_PASSWORD = "Sauvegarder mot de passe"
+SET_CHECK_AUTO_LOGIN = "Login automatically"
 SET_CHECK_ASK_CLOSING = "Demander, avant fermeture"
 SET_CHECK_MINIMIZE = "Réduire la fenêtre de barre d'état système"
 

@@ -34,8 +34,14 @@ If Setting.VALIDATE = 0 Then
         Case 7 'French
             SET_LANG_FRENCH
     End Select
+    
     frmMain.Show
     SetScheme True
+    
+    'Temp hackfix for auto login
+    If Setting.AUTO_LOGIN Then
+        frmConfig.cmdConnect_Click
+    End If
 Else
     'Set language default ( english )
     SET_LANG_ENGLISH
@@ -89,6 +95,12 @@ With Setting
         .MIN_TICK = False
     Else
         .MIN_TICK = CBool(ReadFromRegistry("Client\Configuration", "MinimizeTray"))
+    End If
+    
+    If LenB(ReadFromRegistry("Client\Configuration", "AutoLogin")) = 0 Then
+        .AUTO_LOGIN = False
+    Else
+        .AUTO_LOGIN = CBool(ReadFromRegistry("Client\Configuration", "AutoLogin"))
     End If
     
     If LenB(ReadFromRegistry("Client\Configuration", "Validate")) = 0 Then
@@ -202,10 +214,11 @@ If Not IsFirst Then
         .lblFont.BackColor = SC
         .Label2.BackColor = SC
         .Label3.BackColor = SC
-        .SaveAccount.BackColor = SC
-        .SavePassword.BackColor = SC
-        .CheckAsk.BackColor = SC
-        .CheckMin.BackColor = SC
+        .chkSaveAccount.BackColor = SC
+        .chkSavePassword.BackColor = SC
+        .chkAutoLogin.BackColor = SC
+        .chkAskClosing.BackColor = SC
+        .chkMinimize.BackColor = SC
         .lblMinimizeTray.BackColor = SC
     End With
 End If

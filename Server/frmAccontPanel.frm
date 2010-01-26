@@ -376,8 +376,8 @@ Select Case Switch
             txtPassword.SetFocus
             Exit Sub
         End If
-        
         ModifyAccount txtName.Text, txtPassword.Text, CBool(cmbBanned.Text), cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index, cmbGender.Text
+        
 End Select
 DoButtons False
 End Sub
@@ -390,12 +390,12 @@ With frmMain.xCommand
 End With
 
 'Update the listview
-With ListView1.ListItems
-    .Item(LST_ID).SubItems(1) = pName
-    .Item(LST_ID).SubItems(2) = pPassword
-    .Item(LST_ID).SubItems(5) = CStr(pBanned)
-    .Item(LST_ID).SubItems(6) = pLevel
-    .Item(LST_ID).SubItems(9) = pGender
+With ListView1.ListItems.Item(LST_ID)
+    .SubItems(1) = pName
+    .SubItems(2) = pPassword
+    .SubItems(5) = CStr(pBanned)
+    .SubItems(6) = pLevel
+    .SubItems(9) = pGender
 End With
 End Sub
 

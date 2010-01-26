@@ -3,7 +3,7 @@ Begin VB.Form frmSettings
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Peach Settings"
-   ClientHeight    =   5790
+   ClientHeight    =   6300
    ClientLeft      =   45
    ClientTop       =   375
    ClientWidth     =   4455
@@ -18,10 +18,9 @@ Begin VB.Form frmSettings
    EndProperty
    Icon            =   "frmSettings.frx":0000
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   5790
+   ScaleHeight     =   6300
    ScaleWidth      =   4455
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
@@ -69,20 +68,28 @@ Begin VB.Form frmSettings
    Begin VB.Frame Frame2 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Options"
-      Height          =   2055
+      Height          =   2535
       Left            =   120
       TabIndex        =   8
       Top             =   3120
       Width           =   4215
-      Begin VB.CheckBox CheckMin 
+      Begin VB.CheckBox chkAutoLogin 
+         Caption         =   "Login automatically"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   20
+         Top             =   1440
+         Width           =   3855
+      End
+      Begin VB.CheckBox chkMinimize 
          BackColor       =   &H00F4F4F4&
          Height          =   180
          Left            =   120
          TabIndex        =   15
-         Top             =   1440
+         Top             =   1800
          Width           =   255
       End
-      Begin VB.CheckBox CheckAsk 
+      Begin VB.CheckBox chkAskClosing 
          BackColor       =   &H00F4F4F4&
          Caption         =   "Ask before closing"
          Height          =   195
@@ -91,7 +98,7 @@ Begin VB.Form frmSettings
          Top             =   1080
          Width           =   3975
       End
-      Begin VB.CheckBox SavePassword 
+      Begin VB.CheckBox chkSavePassword 
          BackColor       =   &H00F4F4F4&
          Caption         =   "Save Password"
          Height          =   195
@@ -100,7 +107,7 @@ Begin VB.Form frmSettings
          Top             =   720
          Width           =   3855
       End
-      Begin VB.CheckBox SaveAccount 
+      Begin VB.CheckBox chkSaveAccount 
          BackColor       =   &H00F4F4F4&
          Caption         =   "Save Account"
          Height          =   195
@@ -113,7 +120,7 @@ Begin VB.Form frmSettings
          Height          =   495
          Left            =   360
          TabIndex        =   16
-         Top             =   1440
+         Top             =   1800
          Width           =   3615
       End
    End
@@ -122,7 +129,7 @@ Begin VB.Form frmSettings
       Height          =   375
       Left            =   2880
       TabIndex        =   5
-      Top             =   5280
+      Top             =   5760
       Width           =   1455
    End
    Begin VB.CommandButton Command1 
@@ -130,7 +137,7 @@ Begin VB.Form frmSettings
       Height          =   375
       Left            =   120
       TabIndex        =   4
-      Top             =   5280
+      Top             =   5760
       Width           =   1455
    End
    Begin VB.Frame Frame1 
@@ -262,10 +269,11 @@ Command2.Enabled = False
 InsertIntoRegistry "Client\Configuration", "IP", txtIP
 InsertIntoRegistry "Client\Configuration", "Port", txtPort
 InsertIntoRegistry "Client\Configuration", "SchemeColor", txtColor.BackColor
-InsertIntoRegistry "Client\Configuration", "PasswordTick", SavePassword.Value
-InsertIntoRegistry "Client\Configuration", "AccountTick", SaveAccount.Value
-InsertIntoRegistry "Client\Configuration", "CloseQuestion", CheckAsk.Value
-InsertIntoRegistry "Client\Configuration", "MinimizeTray", CheckMin.Value
+InsertIntoRegistry "Client\Configuration", "PasswordTick", chkSavePassword.Value
+InsertIntoRegistry "Client\Configuration", "AutoLogin", chkAutoLogin.Value
+InsertIntoRegistry "Client\Configuration", "AccountTick", chkSaveAccount.Value
+InsertIntoRegistry "Client\Configuration", "CloseQuestion", chkAskClosing.Value
+InsertIntoRegistry "Client\Configuration", "MinimizeTray", chkMinimize.Value
 
 With txtFont
     InsertIntoRegistry "Client\Font", "FontName", .Font
@@ -280,10 +288,11 @@ With Setting
     .SERVER_IP = txtIP
     .SERVER_PORT = txtPort
     .SCHEME_COLOR = txtColor.BackColor
-    .PASSWORD_TICK = SavePassword.Value
-    .ACCOUNT_TICK = SaveAccount.Value
-    .ASK_TICK = CheckAsk.Value
-    .MIN_TICK = CheckMin.Value
+    .PASSWORD_TICK = chkSavePassword.Value
+    .ACCOUNT_TICK = chkSaveAccount.Value
+    .AUTO_LOGIN = chkAutoLogin.Value
+    .ASK_TICK = chkAskClosing.Value
+    .MIN_TICK = chkMinimize.Value
 End With
 
 SetScheme False
@@ -296,9 +305,11 @@ lblMinimizeTray = SET_CHECK_MINIMIZE
 Frame1.Caption = SET_FRAME_STYLE
 Frame2.Caption = SET_FRAME_OPTIONS
 Frame3.Caption = SET_FRAME_CONNECTION
-SaveAccount.Caption = SET_CHECK_SAVE_ACCOUNT
-SavePassword.Caption = SET_CHECK_SAVE_PASSWORD
-CheckAsk.Caption = SET_CHECK_ASK_CLOSING
+chkSaveAccount.Caption = SET_CHECK_SAVE_ACCOUNT
+chkSavePassword.Caption = SET_CHECK_SAVE_PASSWORD
+chkAutoLogin.Caption = SET_CHECK_AUTO_LOGIN
+chkAskClosing.Caption = SET_CHECK_ASK_CLOSING
+chkMinimize.Caption = SET_CHECK_MINIMIZE
 Command1.Caption = SET_COMMAND_LANGUAGE
 Command2.Caption = SET_COMMAND_SAVE
 End Sub
@@ -314,10 +325,11 @@ lblColor.BackColor = SC
 lblFont.BackColor = SC
 Label2.BackColor = SC
 Label3.BackColor = SC
-SaveAccount.BackColor = SC
-SavePassword.BackColor = SC
-CheckAsk.BackColor = SC
-CheckMin.BackColor = SC
+chkSaveAccount.BackColor = SC
+chkSavePassword.BackColor = SC
+chkAutoLogin.BackColor = SC
+chkAskClosing.BackColor = SC
+chkMinimize.BackColor = SC
 lblMinimizeTray.BackColor = SC
 End Sub
 
@@ -325,26 +337,37 @@ Private Sub Form_Load()
 LoadSettingsForm
 With Setting
     txtColor.BackColor = .SCHEME_COLOR
+    
     If .ACCOUNT_TICK Then
-        SaveAccount.Value = 1
+        chkSaveAccount.Value = 1
     Else
-        SaveAccount.Value = 0
+        chkSaveAccount.Value = 0
     End If
+    
     If .PASSWORD_TICK Then
-        SavePassword.Value = 1
+        chkSavePassword.Value = 1
     Else
-        SavePassword.Value = 0
+        chkSavePassword.Value = 0
     End If
+    
+    If .AUTO_LOGIN Then
+        chkAutoLogin.Value = 1
+    Else
+        chkAutoLogin.Value = 0
+    End If
+    
     If .ASK_TICK Then
-        CheckAsk.Value = 1
+        chkAskClosing.Value = 1
     Else
-        CheckAsk.Value = 0
+        chkAskClosing.Value = 0
     End If
+    
     If .MIN_TICK Then
-        CheckMin.Value = 1
+        chkMinimize.Value = 1
     Else
-        CheckMin.Value = 0
+        chkMinimize.Value = 0
     End If
+    
     txtIP = .SERVER_IP
     txtPort = .SERVER_PORT
 End With

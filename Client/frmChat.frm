@@ -44,7 +44,6 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -169,6 +168,9 @@ End Sub
 Private Sub Form_Load()
 Top = 0: Left = 0
 Call LoadChatForm
+
+'Set the signs to highlight
+Call InitSigns
 End Sub
 
 Public Sub LoadChatForm()
@@ -209,9 +211,6 @@ txtConver.Locked = False
 
 'Create smileys
 Call Create_Smileys(txtConver)
-
-'Set the signs to highlight
-Call InitSigns
 
 'Highlight links, emails and ftp links
 Call Highlight(txtConver)
