@@ -207,6 +207,7 @@ Public xCommand                 As New ADODB.Command
 Public xRecordSet               As New ADODB.Recordset
 
 Private Vali                    As Boolean
+Private pStartTime              As Long
 
 Private Sub Command1_Click()
 SetupForms frmConfig
@@ -229,6 +230,7 @@ SetupForms frmFriendIgnoreList
 End Sub
 
 Private Sub MDIForm_Initialize()
+pStartTime = timeGetTime
 Call InitCommonControls
 End Sub
 
@@ -354,7 +356,10 @@ End With
 frmMain.StatusBar1.Panels(1) = "Status: Disconnected"
 SetupForms frmConfig
 
-If HasError = False Then WriteLog "Correctly loaded."
+If HasError = False Then
+    WriteLog "Correctly loaded in " & timeGetTime - pStartTime & " ms."
+End If
+pStartTime = vbNull
 End Sub
 
 Public Sub ConnectMySQL(pDatabase As String, pUser As String, pPassword As String, pIP As String)
@@ -598,8 +603,8 @@ With frmAccountPanel
     .ListView1.ListItems.Clear
     With .cmbBanned
         .Clear
-        .AddItem "False"
-        .AddItem "True"
+        .AddItem "0", 0
+        .AddItem "1", 1
     End With
     With .cmbLevel
         .Clear
@@ -625,7 +630,7 @@ With xRecordSet
         LItem.SubItems(6) = !Level1
         LItem.SubItems(7) = !SecretQuestion1
         LItem.SubItems(8) = !SecretAnswer1
-        LItem.SubItems(9) = !gender1
+        LItem.SubItems(9) = !Gender1
         .MoveNext
         Counter = Counter + 1
     Loop

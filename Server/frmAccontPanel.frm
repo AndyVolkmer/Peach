@@ -383,9 +383,17 @@ DoButtons False
 End Sub
 
 Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Boolean, pLevel As String, MOD_ID As Long, LST_ID As Long, pGender As String)
+Dim pBan As String
+
+If pBanned Then
+    pBan = "1"
+Else
+    pBan = "0"
+End If
+
 'Update the database
 With frmMain.xCommand
-    .CommandText = "UPDATE " & Database.AccountTable & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & CStr(pBanned) & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID
+    .CommandText = "UPDATE " & Database.AccountTable & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBan & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID
     .Execute
 End With
 
@@ -393,7 +401,7 @@ End With
 With ListView1.ListItems.Item(LST_ID)
     .SubItems(1) = pName
     .SubItems(2) = pPassword
-    .SubItems(5) = CStr(pBanned)
+    .SubItems(5) = pBan
     .SubItems(6) = pLevel
     .SubItems(9) = pGender
 End With
@@ -416,7 +424,7 @@ j = j + 1
 
 'Add new account to database
 With frmMain.xCommand
-    .CommandText = "INSERT INTO " & Database.AccountTable & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', 'False', '0', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "')"
+    .CommandText = "INSERT INTO " & Database.AccountTable & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '0', '0', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "')"
     .Execute
 End With
 
@@ -430,7 +438,7 @@ With ListView1.ListItems
     .Item(i).SubItems(2) = pPassword
     .Item(i).SubItems(3) = Format(Time, "hh:nn:ss")
     .Item(i).SubItems(4) = Format(Date, "dd/mm/yyyy")
-    .Item(i).SubItems(5) = "False"
+    .Item(i).SubItems(5) = "0"
     .Item(i).SubItems(6) = "0"
     .Item(i).SubItems(7) = pSecretQuestion
     .Item(i).SubItems(8) = pSecretAnswer

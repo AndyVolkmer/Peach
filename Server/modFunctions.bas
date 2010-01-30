@@ -80,6 +80,10 @@ Public Const VER_PLATFORM_WIN32_NT          As Long = 2         'Windows NT, Win
 
 Public nid                                  As NOTIFYICONDATA   'Trayicon variable
 
+'Time functions to determine exact ms time
+Public Declare Function timeGetTime Lib "winmm.dll" () As Long
+Public Declare Function timeBeginPeriod Lib "winmm.dll" (ByVal uPeriod As Long) As Long
+
 Declare Function GetVersionExA Lib "kernel32" (lpVersionInformation As OSVERSIONINFO) As Integer
 Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal dwMessage As Long, pnid As NOTIFYICONDATA) As Boolean
 Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long

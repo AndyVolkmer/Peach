@@ -207,33 +207,36 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Const GWL_STYLE = (-16)
-Private Const WS_SYSMENU = &H80000
-Private Const WS_CAPTION = &HC00000
-Private Const WS_THICKFRAME = &H40000
-Private Const WS_MAXIMIZEBOX = &H10000
-Private Const WS_MINIMIZEBOX = &H20000
-Private Const SC_MAXIMIZE = &HF030&
-Private Const SC_MINIMIZE = &HF020&
-Private Const SC_CLOSE        As Long = &HF060&
-Private Const MIIM_STATE      As Long = &H1&
-Private Const MIIM_ID         As Long = &H2&
-Private Const MFS_GRAYED      As Long = &H3&
-Private Const WM_NCACTIVATE   As Long = &H86
+Private Const GWL_STYLE         As Long = (-16)
+Private Const WS_SYSMENU        As Long = &H80000
+Private Const WS_CAPTION        As Long = &HC00000
+Private Const WS_THICKFRAME     As Long = &H40000
+Private Const WS_MAXIMIZEBOX    As Long = &H10000
+Private Const WS_MINIMIZEBOX    As Long = &H20000
+Private Const SC_MAXIMIZE       As Long = &HF030&
+Private Const SC_MINIMIZE       As Long = &HF020&
+Private Const SC_CLOSE          As Long = &HF060&
+Private Const MIIM_STATE        As Long = &H1&
+Private Const MIIM_ID           As Long = &H2&
+Private Const MFS_GRAYED        As Long = &H3&
+Private Const WM_NCACTIVATE     As Long = &H86
 
 Private Type MENUITEMINFO
-    cbSize          As Long
-    fMask           As Long
-    fType           As Long
-    fState          As Long
-    wID             As Long
-    hSubMenu        As Long
-    hbmpChecked     As Long
-    hbmpUnchecked   As Long
-    dwItemData      As Long
-    dwTypeData      As String
-    cch             As Long
+    cbSize                      As Long
+    fMask                       As Long
+    fType                       As Long
+    fState                      As Long
+    wID                         As Long
+    hSubMenu                    As Long
+    hbmpChecked                 As Long
+    hbmpUnchecked               As Long
+    dwItemData                  As Long
+    dwTypeData                  As String
+    cch                         As Long
 End Type
+
+Private Vali                    As Boolean
+Public RunOnce                  As Boolean
 
 Private Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Long, ByVal bRevert As Long) As Long
 Private Declare Function GetMenuItemInfo Lib "user32" Alias "GetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal b As Boolean, lpMenuItemInfo As MENUITEMINFO) As Long
@@ -245,15 +248,12 @@ Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPo
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
-Dim Vali        As Boolean
-Public RunOnce  As Boolean
-
 Private Sub ChatNotifyTimer_Timer()
 Static onORoff As Boolean
 
 With frmMain.Command2
     If Not onORoff Then
-        .Caption = MDI_COMMAND_CHAT & " - !"
+        .Caption = "! - " & MDI_COMMAND_CHAT & " - !"
         onORoff = True
     Else
         .Caption = MDI_COMMAND_CHAT
@@ -299,8 +299,8 @@ Disconnect
 End Sub
 
 Private Sub FSocket_DataArrival(ByVal bytesTotal As Long)
-Dim GetMessage As String
-Dim array1() As String
+Dim GetMessage  As String
+Dim array1()    As String
 
 FSocket.GetData GetMessage
 

@@ -35,8 +35,8 @@ If Setting.VALIDATE = 0 Then
             SET_LANG_FRENCH
     End Select
     
-    frmMain.Show
     SetScheme True
+    frmMain.Show
     
     'Temp hackfix for auto login
     If Setting.AUTO_LOGIN Then
