@@ -25,6 +25,20 @@ Type NOTIFYICONDATA
     szTip                                   As String * 64
 End Type
 
+Type MENUITEMINFO
+    cbSize                      As Long
+    fMask                       As Long
+    fType                       As Long
+    fState                      As Long
+    wID                         As Long
+    hSubMenu                    As Long
+    hbmpChecked                 As Long
+    hbmpUnchecked               As Long
+    dwItemData                  As Long
+    dwTypeData                  As String
+    cch                         As Long
+End Type
+
 Type OSVERSIONINFO
     dwOSVersionInfoSize                     As Long
     dwMajorVersion                          As Long
@@ -57,7 +71,7 @@ Public Commands()                           As GC
 Public Emotes()                             As EMT
 Public DeclinedNames()                      As String
 
-'Tray Constants
+'Tray constants
 Public Const NIM_ADD                        As Long = &H0
 Public Const NIM_MODIFY                     As Long = &H1
 Public Const NIM_DELETE                     As Long = &H2
@@ -65,6 +79,7 @@ Public Const WM_MOUSEMOVE                   As Long = &H200
 Public Const NIF_MESSAGE                    As Long = &H1
 Public Const NIF_ICON                       As Long = &H2
 Public Const NIF_TIP                        As Long = &H4
+Public NID                                  As NOTIFYICONDATA   'Trayicon variable
 
 'Mouseclick constants
 Public Const WM_LBUTTONDBLCLK               As Long = &H203     'Double-click
@@ -74,12 +89,26 @@ Public Const WM_RBUTTONDBLCLK               As Long = &H206     'Double-click
 Public Const WM_RBUTTONDOWN                 As Long = &H204     'Button down
 Public Const WM_RBUTTONUP                   As Long = &H205     'Button up
 
-'Windows version constant
+'Windows version constants
 Public Const VER_PLATFORM_WIN32s            As Long = 0         'Win32s on Windows 3.1
 Public Const VER_PLATFORM_WIN32_WINDOWS     As Long = 1         'Windows 95, Windows 98, or Windows Me
 Public Const VER_PLATFORM_WIN32_NT          As Long = 2         'Windows NT, Windows 2000, Windows XP, Windows Vista, Windows 7 or Windows Server 2003 family.
 
-Public nid                                  As NOTIFYICONDATA   'Trayicon variable
+'Windows frame constants
+Public Const GWL_STYLE                      As Long = (-16)
+Public Const WS_THICKFRAME                  As Long = &H40000
+Public Const WS_MAXIMIZEBOX                 As Long = &H10000
+Public Const WS_MINIMIZEBOX                 As Long = &H20000
+
+Private Const WS_SYSMENU                    As Long = &H80000
+Private Const WS_CAPTION                    As Long = &HC00000
+Private Const SC_MAXIMIZE                   As Long = &HF030&
+Private Const SC_MINIMIZE                   As Long = &HF020&
+Private Const SC_CLOSE                      As Long = &HF060&
+Private Const MIIM_STATE                    As Long = &H1&
+Private Const MIIM_ID                       As Long = &H2&
+Private Const MFS_GRAYED                    As Long = &H3&
+Private Const WM_NCACTIVATE                 As Long = &H86
 
 'Time functions to determine exact ms time
 Public Declare Function timeGetTime Lib "winmm.dll" () As Long
@@ -89,6 +118,16 @@ Declare Function GetVersionExA Lib "kernel32" (lpVersionInformation As OSVERSION
 Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal dwMessage As Long, pnid As NOTIFYICONDATA) As Boolean
 Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long
 Declare Function GetActiveWindow Lib "user32" () As Long
+
+Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Long, ByVal bRevert As Long) As Long
+Declare Function GetMenuItemInfo Lib "user32" Alias "GetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal b As Boolean, lpMenuItemInfo As MENUITEMINFO) As Long
+Declare Function SetMenuItemInfo Lib "user32" Alias "SetMenuItemInfoA" (ByVal hMenu As Long, ByVal un As Long, ByVal bool As Boolean, lpcMenuItemInfo As MENUITEMINFO) As Long
+Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long) As Long
+Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+Declare Function SendMessage2 Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+Declare Function GetMenuItemCount Lib "user32" (ByVal hMenu As Long) As Long
+Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPosition As Long, ByVal wFlags As Long) As Long
+Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
 
 Public Sub WriteLog(pData As String)
 With frmConfig
@@ -243,14 +282,14 @@ End Function
 
 Public Sub MinimizeToTray()
 frmMain.Hide
-nid.cbSize = Len(nid)
-nid.hwnd = frmMain.hwnd
-nid.uId = vbNull
-nid.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
-nid.uCallBackMessage = WM_MOUSEMOVE
-nid.hIcon = frmMain.Icon        'the icon will be your frmMain project icon
-nid.szTip = "Peach" & vbNullChar
-Shell_NotifyIcon NIM_ADD, nid
+NID.cbSize = Len(NID)
+NID.hwnd = frmMain.hwnd
+NID.uId = vbNull
+NID.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
+NID.uCallBackMessage = WM_MOUSEMOVE
+NID.hIcon = frmMain.Icon        'the icon will be your frmMain project icon
+NID.szTip = "Peach" & vbNullChar
+Shell_NotifyIcon NIM_ADD, NID
 End Sub
 
 Public Function GetOS() As String
@@ -320,3 +359,49 @@ With OSInfo
     End Select
 End With
 End Function
+
+Public Sub DisableFormResize(frm As Form)
+Dim style           As Long
+Dim hMenu           As Long
+Dim MII             As MENUITEMINFO
+Dim lngMenuID       As Long
+Const xSC_MAXIMIZE  As Long = -11
+
+style = GetWindowLong(frm.hwnd, GWL_STYLE)
+
+style = style And Not WS_THICKFRAME
+style = style And Not WS_MAXIMIZEBOX
+
+style = SetWindowLong(frm.hwnd, GWL_STYLE, style)
+
+On Error Resume Next
+
+hMenu = GetSystemMenu(frm.hwnd, 0)
+
+With MII
+    .cbSize = Len(MII)
+    .dwTypeData = String(80, 0)
+    .cch = Len(.dwTypeData)
+    .fMask = MIIM_STATE
+    .wID = SC_MAXIMIZE
+End With
+If GetMenuItemInfo(hMenu, MII.wID, False, MII) = 0 Then Exit Sub
+
+With MII
+    lngMenuID = .wID
+    .wID = xSC_MAXIMIZE
+    .fMask = MIIM_ID
+End With
+If SetMenuItemInfo(hMenu, lngMenuID, False, MII) = 0 Then Exit Sub
+
+With MII
+    .fState = (.fState Or MFS_GRAYED)
+    .fMask = MIIM_STATE
+End With
+If SetMenuItemInfo(hMenu, MII.wID, False, MII) = 0 Then Exit Sub
+
+SendMessage2 frmMain.hwnd, WM_NCACTIVATE, True, 0
+
+frm.Width = frm.Width - 1
+frm.Width = frm.Width + 1
+End Sub
