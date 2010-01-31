@@ -8,6 +8,13 @@ Global Const MIN_INT_VALUE                  As Long = -2147483647
 Global VarTime                              As Long     'Time counter variable
 Global HasError                             As Boolean  'Used in frmMain and frmConfig
 
+Global Const DATABASE_TABLE_ACCOUNTS        As String = "accounts"
+Global Const DATABASE_TABLE_EMOTES          As String = "emotes"
+Global Const DATABASE_TABLE_COMMANDS        As String = "commands"
+Global Const DATABASE_TABLE_DECLINED_NAMES  As String = "declinednames"
+Global Const DATABASE_TABLE_FRIENDS         As String = "friends"
+Global Const DATABASE_TABLE_IGNORES         As String = "ignores"
+
 Type NOTIFYICONDATA
     cbSize                                  As Long
     hwnd                                    As Long
@@ -32,12 +39,6 @@ Type DB
     User                                    As String
     Host                                    As String
     Password                                As String
-    FriendTable                             As String
-    IgnoreTable                             As String
-    AccountTable                            As String
-    EmoteTable                              As String
-    DeclinedNameTable                       As String
-    CommandsTable                           As String
 End Type
 
 Type EMT

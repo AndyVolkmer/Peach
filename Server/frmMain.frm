@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.MDIForm frmMain 
    Appearance      =   0  'Flat
@@ -274,48 +274,6 @@ Else
     .Host = InputBox("The configuration file does not cotain a host adress, please insert one in the textbox below.", "Database error ..", "Host Adress")
 End If
 
-If LenB(ReadFromRegistry("Server\Database", "Account_Table")) <> 0 Then
-    .AccountTable = ReadFromRegistry("Server\Database", "Account_Table")
-Else
-    WriteLog "No Account-Table found."
-    .AccountTable = InputBox("The configuration file does not contain a account table, please insert one in the textbox below.", "Database error ..", "Account Table")
-End If
-
-If LenB(ReadFromRegistry("Server\Database", "Friend_Table")) <> 0 Then
-    .FriendTable = ReadFromRegistry("Server\Database", "Friend_Table")
-Else
-    WriteLog "No Friends-Table found."
-    .FriendTable = InputBox("The configuration file does not contain a friend table, please insert one in the textbox below.", "Database error ..", "Friend Table")
-End If
-
-If LenB(ReadFromRegistry("Server\Database", "Ignore_Table")) <> 0 Then
-    .IgnoreTable = ReadFromRegistry("Server\Database", "Ignore_Table")
-Else
-    WriteLog "No Ignore-Table found."
-    .IgnoreTable = InputBox("The configuration file does not contain a ignore table, please insert one in the textbox below.", "Database error ..", "Ignore Table")
-End If
-
-If LenB(ReadFromRegistry("Server\Database", "Emote_Table")) <> 0 Then
-    .EmoteTable = ReadFromRegistry("Server\Database", "Emote_Table")
-Else
-    WriteLog "No Emotes-Table found."
-    .EmoteTable = InputBox("The configuration file does not contain a emote table, please insert one in the textbox below.", "Database error ..", "Emote Table")
-End If
-
-If LenB(ReadFromRegistry("Server\Database", "Declined_Name_Table")) <> 0 Then
-    .DeclinedNameTable = ReadFromRegistry("Server\Database", "Declined_Name_Table")
-Else
-    WriteLog "No Declined-Names-Table found."
-    .DeclinedNameTable = InputBox("The configuration file does not contain a declined name table, please insert one in the textbox below.", "Database error ..", "Declined Name Table")
-End If
-
-If LenB(ReadFromRegistry("Server\Database", "Command_Table")) <> 0 Then
-    .CommandsTable = ReadFromRegistry("Server\Database", "Command_Table")
-Else
-    WriteLog "No Command-Table found."
-    .CommandsTable = InputBox("The configuration file does not contain a command table, please insert one in the textbox below.", "Database error ..", "Commands Table")
-End If
-
 '== Position ==
 If LenB(ReadFromRegistry("Server\Configuration", "Top")) <> 0 Then
     Me.Top = ReadFromRegistry("Server\Configuration", "Top")
@@ -332,31 +290,25 @@ End If
 'Connect to MySQL Database
 ConnectMySQL .Database, .User, .Password, .Host
 
-'Load Accounts
-LoadAccounts .AccountTable
-
-'Load Emotes
-LoadEmotes .EmoteTable
-
-'Load Friends
-LoadFriends .FriendTable
-
-'Load Ignores
-LoadIgnores .IgnoreTable
-
-'Load Declined Names
-LoadDeclinedNames .DeclinedNameTable
-
-'Load commands
-LoadCommands .CommandsTable
-
 'Close Database variable
 End With
+
+'Load database values
+LoadAccounts
+LoadCommands
+LoadDeclinedNames
+LoadEmotes
+LoadFriends
+LoadIgnores
 
 frmMain.StatusBar1.Panels(1) = "Status: Disconnected"
 SetupForms frmConfig
 
-If HasError = False Then
+If HasError Then
+    MsgBox frmConfig.txt_log.Text, vbInformation
+    frmSettings.Show 1
+    End
+Else
     WriteLog "Correctly loaded in " & timeGetTime - pStartTime & " ms."
 End If
 pStartTime = vbNull
@@ -395,13 +347,13 @@ Screen.MousePointer = vbDefault
 HasError = True
 End Sub
 
-Private Sub LoadCommands(pTable As String)
+Private Sub LoadCommands()
 Dim SQL     As String
 Dim Counter As Long
 
 If HasError Then Exit Sub
 
-SQL = "SELECT * FROM " & pTable
+SQL = "SELECT * FROM " & DATABASE_TABLE_COMMANDS
 Counter = 0
 
 On Error GoTo HandleErrorEmotes
@@ -433,13 +385,13 @@ WriteLog Err.Description & "."
 HasError = True
 End Sub
 
-Private Sub LoadDeclinedNames(pTable As String)
+Private Sub LoadDeclinedNames()
 Dim SQL     As String
 Dim Counter As Long
 
 If HasError Then Exit Sub
 
-SQL = "SELECT * FROM " & pTable
+SQL = "SELECT * FROM " & DATABASE_TABLE_DECLINED_NAMES
 Counter = 0
 
 On Error GoTo HandleErrorEmotes
@@ -470,13 +422,13 @@ WriteLog Err.Description & "."
 HasError = True
 End Sub
 
-Private Sub LoadEmotes(pTable As String)
+Private Sub LoadEmotes()
 Dim SQL     As String
 Dim Counter As Long
 
 If HasError Then Exit Sub
 
-SQL = "SELECT * FROM " & pTable
+SQL = "SELECT * FROM " & DATABASE_TABLE_EMOTES
 Counter = 0
 
 On Error GoTo HandleErrorEmotes
@@ -509,14 +461,14 @@ WriteLog Err.Description
 HasError = True
 End Sub
 
-Private Sub LoadFriends(pTable As String)
+Private Sub LoadFriends()
 Dim SQL     As String
 Dim LItem   As ListItem
 Dim Counter As Long
 
 If HasError Then Exit Sub
 
-SQL = "SELECT * FROM " & pTable
+SQL = "SELECT * FROM " & DATABASE_TABLE_FRIENDS
 Counter = 0
 
 On Error GoTo HandleErrorFriends
@@ -547,14 +499,14 @@ WriteLog Err.Description
 HasError = True
 End Sub
 
-Private Sub LoadIgnores(pTable As String)
+Private Sub LoadIgnores()
 Dim SQL     As String
 Dim LItem   As ListItem
 Dim Counter As Long
 
 If HasError Then Exit Sub
 
-SQL = "SELECT * FROM " & pTable
+SQL = "SELECT * FROM " & DATABASE_TABLE_IGNORES
 Counter = 0
 
 On Error GoTo HandleErrorFriends
@@ -585,14 +537,14 @@ WriteLog Err.Description
 HasError = True
 End Sub
 
-Private Sub LoadAccounts(pTable As String)
+Private Sub LoadAccounts()
 Dim SQL     As String
 Dim LItem   As ListItem
 Dim Counter As Long
 
 If HasError Then Exit Sub
 
-SQL = "SELECT * FROM " & pTable
+SQL = "SELECT * FROM " & DATABASE_TABLE_ACCOUNTS
 Counter = 0
 
 On Error GoTo HandleErrorTable
@@ -650,7 +602,7 @@ WriteLog Err.Description
 HasError = True
 End Sub
 
-Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim msg         As Long
 Dim sFilter     As String
 
@@ -690,12 +642,6 @@ InsertIntoRegistry "Server\Database", "Name", .Database
 InsertIntoRegistry "Server\Database", "User", .User
 InsertIntoRegistry "Server\Database", "Password", Encode(.Password)
 InsertIntoRegistry "Server\Database", "Host", .Host
-InsertIntoRegistry "Server\Database", "Account_Table", .AccountTable
-InsertIntoRegistry "Server\Database", "Friend_Table", .FriendTable
-InsertIntoRegistry "Server\Database", "Ignore_Table", .IgnoreTable
-InsertIntoRegistry "Server\Database", "Emote_Table", .EmoteTable
-InsertIntoRegistry "Server\Database", "Declined_Name_Table", .DeclinedNameTable
-InsertIntoRegistry "Server\Database", "Command_Table", .CommandsTable
 
 'Close Database variable
 End With
@@ -882,6 +828,10 @@ For k = 0 To UBound(p_PreArray) - 1
             
         Case "!login"
             With frmAccountPanel.ListView1.ListItems
+                If .Count = 0 Then
+                    SendSingle "!login#Account#", Index
+                    Exit Sub
+                End If
                 For i = 1 To .Count
                     If LCase$(.Item(i).SubItems(1)) = LCase$(p_MainArray(1)) Then
                         'Ban Check
@@ -1101,23 +1051,23 @@ For k = 0 To UBound(p_PreArray) - 1
                     Case ".reload"
                         With Database
                             Select Case LCase$(p_TEXT_FIRST)
-                                Case LCase$(.AccountTable), LCase$(.FriendTable), LCase$(.IgnoreTable)
+                                Case LCase$(DATABASE_TABLE_ACCOUNTS), LCase$(DATABASE_TABLE_FRIENDS), LCase$(DATABASE_TABLE_IGNORES)
                                     SendSingle "This table can't be reloaded.", Index
                                 
-                                Case LCase$(.CommandsTable)
+                                Case LCase$(DATABASE_TABLE_COMMANDS)
                                     Erase Commands
-                                    LoadCommands .CommandsTable
-                                    SendMessage p_MainArray(1) & " initiated the reload of '" & .CommandsTable & "' table."
+                                    LoadCommands
+                                    SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_COMMANDS & "' table."
                                     
-                                Case LCase$(.DeclinedNameTable)
+                                Case LCase$(DATABASE_TABLE_DECLINED_NAMES)
                                     Erase DeclinedNames
-                                    LoadDeclinedNames .DeclinedNameTable
-                                    SendMessage p_MainArray(1) & " initiated the reload of '" & .DeclinedNameTable & "' table."
+                                    LoadDeclinedNames
+                                    SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_DECLINED_NAMES & "' table."
                                     
-                                Case LCase$(.EmoteTable)
+                                Case LCase$(DATABASE_TABLE_EMOTES)
                                     Erase Emotes
-                                    LoadEmotes .EmoteTable
-                                    SendMessage p_MainArray(1) & " initiated the reload of '" & .EmoteTable & "' table."
+                                    LoadEmotes
+                                    SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_EMOTES & "' table."
                                 
                                 Case Else
                                     If LenB(p_TEXT_FIRST) = 0 Then

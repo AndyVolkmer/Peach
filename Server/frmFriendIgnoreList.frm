@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmFriendIgnoreList 
    BorderStyle     =   0  'None
    Caption         =   "Friend List Overview"
@@ -185,7 +185,7 @@ If IsValid Then
     
     'Execute into database
     With frmMain
-        .xCommand.CommandText = "INSERT INTO " & Database.FriendTable & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')"
+        .xCommand.CommandText = "INSERT INTO " & DATABASE_TABLE_FRIENDS & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')"
         .xCommand.Execute
     End With
     
@@ -220,7 +220,7 @@ With ListView1.ListItems
 End With
 
 With frmMain
-    .xCommand.CommandText = "DELETE FROM " & Database.FriendTable & " WHERE ID = " & pID
+    .xCommand.CommandText = "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE ID = " & pID
     .xCommand.Execute
 End With
 
@@ -250,9 +250,9 @@ End With
 
 'Delete user from database
 With frmMain.xCommand
-    .CommandText = "DELETE FROM " & Database.FriendTable & " WHERE Name = '" & pUser & "'"
+    .CommandText = "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Name = '" & pUser & "'"
     .Execute
-    .CommandText = "DELETE FROM " & Database.FriendTable & " WHERE Friend = '" & pUser & "'"
+    .CommandText = "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Friend = '" & pUser & "'"
     .Execute
 End With
 End Sub
@@ -305,7 +305,7 @@ If IsValid Then
     
     'Execute into database
     With frmMain
-        .xCommand.CommandText = "INSERT INTO " & Database.IgnoreTable & " (ID, Name, IgnoredName) VALUES('" & j & "', '" & pUser & "', '" & pIgnore & "')"
+        .xCommand.CommandText = "INSERT INTO " & DATABASE_TABLE_IGNORES & " (ID, Name, IgnoredName) VALUES('" & j & "', '" & pUser & "', '" & pIgnore & "')"
         .xCommand.Execute
     End With
     
@@ -340,7 +340,7 @@ With ListView2.ListItems
 End With
 
 With frmMain
-    .xCommand.CommandText = "DELETE FROM " & Database.IgnoreTable & " WHERE ID = " & pID
+    .xCommand.CommandText = "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE ID = " & pID
     .xCommand.Execute
 End With
 
@@ -370,9 +370,9 @@ End With
 
 'Delete user from database
 With frmMain.xCommand
-    .CommandText = "DELETE FROM " & Database.IgnoreTable & " WHERE Name = '" & pUser & "'"
+    .CommandText = "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE Name = '" & pUser & "'"
     .Execute
-    .CommandText = "DELETE FROM " & Database.IgnoreTable & " WHERE IgnoredName = '" & pUser & "'"
+    .CommandText = "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE IgnoredName = '" & pUser & "'"
     .Execute
 End With
 End Sub

@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmConfig 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
@@ -18,13 +18,20 @@ Begin VB.Form frmConfig
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
    ScaleHeight     =   5220
    ScaleWidth      =   7605
    ShowInTaskbar   =   0   'False
+   Begin VB.CommandButton cmdSettings 
+      Caption         =   "&Settings"
+      Height          =   375
+      Left            =   2160
+      TabIndex        =   10
+      Top             =   3360
+      Width           =   1335
+   End
    Begin RichTextLib.RichTextBox txt_log 
       Height          =   1815
       Left            =   120
@@ -35,6 +42,7 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -51,8 +59,8 @@ Begin VB.Form frmConfig
    Begin VB.Timer connCounter 
       Enabled         =   0   'False
       Interval        =   1000
-      Left            =   1920
-      Top             =   3480
+      Left            =   1560
+      Top             =   3360
    End
    Begin VB.CommandButton Command2 
       Caption         =   "&Disconnect"
@@ -146,6 +154,10 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
+Private Sub cmdSettings_Click()
+frmSettings.Show 1
+End Sub
 
 Private Sub Command1_Click()
 If HasError Then

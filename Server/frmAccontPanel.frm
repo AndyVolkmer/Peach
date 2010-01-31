@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmAccountPanel 
    BackColor       =   &H00F4F4F4&
@@ -27,7 +27,7 @@ Begin VB.Form frmAccountPanel
    Begin VB.ComboBox cmbGender 
       Enabled         =   0   'False
       Height          =   315
-      Left            =   5880
+      Left            =   5520
       Style           =   2  'Dropdown List
       TabIndex        =   16
       Top             =   2880
@@ -76,12 +76,12 @@ Begin VB.Form frmAccountPanel
       Style           =   2  'Dropdown List
       TabIndex        =   12
       Top             =   2880
-      Width           =   1335
+      Width           =   975
    End
    Begin VB.ComboBox cmbLevel 
       Enabled         =   0   'False
       Height          =   315
-      Left            =   4680
+      Left            =   4320
       Style           =   2  'Dropdown List
       TabIndex        =   11
       Top             =   2880
@@ -109,7 +109,7 @@ Begin VB.Form frmAccountPanel
          Caption         =   " Gender:"
          Enabled         =   0   'False
          Height          =   255
-         Left            =   5760
+         Left            =   5400
          TabIndex        =   15
          Top             =   240
          Width           =   975
@@ -119,7 +119,7 @@ Begin VB.Form frmAccountPanel
          Caption         =   " Level:"
          Enabled         =   0   'False
          Height          =   255
-         Left            =   4560
+         Left            =   4200
          TabIndex        =   10
          Top             =   240
          Width           =   975
@@ -287,7 +287,7 @@ End With
 If MsgBox("Are you sure that you want to delete account '" & strName & "' ?", vbYesNo + vbQuestion, "Confirm Delete") = vbNo Then Exit Sub
 
 With frmMain.xCommand
-    .CommandText = "DELETE FROM " & Database.AccountTable & " WHERE ID = " & lngID
+    .CommandText = "DELETE FROM " & DATABASE_TABLE_COMMANDS & " WHERE ID = " & lngID
     .Execute
 End With
 
@@ -393,7 +393,7 @@ End If
 
 'Update the database
 With frmMain.xCommand
-    .CommandText = "UPDATE " & Database.AccountTable & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBan & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID
+    .CommandText = "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBan & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID
     .Execute
 End With
 
@@ -424,7 +424,7 @@ j = j + 1
 
 'Add new account to database
 With frmMain.xCommand
-    .CommandText = "INSERT INTO " & Database.AccountTable & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '0', '0', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "')"
+    .CommandText = "INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '0', '0', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "')"
     .Execute
 End With
 
