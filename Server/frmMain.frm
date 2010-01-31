@@ -581,10 +581,10 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                     Case ".ban"
                         If IsPartOf(p_TEXT_FIRST, "user") Then
-                            BanUser p_TEXT_SECOND_PROP, p_MainArray(1), True, Index, Trim$(Reason2)
+                            BanUser p_TEXT_SECOND_PROP, p_MainArray(1), 1, Index, Trim$(Reason2)
                             
                         ElseIf IsPartOf(p_TEXT_FIRST, "account") Then
-                            BanAccount p_TEXT_SECOND, p_MainArray(1), True, Index, Trim$(Reason2)
+                            BanAccount p_TEXT_SECOND, p_MainArray(1), 1, Index, Trim$(Reason2)
                         
                         Else
                             SendSingle "Incorrect syntax, use the following format .ban User / Account 'Name' 'Reason'", Index
@@ -593,10 +593,10 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                     Case ".unban"
                         If IsPartOf(p_TEXT_FIRST, "user") Then
-                            BanUser p_TEXT_SECOND_PROP, p_MainArray(1), False, Index, Trim$(Reason2)
+                            BanUser p_TEXT_SECOND_PROP, p_MainArray(1), 0, Index, Trim$(Reason2)
                             
                         ElseIf IsPartOf(p_TEXT_FIRST, "account") Then
-                            BanAccount p_TEXT_SECOND, p_MainArray(1), False, Index, Trim$(Reason2)
+                            BanAccount p_TEXT_SECOND, p_MainArray(1), 0, Index, Trim$(Reason2)
                             
                         Else
                             SendSingle "Incorrect syntax, use the following format .unban [User, Account] [Name] [Reason]", Index
@@ -1113,7 +1113,7 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Private Sub BanUser(User As String, AdminName As String, Ban As Boolean, pIndex As Integer, Reason As String)
+Private Sub BanUser(User As String, AdminName As String, Ban As Long, pIndex As Integer, Reason As String)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(User, vbProperCase) Then
@@ -1122,7 +1122,7 @@ With frmPanel.ListView1.ListItems
         Else
             If i = .Count Then
                 If LenB(User) = 0 Then
-                    If Ban Then
+                    If Ban = 1 Then
                         SendSingle "Incorrect syntax, use the following format .ban user [User] [Reason].", pIndex
                     Else
                         SendSingle "Incorrect syntax, use the following format .unban user [User] [Reason].", pIndex
@@ -1136,7 +1136,7 @@ With frmPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub BanAccount(Account As String, AdminName As String, Ban As Boolean, pIndex As Integer, Reason As String)
+Private Sub BanAccount(Account As String, AdminName As String, Ban As Long, pIndex As Integer, Reason As String)
 Dim User As String
 Dim j    As Long
 
@@ -1146,13 +1146,13 @@ With frmAccountPanel.ListView1.ListItems
             'If the account is already banned send feedback
             Account = .Item(i).SubItems(1)
             
-            If Ban Then
-                If .Item(i).SubItems(5) = "True" Then
+            If Ban = 1 Then
+                If .Item(i).SubItems(5) = "1" Then
                     SendSingle "Account '" & Account & "' is already banned.", pIndex
                     Exit Sub
                 End If
             Else
-                If .Item(i).SubItems(5) = "False" Then
+                If .Item(i).SubItems(5) = "0" Then
                     SendSingle "Account '" & Account & "' is not banned.", pIndex
                     Exit Sub
                 End If
