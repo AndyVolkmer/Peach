@@ -286,8 +286,8 @@ End With
     
 If MsgBox("Are you sure that you want to delete account '" & strName & "' ?", vbYesNo + vbQuestion, "Confirm Delete") = vbNo Then Exit Sub
 
-With frmMain.xCommand
-    .CommandText = "DELETE FROM " & DATABASE_TABLE_COMMANDS & " WHERE ID = " & lngID
+With pCommand
+    .CommandText = "DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & lngID
     .Execute
 End With
 
@@ -383,17 +383,9 @@ DoButtons False
 End Sub
 
 Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Boolean, pLevel As String, MOD_ID As Long, LST_ID As Long, pGender As String)
-Dim pBan As String
-
-If pBanned Then
-    pBan = "1"
-Else
-    pBan = "0"
-End If
-
 'Update the database
-With frmMain.xCommand
-    .CommandText = "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBan & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID
+With pCommand
+    .CommandText = "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & CLng(pBanned) & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID
     .Execute
 End With
 
@@ -401,7 +393,7 @@ End With
 With ListView1.ListItems.Item(LST_ID)
     .SubItems(1) = pName
     .SubItems(2) = pPassword
-    .SubItems(5) = pBan
+    .SubItems(5) = CLng(pBanned)
     .SubItems(6) = pLevel
     .SubItems(9) = pGender
 End With
@@ -423,7 +415,7 @@ End With
 j = j + 1
 
 'Add new account to database
-With frmMain.xCommand
+With pCommand
     .CommandText = "INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '0', '0', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "')"
     .Execute
 End With

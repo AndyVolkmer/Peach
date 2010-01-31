@@ -184,9 +184,9 @@ If IsValid Then
     j = j + 1
     
     'Execute into database
-    With frmMain
-        .xCommand.CommandText = "INSERT INTO " & DATABASE_TABLE_FRIENDS & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')"
-        .xCommand.Execute
+    With pCommand
+        .CommandText = "INSERT INTO " & DATABASE_TABLE_FRIENDS & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')"
+        .Execute
     End With
     
     'Add relation to listview
@@ -219,9 +219,9 @@ With ListView1.ListItems
     Next i
 End With
 
-With frmMain
-    .xCommand.CommandText = "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE ID = " & pID
-    .xCommand.Execute
+With pCommand
+    .CommandText = "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE ID = " & pID
+    .Execute
 End With
 
 UPDATE_FRIEND pUser, pIndex
@@ -249,7 +249,7 @@ With ListView1.ListItems
 End With
 
 'Delete user from database
-With frmMain.xCommand
+With pCommand
     .CommandText = "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Name = '" & pUser & "'"
     .Execute
     .CommandText = "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Friend = '" & pUser & "'"
@@ -304,9 +304,9 @@ If IsValid Then
     j = j + 1
     
     'Execute into database
-    With frmMain
-        .xCommand.CommandText = "INSERT INTO " & DATABASE_TABLE_IGNORES & " (ID, Name, IgnoredName) VALUES('" & j & "', '" & pUser & "', '" & pIgnore & "')"
-        .xCommand.Execute
+    With pCommand
+        .CommandText = "INSERT INTO " & DATABASE_TABLE_IGNORES & " (ID, Name, IgnoredName) VALUES('" & j & "', '" & pUser & "', '" & pIgnore & "')"
+        .Execute
     End With
     
     'Add relation to listview
@@ -339,9 +339,9 @@ With ListView2.ListItems
     Next i
 End With
 
-With frmMain
-    .xCommand.CommandText = "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE ID = " & pID
-    .xCommand.Execute
+With pCommand
+    .CommandText = "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE ID = " & pID
+    .Execute
 End With
 
 UPDATE_IGNORE pUser, pIndex
@@ -369,7 +369,7 @@ With ListView2.ListItems
 End With
 
 'Delete user from database
-With frmMain.xCommand
+With pCommand
     .CommandText = "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE Name = '" & pUser & "'"
     .Execute
     .CommandText = "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE IgnoredName = '" & pUser & "'"
