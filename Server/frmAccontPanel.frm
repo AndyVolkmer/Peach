@@ -376,16 +376,16 @@ Select Case Switch
             txtPassword.SetFocus
             Exit Sub
         End If
-        ModifyAccount txtName.Text, txtPassword.Text, CBool(cmbBanned.Text), cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index, cmbGender.Text
+        ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index, cmbGender.Text
         
 End Select
 DoButtons False
 End Sub
 
-Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Boolean, pLevel As String, MOD_ID As Long, LST_ID As Long, pGender As String)
+Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Long, pLevel As String, MOD_ID As Long, LST_ID As Long, pGender As String)
 'Update the database
 With pCommand
-    .CommandText = "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & CLng(pBanned) & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID
+    .CommandText = "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBanned & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID
     .Execute
 End With
 
@@ -393,7 +393,7 @@ End With
 With ListView1.ListItems.Item(LST_ID)
     .SubItems(1) = pName
     .SubItems(2) = pPassword
-    .SubItems(5) = CLng(pBanned)
+    .SubItems(5) = pBanned
     .SubItems(6) = pLevel
     .SubItems(9) = pGender
 End With

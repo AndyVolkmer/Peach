@@ -418,7 +418,7 @@ For k = 0 To UBound(p_PreArray) - 1
                 For i = 1 To .Count
                     If LCase$(.Item(i).SubItems(1)) = LCase$(p_MainArray(1)) Then
                         'Ban Check
-                        If .Item(i).SubItems(5) = "True" Then
+                        If .Item(i).SubItems(5) = "1" Then
                             SendSingle "!login#Banned#", Index
                             Exit Sub
                         End If
