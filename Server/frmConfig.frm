@@ -160,12 +160,6 @@ frmSettings.Show 1
 End Sub
 
 Private Sub Command1_Click()
-If HasError Then
-    Command1.Enabled = False
-    MsgBox "Database error occured, read the log for more information.", vbInformation
-    Exit Sub
-End If
-
 Label2.Caption = "Server Uptime : 00:00:00"
 connCounter.Enabled = True
 'Do the buttons

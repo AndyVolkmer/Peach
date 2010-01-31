@@ -151,12 +151,11 @@ Dim SQL     As String
 Dim LItem   As ListItem
 Dim Counter As Long
 
-If HasError Then Exit Function
-
 SQL = "SELECT * FROM " & DATABASE_TABLE_FRIENDS
 Counter = 0
 
 On Error GoTo HandleErrorFriends
+
 pCommand.CommandText = SQL
 Set pRecordSet = pCommand.Execute
 
@@ -233,20 +232,17 @@ pCommand.CommandText = SQL
 Set pRecordSet = pCommand.Execute
 
 With frmAccountPanel
-    .ListView1.ListItems.Clear
     With .cmbBanned
         .Clear
         .AddItem "0"
         .AddItem "1"
     End With
     With .cmbLevel
-        .Clear
         .AddItem "0"
         .AddItem "1"
         .AddItem "2"
     End With
     With .cmbGender
-        .Clear
         .AddItem "Male"
         .AddItem "Female"
     End With

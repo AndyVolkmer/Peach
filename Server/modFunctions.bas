@@ -6,7 +6,6 @@ Global Const MAX_INT_VALUE                  As Long = 2147483647
 Global Const MIN_INT_VALUE                  As Long = -2147483647
 
 Global VarTime                              As Long     'Time counter variable
-Global HasError                             As Boolean  'Used in frmMain and frmConfig
 
 Global Const DATABASE_TABLE_ACCOUNTS        As String = "accounts"
 Global Const DATABASE_TABLE_EMOTES          As String = "emotes"
@@ -112,7 +111,6 @@ Private Const WM_NCACTIVATE                 As Long = &H86
 
 'Time functions to determine exact ms time
 Public Declare Function timeGetTime Lib "winmm.dll" () As Long
-Public Declare Function timeBeginPeriod Lib "winmm.dll" (ByVal uPeriod As Long) As Long
 
 Declare Function GetVersionExA Lib "kernel32" (lpVersionInformation As OSVERSIONINFO) As Integer
 Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal dwMessage As Long, pnid As NOTIFYICONDATA) As Boolean
