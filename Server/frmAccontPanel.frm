@@ -29,7 +29,7 @@ Begin VB.Form frmAccountPanel
       Height          =   315
       Left            =   5520
       Style           =   2  'Dropdown List
-      TabIndex        =   16
+      TabIndex        =   9
       Top             =   2880
       Width           =   975
    End
@@ -38,7 +38,7 @@ Begin VB.Form frmAccountPanel
       Enabled         =   0   'False
       Height          =   350
       Left            =   5160
-      TabIndex        =   9
+      TabIndex        =   4
       Top             =   3600
       Width           =   1215
    End
@@ -47,7 +47,7 @@ Begin VB.Form frmAccountPanel
       Enabled         =   0   'False
       Height          =   350
       Left            =   3960
-      TabIndex        =   8
+      TabIndex        =   3
       Top             =   3600
       Width           =   1215
    End
@@ -56,7 +56,7 @@ Begin VB.Form frmAccountPanel
       Enabled         =   0   'False
       Height          =   315
       Left            =   240
-      TabIndex        =   14
+      TabIndex        =   5
       Top             =   2880
       Width           =   1215
    End
@@ -65,7 +65,7 @@ Begin VB.Form frmAccountPanel
       Enabled         =   0   'False
       Height          =   315
       Left            =   1680
-      TabIndex        =   13
+      TabIndex        =   6
       Top             =   2880
       Width           =   1215
    End
@@ -74,7 +74,7 @@ Begin VB.Form frmAccountPanel
       Height          =   315
       Left            =   3120
       Style           =   2  'Dropdown List
-      TabIndex        =   12
+      TabIndex        =   7
       Top             =   2880
       Width           =   975
    End
@@ -83,7 +83,7 @@ Begin VB.Form frmAccountPanel
       Height          =   315
       Left            =   4320
       Style           =   2  'Dropdown List
-      TabIndex        =   11
+      TabIndex        =   8
       Top             =   2880
       Width           =   975
    End
@@ -101,7 +101,7 @@ Begin VB.Form frmAccountPanel
       Enabled         =   0   'False
       Height          =   1095
       Left            =   120
-      TabIndex        =   4
+      TabIndex        =   10
       Top             =   2400
       Width           =   7215
       Begin VB.Label lblGender 
@@ -110,7 +110,7 @@ Begin VB.Form frmAccountPanel
          Enabled         =   0   'False
          Height          =   255
          Left            =   5400
-         TabIndex        =   15
+         TabIndex        =   16
          Top             =   240
          Width           =   975
       End
@@ -120,7 +120,7 @@ Begin VB.Form frmAccountPanel
          Enabled         =   0   'False
          Height          =   255
          Left            =   4200
-         TabIndex        =   10
+         TabIndex        =   15
          Top             =   240
          Width           =   975
       End
@@ -130,7 +130,7 @@ Begin VB.Form frmAccountPanel
          Enabled         =   0   'False
          Height          =   255
          Left            =   3000
-         TabIndex        =   7
+         TabIndex        =   14
          Top             =   240
          Width           =   1215
       End
@@ -140,7 +140,7 @@ Begin VB.Form frmAccountPanel
          Enabled         =   0   'False
          Height          =   255
          Left            =   1560
-         TabIndex        =   6
+         TabIndex        =   13
          Top             =   240
          Width           =   1215
       End
@@ -150,7 +150,7 @@ Begin VB.Form frmAccountPanel
          Enabled         =   0   'False
          Height          =   255
          Left            =   120
-         TabIndex        =   5
+         TabIndex        =   12
          Top             =   240
          Width           =   1215
       End
@@ -159,7 +159,7 @@ Begin VB.Form frmAccountPanel
       Caption         =   "&Modify"
       Height          =   350
       Left            =   2520
-      TabIndex        =   3
+      TabIndex        =   2
       Top             =   3600
       Width           =   1215
    End
@@ -167,7 +167,7 @@ Begin VB.Form frmAccountPanel
       Caption         =   "&Delete"
       Height          =   350
       Left            =   1320
-      TabIndex        =   2
+      TabIndex        =   1
       Top             =   3600
       Width           =   1215
    End
@@ -175,14 +175,14 @@ Begin VB.Form frmAccountPanel
       Caption         =   "&Add"
       Height          =   350
       Left            =   120
-      TabIndex        =   1
+      TabIndex        =   0
       Top             =   3600
       Width           =   1215
    End
    Begin MSComctlLib.ListView ListView1 
       Height          =   2220
       Left            =   120
-      TabIndex        =   0
+      TabIndex        =   11
       Top             =   120
       Width           =   7215
       _ExtentX        =   12726
@@ -286,30 +286,27 @@ End With
     
 If MsgBox("Are you sure that you want to delete account '" & strName & "' ?", vbYesNo + vbQuestion, "Confirm Delete") = vbNo Then Exit Sub
 
-With pCommand
-    .CommandText = "DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & lngID
-    .Execute
-End With
-
-With frmFriendIgnoreList
-    .RemoveAllFriendsFromUser strName
-    .RemoveAllIgnoresFromUser strName
-End With
-
-With ListView1
-    If .SelectedItem.Index = .ListItems.Count Then
-        NewIndex = .ListItems.Count - 1
-    Else
-        NewIndex = .SelectedItem.Index
-    End If
-    .ListItems.Remove .SelectedItem.Index
-    If .ListItems.Count > 0 Then
-        Set .SelectedItem = .ListItems(NewIndex)
-        ListView1_ItemClick .SelectedItem
-    Else
-        ClearTxBoxes
-    End If
-End With
+If ExecuteCommand("DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & lngID) Then
+    With frmFriendIgnoreList
+        .RemoveAllFriendsFromUser strName
+        .RemoveAllIgnoresFromUser strName
+    End With
+    
+    With ListView1
+        If .SelectedItem.Index = .ListItems.Count Then
+            NewIndex = .ListItems.Count - 1
+        Else
+            NewIndex = .SelectedItem.Index
+        End If
+        .ListItems.Remove .SelectedItem.Index
+        If .ListItems.Count > 0 Then
+            Set .SelectedItem = .ListItems(NewIndex)
+            ListView1_ItemClick .SelectedItem
+        Else
+            ClearTxBoxes
+        End If
+    End With
+End If
 End Sub
 
 Private Sub DoButtons(Args As Boolean)
@@ -360,7 +357,8 @@ Select Case Switch
                 Exit Sub
             End If
         Next i
-        RegisterAccount txtName.Text, txtPassword.Text, vbNullString, vbNullString, cmbGender.Text
+        
+        RegisterAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, vbNullString, vbNullString, cmbGender.Text
         
     Case "MOD"
         'Name can't be modified to nothing
@@ -376,6 +374,7 @@ Select Case Switch
             txtPassword.SetFocus
             Exit Sub
         End If
+        
         ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index, cmbGender.Text
         
 End Select
@@ -383,23 +382,20 @@ DoButtons False
 End Sub
 
 Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Long, pLevel As String, MOD_ID As Long, LST_ID As Long, pGender As String)
-'Update the database
-With pCommand
-    .CommandText = "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBanned & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID
-    .Execute
-End With
-
-'Update the listview
-With ListView1.ListItems.Item(LST_ID)
-    .SubItems(1) = pName
-    .SubItems(2) = pPassword
-    .SubItems(5) = pBanned
-    .SubItems(6) = pLevel
-    .SubItems(9) = pGender
-End With
+'Only modify account if it succesfully updated in the database
+If ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBanned & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID) Then
+    'Modify listview values
+    With ListView1.ListItems.Item(LST_ID)
+        .SubItems(1) = pName
+        .SubItems(2) = pPassword
+        .SubItems(5) = pBanned
+        .SubItems(6) = pLevel
+        .SubItems(9) = pGender
+    End With
+End If
 End Sub
 
-Private Sub RegisterAccount(pName As String, pPassword As String, pSecretQuestion As String, pSecretAnswer As String, pGender As String)
+Private Sub RegisterAccount(pName As String, pPassword As String, pBanned As String, pLevel As String, pSecretQuestion As String, pSecretAnswer As String, pGender As String)
 Dim j As Long
 
 'Check list for biggest value
@@ -414,28 +410,25 @@ End With
 'Create new index
 j = j + 1
 
-'Add new account to database
-With pCommand
-    .CommandText = "INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '0', '0', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "')"
-    .Execute
-End With
-
-'Save index in variable
-i = ListView1.ListItems.Count + 1
-
-'Add account to the listview
-With ListView1.ListItems
-    .Add , , j
-    .Item(i).SubItems(1) = pName
-    .Item(i).SubItems(2) = pPassword
-    .Item(i).SubItems(3) = Format(Time, "hh:nn:ss")
-    .Item(i).SubItems(4) = Format(Date, "dd/mm/yyyy")
-    .Item(i).SubItems(5) = "0"
-    .Item(i).SubItems(6) = "0"
-    .Item(i).SubItems(7) = pSecretQuestion
-    .Item(i).SubItems(8) = pSecretAnswer
-    .Item(i).SubItems(9) = pGender
-End With
+'Only add account to list if it got executed into the database
+If ExecuteCommand("INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & pBanned & "', '" & pLevel & "', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "')") Then
+    'Save index in variable
+    i = ListView1.ListItems.Count + 1
+    
+    'Add account to the listview
+    With ListView1.ListItems
+        .Add , , j
+        .Item(i).SubItems(1) = pName
+        .Item(i).SubItems(2) = pPassword
+        .Item(i).SubItems(3) = Format(Time, "hh:nn:ss")
+        .Item(i).SubItems(4) = Format(Date, "dd/mm/yyyy")
+        .Item(i).SubItems(5) = pBanned
+        .Item(i).SubItems(6) = pLevel
+        .Item(i).SubItems(7) = pSecretQuestion
+        .Item(i).SubItems(8) = pSecretAnswer
+        .Item(i).SubItems(9) = pGender
+    End With
+End If
 End Sub
 
 Private Sub Form_Activate()
@@ -476,14 +469,17 @@ End Sub
 
 Private Function socketFree() As Integer
 On Error GoTo HandleErrorFreeSocket
-    Dim theIP As String
-    For i = RegSock.LBound + 1 To RegSock.UBound
-        theIP = RegSock(i).LocalIP
+With RegSock
+    For i = .LBound + 1 To .UBound
+        If .Item(i) Then End If
     Next i
-    socketFree = RegSock.UBound + 1
+
+    socketFree = .UBound + 1
+End With
+
 Exit Function
 HandleErrorFreeSocket:
-socketFree = i
+    socketFree = i
 End Function
 
 Private Function loadSocket() As Integer

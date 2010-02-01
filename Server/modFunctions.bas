@@ -181,12 +181,22 @@ Next
 End Sub
 
 Public Sub SendSingle(pMessage As String, pIndex As Integer)
+On Error GoTo hLC
 With frmMain.Winsock1(pIndex)
     If .State = 7 Then
         .SendData pMessage & Chr(24) & Chr(25)
         DoEvents
     End If
 End With
+Exit Sub
+
+hLC:
+Select Case Err.Number
+    Case 340
+        Debug.Print "[" & Err.Number & "] " & Err.Description
+    Case Else
+        Debug.Print "[" & Err.Number & "] " & Err.Description
+End Select
 End Sub
 
 Public Sub UPDATE_ONLINE()

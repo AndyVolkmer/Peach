@@ -279,3 +279,19 @@ WriteLog Err.Description
 LoadAccounts = False
 End Function
 
+Public Function ExecuteCommand(pShell As String) As Boolean
+On Error GoTo hHE
+
+With pCommand
+    .CommandText = pShell
+    .Execute
+End With
+
+ExecuteCommand = True
+
+Exit Function
+
+hHE:
+MsgBox Err.Description, vbInformation, Err.Number
+ExecuteCommand = False
+End Function
