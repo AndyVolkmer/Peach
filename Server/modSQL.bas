@@ -233,7 +233,6 @@ Set pRecordSet = pCommand.Execute
 
 With frmAccountPanel
     With .cmbBanned
-        .Clear
         .AddItem "0"
         .AddItem "1"
     End With

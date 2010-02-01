@@ -333,6 +333,7 @@ txtName.Text = vbNullString
 txtPassword.Text = vbNullString
 cmbBanned.ListIndex = 0
 cmbLevel.ListIndex = 0
+cmbGender.ListIndex = 0
 End Sub
 
 Private Sub cmdMod_Click()
@@ -349,6 +350,20 @@ End Sub
 Private Sub cmdSave_Click()
 Select Case Switch
     Case "ADD"
+        'Name can't be added if there is none
+        If LenB(Trim$(txtName.Text)) = 0 Then
+            MsgBox "The name can't be empty.", vbInformation
+            txtName.SetFocus
+            Exit Sub
+        End If
+        
+        'Password can't be added if there is none
+        If LenB(Trim$(txtPassword.Text)) = 0 Then
+            MsgBox "The password can't be empty.", vbInformation
+            txtPassword.SetFocus
+            Exit Sub
+        End If
+        
         For i = 1 To ListView1.ListItems.Count
             If txtName.Text = ListView1.ListItems.Item(i).SubItems(1) Then
                 MsgBox "Name already given.", vbInformation
