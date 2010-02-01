@@ -471,7 +471,7 @@ Private Function socketFree() As Integer
 On Error GoTo HandleErrorFreeSocket
 With RegSock
     For i = .LBound + 1 To .UBound
-        If .Item(i) Then End If
+        .Item (i)
     Next i
 
     socketFree = .UBound + 1
@@ -526,7 +526,7 @@ Select Case array1(0)
             Next i
         End With
     
-        RegisterAccount GetName, GetPassword, GetSecretQuestion, GetSecretAnswer, GetGender
+        RegisterAccount GetName, GetPassword, "0", "0", GetSecretQuestion, GetSecretAnswer, GetGender
         RegSock(Index).SendData "!done#"
         
     'Check the secret question and send password
