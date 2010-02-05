@@ -311,7 +311,9 @@ End Sub
 
 Private Sub tmrCalcSpeed_Timer()
 Static PrevSent As Long
-Dim BSentPerSec As Long, DataSent As Long, DataLen As Long
+Dim BSentPerSec As Long
+Dim DataSent    As Long
+Dim DataLen     As Long
 Dim SecondsLeft As Single
 
 If iFileNum > 0 Then
@@ -332,7 +334,8 @@ lblSendSpeed.Caption = Format$(DataSent / 1024#, "###,###,##0.00") & SF_LABEL_KB
 End Sub
 
 Private Sub tmrSendFile_Timer()
-Dim Buffer() As Byte, BuffSize As Long
+Dim Buffer() As Byte
+Dim BuffSize As Long
 
 tmrSendFile.Enabled = False
 If iFileNum <= 0 Or SckSendFile.State <> sckConnected Then Exit Sub

@@ -235,10 +235,18 @@ End Sub
 Private Sub cmdFont_Click()
 On Error Resume Next
 With frmMain.CDialog
+    .FontBold = Fonts.Bold
+    .FontName = Fonts.Name
+    .FontItalic = Fonts.Italic
+    .FontSize = Fonts.Size
+    .FontStrikethru = Fonts.Strike
+    .FontUnderline = Fonts.Under
+    
     .Min = 9
     .Max = 16
     .Flags = cdlCFEffects + cdlCFForceFontExist + cdlCFPrinterFonts + cdlCFLimitSize
     .ShowFont
+    
     Fonts.Bold = .FontBold
     Fonts.Name = .FontName
     Fonts.Italic = .FontItalic

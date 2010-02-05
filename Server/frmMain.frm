@@ -186,12 +186,12 @@ SetupForms frmFriendIgnoreList
 End Sub
 
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Dim msg         As Long
+Dim MSG         As Long
 Dim sFilter     As String
 
-msg = X / Screen.TwipsPerPixelX
+MSG = X / Screen.TwipsPerPixelX
 
-Select Case msg
+Select Case MSG
     Case WM_LBUTTONDOWN
     Case WM_LBUTTONUP
         Vali = True
@@ -587,7 +587,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             BanAccount p_TEXT_SECOND, p_MainArray(1), 1, Index, Trim$(Reason2)
                         
                         Else
-                            SendSingle "Incorrect syntax, use the following format .ban User / Account 'Name' 'Reason'", Index
+                            SendSingle "Incorrect syntax, use the following format .ban [User, Account] [Name] [Reason]", Index
                             
                         End If
                         
@@ -627,7 +627,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                 Next i
                             End With
                         End If
-                    
+                        
                     Case ".help", ".command", ".commands"
                         SendSingle GetCommands, Index
                         
@@ -651,7 +651,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                     Erase Emotes
                                     LoadEmotes
                                     SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_EMOTES & "' table."
-                                
+                                    
                                 Case Else
                                     If LenB(p_TEXT_FIRST) = 0 Then
                                         SendSingle "Incorrect Syntax. Use the following format .reload Table.", Index
@@ -665,6 +665,11 @@ For k = 0 To UBound(p_PreArray) - 1
                         If LenB(p_TEXT_FIRST) = 0 Then
                             SendSingle "Incorrect Syntax. Use the following format .clear [User]", Index
                         Else
+                            If p_TEXT_FIRST = "this" Or p_TEXT_FIRST = "me" Then
+                                SendSingle "!clear#", Index
+                                Exit Sub
+                            End If
+                            
                             With frmPanel.ListView1.ListItems
                                 For i = 1 To .Count
                                     If .Item(i) = p_TEXT_FIRST_PROP Then
