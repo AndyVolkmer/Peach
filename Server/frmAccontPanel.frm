@@ -310,6 +310,7 @@ End If
 End Sub
 
 Private Sub DoButtons(Args As Boolean)
+ListView1.Enabled = Not Args
 cmdAdd.Enabled = Not Args
 cmdDel.Enabled = Not Args
 cmdMod.Enabled = Not Args

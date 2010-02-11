@@ -14,7 +14,6 @@ Module=modCrypt; modCrypt.bas
 Form=frmFriendIgnoreList.frm
 Module=modShared; ..\Shared\modShared.bas
 Module=modRegistry; ..\Shared\modRegistry.bas
-Module=modLang; modLang.bas
 Form=frmSettings.frm
 Module=modMain; modMain.bas
 Module=modSQL; modSQL.bas

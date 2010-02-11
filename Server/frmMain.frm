@@ -235,21 +235,12 @@ InsertIntoRegistry "Server\Configuration", "Left", Me.Left
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
-Dim pTemp As String
-Dim j     As Long
-
 Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(2) = Index Then
             If Not Len(.Item(i)) = 0 Then
-                For j = 1 To .Count
-                    If Not .Item(j).SubItems(2) = Index Then
-                        SetLanguageByID .Item(j).SubItems(7)
-                        pTemp = Replace(MSG_GONE_OFFLINE, "%u", .Item(i))
-                        SendSingle pTemp, .Item(j).SubItems(2)
-                    End If
-                Next j
+                SendMessage .Item(i) & " has gone offline."
             End If
             .Remove (i)
             Exit For
@@ -396,14 +387,16 @@ For k = 0 To UBound(p_PreArray) - 1
         Case "!connected"
             UPDATE_ONLINE
             
-            With frmPanel.ListView1.ListItems
-                For i = 1 To .Count
-                    If Not .Item(i) = p_MainArray(1) Then
-                        SetLanguageByID .Item(i).SubItems(7)
-                        SendSingle Replace$(MSG_COME_ONLINE, "%u", p_MainArray(1)), .Item(i).SubItems(2)
+            Dim pSocket As Winsock
+            
+            For Each pSocket In frmMain.Winsock1
+                With pSocket
+                    If .State = 7 And Not .Index = Index Then
+                        .SendData p_MainArray(1) & " has come online." & Chr(24) & Chr(25)
+                        DoEvents
                     End If
-                Next i
-            End With
+                End With
+            Next
             
         'Send Server information
         Case "!server_info"
@@ -466,7 +459,6 @@ For k = 0 To UBound(p_PreArray) - 1
                 
                 .Item(.Count).Text = p_MainArray(3)
                 .Item(.Count).SubItems(5) = GetProperAccountName(p_MainArray(1))
-                .Item(.Count).SubItems(7) = p_MainArray(4)
             End With
             
             UPDATE_STATUS_BAR
@@ -620,12 +612,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         If LenB(p_ANN_MSG) = 0 Then
                             SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & " [Text].", Index
                         Else
-                            With frmPanel.ListView1.ListItems
-                                For i = 1 To .Count
-                                    SetLanguageByID .Item(i).SubItems(7)
-                                    SendSingle Replace$(MSG_ANNOUNCE, "%u", p_MainArray(1)) & p_ANN_MSG, .Item(i).SubItems(2)
-                                Next i
-                            End With
+                            SendMessage "[" & p_MainArray(1) & " announces]: " & p_ANN_MSG
                         End If
                         
                     Case ".help", ".command", ".commands"
@@ -1209,21 +1196,11 @@ End With
 End Sub
 
 Private Sub KickUser(pUser As String)
-Dim j       As Long
-Dim pTemp   As String
-
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
             Unload frmMain.Winsock1(.Item(i).SubItems(2))
-            
-            For j = 1 To .Count
-                If Not .Item(j) = pUser Then
-                    SetLanguageByID .Item(j).SubItems(7)
-                    pTemp = Replace(MSG_GONE_OFFLINE, "%u", .Item(i))
-                    SendSingle pTemp, .Item(j).SubItems(2)
-                End If
-            Next j
+            SendMessage .Item(i) & " has gone offline."
             
             .Remove (i)
             
@@ -1309,15 +1286,7 @@ Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(2) = Index Then
-            If Not Len(.Item(i)) = 0 Then
-                For j = 1 To .Count
-                    If Not .Item(j).SubItems(2) = Index Then
-                        SetLanguageByID .Item(j).SubItems(7)
-                        pTemp = Replace(MSG_GONE_OFFLINE, "%u", .Item(i))
-                        SendSingle pTemp, .Item(j).SubItems(2)
-                    End If
-                Next j
-            End If
+            SendMessage .Item(i) & " has gone offline."
             .Remove (i)
             Exit For
         End If
