@@ -28,6 +28,9 @@ ConnectMySQL = True
 
 Exit Function
 HandleErrorConnection:
+'Reset database variable
+WriteIniValue App.Path & "\peachConfig.conf", "Database", "Name", vbNullString
+
 'Print error
 WriteLog Err.Description
 

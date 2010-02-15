@@ -267,17 +267,17 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     
     'Password can't be empty
     If CheckTx(txtPassword, CONFIG_MSG_PASSWORD) Then Exit Sub
-     
+    
     'Nick can't be empty
     If CheckTx(txtNick, CONFIG_MSG_NAME) Then Exit Sub
-     
+    
     'Nick can't be numeric
     If IsNumeric(txtNick) Then
         MsgBox CONFIG_MSG_NUMERIC, vbInformation
         txtNick.SetFocus
         Exit Sub
     End If
-
+    
     'Nick can't be shorter then 4 characters
     If Len(txtNick) < 4 Then
         MsgBox CONFIG_MSG_NAME_SHORT, vbInformation, "Error - Nickname"
@@ -310,7 +310,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
             .LocalPort = aPort
             .Listen
         End With
-    
+        
         'Set Recieve-File-Winsock to listen
         With frmSendFile2.SckReceiveFile(0)
             .LocalPort = bPort

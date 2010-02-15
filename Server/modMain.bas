@@ -93,7 +93,9 @@ With Database
         .Database = ReadIniValue(p_Path, "Database", "Name")
     Else
         WriteIniValue p_Path, "Database", "Name", vbNullString
-        MsgBox "Database name not found, please check configuration file.", vbCritical
+        If MsgBox("Database name not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
+            WriteIniValue p_Path, "Database", "Name", InputBox("Enter a database name.", "Database name ..")
+        End If
         End
     End If
     
@@ -101,7 +103,9 @@ With Database
         .User = ReadIniValue(p_Path, "Database", "User")
     Else
         WriteIniValue p_Path, "Database", "User", vbNullString
-        MsgBox "Database user name not found, please check configuration file.", vbCritical
+        If MsgBox("Database user not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
+            WriteIniValue p_Path, "Database", "User", InputBox("Enter a database user.", "Database user ..")
+        End If
         End
     End If
     
@@ -109,7 +113,9 @@ With Database
         .Password = DeCode(ReadIniValue(p_Path, "Database", "Password"))
     Else
         WriteIniValue p_Path, "Database", "Password", vbNullString
-        MsgBox "Database password not found, please check configuration file.", vbCritical
+        If MsgBox("Database password not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
+            WriteIniValue p_Path, "Database", "Password", InputBox("Enter a database password.", "Database password ..")
+        End If
         End
     End If
     
@@ -117,7 +123,9 @@ With Database
         .Host = ReadIniValue(p_Path, "Database", "Host")
     Else
         WriteIniValue p_Path, "Database", "Host", vbNullString
-        MsgBox "Database host not found, please check configuration file.", vbCritical
+        If MsgBox("Database host not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
+            WriteIniValue p_Path, "Database", "Host", InputBox("Enter a database host.", "Database host ..")
+        End If
         End
     End If
 End With

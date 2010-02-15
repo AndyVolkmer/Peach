@@ -44,7 +44,6 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -419,7 +418,6 @@ Dim txtlen          As Integer
 'Convert the position to pixels.
 pAPI.X = X \ Screen.TwipsPerPixelX
 pAPI.Y = Y \ Screen.TwipsPerPixelY
-
     
 pPosition = SendMessage(rch.hwnd, EM_CHARFROMPOS, 0&, pAPI)
 If pPosition <= 0 Then Exit Function
