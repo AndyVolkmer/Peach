@@ -24,14 +24,6 @@ Begin VB.Form frmConfig
    ScaleHeight     =   5220
    ScaleWidth      =   7605
    ShowInTaskbar   =   0   'False
-   Begin VB.CommandButton cmdSettings 
-      Caption         =   "&Settings"
-      Height          =   375
-      Left            =   2160
-      TabIndex        =   10
-      Top             =   3360
-      Width           =   1335
-   End
    Begin RichTextLib.RichTextBox txt_log 
       Height          =   1815
       Left            =   120
@@ -42,7 +34,6 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -154,10 +145,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-
-Private Sub cmdSettings_Click()
-frmSettings.Show 1
-End Sub
 
 Private Sub Command1_Click()
 Label2.Caption = "Server Uptime : 00:00:00"

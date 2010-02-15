@@ -217,18 +217,6 @@ Private Sub MDIForm_Unload(Cancel As Integer)
 'Remove tray icon
 Shell_NotifyIcon NIM_DELETE, NID
 
-'Open Database variable
-With Database
-
-'== Database ==
-InsertIntoRegistry "Server\Database", "Name", .Database
-InsertIntoRegistry "Server\Database", "User", .User
-InsertIntoRegistry "Server\Database", "Password", Encode(.Password)
-InsertIntoRegistry "Server\Database", "Host", .Host
-
-'Close Database variable
-End With
-
 '== Position ==
 InsertIntoRegistry "Server\Configuration", "Top", Me.Top
 InsertIntoRegistry "Server\Configuration", "Left", Me.Left

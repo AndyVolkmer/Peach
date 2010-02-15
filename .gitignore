@@ -7,7 +7,7 @@
 # any tracked files which get ignored after the change.
 
 # == Files ==
-Config.ini
+peachConfig.conf
 
 *.vbw
 *.ini

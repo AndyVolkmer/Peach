@@ -9,6 +9,9 @@ Dim pStartTime As Long
 InitCommonControls
 pStartTime = timeGetTime
 
+'Load ini values
+LoadIniValue
+
 'Load registry values
 LoadRegistry
 
@@ -16,42 +19,35 @@ LoadRegistry
  If ConnectMySQL(Database.Database, Database.User, Database.Password, Database.Host) Then
     If Not LoadAccounts Then
         MsgBox frmConfig.txt_log.Text, vbInformation
-        frmSettings.Show 1
         End
     End If
     
     If Not LoadCommands Then
         MsgBox frmConfig.txt_log.Text, vbInformation
-        frmSettings.Show 1
         End
     End If
     
     If Not LoadDeclinedNames Then
         MsgBox frmConfig.txt_log.Text, vbInformation
-        frmSettings.Show 1
         End
     End If
     
     If Not LoadEmotes Then
         MsgBox frmConfig.txt_log.Text, vbInformation
-        frmSettings.Show 1
         End
     End If
     
     If Not LoadFriends Then
         MsgBox frmConfig.txt_log.Text, vbInformation
-        frmSettings.Show 1
         End
     End If
     
     If Not LoadIgnores Then
         MsgBox frmConfig.txt_log.Text, vbInformation
-        frmSettings.Show 1
         End
     End If
 Else
     MsgBox frmConfig.txt_log.Text, vbInformation
-    frmSettings.Show 1
     End
 End If
 
@@ -71,47 +67,58 @@ Dim L As Long
 End Sub
 
 Private Sub LoadRegistry()
-With Database
-    '== Database ==
-    If LenB(ReadFromRegistry("Server\Database", "Name")) <> 0 Then
-        .Database = ReadFromRegistry("Server\Database", "Name")
-    Else
-        WriteLog "No Database value found."
-        .Database = InputBox("The configuration file does not cotain a valid database, please insert one in the textbox below.", "Database error ..", "Database Name")
-    End If
-    
-    If LenB(ReadFromRegistry("Server\Database", "User")) <> 0 Then
-        .User = ReadFromRegistry("Server\Database", "User")
-    Else
-        WriteLog "No User value found."
-        .User = InputBox("The configuration file does not cotain a valid user name, please insert one in the textbox below.", "Database error ..", "User Name")
-    End If
-    
-    If LenB(DeCode(ReadFromRegistry("Server\Database", "Password"))) <> 0 Then
-        .Password = DeCode(ReadFromRegistry("Server\Database", "Password"))
-    Else
-        WriteLog "No Password value found."
-        .Password = InputBox("The configuration file does not cotain a valid password, please insert one in the textbox below.", "Database error ..", "Password")
-    End If
-    
-    If LenB(ReadFromRegistry("Server\Database", "Host")) <> 0 Then
-        .Host = ReadFromRegistry("Server\Database", "Host")
-    Else
-        WriteLog "No Host value found."
-        .Host = InputBox("The configuration file does not cotain a host adress, please insert one in the textbox below.", "Database error ..", "Host Adress")
-    End If
-    
+With frmMain
     '== Position ==
     If LenB(ReadFromRegistry("Server\Configuration", "Top")) <> 0 Then
-        frmMain.Top = ReadFromRegistry("Server\Configuration", "Top")
+        .Top = ReadFromRegistry("Server\Configuration", "Top")
     Else
-        frmMain.Top = 1200
+        .Top = 1200
     End If
     
     If LenB(ReadFromRegistry("Server\Configuration", "Left")) <> 0 Then
-        frmMain.Left = ReadFromRegistry("Server\Configuration", "Left")
+        .Left = ReadFromRegistry("Server\Configuration", "Left")
     Else
-        frmMain.Left = 1200
+        .Left = 1200
+    End If
+End With
+End Sub
+
+Private Sub LoadIniValue()
+Dim p_Path As String
+    p_Path = App.Path & "\peachConfig.conf"
+
+With Database
+    '== Database ==
+    If LenB(ReadIniValue(p_Path, "Database", "Name")) <> 0 Then
+        .Database = ReadIniValue(p_Path, "Database", "Name")
+    Else
+        WriteIniValue p_Path, "Database", "Name", vbNullString
+        MsgBox "Database name not found, please check configuration file.", vbCritical
+        End
+    End If
+    
+    If LenB(ReadIniValue(p_Path, "Database", "User")) <> 0 Then
+        .User = ReadIniValue(p_Path, "Database", "User")
+    Else
+        WriteIniValue p_Path, "Database", "User", vbNullString
+        MsgBox "Database user name not found, please check configuration file.", vbCritical
+        End
+    End If
+    
+    If LenB(ReadIniValue(p_Path, "Database", "Password")) <> 0 Then
+        .Password = DeCode(ReadIniValue(p_Path, "Database", "Password"))
+    Else
+        WriteIniValue p_Path, "Database", "Password", vbNullString
+        MsgBox "Database password not found, please check configuration file.", vbCritical
+        End
+    End If
+    
+    If LenB(ReadIniValue(p_Path, "Database", "Host")) <> 0 Then
+        .Host = ReadIniValue(p_Path, "Database", "Host")
+    Else
+        WriteIniValue p_Path, "Database", "Host", vbNullString
+        MsgBox "Database host not found, please check configuration file.", vbCritical
+        End
     End If
 End With
 End Sub
