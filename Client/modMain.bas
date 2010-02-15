@@ -116,13 +116,13 @@ With Setting
     End If
     
     If LenB(ReadFromRegistry("Client\Configuration", "Top")) = 0 Then
-        .MAIN_TOP = 1200
+        .MAIN_TOP = Screen.Height / Screen.TwipsPerPixelY
     Else
         .MAIN_TOP = ReadFromRegistry("Client\Configuration", "Top")
     End If
     
     If LenB(ReadFromRegistry("Client\Configuration", "Left")) = 0 Then
-        .MAIN_LEFT = 1200
+        .MAIN_LEFT = Screen.Width / Screen.TwipsPerPixelX
     Else
         .MAIN_LEFT = ReadFromRegistry("Client\Configuration", "Left")
     End If

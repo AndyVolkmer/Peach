@@ -191,12 +191,7 @@ End With
 Exit Sub
 
 hLC:
-Select Case Err.Number
-    Case 340
-        Debug.Print "[" & Err.Number & "] " & Err.Description
-    Case Else
-        Debug.Print "[" & Err.Number & "] " & Err.Description
-End Select
+Debug.Print "[" & Err.Number & "] " & Err.Description
 End Sub
 
 Public Sub UPDATE_ONLINE()

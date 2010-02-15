@@ -594,13 +594,13 @@ For k = 0 To UBound(p_PreArray) - 1
                             SendSingle "Incorrect syntax, use the following format .unban [User, Account] [Name] [Reason]", Index
                             
                         End If
-                    
+                        
                     Case ".mute"
                         MuteUser p_TEXT_FIRST_PROP, p_MainArray(1), True, Index, Trim$(Reason)
-                    
+                        
                     Case ".unmute"
                         MuteUser p_TEXT_FIRST_PROP, p_MainArray(1), False, Index, Trim$(Reason)
-                    
+                        
                     Case ".announce", ".ann", ".broadcast"
                         Dim p_ANN_MSG As String
                         
@@ -878,7 +878,7 @@ For k = 0 To UBound(p_PreArray) - 1
             SetLastMessage p_MainArray(1), p_MainArray(2)
             
         Case Else
-            SendMessage "Error."
+            SendSingle "ERROR", Index
     End Select
 Next k
 End Sub

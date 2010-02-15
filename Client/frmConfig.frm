@@ -375,8 +375,13 @@ InsertIntoRegistry "Client\Configuration", "Password", Encode(Encode(txtPassword
 InsertIntoRegistry "Client\Configuration", "Account", txtAccount
 InsertIntoRegistry "Client\Configuration", "Nickname", txtNick
 
-InsertIntoRegistry "Client\Configuration", "Top", frmMain.Top
-InsertIntoRegistry "Client\Configuration", "Left", frmMain.Left
+If frmMain.WindowState = 1 Then
+    InsertIntoRegistry "Client\Configuration", "Top", Screen.Height / Screen.TwipsPerPixelY
+    InsertIntoRegistry "Client\Configuration", "Left", Screen.Width / Screen.TwipsPerPixelX
+Else
+    InsertIntoRegistry "Client\Configuration", "Top", frmMain.Top
+    InsertIntoRegistry "Client\Configuration", "Left", frmMain.Left
+End If
 End Sub
 
 Private Sub Label1_Click()
