@@ -25,17 +25,17 @@ Type NOTIFYICONDATA
 End Type
 
 Type MENUITEMINFO
-    cbSize                      As Long
-    fMask                       As Long
-    fType                       As Long
-    fState                      As Long
-    wID                         As Long
-    hSubMenu                    As Long
-    hbmpChecked                 As Long
-    hbmpUnchecked               As Long
-    dwItemData                  As Long
-    dwTypeData                  As String
-    cch                         As Long
+    cbSize                                  As Long
+    fMask                                   As Long
+    fType                                   As Long
+    fState                                  As Long
+    wID                                     As Long
+    hSubMenu                                As Long
+    hbmpChecked                             As Long
+    hbmpUnchecked                           As Long
+    dwItemData                              As Long
+    dwTypeData                              As String
+    cch                                     As Long
 End Type
 
 Type OSVERSIONINFO
@@ -65,10 +65,16 @@ Type GC
     Description                             As String
 End Type
 
+Type OPT
+    CAPS_CHECK                              As Long
+    REPEAT_CHECK                            As Long
+End Type
+
 Public Database                             As DB
 Public Commands()                           As GC
 Public Emotes()                             As EMT
 Public DeclinedNames()                      As String
+Public Options                              As OPT
 
 'Tray constants
 Public Const NIM_ADD                        As Long = &H0

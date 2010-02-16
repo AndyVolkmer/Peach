@@ -478,7 +478,7 @@ For k = 0 To UBound(p_PreArray) - 1
             Select Case Left$(p_CHAT_ARRAY(0), 1)
                 Case Chr(46)
                     If GetLevel(p_MainArray(1)) > 0 Then IsCommand = True
-                        
+                    
                 Case Chr(47)
                     IsSlash = True
                     
@@ -530,18 +530,18 @@ For k = 0 To UBound(p_PreArray) - 1
                             
                         ElseIf IsPartOf(p_TEXT_FIRST, "users") Then
                             SendSingle "!split_text#" & GetUserList, Index
-                        
+                            
                         Else
                             SendSingle "Incorrect Syntax, use the following format .show [accounts, users].", Index
                             
                         End If
-                    
+                        
                     Case ".userinfo", ".uinfo"
                         GetUserInfo p_TEXT_FIRST_PROP, p_CHAT_ARRAY(0), Index
-                    
+                        
                     Case ".accountinfo", ".accinfo", ".ainfo"
                         GetAccountInfo p_TEXT_FIRST, p_CHAT_ARRAY(0), Index
-                    
+                        
                     Case ".kick"
                         With frmPanel.ListView1.ListItems
                             For i = 1 To .Count
@@ -635,7 +635,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                     End If
                             End Select
                         End With
-                    
+                        
                     Case ".clear"
                         If LenB(p_TEXT_FIRST) = 0 Then
                             SendSingle "Incorrect Syntax. Use the following format .clear [User]", Index
@@ -671,9 +671,11 @@ For k = 0 To UBound(p_PreArray) - 1
                     Exit Sub
                 End If
                 
-                If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
-                    SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
-                    Exit Sub
+                If Options.REPEAT_CHECK = 1 Then
+                    If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
+                        SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
+                        Exit Sub
+                    End If
                 End If
                 
                 With frmPanel.ListView1.ListItems
@@ -846,7 +848,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         Next i
                         E = vbNullString
                         'Exit if there are more then 75% of caps
-                        If Format$(100 * S1 / Len(p_MainArray(2)), "0") > 75 Then
+                        If Format$(100 * S1 / Len(p_MainArray(2)), "0") > 75 And Options.CAPS_CHECK = 1 Then
                             SendSingle "Message blocked. Please do not write more then 75% in caps.", Index
                             Exit Sub
                         End If
@@ -854,9 +856,11 @@ For k = 0 To UBound(p_PreArray) - 1
                 End If
             End If
             
-            If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
-                SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
-                Exit Sub
+            If Options.REPEAT_CHECK = 1 Then
+                If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
+                    SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
+                    Exit Sub
+                End If
             End If
             
             'Send Message and print in chat
@@ -951,6 +955,7 @@ With frmPanel.ListView1.ListItems
                                 TD = TD & TD1(j) & " seconds"
                             End If
                         End If
+                        
                 End Select
             Next j
             
