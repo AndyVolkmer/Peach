@@ -627,6 +627,10 @@ For k = 0 To UBound(p_PreArray) - 1
                                     LoadEmotes
                                     SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_EMOTES & "' table."
                                     
+                                Case LCase$("config"), LCase$("c")
+                                    LoadConfigValue
+                                    SendMessage p_MainArray(1) & " iniated the reload of configuration files."
+                                    
                                 Case Else
                                     If LenB(p_TEXT_FIRST) = 0 Then
                                         SendSingle "Incorrect Syntax. Use the following format .reload Table.", Index

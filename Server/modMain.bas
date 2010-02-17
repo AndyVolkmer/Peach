@@ -128,21 +128,26 @@ With Database
     Else
         .Host = ReadIniValue(p_Path, "Database", "Host")
     End If
-    
-    If LenB(ReadIniValue(p_Path, "Options", "CapsCheck")) = 0 Then
-        WriteIniValue p_Path, "Options", "CapsCheck", "1"
-        MsgBox "Option caps check value not found, default set.", vbInformation
-        End
-    Else
-        Options.CAPS_CHECK = ReadIniValue(p_Path, "Options", "CapsCheck")
-    End If
-    
-    If LenB(ReadIniValue(p_Path, "Options", "RepeatCheck")) = 0 Then
-        WriteIniValue p_Path, "Options", "RepeatCheck", "1"
-        MsgBox "Option repeat check vlaue not found, default set.", vbInformation
-        End
-    Else
-        Options.REPEAT_CHECK = ReadIniValue(p_Path, "Options", "RepeatCheck")
-    End If
 End With
+End Sub
+
+Public Sub LoadConfigValue()
+Dim p_Path As String
+    p_Path = App.Path & "\peachConfig.conf"
+    
+If LenB(ReadIniValue(p_Path, "Options", "CapsCheck")) = 0 Then
+    WriteIniValue p_Path, "Options", "CapsCheck", "1"
+    MsgBox "Option caps check value not found, default set.", vbInformation
+    End
+Else
+    Options.CAPS_CHECK = ReadIniValue(p_Path, "Options", "CapsCheck")
+End If
+
+If LenB(ReadIniValue(p_Path, "Options", "RepeatCheck")) = 0 Then
+    WriteIniValue p_Path, "Options", "RepeatCheck", "1"
+    MsgBox "Option repeat check vlaue not found, default set.", vbInformation
+    End
+Else
+    Options.REPEAT_CHECK = ReadIniValue(p_Path, "Options", "RepeatCheck")
+End If
 End Sub

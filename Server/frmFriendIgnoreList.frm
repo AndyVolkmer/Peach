@@ -341,7 +341,7 @@ If ExecuteCommand("DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE Name = '" & 
                 i = i - 1
             End If
         Next i
-    
+        
         'Search for the user in Ignore row
         For i = 1 To .Count
             If i > .Count Then Exit For

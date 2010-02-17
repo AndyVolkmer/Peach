@@ -394,6 +394,7 @@ Select Case Switch
         ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index, cmbGender.Text
         
 End Select
+SetData ListView1.SelectedItem
 DoButtons False
 End Sub
 

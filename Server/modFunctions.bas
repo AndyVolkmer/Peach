@@ -5,8 +5,6 @@ Global Const rPort                          As Long = 6222
 Global Const MAX_INT_VALUE                  As Long = 2147483647
 Global Const MIN_INT_VALUE                  As Long = -2147483647
 
-Global VarTime                              As Long     'Time counter variable
-
 Global Const DATABASE_TABLE_ACCOUNTS        As String = "accounts"
 Global Const DATABASE_TABLE_EMOTES          As String = "emotes"
 Global Const DATABASE_TABLE_COMMANDS        As String = "commands"
@@ -75,6 +73,8 @@ Public Commands()                           As GC
 Public Emotes()                             As EMT
 Public DeclinedNames()                      As String
 Public Options                              As OPT
+
+Global VarTime                              As Long     'Time counter variable
 
 'Tray constants
 Public Const NIM_ADD                        As Long = &H0
