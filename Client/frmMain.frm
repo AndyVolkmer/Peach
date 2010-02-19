@@ -588,32 +588,25 @@ For K = 0 To UBound(p_PreArray) - 1
         Case "!login"
             Select Case StrArr(1)
                 Case "Password"
+                    MsgBox MDI_MSG_WRONG_PASSWORD, vbInformation
+                    Disconnect
                     With frmConfig
-                        .cmdConnect_Click
                         .txtPassword = vbNullString
-                        frmChat.Hide
-                        .Show
                         .txtPassword.SetFocus
                     End With
-                    MsgBox MDI_MSG_WRONG_PASSWORD, vbInformation
                     
                 Case "Account"
+                    MsgBox MDI_MSG_WRONG_ACCOUNT, vbInformation
+                    Disconnect
                     With frmConfig
-                        .cmdConnect_Click
                         .txtAccount = vbNullString
-                        frmChat.Hide
-                        .Show
                         .txtAccount.SetFocus
                     End With
-                    MsgBox MDI_MSG_WRONG_ACCOUNT, vbInformation
                     
                 Case "Banned"
-                    With frmConfig
-                        .cmdConnect_Click
-                        frmChat.Hide
-                        .Show
-                    End With
                     MsgBox MDI_MSG_BANNED, vbInformation
+                    Disconnect
+                    
             End Select
             
         'We get ip here
