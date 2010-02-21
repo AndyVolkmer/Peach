@@ -718,7 +718,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             Else
                                 pMaxRoll = 100
                             End If
-                                                        
+                            
                         ElseIf UBound(p_CHAT_ARRAY) > 0 Then
                             pMinRoll = 1
                             
@@ -802,8 +802,10 @@ For k = 0 To UBound(p_PreArray) - 1
                                             Select Case .Item(j).SubItems(9)
                                                 Case "Male"
                                                     pGen = "his"
+                                                    
                                                 Case "Female"
                                                     pGen = "her"
+                                                    
                                             End Select
                                             Exit For
                                         End If

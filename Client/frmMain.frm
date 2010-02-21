@@ -594,6 +594,7 @@ For K = 0 To UBound(p_PreArray) - 1
                         .txtPassword = vbNullString
                         .txtPassword.SetFocus
                     End With
+                    Exit Sub
                     
                 Case "Account"
                     MsgBox MDI_MSG_WRONG_ACCOUNT, vbInformation
@@ -602,10 +603,12 @@ For K = 0 To UBound(p_PreArray) - 1
                         .txtAccount = vbNullString
                         .txtAccount.SetFocus
                     End With
+                    Exit Sub
                     
                 Case "Banned"
                     MsgBox MDI_MSG_BANNED, vbInformation
                     Disconnect
+                    Exit Sub
                     
             End Select
             

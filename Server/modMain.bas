@@ -84,6 +84,7 @@ End With
 End Sub
 
 Private Sub LoadIniValue()
+Dim eFlag  As Boolean
 Dim p_Path As String
     p_Path = App.Path & "\peachConfig.conf"
 
@@ -94,7 +95,7 @@ With Database
         If MsgBox("Database name not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
             WriteIniValue p_Path, "Database", "Name", InputBox("Enter a database name.", "Database name ..")
         End If
-        End
+        eFlag = True
     Else
         .Database = ReadIniValue(p_Path, "Database", "Name")
     End If
@@ -104,7 +105,7 @@ With Database
         If MsgBox("Database user not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
             WriteIniValue p_Path, "Database", "User", InputBox("Enter a database user.", "Database user ..")
         End If
-        End
+        eFlag = True
     Else
         .User = ReadIniValue(p_Path, "Database", "User")
     End If
@@ -114,7 +115,7 @@ With Database
         If MsgBox("Database password not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
             WriteIniValue p_Path, "Database", "Password", InputBox("Enter a database password.", "Database password ..")
         End If
-        End
+        eFlag = True
     Else
         .Password = DeCode(ReadIniValue(p_Path, "Database", "Password"))
     End If
@@ -124,10 +125,12 @@ With Database
         If MsgBox("Database host not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
             WriteIniValue p_Path, "Database", "Host", InputBox("Enter a database host.", "Database host ..")
         End If
-        End
+        eFlag = True
     Else
         .Host = ReadIniValue(p_Path, "Database", "Host")
     End If
+    
+    If eFlag Then End
 End With
 End Sub
 

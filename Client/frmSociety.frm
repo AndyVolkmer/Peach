@@ -56,16 +56,19 @@ Begin VB.Form frmSociety
       TabCaption(1)   =   "Online List"
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "cmdAddToIgnore"
+      Tab(1).Control(0)=   "lvOnlineList"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdAddToFriend"
-      Tab(1).Control(2)=   "lvOnlineList"
+      Tab(1).Control(1).Enabled=   0   'False
+      Tab(1).Control(2)=   "cmdAddToIgnore"
+      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "cmdRemoveIgnore"
+      Tab(2).Control(0)=   "lvIgnoreList"
       Tab(2).Control(1)=   "cmdAddIgnore"
-      Tab(2).Control(2)=   "lvIgnoreList"
+      Tab(2).Control(2)=   "cmdRemoveIgnore"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToIgnore 
          Caption         =   "&Add to Ignore"
@@ -536,4 +539,3 @@ With frmChat.txtToSend
     .SetFocus
 End With
 End Sub
-

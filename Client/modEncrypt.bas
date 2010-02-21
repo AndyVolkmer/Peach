@@ -7,11 +7,12 @@ Dim CurSpc As Integer
 Dim varLen As Integer
 Dim varChr As String
 Dim varFin As String
+
 CurSpc = CurSpc + 1
 varLen = Len(vText)
 Do While CurSpc <= varLen
     DoEvents
-    varChr = Mid(vText, CurSpc, 3)
+    varChr = Mid$(vText, CurSpc, 3)
     Select Case varChr
         'lower case
         Case "coe"

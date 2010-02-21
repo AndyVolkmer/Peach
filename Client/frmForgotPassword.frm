@@ -151,6 +151,7 @@ lblAccount.Caption = FP_LABEL_ACCOUNT
 lblSecretQuestion.Caption = FP_LABEL_SECRET_QUESTION
 lblSecretAnswer.Caption = FP_LABEL_SECRET_ANSWER
 cmdRequest.Caption = FP_COMMAND_REQUEST
+
 With cmbSecretQuestion
     .List(0) = REG_CMB_SECRET_QUESTION_0
     .List(1) = REG_CMB_SECRET_QUESTION_1
