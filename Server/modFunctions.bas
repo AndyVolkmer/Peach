@@ -46,10 +46,12 @@ Type OSVERSIONINFO
 End Type
 
 Type DB
+    Type                                    As String
     Database                                As String
     User                                    As String
     Host                                    As String
     Password                                As String
+    File                                    As String
 End Type
 
 Type EMT
@@ -73,6 +75,7 @@ Public Commands()                           As GC
 Public Emotes()                             As EMT
 Public DeclinedNames()                      As String
 Public Options                              As OPT
+Public pDB                                  As New DatabaseClass
 
 Global VarTime                              As Long     'Time counter variable
 

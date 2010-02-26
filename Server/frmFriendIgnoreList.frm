@@ -184,7 +184,7 @@ If IsValid Then
     j = j + 1
     
     'Add accounts to database
-    If ExecuteCommand("INSERT INTO " & DATABASE_TABLE_FRIENDS & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')") Then
+    If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_FRIENDS & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')") Then
         'Add relation to listview
         With ListView1.ListItems
             .Add , , j
@@ -215,14 +215,14 @@ With ListView1.ListItems
 End With
 
 'This seems to be very hacky
-If ExecuteCommand("DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE ID = " & pID) Then
+If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE ID = " & pID) Then
     UPDATE_FRIEND pUser, pIndex
 End If
 End Sub
 
 Public Sub RemoveAllFriendsFromUser(pUser As String)
-If ExecuteCommand("DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Name = '" & pUser & "'") And _
-   ExecuteCommand("DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Friend = '" & pUser & "'") Then
+If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Name = '" & pUser & "'") And _
+   pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Friend = '" & pUser & "'") Then
     With ListView1.ListItems
         'Search for the user in Name row
         For i = 1 To .Count
@@ -291,7 +291,7 @@ If IsValid Then
     
     j = j + 1
     
-    If ExecuteCommand("INSERT INTO " & DATABASE_TABLE_IGNORES & " (ID, Name, IgnoredName) VALUES('" & j & "', '" & pUser & "', '" & pIgnore & "')") Then
+    If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_IGNORES & " (ID, Name, IgnoredName) VALUES('" & j & "', '" & pUser & "', '" & pIgnore & "')") Then
         'Add relation to listview
         With ListView2.ListItems
             .Add , , j
@@ -324,14 +324,14 @@ With ListView2.ListItems
 End With
 
 'Another hacky solution
-If ExecuteCommand("DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE ID = " & pID) Then
+If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE ID = " & pID) Then
     UPDATE_IGNORE pUser, pIndex
 End If
 End Sub
 
 Public Sub RemoveAllIgnoresFromUser(pUser As String)
-If ExecuteCommand("DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE Name = '" & pUser & "'") And _
-   ExecuteCommand("DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE IgnoredName = '" & pUser & "'") Then
+If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE Name = '" & pUser & "'") And _
+   pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE IgnoredName = '" & pUser & "'") Then
     With ListView2.ListItems
         'Search for the user in Name row
         For i = 1 To .Count

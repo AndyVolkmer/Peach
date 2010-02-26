@@ -663,6 +663,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                     Case Else
                         SendSingle "Unknown command used. Check .help for more information about commands.", Index
+                        
                 End Select
                 Exit Sub
             End If
@@ -877,6 +878,7 @@ For k = 0 To UBound(p_PreArray) - 1
             
         Case Else
             SendSingle "ERROR", Index
+            
     End Select
 Next k
 End Sub

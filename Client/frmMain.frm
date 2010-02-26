@@ -16,7 +16,7 @@ Begin VB.MDIForm frmMain
    ScrollBars      =   0   'False
    Begin VB.Timer ChatNotifyTimer 
       Enabled         =   0   'False
-      Interval        =   1000
+      Interval        =   1
       Left            =   480
       Top             =   1080
    End
@@ -250,7 +250,7 @@ Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Private Sub ChatNotifyTimer_Timer()
 Static onORoff As Boolean
-
+ChatNotifyTimer.Interval = 500
 With frmMain.Command2
     If Not onORoff Then
         .Caption = "! - " & MDI_COMMAND_CHAT & " - !"
@@ -521,7 +521,7 @@ For K = 0 To UBound(p_PreArray) - 1
         'We can login
         Case "!accepted"
             SetupForms frmChat
-            StatusBar1.Panels(1).Text = MDI_STAT_CONNECTED
+            StatusBar1.Panels(1).Text = Replace$(MDI_STAT_CONNECTED, "%s", Setting.SERVER_IP)
             SendMSG "!connected#" & frmConfig.txtNick.Text & "#"
             
         'Wipe out current ignore list and insert new values

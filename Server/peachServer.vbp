@@ -17,6 +17,7 @@ Module=modRegistry; ..\Shared\modRegistry.bas
 Module=modMain; modMain.bas
 Module=modSQL; modSQL.bas
 Module=modIni; modIni.bas
+Class=DatabaseClass; DatabaseClass.cls
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""

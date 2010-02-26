@@ -194,7 +194,7 @@ MDI_COMMAND_SOCIETY = "&Gesellschaft"
 
 MDI_STAT_DISCONNECTED = "Status: Getrennt"
 MDI_STAT_DISCONNECT = "Status: Getrennt vom Server"
-MDI_STAT_CONNECTED = "Status: Verbunden"
+MDI_STAT_CONNECTED = "Status: Verbunden (%s)"
 MDI_STAT_CONNECTING = "Status: Verbindung wird aufgebaut .."
 
 MDI_MSG_NAME_TAKEN = "Der Name ist bereits vergeben."
@@ -375,7 +375,7 @@ MDI_COMMAND_SOCIETY = "&Society"
 
 MDI_STAT_DISCONNECTED = "Status: Disconnected"
 MDI_STAT_DISCONNECT = "Status: Disconnected from Server"
-MDI_STAT_CONNECTED = "Status: Connected"
+MDI_STAT_CONNECTED = "Status: Connected (%s)"
 MDI_STAT_CONNECTING = "Status: Connecting .."
 
 'MDImsgbox_errorHandlerFormLoad
@@ -559,7 +559,7 @@ MDI_COMMAND_SOCIETY = "&Sociedad"
 
 MDI_STAT_DISCONNECTED = "Estado: Desconectado"
 MDI_STAT_DISCONNECT = "Estado: Desconectado del servidor"
-MDI_STAT_CONNECTED = "Estado: Disponible"
+MDI_STAT_CONNECTED = "Estado: Disponible (%s)"
 MDI_STAT_CONNECTING = "Estado: Conectando .."
 
 MDI_MSG_NAME_TAKEN = "Este nombre ya esta cogido."
@@ -740,7 +740,7 @@ MDI_COMMAND_SOCIETY = "&Samhälle"
 
 MDI_STAT_DISCONNECTED = "Status: Frånkopplad"
 MDI_STAT_DISCONNECT = "Status: Koppla ifrån servern"
-MDI_STAT_CONNECTED = "Status: Anslut"
+MDI_STAT_CONNECTED = "Status: Anslut (%s)"
 MDI_STAT_CONNECTING = "Status: Ansluter .."
 
 'MDImsgbox_errorHandlerFormLoad
@@ -920,7 +920,7 @@ MDI_COMMAND_SOCIETY = "&Società"
 
 MDI_STAT_DISCONNECTED = "Stato: Disconnesso"
 MDI_STAT_DISCONNECT = "Stato: Disconnesso dal Server"
-MDI_STAT_CONNECTED = "Stato: Connesso"
+MDI_STAT_CONNECTED = "Stato: Connesso (%s)"
 MDI_STAT_CONNECTING = "Stato: Connessione .."
 
 'MDImsgbox_errorHandlerFormLoad
@@ -1102,7 +1102,7 @@ MDI_COMMAND_SOCIETY = "&Gezelschap"
 
 MDI_STAT_DISCONNECTED = "Status: Verbinding verbroken"
 MDI_STAT_DISCONNECT = "Status: Verbinding verbroken met de server"
-MDI_STAT_CONNECTED = "Status: Verbonden"
+MDI_STAT_CONNECTED = "Status: Verbonden (%s)"
 MDI_STAT_CONNECTING = "Status: Verbinden .."
 
 'MDImsgbox_errorHandlerFormLoad
@@ -1289,7 +1289,7 @@ MDI_COMMAND_SOCIETY = "&Onlajn lista"
 
 MDI_STAT_DISCONNECTED = "Status: Veza je prekinuta"
 MDI_STAT_DISCONNECT = "Status: Veza sa serverom je prekinuta"
-MDI_STAT_CONNECTED = "Status: Povezi"
+MDI_STAT_CONNECTED = "Status: Povezi (%s)"
 MDI_STAT_CONNECTING = "Status: Povezi .."
 
 'MDImsgbox_errorHandlerFormLoad
@@ -1470,7 +1470,7 @@ MDI_COMMAND_SOCIETY = "&Société"
 
 MDI_STAT_DISCONNECTED = "Etat: Deconnecté"
 MDI_STAT_DISCONNECT = "Etat: Deconnecté du Server"
-MDI_STAT_CONNECTED = "Etat: Connecté"
+MDI_STAT_CONNECTED = "Etat: Connecté (%s)"
 MDI_STAT_CONNECTING = "Etat: Connection .."
 
 MDI_MSG_NAME_TAKEN = "Le nom inséré est déjà utilizé."

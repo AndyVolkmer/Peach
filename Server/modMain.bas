@@ -4,7 +4,8 @@ Option Explicit
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Sub Main()
-Dim pStartTime As Long
+Dim pStartTime      As Long
+Dim pConnectResult  As String
 
 InitCommonControls
 pStartTime = timeGetTime
@@ -15,8 +16,10 @@ LoadRegistry
 'Load ini values
 LoadIniValue
 
-'Connect to MySQL Database
- If ConnectMySQL(Database.Database, Database.User, Database.Password, Database.Host) Then
+'Connect to Database
+pConnectResult = pDB.ConnectDatabase(Database.Type, Database.Host, Database.Database, Database.User, Database.Password, Database.File)
+
+If LenB(pConnectResult) = 0 Then
     If Not LoadAccounts Then
         MsgBox frmConfig.txt_log.Text, vbInformation
         End
@@ -47,15 +50,12 @@ LoadIniValue
         End
     End If
 Else
-    MsgBox frmConfig.txt_log.Text, vbInformation
+    MsgBox pConnectResult, vbInformation
     End
 End If
 
 frmMain.StatusBar1.Panels(1) = "Status: Disconnected"
-frmMain.SetupForms frmConfig
-
-WriteLog "Correctly loaded in " & timeGetTime - pStartTime & " ms."
-pStartTime = vbNull
+'frmMain.SetupForms frmConfig
 
 DisableFormResize frmMain
 
@@ -64,6 +64,8 @@ Dim L As Long
 '   L = L And Not (WS_MINIMIZEBOX)
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(frmMain.hwnd, GWL_STYLE, L)
+    
+WriteLog "Loaded in " & timeGetTime - pStartTime & " ms."
 End Sub
 
 Private Sub LoadRegistry()
@@ -89,45 +91,73 @@ Dim p_Path As String
     p_Path = App.Path & "\peachConfig.conf"
 
 With Database
-    '== Database ==
-    If LenB(ReadIniValue(p_Path, "Database", "Name")) = 0 Then
-        WriteIniValue p_Path, "Database", "Name", vbNullString
-        If MsgBox("Database name not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
-            WriteIniValue p_Path, "Database", "Name", InputBox("Enter a database name.", "Database name ..")
+    If LenB(ReadIniValue(p_Path, "Database", "Type")) = 0 Then
+        WriteIniValue p_Path, "Database", "Type", vbNullString
+        If MsgBox("Database type not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
+            WriteIniValue p_Path, "Database", "Type", InputBox("Enter a database type.", "Database type ..")
         End If
         eFlag = True
     Else
-        .Database = ReadIniValue(p_Path, "Database", "Name")
+        .Type = ReadIniValue(p_Path, "Database", "Type")
     End If
     
-    If LenB(ReadIniValue(p_Path, "Database", "User")) = 0 Then
-        WriteIniValue p_Path, "Database", "User", vbNullString
-        If MsgBox("Database user not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
-            WriteIniValue p_Path, "Database", "User", InputBox("Enter a database user.", "Database user ..")
+    If .Type = "1" Then
+        If LenB(ReadIniValue(p_Path, "Database", "File")) = 0 Then
+            WriteIniValue p_Path, "Database", "File", vbNullString
+            If MsgBox("Database file name not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
+                WriteIniValue p_Path, "Database", "File", InputBox("Enter a database file name.", "Database file name ..")
+            End If
+            eFlag = True
+        Else
+            .File = ReadIniValue(p_Path, "Database", "File")
         End If
-        eFlag = True
-    Else
-        .User = ReadIniValue(p_Path, "Database", "User")
-    End If
     
-    If LenB(ReadIniValue(p_Path, "Database", "Password")) = 0 Then
-        WriteIniValue p_Path, "Database", "Password", vbNullString
-        If MsgBox("Database password not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
-            WriteIniValue p_Path, "Database", "Password", InputBox("Enter a database password.", "Database password ..")
+    ElseIf .Type = "2" Then
+        If LenB(ReadIniValue(p_Path, "Database", "Name")) = 0 Then
+            WriteIniValue p_Path, "Database", "Name", vbNullString
+            If MsgBox("Database name not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
+                WriteIniValue p_Path, "Database", "Name", InputBox("Enter a database name.", "Database name ..")
+            End If
+            eFlag = True
+        Else
+            .Database = ReadIniValue(p_Path, "Database", "Name")
+        End If
+        
+        If LenB(ReadIniValue(p_Path, "Database", "User")) = 0 Then
+            WriteIniValue p_Path, "Database", "User", vbNullString
+            If MsgBox("Database user not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
+                WriteIniValue p_Path, "Database", "User", InputBox("Enter a database user.", "Database user ..")
+            End If
+            eFlag = True
+        Else
+            .User = ReadIniValue(p_Path, "Database", "User")
+        End If
+        
+        If LenB(ReadIniValue(p_Path, "Database", "Password")) = 0 Then
+            WriteIniValue p_Path, "Database", "Password", vbNullString
+            If MsgBox("Database password not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
+                WriteIniValue p_Path, "Database", "Password", InputBox("Enter a database password.", "Database password ..")
+            End If
+            eFlag = True
+        Else
+            .Password = DeCode(ReadIniValue(p_Path, "Database", "Password"))
+        End If
+        
+        If LenB(ReadIniValue(p_Path, "Database", "Host")) = 0 Then
+            WriteIniValue p_Path, "Database", "Host", vbNullString
+            If MsgBox("Database host not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
+                WriteIniValue p_Path, "Database", "Host", InputBox("Enter a database host.", "Database host ..")
+            End If
+            eFlag = True
+        Else
+            .Host = ReadIniValue(p_Path, "Database", "Host")
+        End If
+        
+    Else
+        If MsgBox("Invalid database type, please check configuration file. Do you want to enter a value now?", vbQuestion + vbYesNo) = vbYes Then
+            WriteIniValue p_Path, "Database", "Type", InputBox("Enter a valid database type, 1 for Access Database and 2 for MySQL Database ..", "Invalid database type ..")
         End If
         eFlag = True
-    Else
-        .Password = DeCode(ReadIniValue(p_Path, "Database", "Password"))
-    End If
-    
-    If LenB(ReadIniValue(p_Path, "Database", "Host")) = 0 Then
-        WriteIniValue p_Path, "Database", "Host", vbNullString
-        If MsgBox("Database host not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
-            WriteIniValue p_Path, "Database", "Host", InputBox("Enter a database host.", "Database host ..")
-        End If
-        eFlag = True
-    Else
-        .Host = ReadIniValue(p_Path, "Database", "Host")
     End If
     
     If eFlag Then End

@@ -286,7 +286,7 @@ End With
     
 If MsgBox("Are you sure that you want to delete account '" & strName & "' ?", vbYesNo + vbQuestion, "Confirm Delete") = vbNo Then Exit Sub
 
-If ExecuteCommand("DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & lngID) Then
+If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & lngID) Then
     With frmFriendIgnoreList
         .RemoveAllFriendsFromUser strName
         .RemoveAllIgnoresFromUser strName
@@ -400,7 +400,7 @@ End Sub
 
 Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Long, pLevel As String, MOD_ID As Long, LST_ID As Long, pGender As String)
 'Only modify account if it succesfully updated in the database
-If ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBanned & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID) Then
+If pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBanned & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID) Then
     'Modify listview values
     With ListView1.ListItems.Item(LST_ID)
         .SubItems(1) = pName
@@ -428,7 +428,7 @@ End With
 j = j + 1
 
 'Only add account to list if it got executed into the database
-If ExecuteCommand("INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & pBanned & "', '" & pLevel & "', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "')") Then
+If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & pBanned & "', '" & pLevel & "', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "')") Then
     'Save index in variable
     i = ListView1.ListItems.Count + 1
     
