@@ -36,7 +36,6 @@ If Setting.VALIDATE = 0 Then
     End Select
     
     SetScheme True
-    frmMain.Show
     
     'Temp hackfix for auto login
     If Setting.AUTO_LOGIN Then
@@ -184,17 +183,6 @@ End With
 
 frmChat.BackColor = SC
 
-With frmConfig
-    .BackColor = SC
-    .Label1.BackColor = SC
-    .Label2.BackColor = SC
-    .lblAccount.BackColor = SC
-    .lblAuthor.BackColor = SC
-    .lblNickname.BackColor = SC
-    .lblPassword.BackColor = SC
-    .lblVersion.BackColor = SC
-End With
-
 With frmSendFile
     .BackColor = SC
     .picProgress.BackColor = SC
@@ -244,5 +232,16 @@ End With
 With frmSociety
     .BackColor = SC
     .SSTab1.BackColor = SC
+End With
+
+With frmConfig
+    .BackColor = SC
+    .Label1.BackColor = SC
+    .Label2.BackColor = SC
+    .lblAccount.BackColor = SC
+    .lblAuthor.BackColor = SC
+    .lblNickname.BackColor = SC
+    .lblPassword.BackColor = SC
+    .lblVersion.BackColor = SC
 End With
 End Sub

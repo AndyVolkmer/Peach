@@ -270,12 +270,15 @@ Private Sub Command2_Click()
 SetupForms frmChat
 End Sub
 
-Public Sub SetupForms(Nix As Form)
-frmSociety.Hide
-frmChat.Hide
-frmConfig.Hide
-frmSendFile.Hide
-Nix.Show
+Public Sub SetupForms(pNewForm As Form)
+Dim pForm As Form
+
+For Each pForm In Forms
+    If Not pForm.Name = frmMain.Name Then
+        pForm.Hide
+    End If
+Next
+pNewForm.Show
 End Sub
 
 Private Sub Command3_Click()
@@ -384,8 +387,6 @@ Dim L As Long
 
 Me.Top = Setting.MAIN_TOP
 Me.Left = Setting.MAIN_LEFT
-
-SetupForms frmConfig
 End Sub
 
 Public Sub LoadMDIForm()

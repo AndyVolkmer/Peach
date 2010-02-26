@@ -364,6 +364,7 @@ End Sub
 Private Function CheckTx(txtBox As TextBox, mBox As String) As Boolean
 If LenB(Trim$(txtBox)) = 0 Then
     MsgBox mBox, vbInformation
+    txtBox.BackColor = vbYellow
     txtBox.SetFocus
     CheckTx = True
 End If
@@ -405,6 +406,7 @@ If KeyAscii = vbKeyReturn Then
     cmdConnect_Click
     KeyAscii = 0
 End If
+If txtAccount.BackColor <> vbWhite Then txtAccount.BackColor = vbWhite
 End Sub
 
 Private Sub txtNick_KeyPress(KeyAscii As Integer)
@@ -412,10 +414,7 @@ If KeyAscii = vbKeyReturn Then
     cmdConnect_Click
     KeyAscii = 0
 End If
-End Sub
-
-Private Sub txtNick_LostFocus()
-txtNick = StrConv(txtNick, vbProperCase)
+If txtNick.BackColor <> vbWhite Then txtNick.BackColor = vbWhite
 End Sub
 
 Private Sub txtPassword_KeyPress(KeyAscii As Integer)
@@ -423,4 +422,9 @@ If KeyAscii = vbKeyReturn Then
     cmdConnect_Click
     KeyAscii = 0
 End If
+If txtPassword.BackColor <> vbWhite Then txtPassword.BackColor = vbWhite
+End Sub
+
+Private Sub txtNick_LostFocus()
+txtNick = StrConv(txtNick, vbProperCase)
 End Sub
