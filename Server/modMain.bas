@@ -16,6 +16,9 @@ LoadRegistry
 'Load ini values
 LoadIniValue
 
+'Load config value
+LoadConfigValue
+
 'Connect to Database
 pConnectResult = pDB.ConnectDatabase(Database.Type, Database.Host, Database.Database, Database.User, Database.Password, Database.File)
 
@@ -55,7 +58,6 @@ Else
 End If
 
 frmMain.StatusBar1.Panels(1) = "Status: Disconnected"
-'frmMain.SetupForms frmConfig
 
 DisableFormResize frmMain
 
@@ -94,7 +96,8 @@ With Database
     If LenB(ReadIniValue(p_Path, "Database", "Type")) = 0 Then
         WriteIniValue p_Path, "Database", "Type", vbNullString
         If MsgBox("Database type not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
-            WriteIniValue p_Path, "Database", "Type", InputBox("Enter a database type.", "Database type ..")
+            .Type = InputBox("Enter a database type." & vbCrLf & "1 - Access Database" & vbCrLf & "2 - MySQL Database", "Database type ..")
+            WriteIniValue p_Path, "Database", "Type", .Type
         End If
         eFlag = True
     Else
@@ -155,7 +158,7 @@ With Database
         
     Else
         If MsgBox("Invalid database type, please check configuration file. Do you want to enter a value now?", vbQuestion + vbYesNo) = vbYes Then
-            WriteIniValue p_Path, "Database", "Type", InputBox("Enter a valid database type, 1 for Access Database and 2 for MySQL Database ..", "Invalid database type ..")
+            WriteIniValue p_Path, "Database", "Type", InputBox("Enter a valid database type." & vbCrLf & "1 - Access Database" & vbCrLf & "2 - MySQL Database", "Invalid database type ..")
         End If
         eFlag = True
     End If
