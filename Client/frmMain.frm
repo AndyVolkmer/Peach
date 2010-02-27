@@ -409,7 +409,7 @@ Select Case Msg
         Vali = True
         frmMain.Show
         frmMain.WindowState = 0
-        Shell_NotifyIcon NIM_DELETE, nid    'Del tray icon
+        Shell_NotifyIcon NIM_DELETE, NID    'Del tray icon
         
     Case WM_LBUTTONDBLCLK
         
@@ -435,7 +435,7 @@ End If
 End Sub
 
 Private Sub MDIForm_Unload(Cancel As Integer)
-Shell_NotifyIcon NIM_DELETE, nid 'Del tray icon
+Shell_NotifyIcon NIM_DELETE, NID 'Del tray icon
 End
 End Sub
 
@@ -445,7 +445,7 @@ With frmMain
     .Show
     .WindowState = 0
 End With
-Shell_NotifyIcon NIM_DELETE, nid 'Del tray icon
+Shell_NotifyIcon NIM_DELETE, NID 'Del tray icon
 End Sub
 
 Private Sub STimer_Timer()
@@ -464,7 +464,7 @@ End Sub
 
 Private Sub Winsock1_Connect()
 With frmConfig
-    SendMSG "!login#" & .txtAccount & "#" & .txtPassword & "#" & .txtNick & "#" & CURRENT_LANG & "#"
+    SendMessage "!login#" & .txtAccount & "#" & .txtPassword & "#" & .txtNick & "#" & CURRENT_LANG & "#"
 End With
 SwitchButtons False, False
 End Sub
@@ -516,7 +516,7 @@ For K = 0 To UBound(p_PreArray) - 1
                 .SelStart = Len(.Text)
                 .SelRTF = Buffer
             End With
-            SendMSG "!ignore#-get#" & frmConfig.txtAccount & "#"
+            SendMessage "!ignore#-get#" & frmConfig.txtAccount & "#"
             
         'We can't login
         Case "!decilined"
@@ -527,7 +527,7 @@ For K = 0 To UBound(p_PreArray) - 1
         Case "!accepted"
             SetupForms frmChat
             StatusBar1.Panels(1).Text = Replace$(MDI_STAT_CONNECTED, "%s", Setting.SERVER_IP)
-            SendMSG "!connected#" & frmConfig.txtNick.Text & "#"
+            SendMessage "!connected#" & frmConfig.txtNick.Text & "#"
             
         'Wipe out current ignore list and insert new values
         Case "!update_ignore"
@@ -567,7 +567,7 @@ For K = 0 To UBound(p_PreArray) - 1
                 'Ask for server information
                 If RunOnce = False Then
                     RunOnce = True
-                    SendMSG "!server_info#"
+                    SendMessage "!server_info#"
                 End If
             End With
             
@@ -587,7 +587,7 @@ For K = 0 To UBound(p_PreArray) - 1
             Next i
             
             'Ask for friendlist
-            SendMSG "!friend#-get#" & frmConfig.txtAccount & "#"
+            SendMessage "!friend#-get#" & frmConfig.txtAccount & "#"
             
         'We get login answer here
         Case "!login"
@@ -709,7 +709,7 @@ With MII
 End With
 If SetMenuItemInfo(hMenu, MII.wID, False, MII) = 0 Then Exit Sub
 
-SendMessage hwnd, WM_NCACTIVATE, True, 0
+SendMessage2 hwnd, WM_NCACTIVATE, True, 0
 
 frm.Width = frm.Width - 1
 frm.Width = frm.Width + 1

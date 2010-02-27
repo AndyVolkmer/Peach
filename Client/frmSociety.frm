@@ -301,7 +301,7 @@ Dim pVal As String
 pVal = InputBox(SOC_ASK_FRIEND_TEXT, SOC_ASK_FRIEND_DEFAULT, SOC_ASK_FRIEND_DEFAULT)
 
 If LenB(Trim$(pVal)) = 0 Then Exit Sub
-SendMSG "!friend#-add-account#" & frmConfig.txtAccount & "#" & pVal & "#"
+SendMessage "!friend#-add-account#" & frmConfig.txtAccount & "#" & pVal & "#"
 End Sub
 
 Private Sub cmdRemoveFriend_Click()
@@ -354,7 +354,7 @@ Dim pVal As String
 pVal = InputBox(SOC_ASK_IGNORE_TEXT, SOC_ASK_IGNORE_TITLE, SOC_ASK_IGNORE_DEFAULT)
 
 If LenB(Trim$(pVal)) = 0 Then Exit Sub
-SendMSG "!ignore#-add-account#" & frmConfig.txtAccount & "#" & pVal & "#"
+SendMessage "!ignore#-add-account#" & frmConfig.txtAccount & "#" & pVal & "#"
 End Sub
 
 Private Sub cmdRemoveIgnore_Click()
@@ -387,9 +387,9 @@ End If
 
 pMiddle = InStr(1, pFullName, " ")
 If pMiddle = 0 Then
-    SendMSG "!friend#-remove-account#" & frmConfig.txtAccount.Text & "#" & pFullName & "#"
+    SendMessage "!friend#-remove-account#" & frmConfig.txtAccount.Text & "#" & pFullName & "#"
 Else
-    SendMSG "!friend#-remove-account#" & frmConfig.txtAccount.Text & "#" & Left$(pFullName, pMiddle - 1) & "#"
+    SendMessage "!friend#-remove-account#" & frmConfig.txtAccount.Text & "#" & Left$(pFullName, pMiddle - 1) & "#"
 End If
 End Sub
 
@@ -399,7 +399,7 @@ Dim pMiddle As Long
 
 pMiddle = InStr(1, pString, "(")
 
-SendMSG "!friend#-add-account#" & frmConfig.txtAccount & "#" & Mid(pString, pMiddle + 2, Len(pString) - pMiddle - 3) & "#"
+SendMessage "!friend#-add-account#" & frmConfig.txtAccount & "#" & Mid(pString, pMiddle + 2, Len(pString) - pMiddle - 3) & "#"
 End Sub
 
 Private Sub pAddToIgnore(pString As String)
@@ -407,7 +407,7 @@ Dim pMiddle As Long
 
 pMiddle = InStr(1, pString, "(")
 
-SendMSG "!ignore#-add-account#" & frmConfig.txtAccount & "#" & Mid(pString, pMiddle + 2, Len(pString) - pMiddle - 3) & "#"
+SendMessage "!ignore#-add-account#" & frmConfig.txtAccount & "#" & Mid(pString, pMiddle + 2, Len(pString) - pMiddle - 3) & "#"
 End Sub
 
 '=== Ignore List Tab ==='
@@ -424,9 +424,9 @@ End If
 
 pMiddle = InStr(1, pFullName, " ")
 If pMiddle = 0 Then
-    SendMSG "!ignore#-remove-account#" & frmConfig.txtAccount.Text & "#" & pFullName & "#"
+    SendMessage "!ignore#-remove-account#" & frmConfig.txtAccount.Text & "#" & pFullName & "#"
 Else
-    SendMSG "!ignore#-remove-account#" & frmConfig.txtAccount.Text & "#" & Left$(pFullName, pMiddle - 1) & "#"
+    SendMessage "!ignore#-remove-account#" & frmConfig.txtAccount.Text & "#" & Left$(pFullName, pMiddle - 1) & "#"
 End If
 End Sub
 
@@ -524,10 +524,10 @@ With lvFriendList.SelectedItem
 End With
 
 frmMain.SetupForms frmChat
-With frmChat
-    .txtToSend = "/whisper " & pName & " "
-    .txtToSend.SelStart = Len(.txtToSend.Text)
-    .txtToSend.SetFocus
+With frmChat.txtToSend
+    .Text = "/whisper " & pName & " "
+    .SelStart = Len(.Text)
+    .SetFocus
 End With
 End Sub
 

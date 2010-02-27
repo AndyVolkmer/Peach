@@ -152,7 +152,7 @@ txtToSend.Text = vbNullString
 If LenB(Trim$(TTS)) = 0 Then Exit Sub
 
 'Send public message
-SendMSG "!message#" & frmConfig.txtNick & "#" & RTrim$(TTS) & "#"
+SendMessage "!message#" & frmConfig.txtNick & "#" & RTrim$(TTS) & "#"
 End Sub
 
 Private Sub Form_Activate()
@@ -182,11 +182,11 @@ txtToSend.Text = vbNullString
 End Sub
 
 Private Sub pAddToFriendlist_Click()
-SendMSG "!friend#-add-user#" & frmConfig.txtAccount & "#" & menuUser & "#"
+SendMessage "!friend#-add-user#" & frmConfig.txtAccount & "#" & menuUser & "#"
 End Sub
 
 Private Sub pIgnoreUser_Click()
-SendMSG "!ignore#-add-user#" & frmConfig.txtAccount & "#" & menuUser & "#"
+SendMessage "!ignore#-add-user#" & frmConfig.txtAccount & "#" & menuUser & "#"
 End Sub
 
 Private Sub pWhisper_Click()
@@ -382,7 +382,7 @@ Clipboard.Clear
 Clipboard.SetData Picture1.Picture
 DoEvents
 
-SendMessage RTF.hwnd, WM_PASTE, 0, 0
+SendMessage2 RTF.hwnd, WM_PASTE, 0, 0
 DoEvents
 
 Clipboard.Clear
@@ -414,7 +414,7 @@ Dim txtlen          As Integer
 pAPI.X = X \ Screen.TwipsPerPixelX
 pAPI.Y = Y \ Screen.TwipsPerPixelY
     
-pPosition = SendMessage(rch.hwnd, EM_CHARFROMPOS, 0&, pAPI)
+pPosition = SendMessage2(rch.hwnd, EM_CHARFROMPOS, 0&, pAPI)
 If pPosition <= 0 Then Exit Function
         
 pText = rch.Text
@@ -458,7 +458,7 @@ Dim MousePointer As POINTAPI
 
 MousePointer.X = X \ Screen.TwipsPerPixelX
 MousePointer.Y = Y \ Screen.TwipsPerPixelY
-Pos = SendMessage(Rich.hwnd, EM_CHARFROMPOS, 0&, MousePointer)
+Pos = SendMessage2(Rich.hwnd, EM_CHARFROMPOS, 0&, MousePointer)
 If Pos <= 0 Then Exit Function
 
 For P1 = Pos To 1 Step -1

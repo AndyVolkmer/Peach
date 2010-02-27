@@ -73,13 +73,13 @@ Public Const WM_RBUTTONDBLCLK   As Long = &H206 'Double-click
 Public Const WM_RBUTTONDOWN     As Long = &H204 'Button down
 Public Const WM_RBUTTONUP       As Long = &H205 'Button up
 
-Public Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+Public Declare Function SendMessage2 Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Public Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal dwMessage As Long, pnid As NOTIFYICONDATA) As Boolean
 
 Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long
 Declare Function GetActiveWindow Lib "user32" () As Long
 
-Public Sub SendMSG(pMessage As String)
+Public Sub SendMessage(pMessage As String)
 With frmMain.Winsock1
     If .State = 7 Then
         .SendData pMessage & Chr(24) & Chr(25)

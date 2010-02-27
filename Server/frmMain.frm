@@ -316,7 +316,7 @@ Dim IsMuted         As Boolean  'Mute explains itself
 'Get Message
 frmMain.Winsock1(Index).GetData p_Message
 DoEvents
-
+ 
 'Do first array to avoid spam
 p_PreArray = Split(p_Message, Chr(24) & Chr(25))
 
@@ -467,6 +467,7 @@ For k = 0 To UBound(p_PreArray) - 1
                 For i = 1 To .Count
                     If .Item(i) = p_MainArray(1) Then
                         SendSingle "!iprequest#" & .Item(i).SubItems(1) & "#", Index
+                        Exit For
                     End If
                 Next i
             End With
@@ -616,29 +617,34 @@ For k = 0 To UBound(p_PreArray) - 1
                         SendSingle GetCommands, Index
                         
                     Case ".reload"
+                        Dim loadTime As Long
                         With Database
                             Select Case LCase$(p_TEXT_FIRST)
                                 Case LCase$(DATABASE_TABLE_ACCOUNTS), LCase$(DATABASE_TABLE_FRIENDS), LCase$(DATABASE_TABLE_IGNORES)
                                     SendSingle "This table can't be reloaded.", Index
                                 
                                 Case LCase$(DATABASE_TABLE_COMMANDS)
+                                    loadTime = timeGetTime
                                     Erase Commands
                                     LoadCommands
-                                    SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_COMMANDS & "' table."
+                                    SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_COMMANDS & "' table.( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case LCase$(DATABASE_TABLE_DECLINED_NAMES)
+                                    loadTime = timeGetTime
                                     Erase DeclinedNames
                                     LoadDeclinedNames
-                                    SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_DECLINED_NAMES & "' table."
+                                    SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_DECLINED_NAMES & "' table.( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case LCase$(DATABASE_TABLE_EMOTES)
+                                    loadTime = timeGetTime
                                     Erase Emotes
                                     LoadEmotes
-                                    SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_EMOTES & "' table."
+                                    SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_EMOTES & "' table.( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case LCase$("config"), LCase$("c")
+                                    loadTime = timeGetTime
                                     LoadConfigValue
-                                    SendMessage p_MainArray(1) & " iniated the reload of configuration files."
+                                    SendMessage p_MainArray(1) & " iniated the reload of configuration files.( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case Else
                                     If LenB(p_TEXT_FIRST) = 0 Then
