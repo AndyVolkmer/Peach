@@ -280,7 +280,7 @@ InsertIntoRegistry "Client\Configuration", "SchemeColor", txtColor.BackColor
 InsertIntoRegistry "Client\Configuration", "PasswordTick", chkSavePassword.Value
 InsertIntoRegistry "Client\Configuration", "AutoLogin", chkAutoLogin.Value
 InsertIntoRegistry "Client\Configuration", "AccountTick", chkSaveAccount.Value
-InsertIntoRegistry "Client\Configuration", "CloseQuestion", chkAskClosing.Value
+InsertIntoRegistry "Client\Configuration", "AskTick", chkAskClosing.Value
 InsertIntoRegistry "Client\Configuration", "MinimizeTray", chkMinimize.Value
 
 With txtFont
