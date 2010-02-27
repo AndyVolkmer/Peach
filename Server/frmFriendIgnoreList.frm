@@ -248,9 +248,11 @@ With frmAccountPanel.ListView1.ListItems
             pIgnore = .Item(i).SubItems(1)
             Exit For
         Else
-            'Send message that the account doesn't exist
-            SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#'" & pIgnore & "#", pIndex
-            Exit Sub
+            If i = .Count Then
+                'Send message that the account doesn't exist
+                SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#'" & pIgnore & "#", pIndex
+                Exit Sub
+            End If
         End If
     Next i
 End With

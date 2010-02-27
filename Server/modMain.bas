@@ -66,7 +66,8 @@ Dim L As Long
 '   L = L And Not (WS_MINIMIZEBOX)
     L = L And Not (WS_MAXIMIZEBOX)
     L = SetWindowLong(frmMain.hwnd, GWL_STYLE, L)
-    
+
+frmMain.SetupForms frmConfig
 WriteLog "Loaded in " & timeGetTime - pStartTime & " ms."
 End Sub
 
