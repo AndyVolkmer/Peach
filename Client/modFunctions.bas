@@ -6,35 +6,23 @@ Public Const bPort              As Long = 6124
 Public Const rPort              As Long = 6222
 
 Public ACC_SWITCH               As String
-Public Prefix                   As String  'Time Prefix vairbale
-
 Public Setting                  As CONFIG
 Public Fonts                    As FNT
+Public NID                      As NOTIFYICONDATA
 
 Type CONFIG
-    'frmMain values
     MAIN_TOP                    As Long
     MAIN_LEFT                   As Long
-    
-    'Language values
     VALIDATE                    As Long
     LANGUAGE                    As Long
-        
-    'Peach color scheme
-    SCHEME_COLOR                As String
-    
-    'Ticks
     ACCOUNT_TICK                As Boolean
     PASSWORD_TICK               As Boolean
     AUTO_LOGIN                  As Boolean
     ASK_TICK                    As Boolean
     MIN_TICK                    As Boolean
-    
-    'Server information
+    SCHEME_COLOR                As String
     SERVER_IP                   As String
     SERVER_PORT                 As String
-    
-    'frmConfig information
     ACCOUNT                     As String
     PASSWORD                    As String
     NICKNAME                    As String
@@ -59,6 +47,18 @@ Public Type NOTIFYICONDATA
     szTip                       As String * 64
 End Type
 
+Public Type POINTAPI
+    X                           As Long
+    Y                           As Long
+End Type
+
+Type RECT
+    Left                        As Long
+    Top                         As Long
+    Right                       As Long
+    Bottom                      As Long
+End Type
+
 Public Const NIM_ADD            As Long = &H0
 Public Const NIM_MODIFY         As Long = &H1
 Public Const NIM_DELETE         As Long = &H2
@@ -73,42 +73,9 @@ Public Const WM_RBUTTONDBLCLK   As Long = &H206 'Double-click
 Public Const WM_RBUTTONDOWN     As Long = &H204 'Button down
 Public Const WM_RBUTTONUP       As Long = &H205 'Button up
 
-Type RECT
-    Left                        As Long
-    Top                         As Long
-    Right                       As Long
-    Bottom                      As Long
-End Type
-
-Type POINTAPI
-    X                           As Long
-    Y                           As Long
-End Type
-
-Public Const GWL_STYLE          As Long = (-16)
-Public Const WS_SYSMENU         As Long = &H80000
-Public Const WS_MINIMIZEBOX     As Long = &H20000
-    
-Private Const GWL_EXSTYLE       As Long = (-20)
-Private Const WS_EX_LAYERED     As Long = &H80000
-    
-Private Const LWA_COLORKEY      As Long = &H1
-Private Const LWA_ALPHA         As Long = &H2
-
-Private Const GW_HWNDNEXT       As Long = 2
-
-Public nid                      As NOTIFYICONDATA   'Trayicon variable
-
-Public Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long) As Long
-Public Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
 Public Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+Public Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal dwMessage As Long, pnid As NOTIFYICONDATA) As Boolean
 
-Private Declare Function SetLayeredWindowAttributes Lib "user32" (ByVal hwnd As Long, ByVal crKey As Long, ByVal bAlpha As Byte, ByVal dwFlags As Long) As Long
-Private Declare Function GetWindowRect Lib "user32" (ByVal hwnd As Long, lpRect As RECT) As Long
-Private Declare Function ClientToScreen Lib "user32" (ByVal hwnd As Long, lpPoint As POINTAPI) As Long
-Private Declare Function GetWindow Lib "user32" (ByVal hwnd As Long, ByVal wCmd As Long) As Long
-
-Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal dwMessage As Long, pnid As NOTIFYICONDATA) As Boolean
 Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long
 Declare Function GetActiveWindow Lib "user32" () As Long
 
@@ -127,49 +94,17 @@ End Sub
 
 Public Sub MinimizeToTray()
 frmMain.Hide
-nid.cbSize = Len(nid)
-nid.hwnd = frmMain.hwnd
-nid.uId = vbNull
-nid.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
-nid.uCallBackMessage = WM_MOUSEMOVE
-nid.hIcon = frmMain.Icon ' the icon will be your Form1 project icon
-nid.szTip = "Peach -  " & frmConfig.txtNick & vbNullChar
-Shell_NotifyIcon NIM_ADD, nid
+With NID
+    .cbSize = Len(NID)
+    .hwnd = frmMain.hwnd
+    .uId = vbNull
+    .uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
+    .uCallBackMessage = WM_MOUSEMOVE
+    .hIcon = frmMain.Icon ' the icon will be your Form1 project icon
+    .szTip = "Peach -  " & frmConfig.txtNick & vbNullChar
+End With
+Shell_NotifyIcon NIM_ADD, NID
 End Sub
-
-Public Sub SetTrans(oForm As Form, Optional bytAlpha As Byte = 255, Optional lColor As Long = 0)
-Dim lStyle As Long
-lStyle = GetWindowLong(oForm.hwnd, GWL_EXSTYLE)
-If Not (lStyle And WS_EX_LAYERED) = WS_EX_LAYERED Then _
-    SetWindowLong oForm.hwnd, GWL_EXSTYLE, lStyle Or WS_EX_LAYERED
-SetLayeredWindowAttributes oForm.hwnd, lColor, bytAlpha, LWA_COLORKEY Or LWA_ALPHA
-End Sub
-
-Public Function IsOverCtl(oForm As Form, ByVal X As Long, ByVal Y As Long) As Boolean
-Dim ctl As Control, lhWnd As Long, r As RECT, pt As POINTAPI
-
-pt.X = X: pt.Y = Y
-ClientToScreen oForm.hwnd, pt
-
-For Each ctl In oForm.Controls
-    On Error GoTo ErrHandler
-    lhWnd = ctl.hwnd
-    On Error GoTo 0
-    If lhWnd Then
-        GetWindowRect ctl.hwnd, r
-        IsOverCtl = (pt.X >= r.Left And pt.X <= r.Right And pt.Y >= r.Top And pt.Y <= r.Bottom)
-        If IsOverCtl Then Exit Function
-    End If
-Next ctl
-Exit Function
-ErrHandler:
-    lhWnd = 0
-    Resume Next
-End Function
-
-Public Function GetNextWindow(ByVal lhWnd As Long) As Long
-GetNextWindow = GetWindow(lhWnd, GW_HWNDNEXT)
-End Function
 
 Public Sub SwitchButtons(pSwitch As Boolean, IsConnecting As Boolean)
 Dim pBool As Boolean

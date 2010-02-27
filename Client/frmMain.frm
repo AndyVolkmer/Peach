@@ -403,19 +403,23 @@ Dim Msg     As Long
 Dim sFilter As String
 Msg = X / Screen.TwipsPerPixelX
 Select Case Msg
-Case WM_LBUTTONDOWN
-Case WM_LBUTTONUP
-    Vali = True
-    With frmMain
-        .Show
-        .WindowState = 0
-    End With
-    Shell_NotifyIcon NIM_DELETE, nid    'Del tray icon
-Case WM_LBUTTONDBLCLK
-Case WM_RBUTTONDOWN
-    frmMain.PopupMenu myPOP
-Case WM_RBUTTONUP
-Case WM_RBUTTONDBLCLK
+    Case WM_LBUTTONDOWN
+        
+    Case WM_LBUTTONUP
+        Vali = True
+        frmMain.Show
+        frmMain.WindowState = 0
+        Shell_NotifyIcon NIM_DELETE, nid    'Del tray icon
+        
+    Case WM_LBUTTONDBLCLK
+        
+    Case WM_RBUTTONDOWN
+        frmMain.PopupMenu myPOP
+        
+    Case WM_RBUTTONUP
+    
+    Case WM_RBUTTONDBLCLK
+        
 End Select
 End Sub
 

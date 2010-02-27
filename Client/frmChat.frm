@@ -44,7 +44,6 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -135,11 +134,6 @@ Private Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (B
 
 Private Const EM_CHARFROMPOS    As Long = &HD7&
 Private Const WM_PASTE          As Long = &H302
-
-Private Type POINTAPI
-    X                           As Long
-    Y                           As Long
-End Type
 
 Private Sign(255)               As Integer
 Private menuUser                As String
