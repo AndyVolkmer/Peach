@@ -193,14 +193,20 @@ MSG = X / Screen.TwipsPerPixelX
 
 Select Case MSG
     Case WM_LBUTTONDOWN
+    
     Case WM_LBUTTONUP
         Vali = True
         frmMain.Show
         frmMain.WindowState = 0
+        
     Case WM_LBUTTONDBLCLK
+    
     Case WM_RBUTTONDOWN
+    
     Case WM_RBUTTONUP
+    
     Case WM_RBUTTONDBLCLK
+    
 End Select
 End Sub
 
@@ -216,6 +222,9 @@ End Sub
 Private Sub MDIForm_Unload(Cancel As Integer)
 'Remove tray icon
 Shell_NotifyIcon NIM_DELETE, NID
+
+'Disconnect the database
+pDB.CloseDatabase
 
 '== Position ==
 InsertIntoRegistry "Server\Configuration", "Top", Me.Top
@@ -314,7 +323,7 @@ p_PreArray = Split(p_Message, Chr(24) & Chr(25))
 'Start looping through
 For k = 0 To UBound(p_PreArray) - 1
     'Print the message
-    CMSG p_PreArray(k) & " | Index: " & Index
+    WriteText p_PreArray(k) & " | Index: " & Index
     
     'We decode (split) the message into an array
     p_MainArray = Split(p_PreArray(k), "#")
@@ -1298,11 +1307,13 @@ UPDATE_ONLINE
 UPDATE_STATUS_BAR
 End Sub
 
-Public Sub SetupForms(pForm As Form)
-frmChat.Hide
-frmFriendIgnoreList.Hide
-frmConfig.Hide
-frmAccountPanel.Hide
-frmPanel.Hide
-pForm.Show
+Public Sub SetupForms(pNewForm As Form)
+Dim pForm As Form
+
+For Each pForm In Forms
+    If Not pForm.Name = frmMain.Name Then
+        pForm.Hide
+    End If
+Next
+pNewForm.Show
 End Sub

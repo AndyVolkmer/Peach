@@ -138,8 +138,7 @@ Me.Top = 0: Me.Left = 0
 End Sub
 
 Public Sub AddFriend(pUser As String, pFriend As String, pIndex As Integer)
-Dim IsValid    As Boolean
-Dim j          As Long
+Dim j As Long
 
 'Check if you are trying to add urself
 If LCase$(pUser) = LCase$(pFriend) Then
@@ -152,8 +151,12 @@ With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(1)) = LCase(pFriend) Then
             pFriend = .Item(i).SubItems(1)
-            IsValid = True
             Exit For
+        Else
+            If i = .Count Then
+                SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#'" & pFriend & "#", pIndex
+                Exit Sub
+            End If
         End If
     Next i
 End With
@@ -170,34 +173,18 @@ With ListView1.ListItems
     Next i
 End With
 
-'If friends account exist then process
-If IsValid Then
-    j = 0
+j = pDB.GetMaxID("ID", DATABASE_TABLE_FRIENDS)
+
+If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_FRIENDS & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')") Then
+    'Add relation to listview
     With ListView1.ListItems
-        For i = 1 To .Count
-            If .Item(i) > j Then
-                j = .Item(i)
-            End If
-        Next i
+        .Add , , j
+        i = .Count
+        .Item(i).SubItems(1) = pUser
+        .Item(i).SubItems(2) = pFriend
     End With
     
-    j = j + 1
-    
-    'Add accounts to database
-    If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_FRIENDS & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')") Then
-        'Add relation to listview
-        With ListView1.ListItems
-            .Add , , j
-            i = .Count
-            .Item(i).SubItems(1) = pUser
-            .Item(i).SubItems(2) = pFriend
-        End With
-        
-        UPDATE_FRIEND pUser, pIndex
-    End If
-Else
-    'Send message that the account doesn't exist
-    SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#'" & pFriend & "#", pIndex
+    UPDATE_FRIEND pUser, pIndex
 End If
 End Sub
 
@@ -232,7 +219,7 @@ If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Name = '
                 i = i - 1
             End If
         Next i
-    
+        
         'Search for the user in Friend row
         For i = 1 To .Count
             If i > .Count Then Exit For
@@ -246,8 +233,7 @@ End If
 End Sub
 
 Public Sub AddIgnore(pUser As String, pIgnore As String, pIndex As Integer)
-Dim IsValid    As Boolean
-Dim j          As Long
+Dim j As Long
 
 'Check if you are trying to add urself
 If LCase$(pUser) = LCase$(pIgnore) Then
@@ -260,8 +246,11 @@ With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(1)) = LCase(pIgnore) Then
             pIgnore = .Item(i).SubItems(1)
-            IsValid = True
             Exit For
+        Else
+            'Send message that the account doesn't exist
+            SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#'" & pIgnore & "#", pIndex
+            Exit Sub
         End If
     Next i
 End With
@@ -278,33 +267,18 @@ With ListView2.ListItems
     Next i
 End With
 
-'If friends account exist then process
-If IsValid Then
-    j = 0
+j = pDB.GetMaxID("ID", DATABASE_TABLE_IGNORES)
+
+If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_IGNORES & " (ID, Name, IgnoredName) VALUES('" & j & "', '" & pUser & "', '" & pIgnore & "')") Then
+    'Add relation to listview
     With ListView2.ListItems
-        For i = 1 To .Count
-            If .Item(i) > j Then
-                j = .Item(i)
-            End If
-        Next i
+        .Add , , j
+        i = .Count
+        .Item(i).SubItems(1) = pUser
+        .Item(i).SubItems(2) = pIgnore
     End With
     
-    j = j + 1
-    
-    If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_IGNORES & " (ID, Name, IgnoredName) VALUES('" & j & "', '" & pUser & "', '" & pIgnore & "')") Then
-        'Add relation to listview
-        With ListView2.ListItems
-            .Add , , j
-            i = .Count
-            .Item(i).SubItems(1) = pUser
-            .Item(i).SubItems(2) = pIgnore
-        End With
-        
-        UPDATE_IGNORE pUser, pIndex
-    End If
-Else
-    'Send message that the account doesn't exist
-    SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#'" & pIgnore & "#", pIndex
+    UPDATE_IGNORE pUser, pIndex
 End If
 End Sub
 

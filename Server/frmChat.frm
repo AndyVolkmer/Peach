@@ -69,7 +69,7 @@ If LenB(Trim$(txtToSend)) = 0 Then
 End If
 
 SendMessage "Server Notice: " & txtToSend
-CMSG txtToSend
+WriteText txtToSend
 txtToSend = vbNullString
 End Sub
 

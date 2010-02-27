@@ -202,12 +202,12 @@ End Sub
 Public Sub UPDATE_ONLINE()
 Dim GetList As String
 With frmPanel.ListView1.ListItems
-    GetList = "!update_online#"
     For i = 1 To .Count
         GetList = GetList & .Item(i) & " ( " & .Item(i).SubItems(5) & " )#"
+        If i = .Count Then GetList = "!update_online#" & GetList
     Next i
 End With
-If GetList <> "!update_online#" Then SendMessage GetList
+If LenB(GetList) <> 0 Then SendMessage GetList
 End Sub
 
 Public Sub UPDATE_FRIEND(pName As String, pIndex As Integer)
@@ -270,7 +270,7 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Public Sub CMSG(pData As String)
+Public Sub WriteText(pData As String)
 With frmChat.txtConver
     .Text = .Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & pData
     .SelStart = Len(.Text)
@@ -312,7 +312,7 @@ Public Function GetOS() As String
 ' 2000            2         5          0
 ' XP              2         5          1       2600
 ' Server 2003     2         5          2
-Dim OSInfo As OSVERSIONINFO
+Dim OSInfo   As OSVERSIONINFO
 Dim retvalue As Integer
   
 OSInfo.dwOSVersionInfoSize = 148

@@ -256,10 +256,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim Switch As String
+Dim Switch As Boolean
 
 Private Sub cmdAdd_Click()
-Switch = "ADD"
+Switch = True
 DoButtons True
 ClearTxBoxes
 End Sub
@@ -344,56 +344,55 @@ If ListView1.ListItems.Count = 0 Then
     Exit Sub
 End If
 'Set switch to modify
-Switch = "MOD"
+Switch = False
 DoButtons True
 End Sub
 
 Private Sub cmdSave_Click()
-Select Case Switch
-    Case "ADD"
-        'Name can't be added if there is none
-        If LenB(Trim$(txtName.Text)) = 0 Then
-            MsgBox "The name can't be empty.", vbInformation
+If Switch Then
+    'Name can't be added if there is none
+    If LenB(Trim$(txtName.Text)) = 0 Then
+        MsgBox "The name can't be empty.", vbInformation
+        txtName.SetFocus
+        Exit Sub
+    End If
+    
+    'Password can't be added if there is none
+    If LenB(Trim$(txtPassword.Text)) = 0 Then
+        MsgBox "The password can't be empty.", vbInformation
+        txtPassword.SetFocus
+        Exit Sub
+    End If
+    
+    For i = 1 To ListView1.ListItems.Count
+        If txtName.Text = ListView1.ListItems.Item(i).SubItems(1) Then
+            MsgBox "Name already given.", vbInformation
+            ClearTxBoxes
             txtName.SetFocus
             Exit Sub
         End If
-        
-        'Password can't be added if there is none
-        If LenB(Trim$(txtPassword.Text)) = 0 Then
-            MsgBox "The password can't be empty.", vbInformation
-            txtPassword.SetFocus
-            Exit Sub
-        End If
-        
-        For i = 1 To ListView1.ListItems.Count
-            If txtName.Text = ListView1.ListItems.Item(i).SubItems(1) Then
-                MsgBox "Name already given.", vbInformation
-                ClearTxBoxes
-                txtName.SetFocus
-                Exit Sub
-            End If
-        Next i
-        
-        RegisterAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, vbNullString, vbNullString, cmbGender.Text
-        
-    Case "MOD"
-        'Name can't be modified to nothing
-        If LenB(Trim$(txtName.Text)) = 0 Then
-            MsgBox "The name can't be empty.", vbInformation
-            txtName.SetFocus
-            Exit Sub
-        End If
-        
-        'Password can't be modified to nothing
-        If LenB(Trim$(txtPassword.Text)) = 0 Then
-            MsgBox "The password can't be empty.", vbInformation
-            txtPassword.SetFocus
-            Exit Sub
-        End If
-        
-        ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index, cmbGender.Text
-        
-End Select
+    Next i
+    
+    RegisterAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, vbNullString, vbNullString, cmbGender.Text
+    
+Else
+    'Name can't be modified to nothing
+    If LenB(Trim$(txtName.Text)) = 0 Then
+        MsgBox "The name can't be empty.", vbInformation
+        txtName.SetFocus
+        Exit Sub
+    End If
+    
+    'Password can't be modified to nothing
+    If LenB(Trim$(txtPassword.Text)) = 0 Then
+        MsgBox "The password can't be empty.", vbInformation
+        txtPassword.SetFocus
+        Exit Sub
+    End If
+    
+    ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index, cmbGender.Text
+    
+End If
 SetData ListView1.SelectedItem
 DoButtons False
 End Sub
@@ -415,17 +414,8 @@ End Sub
 Private Sub RegisterAccount(pName As String, pPassword As String, pBanned As String, pLevel As String, pSecretQuestion As String, pSecretAnswer As String, pGender As String)
 Dim j As Long
 
-'Check list for biggest value
-With ListView1.ListItems
-    For i = 1 To .Count
-        If .Item(i) > j Then
-            j = .Item(i)
-        End If
-    Next i
-End With
-
-'Create new index
-j = j + 1
+'Check list for biggest value and create new index
+j = pDB.GetMaxID("ID", DATABASE_TABLE_ACCOUNTS)
 
 'Only add account to list if it got executed into the database
 If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & pBanned & "', '" & pLevel & "', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "')") Then
@@ -542,7 +532,7 @@ Select Case array1(0)
                 End If
             Next i
         End With
-    
+        
         RegisterAccount GetName, GetPassword, "0", "0", GetSecretQuestion, GetSecretAnswer, GetGender
         RegSock(Index).SendData "!done#"
         

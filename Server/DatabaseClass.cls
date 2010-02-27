@@ -94,3 +94,16 @@ Exit Function
 hHE:
 MsgBox Err.Description, vbInformation, Err.Number
 End Function
+
+Public Function GetMaxID(RowName As String, TableName As String) As Long
+pCommand.CommandText = "SELECT MAX(" & RowName & ") AS MaxID FROM " & TableName
+Set pRecordSet = pCommand.Execute
+
+If pRecordSet.EOF Or IsNull(pRecordSet!MaxID) Then
+    GetMaxID = 1
+Else
+    GetMaxID = pRecordSet!MaxID + 1
+End If
+
+Set pRecordSet = Nothing
+End Function

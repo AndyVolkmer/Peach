@@ -16,7 +16,7 @@ Set .pRecordSet = .pCommand.Execute
 
 ReDim Commands(0)
 
-With pDB.pRecordSet
+With .pRecordSet
     Do Until .EOF
         ReDim Preserve Commands(Counter + 1)
         Commands(Counter).Syntax = !Syntax
