@@ -1,6 +1,6 @@
 Attribute VB_Name = "modShared"
 Option Explicit
 
-Global Const pRev       As String = "312"
+Global Const pRev       As String = "313"
 Global Const pAuthor    As String = "Andy V."
 Global i                As Long     'Global "FOR" variable

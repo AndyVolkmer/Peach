@@ -165,7 +165,7 @@ Begin VB.Form frmSettings
          Height          =   375
          Left            =   3360
          TabIndex        =   17
-         ToolTipText     =   "Click here to change the color."
+         ToolTipText     =   "Click here to change the font."
          Top             =   480
          Width           =   375
       End
