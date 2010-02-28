@@ -222,6 +222,26 @@ Private Sub CheckMin_Click()
 Command2.Enabled = True
 End Sub
 
+Private Sub chkAskClosing_Click()
+Command2.Enabled = True
+End Sub
+
+Private Sub chkAutoLogin_Click()
+Command2.Enabled = True
+End Sub
+
+Private Sub chkMinimize_Click()
+Command2.Enabled = True
+End Sub
+
+Private Sub chkSaveAccount_Click()
+Command2.Enabled = True
+End Sub
+
+Private Sub chkSavePassword_Click()
+Command2.Enabled = True
+End Sub
+
 Private Sub cmdColor_Click()
 On Error Resume Next
 With frmMain.CDialog
@@ -325,6 +345,7 @@ End Sub
 Private Sub Form_Activate()
 Dim SC As String
     SC = Setting.SCHEME_COLOR
+
 Me.BackColor = SC
 Frame1.BackColor = SC
 Frame2.BackColor = SC

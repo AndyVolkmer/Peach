@@ -17,28 +17,28 @@ LoadRegistryValue
 
 If Setting.VALIDATE = 0 Then
     Select Case Setting.LANGUAGE
-        Case 0 'German
+        Case 0
             SET_LANG_GERMAN
             
-        Case 1 'English
+        Case 1
             SET_LANG_ENGLISH
             
-        Case 2 'Spanish
+        Case 2
             SET_LANG_SPANISH
             
-        Case 3 'Swedish
+        Case 3
             SET_LANG_SWEDISH
             
-        Case 4 'Italian
+        Case 4
             SET_LANG_ITALIAN
             
-        Case 5 'Dutch
+        Case 5
             SET_LANG_DUTCH
             
-        Case 6 'Serbian
+        Case 6
             SET_LANG_SERBIAN
             
-        Case 7 'French
+        Case 7
             SET_LANG_FRENCH
             
     End Select

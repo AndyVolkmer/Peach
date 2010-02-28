@@ -413,3 +413,26 @@ SendMessage2 frmMain.hwnd, WM_NCACTIVATE, True, 0
 frm.Width = frm.Width - 1
 frm.Width = frm.Width + 1
 End Sub
+
+Public Sub SetButtons(args As Boolean)
+If args Then
+    With frmConfig
+        .Label2.Caption = "Server Uptime : 00:00:00"
+        .connCounter.Enabled = True
+        .txtPort.Enabled = False
+        .Command1.Enabled = False
+        .Command2.Enabled = True
+    End With
+    frmMain.StatusBar1.Panels(1).Text = "Status: Connected with 0 Client(s)."
+Else
+    With frmConfig
+        .Label2.Caption = "Offline"
+        .connCounter.Enabled = False
+        .txtPort.Enabled = False
+        .Command1.Enabled = True
+        .Command2.Enabled = False
+    End With
+    frmMain.StatusBar1.Panels(1).Text = "Status: Disconnected"
+    VarTime = 0
+End If
+End Sub

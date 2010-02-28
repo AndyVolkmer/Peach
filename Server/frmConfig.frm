@@ -34,6 +34,7 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -147,19 +148,13 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-Label2.Caption = "Server Uptime : 00:00:00"
-connCounter.Enabled = True
-'Do the buttons
-txtPort.Enabled = False
-Command1.Enabled = False
-Command2.Enabled = True
-    
+SetButtons True
+
 On Error GoTo ErrListen
 'Connect sockets and start listening
 With frmMain
     .Winsock1(0).LocalPort = txtPort.Text
     .Winsock1(0).Listen
-    .StatusBar1.Panels(1).Text = "Status: Connected with " & .Winsock1.Count - 1 & " Client(s)."
 End With
 
 With frmAccountPanel
@@ -175,25 +170,21 @@ ErrListen:
 Select Case Err.Number
     Case 10048
         MsgBox "This adress is already in use, please select another port.", vbInformation
-        txtPort.Enabled = True
-        Command1.Enabled = True
-        Command2.Enabled = False
+        SetButtons False
         txtPort.SetFocus
         txtPort.SelStart = Len(txtPort.Text)
-        connCounter.Enabled = False
-        Label2.Caption = "Offline"
+        
     Case Else
         MsgBox "Error: " & Err.Number & vbCrLf & Err.Description & vbCrLf & "Report the number above to developement.", vbInformation
         Unload Me
+        
 End Select
 End Sub
 
 Private Sub Command2_Click()
 Dim WiSk As Winsock
 
-connCounter.Enabled = False
-VarTime = 0
-Label2.Caption = "Offline"
+SetButtons False
 
 For Each WiSk In frmMain.Winsock1
     If WiSk.Index <> 0 Then
@@ -202,22 +193,16 @@ For Each WiSk In frmMain.Winsock1
 Next
 
 frmMain.Winsock1(0).Close
-frmMain.StatusBar1.Panels(1).Text = "Status: Disconnected"
 
 For Each WiSk In frmAccountPanel.RegSock
     If WiSk.Index <> 0 Then
         Unload WiSk
     End If
 Next
-frmAccountPanel.RegSock(0).Close
-        
-'Clear frmPanel ListView
-frmPanel.ListView1.ListItems.Clear
 
-'Do the buttons
-txtPort.Enabled = True
-Command1.Enabled = True
-Command2.Enabled = False
+frmAccountPanel.RegSock(0).Close
+frmPanel.ListView1.ListItems.Clear
+frmMain.SetupForms frmConfig
 End Sub
 
 Private Function CheckTx(TB As TextBox, MB As String) As Boolean
