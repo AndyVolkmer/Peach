@@ -326,22 +326,6 @@ End With
 SetScheme False
 End Sub
 
-Public Sub LoadSettingsForm()
-lblColor.Caption = SET_LABEL_COLOR
-lblFont.Caption = SET_LABEL_FONT
-lblMinimizeTray = SET_CHECK_MINIMIZE
-Frame1.Caption = SET_FRAME_STYLE
-Frame2.Caption = SET_FRAME_OPTIONS
-Frame3.Caption = SET_FRAME_CONNECTION
-chkSaveAccount.Caption = SET_CHECK_SAVE_ACCOUNT
-chkSavePassword.Caption = SET_CHECK_SAVE_PASSWORD
-chkAutoLogin.Caption = SET_CHECK_AUTO_LOGIN
-chkAskClosing.Caption = SET_CHECK_ASK_CLOSING
-chkMinimize.Caption = SET_CHECK_MINIMIZE
-Command1.Caption = SET_COMMAND_LANGUAGE
-Command2.Caption = SET_COMMAND_SAVE
-End Sub
-
 Private Sub Form_Activate()
 Dim SC As String
     SC = Setting.SCHEME_COLOR
@@ -363,7 +347,20 @@ lblMinimizeTray.BackColor = SC
 End Sub
 
 Private Sub Form_Load()
-LoadSettingsForm
+lblColor.Caption = SET_LABEL_COLOR
+lblFont.Caption = SET_LABEL_FONT
+lblMinimizeTray = SET_CHECK_MINIMIZE
+Frame1.Caption = SET_FRAME_STYLE
+Frame2.Caption = SET_FRAME_OPTIONS
+Frame3.Caption = SET_FRAME_CONNECTION
+chkSaveAccount.Caption = SET_CHECK_SAVE_ACCOUNT
+chkSavePassword.Caption = SET_CHECK_SAVE_PASSWORD
+chkAutoLogin.Caption = SET_CHECK_AUTO_LOGIN
+chkAskClosing.Caption = SET_CHECK_ASK_CLOSING
+chkMinimize.Caption = SET_CHECK_MINIMIZE
+Command1.Caption = SET_COMMAND_LANGUAGE
+Command2.Caption = SET_COMMAND_SAVE
+
 With Setting
     txtColor.BackColor = .SCHEME_COLOR
     

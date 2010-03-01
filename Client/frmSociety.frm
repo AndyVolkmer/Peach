@@ -56,19 +56,19 @@ Begin VB.Form frmSociety
       TabCaption(1)   =   "Online List"
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "lvOnlineList"
+      Tab(1).Control(0)=   "cmdAddToIgnore"
       Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdAddToFriend"
       Tab(1).Control(1).Enabled=   0   'False
-      Tab(1).Control(2)=   "cmdAddToIgnore"
+      Tab(1).Control(2)=   "lvOnlineList"
       Tab(1).Control(2).Enabled=   0   'False
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "lvIgnoreList"
+      Tab(2).Control(0)=   "cmdRemoveIgnore"
       Tab(2).Control(1)=   "cmdAddIgnore"
-      Tab(2).Control(2)=   "cmdRemoveIgnore"
+      Tab(2).Control(2)=   "lvIgnoreList"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToIgnore 
          Caption         =   "&Add to Ignore"
@@ -266,31 +266,6 @@ Option Explicit
 
 Dim pTEMP_NAME As String
 
-Public Sub LoadSocietyForm()
-SSTab1.TabCaption(0) = SOC_FRIEND_LIST
-SSTab1.TabCaption(1) = SOC_ONLINE_LIST
-SSTab1.TabCaption(2) = SOC_IGNORE_LIST
-
-cmdAddFriend.Caption = SOC_COMMAND_ADD
-cmdRemoveFriend.Caption = SOC_COMMAND_REMOVE
-cmdAddIgnore.Caption = SOC_COMMAND_ADD
-cmdRemoveIgnore.Caption = SOC_COMMAND_REMOVE
-cmdAddToFriend.Caption = SOC_COMMAND_FRIEND
-cmdAddToIgnore.Caption = SOC_COMMAND_IGNORE
-
-lvFriendList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
-lvFriendList.ColumnHeaders(2).Text = SOC_FRIEND_LIST_STATUS
-lvOnlineList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
-lvIgnoreList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
-
-mWhisper.Caption = SOC_COMMAND_WHISPER
-mWhisperT.Caption = SOC_COMMAND_WHISPER
-mAddToFriend.Caption = SOC_COMMAND_FRIEND
-mIgnoreUser.Caption = SOC_COMMAND_IGNORE
-mRemoveFriend.Caption = SOC_COMMAND_REMOVE
-mRemoveIgnore.Caption = SOC_COMMAND_REMOVE
-End Sub
-
 '==============================='
 '======= Friend List Tab ======='
 '==============================='
@@ -437,7 +412,29 @@ End Sub
 '==== Form ===='
 Private Sub Form_Load()
 Me.Top = 0: Me.Left = 0
-LoadSocietyForm
+
+SSTab1.TabCaption(0) = SOC_FRIEND_LIST
+SSTab1.TabCaption(1) = SOC_ONLINE_LIST
+SSTab1.TabCaption(2) = SOC_IGNORE_LIST
+
+cmdAddFriend.Caption = SOC_COMMAND_ADD
+cmdRemoveFriend.Caption = SOC_COMMAND_REMOVE
+cmdAddIgnore.Caption = SOC_COMMAND_ADD
+cmdRemoveIgnore.Caption = SOC_COMMAND_REMOVE
+cmdAddToFriend.Caption = SOC_COMMAND_FRIEND
+cmdAddToIgnore.Caption = SOC_COMMAND_IGNORE
+
+lvFriendList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
+lvFriendList.ColumnHeaders(2).Text = SOC_FRIEND_LIST_STATUS
+lvOnlineList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
+lvIgnoreList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
+
+mWhisper.Caption = SOC_COMMAND_WHISPER
+mWhisperT.Caption = SOC_COMMAND_WHISPER
+mAddToFriend.Caption = SOC_COMMAND_FRIEND
+mIgnoreUser.Caption = SOC_COMMAND_IGNORE
+mRemoveFriend.Caption = SOC_COMMAND_REMOVE
+mRemoveIgnore.Caption = SOC_COMMAND_REMOVE
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

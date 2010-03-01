@@ -418,24 +418,13 @@ Picture1.BackColor = SC
 End Sub
 
 Private Sub Form_Load()
-LoadRegistrationForm
-With frmMain.RegSock
-    .Close
-    .RemoteHost = Setting.SERVER_IP
-    .RemotePort = rPort
-    .Connect
-End With
-Screen.MousePointer = vbArrowHourglass
-ACC_SWITCH = "REG"
-End Sub
-
-Public Sub LoadRegistrationForm()
 Frame1.Caption = REG_FRAME_DETAIL
 Label1.Caption = REG_LABEL_ACCOUNT_NAME
 Label2.Caption = REG_LABEL_PASSWORD
 Label3.Caption = REG_LABEL_PASSWORD_CONFIRM
 Check1.Caption = REG_CHECK_PASSWORD_SHOW
 Command1.Caption = REG_COMMAND_CLOSE
+
 With cmbSecretQuestion
     .List(0) = REG_CMB_SECRET_QUESTION_0
     .List(1) = REG_CMB_SECRET_QUESTION_1
@@ -445,15 +434,26 @@ With cmbSecretQuestion
     .List(5) = REG_CMB_SECRET_QUESTION_5
     .ListIndex = 0
 End With
+
 Label7.Caption = REG_LABEL_SECRET_QUESTION
 Label8.Caption = REG_LABEL_SECRET_ANSWER
 Me.Caption = REG_MSG_LOADING
 Label9.Caption = REG_LABEL_GENDER
+
 With cmbGender
     .List(0) = REG_CMB_GENDER_MALE
     .List(1) = REG_CMB_GENDER_FEMALE
     .ListIndex = 0
 End With
+
+With frmMain.RegSock
+    .Close
+    .RemoteHost = Setting.SERVER_IP
+    .RemotePort = rPort
+    .Connect
+End With
+Screen.MousePointer = vbArrowHourglass
+ACC_SWITCH = "REG"
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

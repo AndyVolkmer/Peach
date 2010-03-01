@@ -73,6 +73,8 @@ Public SF_MSG_DECILINED                 As String
 Public LANG_COMMAND_ENTER               As String
 Public LANG_LABEL_SELLANG               As String
 
+Public LANG_QUIT                        As String
+
 Public LANG_GERMAN                      As String
 Public LANG_ENGLISH                     As String
 Public LANG_SPANISH                     As String
@@ -263,6 +265,8 @@ SF_COMMAND_CANCEL = "Abbrechen .."
 LANG_COMMAND_ENTER = "&Auswählen"
 LANG_LABEL_SELLANG = "Wählen Sie Ihre Sprache aus:"
 
+LANG_QUIT = "Um die Sprache zu ändern müssen Sie Peach neu starten, möchten Sie dies jetzt tun?"
+
 SOC_FRIEND_LIST = "Freundesliste"
 SOC_ONLINE_LIST = "Online-Liste"
 SOC_IGNORE_LIST = "Ignorier-Liste"
@@ -448,6 +452,8 @@ SF_COMMAND_CANCEL = "Cancel .."
 LANG_COMMAND_ENTER = "&Select"
 LANG_LABEL_SELLANG = "Select your language:"
 
+LANG_QUIT = "In order to change the language you need to restart Peach, do you want to do this now?"
+
 SOC_FRIEND_LIST = "Friend List"
 SOC_ONLINE_LIST = "Online List"
 SOC_IGNORE_LIST = "Ignore List"
@@ -627,6 +633,8 @@ SF_COMMAND_CANCEL = "Cancelar .."
 
 LANG_COMMAND_ENTER = "&Seleccionar"
 LANG_LABEL_SELLANG = "Elige tu idioma:"
+
+LANG_QUIT = "¿Para cambiar el idioma tienes que reiniciar Peach, deseas hacerlo ahora?"
 
 SOC_FRIEND_LIST = "Lista de contactos"
 SOC_ONLINE_LIST = "Lista de online"
@@ -810,6 +818,8 @@ SF2_COMMAND_OPEN_FILE = "&Öppna fil map"
 LANG_COMMAND_ENTER = "&Öppna"
 LANG_LABEL_SELLANG = "Välj språk:"
 
+LANG_QUIT = "In order to change the language you need to restart Peach, do you want to do this now?"
+
 SOC_FRIEND_LIST = "Kompis Lista"
 SOC_ONLINE_LIST = "Online Lista"
 SOC_IGNORE_LIST = "Ignorerings Lista"
@@ -991,6 +1001,8 @@ SF_COMMAND_CANCEL = "Annulla .."
 LANG_COMMAND_ENTER = "&Apri"
 LANG_LABEL_SELLANG = "Seleziona la tua lingua:"
 
+LANG_QUIT = "In order to change the language you need to restart Peach, do you want to do this now?"
+
 SOC_FRIEND_LIST = "Lista di amici"
 SOC_ONLINE_LIST = "Elenco di persone online"
 SOC_IGNORE_LIST = "Elenco degli utenti ignorati"
@@ -1170,6 +1182,8 @@ SF_COMMAND_CANCEL = "&Annuleren .."
 LANG_COMMAND_ENTER = "&Openen"
 LANG_LABEL_SELLANG = "Selecteer jou taal:"
 
+LANG_QUIT = "In order to change the language you need to restart Peach, do you want to do this now?"
+
 SOC_FRIEND_LIST = "Vriendenlijst"
 SOC_ONLINE_LIST = "Onlinelijst"
 SOC_IGNORE_LIST = "Negeerlijst"
@@ -1294,29 +1308,29 @@ MDI_STAT_CONNECTING = "Status: Povezi .."
 
 'MDImsgbox_errorHandlerFormLoad
 MDI_MSG_NAME_TAKEN = "Ime je vec zauzeto."
-MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
-MDI_MSG_WRONG_PASSWORD = "The password is wrong."
-MDI_MSG_BANNED = "This account is banned."
-MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
+MDI_MSG_WRONG_ACCOUNT = "Akaunt ne postoji ili je pogresan."
+MDI_MSG_WRONG_PASSWORD = "Sifra je pogresna."
+MDI_MSG_BANNED = "Profil je banovan."
+MDI_MSG_UNLOAD = "Da li si siguran da zelis da zatvoris Peach?"
 
-MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
+MDI_MSG_CANT_ADD_YOU = "Ne mozes dodati sebe."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "' je vec u tvojoj ignor listi."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "' je vec u tvojim prijateljima."
+MDI_MSG_ACCOUNT_NOT_EXIST = "' ne postoji."
 
 'Config form ..
-CONFIG_LABEL_ACCOUNT = " Account"
-CONFIG_LABEL_PASSWORD = " Password"
-CONFIG_LABEL_NAME = " Name"
+CONFIG_LABEL_ACCOUNT = " Profil"
+CONFIG_LABEL_PASSWORD = " Sifra"
+CONFIG_LABEL_NAME = " Ime"
 
 CONFIG_COMMAND_CONNECT = "&Povezi se"
 CONFIG_COMMAND_DISCONNECT = "&Veza je prekinuta"
-CONFIG_COMMAND_SETTINGS = "&Settings"
+CONFIG_COMMAND_SETTINGS = "&Podesavanje"
 CONFIG_COMMAND_UPDATE = "&Update"
-CONFIG_COMMAND_REGISTER = "&Create an account"
-CONFIG_COMMAND_FORGOT_PASSWORD = "Forgot Password"
+CONFIG_COMMAND_REGISTER = "&Napravi profil"
+CONFIG_COMMAND_FORGOT_PASSWORD = "Zaboravio sifru"
 
-CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
+CONFIG_CHECK_SAVE_PASSWORD = "&Sacuvaj sifru"
 
 LANG_GERMAN = "Nemacki"
 LANG_ENGLISH = "Engleski"
@@ -1327,14 +1341,14 @@ LANG_SERBIAN = "Srpski"
 LANG_DUTCH = "Holandski"
 LANG_FRENCH = "Francuski"
 
-CONFIG_MSG_ACCOUNT = "You have not entered an account."
-CONFIG_MSG_PASSWORD = "You have not entered a password."
+CONFIG_MSG_ACCOUNT = "Nisi ukucao lozinku."
+CONFIG_MSG_PASSWORD = "Nisi ukucao sifru."
 CONFIG_MSG_NUMERIC = "Ne mozete uzeti numericka imena."
 CONFIG_MSG_PORT = "Niste uneli port."
 CONFIG_MSG_IP = "Niste uneli IP"
 CONFIG_MSG_NAME = "Niste uneli ime"
-CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
-CONFIG_MSG_NAME_INVALID = "The name you have entered is not valid."
+CONFIG_MSG_NAME_SHORT = "Ime je suvise kratko."
+CONFIG_MSG_NAME_INVALID = "Ime  nije dobro."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 'Chat form ..
@@ -1348,8 +1362,8 @@ SF_LABEL_TIME = " Time left: "
 SF_LABEL_KBS = " Kb/Sec, "
 SF_LABEL_KBSS = " KBytes sent, "
 
-SF_MSG_USER = "No user selected."
-SF_MSG_FILE = "No file selected."
+SF_MSG_USER = "Nije izabran korisnik."
+SF_MSG_FILE = "Podatak nije izabran."
 SF_MSG_INCOMMING_FILE = "You are receiving '%f' from '%u'. Do you want to accept?"
 SF_MSG_DECILINED = "The file transfer has been refused."
 
@@ -1360,14 +1374,16 @@ SF_COMMAND_CANCEL = "Otkazhi .."
 LANG_COMMAND_ENTER = "&Otvori"
 LANG_LABEL_SELLANG = "Dodaj svoj jezik:"
 
-SOC_FRIEND_LIST = "Friend List"
-SOC_ONLINE_LIST = "Online List"
+LANG_QUIT = "In order to change the language you need to restart Peach, do you want to do this now?"
 
-SOC_COMMAND_ADD = "&Add"
-SOC_COMMAND_REMOVE = "&Remove"
-SOC_COMMAND_FRIEND = "&Add to Friends"
-SOC_COMMAND_IGNORE = "&Ignore user"
-SOC_COMMAND_WHISPER = "&Whisper"
+SOC_FRIEND_LIST = "Lista prijatelja"
+SOC_ONLINE_LIST = "Lista onlajn"
+
+SOC_COMMAND_ADD = "&Dodati"
+SOC_COMMAND_REMOVE = "&Ukloni"
+SOC_COMMAND_FRIEND = "&Dodaj u Prijatelje"
+SOC_COMMAND_IGNORE = "&Ignorishi korisnika"
+SOC_COMMAND_WHISPER = "&Privatna Poruka"
 
 SOC_ASK_DEL_1 = "Do you want to delete '"
 SOC_ASK_DEL_2 = "' from the list?"

@@ -66,18 +66,14 @@ Dim FIRST_LANG As Long
 Private Sub cmdEnter_Click()
 SET_LANG_1 Combo1.ListIndex
 
-frmMain.LoadMDIForm
-frmSendFile.LoadSendFileForm
-frmChat.LoadChatForm
-frmConfig.LoadConfigForm
-frmSettings.LoadSettingsForm
-frmRegistration.LoadRegistrationForm
-frmSociety.LoadSocietyForm
-frmForgotPassword.LoadForgotPasswordForm
-
 InsertIntoRegistry "Client\Configuration", "Validate", "0"
 InsertIntoRegistry "Client\Configuration", "Language", frmLanguage.Combo1.ListIndex
-frmLanguage.Hide
+
+If MsgBox(LANG_QUIT, vbQuestion + vbYesNo) = vbYes Then
+    End
+Else
+    Unload Me
+End If
 End Sub
 
 Private Sub Combo1_Click()
@@ -112,21 +108,29 @@ End Sub
 
 Private Sub SET_LANG_1(Lang As Long)
 Select Case Lang
-    Case 0 'German
+    Case 0
         SET_LANG_GERMAN
-    Case 1 'English
+        
+    Case 1
         SET_LANG_ENGLISH
-    Case 2 'Spanish
+        
+    Case 2
         SET_LANG_SPANISH
-    Case 3 'Swedish
+        
+    Case 3
         SET_LANG_SWEDISH
-    Case 4 'Italian
+        
+    Case 4
         SET_LANG_ITALIAN
-    Case 5 'Dutch
+        
+    Case 5
         SET_LANG_DUTCH
-    Case 6 'Serbian
+        
+    Case 6
         SET_LANG_SERBIAN
-    Case 7 'French
+        
+    Case 7
         SET_LANG_FRENCH
+        
 End Select
 End Sub

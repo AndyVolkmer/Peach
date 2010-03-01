@@ -141,7 +141,8 @@ End Sub
 
 Private Sub Form_Activate()
 Dim SC As String
-SC = Setting.SCHEME_COLOR
+    SC = Setting.SCHEME_COLOR
+
 Me.BackColor = SC
 Frame1.BackColor = SC
 lblAccount.BackColor = SC
@@ -150,7 +151,7 @@ lblSecretAnswer.BackColor = SC
 lblStatus.BackColor = SC
 End Sub
 
-Public Sub LoadForgotPasswordForm()
+Private Sub Form_Load()
 Frame1.Caption = FP_FRAME_FORGOT_PASSWORD
 lblAccount.Caption = FP_LABEL_ACCOUNT
 lblSecretQuestion.Caption = FP_LABEL_SECRET_QUESTION
@@ -166,16 +167,14 @@ With cmbSecretQuestion
     .List(5) = REG_CMB_SECRET_QUESTION_5
     .ListIndex = 0
 End With
-End Sub
 
-Private Sub Form_Load()
-LoadForgotPasswordForm
 With frmMain.RegSock
     .Close
     .RemoteHost = Setting.SERVER_IP
     .RemotePort = rPort
     .Connect
 End With
+
 Screen.MousePointer = vbArrowHourglass
 Me.Caption = REG_MSG_LOADING
 ACC_SWITCH = "FP"

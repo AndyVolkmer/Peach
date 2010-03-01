@@ -376,7 +376,13 @@ Call InitCommonControls
 End Sub
 
 Private Sub MDIForm_Load()
-LoadMDIForm
+Connect.Caption = CONFIG_COMMAND_CONNECT
+ExitC.Caption = REG_COMMAND_CLOSE
+Command2.Caption = MDI_COMMAND_CHAT
+Command3.Caption = MDI_COMMAND_SENDFILE
+Command4.Caption = MDI_COMMAND_SOCIETY
+StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
+
 DisableFormResize Me
 
 Dim L As Long
@@ -387,15 +393,6 @@ Dim L As Long
 
 Me.Top = Setting.MAIN_TOP
 Me.Left = Setting.MAIN_LEFT
-End Sub
-
-Public Sub LoadMDIForm()
-Connect.Caption = CONFIG_COMMAND_CONNECT
-ExitC.Caption = REG_COMMAND_CLOSE
-Command2.Caption = MDI_COMMAND_CHAT
-Command3.Caption = MDI_COMMAND_SENDFILE
-Command4.Caption = MDI_COMMAND_SOCIETY
-StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
 End Sub
 
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)

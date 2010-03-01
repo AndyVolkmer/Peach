@@ -347,10 +347,6 @@ txtAccount = Setting.ACCOUNT
 txtNick = Setting.NICKNAME
 txtPassword = Setting.PASSWORD
 
-LoadConfigForm
-End Sub
-
-Public Sub LoadConfigForm()
 Command3.Caption = CONFIG_COMMAND_SETTINGS
 Command4.Caption = CONFIG_COMMAND_UPDATE
 Label1.Caption = CONFIG_COMMAND_REGISTER

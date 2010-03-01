@@ -256,10 +256,7 @@ End Sub
 
 Private Sub Form_Load()
 Top = 0: Left = 0
-LoadSendFileForm
-End Sub
 
-Public Sub LoadSendFileForm()
 Label1.Caption = SF_LABEL_FILENAME
 cmdBrowse.Caption = SF_COMMAND_BROWSE
 cmdSendFile.Caption = SF_COMMAND_SENDFILE
