@@ -106,7 +106,6 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdRequest_Click()
-On Error GoTo hRC
 If cmdRequest.Caption = FP_COMMAND_REQUEST Then
     'Can't request if account empty
     If LenB(txtAccount) = 0 Then
@@ -135,8 +134,6 @@ Else
 End If
 
 Exit Sub
-hRC:
-    MsgBox "UNEXPECTED ERROR." & vbCrLf & vbCrLf & "Error Number: " & Err.Number & vbCrLf & "Error Description: " & Err.Description, vbCritical, "REPORT TO DEVELOPER"
 End Sub
 
 Private Sub Form_Activate()
