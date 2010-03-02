@@ -1174,7 +1174,7 @@ End Sub
 
 Private Sub BanAccount(Account As String, AdminName As String, Ban As Long, pIndex As Integer, Reason As String)
 Dim User As String
-Dim i    As logn
+Dim i    As Long
 Dim j    As Long
 
 With frmAccountPanel.ListView1.ListItems
