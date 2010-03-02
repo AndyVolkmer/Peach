@@ -232,6 +232,8 @@ InsertIntoRegistry "Server\Configuration", "Left", Me.Left
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
+Dim i As Long
+
 Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
@@ -251,6 +253,7 @@ End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
 Dim j As Long
+Dim i As Long
 j = loadSocket
 
 With Winsock1(j)
@@ -278,6 +281,8 @@ UPDATE_STATUS_BAR
 End Sub
 
 Private Function socketFree() As Long
+Dim i As Long
+
 On Error GoTo HandleErrorFreeSocket
 
 With Winsock1
@@ -306,6 +311,7 @@ End Function
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
 Dim p_PreArray()    As String
 Dim k               As Long
+Dim i               As Long
 
 Dim p_Message       As String
 Dim p_MainArray()   As String   'Whole message string is saved here and split up by # sign
@@ -444,7 +450,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         Exit Sub
                     End If
                 Next i
-                        
+                
                 'If the account is already beeing used kick first instance
                 For i = 1 To .Count
                     If .Item(i).SubItems(5) = p_MainArray(1) Then
@@ -904,6 +910,8 @@ Next k
 End Sub
 
 Private Sub SetLastMessage(pUser As String, pMessage As String)
+Dim i As Long
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
@@ -915,6 +923,8 @@ End With
 End Sub
 
 Private Function IsRepeating(pUser As String, pMessage As String) As Boolean
+Dim i As Long
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
@@ -929,22 +939,23 @@ End Function
 
 Private Function IsPartOf(pPart As String, pCommand As String) As Boolean
 Dim pTemp1  As String
-Dim j       As Long
+Dim i       As Long
 
-For j = 1 To Len(pPart)
-    pTemp1 = Mid(pPart, 1, j)
+For i = 1 To Len(pPart)
+    pTemp1 = Mid(pPart, 1, i)
     If LCase$(pTemp1) = LCase$(Left$(pCommand, Len(pTemp1))) Then
         IsPartOf = True
     Else
         IsPartOf = False
-        Exit For
+        Exit Function
     End If
-Next j
+Next i
 End Function
 
 Private Function GetOnlineTime(pUser As String) As String
 Dim TD      As String
 Dim TD1()   As String
+Dim i       As Long
 Dim j       As Long
 
 With frmPanel.ListView1.ListItems
@@ -994,6 +1005,8 @@ End With
 End Function
 
 Private Function GetProperAccountName(pAccount As String) As String
+Dim i As Long
+
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If LCase$(.Item(i).SubItems(1)) = LCase$(pAccount) Then
@@ -1010,6 +1023,7 @@ End Function
 
 Private Function GetProperAccountNameByUser(pUser As String) As String
 Dim pAccount As String
+Dim i        As Long
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
@@ -1031,6 +1045,7 @@ End Function
 
 Private Sub Whisper(pUser As String, pTarget As String, pConv As String, Index As Integer)
 Dim pAccount As String
+Dim i        As Long
 
 'Check if user is whispering itself
 If pUser = pTarget Then
@@ -1063,6 +1078,8 @@ End With
 End Sub
 
 Private Sub MuteUser(User As String, AdminName As String, IsMuted As Boolean, pIndex As Integer, Reason As String)
+Dim i As Long
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
@@ -1109,6 +1126,8 @@ End With
 End Sub
 
 Private Function GetAccountList() As String
+Dim i As Long
+
 With frmAccountPanel.ListView1.ListItems
     GetAccountList = "Account List:#"
     For i = 1 To .Count
@@ -1118,6 +1137,8 @@ End With
 End Function
 
 Private Function GetUserList() As String
+Dim i As Long
+
 With frmPanel.ListView1.ListItems
     GetUserList = "User List:#"
     For i = 1 To .Count
@@ -1127,6 +1148,8 @@ End With
 End Function
 
 Private Sub BanUser(User As String, AdminName As String, Ban As Long, pIndex As Integer, Reason As String)
+Dim i As Long
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(User, vbProperCase) Then
@@ -1151,6 +1174,7 @@ End Sub
 
 Private Sub BanAccount(Account As String, AdminName As String, Ban As Long, pIndex As Integer, Reason As String)
 Dim User As String
+Dim i    As logn
 Dim j    As Long
 
 With frmAccountPanel.ListView1.ListItems
@@ -1217,6 +1241,8 @@ End With
 End Sub
 
 Private Sub KickUser(pUser As String)
+Dim i As Long
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
@@ -1234,6 +1260,8 @@ End With
 End Sub
 
 Private Sub GetAccountInfo(Account As String, pUsedSyntax As String, pIndex As Integer)
+Dim i As Long
+
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(1)) = LCase(Account) Then
@@ -1253,6 +1281,8 @@ End With
 End Sub
 
 Private Sub GetUserInfo(pUser As String, pUsedSyntax As String, pIndex As Integer)
+Dim i As Long
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(pUser, vbProperCase) Then
@@ -1272,6 +1302,8 @@ End With
 End Sub
 
 Private Function GetCommands() As String
+Dim i As Long
+
 GetCommands = vbCrLf & "*********************************************" & vbCrLf & "* List of all avaible commands:" & vbCrLf
 For i = 0 To UBound(Commands) - 1
     GetCommands = GetCommands & "* " & Commands(i).Syntax & " (" & Commands(i).Description & ")" & vbCrLf
@@ -1279,11 +1311,14 @@ Next i
 GetCommands = GetCommands & "*********************************************"
 End Function
 
-Private Function GetLevel(ByVal Name As String) As Long
+Private Function GetLevel(Name As String) As Long
+Dim pName   As String
+Dim i       As Long
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = Name Then
-            Name = .Item(i).SubItems(5)
+            pName = .Item(i).SubItems(5)
             Exit For
         End If
     Next i
@@ -1291,7 +1326,7 @@ End With
 
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(1) = Name Then
+        If .Item(i).SubItems(1) = pName Then
             GetLevel = .Item(i).SubItems(6)
             Exit For
         End If
@@ -1300,8 +1335,8 @@ End With
 End Function
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-Dim j       As Long
 Dim pTemp   As String
+Dim i       As Long
 
 Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems

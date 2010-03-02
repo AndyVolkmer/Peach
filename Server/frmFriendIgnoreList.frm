@@ -138,6 +138,7 @@ Me.Top = 0: Me.Left = 0
 End Sub
 
 Public Sub AddFriend(pUser As String, pFriend As String, pIndex As Integer)
+Dim i As Long
 Dim j As Long
 
 'Check if you are trying to add urself
@@ -190,6 +191,7 @@ End Sub
 
 Public Sub RemoveFriend(pUser As String, pFriend As String, pIndex As Integer)
 Dim pID As Integer
+Dim i   As Long
 
 With ListView1.ListItems
     For i = 1 To .Count
@@ -208,6 +210,8 @@ End If
 End Sub
 
 Public Sub RemoveAllFriendsFromUser(pUser As String)
+Dim i As Long
+
 If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Name = '" & pUser & "'") And _
    pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Friend = '" & pUser & "'") Then
     With ListView1.ListItems
@@ -233,6 +237,7 @@ End If
 End Sub
 
 Public Sub AddIgnore(pUser As String, pIgnore As String, pIndex As Integer)
+Dim i As Long
 Dim j As Long
 
 'Check if you are trying to add urself
@@ -286,6 +291,7 @@ End Sub
 
 Public Sub RemoveIgnore(pUser As String, pIgnore As String, pIndex As Integer)
 Dim pID As Integer
+Dim i   As Long
 
 With ListView2.ListItems
     For i = 1 To .Count
@@ -306,6 +312,8 @@ End If
 End Sub
 
 Public Sub RemoveAllIgnoresFromUser(pUser As String)
+Dim i As Long
+
 If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE Name = '" & pUser & "'") And _
    pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE IgnoredName = '" & pUser & "'") Then
     With ListView2.ListItems

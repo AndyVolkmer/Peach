@@ -349,6 +349,8 @@ DoButtons True
 End Sub
 
 Private Sub cmdSave_Click()
+Dim i As Long
+
 If Switch Then
     'Name can't be added if there is none
     If LenB(Trim$(txtName.Text)) = 0 Then
@@ -412,6 +414,7 @@ End If
 End Sub
 
 Private Sub RegisterAccount(pName As String, pPassword As String, pBanned As String, pLevel As String, pSecretQuestion As String, pSecretAnswer As String, pGender As String)
+Dim i As Long
 Dim j As Long
 
 'Check list for biggest value and create new index
@@ -475,6 +478,8 @@ End If
 End Sub
 
 Private Function socketFree() As Integer
+Dim i As Long
+
 On Error GoTo HandleErrorFreeSocket
 With RegSock
     For i = .LBound + 1 To .UBound
@@ -500,6 +505,7 @@ loadSocket = theFreeSocket
 End Function
 
 Private Sub RegSock_DataArrival(Index As Integer, ByVal bytesTotal As Long)
+Dim i                   As Long
 Dim array1()            As String
 Dim GetMessage          As String
 Dim GetName             As String

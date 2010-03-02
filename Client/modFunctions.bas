@@ -214,9 +214,10 @@ ErrorHandler:
 End Function
 
 Public Function IsInvalid(pString As String) As Boolean
-Dim CHAR As String
-Dim SIGN_STRING As String
-Dim SIGN_ARRAY() As String
+Dim CHAR            As String
+Dim SIGN_STRING     As String
+Dim SIGN_ARRAY()    As String
+Dim i               As Long
 
 SIGN_STRING = " 1F.1F*1F#1F{1F}1F,1F(1F)1F&1F!1F@1F?1F/1F¬1F=1F<1F>1F[1F]1F'1F¿1Fº1Fª1F\1F|1F~1F´1F`1F+1F-1F^1F_1F·1F€"
 SIGN_ARRAY = Split(SIGN_STRING, "1F")

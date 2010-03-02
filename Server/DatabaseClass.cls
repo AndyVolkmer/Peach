@@ -46,7 +46,7 @@ Select Case pType
             & App.Path & "\" _
             & pDatabaseFile
             
-    Case "2" 'MySQL Database
+    Case "2" 'MySQL Database 3.51
         pConnection.ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver};" _
             & "SERVER=" & pHost & ";" _
             & "DATABASE=" & pDatabase & ";" _

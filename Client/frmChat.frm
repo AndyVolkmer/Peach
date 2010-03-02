@@ -225,6 +225,7 @@ Private Sub txtConver_MouseDown(Button As Integer, Shift As Integer, X As Single
 Dim Text    As String
 Dim lnk     As Long
 Dim ret     As Long
+Dim i       As Long
 Dim j       As Long
 Dim pTemp   As String
 
@@ -312,6 +313,7 @@ Dim SmileyResID(13) As Long
 Dim Smilestring     As String
 Dim SmileFileString As String
 Dim Start           As Long
+Dim i               As Long
 
 Screen.MousePointer = vbHourglass
 
@@ -557,20 +559,20 @@ IsUrlOrMail = ok
 End Function
 
 Private Sub InitSigns()
-Dim i As Long
-Dim K As Long
+Dim i    As Long
+Dim k    As Long
 Dim Test As String
 
 Test = ".,;:?!"
 For i = 1 To 6
-    K = Asc(Mid$(Test, i, 1))
-    Sign(K) = 1
+    k = Asc(Mid$(Test, i, 1))
+    Sign(k) = 1
 Next i
 
 Test = " " + vbCrLf + Chr$(160)
 For i = 1 To Len(Test)
-    K = Asc(Mid$(Test, i, 1))
-    Sign(K) = 2
+    k = Asc(Mid$(Test, i, 1))
+    Sign(k) = 2
 Next i
 End Sub
 

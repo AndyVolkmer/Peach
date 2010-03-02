@@ -327,16 +327,19 @@ End With
 End Sub
 
 Private Function socketFree() As Integer
+Dim i       As Long
+Dim theIP   As String
+
 On Error GoTo HandleErrorFreeSocket
-Dim theIP As String
 For i = FSocket2.LBound + 1 To FSocket2.UBound
     theIP = FSocket2(i).LocalIP
 Next i
+
 socketFree = FSocket2.UBound + 1
 
 Exit Function
 HandleErrorFreeSocket:
-socketFree = i
+    socketFree = i
 End Function
 
 Private Function loadSocket() As Integer
@@ -463,7 +466,8 @@ End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
 Dim p_PreArray()    As String
-Dim K               As Long
+Dim k               As Long
+Dim i               As Long
 
 Dim GetCommand      As String
 Dim StrArr()        As String
@@ -479,9 +483,9 @@ DoEvents
 p_PreArray = Split(GetMessage, Chr(24) & Chr(25))
 
 'Start looping through
-For K = 0 To UBound(p_PreArray) - 1
+For k = 0 To UBound(p_PreArray) - 1
     'We split the message into an array
-    StrArr = Split(p_PreArray(K), "#")
+    StrArr = Split(p_PreArray(k), "#")
         
     'Assign the variables to the array
     GetCommand = StrArr(0)
@@ -650,10 +654,10 @@ For K = 0 To UBound(p_PreArray) - 1
             End If
             With frmChat.txtConver
                 .SelStart = Len(.Text)
-                .SelRTF = vbCrLf & Space(1) & "[" & Format$(Time, "hh:nn:ss") & "]" & Space(1) & p_PreArray(K)
+                .SelRTF = vbCrLf & Space(1) & "[" & Format$(Time, "hh:nn:ss") & "]" & Space(1) & p_PreArray(k)
             End With
     End Select
-Next K
+Next k
 End Sub
 
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)

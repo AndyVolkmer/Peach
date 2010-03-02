@@ -63,6 +63,7 @@ Dim OpenKey     As Long
 Dim hKey        As Long
 Dim strTempVal  As String
 Dim KeyValSize  As Long
+Dim i           As Long
        
 OpenKey = RegOpenKeyEx(RegKeyRoot, RegKeyName, 0, KEY_ALL_ACCESS, hKey)
         

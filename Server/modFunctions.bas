@@ -139,21 +139,23 @@ End With
 End Sub
 
 Public Function IsIgnoring(pUser As String, pTarget As String) As Boolean
-Dim j As Long
+Dim i As Long
+
 With frmFriendIgnoreList.ListView2.ListItems
-    For j = 1 To .Count
-        If .Item(j).SubItems(1) = pUser Then
-            If .Item(j).SubItems(2) = pTarget Then
+    For i = 1 To .Count
+        If .Item(i).SubItems(1) = pUser Then
+            If .Item(i).SubItems(2) = pTarget Then
                 IsIgnoring = True
                 Exit For
             End If
         End If
-    Next j
+    Next i
 End With
 End Function
 
 Public Sub SendProtectedMessage(pUser As String, pMessage As String)
 Dim pAccount As String
+Dim i        As Long
 
 'Get account name to interact better with frmFriendIgnoreList
 With frmPanel.ListView1.ListItems
@@ -201,6 +203,8 @@ End Sub
 
 Public Sub UPDATE_ONLINE()
 Dim GetList As String
+Dim i       As Long
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         GetList = GetList & .Item(i) & " ( " & .Item(i).SubItems(5) & " )#"
@@ -213,6 +217,7 @@ End Sub
 Public Sub UPDATE_FRIEND(pName As String, pIndex As Integer)
 Dim buffer      As String
 Dim p_Array()   As String
+Dim i           As Long
 
 buffer = "!update_friends#"
 With frmFriendIgnoreList.ListView1.ListItems
@@ -226,6 +231,7 @@ With frmFriendIgnoreList.ListView1.ListItems
                     
                 Case "!offline"
                     buffer = buffer & .Item(i).SubItems(2) & "$Offline#"
+                    
             End Select
         End If
     Next i
@@ -236,6 +242,7 @@ End Sub
 
 Public Sub UPDATE_IGNORE(pName As String, pIndex As Integer)
 Dim buffer As String
+Dim i      As Long
 
 buffer = "!update_ignore#"
 With frmFriendIgnoreList.ListView2.ListItems
@@ -255,18 +262,18 @@ End Sub
 
 Private Function GetAccountStatus(pAccount As String) As String
 Dim IsAvaible   As Boolean
-Dim j           As Integer
+Dim i           As Integer
 
 With frmPanel.ListView1.ListItems
-    For j = 1 To .Count
-        If .Item(j).SubItems(5) = pAccount Then
-            GetAccountStatus = "!online#" & .Item(j) & "#"
+    For i = 1 To .Count
+        If .Item(i).SubItems(5) = pAccount Then
+            GetAccountStatus = "!online#" & .Item(i) & "#"
             IsAvaible = True
             Exit For
         Else
-            If j = .Count Then GetAccountStatus = "!offline#"
+            If i = .Count Then GetAccountStatus = "!offline#"
         End If
-    Next j
+    Next i
 End With
 End Function
 
