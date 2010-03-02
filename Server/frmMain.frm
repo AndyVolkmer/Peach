@@ -659,9 +659,14 @@ For k = 0 To UBound(p_PreArray) - 1
                         If LenB(p_TEXT_FIRST) = 0 Then
                             SendSingle "Incorrect Syntax. Use the following format .clear [User]", Index
                         Else
-                            If p_TEXT_FIRST = "this" Or p_TEXT_FIRST = "me" Then
+                            If LCase$(p_TEXT_FIRST) = "this" Or LCase$(p_TEXT_FIRST) = "me" Then
                                 SendSingle "!clear#", Index
                                 Exit Sub
+                                
+                            ElseIf LCase$(p_TEXT_FIRST) = "all" Then
+                                SendMessage "!clear#"
+                                Exit Sub
+                                
                             End If
                             
                             With frmPanel.ListView1.ListItems

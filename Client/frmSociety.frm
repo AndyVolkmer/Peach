@@ -264,7 +264,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim pTEMP_NAME As String
+Dim p_TEMP_NAME As String
 
 '==============================='
 '======= Friend List Tab ======='
@@ -354,18 +354,32 @@ Dim pMiddle As Long
 Dim pTemp() As String
 
 If lvFriendList.ListItems.Count = 0 Then Exit Sub
-    
+
 pTemp = Split(pFullName, " ")
+
 If MsgBox(SOC_ASK_DEL_1 & pTemp(0) & SOC_ASK_DEL_2, vbQuestion + vbYesNo) = vbNo Then
     Exit Sub
 End If
 
 pMiddle = InStr(1, pFullName, " ")
+
 If pMiddle = 0 Then
     SendMessage "!friend#-remove-account#" & frmConfig.txtAccount.Text & "#" & pFullName & "#"
 Else
     SendMessage "!friend#-remove-account#" & frmConfig.txtAccount.Text & "#" & Left$(pFullName, pMiddle - 1) & "#"
 End If
+End Sub
+
+Private Sub TriggerFriendEvent()
+If lvFriendList.ListItems.Count = 0 Then Exit Sub
+
+If Len(lvFriendList.SelectedItem.SubItems(1)) = 7 Then
+    mWhisper.Enabled = False
+Else
+    mWhisper.Enabled = True
+End If
+
+PopupMenu lvFriendMenu
 End Sub
 
 '=== Online List Tab ==='
@@ -377,6 +391,26 @@ pMiddle = InStr(1, pString, "(")
 SendMessage "!friend#-add-account#" & frmConfig.txtAccount & "#" & Mid(pString, pMiddle + 2, Len(pString) - pMiddle - 3) & "#"
 End Sub
 
+Private Sub TriggerOnlineEvent()
+If lvOnlineList.ListItems.Count = 0 Then Exit Sub
+
+With lvOnlineList.SelectedItem
+    p_TEMP_NAME = Left$(.Text, InStr(1, .Text, " ") - 1)
+End With
+
+If p_TEMP_NAME = frmConfig.txtNick Then
+    mWhisperT.Enabled = False
+    mAddToFriend.Enabled = False
+    mIgnoreUser.Enabled = False
+Else
+    mWhisperT.Enabled = True
+    mAddToFriend.Enabled = True
+    mIgnoreUser.Enabled = True
+End If
+
+PopupMenu lvOnlineMenu
+End Sub
+
 Private Sub pAddToIgnore(pString As String)
 Dim pMiddle As Long
 
@@ -386,6 +420,11 @@ SendMessage "!ignore#-add-account#" & frmConfig.txtAccount & "#" & Mid(pString, 
 End Sub
 
 '=== Ignore List Tab ==='
+Private Sub TriggerIgnoreEvent()
+If lvIgnoreList.ListItems.Count = 0 Then Exit Sub
+PopupMenu lvIgnoreMenu
+End Sub
+
 Private Sub pRemoveIgnore(pFullName As String)
 Dim pMiddle As Long
 Dim pTemp() As String
@@ -447,17 +486,16 @@ End Sub
 
 '==== Friend List ===='
 Private Sub lvFriendList_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-If lvFriendList.ListItems.Count = 0 Then Exit Sub
 If Button <> 2 Then Exit Sub
 If lvFriendList.HitTest(X, Y) Is Nothing Then Exit Sub
 
-If Len(lvFriendList.SelectedItem.SubItems(1)) = 7 Then
-    mWhisper.Enabled = False
-Else
-    mWhisper.Enabled = True
-End If
+TriggerFriendEvent
+End Sub
 
-PopupMenu lvFriendMenu
+Private Sub lvFriendList_KeyDown(KeyCode As Integer, Shift As Integer)
+If KeyCode <> 93 Then Exit Sub
+
+TriggerFriendEvent
 End Sub
 
 Private Sub lvFriendList_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnHeader)
@@ -483,32 +521,28 @@ End Sub
 Private Sub lvOnlineList_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 If lvOnlineList.ListItems.Count = 0 Then Exit Sub
 If Button <> 2 Then Exit Sub
-If lvOnlineList.HitTest(X, Y) Is Nothing Then Exit Sub
 
-With lvOnlineList.SelectedItem
-    pTEMP_NAME = Left$(.Text, InStr(1, .Text, " ") - 1)
-End With
+TriggerOnlineEvent
+End Sub
 
-If pTEMP_NAME = frmConfig.txtNick Then
-    mWhisperT.Enabled = False
-    mAddToFriend.Enabled = False
-    mIgnoreUser.Enabled = False
-Else
-    mWhisperT.Enabled = True
-    mAddToFriend.Enabled = True
-    mIgnoreUser.Enabled = True
-End If
+Private Sub lvOnlineList_KeyDown(KeyCode As Integer, Shift As Integer)
+If KeyCode <> 93 Then Exit Sub
 
-PopupMenu lvOnlineMenu
+TriggerOnlineEvent
 End Sub
 
 '==== Ignore List ===='
 Private Sub lvIgnoreList_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-If lvIgnoreList.ListItems.Count = 0 Then Exit Sub
 If Button <> 2 Then Exit Sub
 If lvIgnoreList.HitTest(X, Y) Is Nothing Then Exit Sub
 
-PopupMenu lvIgnoreMenu
+TriggerIgnoreEvent
+End Sub
+
+Private Sub lvIgnoreList_KeyDown(KeyCode As Integer, Shift As Integer)
+If KeyCode <> 93 Then Exit Sub
+
+TriggerIgnoreEvent
 End Sub
 
 Private Sub mWhisper_Click()
@@ -531,7 +565,7 @@ End Sub
 Private Sub mWhisperT_Click()
 frmMain.SetupForms frmChat
 With frmChat.txtToSend
-    .Text = "/whisper " & pTEMP_NAME & " "
+    .Text = "/whisper " & p_TEMP_NAME & " "
     .SelStart = Len(.Text)
     .SetFocus
 End With

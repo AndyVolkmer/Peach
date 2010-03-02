@@ -52,13 +52,6 @@ Public Type POINTAPI
     Y                           As Long
 End Type
 
-Type RECT
-    Left                        As Long
-    Top                         As Long
-    Right                       As Long
-    Bottom                      As Long
-End Type
-
 Public Const NIM_ADD            As Long = &H0
 Public Const NIM_MODIFY         As Long = &H1
 Public Const NIM_DELETE         As Long = &H2

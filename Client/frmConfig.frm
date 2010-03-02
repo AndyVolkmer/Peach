@@ -304,7 +304,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
         .Connect
     End With
     
-    If Not App.EXEName = "peachClient_DEBUG" Then
+    If Right$(App.EXEName, "5") = "DEBUG" Then
         'Set Recieve-Request-Winsock to listen
         With frmMain.FSocket2(0)
             .LocalPort = aPort

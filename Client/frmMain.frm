@@ -246,18 +246,17 @@ Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVa
 Private Declare Function GetMenuItemCount Lib "user32" (ByVal hMenu As Long) As Long
 Private Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPosition As Long, ByVal wFlags As Long) As Long
 Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
-Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Private Sub ChatNotifyTimer_Timer()
 Static onORoff As Boolean
 ChatNotifyTimer.Interval = 500
 With frmMain.Command2
-    If Not onORoff Then
-        .Caption = "! - " & MDI_COMMAND_CHAT & " - !"
-        onORoff = True
-    Else
+    If onORoff Then
         .Caption = MDI_COMMAND_CHAT
         onORoff = False
+    Else
+        .Caption = "! - " & MDI_COMMAND_CHAT & " - !"
+        onORoff = True
     End If
 End With
 End Sub
@@ -369,10 +368,6 @@ Select Case array1(0)
             FSocket2(Index).SendData "!denyfile#"
         End If
     End Select
-End Sub
-
-Private Sub MDIForm_Initialize()
-Call InitCommonControls
 End Sub
 
 Private Sub MDIForm_Load()
