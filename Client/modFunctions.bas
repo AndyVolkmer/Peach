@@ -6,6 +6,7 @@ Public Const bPort              As Long = 6124
 Public Const rPort              As Long = 6222
 
 Public ACC_SWITCH               As String
+Public pCaption                 As String
 Public Setting                  As CONFIG
 Public Fonts                    As FNT
 Public NID                      As NOTIFYICONDATA

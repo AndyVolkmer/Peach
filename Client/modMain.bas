@@ -5,8 +5,13 @@ Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Sub Main()
 'If the application is already open then close it
-If App.PrevInstance And Not Right$(App.EXEName, 5) = "DEBUG" Then
-    End
+If App.PrevInstance And Not Right$(App.EXEName, 5) = "DEBUG" Then End
+
+'Set the caption for proper identifying on frmMain
+If Right$(App.EXEName, 5) = "DEBUG" Then
+    pCaption = "Peach - Debug"
+Else
+    pCaption = "Peach"
 End If
 
 'Load Windows own style
@@ -17,30 +22,14 @@ LoadRegistryValue
 
 If Setting.VALIDATE = 0 Then
     Select Case Setting.LANGUAGE
-        Case 0
-            SET_LANG_GERMAN
-            
-        Case 1
-            SET_LANG_ENGLISH
-            
-        Case 2
-            SET_LANG_SPANISH
-            
-        Case 3
-            SET_LANG_SWEDISH
-            
-        Case 4
-            SET_LANG_ITALIAN
-            
-        Case 5
-            SET_LANG_DUTCH
-            
-        Case 6
-            SET_LANG_SERBIAN
-            
-        Case 7
-            SET_LANG_FRENCH
-            
+        Case 0: SET_LANG_GERMAN
+        Case 1: SET_LANG_ENGLISH
+        Case 2: SET_LANG_SPANISH
+        Case 3: SET_LANG_SWEDISH
+        Case 4: SET_LANG_ITALIAN
+        Case 5: SET_LANG_DUTCH
+        Case 6: SET_LANG_SERBIAN
+        Case 7: SET_LANG_FRENCH
     End Select
     
     SetScheme True

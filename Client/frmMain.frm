@@ -314,6 +314,7 @@ Select Case array1(0)
         
     Case "!denyfile"
         MsgBox SF_MSG_DECILINED, vbInformation
+		
 End Select
 End Sub
 
@@ -377,6 +378,8 @@ Command2.Caption = MDI_COMMAND_CHAT
 Command3.Caption = MDI_COMMAND_SENDFILE
 Command4.Caption = MDI_COMMAND_SOCIETY
 StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
+
+Me.Caption = pCaption
 
 DisableFormResize Me
 

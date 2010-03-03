@@ -108,29 +108,13 @@ End Sub
 
 Private Sub SET_LANG_1(Lang As Long)
 Select Case Lang
-    Case 0
-        SET_LANG_GERMAN
-        
-    Case 1
-        SET_LANG_ENGLISH
-        
-    Case 2
-        SET_LANG_SPANISH
-        
-    Case 3
-        SET_LANG_SWEDISH
-        
-    Case 4
-        SET_LANG_ITALIAN
-        
-    Case 5
-        SET_LANG_DUTCH
-        
-    Case 6
-        SET_LANG_SERBIAN
-        
-    Case 7
-        SET_LANG_FRENCH
-        
+    Case 0: SET_LANG_GERMAN
+    Case 1: SET_LANG_ENGLISH
+    Case 2: SET_LANG_SPANISH
+    Case 3: SET_LANG_SWEDISH
+    Case 4: SET_LANG_ITALIAN
+    Case 5: SET_LANG_DUTCH
+    Case 6: SET_LANG_SERBIAN
+    Case 7: SET_LANG_FRENCH
 End Select
 End Sub
