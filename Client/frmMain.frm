@@ -318,38 +318,35 @@ End Select
 End Sub
 
 Private Sub FSocket2_ConnectionRequest(Index As Integer, ByVal requestID As Long)
-Dim intCounter As Integer
-intCounter = loadSocket
-With FSocket2(intCounter)
-    .LocalPort = aPort
-    .Accept requestID
-End With
+Dim i As Long
+    i = LoadSocket
+
+FSocket2(i).LocalPort = aPort
+FSocket2(i).Accept requestID
 End Sub
 
-Private Function socketFree() As Integer
-Dim i       As Long
-Dim theIP   As String
+Private Function GetFreeSocket() As Long
+Dim i As Long
+Dim j As Long
 
 On Error GoTo HandleErrorFreeSocket
 For i = FSocket2.LBound + 1 To FSocket2.UBound
-    theIP = FSocket2(i).LocalIP
+    j = FSocket2(i).LocalIP
 Next i
 
-socketFree = FSocket2.UBound + 1
+GetFreeSocket = FSocket2.UBound + 1
 
 Exit Function
 HandleErrorFreeSocket:
-    socketFree = i
+    GetFreeSocket = i
 End Function
 
-Private Function loadSocket() As Integer
-Dim theFreeSocket As Integer
-theFreeSocket = 0
-theFreeSocket = socketFree
+Private Function LoadSocket() As Integer
+Dim i As Long
+    i = GetFreeSocket
 
-Load FSocket2(theFreeSocket)
-
-loadSocket = theFreeSocket
+Load FSocket2(i)
+LoadSocket = i
 End Function
 
 Private Sub FSocket2_DataArrival(Index As Integer, ByVal bytesTotal As Long)

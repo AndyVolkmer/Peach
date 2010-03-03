@@ -459,10 +459,11 @@ Unload RegSock(Index)
 End Sub
 
 Private Sub RegSock_ConnectionRequest(Index As Integer, ByVal requestID As Long)
-Dim intCounter As Integer
-    intCounter = loadSocket
-    RegSock(intCounter).LocalPort = rPort
-    RegSock(intCounter).Accept requestID
+Dim i As Long
+    i = LoadSocket()
+
+RegSock(i).LocalPort = rPort
+RegSock(i).Accept requestID
 End Sub
 
 Private Sub SetData(pItem As ListItem)
@@ -477,7 +478,7 @@ If ListView1.ListItems.Count <> 0 Then
 End If
 End Sub
 
-Private Function socketFree() As Integer
+Private Function GetFreeSocket() As Long
 Dim i As Long
 
 On Error GoTo HandleErrorFreeSocket
@@ -485,23 +486,21 @@ With RegSock
     For i = .LBound + 1 To .UBound
         .Item (i)
     Next i
-
-    socketFree = .UBound + 1
+    
+    GetFreeSocket = .UBound + 1
 End With
 
 Exit Function
 HandleErrorFreeSocket:
-    socketFree = i
+    GetFreeSocket = i
 End Function
 
-Private Function loadSocket() As Integer
-Dim theFreeSocket As Integer
-theFreeSocket = 0
-theFreeSocket = socketFree
+Private Function LoadSocket() As Long
+Dim i As Long
+    i = GetFreeSocket()
 
-Load RegSock(theFreeSocket)
-
-loadSocket = theFreeSocket
+Load RegSock(i)
+LoadSocket = i
 End Function
 
 Private Sub RegSock_DataArrival(Index As Integer, ByVal bytesTotal As Long)

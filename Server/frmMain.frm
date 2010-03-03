@@ -252,9 +252,9 @@ UPDATE_STATUS_BAR
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
-Dim j As Long
 Dim i As Long
-j = loadSocket
+Dim j As Long
+    j = LoadSocket()
 
 With Winsock1(j)
     .LocalPort = frmConfig.txtPort.Text
@@ -280,32 +280,29 @@ End With
 UPDATE_STATUS_BAR
 End Sub
 
-Private Function socketFree() As Long
+Private Function GetFreeSocket() As Long
 Dim i As Long
 
 On Error GoTo HandleErrorFreeSocket
-
 With Winsock1
     For i = .LBound + 1 To .UBound
-        If Winsock1(i).LocalIP Then
-        End If
+        .Item (i)
     Next i
-    socketFree = .UBound + 1
+    
+    GetFreeSocket = .UBound + 1
 End With
 
 Exit Function
 HandleErrorFreeSocket:
-socketFree = i
+    GetFreeSocket = i
 End Function
 
-Private Function loadSocket() As Integer
-Dim theFreeSocket As Integer
-theFreeSocket = 0
-theFreeSocket = socketFree
+Private Function LoadSocket() As Long
+Dim i As Long
+    i = GetFreeSocket()
 
-Load Winsock1(theFreeSocket)
-
-loadSocket = theFreeSocket
+Load Winsock1(i)
+LoadSocket = i
 End Function
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
