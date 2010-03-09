@@ -70,7 +70,7 @@ InsertIntoRegistry "Client\Configuration", "Validate", "0"
 InsertIntoRegistry "Client\Configuration", "Language", frmLanguage.Combo1.ListIndex
 
 If MsgBox(LANG_QUIT, vbQuestion + vbYesNo) = vbYes Then
-    End
+    CloseThis
 Else
     Unload Me
 End If

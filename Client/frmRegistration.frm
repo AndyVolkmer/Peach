@@ -391,10 +391,8 @@ End If
 
 Dim pGender As String
 Select Case cmbGender.ListIndex
-    Case 0
-        pGender = "Male"
-    Case 1
-        pGender = "Female"
+    Case 0: pGender = "Male"
+    Case 1: pGender = "Female"
 End Select
 
 frmMain.RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#" & pGender & "#"
@@ -402,7 +400,8 @@ End Sub
 
 Private Sub Form_Activate()
 Dim SC As String
-SC = Setting.SCHEME_COLOR
+    SC = Setting.SCHEME_COLOR
+
 BackColor = SC
 Check1.BackColor = SC
 Frame1.BackColor = SC
@@ -452,6 +451,7 @@ With frmMain.RegSock
     .RemotePort = rPort
     .Connect
 End With
+
 Screen.MousePointer = vbArrowHourglass
 ACC_SWITCH = "REG"
 End Sub

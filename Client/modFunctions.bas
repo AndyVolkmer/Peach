@@ -69,9 +69,9 @@ Public Const WM_RBUTTONUP       As Long = &H205 'Button up
 
 Public Declare Function SendMessage2 Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Public Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal dwMessage As Long, pnid As NOTIFYICONDATA) As Boolean
+Public Declare Function GetActiveWindow Lib "user32" () As Long
 
-Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long
-Declare Function GetActiveWindow Lib "user32" () As Long
+Private Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long
 
 Public Sub SendMessage(pMessage As String)
 With frmMain.Winsock1
@@ -215,7 +215,6 @@ ErrorHandler:
 End Function
 
 Public Function IsInvalid(pString As String) As Boolean
-Dim CHAR            As String
 Dim SIGN_STRING     As String
 Dim SIGN_ARRAY()    As String
 Dim i               As Long
@@ -230,3 +229,21 @@ For i = LBound(SIGN_ARRAY) To UBound(SIGN_ARRAY)
     End If
 Next i
 End Function
+
+Public Sub CloseThis()
+'Write data entries into registry
+InsertIntoRegistry "Client\Configuration", "Password", Encode(Encode(frmConfig.txtPassword))
+InsertIntoRegistry "Client\Configuration", "Account", frmConfig.txtAccount
+InsertIntoRegistry "Client\Configuration", "Nickname", frmConfig.txtNick
+
+If frmMain.WindowState = 1 Then
+    InsertIntoRegistry "Client\Configuration", "Top", Screen.Height / Screen.TwipsPerPixelY
+    InsertIntoRegistry "Client\Configuration", "Left", Screen.Width / Screen.TwipsPerPixelX
+Else
+    InsertIntoRegistry "Client\Configuration", "Top", frmMain.Top
+    InsertIntoRegistry "Client\Configuration", "Left", frmMain.Left
+End If
+
+Shell_NotifyIcon NIM_DELETE, NID  'Del tray icon
+End
+End Sub

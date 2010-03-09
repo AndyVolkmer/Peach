@@ -249,7 +249,9 @@ Private Declare Function DrawMenuBar Lib "user32" (ByVal hwnd As Long) As Long
 
 Private Sub ChatNotifyTimer_Timer()
 Static onORoff As Boolean
+
 ChatNotifyTimer.Interval = 500
+
 With frmMain.Command2
     If onORoff Then
         .Caption = MDI_COMMAND_CHAT
@@ -293,7 +295,7 @@ frmConfig.cmdConnect_Click
 End Sub
 
 Private Sub ExitC_Click()
-End
+CloseThis
 End Sub
 
 Private Sub FSocket_Close()
@@ -314,7 +316,7 @@ Select Case array1(0)
         
     Case "!denyfile"
         MsgBox SF_MSG_DECILINED, vbInformation
-		
+                
 End Select
 End Sub
 
@@ -351,8 +353,8 @@ LoadSocket = i
 End Function
 
 Private Sub FSocket2_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-Dim GetMessage As String
-Dim array1() As String
+Dim GetMessage  As String
+Dim array1()    As String
 
 FSocket2(Index).GetData GetMessage
 
@@ -399,7 +401,6 @@ Dim sFilter As String
 Msg = X / Screen.TwipsPerPixelX
 Select Case Msg
     Case WM_LBUTTONDOWN
-        
     Case WM_LBUTTONUP
         Vali = True
         frmMain.Show
@@ -407,14 +408,9 @@ Select Case Msg
         Shell_NotifyIcon NIM_DELETE, NID    'Del tray icon
         
     Case WM_LBUTTONDBLCLK
-        
-    Case WM_RBUTTONDOWN
-        frmMain.PopupMenu myPOP
-        
+    Case WM_RBUTTONDOWN: frmMain.PopupMenu myPOP
     Case WM_RBUTTONUP
-    
     Case WM_RBUTTONDBLCLK
-        
 End Select
 End Sub
 
@@ -569,8 +565,6 @@ For k = 0 To UBound(p_PreArray) - 1
             
         'Wipe out current list and insert new values
         Case "!update_online"
-            Dim User As String
-            
             'Clear the current list so we don't get multiply entries
             frmSociety.lvOnlineList.ListItems.Clear
             frmSendFile.Combo1.Clear
@@ -578,8 +572,7 @@ For k = 0 To UBound(p_PreArray) - 1
             'Go through array and add users
             For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
                 frmSociety.lvOnlineList.ListItems.Add , , StrArr(i)
-                User = Left(StrArr(i), InStr(1, StrArr(i), " ") - 1)
-                frmSendFile.Combo1.AddItem User
+                frmSendFile.Combo1.AddItem Left(StrArr(i), InStr(1, StrArr(i), " ") - 1)
             Next i
             
             'Ask for friendlist
@@ -656,6 +649,7 @@ For k = 0 To UBound(p_PreArray) - 1
                 .SelStart = Len(.Text)
                 .SelRTF = vbCrLf & Space(1) & "[" & Format$(Time, "hh:nn:ss") & "]" & Space(1) & p_PreArray(k)
             End With
+            
     End Select
 Next k
 End Sub
@@ -805,6 +799,7 @@ Select Case array1(0)
             .txtAccount = vbNullString
             .txtAccount.SetFocus
         End With
+        
 End Select
 End Sub
 

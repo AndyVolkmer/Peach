@@ -506,30 +506,25 @@ End Function
 Private Sub RegSock_DataArrival(Index As Integer, ByVal bytesTotal As Long)
 Dim i                   As Long
 Dim array1()            As String
-Dim GetMessage          As String
-Dim GetName             As String
-Dim GetPassword         As String
-Dim GetSecretQuestion   As String
-Dim GetSecretAnswer     As String
-Dim GetGender           As String
+Dim pCommand            As String
+Dim pMessage            As String
 
 On Error GoTo HandleError
-RegSock(Index).GetData GetMessage
-array1 = Split(GetMessage, "#")
 
-GetName = array1(1)
-GetPassword = array1(2)
-GetSecretQuestion = array1(3)
-GetSecretAnswer = array1(4)
-GetGender = array1(5)
+RegSock(Index).GetData pMessage
+array1 = Split(pMessage, "#")
 
-Select Case array1(0)
+If UBound(array1) > -1 Then
+    pCommand = array1(0)
+End If
+
+Select Case pCommand
     'Regster an account
     Case "!register"
         With ListView1.ListItems
             'Check if the account already exists
             For i = 1 To .Count
-                If UCase$(GetName) = UCase$(.Item(i).SubItems(1)) Then
+                If UCase$(array1(1)) = UCase$(.Item(i).SubItems(1)) Then
                     If RegSock(Index).State = 7 Then
                         RegSock(Index).SendData "!nameexist#"
                         Exit Sub
@@ -538,7 +533,7 @@ Select Case array1(0)
             Next i
         End With
         
-        RegisterAccount GetName, GetPassword, "0", "0", GetSecretQuestion, GetSecretAnswer, GetGender
+        RegisterAccount array1(1), array1(2), "0", "0", array1(3), array1(4), array1(5)
         RegSock(Index).SendData "!done#"
         
     'Check the secret question and send password
@@ -546,11 +541,11 @@ Select Case array1(0)
         With ListView1.ListItems
             For i = 1 To .Count
                 'Check if the account exists
-                If UCase$(GetName) = UCase$(.Item(i).SubItems(1)) Then
+                If UCase$(.Item(i).SubItems(1)) = UCase$(array1(1)) Then
                     'Check if the question chosen is the same
-                    If .Item(i).SubItems(7) = GetPassword Then
+                    If .Item(i).SubItems(7) = array1(2) Then
                         'Check if the answer is the same
-                        If .Item(i).SubItems(8) = GetSecretQuestion Then
+                        If .Item(i).SubItems(8) = array1(3) Then
                             If RegSock(Index).State = 7 Then
                                 RegSock(Index).SendData "!successfull#" & .Item(i).SubItems(2) & ".#"
                             End If
