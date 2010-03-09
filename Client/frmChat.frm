@@ -1,14 +1,13 @@
 VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmChat 
-   Appearance      =   0  'Flat
-   BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    Caption         =   "frmChat"
    ClientHeight    =   3870
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   7485
+   ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Segoe UI"
       Size            =   8.25
@@ -20,12 +19,13 @@ Begin VB.Form frmChat
    EndProperty
    LinkTopic       =   "Form1"
    LockControls    =   -1  'True
+   MaxButton       =   0   'False
    MDIChild        =   -1  'True
+   MinButton       =   0   'False
    ScaleHeight     =   3870
    ScaleWidth      =   7485
    ShowInTaskbar   =   0   'False
    Begin VB.TextBox txtToSend 
-      Enabled         =   0   'False
       Height          =   855
       Left            =   120
       MaxLength       =   180
@@ -69,7 +69,6 @@ Begin VB.Form frmChat
    Begin VB.CommandButton cmdClear 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Clear"
-      Enabled         =   0   'False
       Height          =   375
       Left            =   5760
       TabIndex        =   1
@@ -79,7 +78,6 @@ Begin VB.Form frmChat
    Begin VB.CommandButton cmdSend 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Send"
-      Enabled         =   0   'False
       Height          =   375
       Left            =   5760
       TabIndex        =   0
@@ -96,7 +94,6 @@ Begin VB.Form frmChat
       _ExtentY        =   4471
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   0   'False
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmChat.frx":007D
@@ -153,11 +150,11 @@ txtToSend.Text = vbNullString
 If LenB(Trim$(TTS)) = 0 Then Exit Sub
 
 'Send public message
-SendMessage "!message#" & frmConfig.txtNick & "#" & RTrim$(TTS) & "#"
+SendMessage "!message#" & frmMain.txtName.Text & "#" & RTrim$(TTS) & "#"
 End Sub
 
 Private Sub Form_Activate()
-frmMain.Command2.Caption = MDI_COMMAND_CHAT
+frmContainer.cmdChat.Caption = MDI_COMMAND_CHAT
 frmMain.ChatNotifyTimer.Enabled = False
 End Sub
 
@@ -179,19 +176,19 @@ txtToSend.Text = vbNullString
 End Sub
 
 Private Sub pAddToFriendlist_Click()
-SendMessage "!friend#-add-user#" & frmConfig.txtAccount & "#" & menuUser & "#"
+SendMessage "!friend#-add-user#" & frmMain.txtAccount.Text & "#" & menuUser & "#"
 End Sub
 
 Private Sub pIgnoreUser_Click()
-SendMessage "!ignore#-add-user#" & frmConfig.txtAccount & "#" & menuUser & "#"
+SendMessage "!ignore#-add-user#" & frmMain.txtAccount.Text & "#" & menuUser & "#"
 End Sub
 
 Private Sub pWhisper_Click()
-frmMain.SetupForms frmChat
-With frmChat
-    .txtToSend = "/whisper " & menuUser & " "
-    .txtToSend.SelStart = Len(.txtToSend.Text)
-    .txtToSend.SetFocus
+frmContainer.SetupForms frmChat
+With frmChat.txtToSend
+    .Text = "/whisper " & menuUser & " "
+    .SelStart = Len(.Text)
+    .SetFocus
 End With
 End Sub
 
@@ -253,7 +250,7 @@ Else
                 menuAccount = Mid(.Item(i), InStr(1, .Item(i), "(") + 2, Len(.Item(i)) - InStr(1, .Item(i), "(") - 3)
                 
                 'If the it is the user and not your self then proceed
-                If pTemp = menuUser And Not menuUser = frmConfig.txtNick Then
+                If pTemp = menuUser And Not menuUser = frmMain.txtName Then
                     'Check if the user is already added in friend list ( to disable control )
                     With frmSociety.lvFriendList.ListItems
                         For j = 1 To .Count

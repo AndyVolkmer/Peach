@@ -9,6 +9,7 @@ Begin VB.Form frmSendFile
    ClientLeft      =   690
    ClientTop       =   1365
    ClientWidth     =   7500
+   ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Segoe UI"
       Size            =   8.25
@@ -25,7 +26,6 @@ Begin VB.Form frmSendFile
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
    Begin VB.ComboBox Combo1 
-      Enabled         =   0   'False
       Height          =   315
       Left            =   120
       Style           =   2  'Dropdown List
@@ -34,7 +34,6 @@ Begin VB.Form frmSendFile
       Width           =   1935
    End
    Begin VB.TextBox txtFileName 
-      Enabled         =   0   'False
       Height          =   285
       Left            =   120
       Locked          =   -1  'True
@@ -55,7 +54,6 @@ Begin VB.Form frmSendFile
    Begin VB.PictureBox picProgress 
       AutoRedraw      =   -1  'True
       BackColor       =   &H00F4F4F4&
-      Enabled         =   0   'False
       FillColor       =   &H00C00000&
       BeginProperty Font 
          Name            =   "MS Sans Serif"
@@ -78,7 +76,6 @@ Begin VB.Form frmSendFile
    Begin VB.CommandButton cmdBrowse 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Browse"
-      Enabled         =   0   'False
       Height          =   375
       Left            =   5640
       TabIndex        =   1
@@ -89,7 +86,6 @@ Begin VB.Form frmSendFile
    Begin VB.CommandButton cmdSendFile 
       BackColor       =   &H00F4F4F4&
       Caption         =   "&Send File"
-      Enabled         =   0   'False
       Height          =   375
       Left            =   5640
       TabIndex        =   0
@@ -104,9 +100,8 @@ Begin VB.Form frmSendFile
       _Version        =   393216
    End
    Begin VB.Label lblSendStatus 
-      BackColor       =   &H00E0E0E0&
+      BackColor       =   &H00F4F4F4&
       Caption         =   "0.0%"
-      Enabled         =   0   'False
       Height          =   255
       Left            =   120
       TabIndex        =   8
@@ -116,7 +111,6 @@ Begin VB.Form frmSendFile
    Begin VB.Label Label4 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Send to :"
-      Enabled         =   0   'False
       Height          =   255
       Left            =   120
       TabIndex        =   6
@@ -127,7 +121,6 @@ Begin VB.Form frmSendFile
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "File Name:"
-      Enabled         =   0   'False
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   120
@@ -147,7 +140,6 @@ Begin VB.Form frmSendFile
       AutoSize        =   -1  'True
       BackColor       =   &H00F4F4F4&
       Caption         =   "0.00 Kb/Sec"
-      Enabled         =   0   'False
       ForeColor       =   &H00000000&
       Height          =   195
       Left            =   6405
@@ -247,7 +239,7 @@ If Combo1.ListCount = 0 Then
     Exit Sub
 End If
 
-If Combo1.Text = frmConfig.txtNick Then
+If Combo1.Text = frmMain.txtName Then
     cmdSendFile.Enabled = False
 Else
     cmdSendFile.Enabled = True

@@ -323,7 +323,7 @@ With Setting
     .MIN_TICK = chkMinimize.Value
 End With
 
-SetScheme False
+SetScheme
 End Sub
 
 Private Sub Form_Activate()

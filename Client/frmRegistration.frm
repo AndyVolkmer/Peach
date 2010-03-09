@@ -1,5 +1,5 @@
 VERSION 5.00
-Begin VB.Form frmRegistration 
+Begin VB.Form frmCreateAccount 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Peach - Registration"
@@ -303,7 +303,7 @@ Begin VB.Form frmRegistration
       Width           =   3255
    End
 End
-Attribute VB_Name = "frmRegistration"
+Attribute VB_Name = "frmCreateAccount"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True

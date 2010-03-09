@@ -32,12 +32,14 @@ If Setting.VALIDATE = 0 Then
         Case 7: SET_LANG_FRENCH
     End Select
     
-    SetScheme True
+    SetScheme
     
     'Temp hackfix for auto login
     If Setting.AUTO_LOGIN Then
-        frmConfig.cmdConnect_Click
+        frmMain.cmdConnect_Click
     End If
+    
+    frmMain.Show
 Else
     'Set language default ( english )
     SET_LANG_ENGLISH
@@ -166,79 +168,5 @@ With Fonts
     Else
         .Under = CBool(ReadFromRegistry("Client\Font", "FontStrike"))
     End If
-End With
-End Sub
-
-Public Sub SetScheme(IsFirst As Boolean)
-Dim SC As String
-    SC = Setting.SCHEME_COLOR
-
-With frmMain
-    .BackColor = SC
-    .Picture1.BackColor = SC
-End With
-
-With frmSendFile
-    .BackColor = SC
-    .picProgress.BackColor = SC
-    .Label1.BackColor = SC
-    .Label4.BackColor = SC
-    .lblSendStatus.BackColor = SC
-    .lblSendSpeed.BackColor = SC
-End With
-
-If Not IsFirst Then
-    With frmSettings
-        .BackColor = SC
-        .Frame1.BackColor = SC
-        .Frame2.BackColor = SC
-        .Frame3.BackColor = SC
-        .lblColor.BackColor = SC
-        .lblFont.BackColor = SC
-        .Label2.BackColor = SC
-        .Label3.BackColor = SC
-        .chkSaveAccount.BackColor = SC
-        .chkSavePassword.BackColor = SC
-        .chkAutoLogin.BackColor = SC
-        .chkAskClosing.BackColor = SC
-        .chkMinimize.BackColor = SC
-        .lblMinimizeTray.BackColor = SC
-    End With
-End If
-
-frmChat.BackColor = SC
-
-With frmChat.txtConver
-    .Font.Name = Fonts.Name
-    .Font.Bold = Fonts.Bold
-    .Font.Italic = Fonts.Italic
-    .Font.Size = Fonts.Size
-    .Font.Strikethrough = Fonts.Strike
-    .Font.Underline = Fonts.Under
-End With
-
-With frmChat.txtToSend
-    .Font.Name = Fonts.Name
-    .Font.Bold = Fonts.Bold
-    .Font.Italic = Fonts.Italic
-    .Font.Size = Fonts.Size
-    .Font.Strikethrough = Fonts.Strike
-    .Font.Underline = Fonts.Under
-End With
-
-With frmSociety
-    .BackColor = SC
-    .SSTab1.BackColor = SC
-End With
-
-With frmConfig
-    .BackColor = SC
-    .Label1.BackColor = SC
-    .Label2.BackColor = SC
-    .lblAccount.BackColor = SC
-    .lblAuthor.BackColor = SC
-    .lblNickname.BackColor = SC
-    .lblPassword.BackColor = SC
-    .lblVersion.BackColor = SC
 End With
 End Sub

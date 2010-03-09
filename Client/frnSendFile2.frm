@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmSendFile2 
    BackColor       =   &H00F4F4F4&
@@ -175,29 +175,29 @@ If LV.ColumnHeaders(Column + 1).Width < TLen Then LV.ColumnHeaders(Column + 1).W
 End Sub
 
 Private Sub SckReceiveFile_ConnectionRequest(Index As Integer, ByVal requestID As Long)
-Dim K As Integer, LI As ListItem
+Dim k As Integer, LI As ListItem
 
-For K = 1 To SckReceiveFile.UBound
-    If SckReceiveFile(K).State = sckClosed Then Exit For
-Next K
+For k = 1 To SckReceiveFile.UBound
+    If SckReceiveFile(k).State = sckClosed Then Exit For
+Next k
 
-If K = SckReceiveFile.UBound + 1 Then
+If k = SckReceiveFile.UBound + 1 Then
     Load SckReceiveFile(SckReceiveFile.UBound + 1)
     ReDim Preserve Clients(SckReceiveFile.UBound)
     
-    K = SckReceiveFile.UBound
-    lstConnections.ListItems.Add , , CStr(K)
+    k = SckReceiveFile.UBound
+    lstConnections.ListItems.Add , , CStr(k)
 End If
 
-SckReceiveFile(K).Accept requestID
+SckReceiveFile(k).Accept requestID
 
-If LenB(SckReceiveFile(K).RemoteHost) = 0 Then
-    Me.lstConnections.ListItems(K + 1).SubItems(2) = SckReceiveFile(K).RemoteHostIP
+If LenB(SckReceiveFile(k).RemoteHost) = 0 Then
+    Me.lstConnections.ListItems(k + 1).SubItems(2) = SckReceiveFile(k).RemoteHostIP
 Else
-    Me.lstConnections.ListItems(K + 1).SubItems(2) = SckReceiveFile(K).RemoteHost
+    Me.lstConnections.ListItems(k + 1).SubItems(2) = SckReceiveFile(k).RemoteHost
 End If
 
-FitTextInListView Me.lstConnections, 2, , K + 1
+FitTextInListView Me.lstConnections, 2, , k + 1
 End Sub
 
 Private Sub SckReceiveFile_DataArrival(Index As Integer, ByVal bytesTotal As Long)
@@ -239,21 +239,23 @@ Select Case Err.Number
     Case 75
         MsgBox "The file you are trying to get already exists in this location and is ReadOnly. Rename it and try to send again." & vbCrLf & "Current action aborted due to ReadOnly file.", vbInformation
         Exit Sub
+        
     Case Else
         MsgBox "Error : " & Err.Number & vbCrLf & "Description : " & Err.Description & vbCrLf & "Current action aborted because of an unkown error!", vbCritical
         Exit Sub
+        
 End Select
 End Sub
 
 Private Sub tmrStatus_Timer()
-Dim K As Long, TmpStr As String
+Dim k As Long, TmpStr As String
 
-For K = 0 To SckReceiveFile.UBound
-    TmpStr = Choose(SckReceiveFile(K).State + 1, "Closed", "Open", "Listening", "Connection pending", "Resolving host", "Host resolved", "Connecting", "Connected", "Server is disconnecting", "Error")
+For k = 0 To SckReceiveFile.UBound
+    TmpStr = Choose(SckReceiveFile(k).State + 1, "Closed", "Open", "Listening", "Connection pending", "Resolving host", "Host resolved", "Connecting", "Connected", "Server is disconnecting", "Error")
     
-    If Me.lstConnections.ListItems(K + 1).SubItems(1) <> TmpStr Then
-        Me.lstConnections.ListItems(K + 1).SubItems(1) = TmpStr
-        FitTextInListView Me.lstConnections, 1, , K + 1
+    If Me.lstConnections.ListItems(k + 1).SubItems(1) <> TmpStr Then
+        Me.lstConnections.ListItems(k + 1).SubItems(1) = TmpStr
+        FitTextInListView Me.lstConnections, 1, , k + 1
     End If
-Next K
+Next k
 End Sub

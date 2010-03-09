@@ -86,80 +86,18 @@ Public Sub FlashTitle(Handle As Long, ReturnOrig As Boolean)
 Call FlashWindow(Handle, ReturnOrig)
 End Sub
 
-Public Sub MinimizeToTray()
-frmMain.Hide
+Public Sub MinimizeToTray(pForm As Form)
+pForm.Hide
 With NID
     .cbSize = Len(NID)
-    .hwnd = frmMain.hwnd
+    .hwnd = pForm.hwnd
     .uId = vbNull
     .uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
     .uCallBackMessage = WM_MOUSEMOVE
-    .hIcon = frmMain.Icon ' the icon will be your Form1 project icon
-    .szTip = "Peach -  " & frmConfig.txtNick & vbNullChar
+    .hIcon = pForm.Icon ' the icon will be your Form1 project icon
+    .szTip = "Peach" & vbNullChar
 End With
 Shell_NotifyIcon NIM_ADD, NID
-End Sub
-
-Public Sub SwitchButtons(pSwitch As Boolean, IsConnecting As Boolean)
-Dim pBool As Boolean
-'pSwitch - True     = Disconnected
-'pSwitch - False    = Connected
-With frmConfig
-    .lblAccount.Enabled = pSwitch
-    .txtAccount.Enabled = pSwitch
-        
-    .lblPassword.Enabled = pSwitch
-    .txtPassword.Enabled = pSwitch
-    
-    .lblNickname.Enabled = pSwitch
-    .txtNick.Enabled = pSwitch
-    
-    .Command3.Enabled = pSwitch
-    .Command4.Enabled = pSwitch
-    .Label1.Enabled = pSwitch
-    .Label2.Enabled = pSwitch
-
-    If pSwitch Then
-        .cmdConnect.Caption = CONFIG_COMMAND_CONNECT
-        frmMain.Connect.Caption = CONFIG_COMMAND_CONNECT
-    Else
-        .cmdConnect.Caption = CONFIG_COMMAND_DISCONNECT
-        frmMain.Connect.Caption = CONFIG_COMMAND_DISCONNECT
-    End If
-End With
-
-If Not pSwitch And Not IsConnecting Then
-    pBool = True
-Else
-    pBool = False
-End If
-
-With frmChat
-    .cmdSend.Enabled = pBool
-    .cmdClear.Enabled = pBool
-    .txtToSend.Enabled = pBool
-    .txtConver.Enabled = pBool
-End With
-
-With frmSendFile
-    .Label1.Enabled = pBool
-    .Label4.Enabled = pBool
-    .txtFileName.Enabled = pBool
-    .Combo1.Enabled = pBool
-    .cmdBrowse.Enabled = pBool
-    .lblSendSpeed.Enabled = pBool
-    .lblSendStatus.Enabled = pBool
-    .picProgress.Enabled = pBool
-End With
-
-With frmSociety
-    .cmdAddFriend.Enabled = pBool
-    .cmdAddIgnore.Enabled = pBool
-    .cmdRemoveFriend.Enabled = pBool
-    .cmdRemoveIgnore.Enabled = pBool
-    .cmdAddToFriend.Enabled = pBool
-    .cmdAddToIgnore.Enabled = pBool
-End With
 End Sub
 
 Public Sub Disconnect()
@@ -198,13 +136,10 @@ With frmMain
     'Reset RunOnce variable
     .RunOnce = False
     
-    .StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
+    '.StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
 End With
 
-frmConfig.cmdConnect.Caption = CONFIG_COMMAND_CONNECT
-frmMain.Connect.Caption = CONFIG_COMMAND_CONNECT
-
-SwitchButtons True, False
+SwitchButtons True
 End Sub
 
 'If an error occurs, this function returns False
@@ -232,11 +167,11 @@ End Function
 
 Public Sub CloseThis()
 'Write data entries into registry
-InsertIntoRegistry "Client\Configuration", "Password", Encode(Encode(frmConfig.txtPassword))
-InsertIntoRegistry "Client\Configuration", "Account", frmConfig.txtAccount
-InsertIntoRegistry "Client\Configuration", "Nickname", frmConfig.txtNick
+InsertIntoRegistry "Client\Configuration", "Password", Encode(Encode(frmMain.txtPassword.Text))
+InsertIntoRegistry "Client\Configuration", "Account", frmMain.txtAccount.Text
+InsertIntoRegistry "Client\Configuration", "Nickname", frmMain.txtName.Text
 
-If frmMain.WindowState = 1 Then
+If frmMain.WindowState = vbMinimized Then 'vbMinimized = 1
     InsertIntoRegistry "Client\Configuration", "Top", Screen.Height / Screen.TwipsPerPixelY
     InsertIntoRegistry "Client\Configuration", "Left", Screen.Width / Screen.TwipsPerPixelX
 Else
@@ -246,4 +181,96 @@ End If
 
 Shell_NotifyIcon NIM_DELETE, NID  'Del tray icon
 End
+End Sub
+
+Public Sub SwitchButtons(pSwitch As Boolean)
+With frmMain
+    .lblAccount.Enabled = pSwitch
+    .lblCreateAccount.Enabled = pSwitch
+    .lblForgotPassword.Enabled = pSwitch
+    .lblName.Enabled = pSwitch
+    .lblPassword.Enabled = pSwitch
+    
+    .txtAccount.Enabled = pSwitch
+    .txtName.Enabled = pSwitch
+    .txtPassword.Enabled = pSwitch
+    
+    If pSwitch Then
+        .cmdConnect.Caption = CONFIG_COMMAND_CONNECT
+    Else
+        .cmdConnect.Caption = CONFIG_COMMAND_DISCONNECT
+    End If
+End With
+End Sub
+
+Public Sub SetScheme() 'IsFirst As Boolean
+Dim SC As String
+    SC = Setting.SCHEME_COLOR
+
+With frmMain
+    .BackColor = SC
+    .lblAccount.BackColor = SC
+    .lblCreateAccount.BackColor = SC
+    .lblForgotPassword.BackColor = SC
+    .lblName.BackColor = SC
+    .lblPassword.BackColor = SC
+    .lblAuthor.BackColor = SC
+    .lblVersion.BackColor = SC
+End With
+
+'If Not IsFirst Then
+    With frmSettings
+        .BackColor = SC
+        .Frame1.BackColor = SC
+        .Frame2.BackColor = SC
+        .Frame3.BackColor = SC
+        .lblColor.BackColor = SC
+        .lblFont.BackColor = SC
+        .Label2.BackColor = SC
+        .Label3.BackColor = SC
+        .chkSaveAccount.BackColor = SC
+        .chkSavePassword.BackColor = SC
+        .chkAutoLogin.BackColor = SC
+        .chkAskClosing.BackColor = SC
+        .chkMinimize.BackColor = SC
+        .lblMinimizeTray.BackColor = SC
+    End With
+'End If
+
+frmContainer.BackColor = SC
+frmContainer.Picture1.BackColor = SC
+
+With frmSendFile
+    .BackColor = SC
+    .picProgress.BackColor = SC
+    .Label1.BackColor = SC
+    .Label4.BackColor = SC
+    .lblSendStatus.BackColor = SC
+    .lblSendSpeed.BackColor = SC
+End With
+
+frmChat.BackColor = SC
+
+With frmChat.txtConver
+    .Font.Name = Fonts.Name
+    .Font.Bold = Fonts.Bold
+    .Font.Italic = Fonts.Italic
+    .Font.Size = Fonts.Size
+    .Font.Strikethrough = Fonts.Strike
+    .Font.Underline = Fonts.Under
+End With
+
+With frmChat.txtToSend
+    .Font.Name = Fonts.Name
+    .Font.Bold = Fonts.Bold
+    .Font.Italic = Fonts.Italic
+    .Font.Size = Fonts.Size
+    .Font.Strikethrough = Fonts.Strike
+    .Font.Underline = Fonts.Under
+End With
+
+With frmSociety
+    .BackColor = SC
+    .SSTab1.BackColor = SC
+End With
 End Sub

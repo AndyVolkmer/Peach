@@ -25,6 +25,8 @@ Public MDI_MSG_ALREADY_IN_IGNORE_LIST   As String
 Public MDI_MSG_ALREADY_IN_FRIEND_LIST   As String
 Public MDI_MSG_ACCOUNT_NOT_EXIST        As String
 
+Public MDI_MENU                         As String
+
 'Configuration form ..
 Public CONFIG_LABEL_ACCOUNT             As String
 Public CONFIG_LABEL_PASSWORD            As String
@@ -210,6 +212,8 @@ MDI_MSG_ALREADY_IN_IGNORE_LIST = "' ist bereits in deiner Ignorier-Liste."
 MDI_MSG_ALREADY_IN_FRIEND_LIST = "' ist bereits in deiner Freundesliste."
 MDI_MSG_ACCOUNT_NOT_EXIST = "' existiert nicht."
 
+MDI_MENU = "Menü"
+
 CONFIG_LABEL_ACCOUNT = " Konto"
 CONFIG_LABEL_PASSWORD = " Passwort"
 CONFIG_LABEL_NAME = " Name"
@@ -393,6 +397,8 @@ MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
 MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
 MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
 MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
+
+MDI_MENU = "Menu"
 
 'Configuration form ..
 CONFIG_LABEL_ACCOUNT = " Account"
@@ -579,6 +585,8 @@ MDI_MSG_ALREADY_IN_IGNORE_LIST = "' ya esta en tu lista de ignorados."
 MDI_MSG_ALREADY_IN_FRIEND_LIST = "' ya esta en tu lista de amigos."
 MDI_MSG_ACCOUNT_NOT_EXIST = "' no existe."
 
+MDI_MENU = "Menu"
+
 CONFIG_LABEL_ACCOUNT = " Cuenta"
 CONFIG_LABEL_PASSWORD = " Contraseña"
 CONFIG_LABEL_NAME = " Nombre"
@@ -763,6 +771,8 @@ MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
 MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
 MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
 
+MDI_MENU = "Menu"
+
 ' Config form
 CONFIG_LABEL_ACCOUNT = " Konto"
 CONFIG_LABEL_PASSWORD = " Lösenord"
@@ -944,6 +954,8 @@ MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
 MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
 MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
 MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
+
+MDI_MENU = "Menu"
 
 'Config form ..
 CONFIG_LABEL_ACCOUNT = " Conto"
@@ -1128,6 +1140,8 @@ MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
 MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
 MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
 MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
+
+MDI_MENU = "Menu"
 
 CONFIG_LABEL_ACCOUNT = " Account"
 CONFIG_LABEL_PASSWORD = " Wachtwoord"
@@ -1318,6 +1332,8 @@ MDI_MSG_ALREADY_IN_IGNORE_LIST = "' je vec u tvojoj ignor listi."
 MDI_MSG_ALREADY_IN_FRIEND_LIST = "' je vec u tvojim prijateljima."
 MDI_MSG_ACCOUNT_NOT_EXIST = "' ne postoji."
 
+MDI_MENU = "Menu"
+
 'Config form ..
 CONFIG_LABEL_ACCOUNT = " Profil"
 CONFIG_LABEL_PASSWORD = " Sifra"
@@ -1499,6 +1515,8 @@ MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
 MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
 MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
 MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
+
+MDI_MENU = "Menu"
 
 CONFIG_LABEL_ACCOUNT = " Compte"
 CONFIG_LABEL_PASSWORD = " Mot de passe"
