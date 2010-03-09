@@ -18,7 +18,7 @@ Begin VB.Form frmSendFile2
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
-   Icon            =   "frnSendFile2.frx":0000
+   Icon            =   "frmSendFile2.frx":0000
    LinkTopic       =   "Form1"
    LockControls    =   -1  'True
    MaxButton       =   0   'False
