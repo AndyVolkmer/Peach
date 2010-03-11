@@ -278,6 +278,14 @@ If Setting.ASK_TICK Then
 End If
 End Sub
 
+Private Sub FSocket2_Close(Index As Integer)
+Unload FSocket2(Index)
+End Sub
+
+Private Sub FSocket2_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
+Unload FSocket2(Index)
+End Sub
+
 Private Sub txtAccount_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then
     cmdConnect_Click
@@ -831,17 +839,17 @@ FSocket2(Index).GetData GetMessage
 
 array1 = Split(GetMessage, "#")
 
-Select Case array1(0)
-    Case "!filerequest"
-        SF_MSG_INCOMMING_FILE = Replace$(SF_MSG_INCOMMING_FILE, "%f", array1(1))
-        SF_MSG_INCOMMING_FILE = Replace$(SF_MSG_INCOMMING_FILE, "%u", array1(2))
-        If MsgBox(SF_MSG_INCOMMING_FILE, vbYesNo + vbQuestion) = vbYes Then
-            FSocket2(Index).SendData "!acceptfile#"
-            frmSendFile2.Show
-        Else
-            FSocket2(Index).SendData "!denyfile#"
-        End If
-End Select
+If array1(0) = "!filerequest" Then
+    SF_MSG_INCOMMING_FILE = Replace$(SF_MSG_INCOMMING_FILE, "%f", array1(1))
+    SF_MSG_INCOMMING_FILE = Replace$(SF_MSG_INCOMMING_FILE, "%u", array1(2))
+    
+    If MsgBox(SF_MSG_INCOMMING_FILE, vbYesNo + vbQuestion) = vbYes Then
+        FSocket2(Index).SendData "!acceptfile#"
+        frmSendFile2.Show
+    Else
+        FSocket2(Index).SendData "!denyfile#"
+    End If
+End If
 End Sub
 
 Private Sub FSocket2_ConnectionRequest(Index As Integer, ByVal requestID As Long)

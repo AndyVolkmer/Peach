@@ -139,6 +139,8 @@ With frmMain
     '.StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
 End With
 
+SetupForm frmMain
+
 SwitchButtons True
 End Sub
 
@@ -194,6 +196,9 @@ With frmMain
     .txtAccount.Enabled = pSwitch
     .txtName.Enabled = pSwitch
     .txtPassword.Enabled = pSwitch
+    
+    .menuConfig.Enabled = pSwitch
+    .menuUpdate.Enabled = pSwitch
     
     If pSwitch Then
         .cmdConnect.Caption = CONFIG_COMMAND_CONNECT
