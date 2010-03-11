@@ -184,7 +184,7 @@ SendMessage "!ignore#-add-user#" & frmMain.txtAccount.Text & "#" & menuUser & "#
 End Sub
 
 Private Sub pWhisper_Click()
-frmContainer.SetupForms frmChat
+SetupChildForm frmChat
 With frmChat.txtToSend
     .Text = "/whisper " & menuUser & " "
     .SelStart = Len(.Text)

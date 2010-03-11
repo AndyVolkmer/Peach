@@ -546,7 +546,7 @@ With lvFriendList.SelectedItem
     pName = Mid(.Text, pMiddle + 2, Len(.Text) - pMiddle)
 End With
 
-frmContainer.SetupForms frmChat
+SetupChildForm frmChat
 With frmChat.txtToSend
     .Text = "/whisper " & pName & " "
     .SelStart = Len(.Text)
@@ -555,7 +555,7 @@ End With
 End Sub
 
 Private Sub mWhisperT_Click()
-frmContainer.SetupForms frmChat
+SetupChildForm frmChat
 With frmChat.txtToSend
     .Text = "/whisper " & p_TEMP_NAME & " "
     .SelStart = Len(.Text)

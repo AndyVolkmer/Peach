@@ -274,3 +274,23 @@ With frmSociety
     .SSTab1.BackColor = SC
 End With
 End Sub
+
+Public Sub SetupChildForm(pForm As Form)
+Dim pNewForm    As Form
+
+For Each pNewForm In Forms
+    If pNewForm.Name <> frmContainer.Name Then pNewForm.Hide
+Next
+
+pForm.Show
+End Sub
+
+Public Sub SetupForm(pForm As Form)
+Dim pNewForm As Form
+
+For Each pNewForm In Forms
+    pNewForm.Hide
+Next
+
+pForm.Show
+End Sub

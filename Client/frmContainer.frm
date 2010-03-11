@@ -32,6 +32,14 @@ Begin VB.MDIForm frmContainer
       TabIndex        =   0
       Top             =   0
       Width           =   7395
+      Begin VB.CommandButton cmdSwitch 
+         Caption         =   "v"
+         Height          =   375
+         Left            =   6840
+         TabIndex        =   4
+         Top             =   120
+         Width           =   375
+      End
       Begin VB.CommandButton cmdSociety 
          Caption         =   "cmdSociety"
          BeginProperty Font 
@@ -132,19 +140,23 @@ Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVa
 Private Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Long, ByVal bRevert As Long) As Long
 
 Private Sub Command1_Click()
-SetupForms frmSociety
+SetupChildForm frmSociety
 End Sub
 
 Private Sub cmdChat_Click()
-SetupForms frmChat
+SetupChildForm frmChat
 End Sub
 
 Private Sub cmdSendFile_Click()
-SetupForms frmSendFile
+SetupChildForm frmSendFile
 End Sub
 
 Private Sub cmdSociety_Click()
-SetupForms frmSociety
+SetupChildForm frmSociety
+End Sub
+
+Private Sub cmdSwitch_Click()
+SetupForm frmMain
 End Sub
 
 Private Sub MDIForm_Activate()
@@ -208,22 +220,11 @@ frm.Width = frm.Width - 1
 frm.Width = frm.Width + 1
 End Sub
 
-Public Sub SetupForms(pForm As Form)
-Dim i           As Long
-Dim pNewForm    As Form
-
-For Each pNewForm In Forms
-    If pNewForm.Name <> frmContainer.Name Then pNewForm.Hide
-Next
-
-pForm.Show
-End Sub
-
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Dim Msg As Long
-    Msg = X / Screen.TwipsPerPixelX
+Dim MSG As Long
+    MSG = X / Screen.TwipsPerPixelX
 
-Select Case Msg
+Select Case MSG
     Case WM_LBUTTONDOWN
     Case WM_LBUTTONUP
         Vali = True
@@ -241,7 +242,7 @@ End Sub
 Private Sub MDIForm_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 Cancel = 1
 frmContainer.Hide
-frmMain.Show
+SetupForm frmMain
 End Sub
 
 Private Sub MDIForm_Resize()

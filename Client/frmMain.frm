@@ -19,9 +19,18 @@ Begin VB.Form frmMain
    EndProperty
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MaxButton       =   0   'False
    ScaleHeight     =   7320
    ScaleWidth      =   5955
+   Begin VB.CommandButton cmdSwitch 
+      Caption         =   "^"
+      Height          =   375
+      Left            =   5490
+      TabIndex        =   11
+      Top             =   50
+      Width           =   375
+   End
    Begin VB.TextBox txtPassword 
       Alignment       =   2  'Center
       Height          =   285
@@ -252,6 +261,11 @@ With frmContainer.cmdChat
 End With
 End Sub
 
+Private Sub cmdSwitch_Click()
+'SetupChildForm frmChat
+SetupForm frmContainer
+End Sub
+
 Private Sub ExitC_Click()
 CloseThis
 End Sub
@@ -404,10 +418,10 @@ txtPassword.Text = Setting.PASSWORD
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Dim Msg     As Long
-    Msg = X / Screen.TwipsPerPixelX
+Dim MSG     As Long
+    MSG = X / Screen.TwipsPerPixelX
 
-Select Case Msg
+Select Case MSG
     Case WM_LBUTTONDOWN
     Case WM_LBUTTONUP
         Vali = True
@@ -658,7 +672,7 @@ For k = 0 To UBound(p_PreArray) - 1
             
         'We can login
         Case "!accepted"
-            frmContainer.SetupForms frmChat
+            SetupChildForm frmChat
             'StatusBar1.Panels(1).Text = Replace$(MDI_STAT_CONNECTED, "%s", Setting.SERVER_IP)
             SendMessage "!connected#" & frmMain.txtName.Text & "#"
             
@@ -780,6 +794,7 @@ For k = 0 To UBound(p_PreArray) - 1
                     
                 Case Else
                     MsgBox StrArr(1), vbInformation
+                    
             End Select
             
         Case Else
