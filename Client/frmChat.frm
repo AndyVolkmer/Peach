@@ -44,6 +44,7 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -93,7 +94,6 @@ Begin VB.Form frmChat
       _ExtentY        =   4471
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmChat.frx":007D
@@ -193,7 +193,8 @@ End With
 End Sub
 
 Private Sub txtConver_Change()
-Dim hWnd1 As Long: hWnd1 = GetActiveWindow
+Dim hWnd1 As Long
+    hWnd1 = GetActiveWindow
 
 'Unlock so we can convert smileys
 txtConver.Locked = False
@@ -205,7 +206,7 @@ Call Create_Smileys(txtConver)
 Call Highlight(txtConver)
 
 'If window doenst have focus then flash
-With frmMain
+With frmContainer
     If Not hWnd1 = .hwnd Then
         Call FlashTitle(.hwnd, True)
     End If
