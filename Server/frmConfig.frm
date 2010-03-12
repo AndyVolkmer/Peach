@@ -34,7 +34,6 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -198,11 +197,6 @@ If LenB(TB.Text) = 0 Then
     CheckTx = True
 End If
 End Function
-
-Private Sub connCounter_Timer()
-VarTime = VarTime + 1
-Label2.Caption = "Server Uptime : " & Format$(TimeSerial(0, 0, VarTime), "hh:mm:ss")
-End Sub
 
 Private Sub Form_Load()
 Me.Top = 0: Me.Left = 0
