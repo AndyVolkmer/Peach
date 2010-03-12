@@ -4,10 +4,10 @@ Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Begin VB.Form frmSociety 
    BorderStyle     =   0  'None
    Caption         =   "frmSociety"
-   ClientHeight    =   4290
+   ClientHeight    =   4575
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   7665
+   ClientWidth     =   7905
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Segoe UI"
@@ -23,8 +23,8 @@ Begin VB.Form frmSociety
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   4290
-   ScaleWidth      =   7665
+   ScaleHeight     =   4575
+   ScaleWidth      =   7905
    ShowInTaskbar   =   0   'False
    Begin TabDlg.SSTab SSTab1 
       Height          =   3975
@@ -60,21 +60,15 @@ Begin VB.Form frmSociety
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "cmdAddToIgnore"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdAddToFriend"
-      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).Control(2)=   "lvOnlineList"
-      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "cmdRemoveIgnore"
-      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "cmdAddIgnore"
-      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "lvIgnoreList"
-      Tab(2).Control(2).Enabled=   0   'False
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToIgnore 
          Caption         =   "&Add to Ignore"

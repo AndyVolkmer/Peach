@@ -3,10 +3,10 @@ Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmChat 
    BorderStyle     =   0  'None
    Caption         =   "frmChat"
-   ClientHeight    =   3870
+   ClientHeight    =   4575
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   7485
+   ClientWidth     =   7905
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Segoe UI"
@@ -22,8 +22,8 @@ Begin VB.Form frmChat
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   3870
-   ScaleWidth      =   7485
+   ScaleHeight     =   4575
+   ScaleWidth      =   7905
    ShowInTaskbar   =   0   'False
    Begin VB.TextBox txtToSend 
       Height          =   855
@@ -44,7 +44,6 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -94,6 +93,7 @@ Begin VB.Form frmChat
       _ExtentY        =   4471
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmChat.frx":007D

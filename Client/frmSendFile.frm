@@ -5,10 +5,10 @@ Begin VB.Form frmSendFile
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    Caption         =   "frmSendFile"
-   ClientHeight    =   3735
+   ClientHeight    =   4995
    ClientLeft      =   690
    ClientTop       =   1365
-   ClientWidth     =   7500
+   ClientWidth     =   7995
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Segoe UI"
@@ -22,8 +22,8 @@ Begin VB.Form frmSendFile
    LinkTopic       =   "Form1"
    LockControls    =   -1  'True
    MDIChild        =   -1  'True
-   ScaleHeight     =   3735
-   ScaleWidth      =   7500
+   ScaleHeight     =   4995
+   ScaleWidth      =   7995
    ShowInTaskbar   =   0   'False
    Begin VB.ComboBox Combo1 
       Height          =   315

@@ -262,8 +262,8 @@ End With
 End Sub
 
 Private Sub cmdSwitch_Click()
-'SetupChildForm frmChat
 SetupForm frmContainer
+SetupChildForm frmChat
 End Sub
 
 Private Sub ExitC_Click()
