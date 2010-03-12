@@ -27,13 +27,14 @@ Begin VB.Form frmConfig
    Begin RichTextLib.RichTextBox txt_log 
       Height          =   1815
       Left            =   120
-      TabIndex        =   9
+      TabIndex        =   8
       Top             =   1440
       Width           =   7215
       _ExtentX        =   12726
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -46,12 +47,6 @@ Begin VB.Form frmConfig
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-   End
-   Begin VB.Timer connCounter 
-      Enabled         =   0   'False
-      Interval        =   1000
-      Left            =   1560
-      Top             =   3360
    End
    Begin VB.CommandButton Command2 
       Caption         =   "&Disconnect"
@@ -88,16 +83,6 @@ Begin VB.Form frmConfig
          Text            =   "4728"
          Top             =   600
          Width           =   855
-      End
-      Begin VB.Label Label2 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   "Offline"
-         ForeColor       =   &H00000040&
-         Height          =   255
-         Left            =   2880
-         TabIndex        =   8
-         Top             =   600
-         Width           =   2775
       End
       Begin VB.Label Label5 
          BackColor       =   &H00F4F4F4&
@@ -145,6 +130,8 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
+Public START_TIME As String
 
 Private Sub Command1_Click()
 SetButtons True

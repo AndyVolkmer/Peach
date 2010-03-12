@@ -1037,7 +1037,7 @@ GetServerInformation = _
 "Welcome to Peach Servers." & "#" & _
 "Server: Peach r" & pRev & "/" & GetOS & "#" & _
 "Online User: " & frmMain.Winsock1.Count - 1 & "#" & _
-frmConfig.Label2.Caption & "#"
+"Server Uptime: " & TimeSerial(0, 0, DateDiff("s", frmConfig.START_TIME, Time))
 End Function
 
 Private Sub Whisper(pUser As String, pTarget As String, pConv As String, Index As Integer)

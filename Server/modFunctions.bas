@@ -424,8 +424,7 @@ End Sub
 Public Sub SetButtons(args As Boolean)
 If args Then
     With frmConfig
-        .Label2.Caption = "Server Uptime : 00:00:00"
-        .connCounter.Enabled = True
+        .START_TIME = Time
         .txtPort.Enabled = False
         .Command1.Enabled = False
         .Command2.Enabled = True
@@ -433,8 +432,7 @@ If args Then
     frmMain.StatusBar1.Panels(1).Text = "Status: Connected with 0 Client(s)."
 Else
     With frmConfig
-        .Label2.Caption = "Offline"
-        .connCounter.Enabled = False
+        .START_TIME = vbNullString
         .txtPort.Enabled = False
         .Command1.Enabled = True
         .Command2.Enabled = False
