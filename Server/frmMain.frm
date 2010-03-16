@@ -237,7 +237,7 @@ Dim i As Long
 Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(2) = Index Then
+        If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
             If Not Len(.Item(i)) = 0 Then
                 SendMessage .Item(i) & " has gone offline."
             End If
@@ -266,15 +266,15 @@ With frmPanel.ListView1.ListItems
     .Add , , vbNullString
     i = .Count
     If Winsock1(j).RemoteHostIP = "127.0.0.1" Then
-        .Item(i).SubItems(1) = Winsock1(0).LocalIP
+        .Item(i).SubItems(INDEX_IP) = Winsock1(0).LocalIP
     Else
-        .Item(i).SubItems(1) = Winsock1(j).RemoteHostIP
+        .Item(i).SubItems(INDEX_IP) = Winsock1(j).RemoteHostIP
     End If
-    .Item(i).SubItems(2) = j
-    .Item(i).SubItems(3) = vbNullString
-    .Item(i).SubItems(4) = "False"
-    .Item(i).SubItems(5) = vbNullString
-    .Item(i).SubItems(6) = Format$(Time, "hh:mm:ss")
+    .Item(i).SubItems(INDEX_WINSOCK_ID) = j
+    .Item(i).SubItems(INDEX_LAST_MESSAGE) = vbNullString
+    .Item(i).SubItems(INDEX_MUTED) = "False"
+    .Item(i).SubItems(INDEX_ACCOUNT) = vbNullString
+    .Item(i).SubItems(INDEX_LOGIN_TIME) = Format$(Time, "hh:mm:ss")
 End With
 
 UPDATE_STATUS_BAR
@@ -342,46 +342,48 @@ For k = 0 To UBound(p_PreArray) - 1
             Select Case p_MainArray(1)
                 'Update Friend list
                 Case "-get"
-                    UPDATE_FRIEND p_MainArray(2), Index
+                    UPDATE_FRIEND GetAccountByIndex(Index), Index
                     
                 'Add friend to list by user name
                 Case "-add-user"
-                    frmFriendIgnoreList.AddFriend p_MainArray(2), GetProperAccountNameByUser(p_MainArray(3)), Index
+                    frmFriendIgnoreList.AddFriend GetAccountByIndex(Index), GetProperAccountNameByUser(p_MainArray(2)), Index
                     
                 'Add friend to list by account name
                 Case "-add-account"
-                    frmFriendIgnoreList.AddFriend p_MainArray(2), GetProperAccountName(p_MainArray(3)), Index
+                    frmFriendIgnoreList.AddFriend GetAccountByIndex(Index), GetProperAccountName(p_MainArray(2)), Index
                     
                 'Remove friend from list by user name
                 Case "-remove-user"
-                    frmFriendIgnoreList.RemoveFriend p_MainArray(2), GetProperAccountNameByUser(p_MainArray(3)), Index
+                    frmFriendIgnoreList.RemoveFriend GetAccountByIndex(Index), GetProperAccountNameByUser(p_MainArray(2)), Index
                     
                 'Remove friend from list by account name
                 Case "-remove-account"
-                    frmFriendIgnoreList.RemoveFriend p_MainArray(2), GetProperAccountName(p_MainArray(3)), Index
+                    frmFriendIgnoreList.RemoveFriend GetAccountByIndex(Index), GetProperAccountName(p_MainArray(2)), Index
+                    
             End Select
             
         Case "!ignore"
             Select Case p_MainArray(1)
                 'Update Ignore list
                 Case "-get"
-                    UPDATE_IGNORE p_MainArray(2), Index
+                    UPDATE_IGNORE GetAccountByIndex(Index), Index
                     
                 'Add ignore to list by user name
                 Case "-add-user"
-                    frmFriendIgnoreList.AddIgnore p_MainArray(2), GetProperAccountNameByUser(p_MainArray(3)), Index
+                    frmFriendIgnoreList.AddIgnore GetAccountByIndex(Index), GetProperAccountNameByUser(p_MainArray(2)), Index
                     
                 'Add ignore to list by account name
                 Case "-add-account"
-                    frmFriendIgnoreList.AddIgnore p_MainArray(2), GetProperAccountName(p_MainArray(3)), Index
+                    frmFriendIgnoreList.AddIgnore GetAccountByIndex(Index), GetProperAccountName(p_MainArray(2)), Index
                     
                 'Remove ignore from list by user name
                 Case "-remove-user"
-                    frmFriendIgnoreList.RemoveIgnore p_MainArray(2), GetProperAccountNameByUser(p_MainArray(3)), Index
+                    frmFriendIgnoreList.RemoveIgnore GetAccountByIndex(Index), GetProperAccountNameByUser(p_MainArray(2)), Index
                     
                 'Remove ignore from list by account name
                 Case "-remove-account"
-                    frmFriendIgnoreList.RemoveIgnore p_MainArray(2), GetProperAccountName(p_MainArray(3)), Index
+                    frmFriendIgnoreList.RemoveIgnore GetAccountByIndex(Index), GetProperAccountName(p_MainArray(2)), Index
+                    
             End Select
             
         Case "!connected"
@@ -392,7 +394,7 @@ For k = 0 To UBound(p_PreArray) - 1
             For Each pSocket In frmMain.Winsock1
                 With pSocket
                     If .State = 7 And Not .Index = Index Then
-                        .SendData p_MainArray(1) & " has come online." & Chr(24) & Chr(25)
+                        .SendData GetUserByIndex(Index) & " has come online." & Chr(24) & Chr(25)
                         DoEvents
                     End If
                 End With
@@ -411,7 +413,7 @@ For k = 0 To UBound(p_PreArray) - 1
                 For i = 1 To .Count
                     If LCase$(.Item(i).SubItems(INDEX_NAME)) = LCase$(p_MainArray(1)) Then
                         'Ban Check
-                        If .Item(i).SubItems(5) = "1" Then
+                        If .Item(i).SubItems(INDEX_BANNED) = "1" Then
                             SendSingle "!login#Banned#", Index
                             Exit Sub
                         End If
@@ -485,12 +487,12 @@ For k = 0 To UBound(p_PreArray) - 1
             Dim IsSlash             As Boolean
                 
             'Split the conversation text by spaces
-            p_CHAT_ARRAY = Split(p_MainArray(2), " ")
+            p_CHAT_ARRAY = Split(p_MainArray(1), " ")
             
             'Check first position of the text for a point indicating command or emote
             Select Case Left$(p_CHAT_ARRAY(0), 1)
                 Case Chr(46)
-                    If GetLevel(p_MainArray(1)) > 0 Then IsCommand = True
+                    If GetLevel(GetUserByIndex(Index)) > 0 Then IsCommand = True
                     
                 Case Chr(47)
                     IsSlash = True
@@ -512,7 +514,7 @@ For k = 0 To UBound(p_PreArray) - 1
             'Check if user is muted
             With frmPanel.ListView1.ListItems
                 For i = 1 To .Count
-                    If .Item(i) = p_MainArray(1) Then
+                    If .Item(i) = GetUserByIndex(Index) Then
                         If .Item(i).SubItems(INDEX_MUTED) = "True" Then
                             IsMuted = True
                             Exit For
@@ -574,10 +576,10 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                     Case ".ban"
                         If IsPartOf(p_TEXT_FIRST, "user") Then
-                            BanUser p_TEXT_SECOND_PROP, p_MainArray(1), 1, Index, Trim$(Reason2)
+                            BanUser p_TEXT_SECOND_PROP, GetUserByIndex(Index), 1, Index, Trim$(Reason2)
                             
                         ElseIf IsPartOf(p_TEXT_FIRST, "account") Then
-                            BanAccount p_TEXT_SECOND, p_MainArray(1), 1, Index, Trim$(Reason2)
+                            BanAccount p_TEXT_SECOND, GetUserByIndex(Index), 1, Index, Trim$(Reason2)
                         
                         Else
                             SendSingle "Incorrect syntax, use the following format .ban [User, Account] [Name] [Reason]", Index
@@ -586,10 +588,10 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                     Case ".unban"
                         If IsPartOf(p_TEXT_FIRST, "user") Then
-                            BanUser p_TEXT_SECOND_PROP, p_MainArray(1), 0, Index, Trim$(Reason2)
+                            BanUser p_TEXT_SECOND_PROP, GetUserByIndex(Index), 0, Index, Trim$(Reason2)
                             
                         ElseIf IsPartOf(p_TEXT_FIRST, "account") Then
-                            BanAccount p_TEXT_SECOND, p_MainArray(1), 0, Index, Trim$(Reason2)
+                            BanAccount p_TEXT_SECOND, GetUserByIndex(Index), 0, Index, Trim$(Reason2)
                             
                         Else
                             SendSingle "Incorrect syntax, use the following format .unban [User, Account] [Name] [Reason]", Index
@@ -597,10 +599,10 @@ For k = 0 To UBound(p_PreArray) - 1
                         End If
                         
                     Case ".mute"
-                        MuteUser p_TEXT_FIRST_PROP, p_MainArray(1), True, Index, Trim$(Reason)
+                        MuteUser p_TEXT_FIRST_PROP, GetUserByIndex(Index), True, Index, Trim$(Reason)
                         
                     Case ".unmute"
-                        MuteUser p_TEXT_FIRST_PROP, p_MainArray(1), False, Index, Trim$(Reason)
+                        MuteUser p_TEXT_FIRST_PROP, GetUserByIndex(Index), False, Index, Trim$(Reason)
                         
                     Case ".announce", ".ann", ".broadcast"
                         Dim p_ANN_MSG As String
@@ -613,7 +615,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         If LenB(p_ANN_MSG) = 0 Then
                             SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & " [Text].", Index
                         Else
-                            SendMessage "[" & p_MainArray(1) & " announces]: " & p_ANN_MSG
+                            SendMessage "[" & GetUserByIndex(Index) & " announces]: " & p_ANN_MSG
                         End If
                         
                     Case ".help", ".command", ".commands"
@@ -630,24 +632,24 @@ For k = 0 To UBound(p_PreArray) - 1
                                     loadTime = timeGetTime
                                     Erase Commands
                                     LoadCommands
-                                    SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_COMMANDS & "' table.( " & timeGetTime - loadTime & "ms )"
+                                    SendMessage GetUserByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_COMMANDS & "' table.( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case LCase$(DATABASE_TABLE_DECLINED_NAMES)
                                     loadTime = timeGetTime
                                     Erase DeclinedNames
                                     LoadDeclinedNames
-                                    SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_DECLINED_NAMES & "' table.( " & timeGetTime - loadTime & "ms )"
+                                    SendMessage GetUserByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_DECLINED_NAMES & "' table.( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case LCase$(DATABASE_TABLE_EMOTES)
                                     loadTime = timeGetTime
                                     Erase Emotes
                                     LoadEmotes
-                                    SendMessage p_MainArray(1) & " initiated the reload of '" & DATABASE_TABLE_EMOTES & "' table.( " & timeGetTime - loadTime & "ms )"
+                                    SendMessage GetUserByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_EMOTES & "' table.( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case LCase$("config"), LCase$("c")
                                     loadTime = timeGetTime
                                     LoadConfigValue
-                                    SendMessage p_MainArray(1) & " iniated the reload of configuration files.( " & timeGetTime - loadTime & "ms )"
+                                    SendMessage GetUserByIndex(Index) & " iniated the reload of configuration files.( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case Else
                                     If LenB(p_TEXT_FIRST) = 0 Then
@@ -700,7 +702,7 @@ For k = 0 To UBound(p_PreArray) - 1
                 End If
                 
                 If Options.REPEAT_CHECK = 1 Then
-                    If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
+                    If IsRepeating(GetUserByIndex(Index), p_MainArray(1)) Then
                         SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
                         Exit Sub
                     End If
@@ -768,7 +770,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                         pRoll = GetRandomNumber(pMinRoll, pMaxRoll)
                         
-                        SendProtectedMessage p_MainArray(1), p_MainArray(1) & " rolls " & pRoll & ". (" & pMinRoll & " - " & pMaxRoll & ")"
+                        SendProtectedMessage GetUserByIndex(Index), GetUserByIndex(Index) & " rolls " & pRoll & ". (" & pMinRoll & " - " & pMaxRoll & ")"
                         
                     'Whisper X to Z from Y
                     Case "/w", "/whisper"
@@ -780,8 +782,8 @@ For k = 0 To UBound(p_PreArray) - 1
                                     pMes = pMes & p_CHAT_ARRAY(i) & " "
                                 Next i
                                 
-                                Whisper p_MainArray(1), p_TEXT_FIRST_PROP, Trim$(pMes), Index
-                                SetLastMessage p_MainArray(1), p_MainArray(2)
+                                Whisper GetUserByIndex(Index), p_TEXT_FIRST_PROP, Trim$(pMes), Index
+                                SetLastMessage GetUserByIndex(Index), p_MainArray(1)
                             Else
                                 Exit Sub
                             End If
@@ -795,15 +797,15 @@ For k = 0 To UBound(p_PreArray) - 1
                         End If
                         
                     Case "/online"
-                        SendSingle "You are online for " & Trim$(GetOnlineTime(p_MainArray(1))) & ".", Index
+                        SendSingle "You are online for " & Trim$(GetOnlineTime(GetUserByIndex(Index))) & ".", Index
                         
                     Case "/logout"
-                        KickUser p_MainArray(1)
+                        KickUser GetUserByIndex(Index)
                         
                     Case Else
                         For i = LBound(Emotes) To UBound(Emotes)
                             If LCase$(Emotes(i).Command) = LCase$(p_CHAT_ARRAY(0)) Then
-                                If p_MainArray(1) = p_TEXT_FIRST_PROP Then
+                                If GetUserByIndex(Index) = p_TEXT_FIRST_PROP Then
                                     IsUser = False
                                 End If
                                                                 
@@ -813,7 +815,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                                                 
                                 With frmPanel.ListView1.ListItems
                                     For j = 1 To .Count
-                                        If .Item(j) = p_MainArray(1) Then
+                                        If .Item(j) = GetUserByIndex(Index) Then
                                             pTemp = .Item(j).SubItems(INDEX_ACCOUNT)
                                             Exit For
                                         End If
@@ -833,14 +835,14 @@ For k = 0 To UBound(p_PreArray) - 1
                                 End With
                                                                 
                                 If IsUser Then
-                                    pTemp = Replace(Emotes(i).TargetEmote, "%u", p_MainArray(1))
+                                    pTemp = Replace(Emotes(i).TargetEmote, "%u", GetUserByIndex(Index))
                                     pTemp = Replace(pTemp, "%g", pGen)
                                     pTemp = Replace(pTemp, "%t", p_TEXT_FIRST_PROP)
                                 Else
-                                    pTemp = Replace(Emotes(i).SingleEmote, "%u", p_MainArray(1))
+                                    pTemp = Replace(Emotes(i).SingleEmote, "%u", GetUserByIndex(Index))
                                     pTemp = Replace(pTemp, "%g", pGen)
                                 End If
-                                SendProtectedMessage p_MainArray(1), pTemp
+                                SendProtectedMessage GetUserByIndex(Index), pTemp
                                 Exit For
                             Else
                                 If i = UBound(Emotes) Then SendSingle "Unknown command used.", Index
@@ -848,7 +850,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         Next i
                         
                 End Select
-                SetLastMessage p_MainArray(1), p_MainArray(2)
+                SetLastMessage GetUserByIndex(Index), p_MainArray(1)
                 Exit Sub
             End If
             
@@ -883,17 +885,17 @@ For k = 0 To UBound(p_PreArray) - 1
             End If
             
             If Options.REPEAT_CHECK = 1 Then
-                If IsRepeating(p_MainArray(1), p_MainArray(2)) Then
+                If IsRepeating(GetUserByIndex(Index), p_MainArray(1)) Then
                     SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
                     Exit Sub
                 End If
             End If
             
             'Send Message and print in chat
-            SendProtectedMessage p_MainArray(1), "[" & p_MainArray(1) & "]: " & p_MainArray(2)
+            SendProtectedMessage GetUserByIndex(Index), "[" & GetUserByIndex(Index) & "]: " & p_MainArray(1)
             
             'Set last message
-            SetLastMessage p_MainArray(1), p_MainArray(2)
+            SetLastMessage GetUserByIndex(Index), p_MainArray(1)
             
         Case Else
             SendSingle "ERROR", Index

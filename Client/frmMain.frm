@@ -671,7 +671,7 @@ For k = 0 To UBound(p_PreArray) - 1
                 .SelStart = Len(.Text)
                 .SelRTF = Buffer
             End With
-            SendMessage "!ignore#-get#" & frmMain.txtAccount & "#"
+            SendMessage "!ignore#-get#"
             
         'We can't login
         Case "!decilined"
@@ -681,7 +681,7 @@ For k = 0 To UBound(p_PreArray) - 1
         'We can login
         Case "!accepted"
             SetupChildForm frmChat
-            SendMessage "!connected#" & frmMain.txtName.Text & "#"
+            SendMessage "!connected#"
             
         'Wipe out current ignore list and insert new values
         Case "!update_ignore"
@@ -738,7 +738,7 @@ For k = 0 To UBound(p_PreArray) - 1
             Next i
             
             'Ask for friendlist
-            SendMessage "!friend#-get#" & txtAccount.Text & "#"
+            SendMessage "!friend#-get#"
             
         'We get login answer here
         Case "!login"

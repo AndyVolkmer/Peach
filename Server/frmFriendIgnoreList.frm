@@ -150,7 +150,7 @@ End If
 'Check if friends account exist
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
-        If LCase(.Item(i).SubItems(1)) = LCase(pFriend) Then
+        If LCase(.Item(i).SubItems(INDEX_NAME)) = LCase(pFriend) Then
             pFriend = .Item(i).SubItems(1)
             Exit For
         Else

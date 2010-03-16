@@ -229,15 +229,15 @@ End With
 With .pRecordSet
     Do Until .EOF
         Set LItem = frmAccountPanel.ListView1.ListItems.Add(, , !ID)
-        LItem.SubItems(1) = !Name1
-        LItem.SubItems(2) = !Password1
-        LItem.SubItems(3) = Format$(!Time1, "hh:nn:ss")
-        LItem.SubItems(4) = !Date1
-        LItem.SubItems(5) = !Banned1
-        LItem.SubItems(6) = !Level1
-        LItem.SubItems(7) = !SecretQuestion1
-        LItem.SubItems(8) = !SecretAnswer1
-        LItem.SubItems(9) = !Gender1
+        LItem.SubItems(INDEX_NAME) = !Name1
+        LItem.SubItems(INDEX_PASSWORD) = !Password1
+        LItem.SubItems(INDEX_TIME) = Format$(!Time1, "hh:nn:ss")
+        LItem.SubItems(INDEX_DATE) = !Date1
+        LItem.SubItems(INDEX_BANNED) = !Banned1
+        LItem.SubItems(INDEX_LEVEL) = !Level1
+        LItem.SubItems(INDEX_SECRET_QUESTION) = !SecretQuestion1
+        LItem.SubItems(INDEX_SECRET_ANSWER) = !SecretAnswer1
+        LItem.SubItems(INDEX_GENDER) = !Gender1
         .MoveNext
         Counter = Counter + 1
     Loop

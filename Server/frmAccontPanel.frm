@@ -280,7 +280,7 @@ If ListView1.ListItems.Count = 0 Then
 End If
     
 With ListView1.SelectedItem
-    strName = .SubItems(1)
+    strName = .SubItems(INDEX_NAME)
     lngID = CLng(.Text)
 End With
     
@@ -367,7 +367,7 @@ If Switch Then
     End If
     
     For i = 1 To ListView1.ListItems.Count
-        If txtName.Text = ListView1.ListItems.Item(i).SubItems(1) Then
+        If txtName.Text = ListView1.ListItems.Item(i).SubItems(INDEX_NAME) Then
             MsgBox "Name already given.", vbInformation
             ClearTxBoxes
             txtName.SetFocus
@@ -404,11 +404,11 @@ Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Long, 
 If pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBanned & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID) Then
     'Modify listview values
     With ListView1.ListItems.Item(LST_ID)
-        .SubItems(1) = pName
-        .SubItems(2) = pPassword
-        .SubItems(5) = pBanned
-        .SubItems(6) = pLevel
-        .SubItems(9) = pGender
+        .SubItems(INDEX_NAME) = pName
+        .SubItems(INDEX_PASSWORD) = pPassword
+        .SubItems(INDEX_BANNED) = pBanned
+        .SubItems(INDEX_LEVEL) = pLevel
+        .SubItems(INDEX_GENDER) = pGender
     End With
 End If
 End Sub
@@ -428,15 +428,15 @@ If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, P
     'Add account to the listview
     With ListView1.ListItems
         .Add , , j
-        .Item(i).SubItems(1) = pName
-        .Item(i).SubItems(2) = pPassword
-        .Item(i).SubItems(3) = Format(Time, "hh:nn:ss")
-        .Item(i).SubItems(4) = Format(Date, "dd/mm/yyyy")
-        .Item(i).SubItems(5) = pBanned
-        .Item(i).SubItems(6) = pLevel
-        .Item(i).SubItems(7) = pSecretQuestion
-        .Item(i).SubItems(8) = pSecretAnswer
-        .Item(i).SubItems(9) = pGender
+        .Item(i).SubItems(INDEX_NAME) = pName
+        .Item(i).SubItems(INDEX_PASSWORD) = pPassword
+        .Item(i).SubItems(INDEX_TIME) = Format(Time, "hh:nn:ss")
+        .Item(i).SubItems(INDEX_DATE) = Format(Date, "dd/mm/yyyy")
+        .Item(i).SubItems(INDEX_BANNED) = pBanned
+        .Item(i).SubItems(INDEX_LEVEL) = pLevel
+        .Item(i).SubItems(INDEX_SECRET_QUESTION) = pSecretQuestion
+        .Item(i).SubItems(INDEX_SECRET_ANSWER) = pSecretAnswer
+        .Item(i).SubItems(INDEX_GENDER) = pGender
     End With
 End If
 End Sub
@@ -469,11 +469,11 @@ End Sub
 Private Sub SetData(pItem As ListItem)
 If ListView1.ListItems.Count <> 0 Then
     With pItem
-        txtName.Text = .SubItems(1)
-        txtPassword.Text = .SubItems(2)
-        cmbBanned.Text = .SubItems(5)
-        cmbLevel.ListIndex = .SubItems(6)
-        cmbGender.Text = .SubItems(9)
+        txtName.Text = .SubItems(INDEX_NAME)
+        txtPassword.Text = .SubItems(INDEX_PASSWORD)
+        cmbBanned.Text = .SubItems(INDEX_BANNED)
+        cmbLevel.ListIndex = .SubItems(INDEX_LEVEL)
+        cmbGender.Text = .SubItems(INDEX_GENDER)
     End With
 End If
 End Sub
@@ -524,7 +524,7 @@ Select Case pCommand
         With ListView1.ListItems
             'Check if the account already exists
             For i = 1 To .Count
-                If UCase$(array1(1)) = UCase$(.Item(i).SubItems(1)) Then
+                If UCase$(array1(1)) = UCase$(.Item(i).SubItems(INDEX_NAME)) Then
                     If RegSock(Index).State = 7 Then
                         RegSock(Index).SendData "!nameexist#"
                         Exit Sub
@@ -541,13 +541,13 @@ Select Case pCommand
         With ListView1.ListItems
             For i = 1 To .Count
                 'Check if the account exists
-                If UCase$(.Item(i).SubItems(1)) = UCase$(array1(1)) Then
+                If UCase$(.Item(i).SubItems(INDEX_NAME)) = UCase$(array1(1)) Then
                     'Check if the question chosen is the same
-                    If .Item(i).SubItems(7) = array1(2) Then
+                    If .Item(i).SubItems(INDEX_SECRET_QUESTION) = array1(2) Then
                         'Check if the answer is the same
-                        If .Item(i).SubItems(8) = array1(3) Then
+                        If .Item(i).SubItems(INDEX_SECRET_ANSWER) = array1(3) Then
                             If RegSock(Index).State = 7 Then
-                                RegSock(Index).SendData "!successfull#" & .Item(i).SubItems(2) & ".#"
+                                RegSock(Index).SendData "!successfull#" & .Item(i).SubItems(INDEX_PASSWORD) & ".#"
                             End If
                         Else
                             If RegSock(Index).State = 7 Then

@@ -59,16 +59,16 @@ Begin VB.Form frmSociety
       TabCaption(1)   =   "Online List"
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "cmdAddToIgnore"
+      Tab(1).Control(0)=   "lvOnlineList"
       Tab(1).Control(1)=   "cmdAddToFriend"
-      Tab(1).Control(2)=   "lvOnlineList"
+      Tab(1).Control(2)=   "cmdAddToIgnore"
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "cmdRemoveIgnore"
+      Tab(2).Control(0)=   "lvIgnoreList"
       Tab(2).Control(1)=   "cmdAddIgnore"
-      Tab(2).Control(2)=   "lvIgnoreList"
+      Tab(2).Control(2)=   "cmdRemoveIgnore"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToIgnore 
          Caption         =   "&Add to Ignore"
@@ -270,7 +270,7 @@ Dim pVal As String
 pVal = InputBox(SOC_ASK_FRIEND_TEXT, SOC_ASK_FRIEND_DEFAULT, SOC_ASK_FRIEND_DEFAULT)
 
 If LenB(Trim$(pVal)) = 0 Then Exit Sub
-SendMessage "!friend#-add-account#" & frmMain.txtAccount.Text & "#" & pVal & "#"
+SendMessage "!friend#-add-account#" & pVal & "#"
 End Sub
 
 Private Sub cmdRemoveFriend_Click()
@@ -323,7 +323,7 @@ Dim pVal As String
 pVal = InputBox(SOC_ASK_IGNORE_TEXT, SOC_ASK_IGNORE_TITLE, SOC_ASK_IGNORE_DEFAULT)
 
 If LenB(Trim$(pVal)) = 0 Then Exit Sub
-SendMessage "!ignore#-add-account#" & frmMain.txtAccount.Text & "#" & pVal & "#"
+SendMessage "!ignore#-add-account#" & pVal & "#"
 End Sub
 
 Private Sub cmdRemoveIgnore_Click()
@@ -358,9 +358,9 @@ End If
 pMiddle = InStr(1, pFullName, " ")
 
 If pMiddle = 0 Then
-    SendMessage "!friend#-remove-account#" & frmMain.txtAccount.Text & "#" & pFullName & "#"
+    SendMessage "!friend#-remove-account#" & pFullName & "#"
 Else
-    SendMessage "!friend#-remove-account#" & frmMain.txtAccount.Text & "#" & Left$(pFullName, pMiddle - 1) & "#"
+    SendMessage "!friend#-remove-account#" & Left$(pFullName, pMiddle - 1) & "#"
 End If
 End Sub
 
@@ -382,7 +382,7 @@ Dim pMiddle As Long
 
 pMiddle = InStr(1, pString, "(")
 
-SendMessage "!friend#-add-account#" & frmMain.txtAccount.Text & "#" & Mid(pString, pMiddle + 2, Len(pString) - pMiddle - 3) & "#"
+SendMessage "!friend#-add-account#" & Mid(pString, pMiddle + 2, Len(pString) - pMiddle - 3) & "#"
 End Sub
 
 Private Sub TriggerOnlineEvent()
@@ -410,7 +410,7 @@ Dim pMiddle As Long
 
 pMiddle = InStr(1, pString, "(")
 
-SendMessage "!ignore#-add-account#" & frmMain.txtAccount.Text & "#" & Mid(pString, pMiddle + 2, Len(pString) - pMiddle - 3) & "#"
+SendMessage "!ignore#-add-account#" & Mid(pString, pMiddle + 2, Len(pString) - pMiddle - 3) & "#"
 End Sub
 
 '=== Ignore List Tab ==='
@@ -432,9 +432,9 @@ End If
 
 pMiddle = InStr(1, pFullName, " ")
 If pMiddle = 0 Then
-    SendMessage "!ignore#-remove-account#" & frmMain.txtAccount.Text & "#" & pFullName & "#"
+    SendMessage "!ignore#-remove-account#" & pFullName & "#"
 Else
-    SendMessage "!ignore#-remove-account#" & frmMain.txtAccount.Text & "#" & Left$(pFullName, pMiddle - 1) & "#"
+    SendMessage "!ignore#-remove-account#" & Left$(pFullName, pMiddle - 1) & "#"
 End If
 End Sub
 

@@ -182,14 +182,14 @@ Dim i        As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
-            pAccount = .Item(i).SubItems(5)
+            pAccount = .Item(i).SubItems(INDEX_ACCOUNT)
             Exit For
         End If
     Next i
     
     For i = 1 To .Count
-        If IsIgnoring(.Item(i).SubItems(5), pAccount) = False Then
-            SendSingle pMessage, .Item(i).SubItems(2)
+        If IsIgnoring(.Item(i).SubItems(INDEX_ACCOUNT), pAccount) = False Then
+            SendSingle pMessage, .Item(i).SubItems(INDEX_WINSOCK_ID)
             DoEvents
         End If
     Next i
@@ -228,7 +228,7 @@ Dim i       As Long
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        GetList = GetList & .Item(i) & " ( " & .Item(i).SubItems(5) & " )#"
+        GetList = GetList & .Item(i) & " ( " & .Item(i).SubItems(INDEX_ACCOUNT) & " )#"
         If i = .Count Then GetList = "!update_online#" & GetList
     Next i
 End With
@@ -287,7 +287,7 @@ Dim i           As Integer
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(5) = pAccount Then
+        If .Item(i).SubItems(INDEX_ACCOUNT) = pAccount Then
             GetAccountStatus = "!online#" & .Item(i) & "#"
             IsAvaible = True
             Exit For
