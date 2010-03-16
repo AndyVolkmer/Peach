@@ -409,7 +409,7 @@ For k = 0 To UBound(p_PreArray) - 1
                     Exit Sub
                 End If
                 For i = 1 To .Count
-                    If LCase$(.Item(i).SubItems(1)) = LCase$(p_MainArray(1)) Then
+                    If LCase$(.Item(i).SubItems(INDEX_NAME)) = LCase$(p_MainArray(1)) Then
                         'Ban Check
                         If .Item(i).SubItems(5) = "1" Then
                             SendSingle "!login#Banned#", Index
@@ -417,7 +417,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         End If
                         
                         'Password Check
-                        If Not .Item(i).SubItems(2) = p_MainArray(2) Then
+                        If Not .Item(i).SubItems(INDEX_PASSWORD) = p_MainArray(2) Then
                             SendSingle "!login#Password#", Index
                             Exit Sub
                         End If
@@ -450,15 +450,15 @@ For k = 0 To UBound(p_PreArray) - 1
                 
                 'If the account is already beeing used kick first instance
                 For i = 1 To .Count
-                    If .Item(i).SubItems(5) = p_MainArray(1) Then
-                        Unload Winsock1(.Item(i).SubItems(2))
+                    If .Item(i).SubItems(INDEX_ACCOUNT) = p_MainArray(1) Then
+                        Unload Winsock1(.Item(i).SubItems(INDEX_WINSOCK_ID))
                         .Remove (i)
                         Exit For
                     End If
                 Next i
                 
                 .Item(.Count).Text = p_MainArray(3)
-                .Item(.Count).SubItems(5) = GetProperAccountName(p_MainArray(1))
+                .Item(.Count).SubItems(INDEX_ACCOUNT) = GetProperAccountName(p_MainArray(1))
             End With
             
             UPDATE_STATUS_BAR
@@ -469,7 +469,7 @@ For k = 0 To UBound(p_PreArray) - 1
             With frmPanel.ListView1.ListItems
                 For i = 1 To .Count
                     If .Item(i) = p_MainArray(1) Then
-                        SendSingle "!iprequest#" & .Item(i).SubItems(1) & "#", Index
+                        SendSingle "!iprequest#" & .Item(i).SubItems(INDEX_IP) & "#", Index
                         Exit For
                     End If
                 Next i
@@ -513,7 +513,7 @@ For k = 0 To UBound(p_PreArray) - 1
             With frmPanel.ListView1.ListItems
                 For i = 1 To .Count
                     If .Item(i) = p_MainArray(1) Then
-                        If .Item(i).SubItems(4) = "True" Then
+                        If .Item(i).SubItems(INDEX_MUTED) = "True" Then
                             IsMuted = True
                             Exit For
                         End If
@@ -675,7 +675,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             With frmPanel.ListView1.ListItems
                                 For i = 1 To .Count
                                     If .Item(i) = p_TEXT_FIRST_PROP Then
-                                        SendSingle "!clear#", .Item(i).SubItems(2)
+                                        SendSingle "!clear#", .Item(i).SubItems(INDEX_WINSOCK_ID)
                                         Exit For
                                     Else
                                         If i = .Count Then SendSingle "User '" & p_TEXT_FIRST & "' was not found.", Index
@@ -814,7 +814,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                 With frmPanel.ListView1.ListItems
                                     For j = 1 To .Count
                                         If .Item(j) = p_MainArray(1) Then
-                                            pTemp = .Item(j).SubItems(5)
+                                            pTemp = .Item(j).SubItems(INDEX_ACCOUNT)
                                             Exit For
                                         End If
                                     Next j
@@ -822,14 +822,10 @@ For k = 0 To UBound(p_PreArray) - 1
                                 
                                 With frmAccountPanel.ListView1.ListItems
                                     For j = 1 To .Count
-                                        If .Item(j).SubItems(1) = pTemp Then
-                                            Select Case .Item(j).SubItems(9)
-                                                Case "Male"
-                                                    pGen = "his"
-                                                    
-                                                Case "Female"
-                                                    pGen = "her"
-                                                    
+                                        If .Item(j).SubItems(INDEX_NAME) = pTemp Then
+                                            Select Case .Item(j).SubItems(INDEX_GENDER)
+                                                Case "Male": pGen = "his"
+                                                Case "Female": pGen = "her"
                                             End Select
                                             Exit For
                                         End If
@@ -912,7 +908,7 @@ Dim i As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
-            .Item(i).SubItems(3) = pMessage
+            .Item(i).SubItems(INDEX_LAST_MESSAGE) = pMessage
             Exit For
         End If
     Next i
@@ -925,7 +921,7 @@ Dim i As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
-            If .Item(i).SubItems(3) = pMessage Then
+            If .Item(i).SubItems(INDEX_LAST_MESSAGE) = pMessage Then
                  IsRepeating = True
             End If
             Exit For
@@ -958,7 +954,7 @@ Dim j       As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
-            TD = TimeSerial(0, 0, DateDiff("s", .Item(i).SubItems(6), Time))
+            TD = TimeSerial(0, 0, DateDiff("s", .Item(i).SubItems(INDEX_LOGIN_TIME), Time))
             
             TD1 = Split(TD, ":")
             TD = vbNullString
@@ -1006,8 +1002,8 @@ Dim i As Long
 
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
-        If LCase$(.Item(i).SubItems(1)) = LCase$(pAccount) Then
-            GetProperAccountName = .Item(i).SubItems(1)
+        If LCase$(.Item(i).SubItems(INDEX_NAME)) = LCase$(pAccount) Then
+            GetProperAccountName = .Item(i).SubItems(INDEX_NAME)
             Exit For
         Else
             If i = .Count Then
@@ -1025,7 +1021,7 @@ Dim i        As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
-            GetProperAccountNameByUser = .Item(i).SubItems(5)
+            GetProperAccountNameByUser = .Item(i).SubItems(INDEX_ACCOUNT)
             Exit For
         End If
     Next i
@@ -1054,7 +1050,7 @@ With frmPanel.ListView1.ListItems
     'Get user account name
     For i = 1 To .Count
         If .Item(i) = pUser Then
-            pAccount = .Item(i).SubItems(5)
+            pAccount = .Item(i).SubItems(INDEX_ACCOUNT)
             Exit For
         End If
     Next i
@@ -1062,11 +1058,11 @@ With frmPanel.ListView1.ListItems
     'Search target in list and send message
     For i = 1 To .Count
         If pTarget = .Item(i) Then
-            If IsIgnoring(.Item(i).SubItems(5), pAccount) = True Then
+            If IsIgnoring(.Item(i).SubItems(INDEX_ACCOUNT), pAccount) Then
                 SendSingle pTarget & " is ignoring you.", Index
             Else
                 SendSingle "[You whisper to " & pTarget & "]: " & pConv, Index
-                SendSingle "[" & pUser & " whispers]: " & pConv, .Item(i).SubItems(2)
+                SendSingle "[" & pUser & " whispers]: " & pConv, .Item(i).SubItems(INDEX_WINSOCK_ID)
             End If
             Exit For
         End If
@@ -1081,18 +1077,18 @@ With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             
-            If IsMuted And .Item(i).SubItems(4) = "True" Then
+            If IsMuted And .Item(i).SubItems(INDEX_MUTED) = "True" Then
                 SendSingle User & " is already muted.", pIndex
                 Exit Sub
                 
-            ElseIf Not IsMuted And .Item(i).SubItems(4) = "False" Then
+            ElseIf Not IsMuted And .Item(i).SubItems(INDEX_MUTED) = "False" Then
                 SendSingle User & " is not muted.", pIndex
                 Exit Sub
                 
             End If
             
             'Set flag in userlist
-            .Item(i).SubItems(4) = CStr(IsMuted)
+            .Item(i).SubItems(INDEX_MUTED) = CStr(IsMuted)
             
             'Announce the action
             If LenB(Reason) = 0 Then
@@ -1128,7 +1124,7 @@ Dim i As Long
 With frmAccountPanel.ListView1.ListItems
     GetAccountList = "Account List:#"
     For i = 1 To .Count
-        GetAccountList = GetAccountList & .Item(i).SubItems(1) & "#"
+        GetAccountList = GetAccountList & .Item(i).SubItems(INDEX_NAME) & "#"
     Next i
 End With
 End Function
@@ -1150,7 +1146,7 @@ Dim i As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(User, vbProperCase) Then
-            BanAccount .Item(i).SubItems(5), AdminName, Ban, pIndex, Reason
+            BanAccount .Item(i).SubItems(INDEX_NAME), AdminName, Ban, pIndex, Reason
             Exit For
         Else
             If i = .Count Then
@@ -1176,29 +1172,29 @@ Dim j    As Long
 
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
-        If LCase(.Item(i).SubItems(1)) = LCase(Account) Then
+        If LCase(.Item(i).SubItems(INDEX_NAME)) = LCase(Account) Then
             'If the account is already banned send feedback
-            Account = .Item(i).SubItems(1)
+            Account = .Item(i).SubItems(INDEX_NAME)
             
             If Ban = 1 Then
-                If .Item(i).SubItems(5) = "1" Then
+                If .Item(i).SubItems(INDEX_BANNED) = "1" Then
                     SendSingle "Account '" & Account & "' is already banned.", pIndex
                     Exit Sub
                 End If
             Else
-                If .Item(i).SubItems(5) = "0" Then
+                If .Item(i).SubItems(INDEX_BANNED) = "0" Then
                     SendSingle "Account '" & Account & "' is not banned.", pIndex
                     Exit Sub
                 End If
             End If
             
             'Ban account in database
-            frmAccountPanel.ModifyAccount Account, .Item(i).SubItems(2), Ban, .Item(i).SubItems(6), .Item(i), .Item(i).Index, .Item(i).SubItems(9)
+            frmAccountPanel.ModifyAccount Account, .Item(i).SubItems(INDEX_PASSWORD), Ban, .Item(i).SubItems(INDEX_LEVEL), .Item(i), .Item(i).Index, .Item(i).SubItems(INDEX_GENDER)
             
             'Determine user from account
             With frmPanel.ListView1.ListItems
                 For j = 1 To .Count
-                    If LCase(.Item(j).SubItems(5)) = LCase(Account) Then
+                    If LCase(.Item(j).SubItems(INDEX_ACCOUNT)) = LCase(Account) Then
                         User = .Item(j)
                         Exit For
                     End If
@@ -1243,7 +1239,7 @@ Dim i As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
-            Unload frmMain.Winsock1(.Item(i).SubItems(2))
+            Unload frmMain.Winsock1(.Item(i).SubItems(INDEX_WINSOCK_ID))
             SendMessage .Item(i) & " has gone offline."
             
             .Remove (i)
@@ -1261,8 +1257,8 @@ Dim i As Long
 
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
-        If LCase(.Item(i).SubItems(1)) = LCase(Account) Then
-            SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " Name: " & .Item(i).SubItems(1) & vbCrLf & " Password: " & .Item(i).SubItems(2) & vbCrLf & " Registration Time: " & .Item(i).SubItems(3) & vbCrLf & " Registration Date: " & .Item(i).SubItems(4) & vbCrLf & " Banned: " & .Item(i).SubItems(5) & vbCrLf & " Level: " & .Item(i).SubItems(6), pIndex
+        If LCase(.Item(i).SubItems(INDEX_NAME)) = LCase(Account) Then
+            SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " Name: " & .Item(i).SubItems(INDEX_NAME) & vbCrLf & " Password: " & .Item(i).SubItems(INDEX_PASSWORD) & vbCrLf & " Registration Time: " & .Item(i).SubItems(INDEX_TIME) & vbCrLf & " Registration Date: " & .Item(i).SubItems(INDEX_DATE) & vbCrLf & " Banned: " & .Item(i).SubItems(INDEX_BANNED) & vbCrLf & " Level: " & .Item(i).SubItems(INDEX_LEVEL), pIndex
             Exit For
         Else
             If i = .Count Then
@@ -1283,7 +1279,7 @@ Dim i As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(pUser, vbProperCase) Then
-            SendSingle vbCrLf & "User information about '" & pUser & "'" & vbCrLf & " IP : " & .Item(i).SubItems(1) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(2) & vbCrLf & " Last Message: " & .Item(i).SubItems(3) & vbCrLf & " Muted: " & .Item(i).SubItems(4) & vbCrLf & " Account: " & .Item(i).SubItems(5) & vbCrLf & " Login Time: " & .Item(i).SubItems(6), pIndex
+            SendSingle vbCrLf & "User information about '" & pUser & "'" & vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & vbCrLf & " Muted: " & .Item(i).SubItems(INDEX_MUTED) & vbCrLf & " Account: " & .Item(i).SubItems(INDEX_ACCOUNT) & vbCrLf & " Login Time: " & .Item(i).SubItems(INDEX_LOGIN_TIME), pIndex
             Exit For
         Else
             If i = .Count Then
@@ -1315,7 +1311,7 @@ Dim i       As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = Name Then
-            pName = .Item(i).SubItems(5)
+            pName = .Item(i).SubItems(INDEX_ACCOUNT)
             Exit For
         End If
     Next i
@@ -1323,8 +1319,8 @@ End With
 
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(1) = pName Then
-            GetLevel = .Item(i).SubItems(6)
+        If .Item(i).SubItems(INDEX_NAME) = pName Then
+            GetLevel = .Item(i).SubItems(INDEX_LEVEL)
             Exit For
         End If
     Next i
@@ -1336,9 +1332,10 @@ Dim pTemp   As String
 Dim i       As Long
 
 Unload Winsock1(Index)
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(2) = Index Then
+        If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
             SendMessage .Item(i) & " has gone offline."
             .Remove (i)
             Exit For
@@ -1360,3 +1357,31 @@ For Each pForm In Forms
 Next
 pNewForm.Show
 End Sub
+
+Private Function GetUserByIndex(pIndex As Integer)
+Dim i As Long
+
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(INDEX_WINSOCK_ID) = pIndex Then
+            GetUserByIndex = .Item(i)
+            Exit For
+        End If
+    Next i
+End With
+End Function
+
+Private Function GetAccountByIndex(pIndex As Integer)
+Dim i As Long
+
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i).SubItems(INDEX_WINSOCK_ID) = pIndex Then
+            GetAccountByIndex = .Item(i).SubItems(INDEX_ACCOUNT)
+            Exit For
+        End If
+    Next i
+End With
+End Function
+
+

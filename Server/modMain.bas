@@ -16,7 +16,7 @@ LoadRegistry
 'Load ini values
 LoadIniValue
 
-'Load config value
+'Load config values
 LoadConfigValue
 
 'Connect to Database

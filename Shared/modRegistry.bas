@@ -45,14 +45,9 @@ If (OpenKey <> 0) Then
 End If
 
 Select Case KeyDataType
-    Case 1:
-        SetValue = RegSetValueEx(hKey, KeyValueName, 0&, KeyDataType, ByVal CStr(KeyValueDate & Chr$(0)), Len(KeyValueDate))
-        
-    Case 3:
-        SetValue = RegSetValueEx(hKey, KeyValueName, 0&, KeyDataType, ByVal CStr(KeyValueDate & Chr$(0)), Len(KeyValueDate))
-        
-    Case 4:
-        SetValue = RegSetValueEx(hKey, KeyValueName, 0&, KeyDataType, CLng(KeyValueDate), 4)
+    Case 1: SetValue = RegSetValueEx(hKey, KeyValueName, 0&, KeyDataType, ByVal CStr(KeyValueDate & Chr$(0)), Len(KeyValueDate))
+    Case 3: SetValue = RegSetValueEx(hKey, KeyValueName, 0&, KeyDataType, ByVal CStr(KeyValueDate & Chr$(0)), Len(KeyValueDate))
+    Case 4: SetValue = RegSetValueEx(hKey, KeyValueName, 0&, KeyDataType, CLng(KeyValueDate), 4)
 End Select
     
 SetValue = RegCloseKey(hKey)

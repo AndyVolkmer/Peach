@@ -411,8 +411,8 @@ lblForgotPassword.Caption = CONFIG_COMMAND_FORGOT_PASSWORD
 lblAccount.Caption = CONFIG_LABEL_ACCOUNT
 lblPassword.Caption = CONFIG_LABEL_PASSWORD
 lblName.Caption = CONFIG_LABEL_NAME
-lblAuthor.Caption = "Author : " & pAuthor
-lblVersion.Caption = "Version : " & pRev
+lblAuthor.Caption = "Author: " & pAuthor
+lblVersion.Caption = "Version: " & pRev
 
 cmdConnect.Caption = CONFIG_COMMAND_CONNECT
 
@@ -426,7 +426,7 @@ txtPassword.Text = Setting.PASSWORD
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Dim MSG     As Long
+Dim MSG As Long
     MSG = X / Screen.TwipsPerPixelX
 
 Select Case MSG
@@ -681,7 +681,6 @@ For k = 0 To UBound(p_PreArray) - 1
         'We can login
         Case "!accepted"
             SetupChildForm frmChat
-            'StatusBar1.Panels(1).Text = Replace$(MDI_STAT_CONNECTED, "%s", Setting.SERVER_IP)
             SendMessage "!connected#" & frmMain.txtName.Text & "#"
             
         'Wipe out current ignore list and insert new values

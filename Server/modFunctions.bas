@@ -12,6 +12,27 @@ Global Const DATABASE_TABLE_DECLINED_NAMES  As String = "declinednames"
 Global Const DATABASE_TABLE_FRIENDS         As String = "friends"
 Global Const DATABASE_TABLE_IGNORES         As String = "ignores"
 
+Public Enum ACCOUNT_PANEL_INDEX
+    INDEX_NAME = 1
+    INDEX_PASSWORD = 2
+    INDEX_TIME = 3
+    INDEX_DATE = 4
+    INDEX_BANNED = 5
+    INDEX_LEVEL = 6
+    INDEX_SECRET_QUESTION = 7
+    INDEX_SECRET_ANSWER = 8
+    INDEX_GENDER = 9
+End Enum
+
+Public Enum USER_PANEL_INDEX
+    INDEX_IP = 1
+    INDEX_WINSOCK_ID = 2
+    INDEX_LAST_MESSAGE = 3
+    INDEX_MUTED = 4
+    INDEX_ACCOUNT = 5
+    INDEX_LOGIN_TIME = 6
+End Enum
+
 Type NOTIFYICONDATA
     cbSize                                  As Long
     hwnd                                    As Long

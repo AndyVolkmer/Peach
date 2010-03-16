@@ -34,6 +34,7 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -201,9 +202,9 @@ End Function
 Private Sub Form_Load()
 Me.Top = 0: Me.Left = 0
 
-Label5.Caption = "IP : " & frmMain.Winsock1(0).LocalIP
+Label5.Caption = "IP: " & frmMain.Winsock1(0).LocalIP
 Label7.Caption = "Author: " & pAuthor
-Label8.Caption = "Version : " & pRev
+Label8.Caption = "Version: " & pRev
 End Sub
 
 Private Sub txt_log_Change()

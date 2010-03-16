@@ -135,8 +135,6 @@ With frmMain
     
     'Reset RunOnce variable
     .RunOnce = False
-    
-    '.StatusBar1.Panels(1).Text = MDI_STAT_DISCONNECTED
 End With
 
 SetupForm frmMain
@@ -208,7 +206,7 @@ With frmMain
 End With
 End Sub
 
-Public Sub SetScheme() 'IsFirst As Boolean
+Public Sub SetScheme()
 Dim SC As String
     SC = Setting.SCHEME_COLOR
 
@@ -223,24 +221,22 @@ With frmMain
     .lblVersion.BackColor = SC
 End With
 
-'If Not IsFirst Then
-    With frmSettings
-        .BackColor = SC
-        .Frame1.BackColor = SC
-        .Frame2.BackColor = SC
-        .Frame3.BackColor = SC
-        .lblColor.BackColor = SC
-        .lblFont.BackColor = SC
-        .Label2.BackColor = SC
-        .Label3.BackColor = SC
-        .chkSaveAccount.BackColor = SC
-        .chkSavePassword.BackColor = SC
-        .chkAutoLogin.BackColor = SC
-        .chkAskClosing.BackColor = SC
-        .chkMinimize.BackColor = SC
-        .lblMinimizeTray.BackColor = SC
-    End With
-'End If
+With frmSettings
+    .BackColor = SC
+    .Frame1.BackColor = SC
+    .Frame2.BackColor = SC
+    .Frame3.BackColor = SC
+    .lblColor.BackColor = SC
+    .lblFont.BackColor = SC
+    .Label2.BackColor = SC
+    .Label3.BackColor = SC
+    .chkSaveAccount.BackColor = SC
+    .chkSavePassword.BackColor = SC
+    .chkAutoLogin.BackColor = SC
+    .chkAskClosing.BackColor = SC
+    .chkMinimize.BackColor = SC
+    .lblMinimizeTray.BackColor = SC
+End With
 
 frmContainer.BackColor = SC
 frmContainer.Picture1.BackColor = SC
@@ -281,7 +277,7 @@ End With
 End Sub
 
 Public Sub SetupChildForm(pForm As Form)
-Dim pNewForm    As Form
+Dim pNewForm As Form
 
 For Each pNewForm In Forms
     If pNewForm.Name <> frmContainer.Name Then pNewForm.Hide

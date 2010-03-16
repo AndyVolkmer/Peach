@@ -44,7 +44,6 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -94,6 +93,7 @@ Begin VB.Form frmChat
       _ExtentY        =   4471
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmChat.frx":007D
@@ -479,8 +479,8 @@ End Function
 
 Private Function RemoveSign(ByRef Test As String) As Long
 Dim Last As Long
+    Last = Asc(Right$(Test, 1))
 
-Last = Asc(Right$(Test, 1))
 If Sign(Last) = 1 Then
     Test = Left$(Test, Len(Test) - 1)
     RemoveSign = 1
@@ -511,10 +511,10 @@ End If
 End Function
 
 Private Function IsUrlOrMail(Test As String) As Long
-Dim ok As Long
+Dim ok  As Long
 Dim Pos As Long
+    Pos = InStr(1, Test$, "://", 1)
 
-Pos = InStr(1, Test$, "://", 1)
 If Pos > 0 Then
     Pos = InStr(1, Test$, "http", 1)
     If Pos > 0 Then
@@ -603,12 +603,9 @@ Do
             NRTB.SelLength = Len(Test)
             
             Select Case lnk
-                Case 1 To 10
-                    NRTB.SelColor = RGB(34, 0, 204)
-                Case 11 To 20
-                    NRTB.SelColor = RGB(0, 127, 0)
-                Case Is > 100
-                    NRTB.SelColor = vbRed
+                Case 1 To 10: NRTB.SelColor = RGB(34, 0, 204)
+                Case 11 To 20: NRTB.SelColor = RGB(0, 127, 0)
+                Case Is > 100: NRTB.SelColor = vbRed
             End Select
             
             NRTB.SelBold = True

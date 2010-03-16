@@ -8,11 +8,6 @@ Public MDI_COMMAND_CHAT                 As String
 Public MDI_COMMAND_SENDFILE             As String
 Public MDI_COMMAND_SOCIETY              As String
 
-Public MDI_STAT_DISCONNECTED            As String
-Public MDI_STAT_DISCONNECT              As String
-Public MDI_STAT_CONNECTED               As String
-Public MDI_STAT_CONNECTING              As String
-
 Public MDI_MSG_ERROR_FORM_LOAD          As String
 Public MDI_MSG_NAME_TAKEN               As String
 Public MDI_MSG_WRONG_ACCOUNT            As String
@@ -196,11 +191,6 @@ MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Datei senden"
 MDI_COMMAND_SOCIETY = "&Gesellschaft"
 
-MDI_STAT_DISCONNECTED = "Status: Getrennt"
-MDI_STAT_DISCONNECT = "Status: Getrennt vom Server"
-MDI_STAT_CONNECTED = "Status: Verbunden (%s)"
-MDI_STAT_CONNECTING = "Status: Verbindung wird aufgebaut .."
-
 MDI_MSG_NAME_TAKEN = "Der Name ist bereits vergeben."
 MDI_MSG_WRONG_ACCOUNT = "Dieser Konto-Name ist nicht vorhanden oder falsch."
 MDI_MSG_WRONG_PASSWORD = "Das Passwort ist falsch."
@@ -380,11 +370,6 @@ CURRENT_LANG = 1
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Send File"
 MDI_COMMAND_SOCIETY = "&Society"
-
-MDI_STAT_DISCONNECTED = "Status: Disconnected"
-MDI_STAT_DISCONNECT = "Status: Disconnected from Server"
-MDI_STAT_CONNECTED = "Status: Connected (%s)"
-MDI_STAT_CONNECTING = "Status: Connecting .."
 
 'MDImsgbox_errorHandlerFormLoad
 MDI_MSG_NAME_TAKEN = "This name is already taken."
@@ -569,11 +554,6 @@ MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Enviar Archivo"
 MDI_COMMAND_SOCIETY = "&Sociedad"
 
-MDI_STAT_DISCONNECTED = "Estado: Desconectado"
-MDI_STAT_DISCONNECT = "Estado: Desconectado del servidor"
-MDI_STAT_CONNECTED = "Estado: Disponible (%s)"
-MDI_STAT_CONNECTING = "Estado: Conectando .."
-
 MDI_MSG_NAME_TAKEN = "Este nombre ya esta cogido."
 MDI_MSG_WRONG_ACCOUNT = "La cuenta no existe o es incorrecta."
 MDI_MSG_WRONG_PASSWORD = "La contraseña es incorrecta."
@@ -754,11 +734,6 @@ MDI_COMMAND_CHAT = "Ch&att"
 MDI_COMMAND_SENDFILE = "&Sänd fil"
 MDI_COMMAND_SOCIETY = "&Samhälle"
 
-MDI_STAT_DISCONNECTED = "Status: Frånkopplad"
-MDI_STAT_DISCONNECT = "Status: Koppla ifrån servern"
-MDI_STAT_CONNECTED = "Status: Anslut (%s)"
-MDI_STAT_CONNECTING = "Status: Ansluter .."
-
 'MDImsgbox_errorHandlerFormLoad
 MDI_MSG_NAME_TAKEN = "Namnet är upptaget."
 MDI_MSG_WRONG_ACCOUNT = "Kontot finns inte eller är felaktig."
@@ -937,11 +912,6 @@ CURRENT_LANG = 4
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Invia File"
 MDI_COMMAND_SOCIETY = "&Società"
-
-MDI_STAT_DISCONNECTED = "Stato: Disconnesso"
-MDI_STAT_DISCONNECT = "Stato: Disconnesso dal Server"
-MDI_STAT_CONNECTED = "Stato: Connesso (%s)"
-MDI_STAT_CONNECTING = "Stato: Connessione .."
 
 'MDImsgbox_errorHandlerFormLoad
 MDI_MSG_NAME_TAKEN = "Il nome immesso e' gia' in uso."
@@ -1123,11 +1093,6 @@ CURRENT_LANG = 5
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Bestand Verzenden"
 MDI_COMMAND_SOCIETY = "&Gezelschap"
-
-MDI_STAT_DISCONNECTED = "Status: Verbinding verbroken"
-MDI_STAT_DISCONNECT = "Status: Verbinding verbroken met de server"
-MDI_STAT_CONNECTED = "Status: Verbonden (%s)"
-MDI_STAT_CONNECTING = "Status: Verbinden .."
 
 'MDImsgbox_errorHandlerFormLoad
 MDI_MSG_NAME_TAKEN = "Deze naam is niet beschikbaar."
@@ -1315,11 +1280,6 @@ MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Slanje fajla"
 MDI_COMMAND_SOCIETY = "&Onlajn lista"
 
-MDI_STAT_DISCONNECTED = "Status: Veza je prekinuta"
-MDI_STAT_DISCONNECT = "Status: Veza sa serverom je prekinuta"
-MDI_STAT_CONNECTED = "Status: Povezi (%s)"
-MDI_STAT_CONNECTING = "Status: Povezi .."
-
 'MDImsgbox_errorHandlerFormLoad
 MDI_MSG_NAME_TAKEN = "Ime je vec zauzeto."
 MDI_MSG_WRONG_ACCOUNT = "Akaunt ne postoji ili je pogresan."
@@ -1499,11 +1459,6 @@ CURRENT_LANG = 7
 MDI_COMMAND_CHAT = "Ch&at"
 MDI_COMMAND_SENDFILE = "&Envoyer un fichier"
 MDI_COMMAND_SOCIETY = "&Société"
-
-MDI_STAT_DISCONNECTED = "Etat: Deconnecté"
-MDI_STAT_DISCONNECT = "Etat: Deconnecté du Server"
-MDI_STAT_CONNECTED = "Etat: Connecté (%s)"
-MDI_STAT_CONNECTING = "Etat: Connection .."
 
 MDI_MSG_NAME_TAKEN = "Le nom inséré est déjà utilizé."
 MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
