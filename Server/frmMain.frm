@@ -562,6 +562,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             For i = 1 To .Count
                                 If .Item(i) = p_TEXT_FIRST_PROP Then
                                     KickUser p_TEXT_FIRST_PROP
+                                    Exit For
                                 Else
                                     If i = .Count Then
                                         If LenB(p_TEXT_FIRST_PROP) = 0 Then
