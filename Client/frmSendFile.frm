@@ -155,7 +155,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Const PacketSize    As Long = 4096 '1024 * 4
+Private Const PacketSize    As Long = 4096
 Private sFileName           As String
 Private iFileNum            As Integer
 
@@ -267,6 +267,9 @@ Close iFileNum  'Close file
 iFileNum = 0    'Set file number to 0, timer will exit if another timer event
 
 cmdSendFile.Caption = SF_COMMAND_SENDFILE
+
+lblSendSpeed.Caption = "0,00" & SF_LABEL_KBSS & "0,00" & SF_LABEL_KBS & SF_LABEL_TIME & "00:00:00"
+
 PicShowPercentage Me.picProgress, 0
 lblSendStatus.Caption = "0.0%"
 End Sub

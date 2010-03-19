@@ -75,7 +75,7 @@ INSERT INTO `commands` VALUES ('.accountinfo / .accinfo \'Account\'', 'Shows all
 INSERT INTO `commands` VALUES ('.announce \'Text\'', 'Send a server side tagged message.');
 INSERT INTO `commands` VALUES ('.ban account \'Account\' [Reason]', 'Bans the account permanently.');
 INSERT INTO `commands` VALUES ('.ban user \'Name\' [Reason]', 'Bans the users account permanently.');
-INSERT INTO `commands` VALUES ('.clear', 'Clears the chatbox of all users.');
+INSERT INTO `commands` VALUES ('.clear \'Name\'', 'Clears the chatbox of \'Name\'.');
 INSERT INTO `commands` VALUES ('.help / .command', 'Shows a list of all avaible commands.');
 INSERT INTO `commands` VALUES ('.kick \'Name\'', 'Disconnectes the user with \'Name\' from server.');
 INSERT INTO `commands` VALUES ('.mute \'Name\' [Reason]', 'Mutes the user with \'Name\' permanently.');
