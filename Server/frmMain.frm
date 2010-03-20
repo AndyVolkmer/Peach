@@ -610,7 +610,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                         'Capture announce message
                         If UBound(p_CHAT_ARRAY) > 0 Then
-                            p_ANN_MSG = Mid$(p_MainArray(2), Len(p_CHAT_ARRAY(0)) + 2, Len(p_MainArray(2)))
+                            p_ANN_MSG = Mid$(p_MainArray(1), Len(p_CHAT_ARRAY(0)) + 2, Len(p_MainArray(1)))
                         End If
                         
                         If LenB(p_ANN_MSG) = 0 Then
