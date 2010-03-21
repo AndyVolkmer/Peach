@@ -4,7 +4,7 @@ Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form frmMain 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Peach"
-   ClientHeight    =   6465
+   ClientHeight    =   6915
    ClientLeft      =   45
    ClientTop       =   675
    ClientWidth     =   5955
@@ -20,7 +20,7 @@ Begin VB.Form frmMain
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   6465
+   ScaleHeight     =   6915
    ScaleWidth      =   5955
    Begin VB.CommandButton cmdSwitch 
       Caption         =   "^"
@@ -121,7 +121,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   120
       TabIndex        =   8
-      Top             =   5760
+      Top             =   6360
       Width           =   1455
    End
    Begin VB.Label lblVersion 
@@ -139,7 +139,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   120
       TabIndex        =   7
-      Top             =   6000
+      Top             =   6600
       Width           =   1455
    End
    Begin VB.Label lblPassword 

@@ -441,9 +441,7 @@ For k = 0 To UBound(p_PreArray) - 1
         Case "!message"
             Dim p_CHAT_ARRAY()      As String
             Dim p_TEXT_FIRST        As String
-            Dim p_TEXT_FIRST_PROP   As String
             Dim p_TEXT_SECOND       As String
-            Dim p_TEXT_SECOND_PROP  As String
             Dim IsCommand           As Boolean
             Dim IsSlash             As Boolean
                 
@@ -463,13 +461,11 @@ For k = 0 To UBound(p_PreArray) - 1
             'Capture first part of the text
             If UBound(p_CHAT_ARRAY) > 0 Then
                 p_TEXT_FIRST = p_CHAT_ARRAY(1)
-                p_TEXT_FIRST_PROP = StrConv(p_CHAT_ARRAY(1), vbProperCase)
             End If
             
             'Capture second part
             If UBound(p_CHAT_ARRAY) > 1 Then
                 p_TEXT_SECOND = p_CHAT_ARRAY(2)
-                p_TEXT_SECOND_PROP = StrConv(p_CHAT_ARRAY(2), vbProperCase)
             End If
             
             'Check if user is muted
@@ -486,17 +482,11 @@ For k = 0 To UBound(p_PreArray) - 1
             
             'If a command is used check out which
             If IsCommand Then
-                Dim Reason          As String
-                Dim Reason2         As String
-                
+                Dim Reason As String
+                                
                 'Save the reason
                 For i = 2 To UBound(p_CHAT_ARRAY)
                     Reason = Reason & p_CHAT_ARRAY(i) & " "
-                Next i
-                
-                'Save the second reason
-                For i = 3 To UBound(p_CHAT_ARRAY)
-                    Reason2 = Reason2 & p_CHAT_ARRAY(i) & " "
                 Next i
                 
                 Select Case LCase$(p_CHAT_ARRAY(0))
@@ -504,8 +494,8 @@ For k = 0 To UBound(p_PreArray) - 1
                         If IsPartOf(p_TEXT_FIRST, "accounts") Then
                             SendSingle "!split_text#" & GetAccountList, Index
                             
-                        ElseIf IsPartOf(p_TEXT_FIRST, "users") Then
-                            SendSingle "!split_text#" & GetUserList, Index
+                        ElseIf IsPartOf(p_TEXT_FIRST, "online") Then
+                            SendSingle "!split_text#" & GetOnlineList, Index
                             
                         Else
                             SendSingle "Incorrect Syntax, use the following format .show [accounts, users].", Index
@@ -513,23 +503,23 @@ For k = 0 To UBound(p_PreArray) - 1
                         End If
                         
                     Case ".userinfo", ".uinfo"
-                        GetUserInfo p_TEXT_FIRST_PROP, p_CHAT_ARRAY(0), Index
+                        GetUserInfo GetProperAccountName(p_TEXT_FIRST), p_CHAT_ARRAY(0), Index
                         
                     Case ".accountinfo", ".accinfo", ".ainfo"
-                        GetAccountInfo p_TEXT_FIRST, p_CHAT_ARRAY(0), Index
+                        GetAccountInfo GetProperAccountName(p_TEXT_FIRST), p_CHAT_ARRAY(0), Index
                         
                     Case ".kick"
                         With frmPanel.ListView1.ListItems
                             For i = 1 To .Count
-                                If .Item(i) = p_TEXT_FIRST_PROP Then
-                                    KickUser p_TEXT_FIRST_PROP
+                                If .Item(i) = GetProperAccountName(p_TEXT_FIRST) Then
+                                    KickUser .Item(i)
                                     Exit For
                                 Else
                                     If i = .Count Then
-                                        If LenB(p_TEXT_FIRST_PROP) = 0 Then
+                                        If LenB(p_TEXT_FIRST) = 0 Then
                                             SendSingle "Incorrect syntax, use following format .kick [User].", Index
                                         Else
-                                            SendSingle "User '" & p_TEXT_FIRST_PROP & "' not found.", Index
+                                            SendSingle "User '" & p_TEXT_FIRST & "' not found.", Index
                                         End If
                                     End If
                                 End If
@@ -537,24 +527,16 @@ For k = 0 To UBound(p_PreArray) - 1
                         End With
                         
                     Case ".ban"
-                        If IsPartOf(p_TEXT_FIRST, "account") Then
-                            BanAccount p_TEXT_SECOND, GetAccountByIndex(Index), 1, Index, Trim$(Reason2)
-                        Else
-                            SendSingle "Incorrect syntax, use the following format .ban [User, Account] [Name] [Reason]", Index
-                        End If
+                        BanAccount GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 1, Index, Trim$(Reason)
                         
                     Case ".unban"
-                        If IsPartOf(p_TEXT_FIRST, "account") Then
-                            BanAccount p_TEXT_SECOND, GetAccountByIndex(Index), 0, Index, Trim$(Reason2)
-                        Else
-                            SendSingle "Incorrect syntax, use the following format .unban [User, Account] [Name] [Reason]", Index
-                        End If
+                        BanAccount GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 0, Index, Trim$(Reason)
                         
                     Case ".mute"
-                        MuteUser p_TEXT_FIRST_PROP, GetAccountByIndex(Index), True, Index, Trim$(Reason)
+                        MuteUser GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), True, Index, Trim$(Reason)
                         
                     Case ".unmute"
-                        MuteUser p_TEXT_FIRST_PROP, GetAccountByIndex(Index), False, Index, Trim$(Reason)
+                        MuteUser GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), False, Index, Trim$(Reason)
                         
                     Case ".announce", ".ann", ".broadcast"
                         Dim p_ANN_MSG As String
@@ -628,7 +610,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             
                             With frmPanel.ListView1.ListItems
                                 For i = 1 To .Count
-                                    If .Item(i) = p_TEXT_FIRST_PROP Then
+                                    If .Item(i) = GetProperAccountName(p_TEXT_FIRST) Then
                                         SendSingle "!clear#", .Item(i).SubItems(INDEX_WINSOCK_ID)
                                         Exit For
                                     Else
@@ -737,7 +719,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                 Whisper GetAccountByIndex(Index), GetProperAccountName(p_TEXT_FIRST), Trim$(pMes), Index
                             End If
                         Else
-                            If LenB(p_TEXT_FIRST_PROP) = 0 Then
+                            If LenB(p_TEXT_FIRST) = 0 Then
                                 SendSingle "Please use the following format /whisper [Name] [Text]", Index
                                 Exit Sub
                             Else
@@ -995,7 +977,6 @@ Dim i As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            
             If IsMuted And .Item(i).SubItems(INDEX_MUTED) = "True" Then
                 SendSingle User & " is already muted.", pIndex
                 Exit Sub
@@ -1048,53 +1029,26 @@ With frmAccountPanel.ListView1.ListItems
 End With
 End Function
 
-Private Function GetUserList() As String
+Private Function GetOnlineList() As String
 Dim i As Long
 
 With frmPanel.ListView1.ListItems
-    GetUserList = "User List:#"
+    GetOnlineList = "User List:#"
     For i = 1 To .Count
-        GetUserList = GetUserList & .Item(i) & "#"
+        GetOnlineList = GetOnlineList & .Item(i) & "#"
     Next i
 End With
 End Function
 
-Private Sub BanUser(User As String, AdminName As String, Ban As Long, pIndex As Integer, Reason As String)
-Dim i As Long
-
-With frmPanel.ListView1.ListItems
-    For i = 1 To .Count
-        If .Item(i) = StrConv(User, vbProperCase) Then
-            BanAccount .Item(i).SubItems(INDEX_NAME), AdminName, Ban, pIndex, Reason
-            Exit For
-        Else
-            If i = .Count Then
-                If LenB(User) = 0 Then
-                    If Ban = 1 Then
-                        SendSingle "Incorrect syntax, use the following format .ban user [User] [Reason].", pIndex
-                    Else
-                        SendSingle "Incorrect syntax, use the following format .unban user [User] [Reason].", pIndex
-                    End If
-                Else
-                    SendSingle "User '" & User & "' not found.", pIndex
-                End If
-            End If
-        End If
-    Next i
-End With
-End Sub
-
 Private Sub BanAccount(Account As String, AdminName As String, Ban As Long, pIndex As Integer, Reason As String)
-Dim User As String
-Dim i    As Long
-Dim j    As Long
+Dim i As Long
+Dim j As Long
 
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
-        If LCase(.Item(i).SubItems(INDEX_NAME)) = LCase(Account) Then
-            'If the account is already banned send feedback
-            Account = .Item(i).SubItems(INDEX_NAME)
+        If .Item(i).SubItems(INDEX_NAME) = Account Then
             
+            'If the account is already banned send feedback
             If Ban = 1 Then
                 If .Item(i).SubItems(INDEX_BANNED) = "1" Then
                     SendSingle "Account '" & Account & "' is already banned.", pIndex
@@ -1110,41 +1064,27 @@ With frmAccountPanel.ListView1.ListItems
             'Ban account in database
             frmAccountPanel.ModifyAccount Account, .Item(i).SubItems(INDEX_PASSWORD), Ban, .Item(i).SubItems(INDEX_LEVEL), .Item(i), .Item(i).Index, .Item(i).SubItems(INDEX_GENDER)
             
-            'Determine user from account
-            With frmPanel.ListView1.ListItems
-                For j = 1 To .Count
-                    If LCase(.Item(j).SubItems(INDEX_ACCOUNT)) = LCase(Account) Then
-                        User = .Item(j)
-                        Exit For
-                    End If
-                Next j
-            End With
-            
-            If LenB(Trim$(User)) = 0 Then
-                User = Account
-            End If
-            
             'Announce the action
             If LenB(Reason) = 0 Then
                 If Ban Then
-                    SendMessage User & " was account banned by " & AdminName & "."
+                    SendMessage Account & " was account banned by " & AdminName & "."
                 Else
-                    SendMessage User & " was account unbanned by " & AdminName & "."
+                    SendMessage Account & " was account unbanned by " & AdminName & "."
                 End If
             Else
                 If Ban Then
-                    SendMessage User & " was account banned by " & AdminName & ". (" & Reason & ")"
+                    SendMessage Account & " was account banned by " & AdminName & ". (" & Reason & ")"
                 Else
-                    SendMessage User & " was account unbanned by " & AdminName & ". (" & Reason & ")"
+                    SendMessage Account & " was account unbanned by " & AdminName & ". (" & Reason & ")"
                 End If
             End If
             Exit For
         Else
             If i = .Count Then
                 If LenB(Trim$(Account)) = 0 Then
-                    SendSingle "Incorrect syntax, use the following format .ban account [Account] [Reason].", pIndex
+                    SendSingle "Incorrect syntax, use the following format .ban [Name] [Reason].", pIndex
                 Else
-                    SendSingle "Account '" & Account & "' not found.", pIndex
+                    SendSingle "User '" & Account & "' not found.", pIndex
                 End If
             End If
         End If
