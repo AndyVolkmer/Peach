@@ -239,7 +239,7 @@ If Combo1.ListCount = 0 Then
     Exit Sub
 End If
 
-If Combo1.Text = frmMain.txtName Then
+If Combo1.Text = frmMain.txtAccount Then
     cmdSendFile.Enabled = False
 Else
     cmdSendFile.Enabled = True

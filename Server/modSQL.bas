@@ -221,8 +221,8 @@ With frmAccountPanel
         .AddItem "2"
     End With
     With .cmbGender
-        .AddItem "Male"
-        .AddItem "Female"
+        .AddItem "0"
+        .AddItem "1"
     End With
 End With
 

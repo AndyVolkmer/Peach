@@ -355,6 +355,8 @@ If IsNumeric(txtAccount) Then
     Exit Sub
 End If
 
+txtAccount.Text = StrConv(txtAccount.Text, vbProperCase)
+
 'Can't register if there is no Password.
 If LenB(txtPassword1) = 0 Then
     MsgBox REG_MSG_PASSWORD_EMPTY, vbInformation
@@ -389,13 +391,7 @@ If frmMain.RegSock.State <> 7 Then
     Exit Sub
 End If
 
-Dim pGender As String
-Select Case cmbGender.ListIndex
-    Case 0: pGender = "Male"
-    Case 1: pGender = "Female"
-End Select
-
-frmMain.RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#" & pGender & "#"
+frmMain.RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#" & cmbGender.ListIndex & "#"
 End Sub
 
 Private Sub Form_Activate()
@@ -462,6 +458,10 @@ End Sub
 
 Private Sub txtAccount_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then Command1_Click
+End Sub
+
+Private Sub txtAccount_LostFocus()
+txtAccount.Text = StrConv(txtAccount.Text, vbProperCase)
 End Sub
 
 Private Sub txtPassword1_Change()

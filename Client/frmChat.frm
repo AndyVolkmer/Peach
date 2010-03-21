@@ -44,6 +44,7 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -93,7 +94,6 @@ Begin VB.Form frmChat
       _ExtentY        =   4471
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmChat.frx":007D
@@ -246,12 +246,8 @@ Else
     If Button = 2 Then
         With frmSociety.lvOnlineList.ListItems
             For i = 1 To .Count
-                'Get the name of the user from string and account
-                pTemp = Left$(.Item(i), InStr(1, .Item(i), " ") - 1)
-                menuAccount = Mid(.Item(i), InStr(1, .Item(i), "(") + 2, Len(.Item(i)) - InStr(1, .Item(i), "(") - 3)
-                
                 'If the it is the user and not your self then proceed
-                If pTemp = menuUser And Not menuUser = frmMain.txtName Then
+                If .Item(i) = menuUser And Not menuUser = frmMain.txtAccount.Text Then
                     'Check if the user is already added in friend list ( to disable control )
                     With frmSociety.lvFriendList.ListItems
                         For j = 1 To .Count

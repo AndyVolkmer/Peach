@@ -1,10 +1,10 @@
 VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form frmMain 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Peach"
-   ClientHeight    =   7320
+   ClientHeight    =   6465
    ClientLeft      =   45
    ClientTop       =   675
    ClientWidth     =   5955
@@ -19,15 +19,14 @@ Begin VB.Form frmMain
    EndProperty
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MaxButton       =   0   'False
-   ScaleHeight     =   7320
+   ScaleHeight     =   6465
    ScaleWidth      =   5955
    Begin VB.CommandButton cmdSwitch 
       Caption         =   "^"
       Height          =   375
       Left            =   5490
-      TabIndex        =   11
+      TabIndex        =   9
       Top             =   50
       Width           =   375
    End
@@ -38,7 +37,7 @@ Begin VB.Form frmMain
       Left            =   1890
       MaxLength       =   15
       PasswordChar    =   "*"
-      TabIndex        =   3
+      TabIndex        =   2
       Top             =   2400
       Width           =   2175
    End
@@ -47,17 +46,8 @@ Begin VB.Form frmMain
       Height          =   285
       Left            =   1890
       MaxLength       =   15
-      TabIndex        =   2
-      Top             =   1680
-      Width           =   2175
-   End
-   Begin VB.TextBox txtName 
-      Alignment       =   2  'Center
-      Height          =   285
-      Left            =   1890
-      MaxLength       =   15
       TabIndex        =   1
-      Top             =   3120
+      Top             =   1680
       Width           =   2175
    End
    Begin VB.CommandButton cmdConnect 
@@ -65,7 +55,7 @@ Begin VB.Form frmMain
       Height          =   495
       Left            =   1890
       TabIndex        =   0
-      Top             =   3600
+      Top             =   2880
       Width           =   2175
    End
    Begin VB.Timer STimer 
@@ -130,8 +120,8 @@ Begin VB.Form frmMain
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
-      TabIndex        =   10
-      Top             =   6720
+      TabIndex        =   8
+      Top             =   5760
       Width           =   1455
    End
    Begin VB.Label lblVersion 
@@ -148,8 +138,8 @@ Begin VB.Form frmMain
       ForeColor       =   &H8000000C&
       Height          =   255
       Left            =   120
-      TabIndex        =   9
-      Top             =   6960
+      TabIndex        =   7
+      Top             =   6000
       Width           =   1455
    End
    Begin VB.Label lblPassword 
@@ -158,7 +148,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00000000&
       Height          =   255
       Left            =   1890
-      TabIndex        =   8
+      TabIndex        =   6
       Top             =   2160
       Width           =   2175
    End
@@ -168,18 +158,8 @@ Begin VB.Form frmMain
       ForeColor       =   &H00000000&
       Height          =   255
       Left            =   1890
-      TabIndex        =   7
+      TabIndex        =   5
       Top             =   1440
-      Width           =   2175
-   End
-   Begin VB.Label lblName 
-      BackColor       =   &H00F4F4F4&
-      Caption         =   "lblName"
-      ForeColor       =   &H00000000&
-      Height          =   255
-      Left            =   1890
-      TabIndex        =   6
-      Top             =   2880
       Width           =   2175
    End
    Begin VB.Label lblCreateAccount 
@@ -196,8 +176,8 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   255
       Left            =   2010
-      TabIndex        =   5
-      Top             =   4560
+      TabIndex        =   4
+      Top             =   3600
       Width           =   1935
    End
    Begin VB.Label lblForgotPassword 
@@ -214,8 +194,8 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   255
       Left            =   2010
-      TabIndex        =   4
-      Top             =   4920
+      TabIndex        =   3
+      Top             =   3960
       Width           =   1935
    End
    Begin VB.Menu mainMenu 
@@ -294,14 +274,6 @@ End If
 If txtAccount.BackColor <> vbWhite Then txtAccount.BackColor = vbWhite
 End Sub
 
-Private Sub txtName_KeyPress(KeyAscii As Integer)
-If KeyAscii = vbKeyReturn Then
-    cmdConnect_Click
-    KeyAscii = 0
-End If
-If txtName.BackColor <> vbWhite Then txtName.BackColor = vbWhite
-End Sub
-
 Private Sub txtPassword_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then
     cmdConnect_Click
@@ -310,41 +282,10 @@ End If
 If txtPassword.BackColor <> vbWhite Then txtPassword.BackColor = vbWhite
 End Sub
 
-Private Sub txtName_LostFocus()
-txtName.Text = StrConv(txtName.Text, vbProperCase)
-End Sub
-
 Public Sub cmdConnect_Click()
 If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     If CheckTx(txtAccount, CONFIG_MSG_ACCOUNT) Then Exit Sub
     If CheckTx(txtPassword, CONFIG_MSG_PASSWORD) Then Exit Sub
-    If CheckTx(txtName, CONFIG_MSG_NAME) Then Exit Sub
-    
-    'Nick can't be numeric
-    If IsNumeric(txtName.Text) Then
-        MsgBox CONFIG_MSG_NUMERIC, vbInformation
-        txtName.SetFocus
-        Exit Sub
-    End If
-    
-    'Nick can't be shorter then 4 characters
-    If Len(txtName.Text) < 4 Then
-        MsgBox CONFIG_MSG_NAME_SHORT, vbInformation, "Error - Nickname"
-        txtName.SelStart = Len(txtName.Text)
-        txtName.SetFocus
-        Exit Sub
-    End If
-    
-    'Nick can't contain invalid characters
-    If IsInvalid(txtName.Text) Then
-        MsgBox CONFIG_MSG_NAME_INVALID, vbInformation
-        txtName.SelStart = Len(txtName.Text)
-        txtName.SetFocus
-        Exit Sub
-    End If
-    
-    'Make the name proper case
-    txtName.Text = StrConv(txtName.Text, vbProperCase)
     
     'Connect winsocks
     With frmMain.Winsock1
@@ -410,7 +351,6 @@ lblCreateAccount.Caption = CONFIG_COMMAND_REGISTER
 lblForgotPassword.Caption = CONFIG_COMMAND_FORGOT_PASSWORD
 lblAccount.Caption = CONFIG_LABEL_ACCOUNT
 lblPassword.Caption = CONFIG_LABEL_PASSWORD
-lblName.Caption = CONFIG_LABEL_NAME
 lblAuthor.Caption = "Author: " & pAuthor
 lblVersion.Caption = "Version: " & pRev
 
@@ -421,7 +361,6 @@ Me.Caption = pCaption
 Me.Top = Setting.MAIN_TOP
 Me.Left = Setting.MAIN_LEFT
 txtAccount.Text = Setting.ACCOUNT
-txtName.Text = Setting.NICKNAME
 txtPassword.Text = Setting.PASSWORD
 End Sub
 
@@ -619,7 +558,7 @@ End Sub
 
 Private Sub Winsock1_Connect()
 With frmMain
-    SendMessage "!login#" & .txtAccount.Text & "#" & .txtPassword.Text & "#" & .txtName.Text & "#" & CURRENT_LANG & "#"
+    SendMessage "!login#" & .txtAccount.Text & "#" & .txtPassword.Text & "#" & CURRENT_LANG & "#"
 End With
 End Sub
 
@@ -734,7 +673,7 @@ For k = 0 To UBound(p_PreArray) - 1
             'Go through array and add users
             For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
                 frmSociety.lvOnlineList.ListItems.Add , , StrArr(i)
-                frmSendFile.Combo1.AddItem Left(StrArr(i), InStr(1, StrArr(i), " ") - 1)
+                frmSendFile.Combo1.AddItem StrArr(i)
             Next i
             
             'Ask for friendlist
@@ -825,7 +764,7 @@ Private Sub STimer_Timer()
 With FSocket
     If .State = 7 Then
         STimer.Enabled = False
-        .SendData "!filerequest#" & frmMain.CDialog.FileTitle & "#" & frmMain.txtName & "#"
+        .SendData "!filerequest#" & frmMain.CDialog.FileTitle & "#" & frmMain.txtAccount & "#"
     End If
 End With
 End Sub

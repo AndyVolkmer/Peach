@@ -169,7 +169,6 @@ Public Sub CloseThis()
 'Write data entries into registry
 InsertIntoRegistry "Client\Configuration", "Password", Encode(Encode(frmMain.txtPassword.Text))
 InsertIntoRegistry "Client\Configuration", "Account", frmMain.txtAccount.Text
-InsertIntoRegistry "Client\Configuration", "Nickname", frmMain.txtName.Text
 
 If frmMain.WindowState = vbMinimized Then 'vbMinimized = 1
     InsertIntoRegistry "Client\Configuration", "Top", Screen.Height / Screen.TwipsPerPixelY
@@ -188,11 +187,9 @@ With frmMain
     .lblAccount.Enabled = pSwitch
     .lblCreateAccount.Enabled = pSwitch
     .lblForgotPassword.Enabled = pSwitch
-    .lblName.Enabled = pSwitch
     .lblPassword.Enabled = pSwitch
     
     .txtAccount.Enabled = pSwitch
-    .txtName.Enabled = pSwitch
     .txtPassword.Enabled = pSwitch
     
     .menuConfig.Enabled = pSwitch
@@ -215,7 +212,6 @@ With frmMain
     .lblAccount.BackColor = SC
     .lblCreateAccount.BackColor = SC
     .lblForgotPassword.BackColor = SC
-    .lblName.BackColor = SC
     .lblPassword.BackColor = SC
     .lblAuthor.BackColor = SC
     .lblVersion.BackColor = SC

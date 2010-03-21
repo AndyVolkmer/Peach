@@ -43,9 +43,6 @@ Public CONFIG_MSG_PASSWORD              As String
 Public CONFIG_MSG_NUMERIC               As String
 Public CONFIG_MSG_PORT                  As String
 Public CONFIG_MSG_IP                    As String
-Public CONFIG_MSG_NAME                  As String
-Public CONFIG_MSG_NAME_SHORT            As String
-Public CONFIG_MSG_NAME_INVALID          As String
 Public CONFIG_MSG_UPDATE_FILE           As String
 
 Public CHAT_COMMAND_SEND                As String
@@ -232,10 +229,7 @@ CONFIG_MSG_ACCOUNT = "Sie haben keinen Konto-Namen eingegeben."
 CONFIG_MSG_PASSWORD = "Sie haben kein Passwort eingegeben."
 CONFIG_MSG_NUMERIC = "Sie können keine Ziffern in ihrem Namen haben."
 CONFIG_MSG_PORT = "Sie haben keinen Port eingegeben."
-CONFIG_MSG_NAME = "Sie haben keinen Namen eingegeben."
 CONFIG_MSG_IP = "Sie haben keine IP eingegeben."
-CONFIG_MSG_NAME_SHORT = "Sie haben einen zu kurzen Namen eingegeben."
-CONFIG_MSG_NAME_INVALID = "Sie haben einen ungültigen Namen eingegeben."
 CONFIG_MSG_UPDATE_FILE = "Sie brauchen den Peach Updater um ihr Peach zu updaten." & vbCrLf & vbCrLf & "Sie können es hier downloaden:  http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 CHAT_COMMAND_SEND = "&Senden"
@@ -414,10 +408,7 @@ CONFIG_MSG_ACCOUNT = "You didn't enter an account."
 CONFIG_MSG_PASSWORD = "You didn't enter a password."
 CONFIG_MSG_NUMERIC = "You can't take numeric names."
 CONFIG_MSG_PORT = "You didn't introduce a port."
-CONFIG_MSG_NAME = "You didn't introduce a name."
 CONFIG_MSG_IP = "You didn't introduce a IP."
-CONFIG_MSG_NAME_SHORT = "The name you introduced is too short."
-CONFIG_MSG_NAME_INVALID = "The name you have entered is not valid."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 ' Chat form ..
@@ -595,10 +586,7 @@ CONFIG_MSG_ACCOUNT = "No has introducido una cuenta."
 CONFIG_MSG_PASSWORD = "No has introducido una contraseña."
 CONFIG_MSG_NUMERIC = "No puedes coger nombres con numeros."
 CONFIG_MSG_PORT = "No has introducido un puerto."
-CONFIG_MSG_NAME = "No has introducido un nombre."
 CONFIG_MSG_IP = "No has introducido una direccion."
-CONFIG_MSG_NAME_SHORT = "El nombre que has introducido es corto."
-CONFIG_MSG_NAME_INVALID = "El nombre que has introducido es invalido."
 CONFIG_MSG_UPDATE_FILE = "Necesitas el Peach Updater para actualizar tu Peach." & vbCrLf & vbCrLf & "Descargalo aqui http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 CHAT_COMMAND_SEND = "&Enviar"
@@ -774,9 +762,6 @@ CONFIG_MSG_PASSWORD = "Du skrev inte in ett lösenord."
 CONFIG_MSG_NUMERIC = "Du kan inte använda siffror i namnet."
 CONFIG_MSG_PORT = "Du angav inget portnummer."
 CONFIG_MSG_IP = "Du angav inte ett IP."
-CONFIG_MSG_NAME = "Du angav inte ett namn."
-CONFIG_MSG_NAME_SHORT = "Namnet du infört är för kort."
-CONFIG_MSG_NAME_INVALID = "Det namn du har angivit är inte giltigt."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 ' Chat form ..
@@ -955,9 +940,6 @@ CONFIG_MSG_PASSWORD = "Non hai inserito una password."
 CONFIG_MSG_NUMERIC = "Non puoi immettere nomi composti da numeri."
 CONFIG_MSG_PORT = "Non hai selezionato una porta valida."
 CONFIG_MSG_IP = "Non hai immesso un IP."
-CONFIG_MSG_NAME = "Non hai immesso un Nome utente."
-CONFIG_MSG_NAME_SHORT = "Il nome che si è introdotto troppo breve."
-CONFIG_MSG_NAME_INVALID = "Il nome che hai inserito non è valido."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 ' Chat form ..
@@ -1135,9 +1117,6 @@ CONFIG_MSG_PASSWORD = "Je hebt geen wachtwoord ingevuld."
 CONFIG_MSG_NUMERIC = "U kan geen naam nemen dat nummers bevat."
 CONFIG_MSG_PORT = "U hebt geen poort ingesteld."
 CONFIG_MSG_IP = "U hebt geen IP gegoven."
-CONFIG_MSG_NAME = "U hebt geen naam gegoven."
-CONFIG_MSG_NAME_SHORT = "De naam die u hebt ingevoerd is te kort."
-CONFIG_MSG_NAME_INVALID = "De naam die je hebt ingevoerd is niet correct."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 CHAT_COMMAND_SEND = "&Zend"
@@ -1322,9 +1301,6 @@ CONFIG_MSG_PASSWORD = "Nisi ukucao sifru."
 CONFIG_MSG_NUMERIC = "Ne mozete uzeti numericka imena."
 CONFIG_MSG_PORT = "Niste uneli port."
 CONFIG_MSG_IP = "Niste uneli IP"
-CONFIG_MSG_NAME = "Niste uneli ime"
-CONFIG_MSG_NAME_SHORT = "Ime je suvise kratko."
-CONFIG_MSG_NAME_INVALID = "Ime  nije dobro."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 'Chat form ..
@@ -1500,9 +1476,6 @@ CONFIG_MSG_PASSWORD = "Vous n'avez pas introduit un mot de passe."
 CONFIG_MSG_NUMERIC = "Tu ne peut pas insérer noms composé de numeros."
 CONFIG_MSG_PORT = "Tu n'as pas selectionner une porte valide."
 CONFIG_MSG_IP = "Tu n'as pas innecté un IP."
-CONFIG_MSG_NAME = "Tu n'as pas innecté un Nom utilizateur."
-CONFIG_MSG_NAME_SHORT = "Le nom que vous avez introduit est trop court."
-CONFIG_MSG_NAME_INVALID = "Le nom que vous avez introduit n'est pas valide."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 CHAT_COMMAND_SEND = "&Envoi"

@@ -29,8 +29,7 @@ Public Enum USER_PANEL_INDEX
     INDEX_WINSOCK_ID = 2
     INDEX_LAST_MESSAGE = 3
     INDEX_MUTED = 4
-    INDEX_ACCOUNT = 5
-    INDEX_LOGIN_TIME = 6
+    INDEX_LOGIN_TIME = 5
 End Enum
 
 Type NOTIFYICONDATA
@@ -174,21 +173,12 @@ With frmFriendIgnoreList.ListView2.ListItems
 End With
 End Function
 
-Public Sub SendProtectedMessage(pUser As String, pMessage As String)
-Dim pAccount As String
-Dim i        As Long
+Public Sub SendProtectedMessage(pAccount As String, pMessage As String)
+Dim i As Long
 
-'Get account name to interact better with frmFriendIgnoreList
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i) = pUser Then
-            pAccount = .Item(i).SubItems(INDEX_ACCOUNT)
-            Exit For
-        End If
-    Next i
-    
-    For i = 1 To .Count
-        If IsIgnoring(.Item(i).SubItems(INDEX_ACCOUNT), pAccount) = False Then
+        If IsIgnoring(.Item(i), pAccount) = False Then
             SendSingle pMessage, .Item(i).SubItems(INDEX_WINSOCK_ID)
             DoEvents
         End If
@@ -228,7 +218,7 @@ Dim i       As Long
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        GetList = GetList & .Item(i) & " ( " & .Item(i).SubItems(INDEX_ACCOUNT) & " )#"
+        GetList = GetList & .Item(i) & "#"
         If i = .Count Then GetList = "!update_online#" & GetList
     Next i
 End With
@@ -287,7 +277,7 @@ Dim i           As Integer
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(INDEX_ACCOUNT) = pAccount Then
+        If .Item(i) = pAccount Then
             GetAccountStatus = "!online#" & .Item(i) & "#"
             IsAvaible = True
             Exit For

@@ -258,8 +258,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim p_TEMP_NAME As String
-
 '==============================='
 '======= Friend List Tab ======='
 '==============================='
@@ -270,7 +268,7 @@ Dim pVal As String
 pVal = InputBox(SOC_ASK_FRIEND_TEXT, SOC_ASK_FRIEND_DEFAULT, SOC_ASK_FRIEND_DEFAULT)
 
 If LenB(Trim$(pVal)) = 0 Then Exit Sub
-SendMessage "!friend#-add-account#" & pVal & "#"
+SendMessage "!friend#-add#" & pVal & "#"
 End Sub
 
 Private Sub cmdRemoveFriend_Click()
@@ -323,7 +321,7 @@ Dim pVal As String
 pVal = InputBox(SOC_ASK_IGNORE_TEXT, SOC_ASK_IGNORE_TITLE, SOC_ASK_IGNORE_DEFAULT)
 
 If LenB(Trim$(pVal)) = 0 Then Exit Sub
-SendMessage "!ignore#-add-account#" & pVal & "#"
+SendMessage "!ignore#-add#" & pVal & "#"
 End Sub
 
 Private Sub cmdRemoveIgnore_Click()
@@ -344,24 +342,7 @@ End Sub
 
 '=== Friend List Tab ==='
 Private Sub pRemoveFriend(pFullName As String)
-Dim pMiddle As Long
-Dim pTemp() As String
-
-If lvFriendList.ListItems.Count = 0 Then Exit Sub
-
-pTemp = Split(pFullName, " ")
-
-If MsgBox(SOC_ASK_DEL_1 & pTemp(0) & SOC_ASK_DEL_2, vbQuestion + vbYesNo) = vbNo Then
-    Exit Sub
-End If
-
-pMiddle = InStr(1, pFullName, " ")
-
-If pMiddle = 0 Then
-    SendMessage "!friend#-remove-account#" & pFullName & "#"
-Else
-    SendMessage "!friend#-remove-account#" & Left$(pFullName, pMiddle - 1) & "#"
-End If
+SendMessage "!friend#-remove#" & lvFriendList.SelectedItem.Text & "#"
 End Sub
 
 Private Sub TriggerFriendEvent()
@@ -378,21 +359,13 @@ End Sub
 
 '=== Online List Tab ==='
 Private Sub pAddToFriend(pString As String)
-Dim pMiddle As Long
-
-pMiddle = InStr(1, pString, "(")
-
-SendMessage "!friend#-add-account#" & Mid(pString, pMiddle + 2, Len(pString) - pMiddle - 3) & "#"
+SendMessage "!friend#-add#" & pString & "#"
 End Sub
 
 Private Sub TriggerOnlineEvent()
 If lvOnlineList.ListItems.Count = 0 Then Exit Sub
 
-With lvOnlineList.SelectedItem
-    p_TEMP_NAME = Left$(.Text, InStr(1, .Text, " ") - 1)
-End With
-
-If p_TEMP_NAME = frmMain.txtName.Text Then
+If lvOnlineList.SelectedItem.Text = frmMain.txtAccount.Text Then
     mWhisperT.Enabled = False
     mAddToFriend.Enabled = False
     mIgnoreUser.Enabled = False
@@ -406,11 +379,7 @@ PopupMenu lvOnlineMenu
 End Sub
 
 Private Sub pAddToIgnore(pString As String)
-Dim pMiddle As Long
-
-pMiddle = InStr(1, pString, "(")
-
-SendMessage "!ignore#-add-account#" & Mid(pString, pMiddle + 2, Len(pString) - pMiddle - 3) & "#"
+SendMessage "!ignore#-add#" & pString & "#"
 End Sub
 
 '=== Ignore List Tab ==='
@@ -419,23 +388,8 @@ If lvIgnoreList.ListItems.Count = 0 Then Exit Sub
 PopupMenu lvIgnoreMenu
 End Sub
 
-Private Sub pRemoveIgnore(pFullName As String)
-Dim pMiddle As Long
-Dim pTemp() As String
-
-If lvIgnoreList.ListItems.Count = 0 Then Exit Sub
-    
-pTemp = Split(pFullName, " ")
-If MsgBox(SOC_ASK_DEL_1 & pTemp(0) & SOC_ASK_DEL_2, vbQuestion + vbYesNo) = vbNo Then
-    Exit Sub
-End If
-
-pMiddle = InStr(1, pFullName, " ")
-If pMiddle = 0 Then
-    SendMessage "!ignore#-remove-account#" & pFullName & "#"
-Else
-    SendMessage "!ignore#-remove-account#" & Left$(pFullName, pMiddle - 1) & "#"
-End If
+Private Sub pRemoveIgnore(pString As String)
+SendMessage "!ignore#-remove#" & pString & "#"
 End Sub
 
 '======================'
@@ -532,17 +486,9 @@ TriggerIgnoreEvent
 End Sub
 
 Private Sub mWhisper_Click()
-Dim pMiddle As Long
-Dim pName   As String
-
-With lvFriendList.SelectedItem
-    pMiddle = InStr(1, .Text, "-")
-    pName = Mid(.Text, pMiddle + 2, Len(.Text) - pMiddle)
-End With
-
 SetupChildForm frmChat
 With frmChat.txtToSend
-    .Text = "/whisper " & pName & " "
+    .Text = "/whisper " & lvFriendList.SelectedItem.Text & " "
     .SelStart = Len(.Text)
     .SetFocus
 End With
@@ -551,7 +497,7 @@ End Sub
 Private Sub mWhisperT_Click()
 SetupChildForm frmChat
 With frmChat.txtToSend
-    .Text = "/whisper " & p_TEMP_NAME & " "
+    .Text = "/whisper " & lvOnlineList.SelectedItem.Text & " "
     .SelStart = Len(.Text)
     .SetFocus
 End With

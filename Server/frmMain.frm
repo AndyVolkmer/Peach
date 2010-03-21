@@ -193,20 +193,15 @@ MSG = X / Screen.TwipsPerPixelX
 
 Select Case MSG
     Case WM_LBUTTONDOWN
-    
     Case WM_LBUTTONUP
         Vali = True
         frmMain.Show
         frmMain.WindowState = 0
         
     Case WM_LBUTTONDBLCLK
-    
     Case WM_RBUTTONDOWN
-    
     Case WM_RBUTTONUP
-    
     Case WM_RBUTTONDBLCLK
-    
 End Select
 End Sub
 
@@ -273,7 +268,6 @@ With frmPanel.ListView1.ListItems
     .Item(i).SubItems(INDEX_WINSOCK_ID) = j
     .Item(i).SubItems(INDEX_LAST_MESSAGE) = vbNullString
     .Item(i).SubItems(INDEX_MUTED) = "False"
-    .Item(i).SubItems(INDEX_ACCOUNT) = vbNullString
     .Item(i).SubItems(INDEX_LOGIN_TIME) = Format$(Time, "hh:mm:ss")
 End With
 
@@ -343,21 +337,13 @@ For k = 0 To UBound(p_PreArray) - 1
                 'Update Friend list
                 Case "-get"
                     UPDATE_FRIEND GetAccountByIndex(Index), Index
-                    
-                'Add friend to list by user name
-                Case "-add-user"
-                    frmFriendIgnoreList.AddFriend GetAccountByIndex(Index), GetProperAccountNameByUser(p_MainArray(2)), Index
-                    
-                'Add friend to list by account name
-                Case "-add-account"
+                
+                'Add friend to list
+                Case "-add"
                     frmFriendIgnoreList.AddFriend GetAccountByIndex(Index), GetProperAccountName(p_MainArray(2)), Index
                     
-                'Remove friend from list by user name
-                Case "-remove-user"
-                    frmFriendIgnoreList.RemoveFriend GetAccountByIndex(Index), GetProperAccountNameByUser(p_MainArray(2)), Index
-                    
-                'Remove friend from list by account name
-                Case "-remove-account"
+                'Remove friend from list
+                Case "-remove"
                     frmFriendIgnoreList.RemoveFriend GetAccountByIndex(Index), GetProperAccountName(p_MainArray(2)), Index
                     
             End Select
@@ -367,21 +353,13 @@ For k = 0 To UBound(p_PreArray) - 1
                 'Update Ignore list
                 Case "-get"
                     UPDATE_IGNORE GetAccountByIndex(Index), Index
-                    
-                'Add ignore to list by user name
-                Case "-add-user"
-                    frmFriendIgnoreList.AddIgnore GetAccountByIndex(Index), GetProperAccountNameByUser(p_MainArray(2)), Index
-                    
-                'Add ignore to list by account name
-                Case "-add-account"
+                
+                'Add ignore to list
+                Case "-add"
                     frmFriendIgnoreList.AddIgnore GetAccountByIndex(Index), GetProperAccountName(p_MainArray(2)), Index
                     
-                'Remove ignore from list by user name
-                Case "-remove-user"
-                    frmFriendIgnoreList.RemoveIgnore GetAccountByIndex(Index), GetProperAccountNameByUser(p_MainArray(2)), Index
-                    
-                'Remove ignore from list by account name
-                Case "-remove-account"
+                'Remove ignore from list
+                Case "-remove"
                     frmFriendIgnoreList.RemoveIgnore GetAccountByIndex(Index), GetProperAccountName(p_MainArray(2)), Index
                     
             End Select
@@ -394,7 +372,7 @@ For k = 0 To UBound(p_PreArray) - 1
             For Each pSocket In frmMain.Winsock1
                 With pSocket
                     If .State = 7 And Not .Index = Index Then
-                        .SendData GetUserByIndex(Index) & " has come online." & Chr(24) & Chr(25)
+                        .SendData GetAccountByIndex(Index) & " has come online." & Chr(24) & Chr(25)
                         DoEvents
                     End If
                 End With
@@ -433,39 +411,22 @@ For k = 0 To UBound(p_PreArray) - 1
                 Next i
             End With
             
-            'Check badname list
-            For i = LBound(DeclinedNames) To UBound(DeclinedNames)
-                If DeclinedNames(i) = p_MainArray(3) Then
-                    SendSingle "!decilined", Index
-                    Exit Sub
-                End If
-            Next i
-            
             With frmPanel.ListView1.ListItems
-                'Check current online list
-                For i = 1 To .Count
-                    If .Item(i) = p_MainArray(3) Then
-                        SendSingle "!decilined", Index
-                        Exit Sub
-                    End If
-                Next i
-                
                 'If the account is already beeing used kick first instance
                 For i = 1 To .Count
-                    If .Item(i).SubItems(INDEX_ACCOUNT) = p_MainArray(1) Then
+                    If .Item(i) = p_MainArray(1) Then
                         Unload Winsock1(.Item(i).SubItems(INDEX_WINSOCK_ID))
                         .Remove (i)
                         Exit For
                     End If
                 Next i
                 
-                .Item(.Count).Text = p_MainArray(3)
-                .Item(.Count).SubItems(INDEX_ACCOUNT) = GetProperAccountName(p_MainArray(1))
+                .Item(.Count).Text = GetProperAccountName(p_MainArray(1))
             End With
             
             UPDATE_STATUS_BAR
             SendSingle "!accepted#", Index
-                
+            
         'We get ip request and send ip back
         Case "!iprequest"
             With frmPanel.ListView1.ListItems
@@ -492,7 +453,7 @@ For k = 0 To UBound(p_PreArray) - 1
             'Check first position of the text for a point indicating command or emote
             Select Case Left$(p_CHAT_ARRAY(0), 1)
                 Case Chr(46)
-                    If GetLevel(GetUserByIndex(Index)) > 0 Then IsCommand = True
+                    If GetLevel(GetAccountByIndex(Index)) > 0 Then IsCommand = True
                     
                 Case Chr(47)
                     IsSlash = True
@@ -514,7 +475,7 @@ For k = 0 To UBound(p_PreArray) - 1
             'Check if user is muted
             With frmPanel.ListView1.ListItems
                 For i = 1 To .Count
-                    If .Item(i) = GetUserByIndex(Index) Then
+                    If .Item(i) = GetAccountByIndex(Index) Then
                         If .Item(i).SubItems(INDEX_MUTED) = "True" Then
                             IsMuted = True
                             Exit For
@@ -576,34 +537,24 @@ For k = 0 To UBound(p_PreArray) - 1
                         End With
                         
                     Case ".ban"
-                        If IsPartOf(p_TEXT_FIRST, "user") Then
-                            BanUser p_TEXT_SECOND_PROP, GetUserByIndex(Index), 1, Index, Trim$(Reason2)
-                            
-                        ElseIf IsPartOf(p_TEXT_FIRST, "account") Then
-                            BanAccount p_TEXT_SECOND, GetUserByIndex(Index), 1, Index, Trim$(Reason2)
-                        
+                        If IsPartOf(p_TEXT_FIRST, "account") Then
+                            BanAccount p_TEXT_SECOND, GetAccountByIndex(Index), 1, Index, Trim$(Reason2)
                         Else
                             SendSingle "Incorrect syntax, use the following format .ban [User, Account] [Name] [Reason]", Index
-                            
                         End If
                         
                     Case ".unban"
-                        If IsPartOf(p_TEXT_FIRST, "user") Then
-                            BanUser p_TEXT_SECOND_PROP, GetUserByIndex(Index), 0, Index, Trim$(Reason2)
-                            
-                        ElseIf IsPartOf(p_TEXT_FIRST, "account") Then
-                            BanAccount p_TEXT_SECOND, GetUserByIndex(Index), 0, Index, Trim$(Reason2)
-                            
+                        If IsPartOf(p_TEXT_FIRST, "account") Then
+                            BanAccount p_TEXT_SECOND, GetAccountByIndex(Index), 0, Index, Trim$(Reason2)
                         Else
                             SendSingle "Incorrect syntax, use the following format .unban [User, Account] [Name] [Reason]", Index
-                            
                         End If
                         
                     Case ".mute"
-                        MuteUser p_TEXT_FIRST_PROP, GetUserByIndex(Index), True, Index, Trim$(Reason)
+                        MuteUser p_TEXT_FIRST_PROP, GetAccountByIndex(Index), True, Index, Trim$(Reason)
                         
                     Case ".unmute"
-                        MuteUser p_TEXT_FIRST_PROP, GetUserByIndex(Index), False, Index, Trim$(Reason)
+                        MuteUser p_TEXT_FIRST_PROP, GetAccountByIndex(Index), False, Index, Trim$(Reason)
                         
                     Case ".announce", ".ann", ".broadcast"
                         Dim p_ANN_MSG As String
@@ -616,7 +567,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         If LenB(p_ANN_MSG) = 0 Then
                             SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & " [Text].", Index
                         Else
-                            SendMessage "[" & GetUserByIndex(Index) & " announces]: " & p_ANN_MSG
+                            SendMessage "[" & GetAccountByIndex(Index) & " announces]: " & p_ANN_MSG
                         End If
                         
                     Case ".help", ".command", ".commands"
@@ -633,24 +584,24 @@ For k = 0 To UBound(p_PreArray) - 1
                                     loadTime = timeGetTime
                                     Erase Commands
                                     LoadCommands
-                                    SendMessage GetUserByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_COMMANDS & "' table.( " & timeGetTime - loadTime & "ms )"
+                                    SendMessage GetAccountByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_COMMANDS & "' table.( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case LCase$(DATABASE_TABLE_DECLINED_NAMES)
                                     loadTime = timeGetTime
                                     Erase DeclinedNames
                                     LoadDeclinedNames
-                                    SendMessage GetUserByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_DECLINED_NAMES & "' table.( " & timeGetTime - loadTime & "ms )"
+                                    SendMessage GetAccountByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_DECLINED_NAMES & "' table.( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case LCase$(DATABASE_TABLE_EMOTES)
                                     loadTime = timeGetTime
                                     Erase Emotes
                                     LoadEmotes
-                                    SendMessage GetUserByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_EMOTES & "' table.( " & timeGetTime - loadTime & "ms )"
+                                    SendMessage GetAccountByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_EMOTES & "' table.( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case LCase$("config"), LCase$("c")
                                     loadTime = timeGetTime
                                     LoadConfigValue
-                                    SendMessage GetUserByIndex(Index) & " iniated the reload of configuration files.( " & timeGetTime - loadTime & "ms )"
+                                    SendMessage GetAccountByIndex(Index) & " iniated the reload of configuration files.( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case Else
                                     If LenB(p_TEXT_FIRST) = 0 Then
@@ -703,7 +654,7 @@ For k = 0 To UBound(p_PreArray) - 1
                 End If
                 
                 If Options.REPEAT_CHECK = 1 Then
-                    If IsRepeating(GetUserByIndex(Index), p_MainArray(1)) Then
+                    If IsRepeating(GetAccountByIndex(Index), p_MainArray(1)) Then
                         SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
                         Exit Sub
                     End If
@@ -711,7 +662,7 @@ For k = 0 To UBound(p_PreArray) - 1
                 
                 With frmPanel.ListView1.ListItems
                     For i = 1 To .Count
-                        If .Item(i) = p_TEXT_FIRST_PROP Then
+                        If .Item(i) = GetProperAccountName(p_TEXT_FIRST) Then
                             IsUser = True
                             Exit For
                         End If
@@ -771,7 +722,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                         pRoll = GetRandomNumber(pMinRoll, pMaxRoll)
                         
-                        SendProtectedMessage GetUserByIndex(Index), GetUserByIndex(Index) & " rolls " & pRoll & ". (" & pMinRoll & " - " & pMaxRoll & ")"
+                        SendProtectedMessage GetAccountByIndex(Index), GetAccountByIndex(Index) & " rolls " & pRoll & ". (" & pMinRoll & " - " & pMaxRoll & ")"
                         
                     'Whisper X to Z from Y
                     Case "/w", "/whisper"
@@ -783,10 +734,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                     pMes = pMes & p_CHAT_ARRAY(i) & " "
                                 Next i
                                 
-                                Whisper GetUserByIndex(Index), p_TEXT_FIRST_PROP, Trim$(pMes), Index
-                                SetLastMessage GetUserByIndex(Index), p_MainArray(1)
-                            Else
-                                Exit Sub
+                                Whisper GetAccountByIndex(Index), GetProperAccountName(p_TEXT_FIRST), Trim$(pMes), Index
                             End If
                         Else
                             If LenB(p_TEXT_FIRST_PROP) = 0 Then
@@ -798,37 +746,28 @@ For k = 0 To UBound(p_PreArray) - 1
                         End If
                         
                     Case "/online"
-                        SendSingle "You are online for " & Trim$(GetOnlineTime(GetUserByIndex(Index))) & ".", Index
+                        SendSingle "You are online for " & Trim$(GetOnlineTime(GetAccountByIndex(Index))) & ".", Index
                         
                     Case "/logout"
-                        KickUser GetUserByIndex(Index)
+                        KickUser GetAccountByIndex(Index)
                         
                     Case Else
                         For i = LBound(Emotes) To UBound(Emotes)
                             If LCase$(Emotes(i).Command) = LCase$(p_CHAT_ARRAY(0)) Then
-                                If GetUserByIndex(Index) = p_TEXT_FIRST_PROP Then
+                                If GetAccountByIndex(Index) = GetProperAccountName(p_TEXT_FIRST) Then
                                     IsUser = False
                                 End If
-                                                                
-                                Dim pTemp   As String
-                                Dim pGen    As String
-                                Dim j       As Long
-                                                                
-                                With frmPanel.ListView1.ListItems
-                                    For j = 1 To .Count
-                                        If .Item(j) = GetUserByIndex(Index) Then
-                                            pTemp = .Item(j).SubItems(INDEX_ACCOUNT)
-                                            Exit For
-                                        End If
-                                    Next j
-                                End With
+                                
+                                Dim pTemp As String
+                                Dim Gen   As String
+                                Dim j     As Long
                                 
                                 With frmAccountPanel.ListView1.ListItems
                                     For j = 1 To .Count
-                                        If .Item(j).SubItems(INDEX_NAME) = pTemp Then
+                                        If .Item(j).SubItems(INDEX_NAME) = GetAccountByIndex(Index) Then
                                             Select Case .Item(j).SubItems(INDEX_GENDER)
-                                                Case "Male": pGen = "his"
-                                                Case "Female": pGen = "her"
+                                                Case "0": Gen = "his"
+                                                Case "1": Gen = "her"
                                             End Select
                                             Exit For
                                         End If
@@ -836,14 +775,14 @@ For k = 0 To UBound(p_PreArray) - 1
                                 End With
                                                                 
                                 If IsUser Then
-                                    pTemp = Replace(Emotes(i).TargetEmote, "%u", GetUserByIndex(Index))
-                                    pTemp = Replace(pTemp, "%g", pGen)
-                                    pTemp = Replace(pTemp, "%t", p_TEXT_FIRST_PROP)
+                                    pTemp = Replace(Emotes(i).TargetEmote, "%u", GetAccountByIndex(Index))
+                                    pTemp = Replace(pTemp, "%g", Gen)
+                                    pTemp = Replace(pTemp, "%t", GetProperAccountName(p_TEXT_FIRST))
                                 Else
-                                    pTemp = Replace(Emotes(i).SingleEmote, "%u", GetUserByIndex(Index))
-                                    pTemp = Replace(pTemp, "%g", pGen)
+                                    pTemp = Replace(Emotes(i).SingleEmote, "%u", GetAccountByIndex(Index))
+                                    pTemp = Replace(pTemp, "%g", Gen)
                                 End If
-                                SendProtectedMessage GetUserByIndex(Index), pTemp
+                                SendProtectedMessage GetAccountByIndex(Index), pTemp
                                 Exit For
                             Else
                                 If i = UBound(Emotes) Then SendSingle "Unknown command used.", Index
@@ -851,7 +790,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         Next i
                         
                 End Select
-                SetLastMessage GetUserByIndex(Index), p_MainArray(1)
+                SetLastMessage GetAccountByIndex(Index), p_MainArray(1)
                 Exit Sub
             End If
             
@@ -886,17 +825,17 @@ For k = 0 To UBound(p_PreArray) - 1
             End If
             
             If Options.REPEAT_CHECK = 1 Then
-                If IsRepeating(GetUserByIndex(Index), p_MainArray(1)) Then
+                If IsRepeating(GetAccountByIndex(Index), p_MainArray(1)) Then
                     SendSingle "Your message has triggered serverside flood protection. Please don't repeat yourself.", Index
                     Exit Sub
                 End If
             End If
             
             'Send Message and print in chat
-            SendProtectedMessage GetUserByIndex(Index), "[" & GetUserByIndex(Index) & "]: " & p_MainArray(1)
+            SendProtectedMessage GetAccountByIndex(Index), "[" & GetAccountByIndex(Index) & "]: " & p_MainArray(1)
             
             'Set last message
-            SetLastMessage GetUserByIndex(Index), p_MainArray(1)
+            SetLastMessage GetAccountByIndex(Index), p_MainArray(1)
             
         Case Else
             SendSingle "ERROR", Index
@@ -1017,20 +956,6 @@ With frmAccountPanel.ListView1.ListItems
 End With
 End Function
 
-Private Function GetProperAccountNameByUser(pUser As String) As String
-Dim pAccount As String
-Dim i        As Long
-
-With frmPanel.ListView1.ListItems
-    For i = 1 To .Count
-        If .Item(i) = pUser Then
-            GetProperAccountNameByUser = .Item(i).SubItems(INDEX_ACCOUNT)
-            Exit For
-        End If
-    Next i
-End With
-End Function
-
 Private Function GetServerInformation() As String
 GetServerInformation = _
 "Welcome to Peach Servers." & "#" & _
@@ -1040,8 +965,7 @@ GetServerInformation = _
 End Function
 
 Private Sub Whisper(pUser As String, pTarget As String, pConv As String, Index As Integer)
-Dim pAccount As String
-Dim i        As Long
+Dim i As Long
 
 'Check if user is whispering itself
 If pUser = pTarget Then
@@ -1050,18 +974,10 @@ If pUser = pTarget Then
 End If
 
 With frmPanel.ListView1.ListItems
-    'Get user account name
-    For i = 1 To .Count
-        If .Item(i) = pUser Then
-            pAccount = .Item(i).SubItems(INDEX_ACCOUNT)
-            Exit For
-        End If
-    Next i
-
     'Search target in list and send message
     For i = 1 To .Count
-        If pTarget = .Item(i) Then
-            If IsIgnoring(.Item(i).SubItems(INDEX_ACCOUNT), pAccount) Then
+        If .Item(i) = pTarget Then
+            If IsIgnoring(.Item(i), pUser) Then
                 SendSingle pTarget & " is ignoring you.", Index
             Else
                 SendSingle "[You whisper to " & pTarget & "]: " & pConv, Index
@@ -1282,7 +1198,7 @@ Dim i As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = StrConv(pUser, vbProperCase) Then
-            SendSingle vbCrLf & "User information about '" & pUser & "'" & vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & vbCrLf & " Muted: " & .Item(i).SubItems(INDEX_MUTED) & vbCrLf & " Account: " & .Item(i).SubItems(INDEX_ACCOUNT) & vbCrLf & " Login Time: " & .Item(i).SubItems(INDEX_LOGIN_TIME), pIndex
+            SendSingle vbCrLf & "User information about '" & pUser & "'" & vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & vbCrLf & " Muted: " & .Item(i).SubItems(INDEX_MUTED) & vbCrLf & " Login Time: " & .Item(i).SubItems(INDEX_LOGIN_TIME), pIndex
             Exit For
         Else
             If i = .Count Then
@@ -1307,18 +1223,8 @@ Next i
 GetCommands = GetCommands & "*********************************************"
 End Function
 
-Private Function GetLevel(Name As String) As Long
-Dim pName   As String
-Dim i       As Long
-
-With frmPanel.ListView1.ListItems
-    For i = 1 To .Count
-        If .Item(i) = Name Then
-            pName = .Item(i).SubItems(INDEX_ACCOUNT)
-            Exit For
-        End If
-    Next i
-End With
+Private Function GetLevel(pName As String) As Long
+Dim i As Long
 
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
@@ -1361,30 +1267,15 @@ Next
 pNewForm.Show
 End Sub
 
-Private Function GetUserByIndex(pIndex As Integer)
-Dim i As Long
-
-With frmPanel.ListView1.ListItems
-    For i = 1 To .Count
-        If .Item(i).SubItems(INDEX_WINSOCK_ID) = pIndex Then
-            GetUserByIndex = .Item(i)
-            Exit For
-        End If
-    Next i
-End With
-End Function
-
 Private Function GetAccountByIndex(pIndex As Integer)
 Dim i As Long
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(INDEX_WINSOCK_ID) = pIndex Then
-            GetAccountByIndex = .Item(i).SubItems(INDEX_ACCOUNT)
+            GetAccountByIndex = .Item(i)
             Exit For
         End If
     Next i
 End With
 End Function
-
-
