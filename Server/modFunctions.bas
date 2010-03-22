@@ -227,23 +227,17 @@ End Sub
 
 Public Sub UPDATE_FRIEND(pName As String, pIndex As Integer)
 Dim buffer      As String
-Dim p_Array()   As String
 Dim i           As Long
 
 buffer = "!update_friends#"
 With frmFriendIgnoreList.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = pName Then
-            p_Array = Split(GetAccountStatus(.Item(i).SubItems(2)), "#")
-            
-            Select Case p_Array(0)
-                Case "!online"
-                    buffer = buffer & .Item(i).SubItems(2) & " - " & p_Array(1) & "$Online#"
-                    
-                Case "!offline"
-                    buffer = buffer & .Item(i).SubItems(2) & "$Offline#"
-                    
-            End Select
+            If GetAccountStatus(.Item(i).SubItems(2)) = 1 Then
+                buffer = buffer & .Item(i).SubItems(2) & "$Online#"
+            Else
+                buffer = buffer & .Item(i).SubItems(2) & "$Offline#"
+            End If
         End If
     Next i
 End With
@@ -271,18 +265,16 @@ Public Sub UPDATE_STATUS_BAR()
 frmMain.StatusBar1.Panels(1).Text = "Status: Connected with " & frmMain.Winsock1.Count - 1 & " Client(s)."
 End Sub
 
-Private Function GetAccountStatus(pAccount As String) As String
-Dim IsAvaible   As Boolean
-Dim i           As Integer
+Private Function GetAccountStatus(pAccount As String) As Long
+Dim i As Long
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pAccount Then
-            GetAccountStatus = "!online#" & .Item(i) & "#"
-            IsAvaible = True
+            GetAccountStatus = 1
             Exit For
         Else
-            If i = .Count Then GetAccountStatus = "!offline#"
+            If i = .Count Then GetAccountStatus = 0
         End If
     Next i
 End With

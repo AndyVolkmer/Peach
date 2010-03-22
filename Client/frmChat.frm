@@ -135,7 +135,6 @@ Private Const WM_PASTE          As Long = &H302
 
 Private Sign(255)               As Integer
 Private menuUser                As String
-Private menuAccount             As String
 
 Private Sub cmdSend_Click()
 Dim TTS As String
@@ -176,11 +175,11 @@ txtToSend.Text = vbNullString
 End Sub
 
 Private Sub pAddToFriendlist_Click()
-SendMessage "!friend#-add-user#" & menuUser & "#"
+SendMessage "!friend#-add#" & menuUser & "#"
 End Sub
 
 Private Sub pIgnoreUser_Click()
-SendMessage "!ignore#-add-user#" & menuUser & "#"
+SendMessage "!ignore#-add#" & menuUser & "#"
 End Sub
 
 Private Sub pWhisper_Click()
@@ -251,15 +250,9 @@ Else
                     'Check if the user is already added in friend list ( to disable control )
                     With frmSociety.lvFriendList.ListItems
                         For j = 1 To .Count
-                            If Not InStr(1, .Item(j), " ") = 0 Then
-                                If Left$(.Item(j), InStr(1, .Item(j), " ") - 1) = menuAccount Then
-                                    pAddToFriendlist.Enabled = False
-                                    Exit For
-                                Else
-                                    If j = .Count Then
-                                        pAddToFriendlist.Enabled = True
-                                    End If
-                                End If
+                            If .Item(j) = menuUser Then
+                                pAddToFriendlist.Enabled = False
+                                Exit For
                             Else
                                 If j = .Count Then
                                     pAddToFriendlist.Enabled = True
@@ -271,7 +264,7 @@ Else
                     'Check if user is already beeing ignored ( to disable control )
                     With frmSociety.lvIgnoreList.ListItems
                         For j = 1 To .Count
-                            If .Item(j) = menuAccount Then
+                            If .Item(j) = menuUser Then
                                 pIgnoreUser.Enabled = False
                                 Exit For
                             Else
