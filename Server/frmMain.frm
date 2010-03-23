@@ -555,13 +555,14 @@ For k = 0 To UBound(p_PreArray) - 1
                     Case ".help", ".command", ".commands"
                         SendSingle GetCommands, Index
                         
-                    Case ".change"
+                    Case ".change", ".modify"
+                        Dim properAccount As String
+                        Dim m             As Long
+                        Dim n             As Long
+                        
                         Select Case LCase$(p_TEXT_FIRST)
                             Case "name"
-                                Dim m             As Long
-                                Dim n             As Long
-                                Dim properAccount As String
-                                    properAccount = GetProperAccountName(p_TEXT_SECOND)
+                                properAccount = GetProperAccountName(p_TEXT_SECOND)
                                 
                                 'Check if there are enough parameters
                                 If UBound(p_CHAT_ARRAY) > 2 Then
@@ -641,12 +642,60 @@ For k = 0 To UBound(p_PreArray) - 1
                                             End If
                                         Next i
                                     End With
+                                    
                                 Else
-                                    SendSingle "Incorrect syntax, use the follwing format " & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Oldname] [Newname].", Index
+                                    SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Oldname] [Newname].", Index
+                                End If
+                                
+                            Case "level"
+                                If UBound(p_CHAT_ARRAY) > 2 Then
+                                    properAccount = GetProperAccountName(p_TEXT_SECOND)
+                                    
+                                    If Not IsNumeric(p_CHAT_ARRAY(3)) Then
+                                        SendSingle "Level contains incorrect values, must be in range of 0-2.", Index
+                                        Exit Sub
+                                    End If
+                                    
+                                    If p_CHAT_ARRAY(3) > 2 Or p_CHAT_ARRAY(3) < 0 Then
+                                        SendSingle "Level contains incorrect values, must be in range of 0-2", Index
+                                        Exit Sub
+                                    End If
+                                    
+                                    With frmAccountPanel.ListView1.ListItems
+                                        For i = 1 To .Count
+                                            If .Item(i).SubItems(INDEX_NAME) = properAccount Then
+                                                'Modify level for account in database
+                                                frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), p_CHAT_ARRAY(3), .Item(i), i, .Item(i).SubItems(INDEX_GENDER)
+                                                
+                                                'Feedback to the person who modified the level
+                                                SendSingle "Successfully changed level of '" & .Item(i).SubItems(INDEX_NAME) & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
+                                                
+                                                With frmPanel.ListView1.ListItems
+                                                    For n = 1 To .Count
+                                                        If .Item(n) = properAccount Then
+                                                            SendSingle GetAccountByIndex(Index) & " changed your level to '" & p_CHAT_ARRAY(3) & "'.", .Item(n).SubItems(INDEX_WINSOCK_ID)
+                                                            Exit For
+                                                        End If
+                                                    Next n
+                                                End With
+                                                Exit For
+                                            Else
+                                                If i = .Count Then SendSingle "Account '" & p_TEXT_SECOND & "' not found.", Index
+                                            End If
+                                        Next i
+                                    End With
+                                Else
+                                    SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Level].", Index
                                 End If
                                 
                             Case Else
-                                SendSingle vbCrLf & "  Incorrect syntax, use the following format:" & vbCrLf & Space(2) & p_CHAT_ARRAY(0) & " name [Oldname] [Newname]", Index
+                                SendSingle _
+                                    vbCrLf & Space(2) & _
+                                "Incorrect syntax, use the following format:" & _
+                                    vbCrLf & Space(2) & _
+                                p_CHAT_ARRAY(0) & " name [Oldname] [Newname]" & _
+                                    vbCrLf & Space(2) & _
+                                p_CHAT_ARRAY(0) & " change [Name] [Level]", Index
                                 
                         End Select
                         
