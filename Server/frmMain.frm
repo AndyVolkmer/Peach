@@ -695,7 +695,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                     vbCrLf & Space(2) & _
                                 p_CHAT_ARRAY(0) & " name [Oldname] [Newname]" & _
                                     vbCrLf & Space(2) & _
-                                p_CHAT_ARRAY(0) & " change [Name] [Level]", Index
+                                p_CHAT_ARRAY(0) & " level [Name] [Level]", Index
                                 
                         End Select
                         
