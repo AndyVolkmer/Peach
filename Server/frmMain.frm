@@ -688,6 +688,44 @@ For k = 0 To UBound(p_PreArray) - 1
                                     SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Level].", Index
                                 End If
                                 
+                            Case "gender"
+                                Dim pGender As String
+                                If UBound(p_CHAT_ARRAY) > 2 Then
+                                    properAccount = GetProperAccountName(p_TEXT_SECOND)
+                                    
+                                    If p_CHAT_ARRAY(3) = "male" Then
+                                        pGender = "0"
+                                        
+                                    ElseIf p_CHAT_ARRAY(3) = "female" Then
+                                        pGender = "1"
+                                        
+                                    End If
+                                    
+                                    If LenB(pGender) = 0 Then
+                                        SendSingle "Incorrect gender format use 'male' or 'female'.", Index
+                                    Else
+                                        With frmAccountPanel.ListView1.ListItems
+                                            For i = 1 To .Count
+                                                If .Item(i).SubItems(INDEX_NAME) = properAccount Then
+                                                    'Modify gender in database and panel
+                                                    frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, pGender
+                                                    
+                                                    'Feedback to the person who modified the gender
+                                                    SendSingle "Successfully changed gender of '" & properAccount & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
+                                                    
+                                                    'Notify user that gender got changed
+                                                    SendSingle GetAccountByIndex(Index) & " changed your gender to '" & p_CHAT_ARRAY(3) & "'.", Index
+                                                    Exit For
+                                                Else
+                                                    If i = .Count Then SendSingle "Account '" & p_TEXT_SECOND & "' not found.", Index
+                                                End If
+                                            Next i
+                                        End With
+                                    End If
+                                Else
+                                    SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Gender].", Index
+                                End If
+                                
                             Case Else
                                 SendSingle _
                                     vbCrLf & Space(2) & _
