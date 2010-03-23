@@ -735,6 +735,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                     Else
                                         SendSingle "This table does not exist.", Index
                                     End If
+                                    
                             End Select
                         End With
                         
@@ -843,7 +844,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             
                         End If
                         
-                        If pMinRoll > pMaxRoll Then pMaxRoll = 100
+                        If pMinRoll > pMaxRoll Then pMaxRoll = pMinRoll
                         If pMinRoll = 0 Then pMinRoll = 1
                         If pMaxRoll = 0 Then pMaxRoll = 100
                         
