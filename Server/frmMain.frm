@@ -267,7 +267,7 @@ With frmPanel.ListView1.ListItems
     End If
     .Item(i).SubItems(INDEX_WINSOCK_ID) = j
     .Item(i).SubItems(INDEX_LAST_MESSAGE) = vbNullString
-    .Item(i).SubItems(INDEX_MUTED) = "False"
+    .Item(i).SubItems(INDEX_MUTED) = "0"
     .Item(i).SubItems(INDEX_LOGIN_TIME) = Format$(Time, "hh:mm:ss")
 End With
 
@@ -472,7 +472,7 @@ For k = 0 To UBound(p_PreArray) - 1
             With frmPanel.ListView1.ListItems
                 For i = 1 To .Count
                     If .Item(i) = GetAccountByIndex(Index) Then
-                        If .Item(i).SubItems(INDEX_MUTED) = "True" Then
+                        If .Item(i).SubItems(INDEX_MUTED) = "1" Then
                             IsMuted = True
                             Exit For
                         End If
@@ -533,10 +533,10 @@ For k = 0 To UBound(p_PreArray) - 1
                         BanAccount GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 0, Index, Trim$(Reason)
                         
                     Case ".mute"
-                        MuteUser GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), True, Index, Trim$(Reason)
+                        MuteUser GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 1, Index, Trim$(Reason)
                         
                     Case ".unmute"
-                        MuteUser GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), False, Index, Trim$(Reason)
+                        MuteUser GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 0, Index, Trim$(Reason)
                         
                     Case ".announce", ".ann", ".broadcast"
                         Dim p_ANN_MSG As String
@@ -554,6 +554,101 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                     Case ".help", ".command", ".commands"
                         SendSingle GetCommands, Index
+                        
+                    Case ".change"
+                        Select Case LCase$(p_TEXT_FIRST)
+                            Case "name"
+                                Dim m             As Long
+                                Dim n             As Long
+                                Dim properAccount As String
+                                    properAccount = GetProperAccountName(p_TEXT_SECOND)
+                                
+                                'Check if there are enough parameters
+                                If UBound(p_CHAT_ARRAY) > 2 Then
+                                    'Check if the account you want to modify exist
+                                    With frmAccountPanel.ListView1.ListItems
+                                        For i = 1 To .Count
+                                            If .Item(i).SubItems(INDEX_NAME) = properAccount Then
+                                                'Check if change name is already given out
+                                                For n = 1 To .Count
+                                                    If LCase$(.Item(n).SubItems(INDEX_NAME)) = LCase$(p_CHAT_ARRAY(3)) Then
+                                                        SendSingle "Account '" & p_CHAT_ARRAY(3) & "' is already taken.", Index
+                                                        Exit For
+                                                    Else
+                                                        If n = .Count Then
+                                                            'Modify account in database and panel
+                                                            frmAccountPanel.ModifyAccount p_CHAT_ARRAY(3), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, .Item(i).SubItems(INDEX_GENDER)
+                                                            
+                                                            'Send feedback to person who changed name
+                                                            SendSingle "Successfully renamed '" & properAccount & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
+                                                            
+                                                            'Check if player is online and directly rename it, also tell user that he got renamed
+                                                            With frmPanel.ListView1.ListItems
+                                                                For m = 1 To .Count
+                                                                    If .Item(m) = properAccount Then
+                                                                        .Item(m) = p_CHAT_ARRAY(3)
+                                                                        
+                                                                        SendSingle GetAccountByIndex(Index) & " renamed you to '" & p_CHAT_ARRAY(3) & "'.", .Item(m).SubItems(INDEX_WINSOCK_ID)
+                                                                        Exit For
+                                                                    End If
+                                                                Next m
+                                                            End With
+                                                            
+                                                            'Rename it in friend list
+                                                            With frmFriendIgnoreList.ListView1.ListItems
+                                                                'First column
+                                                                For m = 1 To .Count
+                                                                    If .Item(m).SubItems(1) = properAccount Then
+                                                                        .Item(m).SubItems(1) = p_CHAT_ARRAY(3)
+                                                                    End If
+                                                                Next m
+                                                                
+                                                                'Second column
+                                                                For m = 1 To .Count
+                                                                    If .Item(m).SubItems(2) = properAccount Then
+                                                                        .Item(m).SubItems(2) = p_CHAT_ARRAY(3)
+                                                                    End If
+                                                                Next m
+                                                            End With
+                                                            
+                                                            'Rename it in ignore list
+                                                            With frmFriendIgnoreList.ListView2.ListItems
+                                                                'First column
+                                                                For m = 1 To .Count
+                                                                    If .Item(m).SubItems(1) = properAccount Then
+                                                                        .Item(m).SubItems(1) = p_CHAT_ARRAY(3)
+                                                                    End If
+                                                                Next m
+                                                                
+                                                                'Second column
+                                                                For m = 1 To .Count
+                                                                    If .Item(m).SubItems(2) = properAccount Then
+                                                                        .Item(m).SubItems(2) = p_CHAT_ARRAY(3)
+                                                                    End If
+                                                                Next m
+                                                            End With
+                                                            
+                                                            Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_FRIENDS & " SET Name = '" & p_CHAT_ARRAY(3) & "' WHERE Name = '" & properAccount & "'")
+                                                            Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_FRIENDS & " SET Friend = '" & p_CHAT_ARRAY(3) & "' WHERE Friend = '" & properAccount & "'")
+                                                            
+                                                            UPDATE_ONLINE
+                                                        End If
+                                                    End If
+                                                Next n
+                                                Exit For
+                                            Else
+                                                If i = .Count Then SendSingle "Account '" & properAccount & "' not found.", Index
+                                            End If
+                                        Next i
+                                    End With
+                                Else
+                                    SendSingle "Incorrect syntax, use the follwing format " & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Oldname] [Newname].", Index
+                                End If
+                                
+                            Case Else
+                                SendSingle vbCrLf & "  Incorrect syntax, use the following format:" & vbCrLf & Space(2) & p_CHAT_ARRAY(0) & " name [Oldname] [Newname]", Index
+                                
+                        End Select
                         
                     Case ".reload"
                         Dim loadTime As Long
@@ -627,13 +722,14 @@ For k = 0 To UBound(p_PreArray) - 1
                 Exit Sub
             End If
             
+            'Check if user is muted
+            If IsMuted Then
+                SendSingle "You are muted.", Index
+                Exit Sub
+            End If
+            
             If IsSlash Then
                 Dim IsUser As Boolean
-                
-                If IsMuted Then
-                    SendSingle "You are muted.", Index
-                    Exit Sub
-                End If
                 
                 If Options.REPEAT_CHECK = 1 Then
                     If IsRepeating(GetAccountByIndex(Index), p_MainArray(1)) Then
@@ -773,12 +869,6 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                 End Select
                 SetLastMessage GetAccountByIndex(Index), p_MainArray(1)
-                Exit Sub
-            End If
-            
-            'Check if user is muted
-            If IsMuted Then
-                SendSingle "You are muted.", Index
                 Exit Sub
             End If
             
@@ -971,34 +1061,34 @@ With frmPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub MuteUser(User As String, AdminName As String, IsMuted As Boolean, pIndex As Integer, Reason As String)
+Private Sub MuteUser(User As String, AdminName As String, IsMuted As Long, pIndex As Integer, Reason As String)
 Dim i As Long
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            If IsMuted And .Item(i).SubItems(INDEX_MUTED) = "True" Then
+            If IsMuted = 1 And .Item(i).SubItems(INDEX_MUTED) = "1" Then
                 SendSingle User & " is already muted.", pIndex
                 Exit Sub
                 
-            ElseIf Not IsMuted And .Item(i).SubItems(INDEX_MUTED) = "False" Then
+            ElseIf IsMuted = 0 And .Item(i).SubItems(INDEX_MUTED) = "0" Then
                 SendSingle User & " is not muted.", pIndex
                 Exit Sub
                 
             End If
             
             'Set flag in userlist
-            .Item(i).SubItems(INDEX_MUTED) = CStr(IsMuted)
+            .Item(i).SubItems(INDEX_MUTED) = IsMuted
             
             'Announce the action
             If LenB(Reason) = 0 Then
-                If IsMuted Then
+                If IsMuted = 1 Then
                     SendMessage User & " got muted by " & AdminName & "."
                 Else
                     SendMessage User & " got unmuted by " & AdminName & "."
                 End If
             Else
-                If IsMuted Then
+                If IsMuted = 1 Then
                     SendMessage User & " got muted by " & AdminName & ". (" & Reason & ")"
                 Else
                     SendMessage User & " got unmuted by " & AdminName & ". (" & Reason & ")"
@@ -1008,7 +1098,11 @@ With frmPanel.ListView1.ListItems
         Else
             If i = .Count Then
                 If LenB(Trim$(User)) = 0 Then
-                    SendSingle "Incorrect syntax, use the following format .mute [User] [Reason].", pIndex
+                    If IsMuted = 1 Then
+                        SendSingle "Incorrect syntax, use the following format .mute [User] [Reason].", pIndex
+                    Else
+                        SendSingle "Incorrect syntax, use the following format .unmute [User] [Reason].", pIndex
+                    End If
                 Else
                     SendSingle "User '" & User & "' was not found.", pIndex
                 End If
