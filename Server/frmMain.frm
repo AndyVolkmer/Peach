@@ -693,6 +693,8 @@ For k = 0 To UBound(p_PreArray) - 1
                                 If UBound(p_CHAT_ARRAY) > 2 Then
                                     properAccount = GetProperAccountName(p_TEXT_SECOND)
                                     
+                                    p_CHAT_ARRAY(3) = LCase$(p_CHAT_ARRAY(3))
+                                    
                                     If p_CHAT_ARRAY(3) = "male" Then
                                         pGender = "0"
                                         
@@ -714,7 +716,14 @@ For k = 0 To UBound(p_PreArray) - 1
                                                     SendSingle "Successfully changed gender of '" & properAccount & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
                                                     
                                                     'Notify user that gender got changed
-                                                    SendSingle GetAccountByIndex(Index) & " changed your gender to '" & p_CHAT_ARRAY(3) & "'.", Index
+                                                    With frmPanel.ListView1.ListItems
+                                                        For n = 1 To .Count
+                                                            If .Item(n) = properAccount Then
+                                                                SendSingle GetAccountByIndex(Index) & " changed your gender to '" & p_CHAT_ARRAY(3) & "'.", .Item(n).SubItems(INDEX_WINSOCK_ID)
+                                                                Exit For
+                                                            End If
+                                                        Next n
+                                                    End With
                                                     Exit For
                                                 Else
                                                     If i = .Count Then SendSingle "Account '" & p_TEXT_SECOND & "' not found.", Index
@@ -726,6 +735,38 @@ For k = 0 To UBound(p_PreArray) - 1
                                     SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Gender].", Index
                                 End If
                                 
+                            Case "password"
+                                If UBound(p_CHAT_ARRAY) > 2 Then
+                                    properAccount = GetProperAccountName(p_TEXT_SECOND)
+                                    
+                                    With frmAccountPanel.ListView1.ListItems
+                                        For i = 1 To .Count
+                                            If .Item(i).SubItems(INDEX_NAME) = properAccount Then
+                                                'Modify password in database and panel
+                                                frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), p_CHAT_ARRAY(3), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, .Item(i).SubItems(INDEX_GENDER)
+                                                
+                                                'Feedback to the person who modified the password
+                                                SendSingle "Successfully changed password of '" & properAccount & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
+                                                
+                                                'Notify user that password got changed
+                                                With frmPanel.ListView1.ListItems
+                                                    For n = 1 To .Count
+                                                        If .Item(n) = properAccount Then
+                                                            SendSingle GetAccountByIndex(Index) & " changed your password to '" & p_CHAT_ARRAY(3) & "'.", .Item(n).SubItems(INDEX_WINSOCK_ID)
+                                                            Exit For
+                                                        End If
+                                                    Next n
+                                                End With
+                                                Exit For
+                                            Else
+                                                If i = .Count Then SendSingle "Account '" & p_TEXT_SECOND & "' not found.", Index
+                                            End If
+                                        Next i
+                                    End With
+                                Else
+                                    SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Password].", Index
+                                End If
+                                
                             Case Else
                                 SendSingle _
                                     vbCrLf & Space(2) & _
@@ -733,7 +774,11 @@ For k = 0 To UBound(p_PreArray) - 1
                                     vbCrLf & Space(2) & _
                                 p_CHAT_ARRAY(0) & " name [Oldname] [Newname]" & _
                                     vbCrLf & Space(2) & _
-                                p_CHAT_ARRAY(0) & " level [Name] [Level]", Index
+                                p_CHAT_ARRAY(0) & " level [Name] [Level]" & _
+                                    vbCrLf & Space(2) & _
+                                p_CHAT_ARRAY(0) & " gender [Name] [Gender]" & _
+                                    vbCrLf & Space(2) & _
+                                p_CHAT_ARRAY(0) & " password [Name] [Password]", Index
                                 
                         End Select
                         
