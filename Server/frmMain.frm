@@ -425,7 +425,7 @@ For k = 0 To UBound(p_PreArray) - 1
             End With
             
             UPDATE_STATUS_BAR
-            SendSingle "!accepted#", Index
+            SendSingle "!accepted#" & GetProperAccountName(p_MainArray(1)) & "#", Index
             
         'We get ip request and send ip back
         Case "!iprequest"
@@ -590,6 +590,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                                                         .Item(m) = p_CHAT_ARRAY(3)
                                                                         
                                                                         SendSingle GetAccountByIndex(Index) & " renamed you to '" & p_CHAT_ARRAY(3) & "'.", .Item(m).SubItems(INDEX_WINSOCK_ID)
+                                                                        SendSingle "!namechange#" & p_CHAT_ARRAY(3) & "#", .Item(m).SubItems(INDEX_WINSOCK_ID)
                                                                         Exit For
                                                                     End If
                                                                 Next m

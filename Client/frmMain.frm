@@ -601,6 +601,9 @@ For k = 0 To UBound(p_PreArray) - 1
                 .SelRTF = Buffer
             End With
             
+        Case "!namechange"
+            txtAccount.Text = StrArr(1)
+            
         'Show server information
         Case "!server_info"
             For i = 1 To UBound(StrArr)
@@ -620,6 +623,7 @@ For k = 0 To UBound(p_PreArray) - 1
         'We can login
         Case "!accepted"
             SetupChildForm frmChat
+            txtAccount.Text = StrArr(1)
             SendMessage "!connected#"
             
         'Wipe out current ignore list and insert new values
