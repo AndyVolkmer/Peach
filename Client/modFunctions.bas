@@ -195,6 +195,8 @@ With frmMain
     .menuConfig.Enabled = pSwitch
     .menuUpdate.Enabled = pSwitch
     
+    .cmdSwitch.Enabled = Not pSwitch
+    
     If pSwitch Then
         .cmdConnect.Caption = CONFIG_COMMAND_CONNECT
     Else

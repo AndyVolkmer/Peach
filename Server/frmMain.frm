@@ -498,7 +498,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             SendSingle "!split_text#" & GetOnlineList, Index
                             
                         Else
-                            SendSingle "Incorrect Syntax, use the following format .show [accounts, users].", Index
+                            SendSingle "Incorrect Syntax, use the following format .show [accounts, onliners].", Index
                             
                         End If
                         
@@ -527,10 +527,10 @@ For k = 0 To UBound(p_PreArray) - 1
                         End With
                         
                     Case ".ban"
-                        BanAccount GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 1, Index, Trim$(Reason)
+                        Ban GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 1, Index, Trim$(Reason)
                         
                     Case ".unban"
-                        BanAccount GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 0, Index, Trim$(Reason)
+                        Ban GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 0, Index, Trim$(Reason)
                         
                     Case ".mute"
                         MuteUser GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 1, Index, Trim$(Reason)
@@ -1268,7 +1268,7 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Private Sub BanAccount(Account As String, AdminName As String, Ban As Long, pIndex As Integer, Reason As String)
+Private Sub Ban(Account As String, AdminName As String, Ban As Long, pIndex As Integer, Reason As String)
 Dim i As Long
 Dim j As Long
 
@@ -1294,13 +1294,13 @@ With frmAccountPanel.ListView1.ListItems
             
             'Announce the action
             If LenB(Reason) = 0 Then
-                If Ban Then
+                If Ban = 1 Then
                     SendMessage Account & " was account banned by " & AdminName & "."
                 Else
                     SendMessage Account & " was account unbanned by " & AdminName & "."
                 End If
             Else
-                If Ban Then
+                If Ban = 1 Then
                     SendMessage Account & " was account banned by " & AdminName & ". (" & Reason & ")"
                 Else
                     SendMessage Account & " was account unbanned by " & AdminName & ". (" & Reason & ")"
@@ -1310,7 +1310,11 @@ With frmAccountPanel.ListView1.ListItems
         Else
             If i = .Count Then
                 If LenB(Trim$(Account)) = 0 Then
-                    SendSingle "Incorrect syntax, use the following format .ban [Name] [Reason].", pIndex
+                    If Ban = 1 Then
+                        SendSingle "Incorrect syntax, use the following format .ban [Name] [Reason].", pIndex
+                    Else
+                        SendSingle "Incorrect syntax, use the following format .unban [Name] [Reason].", pIndex
+                    End If
                 Else
                     SendSingle "User '" & Account & "' not found.", pIndex
                 End If
