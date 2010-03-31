@@ -275,17 +275,18 @@ lblSendStatus.Caption = "0.0%"
 End Sub
 
 Private Sub SckSendFile_Connect()
-Dim Buffer() As Byte, p As Long
+Dim i        As Long
+Dim Buffer() As Byte
 
 iFileNum = FreeFile
 Open sFileName For Binary Access Read Lock Write As iFileNum
 
 ReDim Buffer(lngMIN(LOF(iFileNum), PacketSize) - 1)
-Get iFileNum, , Buffer ' read data
+Get iFileNum, , Buffer  ' read data
 
 SckSendFile.SendData CStr(LOF(iFileNum)) & ","   ' send the file size
-p = InStrRev(sFileName, "\")
-SckSendFile.SendData Mid(sFileName, p + 1) & ":" ' send the file name
+i = InStrRev(sFileName, "\")
+SckSendFile.SendData Mid(sFileName, i + 1) & ":" ' send the file name
 SckSendFile.SendData Buffer                      ' send first packet
 End Sub
 

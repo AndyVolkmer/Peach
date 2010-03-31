@@ -175,29 +175,30 @@ If LV.ColumnHeaders(Column + 1).Width < TLen Then LV.ColumnHeaders(Column + 1).W
 End Sub
 
 Private Sub SckReceiveFile_ConnectionRequest(Index As Integer, ByVal requestID As Long)
-Dim k As Integer, LI As ListItem
+Dim i   As Long
+Dim LI  As ListItem
 
-For k = 1 To SckReceiveFile.UBound
-    If SckReceiveFile(k).State = sckClosed Then Exit For
-Next k
+For i = 1 To SckReceiveFile.UBound
+    If SckReceiveFile(i).State = sckClosed Then Exit For
+Next i
 
-If k = SckReceiveFile.UBound + 1 Then
+If i = SckReceiveFile.UBound + 1 Then
     Load SckReceiveFile(SckReceiveFile.UBound + 1)
     ReDim Preserve Clients(SckReceiveFile.UBound)
     
-    k = SckReceiveFile.UBound
-    lstConnections.ListItems.Add , , CStr(k)
+    i = SckReceiveFile.UBound
+    lstConnections.ListItems.Add , , CStr(i)
 End If
 
-SckReceiveFile(k).Accept requestID
+SckReceiveFile(i).Accept requestID
 
-If LenB(SckReceiveFile(k).RemoteHost) = 0 Then
-    Me.lstConnections.ListItems(k + 1).SubItems(2) = SckReceiveFile(k).RemoteHostIP
+If LenB(SckReceiveFile(i).RemoteHost) = 0 Then
+    Me.lstConnections.ListItems(i + 1).SubItems(2) = SckReceiveFile(i).RemoteHostIP
 Else
-    Me.lstConnections.ListItems(k + 1).SubItems(2) = SckReceiveFile(k).RemoteHost
+    Me.lstConnections.ListItems(i + 1).SubItems(2) = SckReceiveFile(i).RemoteHost
 End If
 
-FitTextInListView Me.lstConnections, 2, , k + 1
+FitTextInListView Me.lstConnections, 2, , i + 1
 End Sub
 
 Private Sub SckReceiveFile_DataArrival(Index As Integer, ByVal bytesTotal As Long)
@@ -248,14 +249,15 @@ End Select
 End Sub
 
 Private Sub tmrStatus_Timer()
-Dim k As Long, TmpStr As String
+Dim i       As Long
+Dim TmpStr  As String
 
-For k = 0 To SckReceiveFile.UBound
-    TmpStr = Choose(SckReceiveFile(k).State + 1, "Closed", "Open", "Listening", "Connection pending", "Resolving host", "Host resolved", "Connecting", "Connected", "Server is disconnecting", "Error")
+For i = 0 To SckReceiveFile.UBound
+    TmpStr = Choose(SckReceiveFile(i).State + 1, "Closed", "Open", "Listening", "Connection pending", "Resolving host", "Host resolved", "Connecting", "Connected", "Server is disconnecting", "Error")
     
-    If Me.lstConnections.ListItems(k + 1).SubItems(1) <> TmpStr Then
-        Me.lstConnections.ListItems(k + 1).SubItems(1) = TmpStr
-        FitTextInListView Me.lstConnections, 1, , k + 1
+    If Me.lstConnections.ListItems(i + 1).SubItems(1) <> TmpStr Then
+        Me.lstConnections.ListItems(i + 1).SubItems(1) = TmpStr
+        FitTextInListView Me.lstConnections, 1, , i + 1
     End If
-Next k
+Next i
 End Sub

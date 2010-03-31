@@ -69,10 +69,14 @@ SET_LANG_1 Combo1.ListIndex
 InsertIntoRegistry "Client\Configuration", "Validate", "0"
 InsertIntoRegistry "Client\Configuration", "Language", frmLanguage.Combo1.ListIndex
 
-If MsgBox(LANG_QUIT, vbQuestion + vbYesNo) = vbYes Then
-    CloseThis
+If Setting.VALIDATE = 0 Then
+    If MsgBox(LANG_QUIT, vbQuestion + vbYesNo) = vbYes Then
+        CloseThis
+    Else
+        Unload Me
+    End If
 Else
-    Unload Me
+    SetupForm frmMain
 End If
 End Sub
 

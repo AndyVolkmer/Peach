@@ -258,7 +258,7 @@ End With
 
 'Add new user to panel without account and name
 With frmPanel.ListView1.ListItems
-    .Add , , vbNullString
+    .Add
     i = .Count
     If Winsock1(j).RemoteHostIP = "127.0.0.1" Then
         .Item(i).SubItems(INDEX_IP) = Winsock1(0).LocalIP
@@ -1368,7 +1368,7 @@ Dim i As Long
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i) = StrConv(pUser, vbProperCase) Then
+        If .Item(i) = pUser Then
             SendSingle vbCrLf & "User information about '" & pUser & "'" & vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & vbCrLf & " Muted: " & .Item(i).SubItems(INDEX_MUTED) & vbCrLf & " Login Time: " & .Item(i).SubItems(INDEX_LOGIN_TIME), pIndex
             Exit For
         Else
