@@ -445,6 +445,7 @@ For k = 0 To UBound(p_PreArray) - 1
             Dim p_TEXT_SECOND       As String
             Dim IsCommand           As Boolean
             Dim IsSlash             As Boolean
+            Dim properAccount       As String
                 
             'Split the conversation text by spaces
             p_CHAT_ARRAY = Split(p_MainArray(1), " ")
@@ -471,14 +472,18 @@ For k = 0 To UBound(p_PreArray) - 1
             
             'Check if user is muted
             With frmPanel.ListView1.ListItems
+                properAccount = GetAccountByIndex(Index)
+                
                 For i = 1 To .Count
-                    If .Item(i) = GetAccountByIndex(Index) Then
+                    If .Item(i) = properAccount Then
                         If .Item(i).SubItems(INDEX_MUTED) = "1" Then
                             IsMuted = True
                             Exit For
                         End If
                     End If
                 Next i
+                
+                properAccount = vbNullString
             End With
             
             'If a command is used check out which
@@ -511,8 +516,10 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                     Case ".kick"
                         With frmPanel.ListView1.ListItems
+                            properAccount = GetProperAccountName(p_TEXT_FIRST)
+                            
                             For i = 1 To .Count
-                                If .Item(i) = GetProperAccountName(p_TEXT_FIRST) Then
+                                If .Item(i) = properAccount Then
                                     KickUser .Item(i)
                                     Exit For
                                 Else
@@ -525,6 +532,8 @@ For k = 0 To UBound(p_PreArray) - 1
                                     End If
                                 End If
                             Next i
+                            
+                            properAccount = vbNullString
                         End With
                         
                     Case ".ban"
@@ -557,9 +566,8 @@ For k = 0 To UBound(p_PreArray) - 1
                         SendSingle GetCommands, Index
                         
                     Case ".change", ".modify"
-                        Dim properAccount As String
-                        Dim m             As Long
-                        Dim n             As Long
+                        Dim m As Long
+                        Dim n As Long
                         
                         Select Case LCase$(p_TEXT_FIRST)
                             Case "name"
@@ -645,14 +653,13 @@ For k = 0 To UBound(p_PreArray) - 1
                                         Next i
                                     End With
                                     
+                                    properAccount = vbNullString
                                 Else
                                     SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Oldname] [Newname].", Index
                                 End If
                                 
                             Case "level"
                                 If UBound(p_CHAT_ARRAY) > 2 Then
-                                    properAccount = GetProperAccountName(p_TEXT_SECOND)
-                                    
                                     If Not IsNumeric(p_CHAT_ARRAY(3)) Then
                                         SendSingle "Level contains incorrect values, must be in range of 0-2.", Index
                                         Exit Sub
@@ -664,6 +671,8 @@ For k = 0 To UBound(p_PreArray) - 1
                                     End If
                                     
                                     With frmAccountPanel.ListView1.ListItems
+                                        properAccount = GetProperAccountName(p_TEXT_SECOND)
+                                        
                                         For i = 1 To .Count
                                             If .Item(i).SubItems(INDEX_NAME) = properAccount Then
                                                 'Modify level for account in database
@@ -685,6 +694,8 @@ For k = 0 To UBound(p_PreArray) - 1
                                                 If i = .Count Then SendSingle "Account '" & p_TEXT_SECOND & "' not found.", Index
                                             End If
                                         Next i
+                                        
+                                        properAccount = vbNullString
                                     End With
                                 Else
                                     SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Level].", Index
@@ -693,8 +704,6 @@ For k = 0 To UBound(p_PreArray) - 1
                             Case "gender"
                                 Dim pGender As String
                                 If UBound(p_CHAT_ARRAY) > 2 Then
-                                    properAccount = GetProperAccountName(p_TEXT_SECOND)
-                                    
                                     p_CHAT_ARRAY(3) = LCase$(p_CHAT_ARRAY(3))
                                     
                                     If p_CHAT_ARRAY(3) = "male" Then
@@ -709,6 +718,8 @@ For k = 0 To UBound(p_PreArray) - 1
                                         SendSingle "Incorrect gender format use 'male' or 'female'.", Index
                                     Else
                                         With frmAccountPanel.ListView1.ListItems
+                                            properAccount = GetProperAccountName(p_TEXT_SECOND)
+                                            
                                             For i = 1 To .Count
                                                 If .Item(i).SubItems(INDEX_NAME) = properAccount Then
                                                     'Modify gender in database and panel
@@ -731,6 +742,8 @@ For k = 0 To UBound(p_PreArray) - 1
                                                     If i = .Count Then SendSingle "Account '" & p_TEXT_SECOND & "' not found.", Index
                                                 End If
                                             Next i
+                                            
+                                            properAccount = vbNullString
                                         End With
                                     End If
                                 Else
@@ -739,9 +752,9 @@ For k = 0 To UBound(p_PreArray) - 1
                                 
                             Case "password"
                                 If UBound(p_CHAT_ARRAY) > 2 Then
-                                    properAccount = GetProperAccountName(p_TEXT_SECOND)
-                                    
                                     With frmAccountPanel.ListView1.ListItems
+                                        properAccount = GetProperAccountName(p_TEXT_SECOND)
+                                        
                                         For i = 1 To .Count
                                             If .Item(i).SubItems(INDEX_NAME) = properAccount Then
                                                 'Modify password in database and panel
@@ -764,6 +777,8 @@ For k = 0 To UBound(p_PreArray) - 1
                                                 If i = .Count Then SendSingle "Account '" & p_TEXT_SECOND & "' not found.", Index
                                             End If
                                         Next i
+                                        
+                                        properAccount = vbNullString
                                     End With
                                 Else
                                     SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Password].", Index
@@ -839,14 +854,18 @@ For k = 0 To UBound(p_PreArray) - 1
                             End If
                             
                             With frmPanel.ListView1.ListItems
+                                properAccount = GetProperAccountName(p_TEXT_FIRST)
+                                
                                 For i = 1 To .Count
-                                    If .Item(i) = GetProperAccountName(p_TEXT_FIRST) Then
+                                    If .Item(i) = properAccount Then
                                         SendSingle "!clear#", .Item(i).SubItems(INDEX_WINSOCK_ID)
                                         Exit For
                                     Else
                                         If i = .Count Then SendSingle "User '" & p_TEXT_FIRST & "' was not found.", Index
                                     End If
                                 Next i
+                                
+                                properAccount = vbNullString
                             End With
                         End If
                         
@@ -874,12 +893,16 @@ For k = 0 To UBound(p_PreArray) - 1
                 End If
                 
                 With frmPanel.ListView1.ListItems
+                    properAccount = GetProperAccountName(p_TEXT_FIRST)
+                    
                     For i = 1 To .Count
-                        If .Item(i) = GetProperAccountName(p_TEXT_FIRST) Then
+                        If .Item(i) = properAccount Then
                             IsUser = True
                             Exit For
                         End If
                     Next i
+                    
+                    properAccount = vbNullString
                 End With
                 
                 Select Case LCase(p_CHAT_ARRAY(0))
@@ -976,8 +999,10 @@ For k = 0 To UBound(p_PreArray) - 1
                                 Dim j     As Long
                                 
                                 With frmAccountPanel.ListView1.ListItems
+                                    properAccount = GetAccountByIndex(Index)
+                                    
                                     For j = 1 To .Count
-                                        If .Item(j).SubItems(INDEX_NAME) = GetAccountByIndex(Index) Then
+                                        If .Item(j).SubItems(INDEX_NAME) = properAccount Then
                                             Select Case .Item(j).SubItems(INDEX_GENDER)
                                                 Case "0": Gen = "his"
                                                 Case "1": Gen = "her"
@@ -985,6 +1010,8 @@ For k = 0 To UBound(p_PreArray) - 1
                                             Exit For
                                         End If
                                     Next j
+                                    
+                                    properAccount = vbNullString
                                 End With
                                                                 
                                 If IsUser Then
@@ -1080,12 +1107,12 @@ End With
 End Function
 
 Private Function IsPartOf(pPart As String, pCommand As String) As Boolean
-Dim pTemp1  As String
+Dim pTemp  As String
 Dim i       As Long
 
 For i = 1 To Len(pPart)
-    pTemp1 = Mid(pPart, 1, i)
-    If LCase$(pTemp1) = LCase$(Left$(pCommand, Len(pTemp1))) Then
+    pTemp = Mid(pPart, 1, i)
+    If LCase$(pTemp) = LCase$(Left$(pCommand, Len(pTemp))) Then
         IsPartOf = True
     Else
         IsPartOf = False
@@ -1269,7 +1296,6 @@ End Function
 
 Private Sub Ban(Account As String, AdminName As String, Ban As Long, pIndex As Integer, Reason As String)
 Dim i As Long
-Dim j As Long
 
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
