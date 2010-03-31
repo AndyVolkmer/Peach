@@ -633,6 +633,13 @@ For k = 0 To UBound(p_PreArray) - 1
             
         'We can login
         Case "!accepted"
+            frmMain.cmdSwitch.Enabled = True
+            
+            With frmContainer
+                .Top = frmMain.Top
+                .Left = frmMain.Left
+            End With
+            
             SetupChildForm frmChat
             txtAccount.Text = StrArr(1)
             SendMessage "!connected#"
