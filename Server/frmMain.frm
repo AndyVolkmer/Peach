@@ -314,7 +314,8 @@ Dim IsMuted         As Boolean  'Mute explains itself
 frmMain.Winsock1(Index).GetData p_Message
 DoEvents
  
-'Do first array to avoid spam
+'Do first array to avoid incorrect package reading
+'Chr(24) and Chr(25) are the seperators for each packet
 p_PreArray = Split(p_Message, Chr(24) & Chr(25))
 
 'Start looping through
@@ -483,7 +484,7 @@ For k = 0 To UBound(p_PreArray) - 1
             'If a command is used check out which
             If IsCommand Then
                 Dim Reason As String
-                                
+                
                 'Save the reason
                 For i = 2 To UBound(p_CHAT_ARRAY)
                     Reason = Reason & p_CHAT_ARRAY(i) & " "
@@ -494,7 +495,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         If IsPartOf(p_TEXT_FIRST, "accounts") Then
                             SendSingle "!split_text#" & GetAccountList, Index
                             
-                        ElseIf IsPartOf(p_TEXT_FIRST, "online") Then
+                        ElseIf IsPartOf(p_TEXT_FIRST, "onliners") Then
                             SendSingle "!split_text#" & GetOnlineList, Index
                             
                         Else
@@ -794,24 +795,24 @@ For k = 0 To UBound(p_PreArray) - 1
                                     loadTime = timeGetTime
                                     Erase Commands
                                     LoadCommands
-                                    SendMessage GetAccountByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_COMMANDS & "' table.( " & timeGetTime - loadTime & "ms )"
+                                    SendMessage GetAccountByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_COMMANDS & "' table. ( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case LCase$(DATABASE_TABLE_DECLINED_NAMES)
                                     loadTime = timeGetTime
                                     Erase DeclinedNames
                                     LoadDeclinedNames
-                                    SendMessage GetAccountByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_DECLINED_NAMES & "' table.( " & timeGetTime - loadTime & "ms )"
+                                    SendMessage GetAccountByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_DECLINED_NAMES & "' table. ( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case LCase$(DATABASE_TABLE_EMOTES)
                                     loadTime = timeGetTime
                                     Erase Emotes
                                     LoadEmotes
-                                    SendMessage GetAccountByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_EMOTES & "' table.( " & timeGetTime - loadTime & "ms )"
+                                    SendMessage GetAccountByIndex(Index) & " initiated the reload of '" & DATABASE_TABLE_EMOTES & "' table. ( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case LCase$("config"), LCase$("c")
                                     loadTime = timeGetTime
                                     LoadConfigValue
-                                    SendMessage GetAccountByIndex(Index) & " iniated the reload of configuration files.( " & timeGetTime - loadTime & "ms )"
+                                    SendMessage GetAccountByIndex(Index) & " iniated the reload of configuration files. ( " & timeGetTime - loadTime & "ms )"
                                     
                                 Case Else
                                     If LenB(p_TEXT_FIRST) = 0 Then
@@ -1154,9 +1155,7 @@ With frmAccountPanel.ListView1.ListItems
             GetProperAccountName = .Item(i).SubItems(INDEX_NAME)
             Exit For
         Else
-            If i = .Count Then
-                GetProperAccountName = pAccount
-            End If
+            If i = .Count Then GetProperAccountName = pAccount
         End If
     Next i
 End With

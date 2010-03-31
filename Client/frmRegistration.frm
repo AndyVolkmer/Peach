@@ -296,7 +296,7 @@ Begin VB.Form frmCreateAccount
    End
    Begin VB.Label Label4 
       BackColor       =   &H00F4F4F4&
-      Height          =   615
+      Height          =   2055
       Left            =   240
       TabIndex        =   11
       Top             =   120

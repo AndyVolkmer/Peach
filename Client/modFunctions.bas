@@ -139,7 +139,7 @@ End With
 
 SetupForm frmMain
 
-SwitchButtons True
+SwitchButtons True, False
 End Sub
 
 'If an error occurs, this function returns False
@@ -182,7 +182,7 @@ Shell_NotifyIcon NIM_DELETE, NID  'Del tray icon
 End
 End Sub
 
-Public Sub SwitchButtons(pSwitch As Boolean)
+Public Sub SwitchButtons(pSwitch As Boolean, isConnecting As Boolean)
 With frmMain
     .lblAccount.Enabled = pSwitch
     .lblCreateAccount.Enabled = pSwitch
@@ -195,7 +195,7 @@ With frmMain
     .menuConfig.Enabled = pSwitch
     .menuUpdate.Enabled = pSwitch
     
-    .cmdSwitch.Enabled = Not pSwitch
+    If isConnecting = False Then .cmdSwitch.Enabled = Not pSwitch
     
     If pSwitch Then
         .cmdConnect.Caption = CONFIG_COMMAND_CONNECT

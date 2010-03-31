@@ -91,7 +91,7 @@ Begin VB.Form frmForgotPassword
       End
    End
    Begin VB.Label lblStatus 
-      Height          =   495
+      Height          =   2415
       Left            =   120
       TabIndex        =   8
       Top             =   120

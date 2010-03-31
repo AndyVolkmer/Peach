@@ -24,6 +24,7 @@ Begin VB.Form frmMain
    ScaleWidth      =   5955
    Begin VB.CommandButton cmdSwitch 
       Caption         =   "^"
+      Enabled         =   0   'False
       Height          =   375
       Left            =   5490
       TabIndex        =   9
@@ -222,13 +223,15 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Vali        As Boolean
-Public RunOnce      As Boolean
+Private Vali   As Boolean
+Public RunOnce As Boolean
 
 Private Sub ChatNotifyTimer_Timer()
 Static onORoff As Boolean
 
-ChatNotifyTimer.Interval = 500
+If ChatNotifyTimer.Interval <> 500 Then
+    ChatNotifyTimer.Interval = 500
+End If
 
 With frmContainer.cmdChat
     If onORoff Then
@@ -308,7 +311,7 @@ If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
         End With
     End If
     
-    SwitchButtons False
+    SwitchButtons False, True
 Else
     Disconnect
 End If
@@ -411,11 +414,19 @@ frmSettings.Show 1
 End Sub
 
 Private Sub lblAuthor_Click()
-frmAbout.Show
+showAbout
 End Sub
 
 Private Sub lblVersion_Click()
-frmAbout.Show
+showAbout
+End Sub
+
+Private Sub showAbout()
+MsgBox "Author: " & pAuthor & vbCrLf _
+    & "Version: " & pRev & vbCrLf & vbCrLf _
+    & "Peach is beeing developed by " & pAuthor & _
+    " Do not publish this anywhere without " & _
+    "permissions of the author.", vbInformation
 End Sub
 
 Private Sub menuUpdate_Click()
@@ -528,7 +539,7 @@ Private Sub RegSock_Error(ByVal Number As Integer, Description As String, ByVal 
 If ACC_SWITCH = "REG" Then
     With frmCreateAccount
         .Caption = REG_MSG_ERROR_OCCURED
-        .Label4.Caption = REG_MSG_ERROR
+        .Label4.Caption = REG_MSG_ERROR & vbCrLf & vbCrLf & "Error: " & Description
         .Command1.Caption = REG_COMMAND_CLOSE
         .Command1.Visible = True
         .Frame1.Visible = False
@@ -540,7 +551,7 @@ If ACC_SWITCH = "REG" Then
 Else
     With frmForgotPassword
         .Caption = REG_MSG_ERROR_OCCURED
-        .lblStatus.Caption = REG_MSG_ERROR
+        .lblStatus.Caption = REG_MSG_ERROR & vbCrLf & vbCrLf & "Error: " & Description
         .cmdRequest.Caption = REG_COMMAND_CLOSE
         .cmdRequest.Visible = True
         .Frame1.Visible = False
