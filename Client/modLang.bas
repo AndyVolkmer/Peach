@@ -88,8 +88,7 @@ Public SOC_COMMAND_FRIEND               As String
 Public SOC_COMMAND_IGNORE               As String
 Public SOC_COMMAND_WHISPER              As String
 
-Public SOC_ASK_DEL_1                    As String
-Public SOC_ASK_DEL_2                    As String
+Public SOC_ASK_DEL                      As String
 
 Public SOC_ASK_FRIEND_TEXT              As String
 Public SOC_ASK_FRIEND_TITLE             As String
@@ -265,8 +264,7 @@ SOC_COMMAND_FRIEND = "&Als Freund hinzufügen"
 SOC_COMMAND_IGNORE = "&Benutzer ignorieren"
 SOC_COMMAND_WHISPER = "&Anflüstern"
 
-SOC_ASK_DEL_1 = "Möchten Sie '"
-SOC_ASK_DEL_2 = "' von der Liste löschen?"
+SOC_ASK_DEL = "Möchten Sie '%u' von der Liste löschen?"
 
 SOC_ASK_FRIEND_TEXT = "Geben Sie bitte den Konto-Namen Ihres Freundes ein."
 SOC_ASK_FRIEND_TITLE = "Freund hinzufügen"
@@ -446,8 +444,7 @@ SOC_COMMAND_FRIEND = "&Add to Friends"
 SOC_COMMAND_IGNORE = "&Ignore user"
 SOC_COMMAND_WHISPER = "&Whisper"
 
-SOC_ASK_DEL_1 = "Do you want to delete '"
-SOC_ASK_DEL_2 = "' from the list?"
+SOC_ASK_DEL = "Do you want to delete '%u' from the list?"
 
 SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
 SOC_ASK_FRIEND_TITLE = "Adding a friend"
@@ -622,8 +619,7 @@ SOC_COMMAND_FRIEND = "&Añardir a amigos"
 SOC_COMMAND_IGNORE = "&Ignorar al usuario"
 SOC_COMMAND_WHISPER = "&Susurrar"
 
-SOC_ASK_DEL_1 = "¿Estas seguro que quieres borrar a '"
-SOC_ASK_DEL_2 = "' de la lista?"
+SOC_ASK_DEL = "¿Estas seguro que quieres borrar a '%u' de la lista?"
 
 SOC_ASK_FRIEND_TEXT = "Inserta el nombre de la cuenta de tu amigo aqui."
 SOC_ASK_FRIEND_TITLE = "Añadir amigo"
@@ -800,8 +796,7 @@ SOC_COMMAND_FRIEND = "&Lägg till vänner"
 SOC_COMMAND_IGNORE = "&Ignore user"
 SOC_COMMAND_WHISPER = "&Whisper"
 
-SOC_ASK_DEL_1 = "Vill du ta bort '"
-SOC_ASK_DEL_2 = "' från listan?"
+SOC_ASK_DEL = "Vill du ta bort '%u' från listan?"
 
 SOC_ASK_FRIEND_TEXT = "Ange kontonamn på din vän i textrutan nedan."
 SOC_ASK_FRIEND_TITLE = "Lägg till en vän"
@@ -977,8 +972,7 @@ SOC_COMMAND_FRIEND = "&Aggiungi ai tuoi amici"
 SOC_COMMAND_IGNORE = "&Ignore user"
 SOC_COMMAND_WHISPER = "&Whisper"
 
-SOC_ASK_DEL_1 = "Vuoi eliminare '"
-SOC_ASK_DEL_2 = "' dalla lista?"
+SOC_ASK_DEL = "Vuoi eliminare '%u' dalla lista?"
 
 SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
 SOC_ASK_FRIEND_TITLE = "Adding a friend"
@@ -1152,8 +1146,7 @@ SOC_COMMAND_FRIEND = "&Voeg toe aan vrienden"
 SOC_COMMAND_IGNORE = "&Ignore user"
 SOC_COMMAND_WHISPER = "&Whisper"
 
-SOC_ASK_DEL_1 = "Wilt u '"
-SOC_ASK_DEL_2 = "' verwijderen uit de lijst?"
+SOC_ASK_DEL = "Wilt u '%u' verwijderen uit de lijst?"
 
 SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
 SOC_ASK_FRIEND_TITLE = "Adding a friend"
@@ -1337,8 +1330,7 @@ SOC_COMMAND_FRIEND = "&Dodaj u Prijatelje"
 SOC_COMMAND_IGNORE = "&Ignorishi korisnika"
 SOC_COMMAND_WHISPER = "&Privatna Poruka"
 
-SOC_ASK_DEL_1 = "Do you want to delete '"
-SOC_ASK_DEL_2 = "' from the list?"
+SOC_ASK_DEL = "Do you want to delete '%u' from the list?"
 
 SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
 SOC_ASK_FRIEND_TITLE = "Adding a friend"
@@ -1509,8 +1501,7 @@ SOC_COMMAND_FRIEND = "&Ajouter aux amis"
 SOC_COMMAND_IGNORE = "&Ignore user"
 SOC_COMMAND_WHISPER = "&Whisper"
 
-SOC_ASK_DEL_1 = "Voulez-vous supprimer '"
-SOC_ASK_DEL_2 = "' de la liste?"
+SOC_ASK_DEL = "Voulez-vous supprimer '%u' de la liste?"
 
 SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
 SOC_ASK_FRIEND_TITLE = "Adding a friend"

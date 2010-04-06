@@ -66,9 +66,9 @@ Begin VB.Form frmSociety
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "lvIgnoreList"
+      Tab(2).Control(0)=   "cmdRemoveIgnore"
       Tab(2).Control(1)=   "cmdAddIgnore"
-      Tab(2).Control(2)=   "cmdRemoveIgnore"
+      Tab(2).Control(2)=   "lvIgnoreList"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToIgnore 
          Caption         =   "&Add to Ignore"
@@ -341,8 +341,10 @@ End Sub
 '======================='
 
 '=== Friend List Tab ==='
-Private Sub pRemoveFriend(pFullName As String)
-SendMessage "!friend#-remove#" & lvFriendList.SelectedItem.Text & "#"
+Private Sub pRemoveFriend(uString As String)
+If MsgBox(Replace(SOC_ASK_DEL, "%u", uString), vbQuestion + vbYesNo) = vbYes Then
+    SendMessage "!friend#-remove#" & uString & "#"
+End If
 End Sub
 
 Private Sub TriggerFriendEvent()
@@ -358,8 +360,8 @@ PopupMenu lvFriendMenu
 End Sub
 
 '=== Online List Tab ==='
-Private Sub pAddToFriend(pString As String)
-SendMessage "!friend#-add#" & pString & "#"
+Private Sub pAddToFriend(uString As String)
+SendMessage "!friend#-add#" & uString & "#"
 End Sub
 
 Private Sub TriggerOnlineEvent()
@@ -378,8 +380,8 @@ End If
 PopupMenu lvOnlineMenu
 End Sub
 
-Private Sub pAddToIgnore(pString As String)
-SendMessage "!ignore#-add#" & pString & "#"
+Private Sub pAddToIgnore(uString As String)
+SendMessage "!ignore#-add#" & uString & "#"
 End Sub
 
 '=== Ignore List Tab ==='
@@ -388,8 +390,10 @@ If lvIgnoreList.ListItems.Count = 0 Then Exit Sub
 PopupMenu lvIgnoreMenu
 End Sub
 
-Private Sub pRemoveIgnore(pString As String)
-SendMessage "!ignore#-remove#" & pString & "#"
+Private Sub pRemoveIgnore(uString As String)
+If MsgBox(Replace(SOC_ASK_DEL, "%u", uString), vbQuestion + vbYesNo) = vbYes Then
+    SendMessage "!ignore#-remove#" & uString & "#"
+End If
 End Sub
 
 '======================'

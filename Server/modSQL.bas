@@ -46,7 +46,6 @@ Dim Counter As Long
 With pDB
 
 SQL = "SELECT * FROM " & DATABASE_TABLE_DECLINED_NAMES
-Counter = 0
 
 On Error GoTo HandleErrorEmotes
 
@@ -84,7 +83,6 @@ Dim Counter As Long
 With pDB
 
 SQL = "SELECT * FROM " & DATABASE_TABLE_EMOTES
-Counter = 0
 
 On Error GoTo HandleErrorEmotes
 
@@ -125,7 +123,6 @@ Dim Counter As Long
 With pDB
 
 SQL = "SELECT * FROM " & DATABASE_TABLE_FRIENDS
-Counter = 0
 
 On Error GoTo HandleErrorFriends
 
@@ -164,7 +161,6 @@ Dim Counter As Long
 With pDB
 
 SQL = "SELECT * FROM " & DATABASE_TABLE_IGNORES
-Counter = 0
 
 On Error GoTo HandleErrorFriends
 
@@ -203,7 +199,6 @@ Dim Counter As Long
 With pDB
 
 SQL = "SELECT * FROM " & DATABASE_TABLE_ACCOUNTS
-Counter = 0
 
 On Error GoTo HandleErrorTable
 

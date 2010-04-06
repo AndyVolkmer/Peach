@@ -44,7 +44,6 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -94,6 +93,7 @@ Begin VB.Form frmChat
       _ExtentY        =   4471
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmChat.frx":007D
@@ -246,11 +246,11 @@ Else
         With frmSociety.lvOnlineList.ListItems
             For i = 1 To .Count
                 'If the it is the user and not your self then proceed
-                If .Item(i) = menuUser And Not menuUser = frmMain.txtAccount.Text Then
+                If LCase$(.Item(i)) = LCase$(menuUser) And Not LCase$(menuUser) = LCase$(frmMain.txtAccount.Text) Then
                     'Check if the user is already added in friend list ( to disable control )
                     With frmSociety.lvFriendList.ListItems
                         For j = 1 To .Count
-                            If .Item(j) = menuUser Then
+                            If LCase$(.Item(j)) = LCase$(menuUser) Then
                                 pAddToFriendlist.Enabled = False
                                 Exit For
                             Else
@@ -264,7 +264,7 @@ Else
                     'Check if user is already beeing ignored ( to disable control )
                     With frmSociety.lvIgnoreList.ListItems
                         For j = 1 To .Count
-                            If .Item(j) = menuUser Then
+                            If LCase$(.Item(j)) = LCase$(menuUser) Then
                                 pIgnoreUser.Enabled = False
                                 Exit For
                             Else

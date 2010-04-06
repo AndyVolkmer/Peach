@@ -559,7 +559,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         If LenB(p_ANN_MSG) = 0 Then
                             SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & " [Text].", Index
                         Else
-                            SendMessage "[" & GetAccountByIndex(Index) & " announces]: " & p_ANN_MSG
+                            SendMessage "[GM][" & GetAccountByIndex(Index) & " announces]: " & p_ANN_MSG
                         End If
                         
                     Case ".help", ".command", ".commands"
@@ -1043,12 +1043,12 @@ For k = 0 To UBound(p_PreArray) - 1
                 If IsNumeric(p_MainArray(2)) = False Then
                     'If there are letters and not just signs then check
                     If IsAlphaCharacter(p_MainArray(2)) Then
-                        S1 = 0
+                        
                         For i = 1 To Len(p_MainArray(2))
                             E = Mid$(p_MainArray(2), i, 1)
                             If UCase$(E) = E Then S1 = S1 + 1
                         Next i
-                        E = vbNullString
+                        
                         'Exit if there are more then 75% of caps
                         If Format$(100 * S1 / Len(p_MainArray(2)), "0") > 75 And Options.CAPS_CHECK = 1 Then
                             SendSingle "Message blocked. Please do not write more then 75% in caps.", Index
@@ -1065,8 +1065,14 @@ For k = 0 To UBound(p_PreArray) - 1
                 End If
             End If
             
+            Dim p_PREFIX As String
+            
+            If GetLevel(GetAccountByIndex(Index)) > 0 Then
+                p_PREFIX = "[GM]"
+            End If
+            
             'Send Message and print in chat
-            SendProtectedMessage GetAccountByIndex(Index), "[" & GetAccountByIndex(Index) & "]: " & p_MainArray(1)
+            SendProtectedMessage GetAccountByIndex(Index), p_PREFIX & "[" & GetAccountByIndex(Index) & "]: " & p_MainArray(1)
             
             'Set last message
             SetLastMessage GetAccountByIndex(Index), p_MainArray(1)
@@ -1197,12 +1203,17 @@ GetServerInformation = _
 End Function
 
 Private Sub Whisper(pUser As String, pTarget As String, pConv As String, Index As Integer)
-Dim i As Long
+Dim i        As Long
+Dim p_PREFIX As String
 
 'Check if user is whispering itself
 If pUser = pTarget Then
     SendSingle "You can't whisper yourself.", Index
     Exit Sub
+End If
+
+If GetLevel(pUser) > 0 Then
+    p_PREFIX = "[GM]"
 End If
 
 With frmPanel.ListView1.ListItems
@@ -1213,7 +1224,7 @@ With frmPanel.ListView1.ListItems
                 SendSingle pTarget & " is ignoring you.", Index
             Else
                 SendSingle "[You whisper to " & pTarget & "]: " & pConv, Index
-                SendSingle "[" & pUser & " whispers]: " & pConv, .Item(i).SubItems(INDEX_WINSOCK_ID)
+                SendSingle p_PREFIX & "[" & pUser & " whispers]: " & pConv, .Item(i).SubItems(INDEX_WINSOCK_ID)
             End If
             Exit For
         End If

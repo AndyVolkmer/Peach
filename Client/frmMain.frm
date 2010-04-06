@@ -334,12 +334,8 @@ FSocket.GetData GetMessage
 array1 = Split(GetMessage, "#")
 
 Select Case array1(0)
-    Case "!acceptfile"
-        frmSendFile.SendF FSocket.RemoteHost
-        
-    Case "!denyfile"
-        MsgBox SF_MSG_DECILINED, vbInformation
-                
+    Case "!acceptfile": frmSendFile.SendF FSocket.RemoteHost
+    Case "!denyfile": MsgBox SF_MSG_DECILINED, vbInformation
 End Select
 End Sub
 
