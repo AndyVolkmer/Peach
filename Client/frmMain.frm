@@ -118,7 +118,7 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000C&
+      ForeColor       =   &H00000000&
       Height          =   255
       Left            =   120
       TabIndex        =   8
@@ -136,7 +136,7 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000C&
+      ForeColor       =   &H00000000&
       Height          =   255
       Left            =   120
       TabIndex        =   7
@@ -748,13 +748,13 @@ For k = 0 To UBound(p_PreArray) - 1
                     MsgBox MDI_MSG_CANT_ADD_YOU, vbInformation
                     
                 Case "MSG_ALREADY_IN_IGNORE_LIST"
-                    MsgBox StrArr(2) & MDI_MSG_ALREADY_IN_IGNORE_LIST, vbInformation
+                    MsgBox Replace(MDI_MSG_ALREADY_IN_IGNORE_LIST, "%u", StrArr(2)), vbInformation
                     
                 Case "MSG_ALREADY_IN_FRIEND_LIST"
-                    MsgBox StrArr(2) & MDI_MSG_ALREADY_IN_FRIEND_LIST, vbInformation
+                    MsgBox Replace(MDI_MSG_ALREADY_IN_FRIEND_LIST, "%u", StrArr(2)), vbInformation
                     
                 Case "MSG_ACCOUNT_NOT_EXIST"
-                    MsgBox StrArr(2) & MDI_MSG_ACCOUNT_NOT_EXIST, vbInformation
+                    MsgBox Replace(MDI_MSG_ACCOUNT_NOT_EXIST, "%u", StrArr(2)), vbInformation
                     
                 Case Else
                     MsgBox StrArr(1), vbInformation

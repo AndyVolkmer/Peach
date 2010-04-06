@@ -194,9 +194,9 @@ MDI_MSG_BANNED = "Dieses Konto wurde gebannt."
 MDI_MSG_UNLOAD = "Sind Sie sicher, dass Sie Peach schließen wollen?"
 
 MDI_MSG_CANT_ADD_YOU = "Sie können sich nicht selbst hinzufügen."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = "' ist bereits in deiner Ignorier-Liste."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = "' ist bereits in deiner Freundesliste."
-MDI_MSG_ACCOUNT_NOT_EXIST = "' existiert nicht."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' ist bereits in deiner Ignorier-Liste."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' ist bereits in deiner Freundesliste."
+MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' existiert nicht."
 
 MDI_MENU = "Menü"
 
@@ -371,9 +371,9 @@ MDI_MSG_BANNED = "This account is banned."
 MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
 MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' is already in your ignore list."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' is already in your friend list."
+MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' does not exist."
 
 MDI_MENU = "Menu"
 
@@ -549,9 +549,9 @@ MDI_MSG_BANNED = "Esta cuenta esta baneada."
 MDI_MSG_UNLOAD = "¿Esta seguro que quiere cerrar a Peach?"
 
 MDI_MSG_CANT_ADD_YOU = "No te puedes agregar a ti mismo."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = "' ya esta en tu lista de ignorados."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = "' ya esta en tu lista de amigos."
-MDI_MSG_ACCOUNT_NOT_EXIST = "' no existe."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' ya esta en tu lista de ignorados."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' ya esta en tu lista de amigos."
+MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' no existe."
 
 MDI_MENU = "Menu"
 
@@ -726,9 +726,9 @@ MDI_MSG_BANNED = "Detta konto är förbjuden."
 MDI_MSG_UNLOAD = "Är du säker på att du vill stänga Peach?"
 
 MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' is already in your ignore list."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' is already in your friend list."
+MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' does not exist."
 
 MDI_MENU = "Menu"
 
@@ -901,9 +901,9 @@ MDI_MSG_BANNED = "Questo account è vietata.."
 MDI_MSG_UNLOAD = "Sei sicuro di voler chiudere Peach?"
 
 MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' is already in your ignore list."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' is already in your friend list."
+MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' does not exist."
 
 MDI_MENU = "Menu"
 
@@ -1078,9 +1078,9 @@ MDI_MSG_BANNED = "Deze account is verboden."
 MDI_MSG_UNLOAD = "Weet u zeker dat u wilt Peach sluiten?"
 
 MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' is already in your ignore list."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' is already in your friend list."
+MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' does not exist."
 
 MDI_MENU = "Menu"
 
@@ -1260,9 +1260,9 @@ MDI_MSG_BANNED = "Profil je banovan."
 MDI_MSG_UNLOAD = "Da li si siguran da zelis da zatvoris Peach?"
 
 MDI_MSG_CANT_ADD_YOU = "Ne mozes dodati sebe."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = "' je vec u tvojoj ignor listi."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = "' je vec u tvojim prijateljima."
-MDI_MSG_ACCOUNT_NOT_EXIST = "' ne postoji."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' je vec u tvojoj ignor listi."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' je vec u tvojim prijateljima."
+MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' ne postoji."
 
 MDI_MENU = "Menu"
 
@@ -1435,9 +1435,9 @@ MDI_MSG_BANNED = "This account is banned."
 MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
 
 MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = "' is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = "' is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = "' does not exist."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' is already in your ignore list."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' is already in your friend list."
+MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' does not exist."
 
 MDI_MENU = "Menu"
 
