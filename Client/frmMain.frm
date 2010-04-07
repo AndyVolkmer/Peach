@@ -445,6 +445,9 @@ If ACC_SWITCH = "REG" Then
         .cmbSecretQuestion.Visible = False
         .cmbGender.Visible = False
         .txtSecretAnswer.Visible = False
+        .txtAccount.Visible = False
+        .txtPassword1.Visible = False
+        .txtPassword2.Visible = False
     End With
 Else
     With frmForgotPassword

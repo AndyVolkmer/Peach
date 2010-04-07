@@ -725,10 +725,10 @@ MDI_MSG_WRONG_PASSWORD = "Lösenordet är fel."
 MDI_MSG_BANNED = "Detta konto är förbjuden."
 MDI_MSG_UNLOAD = "Är du säker på att du vill stänga Peach?"
 
-MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' does not exist."
+MDI_MSG_CANT_ADD_YOU = "Du kan inte lägga till dig själv."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' finns redan på din ignorerings lista."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' finns redan på din kompis lista."
+MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' finns inte."
 
 MDI_MENU = "Menu"
 
@@ -758,7 +758,7 @@ CONFIG_MSG_PASSWORD = "Du skrev inte in ett lösenord."
 CONFIG_MSG_NUMERIC = "Du kan inte använda siffror i namnet."
 CONFIG_MSG_PORT = "Du angav inget portnummer."
 CONFIG_MSG_IP = "Du angav inte ett IP."
-CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
+CONFIG_MSG_UPDATE_FILE = "Du behöver Peach updater för att uppgradera ditt peach." & vbCrLf & vbCrLf & "Ladda ner det här: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 ' Chat form ..
 CHAT_COMMAND_SEND = "&Sänd"
@@ -773,7 +773,7 @@ SF_LABEL_KBSS = " KBytes sent, "
 
 SF_MSG_USER = "Ingen användare vald."
 SF_MSG_FILE = "Ingen fil vald."
-SF_MSG_INCOMMING_FILE = "You are receiving '%f' from '%u'. Do you want to accept?"
+SF_MSG_INCOMMING_FILE = "Du har tagit emot '%f' från '%u'. Vill du acceptera?"
 SF_MSG_DECILINED = "Filöverföringen var nekad."
 
 SF_COMMAND_BROWSE = "&Sök .."
@@ -784,7 +784,7 @@ SF2_COMMAND_OPEN_FILE = "&Öppna fil map"
 LANG_COMMAND_ENTER = "&Öppna"
 LANG_LABEL_SELLANG = "Välj språk:"
 
-LANG_QUIT = "In order to change the language you need to restart Peach, do you want to do this now?"
+LANG_QUIT = "För att ändra språk måste du starta om Peach, vill du göra det nu?"
 
 SOC_FRIEND_LIST = "Kompis Lista"
 SOC_ONLINE_LIST = "Online Lista"
@@ -793,8 +793,8 @@ SOC_IGNORE_LIST = "Ignorerings Lista"
 SOC_COMMAND_ADD = "&Tillägg"
 SOC_COMMAND_REMOVE = "&Ta bort"
 SOC_COMMAND_FRIEND = "&Lägg till vänner"
-SOC_COMMAND_IGNORE = "&Ignore user"
-SOC_COMMAND_WHISPER = "&Whisper"
+SOC_COMMAND_IGNORE = "&Ignorera user"
+SOC_COMMAND_WHISPER = "&Viska"
 
 SOC_ASK_DEL = "Vill du ta bort '%u' från listan?"
 
@@ -867,7 +867,7 @@ SET_FRAME_CONNECTION = "Anslutnings inställningar"
 
 SET_CHECK_SAVE_ACCOUNT = "Spara konto"
 SET_CHECK_SAVE_PASSWORD = "Spara lösenord"
-SET_CHECK_AUTO_LOGIN = "Login automatically"
+SET_CHECK_AUTO_LOGIN = "Logga in automatiskt"
 SET_CHECK_ASK_CLOSING = "Fråga innan stäng"
 SET_CHECK_MINIMIZE = "Minimera Peach-fönstret till Aktivitetsfältet"
 
