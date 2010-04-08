@@ -489,6 +489,8 @@ For k = 0 To UBound(p_PreArray) - 1
             'If a command is used check out which
             If IsCommand Then
                 Dim Reason As String
+                Dim m As Long
+                Dim n As Long
                 
                 'Save the reason
                 For i = 2 To UBound(p_CHAT_ARRAY)
@@ -565,10 +567,7 @@ For k = 0 To UBound(p_PreArray) - 1
                     Case ".help", ".command", ".commands"
                         SendSingle GetCommands, Index
                         
-                    Case ".change", ".modify"
-                        Dim m As Long
-                        Dim n As Long
-                        
+                    Case ".change", ".modify", ".mod"
                         Select Case LCase$(p_TEXT_FIRST)
                             Case "name"
                                 properAccount = GetProperAccountName(p_TEXT_SECOND)
@@ -868,6 +867,38 @@ For k = 0 To UBound(p_PreArray) - 1
                                 properAccount = vbNullString
                             End With
                         End If
+                        
+                    Case ".delete", ".del"
+                        With frmAccountPanel.ListView1.ListItems
+                            properAccount = GetProperAccountName(p_TEXT_FIRST)
+                            
+                            For i = 1 To .Count
+                                If .Item(i).SubItems(INDEX_NAME) = properAccount Then
+                                    With frmPanel.ListView1.ListItems
+                                        For m = 1 To .Count
+                                            If .Item(m) = properAccount Then
+                                                KickUser properAccount
+                                                Exit For
+                                            End If
+                                        Next m
+                                    End With
+                                    
+                                    'If account exist delete it
+                                    If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & .Item(i)) Then
+                                        frmFriendIgnoreList.RemoveAllFriendsFromUser .Item(i).SubItems(INDEX_NAME)
+                                        frmFriendIgnoreList.RemoveAllIgnoresFromUser .Item(i).SubItems(INDEX_NAME)
+                                        
+                                        SendSingle "Successfully deleted account '" & properAccount & "' ID: " & .Item(i) & ".", Index
+                                        .Remove i
+                                    End If
+                                    Exit For
+                                Else
+                                    If i = .Count Then SendSingle "User '" & p_TEXT_FIRST & "' was not found.", Index
+                                End If
+                            Next i
+                            
+                            properAccount = vbNullString
+                        End With
                         
                     Case Else
                         SendSingle "Unknown command used. Check .help for more information about commands.", Index

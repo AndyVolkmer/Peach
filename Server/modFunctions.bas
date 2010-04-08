@@ -5,6 +5,7 @@ Global Const rPort                          As Long = 6222
 Global Const MAX_INT_VALUE                  As Long = 2147483647
 Global Const MIN_INT_VALUE                  As Long = -2147483647
 
+'Table names
 Global Const DATABASE_TABLE_ACCOUNTS        As String = "accounts"
 Global Const DATABASE_TABLE_EMOTES          As String = "emotes"
 Global Const DATABASE_TABLE_COMMANDS        As String = "commands"
@@ -213,8 +214,8 @@ Debug.Print "[" & Err.Number & "] " & Err.Description
 End Sub
 
 Public Sub UPDATE_ONLINE()
-Dim GetList As String
 Dim i       As Long
+Dim GetList As String
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
