@@ -380,7 +380,7 @@ If Switch Then
         End If
     Next i
     
-    RegisterAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, vbNullString, vbNullString, cmbGender.Text
+    RegisterAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, vbNullString, vbNullString, cmbGender.Text, vbNullString
     
 Else
     'Name can't be modified to nothing
