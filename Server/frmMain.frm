@@ -1137,19 +1137,19 @@ For k = 0 To UBound(p_PreArray) - 1
             Dim E   As String
             
             'We just bother checking if the text is longer then 5 characters
-            If Len(p_MainArray(2)) > 5 Then
+            If Len(p_MainArray(1)) > 5 Then
                 'If the text is just made of numbers we don't check
                 If IsNumeric(p_MainArray(2)) = False Then
                     'If there are letters and not just signs then check
-                    If IsAlphaCharacter(p_MainArray(2)) Then
+                    If IsAlphaCharacter(p_MainArray(1)) Then
                         
-                        For i = 1 To Len(p_MainArray(2))
-                            E = Mid$(p_MainArray(2), i, 1)
+                        For i = 1 To Len(p_MainArray(1))
+                            E = Mid$(p_MainArray(1), i, 1)
                             If UCase$(E) = E Then S1 = S1 + 1
                         Next i
                         
                         'Exit if there are more then 75% of caps
-                        If Format$(100 * S1 / Len(p_MainArray(2)), "0") > 75 And Options.CAPS_CHECK = 1 Then
+                        If Format$(100 * S1 / Len(p_MainArray(1)), "0") > 75 And Options.CAPS_CHECK = 1 Then
                             SendSingle "Message blocked. Please do not write more then 75% in caps.", Index
                             Exit Sub
                         End If
