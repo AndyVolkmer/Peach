@@ -14,6 +14,7 @@ CREATE TABLE `accounts` (
   `SecretQuestion1` varchar(255) DEFAULT '',
   `SecretAnswer1` varchar(255) DEFAULT '',
   `Gender1` varchar(10) DEFAULT '',
+  `Email1` varchar(255) DEFAULT '',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
