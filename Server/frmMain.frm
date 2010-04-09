@@ -307,7 +307,6 @@ Dim i               As Long
 Dim p_Message       As String
 Dim p_MainArray()   As String   'Whole message string is saved here and split up by # sign
 Dim p_Command       As String   'First part of main array ( always the command )
-Dim bMatch          As Boolean  'bMatch controls the login
 Dim IsMuted         As Boolean  'Mute explains itself
 
 'Get Message
@@ -586,7 +585,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                                     Else
                                                         If n = .Count Then
                                                             'Modify account in database and panel
-                                                            frmAccountPanel.ModifyAccount p_CHAT_ARRAY(3), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, .Item(i).SubItems(INDEX_GENDER)
+                                                            frmAccountPanel.ModifyAccount p_CHAT_ARRAY(3), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, .Item(i).SubItems(INDEX_GENDER), .Item(i).SubItems(INDEX_EMAIL)
                                                             
                                                             'Send feedback to person who changed name
                                                             SendSingle "Successfully renamed '" & properAccount & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
@@ -675,7 +674,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                         For i = 1 To .Count
                                             If .Item(i).SubItems(INDEX_NAME) = properAccount Then
                                                 'Modify level for account in database
-                                                frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), p_CHAT_ARRAY(3), .Item(i), i, .Item(i).SubItems(INDEX_GENDER)
+                                                frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), p_CHAT_ARRAY(3), .Item(i), i, .Item(i).SubItems(INDEX_GENDER), .Item(i).SubItems(INDEX_EMAIL)
                                                 
                                                 'Feedback to the person who modified the level
                                                 SendSingle "Successfully changed level of '" & .Item(i).SubItems(INDEX_NAME) & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
@@ -722,7 +721,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                             For i = 1 To .Count
                                                 If .Item(i).SubItems(INDEX_NAME) = properAccount Then
                                                     'Modify gender in database and panel
-                                                    frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, pGender
+                                                    frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, pGender, .Item(i).SubItems(INDEX_EMAIL)
                                                     
                                                     'Feedback to the person who modified the gender
                                                     SendSingle "Successfully changed gender of '" & properAccount & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
@@ -757,7 +756,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                         For i = 1 To .Count
                                             If .Item(i).SubItems(INDEX_NAME) = properAccount Then
                                                 'Modify password in database and panel
-                                                frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), p_CHAT_ARRAY(3), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, .Item(i).SubItems(INDEX_GENDER)
+                                                frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), p_CHAT_ARRAY(3), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, .Item(i).SubItems(INDEX_GENDER), .Item(i).SubItems(INDEX_EMAIL)
                                                 
                                                 'Feedback to the person who modified the password
                                                 SendSingle "Successfully changed password of '" & properAccount & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
@@ -783,6 +782,40 @@ For k = 0 To UBound(p_PreArray) - 1
                                     SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Password].", Index
                                 End If
                                 
+                            Case "email"
+                                If UBound(p_CHAT_ARRAY) > 2 Then
+                                    With frmAccountPanel.ListView1.ListItems
+                                        properAccount = GetProperAccountName(p_TEXT_SECOND)
+                                        
+                                        For i = 1 To .Count
+                                            If .Item(i).SubItems(INDEX_NAME) = properAccount Then
+                                                'Modify email in database and panel
+                                                frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, .Item(i).SubItems(INDEX_GENDER), p_CHAT_ARRAY(3)
+                                                
+                                                'Feedback to the person who modified the email
+                                                SendSingle "Successfully changed email of '" & properAccount & "' to ' " & p_CHAT_ARRAY(3) & " '.", Index
+                                                
+                                                'Notify user that password got changed
+                                                With frmPanel.ListView1.ListItems
+                                                    For n = 1 To .Count
+                                                        If .Item(n) = properAccount Then
+                                                            SendSingle GetAccountByIndex(Index) & " changed your email to ' " & p_CHAT_ARRAY(3) & " '.", .Item(n).SubItems(INDEX_WINSOCK_ID)
+                                                            Exit For
+                                                        End If
+                                                    Next n
+                                                End With
+                                                Exit For
+                                            Else
+                                                If i = .Count Then SendSingle "Account '" & p_TEXT_SECOND & "' not found.", Index
+                                            End If
+                                        Next i
+                                        
+                                        properAccount = vbNullString
+                                    End With
+                                Else
+                                    SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Email].", Index
+                                End If
+                                
                             Case Else
                                 SendSingle _
                                     vbCrLf & Space(2) & _
@@ -794,7 +827,9 @@ For k = 0 To UBound(p_PreArray) - 1
                                     vbCrLf & Space(2) & _
                                 p_CHAT_ARRAY(0) & " gender [Name] [Gender]" & _
                                     vbCrLf & Space(2) & _
-                                p_CHAT_ARRAY(0) & " password [Name] [Password]", Index
+                                p_CHAT_ARRAY(0) & " password [Name] [Password]" & _
+                                    vbCrLf & Space(2) & _
+                                p_CHAT_ARRAY(0) & " email [Name] [Email]", Index
                                 
                         End Select
                         
@@ -1261,17 +1296,12 @@ GetServerInformation = _
 End Function
 
 Private Sub Whisper(pUser As String, pTarget As String, pConv As String, Index As Integer)
-Dim i        As Long
-Dim p_PREFIX As String
+Dim i As Long
 
 'Check if user is whispering itself
 If pUser = pTarget Then
     SendSingle "You can't whisper yourself.", Index
     Exit Sub
-End If
-
-If GetLevel(pUser) > 0 Then
-    p_PREFIX = "[GM]"
 End If
 
 With frmPanel.ListView1.ListItems
@@ -1282,7 +1312,7 @@ With frmPanel.ListView1.ListItems
                 SendSingle pTarget & " is ignoring you.", Index
             Else
                 SendSingle "[You whisper to " & pTarget & "]: " & pConv, Index
-                SendSingle p_PREFIX & "[" & pUser & " whispers]: " & pConv, .Item(i).SubItems(INDEX_WINSOCK_ID)
+                SendSingle GetGMFlag(pUser) & "[" & pUser & " whispers]: " & pConv, .Item(i).SubItems(INDEX_WINSOCK_ID)
             End If
             Exit For
         End If
@@ -1384,7 +1414,7 @@ With frmAccountPanel.ListView1.ListItems
             End If
             
             'Ban account in database
-            frmAccountPanel.ModifyAccount Account, .Item(i).SubItems(INDEX_PASSWORD), Ban, .Item(i).SubItems(INDEX_LEVEL), .Item(i), .Item(i).Index, .Item(i).SubItems(INDEX_GENDER)
+            frmAccountPanel.ModifyAccount Account, .Item(i).SubItems(INDEX_PASSWORD), Ban, .Item(i).SubItems(INDEX_LEVEL), .Item(i), .Item(i).Index, .Item(i).SubItems(INDEX_GENDER), .Item(i).SubItems(INDEX_EMAIL)
             
             'Announce the action
             If LenB(Reason) = 0 Then

@@ -397,16 +397,16 @@ Else
         Exit Sub
     End If
     
-    ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index, cmbGender.Text
+    ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index, cmbGender.Text, vbNullString
     
 End If
 SetData ListView1.SelectedItem
 DoButtons False
 End Sub
 
-Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Long, pLevel As String, MOD_ID As Long, LST_ID As Long, pGender As String)
+Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Long, pLevel As String, MOD_ID As Long, LST_ID As Long, pGender As String, pEmail As String)
 'Only modify account if it succesfully updated in the database
-If pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBanned & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "' WHERE ID = " & MOD_ID) Then
+If pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBanned & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "', Email1 ='" & pEmail & "' WHERE ID = " & MOD_ID) Then
     'Modify listview values
     With ListView1.ListItems.Item(LST_ID)
         .SubItems(INDEX_NAME) = pName
@@ -414,6 +414,7 @@ If pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & p
         .SubItems(INDEX_BANNED) = pBanned
         .SubItems(INDEX_LEVEL) = pLevel
         .SubItems(INDEX_GENDER) = pGender
+        .SubItems(INDEX_EMAIL) = pEmail
     End With
 End If
 End Sub

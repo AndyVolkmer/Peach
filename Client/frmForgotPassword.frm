@@ -109,7 +109,7 @@ Private Sub cmdRequest_Click()
 If cmdRequest.Caption = FP_COMMAND_REQUEST Then
     'Can't request if email empty
     If LenB(txtEmail) = 0 Then
-        MsgBox "REG_MSG_EMAIL_EMPTY", vbInformation
+        MsgBox REG_MSG_EMAIL_EMPTY, vbInformation
         txtEmail.SetFocus
         Exit Sub
     End If
