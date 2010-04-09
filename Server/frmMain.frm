@@ -1443,7 +1443,7 @@ Dim i As Long
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(INDEX_NAME)) = LCase(Account) Then
-            SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " Name: " & .Item(i).SubItems(INDEX_NAME) & vbCrLf & " Password: " & .Item(i).SubItems(INDEX_PASSWORD) & vbCrLf & " Registration Time: " & .Item(i).SubItems(INDEX_TIME) & vbCrLf & " Registration Date: " & .Item(i).SubItems(INDEX_DATE) & vbCrLf & " Banned: " & .Item(i).SubItems(INDEX_BANNED) & vbCrLf & " Level: " & .Item(i).SubItems(INDEX_LEVEL), pIndex
+            SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " ID: " & .Item(i) & vbCrLf & " Password: " & .Item(i).SubItems(INDEX_PASSWORD) & vbCrLf & " Registration Time: " & .Item(i).SubItems(INDEX_TIME) & vbCrLf & " Registration Date: " & .Item(i).SubItems(INDEX_DATE) & vbCrLf & " Banned: " & .Item(i).SubItems(INDEX_BANNED) & vbCrLf & " Level: " & .Item(i).SubItems(INDEX_LEVEL) & vbCrLf & " Gender: " & .Item(i).SubItems(INDEX_GENDER) & vbCrLf & " Email: " & .Item(i).SubItems(INDEX_EMAIL), pIndex
             Exit For
         Else
             If i = .Count Then
