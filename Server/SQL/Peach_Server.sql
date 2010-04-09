@@ -40,6 +40,7 @@ INSERT INTO `commands` VALUES ('.change name \'Oldname\' \'Newname', 'Renames \'
 INSERT INTO `commands` VALUES ('.change password \'Name\' \'Password\'', 'Changes the \'Password\' of \'Name\'.');
 INSERT INTO `commands` VALUES ('.clear \'Name\'', 'Clears the chatbox of \'Name\'.');
 INSERT INTO `commands` VALUES ('.delete \'Name\'', 'Deletes \'Name\'.');
+INSERT INTO `commands` VALUES ('.gm [on / off]', 'Enables / Disables the gm flag in chat.');
 INSERT INTO `commands` VALUES ('.help / .command', 'Shows a list of all avaible commands.');
 INSERT INTO `commands` VALUES ('.kick \'Name\'', 'Disconnectes the user with \'Name\' from server.');
 INSERT INTO `commands` VALUES ('.mute \'Name\' [Reason]', 'Mutes the user with \'Name\' permanently.');

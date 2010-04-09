@@ -8,7 +8,6 @@ Object={BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0; TABCTL32.OCX
 Form=frmChat.frm
 Form=frmSendFile.frm
 Form=frmLanguage.frm
-Form=frmAbout.frm
 Form=frmSendFile2.frm
 Form=frmRegistration.frm
 Module=modEncrypt; modEncrypt.bas
