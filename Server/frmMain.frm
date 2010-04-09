@@ -266,9 +266,9 @@ With frmPanel.ListView1.ListItems
         .Item(i).SubItems(INDEX_IP) = Winsock1(j).RemoteHostIP
     End If
     .Item(i).SubItems(INDEX_WINSOCK_ID) = j
-    .Item(i).SubItems(INDEX_LAST_MESSAGE) = vbNullString
     .Item(i).SubItems(INDEX_MUTED) = "0"
     .Item(i).SubItems(INDEX_LOGIN_TIME) = Format$(Time, "hh:mm:ss")
+    .Item(i).SubItems(INDEX_GM_FLAG) = "0"
 End With
 
 UPDATE_STATUS_BAR
@@ -506,7 +506,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             SendSingle "!split_text#" & GetOnlineList, Index
                             
                         Else
-                            SendSingle "Incorrect Syntax, use the following format .show [accounts, onliners].", Index
+                            SendSingle "Incorrect syntax, use the following format .show [accounts, onliners].", Index
                             
                         End If
                         
@@ -561,7 +561,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         If LenB(p_ANN_MSG) = 0 Then
                             SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & " [Text].", Index
                         Else
-                            SendMessage "[GM][" & GetAccountByIndex(Index) & " announces]: " & p_ANN_MSG
+                            SendMessage GetGMFlag(GetAccountByIndex(Index)) & "[" & GetAccountByIndex(Index) & " announces]: " & p_ANN_MSG
                         End If
                         
                     Case ".help", ".command", ".commands"
@@ -830,7 +830,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                     
                                 Case Else
                                     If LenB(p_TEXT_FIRST) = 0 Then
-                                        SendSingle "Incorrect Syntax. Use the following format .reload Table.", Index
+                                        SendSingle "Incorrect syntax. Use the following format .reload Table.", Index
                                     Else
                                         SendSingle "This table does not exist.", Index
                                     End If
@@ -840,7 +840,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         
                     Case ".clear"
                         If LenB(p_TEXT_FIRST) = 0 Then
-                            SendSingle "Incorrect Syntax. Use the following format .clear [User]", Index
+                            SendSingle "Incorrect syntax. Use the following format .clear [User]", Index
                         Else
                             If LCase$(p_TEXT_FIRST) = "this" Or LCase$(p_TEXT_FIRST) = "me" Then
                                 SendSingle "!clear#", Index
@@ -893,11 +893,44 @@ For k = 0 To UBound(p_PreArray) - 1
                                     End If
                                     Exit For
                                 Else
-                                    If i = .Count Then SendSingle "User '" & p_TEXT_FIRST & "' was not found.", Index
+                                    If i = .Count Then
+                                        If LenB(properAccount) = 0 Then
+                                            SendSingle "Incorrect syntax. Use the following format .delete [Account]", Index
+                                        Else
+                                            SendSingle "User '" & p_TEXT_FIRST & "' was not found.", Index
+                                        End If
+                                    End If
                                 End If
                             Next i
                             
                             properAccount = vbNullString
+                        End With
+                        
+                    Case ".gm"
+                        With frmPanel.ListView1.ListItems
+                            Select Case LCase$(p_TEXT_FIRST)
+                                Case "on"
+                                    For i = 1 To .Count
+                                        If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
+                                            .Item(i).SubItems(INDEX_GM_FLAG) = "1"
+                                            SendSingle "Enabled [GM] flag. Use .gm off to disable.", Index
+                                            Exit For
+                                        End If
+                                    Next i
+                                    
+                                Case "off"
+                                    For i = 1 To .Count
+                                        If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
+                                            .Item(i).SubItems(INDEX_GM_FLAG) = "0"
+                                            SendSingle "Disabled [GM] flag. Use .gm on to enable.", Index
+                                            Exit For
+                                        End If
+                                    Next i
+                                    
+                                Case Else
+                                    SendSingle "Incorrect syntax. Use the following format .gm [on / off].", Index
+                                    
+                            End Select
                         End With
                         
                     Case Else
@@ -1096,14 +1129,8 @@ For k = 0 To UBound(p_PreArray) - 1
                 End If
             End If
             
-            Dim p_PREFIX As String
-            
-            If GetLevel(GetAccountByIndex(Index)) > 0 Then
-                p_PREFIX = "[GM]"
-            End If
-            
             'Send Message and print in chat
-            SendProtectedMessage GetAccountByIndex(Index), p_PREFIX & "[" & GetAccountByIndex(Index) & "]: " & p_MainArray(1)
+            SendProtectedMessage GetAccountByIndex(Index), GetGMFlag(GetAccountByIndex(Index)) & "[" & GetAccountByIndex(Index) & "]: " & p_MainArray(1)
             
             'Set last message
             SetLastMessage GetAccountByIndex(Index), p_MainArray(1)
@@ -1513,6 +1540,19 @@ With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(INDEX_WINSOCK_ID) = pIndex Then
             GetAccountByIndex = .Item(i)
+            Exit For
+        End If
+    Next i
+End With
+End Function
+
+Private Function GetGMFlag(uName As String) As String
+Dim i As Long
+
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i) = uName Then
+            If .Item(i).SubItems(INDEX_GM_FLAG) = "1" Then GetGMFlag = "[GM]"
             Exit For
         End If
     Next i

@@ -43,7 +43,7 @@ Begin VB.Form frmPanel
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
       Appearance      =   1
-      NumItems        =   6
+      NumItems        =   7
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "Name"
          Object.Width           =   2540
@@ -71,6 +71,11 @@ Begin VB.Form frmPanel
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   5
          Text            =   "Login Time"
+         Object.Width           =   2540
+      EndProperty
+      BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   6
+         Text            =   "GM Flag"
          Object.Width           =   2540
       EndProperty
    End

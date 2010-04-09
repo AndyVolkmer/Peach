@@ -274,7 +274,7 @@ Else
                             End If
                         Next j
                     End With
-                                        
+                    
                     PopupMenu UserPop
                     Exit For
                 End If
@@ -467,6 +467,7 @@ If P1 < P2 Then GetWord = Mid$(Rich.Text, P1, P2 - P1 + 1)
 End Function
 
 Private Function RemoveSign(ByRef Test As String) As Long
+On Error GoTo leaveUNEXPECTED
 Dim Last As Long
     Last = Asc(Right$(Test, 1))
 
@@ -474,9 +475,12 @@ If Sign(Last) = 1 Then
     Test = Left$(Test, Len(Test) - 1)
     RemoveSign = 1
 End If
+Exit Function
+leaveUNEXPECTED:
 End Function
 
 Private Function RemoveBrackets(Test As String) As Long
+On Error GoTo leaveUNEXP
 If Left$(Test, 1) = Chr$(40) Then
     If Right(Test, 1) = Chr$(41) Then
         Test = Mid$(Test, 2, Len(Test) - 2)
@@ -497,6 +501,8 @@ If Left$(Test, 1) = Chr$(39) Then
         RemoveBrackets = 1
     End If
 End If
+Exit Function
+leaveUNEXP:
 End Function
 
 Private Function IsUrlOrMail(Test As String) As Long
