@@ -9,6 +9,7 @@ Begin VB.MDIForm frmContainer
    ClientWidth     =   7395
    Icon            =   "frmContainer.frx":0000
    LinkTopic       =   "MDIForm1"
+   LockControls    =   -1  'True
    ScrollBars      =   0   'False
    Begin VB.PictureBox Picture1 
       Align           =   1  'Align Top

@@ -154,8 +154,8 @@ Dim SIGN_STRING     As String
 Dim SIGN_ARRAY()    As String
 Dim i               As Long
 
-SIGN_STRING = " 1F.1F*1F#1F{1F}1F,1F(1F)1F&1F!1F@1F?1F/1F¬1F=1F<1F>1F[1F]1F'1F¿1Fº1Fª1F\1F|1F~1F´1F`1F+1F-1F^1F_1F·1F€"
-SIGN_ARRAY = Split(SIGN_STRING, "1F")
+SIGN_STRING = " o.o*o#o{o}o,o(o)o&o!o@o?o/o¬o=o<o>o[o]o'o¿oºoªo\o|o~o´o`o+o-o^o_o·o€o1o2o3o4o5o6o7o8o9o0o" & Chr(34)
+SIGN_ARRAY = Split(SIGN_STRING, "o")
 
 For i = LBound(SIGN_ARRAY) To UBound(SIGN_ARRAY)
     If InStr(1, pString, SIGN_ARRAY(i)) <> 0 Then

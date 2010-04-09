@@ -49,7 +49,7 @@ Begin VB.Form frmForgotPassword
       Visible         =   0   'False
       Width           =   3015
    End
-   Begin VB.TextBox txtAccount 
+   Begin VB.TextBox txtEmail 
       Height          =   285
       Left            =   240
       TabIndex        =   2
@@ -66,7 +66,7 @@ Begin VB.Form frmForgotPassword
       Visible         =   0   'False
       Width           =   3255
       Begin VB.Label lblSecretAnswer 
-         Caption         =   " Secret Answer:"
+         Caption         =   " Secret Answer"
          Height          =   255
          Left            =   120
          TabIndex        =   6
@@ -74,15 +74,15 @@ Begin VB.Form frmForgotPassword
          Width           =   3015
       End
       Begin VB.Label lblSecretQuestion 
-         Caption         =   " Secret Question:"
+         Caption         =   " Secret Question"
          Height          =   255
          Left            =   120
          TabIndex        =   4
          Top             =   960
          Width           =   2895
       End
-      Begin VB.Label lblAccount 
-         Caption         =   " Enter your account name:"
+      Begin VB.Label lblEmail 
+         Caption         =   " Enter your email adress"
          Height          =   255
          Left            =   120
          TabIndex        =   1
@@ -107,10 +107,10 @@ Option Explicit
 
 Private Sub cmdRequest_Click()
 If cmdRequest.Caption = FP_COMMAND_REQUEST Then
-    'Can't request if account empty
-    If LenB(txtAccount) = 0 Then
-        MsgBox REG_MSG_ACCOUNT_EMPTY, vbInformation
-        txtAccount.SetFocus
+    'Can't request if email empty
+    If LenB(txtEmail) = 0 Then
+        MsgBox "REG_MSG_EMAIL_EMPTY", vbInformation
+        txtEmail.SetFocus
         Exit Sub
     End If
     
@@ -120,15 +120,8 @@ If cmdRequest.Caption = FP_COMMAND_REQUEST Then
         txtSecretAnswer.SetFocus
         Exit Sub
     End If
-
-    'Can't request if account invalid
-    If IsInvalid(txtAccount) Then
-        MsgBox REG_MSG_ACCOUNT_INVALID, vbInformation
-        txtAccount.SetFocus
-        Exit Sub
-    End If
     
-    frmMain.RegSock.SendData "!request_password#" & Trim$(txtAccount) & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#"
+    frmMain.RegSock.SendData "!request_password#" & Trim$(txtEmail) & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#"
 Else
     Unload Me
 End If
@@ -142,7 +135,7 @@ Dim SC As String
 
 Me.BackColor = SC
 Frame1.BackColor = SC
-lblAccount.BackColor = SC
+lblEmail.BackColor = SC
 lblSecretQuestion.BackColor = SC
 lblSecretAnswer.BackColor = SC
 lblStatus.BackColor = SC
@@ -150,7 +143,7 @@ End Sub
 
 Private Sub Form_Load()
 Frame1.Caption = FP_FRAME_FORGOT_PASSWORD
-lblAccount.Caption = FP_LABEL_ACCOUNT
+lblEmail.Caption = FP_LABEL_EMAIL
 lblSecretQuestion.Caption = FP_LABEL_SECRET_QUESTION
 lblSecretAnswer.Caption = FP_LABEL_SECRET_ANSWER
 cmdRequest.Caption = FP_COMMAND_REQUEST

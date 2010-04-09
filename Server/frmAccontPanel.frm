@@ -197,7 +197,7 @@ Begin VB.Form frmAccountPanel
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
       Appearance      =   1
-      NumItems        =   10
+      NumItems        =   11
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID"
          Object.Width           =   882
@@ -245,6 +245,11 @@ Begin VB.Form frmAccountPanel
       BeginProperty ColumnHeader(10) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   9
          Text            =   "Gender"
+         Object.Width           =   2540
+      EndProperty
+      BeginProperty ColumnHeader(11) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   10
+         Text            =   "Email"
          Object.Width           =   2540
       EndProperty
    End
@@ -413,7 +418,7 @@ If pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & p
 End If
 End Sub
 
-Private Sub RegisterAccount(pName As String, pPassword As String, pBanned As String, pLevel As String, pSecretQuestion As String, pSecretAnswer As String, pGender As String)
+Private Sub RegisterAccount(pName As String, pPassword As String, pBanned As String, pLevel As String, pSecretQuestion As String, pSecretAnswer As String, pGender As String, pEmail As String)
 Dim i As Long
 Dim j As Long
 
@@ -421,7 +426,7 @@ Dim j As Long
 j = pDB.GetMaxID("ID", DATABASE_TABLE_ACCOUNTS)
 
 'Only add account to list if it got executed into the database
-If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & pBanned & "', '" & pLevel & "', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "')") Then
+If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1, Email1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & pBanned & "', '" & pLevel & "', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "', '" & pEmail & "')") Then
     'Save index in variable
     i = ListView1.ListItems.Count + 1
     
@@ -437,6 +442,7 @@ If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, P
         .Item(i).SubItems(INDEX_SECRET_QUESTION) = pSecretQuestion
         .Item(i).SubItems(INDEX_SECRET_ANSWER) = pSecretAnswer
         .Item(i).SubItems(INDEX_GENDER) = pGender
+        .Item(i).SubItems(INDEX_EMAIL) = pEmail
     End With
 End If
 End Sub
@@ -524,53 +530,51 @@ Select Case pCommand
         With ListView1.ListItems
             'Check if the account already exists
             For i = 1 To .Count
-                If UCase$(array1(1)) = UCase$(.Item(i).SubItems(INDEX_NAME)) Then
-                    If RegSock(Index).State = 7 Then
-                        RegSock(Index).SendData "!nameexist#"
-                        Exit Sub
-                    End If
+                If LCase$(.Item(i).SubItems(INDEX_NAME)) = LCase$(array1(1)) Then
+                    If RegSock(Index).State = 7 Then RegSock(Index).SendData "!nameexist#"
+                    Exit Sub
+                End If
+            Next i
+            
+            'Check if the email is already used
+            For i = 1 To .Count
+                If LCase$(.Item(i).SubItems(INDEX_EMAIL)) = LCase$(array1(6)) Then
+                    If RegSock(Index).State = 7 Then RegSock(Index).SendData "!emailtaken#"
+                    Exit Sub
                 End If
             Next i
         End With
         
-        RegisterAccount array1(1), array1(2), "0", "0", array1(3), array1(4), array1(5)
+        RegisterAccount array1(1), array1(2), "0", "0", array1(3), array1(4), array1(5), array1(6)
         RegSock(Index).SendData "!done#"
         
     'Check the secret question and send password
     Case "!request_password"
         With ListView1.ListItems
             For i = 1 To .Count
-                'Check if the account exists
-                If UCase$(.Item(i).SubItems(INDEX_NAME)) = UCase$(array1(1)) Then
+                'Check if the email exists
+                If UCase$(.Item(i).SubItems(INDEX_EMAIL)) = UCase$(array1(1)) Then
                     'Check if the question chosen is the same
                     If .Item(i).SubItems(INDEX_SECRET_QUESTION) = array1(2) Then
                         'Check if the answer is the same
                         If .Item(i).SubItems(INDEX_SECRET_ANSWER) = array1(3) Then
-                            If RegSock(Index).State = 7 Then
-                                RegSock(Index).SendData "!successfull#" & .Item(i).SubItems(INDEX_PASSWORD) & ".#"
-                            End If
+                            If RegSock(Index).State = 7 Then RegSock(Index).SendData "!successfull#" & .Item(i).SubItems(INDEX_PASSWORD) & "#" & .Item(i).SubItems(INDEX_NAME) & "#"
                         Else
-                            If RegSock(Index).State = 7 Then
-                                RegSock(Index).SendData "!error_fp#"
-                            End If
+                            If RegSock(Index).State = 7 Then RegSock(Index).SendData "!error_fp#"
                         End If
                     Else
-                        If RegSock(Index).State = 7 Then
-                            RegSock(Index).SendData "!error_fp#"
-                        End If
+                        If RegSock(Index).State = 7 Then RegSock(Index).SendData "!error_fp#"
                     End If
+                    Exit For
                 Else
-                    If i = .Count Then
-                        If RegSock(Index).State = 7 Then
-                            RegSock(Index).SendData "!account_not_exist#"
-                        End If
-                    End If
+                    If i = .Count Then If RegSock(Index).State = 7 Then RegSock(Index).SendData "!email_not_exist#"
                 End If
             Next i
         End With
+        
 End Select
 Exit Sub
 
 HandleError:
-    RegSock(Index).SendData "!error#"
+    If RegSock(Index).State = 7 Then RegSock(Index).SendData "!error#"
 End Sub

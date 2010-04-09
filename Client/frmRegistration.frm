@@ -3,7 +3,7 @@ Begin VB.Form frmCreateAccount
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   1  'Fixed Single
    Caption         =   " Peach - Registration"
-   ClientHeight    =   4950
+   ClientHeight    =   5685
    ClientLeft      =   45
    ClientTop       =   435
    ClientWidth     =   3870
@@ -18,18 +18,25 @@ Begin VB.Form frmCreateAccount
    EndProperty
    Icon            =   "frmRegistration.frx":0000
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4950
+   ScaleHeight     =   5685
    ScaleWidth      =   3870
    StartUpPosition =   1  'CenterOwner
+   Begin VB.TextBox txtEmail 
+      Height          =   285
+      Left            =   240
+      TabIndex        =   6
+      Top             =   3840
+      Visible         =   0   'False
+      Width           =   3255
+   End
    Begin VB.ComboBox cmbGender 
       Height          =   315
       Left            =   240
       Style           =   2  'Dropdown List
-      TabIndex        =   16
-      Top             =   3840
+      TabIndex        =   7
+      Top             =   4440
       Visible         =   0   'False
       Width           =   1935
    End
@@ -122,8 +129,8 @@ Begin VB.Form frmCreateAccount
       EndProperty
       Height          =   375
       Left            =   120
-      TabIndex        =   6
-      Top             =   4440
+      TabIndex        =   8
+      Top             =   5160
       Visible         =   0   'False
       Width           =   1815
    End
@@ -141,8 +148,8 @@ Begin VB.Form frmCreateAccount
       EndProperty
       Height          =   375
       Left            =   2040
-      TabIndex        =   7
-      Top             =   4440
+      TabIndex        =   9
+      Top             =   5160
       Visible         =   0   'False
       Width           =   1695
    End
@@ -158,7 +165,7 @@ Begin VB.Form frmCreateAccount
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   4215
+      Height          =   4815
       Left            =   120
       TabIndex        =   0
       Top             =   120
@@ -173,17 +180,35 @@ Begin VB.Form frmCreateAccount
          Left            =   2160
          ScaleHeight     =   855
          ScaleWidth      =   1215
-         TabIndex        =   12
+         TabIndex        =   14
          Top             =   1200
          Width           =   1215
          Begin VB.Label Label5 
             BackColor       =   &H00F4F4F4&
             Height          =   615
             Left            =   120
-            TabIndex        =   13
+            TabIndex        =   15
             Top             =   120
             Width           =   975
          End
+      End
+      Begin VB.Label lblEmail 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   " Email"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   120
+         TabIndex        =   19
+         Top             =   3480
+         Width           =   3255
       End
       Begin VB.Label Label9 
          BackColor       =   &H00F4F4F4&
@@ -199,13 +224,13 @@ Begin VB.Form frmCreateAccount
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   17
-         Top             =   3480
+         TabIndex        =   18
+         Top             =   4080
          Width           =   3255
       End
       Begin VB.Label Label7 
          BackColor       =   &H00F4F4F4&
-         Caption         =   " Secret question:"
+         Caption         =   " Secret question"
          BeginProperty Font 
             Name            =   "Segoe UI"
             Size            =   8.25
@@ -217,13 +242,13 @@ Begin VB.Form frmCreateAccount
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   15
+         TabIndex        =   17
          Top             =   2160
          Width           =   3255
       End
       Begin VB.Label Label8 
          BackColor       =   &H00F4F4F4&
-         Caption         =   " Secret answer:"
+         Caption         =   " Secret answer"
          BeginProperty Font 
             Name            =   "Segoe UI"
             Size            =   8.25
@@ -235,13 +260,49 @@ Begin VB.Form frmCreateAccount
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   14
+         TabIndex        =   16
          Top             =   2880
          Width           =   3255
       End
       Begin VB.Label Label3 
          BackColor       =   &H00F4F4F4&
-         Caption         =   " Confirm the Password:"
+         Caption         =   " Confirm the Password"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   120
+         TabIndex        =   12
+         Top             =   1560
+         Width           =   1935
+      End
+      Begin VB.Label Label2 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   " Password"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   120
+         TabIndex        =   11
+         Top             =   960
+         Width           =   1335
+      End
+      Begin VB.Label Label1 
+         BackColor       =   &H00F4F4F4&
+         Caption         =   " Account Name"
          BeginProperty Font 
             Name            =   "Segoe UI"
             Size            =   8.25
@@ -254,51 +315,15 @@ Begin VB.Form frmCreateAccount
          Height          =   255
          Left            =   120
          TabIndex        =   10
-         Top             =   1560
-         Width           =   1935
-      End
-      Begin VB.Label Label2 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   " Password: "
-         BeginProperty Font 
-            Name            =   "Segoe UI"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   120
-         TabIndex        =   9
-         Top             =   960
-         Width           =   1335
-      End
-      Begin VB.Label Label1 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   " Account Name: "
-         BeginProperty Font 
-            Name            =   "Segoe UI"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   120
-         TabIndex        =   8
          Top             =   360
-         Width           =   1335
+         Width           =   3255
       End
    End
    Begin VB.Label Label4 
       BackColor       =   &H00F4F4F4&
       Height          =   2055
       Left            =   240
-      TabIndex        =   11
+      TabIndex        =   13
       Top             =   120
       Width           =   3255
    End
@@ -341,7 +366,7 @@ If Len(txtAccount) < 4 Then
     Exit Sub
 End If
 
-'Check for spaces and other signs in the account.
+'Check for invalid characters in the account.
 If IsInvalid(txtAccount) Then
     MsgBox REG_MSG_ACCOUNT_INVALID, vbInformation
     txtAccount.SetFocus
@@ -378,10 +403,42 @@ If txtPassword1 <> txtPassword2 Then
     Exit Sub
 End If
 
-'Can't register if email is empty.
+'Can't register if secret answer is empty.
 If LenB(Trim$(txtSecretAnswer)) = 0 Then
     MsgBox REG_MSG_SECRET_ANSWER_EMPTY, vbInformation
     txtSecretAnswer.SetFocus
+    Exit Sub
+End If
+
+'Can't register if email is empty.
+If LenB(Trim$(txtEmail)) = 0 Then
+    MsgBox REG_MSG_EMAIL_EMPTY, vbInformation
+    txtEmail.SetFocus
+    Exit Sub
+End If
+
+'Check if email has proper format "x@x.x"
+Dim i       As Long
+Dim j       As Long
+Dim eFlag   As Boolean
+
+'Search for @ sign
+i = InStr(1, txtEmail, "@")
+If i = 0 Then eFlag = True
+
+'Search for . after @
+j = InStr(i, txtEmail, ".")
+If j = 0 Then eFlag = True
+
+'Compare if . is right after @
+If j - i < 2 Then eFlag = True
+
+'Check if the domain is not longer then 3 signs (.com / .net / .org) should be max.
+If (Len(txtEmail) - j > 3) Or (Len(txtEmail) - j < 2) Then eFlag = True
+
+If eFlag Then
+    MsgBox "REG_MSG_EMAIL_INVALID", vbInformation
+    txtEmail.SetFocus
     Exit Sub
 End If
 
@@ -391,7 +448,7 @@ If frmMain.RegSock.State <> 7 Then
     Exit Sub
 End If
 
-frmMain.RegSock.SendData "!register#" & txtAccount & "#" & txtPassword1 & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#" & cmbGender.ListIndex & "#"
+frmMain.RegSock.SendData "!register#" & Trim$(txtAccount) & "#" & txtPassword1 & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#" & cmbGender.ListIndex & "#" & Trim$(txtEmail.Text) & "#"
 End Sub
 
 Private Sub Form_Activate()

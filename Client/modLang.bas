@@ -25,7 +25,6 @@ Public MDI_MENU                         As String
 'Configuration form ..
 Public CONFIG_LABEL_ACCOUNT             As String
 Public CONFIG_LABEL_PASSWORD            As String
-Public CONFIG_LABEL_NAME                As String
 
 Public CONFIG_COMMAND_CONNECT           As String
 Public CONFIG_COMMAND_DISCONNECT        As String
@@ -133,10 +132,15 @@ Public REG_MSG_ERROR                    As String
 Public REG_MSG_ERROR_OCCURED            As String
 Public REG_MSG_LOADING                  As String
 Public REG_MSG_CONNECTION_BROKEN        As String
+
 Public REG_MSG_PASSWORD_MATCH           As String
 Public REG_MSG_PASSWORD_SHORT           As String
 Public REG_MSG_PASSWORD_EMPTY           As String
+
 Public REG_MSG_SECRET_ANSWER_EMPTY      As String
+
+Public REG_MSG_EMAIL_EMPTY              As String
+Public REG_MSG_EMAIL_TAKEN              As String
 
 Public REG_CMB_SECRET_QUESTION_0        As String
 Public REG_CMB_SECRET_QUESTION_1        As String
@@ -170,7 +174,7 @@ Public SET_COMMAND_SAVE                 As String
 Public SF2_COMMAND_OPEN_FILE            As String
 
 Public FP_FRAME_FORGOT_PASSWORD         As String
-Public FP_LABEL_ACCOUNT                 As String
+Public FP_LABEL_EMAIL                   As String
 Public FP_LABEL_SECRET_QUESTION         As String
 Public FP_LABEL_SECRET_ANSWER           As String
 Public FP_COMMAND_REQUEST               As String
@@ -178,6 +182,7 @@ Public FP_CAPTION                       As String
 
 Public FP_MSG_SUCCESSFULL               As String
 Public FP_MSG_WRONG_ANSWER              As String
+Public FP_MSG_WRONG_EMAIL               As String
 
 Public Sub SET_LANG_GERMAN()
 CURRENT_LANG = 0
@@ -200,9 +205,8 @@ MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' existiert nicht."
 
 MDI_MENU = "Menü"
 
-CONFIG_LABEL_ACCOUNT = " Konto"
-CONFIG_LABEL_PASSWORD = " Passwort"
-CONFIG_LABEL_NAME = " Name"
+CONFIG_LABEL_ACCOUNT = "Konto"
+CONFIG_LABEL_PASSWORD = "Passwort"
 
 CONFIG_COMMAND_CONNECT = "&Verbinden"
 CONFIG_COMMAND_DISCONNECT = "&Verbindung trenn."
@@ -234,9 +238,9 @@ CONFIG_MSG_UPDATE_FILE = "Sie brauchen den Peach Updater um ihr Peach zu updaten
 CHAT_COMMAND_SEND = "&Senden"
 CHAT_COMMAND_CLEAR = "&Löschen"
 
-SF_LABEL_FILENAME = " Datei Name:"
-SF_LABEL_SEND_TO = " Sende an:"
-SF_LABEL_TIME = " Verbleibende Zeit: "
+SF_LABEL_FILENAME = "Datei Name"
+SF_LABEL_SEND_TO = "Sende an"
+SF_LABEL_TIME = "Verbleibende Zeit: "
 SF_LABEL_KBS = " Kb/Sek, "
 SF_LABEL_KBSS = " KBytes gesendet, "
 
@@ -250,7 +254,7 @@ SF_COMMAND_SENDFILE = "Senden"
 SF_COMMAND_CANCEL = "Abbrechen .."
 
 LANG_COMMAND_ENTER = "&Auswählen"
-LANG_LABEL_SELLANG = "Wählen Sie Ihre Sprache aus:"
+LANG_LABEL_SELLANG = "Wählen Sie Ihre Sprache aus"
 
 LANG_QUIT = "Um die Sprache zu ändern müssen Sie Peach neu starten, möchten Sie dies jetzt tun?"
 
@@ -282,14 +286,14 @@ REG_CAPTION = "Peach - Registration"
 
 REG_FRAME_DETAIL = "Geben Sie Ihre Daten an"
 
-REG_LABEL_ACCOUNT_NAME = " Konto-Name:"
-REG_LABEL_PASSWORD = " Passwort:"
-REG_LABEL_PASSWORD_CONFIRM = " Passwort bestätigen:"
+REG_LABEL_ACCOUNT_NAME = "Konto-Name"
+REG_LABEL_PASSWORD = "Passwort"
+REG_LABEL_PASSWORD_CONFIRM = "Passwort bestätigen"
 REG_LABEL_PASSWORD_WEAK = "Das Passwort ist schwach."
 REG_LABEL_PASSWORD_NORMAL = "Das Passwort ist gut."
 REG_LABEL_PASSWORD_STRONG = "Das Passwort ist stark."
-REG_LABEL_SECRET_QUESTION = " Geheime Frage:"
-REG_LABEL_SECRET_ANSWER = " Geheime Antwort:"
+REG_LABEL_SECRET_QUESTION = "Geheime Frage"
+REG_LABEL_SECRET_ANSWER = "Geheime Antwort"
 
 REG_COMMAND_SUBMIT = "&Registrieren"
 REG_COMMAND_CLOSE = "&Schließen"
@@ -308,10 +312,13 @@ REG_MSG_PASSWORD_EMPTY = "Kein Passwort angegeben."
 
 REG_MSG_SECRET_ANSWER_EMPTY = "Keine geheime Antwort angegeben."
 
+REG_MSG_EMAIL_EMPTY = "Keine Email angegeben."
+REG_MSG_EMAIL_TAKEN = "Die Email-Adresse wird bereits genutzt, haben Sie Ihr Passwort vergessen?"
+
 REG_MSG_SUCCESSFULLY = "Ihr Konto wurde erfolgreich erstellt."
 REG_MSG_ERROR = "Ein Fehler ist aufgetreten bitte versuchen Sie es später nochmal."
 REG_MSG_ERROR_OCCURED = "Fehler aufgetreten ..."
-REG_MSG_LOADING = " Lädt .."
+REG_MSG_LOADING = "Lädt .."
 REG_MSG_CONNECTION_BROKEN = "Die Verbindung wurde unterbrochen bitte versuchen Sie es später nochmal."
 
 REG_CMB_SECRET_QUESTION_0 = "Wie heißt Ihr Haustier?"
@@ -321,13 +328,13 @@ REG_CMB_SECRET_QUESTION_3 = "Ihr Lieblings-Spiel?"
 REG_CMB_SECRET_QUESTION_4 = "Ihr Lieblings-Sänger?"
 REG_CMB_SECRET_QUESTION_5 = "Geburtsort Ihrer Mutter?"
 
-REG_LABEL_GENDER = " Geschlecht:"
+REG_LABEL_GENDER = "Geschlecht"
 
 REG_CMB_GENDER_MALE = "Männlich"
 REG_CMB_GENDER_FEMALE = "Weiblich"
 
-SET_LABEL_COLOR = "Jetzige Farbe:"
-SET_LABEL_FONT = "Schriftart:"
+SET_LABEL_COLOR = "Jetzige Farbe"
+SET_LABEL_FONT = "Schriftart"
 
 SET_FRAME_STYLE = "Stil"
 SET_FRAME_OPTIONS = "Optionen"
@@ -345,14 +352,15 @@ SET_COMMAND_SAVE = "&Speichern"
 SF2_COMMAND_OPEN_FILE = "&Datei Ordner öffnen"
 
 FP_FRAME_FORGOT_PASSWORD = "Passwort vergessen"
-FP_LABEL_ACCOUNT = " Gebe deinen Konto-Namen ein:"
-FP_LABEL_SECRET_QUESTION = " Geheime Frage:"
-FP_LABEL_SECRET_ANSWER = " Geheime Antwort:"
+FP_LABEL_EMAIL = "Gebe deine Email ein"
+FP_LABEL_SECRET_QUESTION = "Geheime Frage"
+FP_LABEL_SECRET_ANSWER = "Geheime Antwort"
 FP_COMMAND_REQUEST = "&Abfragen"
 FP_CAPTION = "Peach - Passwort vergessen"
 
-FP_MSG_SUCCESSFULL = "Ihr Passwort lautet "
+FP_MSG_SUCCESSFULL = "Ihr Account-Name lautet '%u'." & vbCrLf & "Ihr Passwort lautet '%p'."
 FP_MSG_WRONG_ANSWER = "Die Antwort ist falsch."
+FP_MSG_WRONG_EMAIL = "Die angegebene Email-Adresse konnte nicht gefunden werden."
 End Sub
 
 Public Sub SET_LANG_ENGLISH()
@@ -378,9 +386,8 @@ MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' does not exist."
 MDI_MENU = "Menu"
 
 'Configuration form ..
-CONFIG_LABEL_ACCOUNT = " Account"
-CONFIG_LABEL_PASSWORD = " Password"
-CONFIG_LABEL_NAME = " Name"
+CONFIG_LABEL_ACCOUNT = "Account"
+CONFIG_LABEL_PASSWORD = "Password"
 
 CONFIG_COMMAND_CONNECT = "&Connect"
 CONFIG_COMMAND_DISCONNECT = "&Disconnect"
@@ -414,8 +421,8 @@ CHAT_COMMAND_SEND = "&Send"
 CHAT_COMMAND_CLEAR = "&Clear"
 
 ' Send File form ..
-SF_LABEL_FILENAME = " File Name:"
-SF_LABEL_SEND_TO = "Send to:"
+SF_LABEL_FILENAME = "File Name"
+SF_LABEL_SEND_TO = "Send to"
 SF_LABEL_TIME = " Time left: "
 SF_LABEL_KBS = " Kb/Sec, "
 SF_LABEL_KBSS = " KBytes sent, "
@@ -430,7 +437,7 @@ SF_COMMAND_SENDFILE = "Send"
 SF_COMMAND_CANCEL = "Cancel .."
 
 LANG_COMMAND_ENTER = "&Select"
-LANG_LABEL_SELLANG = "Select your language:"
+LANG_LABEL_SELLANG = "Select your language"
 
 LANG_QUIT = "In order to change the language you need to restart Peach, do you want to do this now?"
 
@@ -462,14 +469,14 @@ REG_CAPTION = "Peach - Registration"
 
 REG_FRAME_DETAIL = "Enter your details"
 
-REG_LABEL_ACCOUNT_NAME = " Account Name:"
-REG_LABEL_PASSWORD = " Password:"
-REG_LABEL_PASSWORD_CONFIRM = " Confirm the Password:"
+REG_LABEL_ACCOUNT_NAME = "Account Name"
+REG_LABEL_PASSWORD = "Password"
+REG_LABEL_PASSWORD_CONFIRM = "Confirm the Password"
 REG_LABEL_PASSWORD_WEAK = "The password is weak."
 REG_LABEL_PASSWORD_NORMAL = "The password is normal."
 REG_LABEL_PASSWORD_STRONG = "The password is strong."
-REG_LABEL_SECRET_QUESTION = "Secret question:"
-REG_LABEL_SECRET_ANSWER = "Secret answer:"
+REG_LABEL_SECRET_QUESTION = "Secret question"
+REG_LABEL_SECRET_ANSWER = "Secret answer"
 
 REG_COMMAND_SUBMIT = "&Submit"
 REG_COMMAND_CLOSE = "&Close"
@@ -488,6 +495,9 @@ REG_MSG_PASSWORD_EMPTY = "No Password entered."
 
 REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
 
+REG_MSG_EMAIL_EMPTY = "No email adress entered."
+REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgot your password?"
+
 REG_MSG_SUCCESSFULLY = "The account was successfully registered."
 REG_MSG_ERROR = "An error has occured please try later again."
 REG_MSG_ERROR_OCCURED = "Error has occured ..."
@@ -501,13 +511,13 @@ REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
 REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
 REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
 
-REG_LABEL_GENDER = " Gender:"
+REG_LABEL_GENDER = "Gender"
 
 REG_CMB_GENDER_MALE = "Male"
 REG_CMB_GENDER_FEMALE = "Female"
 
-SET_LABEL_COLOR = "Current Color:"
-SET_LABEL_FONT = "Font:"
+SET_LABEL_COLOR = "Current Color"
+SET_LABEL_FONT = "Font"
 
 SET_FRAME_STYLE = "Style"
 SET_FRAME_OPTIONS = "Options"
@@ -525,14 +535,15 @@ SET_COMMAND_SAVE = "&Save"
 SF2_COMMAND_OPEN_FILE = "&Open File Folder"
 
 FP_FRAME_FORGOT_PASSWORD = "Forgot Password"
-FP_LABEL_ACCOUNT = " Enter your account name:"
-FP_LABEL_SECRET_QUESTION = " Secret Question:"
-FP_LABEL_SECRET_ANSWER = " Secret Answer:"
+FP_LABEL_EMAIL = "Enter your email adress"
+FP_LABEL_SECRET_QUESTION = "Secret Question"
+FP_LABEL_SECRET_ANSWER = "Secret Answer"
 FP_COMMAND_REQUEST = "&Request"
 FP_CAPTION = "Peach - Forgot Password"
 
-FP_MSG_SUCCESSFULL = "Your password is "
+FP_MSG_SUCCESSFULL = "Your account name is '%u'." & vbCrLf & "Your password is '%p'."
 FP_MSG_WRONG_ANSWER = "The answer is wrong."
+FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
 End Sub
 
 Public Sub SET_LANG_SPANISH()
@@ -555,9 +566,8 @@ MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' no existe."
 
 MDI_MENU = "Menu"
 
-CONFIG_LABEL_ACCOUNT = " Cuenta"
-CONFIG_LABEL_PASSWORD = " Contraseña"
-CONFIG_LABEL_NAME = " Nombre"
+CONFIG_LABEL_ACCOUNT = "Cuenta"
+CONFIG_LABEL_PASSWORD = "Contraseña"
 
 CONFIG_COMMAND_CONNECT = "&Conectar"
 CONFIG_COMMAND_DISCONNECT = "&Desconectar"
@@ -589,8 +599,8 @@ CONFIG_MSG_UPDATE_FILE = "Necesitas el Peach Updater para actualizar tu Peach." 
 CHAT_COMMAND_SEND = "&Enviar"
 CHAT_COMMAND_CLEAR = "&Limpiar"
 
-SF_LABEL_FILENAME = " Nombre del archivo:"
-SF_LABEL_SEND_TO = "Enviar a:"
+SF_LABEL_FILENAME = "Nombre del archivo"
+SF_LABEL_SEND_TO = "Enviar a"
 SF_LABEL_TIME = " Time left: "
 SF_LABEL_KBS = " Kb/Sec, "
 SF_LABEL_KBSS = " KBytes sent, "
@@ -605,7 +615,7 @@ SF_COMMAND_SENDFILE = "Enviar"
 SF_COMMAND_CANCEL = "Cancelar .."
 
 LANG_COMMAND_ENTER = "&Seleccionar"
-LANG_LABEL_SELLANG = "Elige tu idioma:"
+LANG_LABEL_SELLANG = "Elige tu idioma"
 
 LANG_QUIT = "¿Para cambiar el idioma tienes que reiniciar Peach, deseas hacerlo ahora?"
 
@@ -637,14 +647,14 @@ REG_CAPTION = "Peach - Registración"
 
 REG_FRAME_DETAIL = "Enter your details"
 
-REG_LABEL_ACCOUNT_NAME = " Nombre de cuenta:"
-REG_LABEL_PASSWORD = " Contraseña:"
-REG_LABEL_PASSWORD_CONFIRM = " Confirmar contraseña:"
+REG_LABEL_ACCOUNT_NAME = "Nombre de cuenta"
+REG_LABEL_PASSWORD = "Contraseña"
+REG_LABEL_PASSWORD_CONFIRM = "Confirmar contraseña"
 REG_LABEL_PASSWORD_WEAK = "La contraseña es floja."
 REG_LABEL_PASSWORD_NORMAL = "La contraseña es normal."
 REG_LABEL_PASSWORD_STRONG = "La contraseña es fuerte."
-REG_LABEL_SECRET_QUESTION = "Pregunta secreta:"
-REG_LABEL_SECRET_ANSWER = "Respuesta secreta:"
+REG_LABEL_SECRET_QUESTION = "Pregunta secreta"
+REG_LABEL_SECRET_ANSWER = "Respuesta secreta"
 
 REG_COMMAND_SUBMIT = "&Registrar"
 REG_COMMAND_CLOSE = "&Cerrar"
@@ -663,10 +673,13 @@ REG_MSG_PASSWORD_EMPTY = "No ha introducido una contraseña."
 
 REG_MSG_SECRET_ANSWER_EMPTY = "No ha introducido una respuesta secreta."
 
+REG_MSG_EMAIL_EMPTY = "No ha introducido un correo electronico."
+REG_MSG_EMAIL_TAKEN = "El correo electronico ya esta usado, ha olvidado su contraseña?"
+
 REG_MSG_SUCCESSFULLY = "La cuenta ha sido registrada con exito."
 REG_MSG_ERROR = "Un error ha occurido intenten de nuevo despues."
 REG_MSG_ERROR_OCCURED = "Error occurido ..."
-REG_MSG_LOADING = " Cargando .."
+REG_MSG_LOADING = "Cargando .."
 REG_MSG_CONNECTION_BROKEN = "La conexión se ha roto, intenten de nuevo despues."
 
 REG_CMB_SECRET_QUESTION_0 = "¿Cual es el nombre de tu mascota?"
@@ -676,13 +689,13 @@ REG_CMB_SECRET_QUESTION_3 = "¿Tu juego favorito?"
 REG_CMB_SECRET_QUESTION_4 = "¿Tu cantante favorito?"
 REG_CMB_SECRET_QUESTION_5 = "¿El lugar de nacimiento de tu madre?"
 
-REG_LABEL_GENDER = " Sexo:"
+REG_LABEL_GENDER = "Sexo"
 
 REG_CMB_GENDER_MALE = "Masculino"
 REG_CMB_GENDER_FEMALE = "Femenino"
 
-SET_LABEL_COLOR = "Color activo:"
-SET_LABEL_FONT = "Fuente:"
+SET_LABEL_COLOR = "Color activo"
+SET_LABEL_FONT = "Fuente"
 
 SET_FRAME_STYLE = "Estilo"
 SET_FRAME_OPTIONS = "Opciones"
@@ -700,14 +713,15 @@ SET_COMMAND_SAVE = "&Guardar"
 SF2_COMMAND_OPEN_FILE = "&Abrir carpeta"
 
 FP_FRAME_FORGOT_PASSWORD = "¿Ha olvidado contraseña?"
-FP_LABEL_ACCOUNT = " Introduce su nombre de cuenta:"
-FP_LABEL_SECRET_QUESTION = " Pregunta secreta:"
-FP_LABEL_SECRET_ANSWER = " Respuesta secreta:"
+FP_LABEL_EMAIL = "Introduce su correo electronico"
+FP_LABEL_SECRET_QUESTION = "Pregunta secreta"
+FP_LABEL_SECRET_ANSWER = "Respuesta secreta"
 FP_COMMAND_REQUEST = "&Solicitar"
 FP_CAPTION = "Peach - Recuperar contraseña"
 
-FP_MSG_SUCCESSFULL = "Tu contraseña es "
+FP_MSG_SUCCESSFULL = "Su nombre de cuenta es '%u'." & vbCrLf & "Su contraseña es '%p'."
 FP_MSG_WRONG_ANSWER = "La respuesta es incorrecta."
+FP_MSG_WRONG_EMAIL = "El correo electronico no se ha encontrado."
 End Sub
 
 Public Sub SET_LANG_SWEDISH()
@@ -733,9 +747,8 @@ MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' finns inte."
 MDI_MENU = "Menu"
 
 ' Config form
-CONFIG_LABEL_ACCOUNT = " Konto"
-CONFIG_LABEL_PASSWORD = " Lösenord"
-CONFIG_LABEL_NAME = " Namn"
+CONFIG_LABEL_ACCOUNT = "Konto"
+CONFIG_LABEL_PASSWORD = "Lösenord"
 
 CONFIG_COMMAND_CONNECT = "&Anslut"
 CONFIG_COMMAND_DISCONNECT = "&Frånkoppla"
@@ -765,8 +778,8 @@ CHAT_COMMAND_SEND = "&Sänd"
 CHAT_COMMAND_CLEAR = "&Rensa"
 
 ' Send file form ..
-SF_LABEL_FILENAME = " Fil Namn:"
-SF_LABEL_SEND_TO = "Skicka till:"
+SF_LABEL_FILENAME = "Fil Namn"
+SF_LABEL_SEND_TO = "Skicka till"
 SF_LABEL_TIME = " Time left: "
 SF_LABEL_KBS = " Kb/Sec, "
 SF_LABEL_KBSS = " KBytes sent, "
@@ -782,7 +795,7 @@ SF_COMMAND_SENDFILE = "Sänd"
 SF2_COMMAND_OPEN_FILE = "&Öppna fil map"
 
 LANG_COMMAND_ENTER = "&Öppna"
-LANG_LABEL_SELLANG = "Välj språk:"
+LANG_LABEL_SELLANG = "Välj språk"
 
 LANG_QUIT = "För att ändra språk måste du starta om Peach, vill du göra det nu?"
 
@@ -814,14 +827,14 @@ REG_CAPTION = "Peach - Registrering"
 
 REG_FRAME_DETAIL = "Ange dina detaljer"
 
-REG_LABEL_ACCOUNT_NAME = " Användar Namn:"
-REG_LABEL_PASSWORD = " Lösenord:"
-REG_LABEL_PASSWORD_CONFIRM = " Bekräfta lösenord:"
+REG_LABEL_ACCOUNT_NAME = "Användar Namn"
+REG_LABEL_PASSWORD = "Lösenord"
+REG_LABEL_PASSWORD_CONFIRM = "Bekräfta lösenord"
 REG_LABEL_PASSWORD_WEAK = "Lösenordet är lätt."
 REG_LABEL_PASSWORD_NORMAL = "Lösenordet är normalt."
 REG_LABEL_PASSWORD_STRONG = "Lösenordet är svårt."
-REG_LABEL_SECRET_QUESTION = "Säkerhetsfråga:"
-REG_LABEL_SECRET_ANSWER = "Säkerhet besvara:"
+REG_LABEL_SECRET_QUESTION = "Säkerhetsfråga"
+REG_LABEL_SECRET_ANSWER = "Säkerhet besvara"
 
 REG_COMMAND_SUBMIT = "&Acceptera"
 REG_COMMAND_CLOSE = "&Ständ"
@@ -840,10 +853,13 @@ REG_MSG_PASSWORD_EMPTY = "Inget lösenord angivet."
 
 REG_MSG_SECRET_ANSWER_EMPTY = "Inga hemliga svaret infördes."
 
+REG_MSG_EMAIL_EMPTY = "Inga hemliga email."
+REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgot your password?"
+
 REG_MSG_SUCCESSFULLY = "Kontot har skapats."
 REG_MSG_ERROR = "Ett fel har uppstått var snäll och försök igen."
 REG_MSG_ERROR_OCCURED = "Ett fel har uppstått ..."
-REG_MSG_LOADING = " Laddar .."
+REG_MSG_LOADING = "Laddar .."
 REG_MSG_CONNECTION_BROKEN = "Anslutnings fel, var snäll och försök igen."
 
 REG_CMB_SECRET_QUESTION_0 = "Vad heter ditt husdjur?"
@@ -853,13 +869,13 @@ REG_CMB_SECRET_QUESTION_3 = "Vilket är ditt favoritspel?"
 REG_CMB_SECRET_QUESTION_4 = "Vilken är din favorit sångare?"
 REG_CMB_SECRET_QUESTION_5 = "Var är den plats där din mor föddes?"
 
-REG_LABEL_GENDER = " Kön:"
+REG_LABEL_GENDER = "Kön"
 
 REG_CMB_GENDER_MALE = "Manlig"
 REG_CMB_GENDER_FEMALE = "Kvinna"
 
-SET_LABEL_COLOR = "Nuvarande färg:"
-SET_LABEL_FONT = "Textsnitt:"
+SET_LABEL_COLOR = "Nuvarande färg"
+SET_LABEL_FONT = "Textsnitt"
 
 SET_FRAME_STYLE = "Stilart"
 SET_FRAME_OPTIONS = "Alternativ"
@@ -875,14 +891,15 @@ SET_COMMAND_LANGUAGE = "&Språk"
 SET_COMMAND_SAVE = "&Spara"
 
 FP_FRAME_FORGOT_PASSWORD = "Glömt lösenord"
-FP_LABEL_ACCOUNT = " Ange ditt kontonamn:"
-FP_LABEL_SECRET_QUESTION = " Säkerhetsfråga:"
-FP_LABEL_SECRET_ANSWER = " Säkerhet besvara:"
+FP_LABEL_EMAIL = "Ange ditt email"
+FP_LABEL_SECRET_QUESTION = "Säkerhetsfråga"
+FP_LABEL_SECRET_ANSWER = "Säkerhet besvara"
 FP_COMMAND_REQUEST = "&Begära"
 FP_CAPTION = "Peach - Glömt lösenord"
 
-FP_MSG_SUCCESSFULL = "Ditt lösenord är "
+FP_MSG_SUCCESSFULL = "Your account name is '%u'." & vbCrLf & "Your password is '%p'."
 FP_MSG_WRONG_ANSWER = "Svaret är fel."
+FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
 End Sub
 
 Public Sub SET_LANG_ITALIAN()
@@ -908,9 +925,8 @@ MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' does not exist."
 MDI_MENU = "Menu"
 
 'Config form ..
-CONFIG_LABEL_ACCOUNT = " Conto"
-CONFIG_LABEL_PASSWORD = " Password"
-CONFIG_LABEL_NAME = " Nome"
+CONFIG_LABEL_ACCOUNT = "Conto"
+CONFIG_LABEL_PASSWORD = "Password"
 
 CONFIG_COMMAND_CONNECT = "&Connesso"
 CONFIG_COMMAND_DISCONNECT = "&Disconnesso"
@@ -942,8 +958,8 @@ CHAT_COMMAND_SEND = "&Invia"
 CHAT_COMMAND_CLEAR = "&Chiaro"
 
 ' Send file form ..
-SF_LABEL_FILENAME = " Nome file:"
-SF_LABEL_SEND_TO = "Send to:"
+SF_LABEL_FILENAME = "Nome file"
+SF_LABEL_SEND_TO = "Send to"
 SF_LABEL_TIME = " Time left: "
 SF_LABEL_KBS = " Kb/Sec, "
 SF_LABEL_KBSS = " KBytes sent, "
@@ -958,7 +974,7 @@ SF_COMMAND_SENDFILE = "Invia"
 SF_COMMAND_CANCEL = "Annulla .."
 
 LANG_COMMAND_ENTER = "&Apri"
-LANG_LABEL_SELLANG = "Seleziona la tua lingua:"
+LANG_LABEL_SELLANG = "Seleziona la tua lingua"
 
 LANG_QUIT = "In order to change the language you need to restart Peach, do you want to do this now?"
 
@@ -990,14 +1006,14 @@ REG_CAPTION = "Peach - Registrazione"
 
 REG_FRAME_DETAIL = "Inserisci i tuoi dati"
 
-REG_LABEL_ACCOUNT_NAME = " Nome account:"
-REG_LABEL_PASSWORD = " Password:"
-REG_LABEL_PASSWORD_CONFIRM = " Confermare la password:"
+REG_LABEL_ACCOUNT_NAME = "Nome account"
+REG_LABEL_PASSWORD = "Password"
+REG_LABEL_PASSWORD_CONFIRM = "Confermare la password"
 REG_LABEL_PASSWORD_WEAK = "La password è debole."
 REG_LABEL_PASSWORD_NORMAL = "La password è normale."
 REG_LABEL_PASSWORD_STRONG = "La password è forte."
-REG_LABEL_SECRET_QUESTION = "Domanda segreta:"
-REG_LABEL_SECRET_ANSWER = "Risposta segreta:"
+REG_LABEL_SECRET_QUESTION = "Domanda segreta"
+REG_LABEL_SECRET_ANSWER = "Risposta segreta"
 
 REG_COMMAND_SUBMIT = "&Inoltrare"
 REG_COMMAND_CLOSE = "&Chiudere"
@@ -1016,10 +1032,13 @@ REG_MSG_PASSWORD_EMPTY = "Nessuna password è stata inserita."
 
 REG_MSG_SECRET_ANSWER_EMPTY = "Risposta segreta non è stato iscritto."
 
+REG_MSG_EMAIL_EMPTY = "Email non è stato iscritto."
+REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgot your password?"
+
 REG_MSG_SUCCESSFULLY = "L'account è stato registrato con successo."
 REG_MSG_ERROR = "Un errore si è verificato per favore riprova più tardi di nuovo."
 REG_MSG_ERROR_OCCURED = "È verificato un errore ..."
-REG_MSG_LOADING = " Carico .."
+REG_MSG_LOADING = "Carico .."
 REG_MSG_CONNECTION_BROKEN = "Connessione viene interrotta per favore riprova più tardi."
 
 REG_CMB_SECRET_QUESTION_0 = "Qual è il nome del vostro animale domestico?"
@@ -1029,13 +1048,13 @@ REG_CMB_SECRET_QUESTION_3 = "Qual è il tuo gioco preferito?"
 REG_CMB_SECRET_QUESTION_4 = "Qual è il vostro cantante preferito?"
 REG_CMB_SECRET_QUESTION_5 = "Dove si trova il luogo in cui tua madre è nata?"
 
-REG_LABEL_GENDER = " Gender:"
+REG_LABEL_GENDER = "Gender"
 
 REG_CMB_GENDER_MALE = "Male"
 REG_CMB_GENDER_FEMALE = "Female"
 
-SET_LABEL_COLOR = "Colore corrente:"
-SET_LABEL_FONT = "Fonte:"
+SET_LABEL_COLOR = "Colore corrente"
+SET_LABEL_FONT = "Fonte"
 
 SET_FRAME_STYLE = "Stile"
 SET_FRAME_OPTIONS = "Opzioni"
@@ -1053,14 +1072,15 @@ SET_COMMAND_SAVE = "&Salva"
 SF2_COMMAND_OPEN_FILE = "&Aprire la cartella File"
 
 FP_FRAME_FORGOT_PASSWORD = "Dimenticato la password"
-FP_LABEL_ACCOUNT = " Inserisci il tuo nome account:"
-FP_LABEL_SECRET_QUESTION = " Domanda segreta:"
-FP_LABEL_SECRET_ANSWER = " Risposta segreta:"
+FP_LABEL_EMAIL = "Inserisci il tuo email"
+FP_LABEL_SECRET_QUESTION = "Domanda segreta"
+FP_LABEL_SECRET_ANSWER = "Risposta segreta"
 FP_COMMAND_REQUEST = "&Richiesta"
 FP_CAPTION = "Peach - Dimenticato la password"
 
-FP_MSG_SUCCESSFULL = "La password è "
+FP_MSG_SUCCESSFULL = "Your account name is '%u'." & vbCrLf & "Your password is '%p'."
 FP_MSG_WRONG_ANSWER = "La risposta è sbagliata."
+FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
 End Sub
 
 Public Sub SET_LANG_DUTCH()
@@ -1084,9 +1104,8 @@ MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' does not exist."
 
 MDI_MENU = "Menu"
 
-CONFIG_LABEL_ACCOUNT = " Account"
-CONFIG_LABEL_PASSWORD = " Wachtwoord"
-CONFIG_LABEL_NAME = " Naam"
+CONFIG_LABEL_ACCOUNT = "Account"
+CONFIG_LABEL_PASSWORD = "Wachtwoord"
 
 CONFIG_COMMAND_CONNECT = "&Verbind"
 CONFIG_COMMAND_DISCONNECT = "&Verbinding verbreken"
@@ -1116,8 +1135,8 @@ CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your 
 CHAT_COMMAND_SEND = "&Zend"
 CHAT_COMMAND_CLEAR = "&Leegmaken"
 
-SF_LABEL_FILENAME = " Bestandsnaam:"
-SF_LABEL_SEND_TO = "Stuur naar:"
+SF_LABEL_FILENAME = "Bestandsnaam"
+SF_LABEL_SEND_TO = "Stuur naar"
 SF_LABEL_TIME = " Resterende tijd: "
 SF_LABEL_KBS = " Kb/Sec, "
 SF_LABEL_KBSS = " KBytes sent, "
@@ -1132,7 +1151,7 @@ SF_COMMAND_SENDFILE = "&Stuur"
 SF_COMMAND_CANCEL = "&Annuleren .."
 
 LANG_COMMAND_ENTER = "&Openen"
-LANG_LABEL_SELLANG = "Selecteer jou taal:"
+LANG_LABEL_SELLANG = "Selecteer jou taal"
 
 LANG_QUIT = "In order to change the language you need to restart Peach, do you want to do this now?"
 
@@ -1164,14 +1183,14 @@ REG_CAPTION = "Peach - Registratie"
 
 REG_FRAME_DETAIL = "Voeg je gegevens in"
 
-REG_LABEL_ACCOUNT_NAME = " Gebruikersnaam:"
-REG_LABEL_PASSWORD = " Wachtwoord:"
-REG_LABEL_PASSWORD_CONFIRM = " Bevestig Wachtwoord:"
+REG_LABEL_ACCOUNT_NAME = "Gebruikersnaam"
+REG_LABEL_PASSWORD = "Wachtwoord"
+REG_LABEL_PASSWORD_CONFIRM = "Bevestig Wachtwoord"
 REG_LABEL_PASSWORD_WEAK = "Dit wachtwoord is zwak."
 REG_LABEL_PASSWORD_NORMAL = "Dit wachtwoord is redelijk."
 REG_LABEL_PASSWORD_STRONG = "Dit wachtwoord is goed."
-REG_LABEL_SECRET_QUESTION = "Geheime vraag:"
-REG_LABEL_SECRET_ANSWER = "Geheim antwoord:"
+REG_LABEL_SECRET_QUESTION = "Geheime vraag"
+REG_LABEL_SECRET_ANSWER = "Geheim antwoord"
 
 REG_CHECK_PASSWORD_SHOW = "Laat wachtwoord zien"
 
@@ -1190,10 +1209,13 @@ REG_MSG_PASSWORD_EMPTY = "Geen wachtwoord ingevoerd."
 
 REG_MSG_SECRET_ANSWER_EMPTY = "Geen geheim beantwoord opgenomen."
 
+REG_MSG_EMAIL_EMPTY = "Geen email opgenomen."
+REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgot your password?"
+
 REG_MSG_SUCCESSFULLY = "Account succesvol aangemaakt."
 REG_MSG_ERROR = "Er is een fout opgetreden, probeer het later opnieuw."
 REG_MSG_ERROR_OCCURED = "Fout opgetreden ..."
-REG_MSG_LOADING = " Laden.. "
+REG_MSG_LOADING = "Laden.. "
 REG_MSG_CONNECTION_BROKEN = "Verbinding verbroken."
 
 REG_CMB_SECRET_QUESTION_0 = "Wat is de naam van uw huisdier?"
@@ -1203,13 +1225,13 @@ REG_CMB_SECRET_QUESTION_3 = "Wat is je favoriete spel?"
 REG_CMB_SECRET_QUESTION_4 = "Wat is uw favoriete zanger?"
 REG_CMB_SECRET_QUESTION_5 = "Waar is de plaats waar je moeder is geboren?"
 
-REG_LABEL_GENDER = " Gender:"
+REG_LABEL_GENDER = "Gender"
 
 REG_CMB_GENDER_MALE = "Male"
 REG_CMB_GENDER_FEMALE = "Female"
 
-SET_LABEL_COLOR = "Momenteel gebruikte kleur:"
-SET_LABEL_FONT = "Doopvont:"
+SET_LABEL_COLOR = "Momenteel gebruikte kleur"
+SET_LABEL_FONT = "Doopvont"
 
 SET_FRAME_STYLE = "Stijl"
 SET_FRAME_OPTIONS = "Instellingen"
@@ -1224,7 +1246,7 @@ SET_CHECK_MINIMIZE = "Peach venster minimaliseren naar het systeemvak"
 SET_COMMAND_LANGUAGE = "&Taal"
 SET_COMMAND_SAVE = "&Opslaan"
 
-SF_LABEL_SEND_TO = "Verzenden naar:"
+SF_LABEL_SEND_TO = "Verzenden naar"
 
 SF_MSG_USER = "Geen gebruiker geselecteerd."
 SF_MSG_FILE = "Geen bestand geselecteerd."
@@ -1234,14 +1256,15 @@ SF_MSG_DECILINED = "Gegevensoverdracht geweigerd."
 SF2_COMMAND_OPEN_FILE = "&Open bestandsmap"
 
 FP_FRAME_FORGOT_PASSWORD = "Wachtwoord vergeten"
-FP_LABEL_ACCOUNT = " Voer uw accountnaam:"
-FP_LABEL_SECRET_QUESTION = " Geheime vraag:"
-FP_LABEL_SECRET_ANSWER = " Geheim antwoord:"
+FP_LABEL_EMAIL = "Voer uw email"
+FP_LABEL_SECRET_QUESTION = "Geheime vraag"
+FP_LABEL_SECRET_ANSWER = "Geheim antwoord"
 FP_COMMAND_REQUEST = "&Verzoeken"
 FP_CAPTION = "Peach - Wachtwoord vergeten"
 
-FP_MSG_SUCCESSFULL = "Uw wachtwoord is "
+FP_MSG_SUCCESSFULL = "Your account name is '%u'." & vbCrLf & "Your password is '%p'."
 FP_MSG_WRONG_ANSWER = "Het antwoord is fout."
+FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
 End Sub
 
 Public Sub SET_LANG_SERBIAN()
@@ -1267,9 +1290,8 @@ MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' ne postoji."
 MDI_MENU = "Menu"
 
 'Config form ..
-CONFIG_LABEL_ACCOUNT = " Profil"
-CONFIG_LABEL_PASSWORD = " Sifra"
-CONFIG_LABEL_NAME = " Ime"
+CONFIG_LABEL_ACCOUNT = "Profil"
+CONFIG_LABEL_PASSWORD = "Sifra"
 
 CONFIG_COMMAND_CONNECT = "&Povezi se"
 CONFIG_COMMAND_DISCONNECT = "&Veza je prekinuta"
@@ -1301,8 +1323,8 @@ CHAT_COMMAND_SEND = "&Posalji"
 CHAT_COMMAND_CLEAR = "&Obrisi"
 
 'Send file form ..
-SF_LABEL_FILENAME = " Ime  arhive:"
-SF_LABEL_SEND_TO = "Send to:"
+SF_LABEL_FILENAME = "Ime  arhive"
+SF_LABEL_SEND_TO = "Send to"
 SF_LABEL_TIME = " Time left: "
 SF_LABEL_KBS = " Kb/Sec, "
 SF_LABEL_KBSS = " KBytes sent, "
@@ -1317,7 +1339,7 @@ SF_COMMAND_SENDFILE = "Posalji"
 SF_COMMAND_CANCEL = "Otkazhi .."
 
 LANG_COMMAND_ENTER = "&Otvori"
-LANG_LABEL_SELLANG = "Dodaj svoj jezik:"
+LANG_LABEL_SELLANG = "Dodaj svoj jezik"
 
 LANG_QUIT = "In order to change the language you need to restart Peach, do you want to do this now?"
 
@@ -1348,14 +1370,14 @@ REG_CAPTION = "Peach - Registration"
 
 REG_FRAME_DETAIL = "Enter your details"
 
-REG_LABEL_ACCOUNT_NAME = " Account Name:"
-REG_LABEL_PASSWORD = " Password:"
-REG_LABEL_PASSWORD_CONFIRM = " Confirm the Password:"
+REG_LABEL_ACCOUNT_NAME = "Account Name"
+REG_LABEL_PASSWORD = "Password"
+REG_LABEL_PASSWORD_CONFIRM = "Confirm the Password"
 REG_LABEL_PASSWORD_WEAK = "The password is weak."
 REG_LABEL_PASSWORD_NORMAL = "The password is normal."
 REG_LABEL_PASSWORD_STRONG = "The password is strong."
-REG_LABEL_SECRET_QUESTION = "Secret question:"
-REG_LABEL_SECRET_ANSWER = "Secret answer:"
+REG_LABEL_SECRET_QUESTION = "Secret question"
+REG_LABEL_SECRET_ANSWER = "Secret answer"
 
 REG_COMMAND_SUBMIT = "&Submit"
 REG_COMMAND_CLOSE = "&Close"
@@ -1374,10 +1396,13 @@ REG_MSG_PASSWORD_EMPTY = "No Password entered."
 
 REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
 
+REG_MSG_EMAIL_EMPTY = "No email entered."
+REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgot your password?"
+
 REG_MSG_SUCCESSFULLY = "The account was successfully registered."
 REG_MSG_ERROR = "An error has occured please try later again."
 REG_MSG_ERROR_OCCURED = "Error has occured ..."
-REG_MSG_LOADING = " Loading .."
+REG_MSG_LOADING = "Loading .."
 REG_MSG_CONNECTION_BROKEN = "Connection is broken please try again later."
 
 REG_CMB_SECRET_QUESTION_0 = "What is the name of your pet?"
@@ -1387,13 +1412,13 @@ REG_CMB_SECRET_QUESTION_3 = "Your favorite game?"
 REG_CMB_SECRET_QUESTION_4 = "Your favorite singer?"
 REG_CMB_SECRET_QUESTION_5 = "The place where your mother was born?"
 
-REG_LABEL_GENDER = " Gender:"
+REG_LABEL_GENDER = "Gender"
 
 REG_CMB_GENDER_MALE = "Male"
 REG_CMB_GENDER_FEMALE = "Female"
 
-SET_LABEL_COLOR = "Current Color:"
-SET_LABEL_FONT = "Font:"
+SET_LABEL_COLOR = "Current Color"
+SET_LABEL_FONT = "Font"
 
 SET_FRAME_STYLE = "Style"
 SET_FRAME_OPTIONS = "Options"
@@ -1411,14 +1436,15 @@ SET_COMMAND_SAVE = "&Save"
 SF2_COMMAND_OPEN_FILE = "&Open File Folder"
 
 FP_FRAME_FORGOT_PASSWORD = "Forgot Passwort"
-FP_LABEL_ACCOUNT = " Enter your account name:"
-FP_LABEL_SECRET_QUESTION = " Secret Question:"
-FP_LABEL_SECRET_ANSWER = " Secret Answer:"
+FP_LABEL_EMAIL = "Enter your email adress"
+FP_LABEL_SECRET_QUESTION = "Secret Question"
+FP_LABEL_SECRET_ANSWER = "Secret Answer"
 FP_COMMAND_REQUEST = "&Request"
 FP_CAPTION = "Peach - Forgot Password"
 
-FP_MSG_SUCCESSFULL = "Your password is "
+FP_MSG_SUCCESSFULL = "Your account name is '%u'." & vbCrLf & "Your password is '%p'."
 FP_MSG_WRONG_ANSWER = "The answer is wrong."
+FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
 End Sub
 
 Public Sub SET_LANG_FRENCH()
@@ -1441,9 +1467,8 @@ MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' does not exist."
 
 MDI_MENU = "Menu"
 
-CONFIG_LABEL_ACCOUNT = " Compte"
-CONFIG_LABEL_PASSWORD = " Mot de passe"
-CONFIG_LABEL_NAME = " Nom"
+CONFIG_LABEL_ACCOUNT = "Compte"
+CONFIG_LABEL_PASSWORD = "Mot de passe"
 
 CONFIG_COMMAND_CONNECT = "&Connecté"
 CONFIG_COMMAND_DISCONNECT = "&Deconnecté"
@@ -1473,8 +1498,8 @@ CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your 
 CHAT_COMMAND_SEND = "&Envoi"
 CHAT_COMMAND_CLEAR = "&Clair"
 
-SF_LABEL_FILENAME = " Nom file:"
-SF_LABEL_SEND_TO = "Send to:"
+SF_LABEL_FILENAME = "Nom file"
+SF_LABEL_SEND_TO = "Send to"
 SF_LABEL_TIME = " Time left: "
 SF_LABEL_KBS = " Kb/Sec, "
 SF_LABEL_KBSS = " KBytes sent, "
@@ -1489,7 +1514,7 @@ SF_COMMAND_SENDFILE = "Envoi"
 SF_COMMAND_CANCEL = "Annuler .."
 
 LANG_COMMAND_ENTER = "&Ouvrir"
-LANG_LABEL_SELLANG = "Choisissez votre langue:"
+LANG_LABEL_SELLANG = "Choisissez votre langue"
 
 SOC_FRIEND_LIST = "Liste D'amis"
 SOC_ONLINE_LIST = "Liste des onlines"
@@ -1519,14 +1544,14 @@ REG_CAPTION = "Peach - D'enregistrement"
 
 REG_FRAME_DETAIL = "Entrez vos coordonnées"
 
-REG_LABEL_ACCOUNT_NAME = " Nom du compte:"
-REG_LABEL_PASSWORD = " Mot de passe:"
-REG_LABEL_PASSWORD_CONFIRM = " Confirmer le mot de passe:"
+REG_LABEL_ACCOUNT_NAME = "Nom du compte"
+REG_LABEL_PASSWORD = "Mot de passe"
+REG_LABEL_PASSWORD_CONFIRM = "Confirmer le mot de passe"
 REG_LABEL_PASSWORD_WEAK = "Le mot de passe est faible."
 REG_LABEL_PASSWORD_NORMAL = "Le mot de passe est normal."
 REG_LABEL_PASSWORD_STRONG = "Le mot de passe est forte."
-REG_LABEL_SECRET_QUESTION = "Question secrète:"
-REG_LABEL_SECRET_ANSWER = "Réponse secrète:"
+REG_LABEL_SECRET_QUESTION = "Question secrète"
+REG_LABEL_SECRET_ANSWER = "Réponse secrète"
 
 REG_COMMAND_SUBMIT = "&Envoyer"
 REG_COMMAND_CLOSE = "&Fermer"
@@ -1545,10 +1570,13 @@ REG_MSG_PASSWORD_EMPTY = "Aucun mot de passe soumis."
 
 REG_MSG_SECRET_ANSWER_EMPTY = "Pas de secret répondu ajouté."
 
+REG_MSG_EMAIL_EMPTY = "No email entered."
+REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgot your password?"
+
 REG_MSG_SUCCESSFULLY = "Le compte a été enregistré avec succès."
 REG_MSG_ERROR = "Une erreur s'est produite, s'il vous plaît essayer à nouveau plus tard.."
 REG_MSG_ERROR_OCCURED = "Une erreur s'est produite ..."
-REG_MSG_LOADING = " Charge .."
+REG_MSG_LOADING = "Charge .."
 REG_MSG_CONNECTION_BROKEN = "La connexion est perdue, s'il vous plaît essayer à nouveau plus tard."
 
 REG_CMB_SECRET_QUESTION_0 = "Quel est le nom de votre animal de compagnie?"
@@ -1558,13 +1586,13 @@ REG_CMB_SECRET_QUESTION_3 = "Quel est votre jeu préféré?"
 REG_CMB_SECRET_QUESTION_4 = "Quel est votre chanteur préféré?"
 REG_CMB_SECRET_QUESTION_5 = "Quel est l'endroit où votre mère est née?"
 
-REG_LABEL_GENDER = " Gender:"
+REG_LABEL_GENDER = "Gender"
 
 REG_CMB_GENDER_MALE = "Male"
 REG_CMB_GENDER_FEMALE = "Female"
 
-SET_LABEL_COLOR = "Couleur Courante:"
-SET_LABEL_FONT = "Fonte:"
+SET_LABEL_COLOR = "Couleur Courante"
+SET_LABEL_FONT = "Fonte"
 
 SET_FRAME_STYLE = "Style"
 SET_FRAME_OPTIONS = "Options"
@@ -1582,12 +1610,13 @@ SET_COMMAND_SAVE = "&Sauvegarder"
 SF2_COMMAND_OPEN_FILE = "&Ouvrez le dossier de fichiers"
 
 FP_FRAME_FORGOT_PASSWORD = "Mot de passe oublié"
-FP_LABEL_ACCOUNT = " Entrez votre nom de compte:"
-FP_LABEL_SECRET_QUESTION = " Question secrète:"
-FP_LABEL_SECRET_ANSWER = " Réponse secrète:"
+FP_LABEL_EMAIL = "Entrez votre e-mail"
+FP_LABEL_SECRET_QUESTION = "Question secrète"
+FP_LABEL_SECRET_ANSWER = "Réponse secrète"
 FP_COMMAND_REQUEST = "&Demande"
 FP_CAPTION = "Peach - Mot de passe oublié"
 
-FP_MSG_SUCCESSFULL = "Votre mot de passe est "
+FP_MSG_SUCCESSFULL = "Votre mot de passe est '%p'."
 FP_MSG_WRONG_ANSWER = "La réponse est fausse."
+FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
 End Sub

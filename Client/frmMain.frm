@@ -448,6 +448,7 @@ If ACC_SWITCH = "REG" Then
         .txtAccount.Visible = False
         .txtPassword1.Visible = False
         .txtPassword2.Visible = False
+        .txtEmail.Visible = False
     End With
 Else
     With frmForgotPassword
@@ -456,7 +457,7 @@ Else
         .cmdRequest.Caption = REG_COMMAND_CLOSE
         .cmdRequest.Visible = True
         .Frame1.Visible = False
-        .txtAccount.Visible = False
+        .txtEmail.Visible = False
         .cmbSecretQuestion.Visible = False
         .txtSecretAnswer.Visible = False
     End With
@@ -476,6 +477,7 @@ If ACC_SWITCH = "REG" Then
         .cmbSecretQuestion.Visible = True
         .cmbGender.Visible = True
         .txtSecretAnswer.Visible = True
+        .txtEmail.Visible = True
         .Command1.Visible = True
         .Command1.Caption = REG_COMMAND_SUBMIT
     End With
@@ -483,7 +485,7 @@ Else
     With frmForgotPassword
         .Caption = FP_CAPTION
         .Frame1.Visible = True
-        .txtAccount.Visible = True
+        .txtEmail.Visible = True
         .txtSecretAnswer.Visible = True
         .cmbSecretQuestion.Visible = True
         .cmdRequest.Visible = True
@@ -509,6 +511,13 @@ Select Case array1(0)
             .txtAccount.SetFocus
         End With
         
+    Case "!emailtaken"
+        MsgBox REG_MSG_EMAIL_TAKEN, vbInformation
+        With frmCreateAccount
+            .txtEmail = vbNullString
+            .txtAccount.SetFocus
+        End With
+        
     Case "!done"
         MsgBox REG_MSG_SUCCESSFULLY, vbInformation
         Unload frmCreateAccount
@@ -521,14 +530,23 @@ Select Case array1(0)
         End With
         
     Case "!successfull"
-        MsgBox FP_MSG_SUCCESSFULL & array1(1), vbInformation
+        Dim pText As String
+        
+        pText = Replace$(FP_MSG_SUCCESSFULL, "%p", array1(1))
+        pText = Replace$(pText, "%u", array1(2))
+        
+        MsgBox pText, vbInformation
+        With frmMain
+            .txtPassword = array1(1)
+            .txtAccount = array1(2)
+        End With
         Unload frmForgotPassword
         
-    Case "!account_not_exist"
-        MsgBox MDI_MSG_WRONG_ACCOUNT, vbInformation
+    Case "!email_not_exist"
+        MsgBox FP_MSG_WRONG_EMAIL, vbInformation
         With frmForgotPassword
-            .txtAccount = vbNullString
-            .txtAccount.SetFocus
+            .txtEmail = vbNullString
+            .txtEmail.SetFocus
         End With
         
 End Select
@@ -546,6 +564,7 @@ If ACC_SWITCH = "REG" Then
         .cmbSecretQuestion.Visible = False
         .cmbGender.Visible = False
         .txtSecretAnswer.Visible = False
+        .txtEmail.Visible = False
     End With
 Else
     With frmForgotPassword
@@ -554,7 +573,7 @@ Else
         .cmdRequest.Caption = REG_COMMAND_CLOSE
         .cmdRequest.Visible = True
         .Frame1.Visible = False
-        .txtAccount.Visible = False
+        .txtEmail.Visible = False
         .cmbSecretQuestion.Visible = False
         .txtSecretAnswer.Visible = False
     End With
@@ -751,13 +770,13 @@ For k = 0 To UBound(p_PreArray) - 1
                     MsgBox MDI_MSG_CANT_ADD_YOU, vbInformation
                     
                 Case "MSG_ALREADY_IN_IGNORE_LIST"
-                    MsgBox Replace(MDI_MSG_ALREADY_IN_IGNORE_LIST, "%u", StrArr(2)), vbInformation
+                    MsgBox Replace$(MDI_MSG_ALREADY_IN_IGNORE_LIST, "%u", StrArr(2)), vbInformation
                     
                 Case "MSG_ALREADY_IN_FRIEND_LIST"
-                    MsgBox Replace(MDI_MSG_ALREADY_IN_FRIEND_LIST, "%u", StrArr(2)), vbInformation
+                    MsgBox Replace$(MDI_MSG_ALREADY_IN_FRIEND_LIST, "%u", StrArr(2)), vbInformation
                     
                 Case "MSG_ACCOUNT_NOT_EXIST"
-                    MsgBox Replace(MDI_MSG_ACCOUNT_NOT_EXIST, "%u", StrArr(2)), vbInformation
+                    MsgBox Replace$(MDI_MSG_ACCOUNT_NOT_EXIST, "%u", StrArr(2)), vbInformation
                     
                 Case Else
                     MsgBox StrArr(1), vbInformation
@@ -799,10 +818,11 @@ FSocket2(Index).GetData GetMessage
 array1 = Split(GetMessage, "#")
 
 If array1(0) = "!filerequest" Then
-    SF_MSG_INCOMMING_FILE = Replace$(SF_MSG_INCOMMING_FILE, "%f", array1(1))
-    SF_MSG_INCOMMING_FILE = Replace$(SF_MSG_INCOMMING_FILE, "%u", array1(2))
-    
-    If MsgBox(SF_MSG_INCOMMING_FILE, vbYesNo + vbQuestion) = vbYes Then
+    Dim pText As String
+        pText = Replace$(SF_MSG_INCOMMING_FILE, "%f", array1(1))
+        pText = Replace$(pText, "%u", array1(2))
+        
+    If MsgBox(pText, vbYesNo + vbQuestion) = vbYes Then
         FSocket2(Index).SendData "!acceptfile#"
         frmSendFile2.Show
     Else

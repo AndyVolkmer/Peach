@@ -342,7 +342,7 @@ End Sub
 
 '=== Friend List Tab ==='
 Private Sub pRemoveFriend(uString As String)
-If MsgBox(Replace(SOC_ASK_DEL, "%u", uString), vbQuestion + vbYesNo) = vbYes Then
+If MsgBox(Replace$(SOC_ASK_DEL, "%u", uString), vbQuestion + vbYesNo) = vbYes Then
     SendMessage "!friend#-remove#" & uString & "#"
 End If
 End Sub
@@ -391,7 +391,7 @@ PopupMenu lvIgnoreMenu
 End Sub
 
 Private Sub pRemoveIgnore(uString As String)
-If MsgBox(Replace(SOC_ASK_DEL, "%u", uString), vbQuestion + vbYesNo) = vbYes Then
+If MsgBox(Replace$(SOC_ASK_DEL, "%u", uString), vbQuestion + vbYesNo) = vbYes Then
     SendMessage "!ignore#-remove#" & uString & "#"
 End If
 End Sub
@@ -415,10 +415,10 @@ cmdRemoveIgnore.Caption = SOC_COMMAND_REMOVE
 cmdAddToFriend.Caption = SOC_COMMAND_FRIEND
 cmdAddToIgnore.Caption = SOC_COMMAND_IGNORE
 
-lvFriendList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
+lvFriendList.ColumnHeaders(1).Text = CONFIG_LABEL_ACCOUNT
 lvFriendList.ColumnHeaders(2).Text = SOC_FRIEND_LIST_STATUS
-lvOnlineList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
-lvIgnoreList.ColumnHeaders(1).Text = CONFIG_LABEL_NAME
+lvOnlineList.ColumnHeaders(1).Text = CONFIG_LABEL_ACCOUNT
+lvIgnoreList.ColumnHeaders(1).Text = CONFIG_LABEL_ACCOUNT
 
 mWhisper.Caption = SOC_COMMAND_WHISPER
 mWhisperT.Caption = SOC_COMMAND_WHISPER
