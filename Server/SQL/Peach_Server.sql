@@ -35,6 +35,7 @@ CREATE TABLE `commands` (
 INSERT INTO `commands` VALUES ('.accountinfo / .accinfo \'Account\'', 'Shows all information about that account.');
 INSERT INTO `commands` VALUES ('.announce \'Text\'', 'Send a server side tagged message.');
 INSERT INTO `commands` VALUES ('.ban \'Account\' [Reason]', 'Bans the account permanently.');
+INSERT INTO `commands` VALUES ('.change email \'Name\' \'Email\'', 'Changes the \'Email\' of \'Name\'.');
 INSERT INTO `commands` VALUES ('.change gender \'Name\' \'Gender\'', 'Changes the \'Gender\' of \'Name\'.');
 INSERT INTO `commands` VALUES ('.change level \'Name\' \'Level\'', 'Changes the \'Level\' of \'Name.');
 INSERT INTO `commands` VALUES ('.change name \'Oldname\' \'Newname', 'Renames \'Oldname\' to \'Newname\'.');
