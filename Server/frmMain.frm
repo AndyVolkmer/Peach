@@ -388,6 +388,7 @@ For k = 0 To UBound(p_PreArray) - 1
                     SendSingle "!login#Account#", Index
                     Exit Sub
                 End If
+                
                 For i = 1 To .Count
                     If LCase$(.Item(i).SubItems(INDEX_NAME)) = LCase$(p_MainArray(1)) Then
                         'Ban Check
@@ -549,7 +550,7 @@ For k = 0 To UBound(p_PreArray) - 1
                     Case ".unmute"
                         MuteUser GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 0, Index, Trim$(Reason)
                         
-                    Case ".announce", ".ann", ".broadcast"
+                    Case ".announce", ".ann", ".notify"
                         Dim p_ANN_MSG As String
                         
                         'Capture announce message
@@ -560,7 +561,14 @@ For k = 0 To UBound(p_PreArray) - 1
                         If LenB(p_ANN_MSG) = 0 Then
                             SendSingle "Incorrect syntax, use the following format " & p_CHAT_ARRAY(0) & " [Text].", Index
                         Else
-                            SendMessage GetGMFlag(GetAccountByIndex(Index)) & "[" & GetAccountByIndex(Index) & " announces]: " & p_ANN_MSG
+                            Select Case LCase$(p_CHAT_ARRAY(0))
+                                Case ".announce", ".ann"
+                                    SendMessage GetGMFlag(GetAccountByIndex(Index)) & "[" & GetAccountByIndex(Index) & " announces]: " & p_ANN_MSG
+                                
+                                Case ".notify"
+                                    SendMessage "!msgbox#" & GetAccountByIndex(Index) & ": " & p_ANN_MSG & "#"
+                            
+                            End Select
                         End If
                         
                     Case ".help", ".command", ".commands"
