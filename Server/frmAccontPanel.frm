@@ -197,7 +197,7 @@ Begin VB.Form frmAccountPanel
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
       Appearance      =   1
-      NumItems        =   11
+      NumItems        =   12
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID"
          Object.Width           =   882
@@ -250,6 +250,11 @@ Begin VB.Form frmAccountPanel
       BeginProperty ColumnHeader(11) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   10
          Text            =   "Email"
+         Object.Width           =   2540
+      EndProperty
+      BeginProperty ColumnHeader(12) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   11
+         Text            =   "Last IP"
          Object.Width           =   2540
       EndProperty
    End

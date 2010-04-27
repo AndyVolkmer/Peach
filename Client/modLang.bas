@@ -649,7 +649,7 @@ SOC_MSG_CANT_WHISPER = "No puedes susurrar a este usuario."
 
 REG_CAPTION = "Peach - Registración"
 
-REG_FRAME_DETAIL = "Enter your details"
+REG_FRAME_DETAIL = "Inserta su detalles"
 
 REG_LABEL_ACCOUNT_NAME = "Nombre de cuenta"
 REG_LABEL_PASSWORD = "Contraseña"
@@ -691,7 +691,7 @@ REG_CMB_SECRET_QUESTION_1 = "¿Tu libro favorito?"
 REG_CMB_SECRET_QUESTION_2 = "¿Tu pelicula favorita?"
 REG_CMB_SECRET_QUESTION_3 = "¿Tu juego favorito?"
 REG_CMB_SECRET_QUESTION_4 = "¿Tu cantante favorito?"
-REG_CMB_SECRET_QUESTION_5 = "¿El lugar de nacimiento de tu madre?"
+REG_CMB_SECRET_QUESTION_5 = "¿El lugar de nacimiento de su madre?"
 
 REG_LABEL_GENDER = "Sexo"
 
@@ -769,7 +769,7 @@ LANG_ITALIAN = "Italienska"
 LANG_SERBIAN = "Serbiska"
 LANG_DUTCH = "Holländska"
 LANG_FRENCH = "Franska"
-LANG_NORWEGIAN = ""
+LANG_NORWEGIAN = "Norska"
 
 CONFIG_MSG_ACCOUNT = "Du skrev inte in en användare."
 CONFIG_MSG_PASSWORD = "Du skrev inte in ett lösenord."
@@ -904,7 +904,7 @@ FP_CAPTION = "Peach - Glömt lösenord"
 
 FP_MSG_SUCCESSFULL = "Your account name is '%u'." & vbCrLf & "Your password is '%p'."
 FP_MSG_WRONG_ANSWER = "Svaret är fel."
-FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
+FP_MSG_WRONG_EMAIL = "Den angivna e-postadressen kunde inte hittas."
 End Sub
 
 Public Sub SET_LANG_ITALIAN()
@@ -922,10 +922,10 @@ MDI_MSG_WRONG_PASSWORD = "La password è errata."
 MDI_MSG_BANNED = "Questo account è vietata.."
 MDI_MSG_UNLOAD = "Sei sicuro di voler chiudere Peach?"
 
-MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' does not exist."
+MDI_MSG_CANT_ADD_YOU = "Non puoi aggiungere te."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' è già nella vostra lista ignorare."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' è già nella vostra lista amici."
+MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' non esiste."
 
 MDI_MENU = "Menu"
 
@@ -972,7 +972,7 @@ SF_LABEL_KBSS = " KBytes sent, "
 
 SF_MSG_USER = "Nessun utente selezionato."
 SF_MSG_FILE = "Nessun file selezionato."
-SF_MSG_INCOMMING_FILE = "You are receiving '%f' from '%u'. Do you want to accept?"
+SF_MSG_INCOMMING_FILE = "Stai ricevendo '%f' da '%u'. Volete accettare?"
 SF_MSG_DECILINED = "Il trasferimento file è stato rifiutato."
 
 SF_COMMAND_BROWSE = "&Cerca .."
@@ -982,7 +982,7 @@ SF_COMMAND_CANCEL = "Annulla .."
 LANG_COMMAND_ENTER = "&Apri"
 LANG_LABEL_SELLANG = "Seleziona la tua lingua"
 
-LANG_QUIT = "In order to change the language you need to restart Peach, do you want to do this now?"
+LANG_QUIT = "Al fine di modificare la lingua è necessario riavviare Peach, vuoi farlo ora?"
 
 SOC_FRIEND_LIST = "Lista di amici"
 SOC_ONLINE_LIST = "Elenco di persone online"
@@ -991,29 +991,29 @@ SOC_IGNORE_LIST = "Elenco degli utenti ignorati"
 SOC_COMMAND_ADD = "&Aggiungere"
 SOC_COMMAND_REMOVE = "&Rimuovere"
 SOC_COMMAND_FRIEND = "&Aggiungi ai tuoi amici"
-SOC_COMMAND_IGNORE = "&Ignore user"
-SOC_COMMAND_WHISPER = "&Whisper"
+SOC_COMMAND_IGNORE = "&Ignora utente"
+SOC_COMMAND_WHISPER = "&Sussurro"
 
 SOC_ASK_DEL = "Vuoi eliminare '%u' dalla lista?"
 
-SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
-SOC_ASK_FRIEND_TITLE = "Adding a friend"
-SOC_ASK_FRIEND_DEFAULT = "Enter account here"
+SOC_ASK_FRIEND_TEXT = "Inserire il nome account del tuo amico nella casella di testo sottostante."
+SOC_ASK_FRIEND_TITLE = "Aggiunta di un amico"
+SOC_ASK_FRIEND_DEFAULT = "Conto inserisci qui"
 
-SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in the text box below."
-SOC_ASK_IGNORE_TITLE = "Ignore a user"
-SOC_ASK_IGNORE_DEFAULT = "Enter account here"
+SOC_ASK_IGNORE_TEXT = "Inserire il nome account dell'utente che si desidera ignorare nella casella di testo sottostante."
+SOC_ASK_IGNORE_TITLE = "Ignorare un utente"
+SOC_ASK_IGNORE_DEFAULT = "Conto inserisci qui"
 
 SOC_FRIEND_LIST_STATUS = "Stato"
 
-SOC_MSG_CANT_WHISPER = "You can't whisper this user."
+SOC_MSG_CANT_WHISPER = "Non si può sussurrare questo utente."
 
 REG_CAPTION = "Peach - Registrazione"
 
 REG_FRAME_DETAIL = "Inserisci i tuoi dati"
 
 REG_LABEL_ACCOUNT_NAME = "Nome account"
-REG_LABEL_PASSWORD = "Password"
+REG_LABEL_PASSWORD = "Parola d'ordine"
 REG_LABEL_PASSWORD_CONFIRM = "Confermare la password"
 REG_LABEL_PASSWORD_WEAK = "La password è debole."
 REG_LABEL_PASSWORD_NORMAL = "La password è normale."
@@ -1039,7 +1039,7 @@ REG_MSG_PASSWORD_EMPTY = "Nessuna password è stata inserita."
 REG_MSG_SECRET_ANSWER_EMPTY = "Risposta segreta non è stato iscritto."
 
 REG_MSG_EMAIL_EMPTY = "Email non è stato iscritto."
-REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgot your password?"
+REG_MSG_EMAIL_TAKEN = "L'indirizzo e-mail che hai inserito è già utilizzato beeing, hai dimenticato la parola d'ordine?"
 
 REG_MSG_SUCCESSFULLY = "L'account è stato registrato con successo."
 REG_MSG_ERROR = "Un errore si è verificato per favore riprova più tardi di nuovo."
@@ -1054,10 +1054,10 @@ REG_CMB_SECRET_QUESTION_3 = "Qual è il tuo gioco preferito?"
 REG_CMB_SECRET_QUESTION_4 = "Qual è il vostro cantante preferito?"
 REG_CMB_SECRET_QUESTION_5 = "Dove si trova il luogo in cui tua madre è nata?"
 
-REG_LABEL_GENDER = "Gender"
+REG_LABEL_GENDER = "Genere"
 
-REG_CMB_GENDER_MALE = "Male"
-REG_CMB_GENDER_FEMALE = "Female"
+REG_CMB_GENDER_MALE = "Maschio"
+REG_CMB_GENDER_FEMALE = "Femminile"
 
 SET_LABEL_COLOR = "Colore corrente"
 SET_LABEL_FONT = "Fonte"
@@ -1067,7 +1067,7 @@ SET_FRAME_OPTIONS = "Opzioni"
 SET_FRAME_CONNECTION = "Impostazioni di connessione"
 
 SET_CHECK_SAVE_ACCOUNT = "Salva conto"
-SET_CHECK_SAVE_PASSWORD = "Salva password"
+SET_CHECK_SAVE_PASSWORD = "Salva parola d'ordine"
 SET_CHECK_AUTO_LOGIN = "Login automatically"
 SET_CHECK_ASK_CLOSING = "Chiedi prima di chiudere"
 SET_CHECK_MINIMIZE = "Contrai la finestra di Peach nella barra delle applicazioni"
@@ -1084,9 +1084,9 @@ FP_LABEL_SECRET_ANSWER = "Risposta segreta"
 FP_COMMAND_REQUEST = "&Richiesta"
 FP_CAPTION = "Peach - Dimenticato la password"
 
-FP_MSG_SUCCESSFULL = "Your account name is '%u'." & vbCrLf & "Your password is '%p'."
+FP_MSG_SUCCESSFULL = "Il tuo nome account è '%u'. La password è '%p'."
 FP_MSG_WRONG_ANSWER = "La risposta è sbagliata."
-FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
+FP_MSG_WRONG_EMAIL = "L'indirizzo email inserito non è stato trovato."
 End Sub
 
 Public Sub SET_LANG_DUTCH()
@@ -1103,14 +1103,14 @@ MDI_MSG_WRONG_PASSWORD = "Het wachtwoord is onjuist."
 MDI_MSG_BANNED = "Deze account is verboden."
 MDI_MSG_UNLOAD = "Weet u zeker dat u wilt Peach sluiten?"
 
-MDI_MSG_CANT_ADD_YOU = "You can't add yourself."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' is already in your ignore list."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' is already in your friend list."
-MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' does not exist."
+MDI_MSG_CANT_ADD_YOU = "Je kunt jezelf niet toevoegen."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' is al in uw negeerlijst."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' is al in uw vriendenlijst."
+MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' bestaat niet."
 
 MDI_MENU = "Menu"
 
-CONFIG_LABEL_ACCOUNT = "Account"
+CONFIG_LABEL_ACCOUNT = "Rekening"
 CONFIG_LABEL_PASSWORD = "Wachtwoord"
 
 CONFIG_COMMAND_CONNECT = "&Verbind"
@@ -1137,7 +1137,7 @@ CONFIG_MSG_PASSWORD = "Je hebt geen wachtwoord ingevuld."
 CONFIG_MSG_NUMERIC = "U kan geen naam nemen dat nummers bevat."
 CONFIG_MSG_PORT = "U hebt geen poort ingesteld."
 CONFIG_MSG_IP = "U hebt geen IP gegoven."
-CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
+CONFIG_MSG_UPDATE_FILE = "Om je Peach versie up-to-date te houden moet je de Peach updater downloaden." & vbCrLf & vbCrLf & "Klik hier om te downloaden: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 CHAT_COMMAND_SEND = "&Zend"
 CHAT_COMMAND_CLEAR = "&Leegmaken"
@@ -1150,7 +1150,7 @@ SF_LABEL_KBSS = " KBytes sent, "
 
 SF_MSG_USER = "Geen gebruiker geselecteerd."
 SF_MSG_FILE = "Geen bestand geselecteerd."
-SF_MSG_INCOMMING_FILE = "You are receiving '%f' from '%u'. Do you want to accept?"
+SF_MSG_INCOMMING_FILE = "U ontvangt '%f' van '%u'. Wil je accepteren?"
 SF_MSG_DECILINED = "De bestandsoverdracht is geweigerd."
 
 SF_COMMAND_BROWSE = "&Zoeken .."
@@ -1160,7 +1160,7 @@ SF_COMMAND_CANCEL = "&Annuleren .."
 LANG_COMMAND_ENTER = "&Openen"
 LANG_LABEL_SELLANG = "Selecteer jou taal"
 
-LANG_QUIT = "In order to change the language you need to restart Peach, do you want to do this now?"
+LANG_QUIT = "Om je taal te verranderen is het nodig om Peach opnieuw op te starten. Wil je dit nu doen?"
 
 SOC_FRIEND_LIST = "Vriendenlijst"
 SOC_ONLINE_LIST = "Onlinelijst"
@@ -1169,18 +1169,18 @@ SOC_IGNORE_LIST = "Negeerlijst"
 SOC_COMMAND_ADD = "&Toevoegen"
 SOC_COMMAND_REMOVE = "&Verwijderen"
 SOC_COMMAND_FRIEND = "&Voeg toe aan vrienden"
-SOC_COMMAND_IGNORE = "&Ignore user"
-SOC_COMMAND_WHISPER = "&Whisper"
+SOC_COMMAND_IGNORE = "&Gebruiker negeren"
+SOC_COMMAND_WHISPER = "&Fluister"
 
 SOC_ASK_DEL = "Wilt u '%u' verwijderen uit de lijst?"
 
-SOC_ASK_FRIEND_TEXT = "Enter the account name of your friend in the text box below."
-SOC_ASK_FRIEND_TITLE = "Adding a friend"
-SOC_ASK_FRIEND_DEFAULT = "Enter account here"
+SOC_ASK_FRIEND_TEXT = "Vul de naam in van je vriend in de kader hieronder."
+SOC_ASK_FRIEND_TITLE = "Vriend aan het toevoegen"
+SOC_ASK_FRIEND_DEFAULT = "Voeg hier uw accountnaam in"
 
-SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in the text box below."
-SOC_ASK_IGNORE_TITLE = "Ignore a user"
-SOC_ASK_IGNORE_DEFAULT = "Enter account here"
+SOC_ASK_IGNORE_TEXT = "Voeg hier de naam van de gebruiker in die je wilt negeren."
+SOC_ASK_IGNORE_TITLE = "Negeer een gebruiker"
+SOC_ASK_IGNORE_DEFAULT = "Voeg hier uw accountnaam in"
 
 SOC_FRIEND_LIST_STATUS = "Staat"
 

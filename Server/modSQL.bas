@@ -234,6 +234,7 @@ With .pRecordSet
         LItem.SubItems(INDEX_SECRET_ANSWER) = !SecretAnswer1
         LItem.SubItems(INDEX_GENDER) = !Gender1
         LItem.SubItems(INDEX_EMAIL) = !Email1
+        LItem.SubItems(INDEX_LAST_IP) = !LastIP1
         .MoveNext
         Counter = Counter + 1
     Loop

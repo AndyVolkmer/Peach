@@ -24,6 +24,7 @@ Public Enum ACCOUNT_PANEL_INDEX
     INDEX_SECRET_ANSWER = 8
     INDEX_GENDER = 9
     INDEX_EMAIL = 10
+    INDEX_LAST_IP = 11
 End Enum
 
 Public Enum USER_PANEL_INDEX
@@ -33,6 +34,7 @@ Public Enum USER_PANEL_INDEX
     INDEX_MUTED = 4
     INDEX_LOGIN_TIME = 5
     INDEX_GM_FLAG = 6
+    INDEX_AFK_FLAG = 7
 End Enum
 
 Type NOTIFYICONDATA
@@ -427,8 +429,8 @@ frm.Width = frm.Width - 1
 frm.Width = frm.Width + 1
 End Sub
 
-Public Sub SetButtons(args As Boolean)
-If args Then
+Public Sub SetButtons(Args As Boolean)
+If Args Then
     With frmConfig
         .START_TIME = Time
         .txtPort.Enabled = False

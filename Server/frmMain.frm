@@ -228,6 +228,7 @@ End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
 Dim i As Long
+Dim j As Long
 
 Unload Winsock1(Index)
 With frmPanel.ListView1.ListItems
@@ -235,6 +236,15 @@ With frmPanel.ListView1.ListItems
         If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
             If Not Len(.Item(i)) = 0 Then
                 SendMessage .Item(i) & " has gone offline."
+                Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & .Item(i) & "'")
+                With frmAccountPanel.ListView1.ListItems
+                    For j = 1 To .Count
+                        If .Item(j).SubItems(INDEX_NAME) = frmPanel.ListView1.ListItems.Item(i) Then
+                            .Item(j).SubItems(INDEX_LAST_IP) = frmPanel.ListView1.ListItems.Item(i).SubItems(INDEX_IP)
+                            Exit For
+                        End If
+                    Next j
+                End With
             End If
             .Remove (i)
             Exit For
@@ -563,7 +573,8 @@ For k = 0 To UBound(p_PreArray) - 1
                         Else
                             Select Case LCase$(p_CHAT_ARRAY(0))
                                 Case ".announce", ".ann"
-                                    SendMessage GetGMFlag(GetAccountByIndex(Index)) & "[" & GetAccountByIndex(Index) & " announces]: " & p_ANN_MSG
+                                    Reason = GetAccountByIndex(Index) '//Temp variable used to not load account twice
+                                    SendMessage GetGMFlag(Reason) & GetAFKFlag(Reason) & "[" & GetAccountByIndex(Index) & " announces]: " & p_ANN_MSG
                                 
                                 Case ".notify"
                                     SendMessage "!msgbox#" & GetAccountByIndex(Index) & ": " & p_ANN_MSG & "#"
@@ -1018,7 +1029,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         Dim pRoll       As Long
                         Dim pMinRoll    As Long
                         Dim pMaxRoll    As Long
-                         
+                        
                         If UBound(p_CHAT_ARRAY) > 1 Then
                             If IsNumeric(p_CHAT_ARRAY(1)) Then
                                 If p_CHAT_ARRAY(1) > MAX_INT_VALUE Or p_CHAT_ARRAY(1) < MIN_INT_VALUE Then
@@ -1088,6 +1099,22 @@ For k = 0 To UBound(p_PreArray) - 1
                             End If
                         End If
                         
+                    Case "/afk"
+                        With frmPanel.ListView1.ListItems
+                            For i = 1 To .Count
+                                If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
+                                    If .Item(i).SubItems(INDEX_AFK_FLAG) = "1" Then
+                                        .Item(i).SubItems(INDEX_AFK_FLAG) = "0"
+                                        SendSingle "You are not away from keyboard anymore.", Index
+                                    Else
+                                        .Item(i).SubItems(INDEX_AFK_FLAG) = "1"
+                                        SendSingle "You are away from keyboard now.", Index
+                                    End If
+                                    Exit For
+                                End If
+                            Next i
+                        End With
+                        
                     Case "/online"
                         SendSingle "You are online for " & Trim$(GetOnlineTime(GetAccountByIndex(Index))) & ".", Index
                         
@@ -1120,7 +1147,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                     
                                     properAccount = vbNullString
                                 End With
-                                                                
+                                
                                 If IsUser Then
                                     pTemp = Replace(Emotes(i).TargetEmote, "%u", GetAccountByIndex(Index))
                                     pTemp = Replace(pTemp, "%g", Gen)
@@ -1173,10 +1200,11 @@ For k = 0 To UBound(p_PreArray) - 1
             End If
             
             'Send Message and print in chat
-            SendProtectedMessage GetAccountByIndex(Index), GetGMFlag(GetAccountByIndex(Index)) & "[" & GetAccountByIndex(Index) & "]: " & p_MainArray(1)
+            E = GetAccountByIndex(Index) '//Temp variable used to save account to not load 4 times
+            SendProtectedMessage E, GetGMFlag(E) & GetAFKFlag(E) & "[" & E & "]: " & p_MainArray(1)
             
             'Set last message
-            SetLastMessage GetAccountByIndex(Index), p_MainArray(1)
+            SetLastMessage E, p_MainArray(1)
             
         Case Else
             SendSingle "ERROR", Index
@@ -1320,6 +1348,7 @@ With frmPanel.ListView1.ListItems
                 SendSingle pTarget & " is ignoring you.", Index
             Else
                 SendSingle "[You whisper to " & pTarget & "]: " & pConv, Index
+                If LenB(GetAFKFlag(pTarget)) <> 0 Then SendSingle pTarget & " is away from keyboard.", Index
                 SendSingle GetGMFlag(pUser) & "[" & pUser & " whispers]: " & pConv, .Item(i).SubItems(INDEX_WINSOCK_ID)
             End If
             Exit For
@@ -1541,15 +1570,25 @@ End With
 End Function
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-Dim pTemp   As String
-Dim i       As Long
+Dim i As Long
+Dim j As Long
 
 Unload Winsock1(Index)
-
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
-            SendMessage .Item(i) & " has gone offline."
+            If Not Len(.Item(i)) = 0 Then
+                SendMessage .Item(i) & " has gone offline."
+                Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & .Item(i) & "'")
+                With frmAccountPanel.ListView1.ListItems
+                    For j = 1 To .Count
+                        If .Item(j).SubItems(INDEX_NAME) = frmPanel.ListView1.ListItems.Item(i) Then
+                            .Item(j).SubItems(INDEX_LAST_IP) = frmPanel.ListView1.ListItems.Item(i).SubItems(INDEX_IP)
+                            Exit For
+                        End If
+                    Next j
+                End With
+            End If
             .Remove (i)
             Exit For
         End If
@@ -1590,7 +1629,20 @@ Dim i As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = uName Then
-            If .Item(i).SubItems(INDEX_GM_FLAG) = "1" Then GetGMFlag = "[GM]"
+            If .Item(i).SubItems(INDEX_GM_FLAG) = "1" Then GetGMFlag = "<GM>"
+            Exit For
+        End If
+    Next i
+End With
+End Function
+
+Private Function GetAFKFlag(uName As String) As String
+Dim i As Long
+
+With frmPanel.ListView1.ListItems
+    For i = 1 To .Count
+        If .Item(i) = uName Then
+            If .Item(i).SubItems(INDEX_AFK_FLAG) = "1" Then GetAFKFlag = "<AFK>"
             Exit For
         End If
     Next i
