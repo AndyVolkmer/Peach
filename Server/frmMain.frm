@@ -1142,49 +1142,21 @@ For k = 0 To UBound(p_PreArray) - 1
                     Case "/logout"
                         KickUser GetAccountByIndex(Index)
                         
+                    Case "/join"
+                        If LenB(p_TEXT_FIRST) = 0 Then
+                            SendSingle "Please enter a valid channel name.", Index
+                        Else
+                            frmChannel.JoinChannel p_TEXT_FIRST, GetAccountByIndex(Index)
+                        End If
+                        
+                    Case "/leave"
+                        If LenB(p_TEXT_FIRST) = 0 Then
+                            SendSingle "Please enter a valid channel name.", Index
+                        Else
+                            frmChannel.LeaveChannel p_TEXT_FIRST, GetAccountByIndex(Index)
+                        End If
+                        
                     Case Else
-                        'Maybe channel ment?
-                        Dim Channel As String
-                            Channel = Right$(p_CHAT_ARRAY(0), Len(p_CHAT_ARRAY(0)) - 1)
-                        
-                        Select Case LCase$(Channel)
-                            Case "join"
-                                frmChannel.JoinChannel p_CHAT_ARRAY(1), GetAccountByIndex(Index)
-                                Exit Sub
-                                
-                            Case "leave"
-                                frmChannel.LeaveChannel p_CHAT_ARRAY(1), GetAccountByIndex(Index)
-                                Exit Sub
-                                
-                            Case Else
-                                Dim tempA As String
-                                
-                                With frmChannel.lvChannels.ListItems
-                                    If .Count = 0 Then
-                                        SendSingle "You are not in channel '" & Channel & "'.", Index
-                                    Else
-                                        For i = 1 To .Count
-                                            If LCase$(.Item(i)) = LCase$(Channel) Then
-                                                With frmChannel.lvUsers.ListItems
-                                                    tempA = GetAccountByIndex(Index)
-                                                    
-                                                    For f = 1 To .Count
-                                                        If .Item(f) = tempA And LCase$(.Item(f).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then
-                                                            SendMessageToChannel Channel, tempA, "[" & .Item(f).SubItems(CHANNEL_USER_CHANNEL) & "][" & tempA & "]: " & Right$(p_MainArray(1), Len(p_MainArray(1)) - Len(p_CHAT_ARRAY(0)) - 1)
-                                                            Exit For
-                                                        Else
-                                                            If f = .Count Then SendSingle "You are not in channel '" & Channel & "'.", Index
-                                                        End If
-                                                    Next f
-                                                End With
-                                                Exit Sub
-                                            End If
-                                        Next i
-                                    End If
-                                End With
-                                
-                        End Select
-                        
                         'Emotes
                         For i = LBound(Emotes) To UBound(Emotes)
                             If LCase$(Emotes(i).Command) = LCase$(p_CHAT_ARRAY(0)) Then
@@ -1220,13 +1192,53 @@ For k = 0 To UBound(p_PreArray) - 1
                                     pTemp = Replace(Emotes(i).SingleEmote, "%u", GetAccountByIndex(Index))
                                     pTemp = Replace(pTemp, "%g", Gen)
                                 End If
+                                
                                 SendProtectedMessage GetAccountByIndex(Index), pTemp
-                                Exit For
+                                SetLastMessage GetAccountByIndex(Index), p_MainArray(1)
+                                Exit Sub
                             End If
                         Next i
                         
+                        Dim tempA   As String
+                        Dim Channel As String
+                        
+                        With frmChannel.lvChannels.ListItems
+                            If .Count = 0 Then
+                                If LenB(p_TEXT_FIRST) = 0 Then
+                                    SendSingle "Please enter a valid channel name.", Index
+                                Else
+                                    SendSingle "You are not in channel '" & p_TEXT_FIRST & "'.", Index
+                                End If
+                            Else
+                                If LenB(p_TEXT_FIRST) = 0 Then
+                                    SendSingle "Please enter a valid channel name.", Index
+                                Else
+                                    Channel = Right$(p_CHAT_ARRAY(0), Len(p_CHAT_ARRAY(0)) - 1)
+                                    
+                                    For i = 1 To .Count
+                                        If LCase$(.Item(i)) = LCase$(Channel) Then
+                                            With frmChannel.lvUsers.ListItems
+                                                tempA = GetAccountByIndex(Index)
+                                                
+                                                For f = 1 To .Count
+                                                    If .Item(f) = tempA And LCase$(.Item(f).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then
+                                                        SendMessageToChannel Channel, tempA, "[" & .Item(f).SubItems(CHANNEL_USER_CHANNEL) & "][" & tempA & "]: " & Right$(p_MainArray(1), Len(p_MainArray(1)) - Len(Channel) - 1)
+                                                        Exit For
+                                                    Else
+                                                        If f = .Count Then SendSingle "You are not in channel '" & Channel & "'.", Index
+                                                    End If
+                                                Next f
+                                            End With
+                                            Exit Sub
+                                        End If
+                                    Next i
+                                End If
+                            End If
+                        End With
+                        
                 End Select
                 SetLastMessage GetAccountByIndex(Index), p_MainArray(1)
+                
                 Exit Sub
             End If
             

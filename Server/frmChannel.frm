@@ -187,17 +187,21 @@ End With
 With lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User And LCase$(.Item(i).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then
+            'If announce is enabled then tell channel that user left
             If JoinAnnounce Then SendMessageToChannel Channel, User, "[" & .Item(i).SubItems(CHANNEL_USER_CHANNEL) & "] " & User & " left channel."
             
+            'Set owner to someone else when owner is leaving
             If .Item(i).SubItems(CHANNEL_USER_IS_OWNER) = "1" And .Count > 1 Then
                 .Item(2).SubItems(CHANNEL_USER_IS_OWNER) = "1"
             End If
             
+            'Remove user
             .Remove i
             Exit For
         End If
     Next i
     
+    'Counter for channel if it's empty then we can disband later
     For i = 1 To .Count
         If LCase$(.Item(i).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then
             Counter = Counter + 1
@@ -205,6 +209,7 @@ With lvUsers.ListItems
     Next i
 End With
 
+'If channel is empty then delete it
 If Counter = 0 Then
     With lvChannels.ListItems
         For i = 1 To .Count
