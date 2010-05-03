@@ -27,7 +27,7 @@ Begin VB.Form frmFriendIgnoreList
       Height          =   2055
       Left            =   120
       TabIndex        =   0
-      Top             =   240
+      Top             =   360
       Width           =   7335
       _ExtentX        =   12938
       _ExtentY        =   3625
@@ -40,6 +40,7 @@ Begin VB.Form frmFriendIgnoreList
       _Version        =   393217
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
+      BorderStyle     =   1
       Appearance      =   1
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI"
@@ -83,6 +84,7 @@ Begin VB.Form frmFriendIgnoreList
       _Version        =   393217
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
+      BorderStyle     =   1
       Appearance      =   1
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI"
@@ -122,7 +124,7 @@ Begin VB.Form frmFriendIgnoreList
       Height          =   255
       Left            =   120
       TabIndex        =   1
-      Top             =   0
+      Top             =   120
       Width           =   735
    End
 End

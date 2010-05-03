@@ -37,6 +37,17 @@ Public Enum USER_PANEL_INDEX
     INDEX_AFK_FLAG = 7
 End Enum
 
+Public Enum CHANNEL_INDEX
+    CHANNEL_PASSWORD = 1
+    CHANNEL_OWNER = 2
+    CHANNEL_JOIN_ANNOUNCE = 3
+End Enum
+
+Public Enum CHANNEL_USER_INDEX
+    CHANNEL_USER_CHANNEL = 1
+    CHANNEL_USER_IS_OWNER = 2
+End Enum
+
 Type NOTIFYICONDATA
     cbSize                                  As Long
     hwnd                                    As Long
@@ -177,6 +188,28 @@ With frmFriendIgnoreList.ListView2.ListItems
     Next i
 End With
 End Function
+
+Public Sub SendMessageToChannel(Channel As String, User As String, Message As String)
+Dim i As Long
+Dim j As Long
+
+With frmChannel.lvUsers.ListItems
+    For i = 1 To .Count
+        If LCase$(.Item(i).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then
+            If IsIgnoring(.Item(i), User) = False Then
+                With frmPanel.ListView1.ListItems
+                    For j = 1 To .Count
+                        If .Item(j) = frmChannel.lvUsers.ListItems.Item(i) Then
+                            SendSingle Message, .Item(j).SubItems(INDEX_WINSOCK_ID)
+                            Exit For
+                        End If
+                    Next j
+                End With
+            End If
+        End If
+    Next i
+End With
+End Sub
 
 Public Sub SendProtectedMessage(pAccount As String, pMessage As String)
 Dim i As Long

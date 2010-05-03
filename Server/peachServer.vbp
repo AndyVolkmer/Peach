@@ -18,6 +18,7 @@ Module=modMain; modMain.bas
 Module=modSQL; modSQL.bas
 Module=modIni; modIni.bas
 Class=DatabaseClass; DatabaseClass.cls
+Form=frmChannel.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""

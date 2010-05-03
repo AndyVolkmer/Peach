@@ -11,7 +11,6 @@ Begin VB.MDIForm frmMain
    ClientWidth     =   7395
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "MDIForm1"
-   LockControls    =   -1  'True
    ScrollBars      =   0   'False
    Begin MSComctlLib.StatusBar StatusBar1 
       Align           =   2  'Align Bottom
@@ -62,15 +61,15 @@ Begin VB.MDIForm frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   615
+      Height          =   495
       Left            =   0
-      ScaleHeight     =   615
+      ScaleHeight     =   495
       ScaleWidth      =   7395
       TabIndex        =   0
       Top             =   0
       Width           =   7395
-      Begin VB.CommandButton Command5 
-         Caption         =   "&Friend List"
+      Begin VB.CommandButton Command6 
+         Caption         =   "C&HANNELS"
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -81,13 +80,30 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   5880
+         Left            =   5850
+         TabIndex        =   7
+         Top             =   120
+         Width           =   1095
+      End
+      Begin VB.CommandButton Command5 
+         Caption         =   "&FL / IL"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   4770
          TabIndex        =   6
          Top             =   120
-         Width           =   1455
+         Width           =   1095
       End
       Begin VB.CommandButton Command4 
-         Caption         =   "&User Panel"
+         Caption         =   "&USERS"
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -98,13 +114,13 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   4440
+         Left            =   3690
          TabIndex        =   4
          Top             =   120
-         Width           =   1455
+         Width           =   1095
       End
       Begin VB.CommandButton Command3 
-         Caption         =   "Acco&unt Panel"
+         Caption         =   "A&CCOUNTS"
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -115,13 +131,13 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   3000
+         Left            =   2610
          TabIndex        =   3
          Top             =   120
-         Width           =   1455
+         Width           =   1095
       End
       Begin VB.CommandButton Command2 
-         Caption         =   "Ch&at"
+         Caption         =   "CH&AT"
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -132,13 +148,13 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   1560
+         Left            =   1530
          TabIndex        =   2
          Top             =   120
-         Width           =   1455
+         Width           =   1095
       End
       Begin VB.CommandButton Command1 
-         Caption         =   "&Configuration"
+         Caption         =   "&CONF"
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -149,10 +165,10 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   120
+         Left            =   450
          TabIndex        =   1
          Top             =   120
-         Width           =   1455
+         Width           =   1095
       End
    End
 End
@@ -183,6 +199,10 @@ End Sub
 
 Private Sub Command5_Click()
 SetupForms frmFriendIgnoreList
+End Sub
+
+Private Sub Command6_Click()
+SetupForms frmChannel
 End Sub
 
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -574,7 +594,7 @@ For k = 0 To UBound(p_PreArray) - 1
                             Select Case LCase$(p_CHAT_ARRAY(0))
                                 Case ".announce", ".ann"
                                     Reason = GetAccountByIndex(Index) '//Temp variable used to not load account twice
-                                    SendMessage GetGMFlag(Reason) & GetAFKFlag(Reason) & "[" & GetAccountByIndex(Index) & " announces]: " & p_ANN_MSG
+                                    SendMessage GetGMFlag(Reason) & GetAFKFlag(Reason) & "[" & Reason & " announces]: " & p_ANN_MSG
                                 
                                 Case ".notify"
                                     SendMessage "!msgbox#" & GetAccountByIndex(Index) & ": " & p_ANN_MSG & "#"
@@ -1001,7 +1021,8 @@ For k = 0 To UBound(p_PreArray) - 1
             End If
             
             If IsSlash Then
-                Dim IsUser As Boolean
+                Dim f       As Long
+                Dim IsUser  As Boolean
                 
                 If Options.REPEAT_CHECK = 1 Then
                     If IsRepeating(GetAccountByIndex(Index), p_MainArray(1)) Then
@@ -1122,6 +1143,49 @@ For k = 0 To UBound(p_PreArray) - 1
                         KickUser GetAccountByIndex(Index)
                         
                     Case Else
+                        'Maybe channel ment?
+                        Dim Channel As String
+                            Channel = Right$(p_CHAT_ARRAY(0), Len(p_CHAT_ARRAY(0)) - 1)
+                        
+                        Select Case LCase$(Channel)
+                            Case "join"
+                                frmChannel.JoinChannel p_CHAT_ARRAY(1), GetAccountByIndex(Index)
+                                Exit Sub
+                                
+                            Case "leave"
+                                frmChannel.LeaveChannel p_CHAT_ARRAY(1), GetAccountByIndex(Index)
+                                Exit Sub
+                                
+                            Case Else
+                                Dim tempA As String
+                                
+                                With frmChannel.lvChannels.ListItems
+                                    If .Count = 0 Then
+                                        SendSingle "You are not in channel '" & Channel & "'.", Index
+                                    Else
+                                        For i = 1 To .Count
+                                            If LCase$(.Item(i)) = LCase$(Channel) Then
+                                                With frmChannel.lvUsers.ListItems
+                                                    tempA = GetAccountByIndex(Index)
+                                                    
+                                                    For f = 1 To .Count
+                                                        If .Item(f) = tempA And LCase$(.Item(f).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then
+                                                            SendMessageToChannel Channel, tempA, "[" & .Item(f).SubItems(CHANNEL_USER_CHANNEL) & "][" & tempA & "]: " & Right$(p_MainArray(1), Len(p_MainArray(1)) - Len(p_CHAT_ARRAY(0)) - 1)
+                                                            Exit For
+                                                        Else
+                                                            If f = .Count Then SendSingle "You are not in channel '" & Channel & "'.", Index
+                                                        End If
+                                                    Next f
+                                                End With
+                                                Exit Sub
+                                            End If
+                                        Next i
+                                    End If
+                                End With
+                                
+                        End Select
+                        
+                        'Emotes
                         For i = LBound(Emotes) To UBound(Emotes)
                             If LCase$(Emotes(i).Command) = LCase$(p_CHAT_ARRAY(0)) Then
                                 If GetAccountByIndex(Index) = GetProperAccountName(p_TEXT_FIRST) Then
@@ -1158,8 +1222,6 @@ For k = 0 To UBound(p_PreArray) - 1
                                 End If
                                 SendProtectedMessage GetAccountByIndex(Index), pTemp
                                 Exit For
-                            Else
-                                If i = UBound(Emotes) Then SendSingle "Unknown command used.", Index
                             End If
                         Next i
                         
@@ -1510,7 +1572,7 @@ Dim i As Long
 With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(INDEX_NAME)) = LCase(Account) Then
-            SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " ID: " & .Item(i) & vbCrLf & " Password: " & .Item(i).SubItems(INDEX_PASSWORD) & vbCrLf & " Registration Time: " & .Item(i).SubItems(INDEX_TIME) & vbCrLf & " Registration Date: " & .Item(i).SubItems(INDEX_DATE) & vbCrLf & " Banned: " & .Item(i).SubItems(INDEX_BANNED) & vbCrLf & " Level: " & .Item(i).SubItems(INDEX_LEVEL) & vbCrLf & " Gender: " & .Item(i).SubItems(INDEX_GENDER) & vbCrLf & " Email: " & .Item(i).SubItems(INDEX_EMAIL), pIndex
+            SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " ID: " & .Item(i) & vbCrLf & " Password: " & .Item(i).SubItems(INDEX_PASSWORD) & vbCrLf & " Registration Time: " & .Item(i).SubItems(INDEX_TIME) & vbCrLf & " Registration Date: " & .Item(i).SubItems(INDEX_DATE) & vbCrLf & " Banned: " & .Item(i).SubItems(INDEX_BANNED) & vbCrLf & " Level: " & .Item(i).SubItems(INDEX_LEVEL) & vbCrLf & " Gender: " & .Item(i).SubItems(INDEX_GENDER) & vbCrLf & " Email: " & .Item(i).SubItems(INDEX_EMAIL) & vbCrLf & " Last IP:  " & .Item(i).SubItems(INDEX_LAST_IP), pIndex
             Exit For
         Else
             If i = .Count Then
@@ -1531,7 +1593,7 @@ Dim i As Long
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
-            SendSingle vbCrLf & "User information about '" & pUser & "'" & vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & vbCrLf & " Muted: " & .Item(i).SubItems(INDEX_MUTED) & vbCrLf & " Login Time: " & .Item(i).SubItems(INDEX_LOGIN_TIME), pIndex
+            SendSingle vbCrLf & "User information about '" & pUser & "'" & vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & vbCrLf & " Muted: " & .Item(i).SubItems(INDEX_MUTED) & vbCrLf & " Login Time: " & .Item(i).SubItems(INDEX_LOGIN_TIME) & " GM Flag: " & .Item(i).SubItems(INDEX_GM_FLAG) & " AFK Flag: " & .Item(i).SubItems(INDEX_AFK_FLAG), pIndex
             Exit For
         Else
             If i = .Count Then
@@ -1610,7 +1672,7 @@ Next
 pNewForm.Show
 End Sub
 
-Private Function GetAccountByIndex(pIndex As Integer)
+Private Function GetAccountByIndex(pIndex As Integer) As String
 Dim i As Long
 
 With frmPanel.ListView1.ListItems

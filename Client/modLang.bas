@@ -579,7 +579,7 @@ CONFIG_COMMAND_UPDATE = "&Actualizar"
 CONFIG_COMMAND_REGISTER = "&Crear una cuenta"
 CONFIG_COMMAND_FORGOT_PASSWORD = "¿Ha olvidado contraseña?"
 
-CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
+CONFIG_CHECK_SAVE_PASSWORD = "&Guardar contraseña"
 
 CONFIG_FRAME_CONNECTION = "Informaciónes de conexión"
 
@@ -1184,7 +1184,7 @@ SOC_ASK_IGNORE_DEFAULT = "Voeg hier uw accountnaam in"
 
 SOC_FRIEND_LIST_STATUS = "Staat"
 
-SOC_MSG_CANT_WHISPER = "You can't whisper this user."
+SOC_MSG_CANT_WHISPER = "Je kan deze persoon niet fluisteren."
 
 REG_CAPTION = "Peach - Registratie"
 
@@ -1217,7 +1217,7 @@ REG_MSG_PASSWORD_EMPTY = "Geen wachtwoord ingevoerd."
 REG_MSG_SECRET_ANSWER_EMPTY = "Geen geheim beantwoord opgenomen."
 
 REG_MSG_EMAIL_EMPTY = "Geen email opgenomen."
-REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgot your password?"
+REG_MSG_EMAIL_TAKEN = "De email adres die je ingevoerd hebt wordt al gebruikt, ben je je passwoord vergeten?"
 
 REG_MSG_SUCCESSFULLY = "Account succesvol aangemaakt."
 REG_MSG_ERROR = "Er is een fout opgetreden, probeer het later opnieuw."
@@ -1232,10 +1232,10 @@ REG_CMB_SECRET_QUESTION_3 = "Wat is je favoriete spel?"
 REG_CMB_SECRET_QUESTION_4 = "Wat is uw favoriete zanger?"
 REG_CMB_SECRET_QUESTION_5 = "Waar is de plaats waar je moeder is geboren?"
 
-REG_LABEL_GENDER = "Gender"
+REG_LABEL_GENDER = "Geslacht"
 
-REG_CMB_GENDER_MALE = "Male"
-REG_CMB_GENDER_FEMALE = "Female"
+REG_CMB_GENDER_MALE = "Man"
+REG_CMB_GENDER_FEMALE = "Vrouw"
 
 SET_LABEL_COLOR = "Momenteel gebruikte kleur"
 SET_LABEL_FONT = "Doopvont"
@@ -1257,7 +1257,7 @@ SF_LABEL_SEND_TO = "Verzenden naar"
 
 SF_MSG_USER = "Geen gebruiker geselecteerd."
 SF_MSG_FILE = "Geen bestand geselecteerd."
-SF_MSG_INCOMMING_FILE = "You are receiving '%f' from '%u'. Do you want to accept?"
+SF_MSG_INCOMMING_FILE = "Je bent nu '%f' aan het ontvangen van '%u' Accepteer je?"
 SF_MSG_DECILINED = "Gegevensoverdracht geweigerd."
 
 SF2_COMMAND_OPEN_FILE = "&Open bestandsmap"
