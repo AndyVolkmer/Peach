@@ -205,6 +205,7 @@ With lvUsers.ListItems
     For i = 1 To .Count
         If LCase$(.Item(i).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then
             Counter = Counter + 1
+            Exit For
         End If
     Next i
 End With
@@ -213,10 +214,26 @@ End With
 If Counter = 0 Then
     With lvChannels.ListItems
         For i = 1 To .Count
+            If i > .Count Then Exit Sub
             If LCase$(.Item(i)) = LCase$(Channel) Then
                 .Remove i
             End If
         Next i
     End With
 End If
+End Sub
+
+Public Sub LeaveAllChannels(User As String)
+Dim i As Long
+
+'Just search user in channel and use LeaveChannel function
+With frmChannel.lvUsers.ListItems
+    For i = 1 To .Count
+        If i > .Count Then Exit Sub
+        If .Item(i) = User Then
+            LeaveChannel .Item(i).SubItems(CHANNEL_USER_CHANNEL), User
+            i = i - 1
+        End If
+    Next i
+End With
 End Sub

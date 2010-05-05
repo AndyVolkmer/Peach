@@ -249,14 +249,19 @@ End Sub
 Private Sub Winsock1_Close(Index As Integer)
 Dim i As Long
 Dim j As Long
+Dim User As String
 
+User = GetAccountByIndex(Index)
 Unload Winsock1(Index)
+
+If LenB(User) <> 0 Then SendMessage User & " has gone offline."
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
-            If Not Len(.Item(i)) = 0 Then
-                SendMessage .Item(i) & " has gone offline."
-                Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & .Item(i) & "'")
+            If Len(.Item(i)) <> 0 Then
+                Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'")
+                
                 With frmAccountPanel.ListView1.ListItems
                     For j = 1 To .Count
                         If .Item(j).SubItems(INDEX_NAME) = frmPanel.ListView1.ListItems.Item(i) Then
@@ -266,11 +271,14 @@ With frmPanel.ListView1.ListItems
                     Next j
                 End With
             End If
-            .Remove (i)
+            
+            .Remove i
             Exit For
         End If
     Next i
 End With
+
+frmChannel.LeaveAllChannels User
 
 UPDATE_ONLINE
 UPDATE_STATUS_BAR
@@ -1146,7 +1154,20 @@ For k = 0 To UBound(p_PreArray) - 1
                         If LenB(p_TEXT_FIRST) = 0 Then
                             SendSingle "Please enter a valid channel name.", Index
                         Else
-                            frmChannel.JoinChannel p_TEXT_FIRST, GetAccountByIndex(Index)
+                            With frmChannel.lvUsers.ListItems
+                                If .Count = 0 Then
+                                    frmChannel.JoinChannel p_TEXT_FIRST, GetAccountByIndex(Index)
+                                Else
+                                    For i = 1 To .Count
+                                        If .Item(i) = GetAccountByIndex(Index) And LCase$(.Item(i).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(p_TEXT_FIRST) Then
+                                            SendSingle "You are already in '" & .Item(i).SubItems(CHANNEL_USER_CHANNEL) & "'.", Index
+                                            Exit For
+                                        Else
+                                            If i = .Count Then frmChannel.JoinChannel p_TEXT_FIRST, GetAccountByIndex(Index)
+                                        End If
+                                    Next i
+                                End If
+                            End With
                         End If
                         
                     Case "/leave"
@@ -1207,7 +1228,7 @@ For k = 0 To UBound(p_PreArray) - 1
                                 If LenB(p_TEXT_FIRST) = 0 Then
                                     SendSingle "Please enter a valid channel name.", Index
                                 Else
-                                    SendSingle "You are not in channel '" & p_TEXT_FIRST & "'.", Index
+                                    SendSingle "You are not in channel '" & Right$(p_CHAT_ARRAY(0), Len(p_CHAT_ARRAY(0)) - 1) & "'.", Index
                                 End If
                             Else
                                 If LenB(p_TEXT_FIRST) = 0 Then
@@ -1566,7 +1587,10 @@ With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = pUser Then
             Unload frmMain.Winsock1(.Item(i).SubItems(INDEX_WINSOCK_ID))
+            
             SendMessage .Item(i) & " has gone offline."
+            
+            frmChannel.LeaveAllChannels pUser
             
             .Remove (i)
             
@@ -1646,14 +1670,19 @@ End Function
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Dim i As Long
 Dim j As Long
+Dim User As String
 
+User = GetAccountByIndex(Index)
 Unload Winsock1(Index)
+
+If LenB(User) <> 0 Then SendMessage User & " has gone offline."
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
-            If Not Len(.Item(i)) = 0 Then
-                SendMessage .Item(i) & " has gone offline."
-                Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & .Item(i) & "'")
+            If Len(.Item(i)) <> 0 Then
+                Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'")
+                
                 With frmAccountPanel.ListView1.ListItems
                     For j = 1 To .Count
                         If .Item(j).SubItems(INDEX_NAME) = frmPanel.ListView1.ListItems.Item(i) Then
@@ -1663,11 +1692,14 @@ With frmPanel.ListView1.ListItems
                     Next j
                 End With
             End If
-            .Remove (i)
+            
+            .Remove i
             Exit For
         End If
     Next i
 End With
+
+frmChannel.LeaveAllChannels User
 
 UPDATE_ONLINE
 UPDATE_STATUS_BAR
