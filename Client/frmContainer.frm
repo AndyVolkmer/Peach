@@ -232,7 +232,7 @@ Select Case MSG
         frmContainer.Show
         frmContainer.WindowState = 0
         Shell_NotifyIcon NIM_DELETE, NID    'Del tray icon
-        
+
     Case WM_LBUTTONDBLCLK
     Case WM_RBUTTONDOWN: frmMain.PopupMenu frmMain.myPOP
     Case WM_RBUTTONUP

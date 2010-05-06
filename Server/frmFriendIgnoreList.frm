@@ -186,7 +186,7 @@ If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_FRIENDS & " (ID, Name, Fri
         .Item(i).SubItems(1) = pUser
         .Item(i).SubItems(2) = pFriend
     End With
-    
+
     UPDATE_FRIEND pUser, pIndex
 End If
 End Sub
@@ -225,7 +225,7 @@ If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Name = '
                 i = i - 1
             End If
         Next i
-        
+
         'Search for the user in Friend row
         For i = 1 To .Count
             If i > .Count Then Exit For
@@ -286,13 +286,13 @@ If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_IGNORES & " (ID, Name, Ign
         .Item(i).SubItems(1) = pUser
         .Item(i).SubItems(2) = pIgnore
     End With
-    
+
     UPDATE_IGNORE pUser, pIndex
 End If
 End Sub
 
 Public Sub RemoveIgnore(pUser As String, pIgnore As String, pIndex As Integer)
-Dim pID As Integer
+Dim pID As Long
 Dim i   As Long
 
 With ListView2.ListItems
@@ -327,7 +327,7 @@ If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE Name = '
                 i = i - 1
             End If
         Next i
-        
+
         'Search for the user in Ignore row
         For i = 1 To .Count
             If i > .Count Then Exit For

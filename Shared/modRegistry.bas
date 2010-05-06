@@ -37,9 +37,9 @@ Private Sub SetKeyDataValue(RegKeyRoot As Long, RegKeyName As String, KeyDataTyp
 Dim OpenKey     As Long
 Dim SetValue    As Long
 Dim hKey        As Long
-    
+
 OpenKey = RegOpenKeyEx(RegKeyRoot, RegKeyName, 0, KEY_ALL_ACCESS, hKey)
-    
+
 If (OpenKey <> 0) Then
     Call RegCreateKey(RegKeyRoot, RegKeyName, hKey)
 End If
@@ -59,12 +59,12 @@ Dim hKey        As Long
 Dim strTempVal  As String
 Dim KeyValSize  As Long
 Dim i           As Long
-       
+
 OpenKey = RegOpenKeyEx(RegKeyRoot, RegKeyName, 0, KEY_ALL_ACCESS, hKey)
-        
+
 strTempVal = String$(1024, 0)
 KeyValSize = 1024
-    
+
 OpenKey = RegQueryValueEx(hKey, KeyValueName, 0, KeyDateType, strTempVal, KeyValSize)
 
 On Error Resume Next
@@ -79,14 +79,14 @@ Select Case KeyDateType
         If Not strTempVal = String$(1023, 0) Then
             GetKeyDataValue = strTempVal
         End If
-        
+
     Case 4:
         For i = Len(strTempVal) To 1 Step -1
             GetKeyDataValue = Format(Hex(Asc(Mid(strTempVal, i, 1))), "00")
         Next i
-        
+
         GetKeyDataValue = Format$("&h" + GetKeyDataValue)
-        
+
 End Select
 
 OpenKey = RegCloseKey(hKey)
@@ -98,7 +98,6 @@ Dim hKey            As Long
 
 DeleteKeyValue = RegOpenKeyEx(RegKeyRoot, RegKeyName, 0, KEY_ALL_ACCESS, hKey)
 DeleteKeyValue = RegDeleteValue(hKey, KeyValueName)
-
 End Sub
 
 Private Sub DeleteRegKey(RegKeyRoot As Long, RegKeyName As String)

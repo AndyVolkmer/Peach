@@ -139,7 +139,7 @@ With lvChannels.ListItems
                 .Item(.Count).SubItems(CHANNEL_USER_CHANNEL) = lvChannels.ListItems.Item(i)
                 .Item(.Count).SubItems(CHANNEL_USER_IS_OWNER) = "0"
             End With
-            
+
             If .Item(i).SubItems(CHANNEL_JOIN_ANNOUNCE) = "1" Then SendMessageToChannel Channel, User, "[" & .Item(i) & "] " & User & " has joined the channel."
             Exit Sub
         End If
@@ -159,7 +159,7 @@ With lvUsers.ListItems
     .Item(.Count).SubItems(CHANNEL_USER_CHANNEL) = Channel
     .Item(.Count).SubItems(CHANNEL_USER_IS_OWNER) = "1"
 End With
-    
+
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
@@ -189,18 +189,18 @@ With lvUsers.ListItems
         If .Item(i) = User And LCase$(.Item(i).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then
             'If announce is enabled then tell channel that user left
             If JoinAnnounce Then SendMessageToChannel Channel, User, "[" & .Item(i).SubItems(CHANNEL_USER_CHANNEL) & "] " & User & " left channel."
-            
+
             'Set owner to someone else when owner is leaving
             If .Item(i).SubItems(CHANNEL_USER_IS_OWNER) = "1" And .Count > 1 Then
                 .Item(2).SubItems(CHANNEL_USER_IS_OWNER) = "1"
             End If
-            
+
             'Remove user
             .Remove i
             Exit For
         End If
     Next i
-    
+
     'Counter for channel if it's empty then we can disband later
     For i = 1 To .Count
         If LCase$(.Item(i).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then

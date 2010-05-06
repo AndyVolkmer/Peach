@@ -44,6 +44,7 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -93,7 +94,6 @@ Begin VB.Form frmChat
       _ExtentY        =   4471
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmChat.frx":007D
@@ -234,11 +234,11 @@ lnk = IsUrlOrMail(Text)
 If lnk > 0 Then
     ret = RemoveSign(Text)
     ret = RemoveBrackets(Text)
-    
+
     If lnk > 100 Then
         Text = "mailto:" + Text
     End If
-    
+
     Call SendLink(Text)
 Else
     'Proceed only if the button pressed is right button
@@ -260,7 +260,7 @@ Else
                             End If
                         Next j
                     End With
-                    
+
                     'Check if user is already beeing ignored ( to disable control )
                     With frmSociety.lvIgnoreList.ListItems
                         For j = 1 To .Count
@@ -274,7 +274,7 @@ Else
                             End If
                         Next j
                     End With
-                    
+
                     PopupMenu UserPop
                     Exit For
                 End If
@@ -282,6 +282,7 @@ Else
         End With
     End If
 End If
+
 pAddToFriendlist.Enabled = True
 pIgnoreUser.Enabled = True
 pWhisper.Enabled = True
@@ -399,7 +400,7 @@ Dim txtlen          As Integer
 'Convert the position to pixels.
 pAPI.X = X \ Screen.TwipsPerPixelX
 pAPI.Y = Y \ Screen.TwipsPerPixelY
-    
+
 pPosition = SendMessage2(rch.hwnd, EM_CHARFROMPOS, 0&, pAPI)
 If pPosition <= 0 Then Exit Function
         
@@ -407,7 +408,7 @@ pText = rch.Text
 
 For p_START_POS = pPosition To 1 Step -1
     ch = Mid$(rch.Text, p_START_POS, 1)
-        
+
     If Not ( _
         (ch >= "0" And ch <= "9") Or _
         (ch >= "a" And ch <= "z") Or _
@@ -415,11 +416,11 @@ For p_START_POS = pPosition To 1 Step -1
         ch = "_" _
     ) Then Exit For
 Next p_START_POS
-    
+
 p_START_POS = p_START_POS + 1
-    
+
 txtlen = Len(pText)
-    
+
 For p_END_POS = pPosition To txtlen
     ch = Mid$(pText, p_END_POS, 1)
     If Not ( _
@@ -520,6 +521,7 @@ If Pos > 0 Then
             ok = 11
         End If
     End If
+
     If ok > 0 Then
         Pos = InStr(1, Test$, ".", 1)
         If Pos = 0 Then
@@ -592,17 +594,17 @@ Do
         br = RemoveBrackets(Test)
         ret = RemoveSign(Test)
         lnk = IsUrlOrMail(Test)
-        
+
         If lnk > 0 Then
             NRTB.SelStart = Pos1 - 1 + br
             NRTB.SelLength = Len(Test)
-            
+
             Select Case lnk
                 Case 1 To 10: NRTB.SelColor = RGB(34, 0, 204)
                 Case 11 To 20: NRTB.SelColor = RGB(0, 127, 0)
                 Case Is > 100: NRTB.SelColor = vbRed
             End Select
-            
+
             NRTB.SelBold = True
         Else
             With NRTB
@@ -612,7 +614,7 @@ Do
                 .SelBold = False
             End With
         End If
-        
+
         Pos1 = Pos2 + 1
     Else
         If Pos2 = Pos1 Then
@@ -623,4 +625,3 @@ Loop Until Pos2 = 0 Or Pos2 >= L
 
 Rtb.TextRTF = NRTB.TextRTF
 End Sub
-

@@ -529,21 +529,21 @@ Select Case Len(txtPassword1)
         Label5.BackColor = vbRed
         Label5.ForeColor = vbWhite
         Label5.Caption = REG_LABEL_PASSWORD_WEAK
-        
+
     Case 5, 6, 7
         Picture1.BackColor = vbYellow
         Picture1.BorderStyle = 1
         Label5.BackColor = vbYellow
         Label5.ForeColor = vbBlack
         Label5.Caption = REG_LABEL_PASSWORD_NORMAL
-        
+
     Case Is > 8
         Picture1.BackColor = vbGreen
         Picture1.BorderStyle = 1
         Label5.BackColor = vbGreen
         Label5.ForeColor = vbBlack
         Label5.Caption = REG_LABEL_PASSWORD_STRONG
-        
+
 End Select
 End Sub
 

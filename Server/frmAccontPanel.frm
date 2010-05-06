@@ -288,12 +288,12 @@ If ListView1.ListItems.Count = 0 Then
     MsgBox "No accounts avaible to delete.", vbInformation, "Delete"
     Exit Sub
 End If
-    
+
 With ListView1.SelectedItem
     strName = .SubItems(INDEX_NAME)
     lngID = CLng(.Text)
 End With
-    
+
 If MsgBox("Are you sure that you want to delete account '" & strName & "' ?", vbYesNo + vbQuestion, "Confirm Delete") = vbNo Then Exit Sub
 
 If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & lngID) Then
@@ -301,14 +301,16 @@ If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " 
         .RemoveAllFriendsFromUser strName
         .RemoveAllIgnoresFromUser strName
     End With
-    
+
     With ListView1
         If .SelectedItem.Index = .ListItems.Count Then
             NewIndex = .ListItems.Count - 1
         Else
             NewIndex = .SelectedItem.Index
         End If
+
         .ListItems.Remove .SelectedItem.Index
+
         If .ListItems.Count > 0 Then
             Set .SelectedItem = .ListItems(NewIndex)
             ListView1_ItemClick .SelectedItem
@@ -353,6 +355,7 @@ If ListView1.ListItems.Count = 0 Then
     MsgBox "No account selected to modify.", vbInformation, "Modify"
     Exit Sub
 End If
+
 'Set switch to modify
 Switch = False
 DoButtons True
@@ -368,14 +371,14 @@ If Switch Then
         txtName.SetFocus
         Exit Sub
     End If
-    
+
     'Password can't be added if there is none
     If LenB(Trim$(txtPassword.Text)) = 0 Then
         MsgBox "The password can't be empty.", vbInformation
         txtPassword.SetFocus
         Exit Sub
     End If
-    
+
     For i = 1 To ListView1.ListItems.Count
         If txtName.Text = ListView1.ListItems.Item(i).SubItems(INDEX_NAME) Then
             MsgBox "Name already given.", vbInformation
@@ -384,9 +387,8 @@ If Switch Then
             Exit Sub
         End If
     Next i
-    
+
     RegisterAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, vbNullString, vbNullString, cmbGender.Text, vbNullString
-    
 Else
     'Name can't be modified to nothing
     If LenB(Trim$(txtName.Text)) = 0 Then
@@ -394,17 +396,18 @@ Else
         txtName.SetFocus
         Exit Sub
     End If
-    
+
     'Password can't be modified to nothing
     If LenB(Trim$(txtPassword.Text)) = 0 Then
         MsgBox "The password can't be empty.", vbInformation
         txtPassword.SetFocus
         Exit Sub
     End If
-    
+
     ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index, cmbGender.Text, vbNullString
-    
+
 End If
+
 SetData ListView1.SelectedItem
 DoButtons False
 End Sub
@@ -435,7 +438,7 @@ j = pDB.GetMaxID("ID", DATABASE_TABLE_ACCOUNTS)
 If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1, Email1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & pBanned & "', '" & pLevel & "', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "', '" & pEmail & "')") Then
     'Save index in variable
     i = ListView1.ListItems.Count + 1
-    
+
     'Add account to the listview
     With ListView1.ListItems
         .Add , , j
@@ -498,7 +501,7 @@ With RegSock
     For i = .LBound + 1 To .UBound
         .Item (i)
     Next i
-    
+
     GetFreeSocket = .UBound + 1
 End With
 
@@ -541,7 +544,7 @@ Select Case pCommand
                     Exit Sub
                 End If
             Next i
-            
+
             'Check if the email is already used
             For i = 1 To .Count
                 If LCase$(.Item(i).SubItems(INDEX_EMAIL)) = LCase$(array1(6)) Then
@@ -550,10 +553,10 @@ Select Case pCommand
                 End If
             Next i
         End With
-        
+
         RegisterAccount array1(1), array1(2), "0", "0", array1(3), array1(4), array1(5), array1(6)
         RegSock(Index).SendData "!done#"
-        
+
     'Check the secret question and send password
     Case "!request_password"
         With ListView1.ListItems
@@ -577,7 +580,7 @@ Select Case pCommand
                 End If
             Next i
         End With
-        
+
 End Select
 Exit Sub
 

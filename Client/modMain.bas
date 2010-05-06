@@ -32,14 +32,14 @@ If Setting.VALIDATE = 0 Then
         Case 7: SET_LANG_FRENCH
         'Case 8: SET_LANG_NORWEGIAN
     End Select
-    
+
     SetScheme
-    
+
     'Temp hackfix for auto login
     If Setting.AUTO_LOGIN Then
         frmMain.cmdConnect_Click
     End If
-    
+
     frmMain.Show
 Else
     'Set language default ( english )
@@ -57,75 +57,75 @@ With Setting
     Else
         .SERVER_IP = ReadFromRegistry("Client\Configuration", "IP")
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Configuration", "Port")) = 0 Then
         .SERVER_PORT = 4728
     Else
         .SERVER_PORT = ReadFromRegistry("Client\Configuration", "Port")
     End If
-    
+
     .NICKNAME = ReadFromRegistry("Client\Configuration", "Nickname")
-    
+
     If LenB(ReadFromRegistry("Client\Configuration", "AccountTick")) = 0 Then
         .ACCOUNT_TICK = False
     Else
         .ACCOUNT_TICK = CBool(ReadFromRegistry("Client\Configuration", "AccountTick"))
     End If
-    
+
     .ACCOUNT = ReadFromRegistry("Client\Configuration", "Account")
-    
+
     If LenB(ReadFromRegistry("Client\Configuration", "PasswordTick")) = 0 Then
         .PASSWORD_TICK = False
     Else
         .PASSWORD_TICK = CBool(ReadFromRegistry("Client\Configuration", "PasswordTick"))
     End If
-    
+
     If .PASSWORD_TICK Then
         .PASSWORD = DeCode(DeCode(ReadFromRegistry("Client\Configuration", "Password")))
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Configuration", "AskTick")) = 0 Then
         .ASK_TICK = False
     Else
         .ASK_TICK = CBool(ReadFromRegistry("Client\Configuration", "AskTick"))
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Configuration", "MinimizeTray")) = 0 Then
         .MIN_TICK = False
     Else
         .MIN_TICK = CBool(ReadFromRegistry("Client\Configuration", "MinimizeTray"))
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Configuration", "AutoLogin")) = 0 Then
         .AUTO_LOGIN = False
     Else
         .AUTO_LOGIN = CBool(ReadFromRegistry("Client\Configuration", "AutoLogin"))
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Configuration", "Validate")) = 0 Then
         .VALIDATE = 1
     Else
         .VALIDATE = ReadFromRegistry("Client\Configuration", "Validate")
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Configuration", "Language")) = 0 Then
         .LANGUAGE = 1 'English as default
     Else
         .LANGUAGE = ReadFromRegistry("Client\Configuration", "Language")
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Configuration", "Top")) = 0 Then
         .MAIN_TOP = Screen.Height / Screen.TwipsPerPixelY
     Else
         .MAIN_TOP = ReadFromRegistry("Client\Configuration", "Top")
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Configuration", "Left")) = 0 Then
         .MAIN_LEFT = Screen.Width / Screen.TwipsPerPixelX
     Else
         .MAIN_LEFT = ReadFromRegistry("Client\Configuration", "Left")
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Configuration", "SchemeColor")) = 0 Then
         .SCHEME_COLOR = 15724527
     Else
@@ -139,31 +139,31 @@ With Fonts
     Else
         .Bold = CBool(ReadFromRegistry("Client\Font", "FontBold"))
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Font", "FontItalic")) = 0 Then
         .Italic = False
     Else
         .Italic = CBool(ReadFromRegistry("Client\Font", "FontItalic"))
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Font", "FontName")) = 0 Then
         .Name = "Segoe UI"
     Else
         .Name = ReadFromRegistry("Client\Font", "FontName")
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Font", "FontSize")) = 0 Then
         .Size = 9
     Else
         .Size = CLng(ReadFromRegistry("Client\Font", "FontSize"))
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Font", "FontStrike")) = 0 Then
         .Strike = False
     Else
         .Strike = CBool(ReadFromRegistry("Client\Font", "FontStrike"))
     End If
-    
+
     If LenB(ReadFromRegistry("Client\Font", "FontUnder")) = 0 Then
         .Under = False
     Else

@@ -12,12 +12,12 @@ AssignVariables:
         ReadIniValue = vbNullString
         KEY = "[" & LCase$(KEY) & "]"
         Variable = LCase$(Variable)
-    
+
 EnsureFileExists:
     Open INIpath For Binary As NF
     Close NF
     SetAttr INIpath, vbArchive
-    
+
 LoadFile:
     Open INIpath For Input As NF
     While Not EOF(NF)
@@ -53,19 +53,19 @@ AssignVariables:
     ReadKey = vbCrLf & "[" & LCase$(PutKey) & "]" & Chr$(13)
     KEYLEN = Len(ReadKey)
     ReadVariable = Chr$(10) & LCase$(PutVariable) & "="
-        
+
 EnsureFileExists:
     Open INIpath For Binary As NF
     Close NF
     SetAttr INIpath, vbArchive
-    
+
 LoadFile:
     Open INIpath For Input As NF
     Temp = Input$(LOF(NF), NF)
     Temp = vbCrLf & Temp & "[]"
     Close NF
     LcaseTemp = LCase$(Temp)
-    
+
 LogicMenu:
     LOKEY = InStr(LcaseTemp, ReadKey)
     If LOKEY = 0 Then GoTo AddKey:
@@ -73,17 +73,17 @@ LogicMenu:
     VAR = InStr(LOKEY, LcaseTemp, ReadVariable)
     If VAR > HIKEY Or VAR < LOKEY Then GoTo AddVariable:
     GoTo RenewVariable:
-    
+
 AddKey:
     Temp = Left$(Temp, Len(Temp) - 2)
     Temp = Temp & vbCrLf & vbCrLf & "[" & PutKey & "]" & vbCrLf & PutVariable & "=" & PutValue
     GoTo TrimFinalString:
-    
+
 AddVariable:
     Temp = Left$(Temp, Len(Temp) - 2)
     Temp = Left$(Temp, LOKEY + KEYLEN) & PutVariable & "=" & PutValue & vbCrLf & Mid$(Temp, LOKEY + KEYLEN + 1)
     GoTo TrimFinalString:
-    
+
 RenewVariable:
     Temp = Left$(Temp, Len(Temp) - 2)
     VARENDOFLINE = InStr(VAR, Temp, Chr$(13))
@@ -108,5 +108,5 @@ OutputAmendedINIFile:
     Open INIpath For Output As NF
     Print #NF, Temp
     Close NF
-    
+
 End Sub

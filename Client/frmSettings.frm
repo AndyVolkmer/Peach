@@ -18,6 +18,7 @@ Begin VB.Form frmSettings
    EndProperty
    Icon            =   "frmSettings.frx":0000
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   6300
@@ -363,37 +364,37 @@ Command2.Caption = SET_COMMAND_SAVE
 
 With Setting
     txtColor.BackColor = .SCHEME_COLOR
-    
+
     If .ACCOUNT_TICK Then
         chkSaveAccount.Value = 1
     Else
         chkSaveAccount.Value = 0
     End If
-    
+
     If .PASSWORD_TICK Then
         chkSavePassword.Value = 1
     Else
         chkSavePassword.Value = 0
     End If
-    
+
     If .AUTO_LOGIN Then
         chkAutoLogin.Value = 1
     Else
         chkAutoLogin.Value = 0
     End If
-    
+
     If .ASK_TICK Then
         chkAskClosing.Value = 1
     Else
         chkAskClosing.Value = 0
     End If
-    
+
     If .MIN_TICK Then
         chkMinimize.Value = 1
     Else
         chkMinimize.Value = 0
     End If
-    
+
     txtIP = .SERVER_IP
     txtPort = .SERVER_PORT
 End With

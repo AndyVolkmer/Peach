@@ -139,7 +139,6 @@ Close Clients(Index).FileNum
 
 If Clients(Index).BytesReceived < Clients(Index).FileSize Then
     Kill App.Path & "\" & Clients(Index).FileName
-    
     Me.lstConnections.ListItems(Index + 1).SubItems(4) = "Incomplete, File Deleted"
 Else
     Me.lstConnections.ListItems(Index + 1).SubItems(4) = "Transfer Complete"
@@ -185,7 +184,7 @@ Next i
 If i = SckReceiveFile.UBound + 1 Then
     Load SckReceiveFile(SckReceiveFile.UBound + 1)
     ReDim Preserve Clients(SckReceiveFile.UBound)
-    
+
     i = SckReceiveFile.UBound
     lstConnections.ListItems.Add , , CStr(i)
 End If
@@ -208,17 +207,17 @@ SckReceiveFile(Index).GetData sData, vbString
 
 If Clients(Index).FileSize = 0 And InStr(1, sData, ":") > 0 Then
     Pos = InStr(1, sData, ",")
-    
+
     Clients(Index).FileSize = Val(Left(sData, Pos - 1))
     Pos2 = InStr(Pos, sData, ":")
     Clients(Index).FileName = Mid(sData, Pos + 1, (Pos2 - Pos) - 1)
-    
+
     Clients(Index).FileNum = FreeFile
     On Error GoTo handleErrorSendFile:
     Open App.Path & "\" & Clients(Index).FileName For Binary Access Write Lock Write As Clients(Index).FileNum
-    
+
     sData = Mid(sData, Pos2 + 1)
-    
+
     Me.lstConnections.ListItems(Index + 1).SubItems(3) = Clients(Index).FileName
     FitTextInListView Me.lstConnections, 3, , Index + 1
 End If
@@ -226,10 +225,10 @@ End If
 If LenB(sData) > 0 Then
     Clients(Index).BytesReceived = Clients(Index).BytesReceived + Len(sData)
     Put Clients(Index).FileNum, , sData
-    
+
     Me.lstConnections.ListItems(Index + 1).SubItems(4) = Format$(Clients(Index).BytesReceived / Clients(Index).FileSize * 100#, "#0.00") & " %"
     FitTextInListView Me.lstConnections, 4, , Index + 1
-    
+
     If Clients(Index).BytesReceived >= Clients(Index).FileSize Then
         SckReceiveFile_Close Index
     End If
@@ -240,11 +239,11 @@ Select Case Err.Number
     Case 75
         MsgBox "The file you are trying to get already exists in this location and is ReadOnly. Rename it and try to send again." & vbCrLf & "Current action aborted due to ReadOnly file.", vbInformation
         Exit Sub
-        
+
     Case Else
         MsgBox "Error : " & Err.Number & vbCrLf & "Description : " & Err.Description & vbCrLf & "Current action aborted because of an unkown error!", vbCritical
         Exit Sub
-        
+
 End Select
 End Sub
 
@@ -254,7 +253,7 @@ Dim TmpStr  As String
 
 For i = 0 To SckReceiveFile.UBound
     TmpStr = Choose(SckReceiveFile(i).State + 1, "Closed", "Open", "Listening", "Connection pending", "Resolving host", "Host resolved", "Connecting", "Connected", "Server is disconnecting", "Error")
-    
+
     If Me.lstConnections.ListItems(i + 1).SubItems(1) <> TmpStr Then
         Me.lstConnections.ListItems(i + 1).SubItems(1) = TmpStr
         FitTextInListView Me.lstConnections, 1, , i + 1

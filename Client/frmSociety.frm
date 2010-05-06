@@ -446,7 +446,7 @@ Private Sub lvFriendList_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnHea
 With lvFriendList
     .Sorted = True
     .SortKey = ColumnHeader.SubItemIndex
-    
+
     If .SortOrder = lvwDescending Then
         .SortOrder = lvwAscending
     Else

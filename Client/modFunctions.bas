@@ -129,10 +129,10 @@ With frmMain
             Unload WiSk
         End If
     Next
-    
+
     .FSocket2(0).Close
     .Winsock1.Close
-    
+
     'Reset RunOnce variable
     .RunOnce = False
 End With
@@ -188,15 +188,15 @@ With frmMain
     .lblCreateAccount.Enabled = pSwitch
     .lblForgotPassword.Enabled = pSwitch
     .lblPassword.Enabled = pSwitch
-    
+
     .txtAccount.Enabled = pSwitch
     .txtPassword.Enabled = pSwitch
-    
+
     .menuConfig.Enabled = pSwitch
     .menuUpdate.Enabled = pSwitch
-    
+
     If isConnecting = False Then .cmdSwitch.Enabled = Not pSwitch
-    
+
     If pSwitch Then
         .cmdConnect.Caption = CONFIG_COMMAND_CONNECT
     Else

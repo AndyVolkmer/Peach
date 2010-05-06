@@ -262,7 +262,6 @@ tmrSendFile.Enabled = False
 tmrSendFile.Interval = 0
 tmrCalcSpeed.Enabled = False
 
-
 Close iFileNum  'Close file
 iFileNum = 0    'Set file number to 0, timer will exit if another timer event
 
@@ -312,10 +311,10 @@ Dim SecondsLeft As Single
 If iFileNum > 0 Then
     DataSent = Loc(iFileNum)
     DataLen = LOF(iFileNum)
-    
+
     BSentPerSec = DataSent - PrevSent
     PrevSent = DataSent
-    
+
     SecondsLeft = (CSng(DataLen) - CSng(DataSent)) / CSng(BSentPerSec)
 Else
     PrevSent = 0
@@ -336,7 +335,6 @@ If iFileNum <= 0 Or SckSendFile.State <> sckConnected Then Exit Sub
 If Loc(iFileNum) >= LOF(iFileNum) Then 'FILE COMPLETE
     Close iFileNum  'Close file
     iFileNum = 0    'Set file number to 0, timer will exit if another timer event
-    
     Exit Sub
 End If
 

@@ -374,7 +374,7 @@ Select Case MSG
         frmMain.Show
         frmMain.WindowState = 0
         Shell_NotifyIcon NIM_DELETE, NID    'Del tray icon
-        
+
     Case WM_LBUTTONDBLCLK
     Case WM_RBUTTONDOWN: frmMain.PopupMenu myPOP
     Case WM_RBUTTONUP
@@ -510,45 +510,45 @@ Select Case array1(0)
             .txtAccount = vbNullString
             .txtAccount.SetFocus
         End With
-        
+
     Case "!emailtaken"
         MsgBox REG_MSG_EMAIL_TAKEN, vbInformation
         With frmCreateAccount
             .txtEmail = vbNullString
             .txtAccount.SetFocus
         End With
-        
+
     Case "!done"
         MsgBox REG_MSG_SUCCESSFULLY, vbInformation
         Unload frmCreateAccount
-        
+
     Case "!error_fp"
         MsgBox FP_MSG_WRONG_ANSWER, vbInformation
         With frmForgotPassword
             .txtSecretAnswer = vbNullString
             .txtSecretAnswer.SetFocus
         End With
-        
+
     Case "!successfull"
         Dim pText As String
-        
+
         pText = Replace$(FP_MSG_SUCCESSFULL, "%p", array1(1))
         pText = Replace$(pText, "%u", array1(2))
-        
+
         MsgBox pText, vbInformation
         With frmMain
             .txtPassword = array1(1)
             .txtAccount = array1(2)
         End With
         Unload frmForgotPassword
-        
+
     Case "!email_not_exist"
         MsgBox FP_MSG_WRONG_EMAIL, vbInformation
         With frmForgotPassword
             .txtEmail = vbNullString
             .txtEmail.SetFocus
         End With
-        
+
 End Select
 End Sub
 
@@ -613,14 +613,14 @@ p_PreArray = Split(GetMessage, Chr(24) & Chr(25))
 For k = 0 To UBound(p_PreArray) - 1
     'We split the message into an array
     StrArr = Split(p_PreArray(k), "#")
-        
+
     'Assign the variables to the array
     GetCommand = StrArr(0)
-    
+
     Select Case GetCommand
         Case "!clear"
             frmChat.txtConver.Text = vbNullString
-            
+
         Case "!split_text"
             For i = 1 To UBound(StrArr)
                 Buffer = Buffer & vbCrLf & " " & StrArr(i)
@@ -629,10 +629,10 @@ For k = 0 To UBound(p_PreArray) - 1
                 .SelStart = Len(.Text)
                 .SelRTF = Buffer
             End With
-            
+
         Case "!namechange"
             txtAccount.Text = StrArr(1)
-            
+
         'Show server information
         Case "!server_info"
             For i = 1 To UBound(StrArr)
@@ -643,25 +643,25 @@ For k = 0 To UBound(p_PreArray) - 1
                 .SelRTF = Buffer
             End With
             SendMessage "!ignore#-get#"
-            
+
         'We can't login
         Case "!decilined"
             Disconnect
             MsgBox MDI_MSG_NAME_TAKEN, vbInformation
-            
+
         'We can login
         Case "!accepted"
             frmMain.cmdSwitch.Enabled = True
-            
+
             With frmContainer
                 .Top = frmMain.Top
                 .Left = frmMain.Left
             End With
-            
+
             SetupChildForm frmChat
             txtAccount.Text = StrArr(1)
             SendMessage "!connected#"
-            
+
         'Wipe out current ignore list and insert new values
         Case "!update_ignore"
             With frmSociety.lvIgnoreList.ListItems
@@ -670,25 +670,25 @@ For k = 0 To UBound(p_PreArray) - 1
                     .Add , , StrArr(i)
                 Next i
             End With
-            
+
         'Wipe out current friend list and insert new values
         Case "!update_friends"
             Dim f_array() As String
             Dim j As Long
-            
+
             With frmSociety.lvFriendList.ListItems
                 .Clear
                 For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
                     f_array = Split(StrArr(i), "$")
-                    
+
                     'Add account name of friend
                     .Add , , f_array(0)
                     j = .Count
-                    
+
                     'Write down status
                     .Item(j).SubItems(1) = f_array(1)
                     .Item(j).ListSubItems(1).Bold = True
-                    
+
                     'Color the listview with apropiate color
                     If Len(f_array(1)) = 6 Then
                         .Item(j).ListSubItems(1).ForeColor = RGB(0, 132, 43)
@@ -696,29 +696,29 @@ For k = 0 To UBound(p_PreArray) - 1
                         .Item(j).ListSubItems(1).ForeColor = RGB(132, 0, 0)
                     End If
                 Next i
-                
+
                 'Ask for server information
                 If RunOnce = False Then
                     RunOnce = True
                     SendMessage "!server_info#"
                 End If
             End With
-            
+
         'Wipe out current list and insert new values
         Case "!update_online"
             'Clear the current list so we don't get multiply entries
             frmSociety.lvOnlineList.ListItems.Clear
             frmSendFile.Combo1.Clear
-            
+
             'Go through array and add users
             For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
                 frmSociety.lvOnlineList.ListItems.Add , , StrArr(i)
                 frmSendFile.Combo1.AddItem StrArr(i)
             Next i
-            
+
             'Ask for friendlist
             SendMessage "!friend#-get#"
-            
+
         'We get login answer here
         Case "!login"
             Select Case StrArr(1)
@@ -730,7 +730,7 @@ For k = 0 To UBound(p_PreArray) - 1
                         .txtPassword.SetFocus
                     End With
                     Exit Sub
-                    
+
                 Case "Account"
                     MsgBox MDI_MSG_WRONG_ACCOUNT, vbInformation
                     Disconnect
@@ -739,14 +739,14 @@ For k = 0 To UBound(p_PreArray) - 1
                         .txtAccount.SetFocus
                     End With
                     Exit Sub
-                    
+
                 Case "Banned"
                     MsgBox MDI_MSG_BANNED, vbInformation
                     Disconnect
                     Exit Sub
-                    
+
             End Select
-            
+
         'We get ip here
         Case "!iprequest"
             'Connect new winsock to client
@@ -756,33 +756,33 @@ For k = 0 To UBound(p_PreArray) - 1
                 .RemotePort = aPort
                 .Connect
             End With
-            
+
             'Start timer to send file
             With STimer
                 .Interval = 5
                 .Enabled = True
             End With
-            
+
         'Function to display information messageboxes
         Case "!msgbox"
             Select Case StrArr(1)
                 Case "MSG_CANT_ADD_YOU"
                     MsgBox MDI_MSG_CANT_ADD_YOU, vbInformation
-                    
+
                 Case "MSG_ALREADY_IN_IGNORE_LIST"
                     MsgBox Replace$(MDI_MSG_ALREADY_IN_IGNORE_LIST, "%u", StrArr(2)), vbInformation
-                    
+
                 Case "MSG_ALREADY_IN_FRIEND_LIST"
                     MsgBox Replace$(MDI_MSG_ALREADY_IN_FRIEND_LIST, "%u", StrArr(2)), vbInformation
-                    
+
                 Case "MSG_ACCOUNT_NOT_EXIST"
                     MsgBox Replace$(MDI_MSG_ACCOUNT_NOT_EXIST, "%u", StrArr(2)), vbInformation
-                    
+
                 Case Else
                     MsgBox StrArr(1), vbInformation
-                    
+
             End Select
-            
+
         Case Else
             If Not Screen.ActiveForm.Name = frmChat.Name Then
                 ChatNotifyTimer.Enabled = True
@@ -791,7 +791,7 @@ For k = 0 To UBound(p_PreArray) - 1
                 .SelStart = Len(.Text)
                 .SelRTF = vbCrLf & Space(1) & "[" & Format$(Time, "hh:nn:ss") & "]" & Space(1) & p_PreArray(k)
             End With
-            
+
     End Select
 Next k
 End Sub
@@ -821,7 +821,7 @@ If array1(0) = "!filerequest" Then
     Dim pText As String
         pText = Replace$(SF_MSG_INCOMMING_FILE, "%f", array1(1))
         pText = Replace$(pText, "%u", array1(2))
-        
+
     If MsgBox(pText, vbYesNo + vbQuestion) = vbYes Then
         FSocket2(Index).SendData "!acceptfile#"
         frmSendFile2.Show

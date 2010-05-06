@@ -40,12 +40,12 @@ Select Case pType
         If InStr(1, pDatabaseFile, ".") = 0 Then
             pDatabaseFile = pDatabaseFile & ".mdb"
         End If
-        
+
         pConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" _
             & "Data Source=" _
             & App.Path & "\" _
             & pDatabaseFile
-            
+
     Case "2" 'MySQL Database 3.51
         pConnection.ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver};" _
             & "SERVER=" & pHost & ";" _
@@ -53,7 +53,7 @@ Select Case pType
             & "UID=" & pUser & ";" _
             & "PWD=" & pPassword & ";" _
             & "OPTION=18475" '-> 1 + 2 + 8 + 32 + 2048 + 16384
-            
+
     Case Else 'Other types database types
         '
 End Select

@@ -27,27 +27,27 @@ If LenB(pConnectResult) = 0 Then
         MsgBox frmConfig.txt_log.Text, vbInformation
         End
     End If
-    
+
     If Not LoadCommands Then
         MsgBox frmConfig.txt_log.Text, vbInformation
         End
     End If
-    
+
     If Not LoadDeclinedNames Then
         MsgBox frmConfig.txt_log.Text, vbInformation
         End
     End If
-    
+
     If Not LoadEmotes Then
         MsgBox frmConfig.txt_log.Text, vbInformation
         End
     End If
-    
+
     If Not LoadFriends Then
         MsgBox frmConfig.txt_log.Text, vbInformation
         End
     End If
-    
+
     If Not LoadIgnores Then
         MsgBox frmConfig.txt_log.Text, vbInformation
         End
@@ -79,7 +79,7 @@ With frmMain
     Else
         .Top = 1200
     End If
-    
+
     If LenB(ReadFromRegistry("Server\Configuration", "Left")) <> 0 Then
         .Left = ReadFromRegistry("Server\Configuration", "Left")
     Else
@@ -104,7 +104,7 @@ With Database
     Else
         .Type = ReadIniValue(p_Path, "Database", "Type")
     End If
-    
+
     If .Type = "1" Then
         If LenB(ReadIniValue(p_Path, "Database", "File")) = 0 Then
             WriteIniValue p_Path, "Database", "File", vbNullString
@@ -115,7 +115,7 @@ With Database
         Else
             .File = ReadIniValue(p_Path, "Database", "File")
         End If
-    
+
     ElseIf .Type = "2" Then
         If LenB(ReadIniValue(p_Path, "Database", "Name")) = 0 Then
             WriteIniValue p_Path, "Database", "Name", vbNullString
@@ -126,7 +126,7 @@ With Database
         Else
             .Database = ReadIniValue(p_Path, "Database", "Name")
         End If
-        
+
         If LenB(ReadIniValue(p_Path, "Database", "User")) = 0 Then
             WriteIniValue p_Path, "Database", "User", vbNullString
             If MsgBox("Database user not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
@@ -136,7 +136,7 @@ With Database
         Else
             .User = ReadIniValue(p_Path, "Database", "User")
         End If
-        
+
         If LenB(ReadIniValue(p_Path, "Database", "Password")) = 0 Then
             WriteIniValue p_Path, "Database", "Password", vbNullString
             If MsgBox("Database password not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
@@ -146,7 +146,7 @@ With Database
         Else
             .Password = DeCode(ReadIniValue(p_Path, "Database", "Password"))
         End If
-        
+
         If LenB(ReadIniValue(p_Path, "Database", "Host")) = 0 Then
             WriteIniValue p_Path, "Database", "Host", vbNullString
             If MsgBox("Database host not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
@@ -156,14 +156,14 @@ With Database
         Else
             .Host = ReadIniValue(p_Path, "Database", "Host")
         End If
-        
+
     Else
         If MsgBox("Invalid database type, please check configuration file. Do you want to enter a value now?", vbQuestion + vbYesNo) = vbYes Then
             WriteIniValue p_Path, "Database", "Type", InputBox("Enter a valid database type." & vbCrLf & "1 - Access Database" & vbCrLf & "2 - MySQL Database", "Invalid database type ..")
         End If
         eFlag = True
     End If
-    
+
     If eFlag Then End
 End With
 End Sub
@@ -171,7 +171,7 @@ End Sub
 Public Sub LoadConfigValue()
 Dim p_Path As String
     p_Path = App.Path & "\peachConfig.conf"
-    
+
 If LenB(ReadIniValue(p_Path, "Options", "CapsCheck")) = 0 Then
     WriteIniValue p_Path, "Options", "CapsCheck", "1"
     MsgBox "Option caps check value not found, default set.", vbInformation

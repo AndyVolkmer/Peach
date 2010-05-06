@@ -34,7 +34,6 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -159,11 +158,11 @@ Select Case Err.Number
         SetButtons False
         txtPort.SetFocus
         txtPort.SelStart = Len(txtPort.Text)
-        
+
     Case Else
         MsgBox "Error: " & Err.Number & vbCrLf & Err.Description & vbCrLf & "Report the number above to developement.", vbInformation
         Unload Me
-        
+
 End Select
 End Sub
 
