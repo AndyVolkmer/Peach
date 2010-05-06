@@ -258,13 +258,13 @@ If LenB(User) <> 0 Then SendMessage User & " has gone offline."
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
-            If Len(.Item(i)) <> 0 Then
+        If .Item(i) = User Then
+            If Len(User) <> 0 Then
                 Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'")
 
                 With frmAccountPanel.ListView1.ListItems
                     For j = 1 To .Count
-                        If .Item(j).SubItems(INDEX_NAME) = frmPanel.ListView1.ListItems.Item(i) Then
+                        If .Item(j).SubItems(INDEX_NAME) = User Then
                             .Item(j).SubItems(INDEX_LAST_IP) = frmPanel.ListView1.ListItems.Item(i).SubItems(INDEX_IP)
                             Exit For
                         End If
@@ -966,13 +966,12 @@ For k = 0 To UBound(p_PreArray) - 1
                                     End With
 
                                     'If account exist delete it
-                                    If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & .Item(i)) Then
-                                        frmFriendIgnoreList.RemoveAllFriendsFromUser .Item(i).SubItems(INDEX_NAME)
-                                        frmFriendIgnoreList.RemoveAllIgnoresFromUser .Item(i).SubItems(INDEX_NAME)
+                                    pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & .Item(i)
+                                    frmFriendIgnoreList.RemoveAllFriendsFromUser .Item(i).SubItems(INDEX_NAME)
+                                    frmFriendIgnoreList.RemoveAllIgnoresFromUser .Item(i).SubItems(INDEX_NAME)
 
-                                        SendSingle "Successfully deleted account '" & properAccount & "' ID: " & .Item(i) & ".", Index
-                                        .Remove i
-                                    End If
+                                    SendSingle "Successfully deleted account '" & properAccount & "' ID: " & .Item(i) & ".", Index
+                                    .Remove i
                                     Exit For
                                 Else
                                     If i = .Count Then
@@ -1679,13 +1678,13 @@ If LenB(User) <> 0 Then SendMessage User & " has gone offline."
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
-            If Len(.Item(i)) <> 0 Then
+        If .Item(i) = User Then
+            If Len(User) <> 0 Then
                 Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'")
 
                 With frmAccountPanel.ListView1.ListItems
                     For j = 1 To .Count
-                        If .Item(j).SubItems(INDEX_NAME) = frmPanel.ListView1.ListItems.Item(i) Then
+                        If .Item(j).SubItems(INDEX_NAME) = User Then
                             .Item(j).SubItems(INDEX_LAST_IP) = frmPanel.ListView1.ListItems.Item(i).SubItems(INDEX_IP)
                             Exit For
                         End If

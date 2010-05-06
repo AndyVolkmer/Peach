@@ -296,29 +296,29 @@ End With
 
 If MsgBox("Are you sure that you want to delete account '" & strName & "' ?", vbYesNo + vbQuestion, "Confirm Delete") = vbNo Then Exit Sub
 
-If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & lngID) Then
-    With frmFriendIgnoreList
-        .RemoveAllFriendsFromUser strName
-        .RemoveAllIgnoresFromUser strName
-    End With
+With frmFriendIgnoreList
+    .RemoveAllFriendsFromUser strName
+    .RemoveAllIgnoresFromUser strName
+End With
 
-    With ListView1
-        If .SelectedItem.Index = .ListItems.Count Then
-            NewIndex = .ListItems.Count - 1
-        Else
-            NewIndex = .SelectedItem.Index
-        End If
+With ListView1
+    If .SelectedItem.Index = .ListItems.Count Then
+        NewIndex = .ListItems.Count - 1
+    Else
+        NewIndex = .SelectedItem.Index
+    End If
 
-        .ListItems.Remove .SelectedItem.Index
+    .ListItems.Remove .SelectedItem.Index
 
-        If .ListItems.Count > 0 Then
-            Set .SelectedItem = .ListItems(NewIndex)
-            ListView1_ItemClick .SelectedItem
-        Else
-            ClearTxBoxes
-        End If
-    End With
-End If
+    If .ListItems.Count > 0 Then
+        Set .SelectedItem = .ListItems(NewIndex)
+        ListView1_ItemClick .SelectedItem
+    Else
+        ClearTxBoxes
+    End If
+End With
+
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & lngID
 End Sub
 
 Private Sub DoButtons(Args As Boolean)
@@ -413,18 +413,18 @@ DoButtons False
 End Sub
 
 Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Long, pLevel As String, MOD_ID As Long, LST_ID As Long, pGender As String, pEmail As String)
-'Only modify account if it succesfully updated in the database
-If pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBanned & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "', Email1 ='" & pEmail & "' WHERE ID = " & MOD_ID) Then
-    'Modify listview values
-    With ListView1.ListItems.Item(LST_ID)
-        .SubItems(INDEX_NAME) = pName
-        .SubItems(INDEX_PASSWORD) = pPassword
-        .SubItems(INDEX_BANNED) = pBanned
-        .SubItems(INDEX_LEVEL) = pLevel
-        .SubItems(INDEX_GENDER) = pGender
-        .SubItems(INDEX_EMAIL) = pEmail
-    End With
-End If
+'Modify listview values
+With ListView1.ListItems.Item(LST_ID)
+    .SubItems(INDEX_NAME) = pName
+    .SubItems(INDEX_PASSWORD) = pPassword
+    .SubItems(INDEX_BANNED) = pBanned
+    .SubItems(INDEX_LEVEL) = pLevel
+    .SubItems(INDEX_GENDER) = pGender
+    .SubItems(INDEX_EMAIL) = pEmail
+End With
+
+'Modify database values
+pDB.ExecuteCommand "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBanned & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "', Email1 ='" & pEmail & "' WHERE ID = " & MOD_ID
 End Sub
 
 Private Sub RegisterAccount(pName As String, pPassword As String, pBanned As String, pLevel As String, pSecretQuestion As String, pSecretAnswer As String, pGender As String, pEmail As String)
@@ -434,26 +434,26 @@ Dim j As Long
 'Check list for biggest value and create new index
 j = pDB.GetMaxID("ID", DATABASE_TABLE_ACCOUNTS)
 
-'Only add account to list if it got executed into the database
-If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1, Email1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & pBanned & "', '" & pLevel & "', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "', '" & pEmail & "')") Then
-    'Save index in variable
-    i = ListView1.ListItems.Count + 1
+'Save index in variable
+i = ListView1.ListItems.Count + 1
 
-    'Add account to the listview
-    With ListView1.ListItems
-        .Add , , j
-        .Item(i).SubItems(INDEX_NAME) = pName
-        .Item(i).SubItems(INDEX_PASSWORD) = pPassword
-        .Item(i).SubItems(INDEX_TIME) = Format(Time, "hh:nn:ss")
-        .Item(i).SubItems(INDEX_DATE) = Format(Date, "dd/mm/yyyy")
-        .Item(i).SubItems(INDEX_BANNED) = pBanned
-        .Item(i).SubItems(INDEX_LEVEL) = pLevel
-        .Item(i).SubItems(INDEX_SECRET_QUESTION) = pSecretQuestion
-        .Item(i).SubItems(INDEX_SECRET_ANSWER) = pSecretAnswer
-        .Item(i).SubItems(INDEX_GENDER) = pGender
-        .Item(i).SubItems(INDEX_EMAIL) = pEmail
-    End With
-End If
+'Add account to the listview
+With ListView1.ListItems
+    .Add , , j
+    .Item(i).SubItems(INDEX_NAME) = pName
+    .Item(i).SubItems(INDEX_PASSWORD) = pPassword
+    .Item(i).SubItems(INDEX_TIME) = Format(Time, "hh:nn:ss")
+    .Item(i).SubItems(INDEX_DATE) = Format(Date, "dd/mm/yyyy")
+    .Item(i).SubItems(INDEX_BANNED) = pBanned
+    .Item(i).SubItems(INDEX_LEVEL) = pLevel
+    .Item(i).SubItems(INDEX_SECRET_QUESTION) = pSecretQuestion
+    .Item(i).SubItems(INDEX_SECRET_ANSWER) = pSecretAnswer
+    .Item(i).SubItems(INDEX_GENDER) = pGender
+    .Item(i).SubItems(INDEX_EMAIL) = pEmail
+End With
+
+'Add account to database
+pDB.ExecuteCommand "INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1, Email1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & pBanned & "', '" & pLevel & "', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "', '" & pEmail & "')"
 End Sub
 
 Private Sub Form_Activate()

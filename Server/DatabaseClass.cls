@@ -80,20 +80,14 @@ pConnection.Close
 Set pConnection = Nothing
 End Sub
 
-Public Function ExecuteCommand(pShell As String) As Boolean
-On Error GoTo hHE
-
+Public Sub ExecuteCommand(pShell As String)
 With pCommand
     .CommandText = pShell
     .Execute
 End With
 
-ExecuteCommand = True
-
-Exit Function
-hHE:
-MsgBox Err.Description, vbInformation, Err.Number
-End Function
+Exit Sub
+End Sub
 
 Public Function GetMaxID(RowName As String, TableName As String) As Long
 pCommand.CommandText = "SELECT MAX(" & RowName & ") AS MaxID FROM " & TableName

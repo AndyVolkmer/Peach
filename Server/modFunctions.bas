@@ -260,6 +260,7 @@ With frmPanel.ListView1.ListItems
         If i = .Count Then GetList = "!update_online#" & GetList
     Next i
 End With
+
 If LenB(GetList) <> 0 Then SendMessage GetList
 End Sub
 
@@ -300,7 +301,7 @@ SendSingle buffer, pIndex
 End Sub
 
 Public Sub UPDATE_STATUS_BAR()
-frmMain.StatusBar1.Panels(1).Text = "Status: Connected with " & frmMain.Winsock1.Count - 1 & " Client(s)."
+frmMain.StatusBar1.Panels(1).Text = "Status: " & frmMain.Winsock1.Count - 1 & " User(s) online."
 End Sub
 
 Private Function GetAccountStatus(pAccount As String) As Long
@@ -481,7 +482,7 @@ If Args Then
         .Command1.Enabled = False
         .Command2.Enabled = True
     End With
-    frmMain.StatusBar1.Panels(1).Text = "Status: Connected with 0 Client(s)."
+    UPDATE_STATUS_BAR
 Else
     With frmConfig
         .START_TIME = vbNullString

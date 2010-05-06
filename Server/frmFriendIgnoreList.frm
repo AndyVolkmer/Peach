@@ -178,17 +178,16 @@ End With
 
 j = pDB.GetMaxID("ID", DATABASE_TABLE_FRIENDS)
 
-If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_FRIENDS & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')") Then
-    'Add relation to listview
-    With ListView1.ListItems
-        .Add , , j
-        i = .Count
-        .Item(i).SubItems(1) = pUser
-        .Item(i).SubItems(2) = pFriend
-    End With
+'Add relation to listview
+With ListView1.ListItems
+    .Add , , j
+    i = .Count
+    .Item(i).SubItems(1) = pUser
+    .Item(i).SubItems(2) = pFriend
+End With
 
-    UPDATE_FRIEND pUser, pIndex
-End If
+pDB.ExecuteCommand "INSERT INTO " & DATABASE_TABLE_FRIENDS & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')"
+UPDATE_FRIEND pUser, pIndex
 End Sub
 
 Public Sub RemoveFriend(pUser As String, pFriend As String, pIndex As Integer)
@@ -205,37 +204,35 @@ With ListView1.ListItems
     Next i
 End With
 
-'This seems to be very hacky
-If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE ID = " & pID) Then
-    UPDATE_FRIEND pUser, pIndex
-End If
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE ID = " & pID
+UPDATE_FRIEND pUser, pIndex
 End Sub
 
 Public Sub RemoveAllFriendsFromUser(pUser As String)
 Dim i As Long
 
-If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Name = '" & pUser & "'") And _
-   pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Friend = '" & pUser & "'") Then
-    With ListView1.ListItems
-        'Search for the user in Name row
-        For i = 1 To .Count
-            If i > .Count Then Exit For
-            If .Item(i).SubItems(1) = pUser Then
-                .Remove (i)
-                i = i - 1
-            End If
-        Next i
+With ListView1.ListItems
+    'Search for the user in Name row
+    For i = 1 To .Count
+        If i > .Count Then Exit For
+        If .Item(i).SubItems(1) = pUser Then
+            .Remove (i)
+            i = i - 1
+        End If
+    Next i
 
-        'Search for the user in Friend row
-        For i = 1 To .Count
-            If i > .Count Then Exit For
-            If .Item(i).SubItems(2) = pUser Then
-                .Remove (i)
-                i = i - 1
-            End If
-        Next i
-    End With
-End If
+    'Search for the user in Friend row
+    For i = 1 To .Count
+        If i > .Count Then Exit For
+        If .Item(i).SubItems(2) = pUser Then
+            .Remove (i)
+            i = i - 1
+        End If
+    Next i
+End With
+
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Name = '" & pUser & "'"
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Friend = '" & pUser & "'"
 End Sub
 
 Public Sub AddIgnore(pUser As String, pIgnore As String, pIndex As Integer)
@@ -278,17 +275,16 @@ End With
 
 j = pDB.GetMaxID("ID", DATABASE_TABLE_IGNORES)
 
-If pDB.ExecuteCommand("INSERT INTO " & DATABASE_TABLE_IGNORES & " (ID, Name, IgnoredName) VALUES('" & j & "', '" & pUser & "', '" & pIgnore & "')") Then
-    'Add relation to listview
-    With ListView2.ListItems
-        .Add , , j
-        i = .Count
-        .Item(i).SubItems(1) = pUser
-        .Item(i).SubItems(2) = pIgnore
-    End With
+'Add relation to listview
+With ListView2.ListItems
+    .Add , , j
+    i = .Count
+    .Item(i).SubItems(1) = pUser
+    .Item(i).SubItems(2) = pIgnore
+End With
 
-    UPDATE_IGNORE pUser, pIndex
-End If
+pDB.ExecuteCommand "INSERT INTO " & DATABASE_TABLE_IGNORES & " (ID, Name, IgnoredName) VALUES('" & j & "', '" & pUser & "', '" & pIgnore & "')"
+UPDATE_IGNORE pUser, pIndex
 End Sub
 
 Public Sub RemoveIgnore(pUser As String, pIgnore As String, pIndex As Integer)
@@ -307,35 +303,33 @@ With ListView2.ListItems
     Next i
 End With
 
-'Another hacky solution
-If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE ID = " & pID) Then
-    UPDATE_IGNORE pUser, pIndex
-End If
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE ID = " & pID
+UPDATE_IGNORE pUser, pIndex
 End Sub
 
 Public Sub RemoveAllIgnoresFromUser(pUser As String)
 Dim i As Long
 
-If pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE Name = '" & pUser & "'") And _
-   pDB.ExecuteCommand("DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE IgnoredName = '" & pUser & "'") Then
-    With ListView2.ListItems
-        'Search for the user in Name row
-        For i = 1 To .Count
-            If i > .Count Then Exit For
-            If .Item(i).SubItems(1) = pUser Then
-                .Remove (i)
-                i = i - 1
-            End If
-        Next i
+With ListView2.ListItems
+    'Search for the user in Name row
+    For i = 1 To .Count
+        If i > .Count Then Exit For
+        If .Item(i).SubItems(1) = pUser Then
+            .Remove (i)
+            i = i - 1
+        End If
+    Next i
 
-        'Search for the user in Ignore row
-        For i = 1 To .Count
-            If i > .Count Then Exit For
-            If .Item(i).SubItems(2) = pUser Then
-                .Remove (i)
-                i = i - 1
-            End If
-        Next i
-    End With
-End If
+    'Search for the user in Ignore row
+    For i = 1 To .Count
+        If i > .Count Then Exit For
+        If .Item(i).SubItems(2) = pUser Then
+            .Remove (i)
+            i = i - 1
+        End If
+    Next i
+End With
+
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE Name = '" & pUser & "'"
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE IgnoredName = '" & pUser & "'"
 End Sub
