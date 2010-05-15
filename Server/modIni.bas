@@ -33,6 +33,7 @@ LoadFile:
         End If
     Wend
     Close NF
+
 End Function
 
 Public Sub WriteIniValue(INIpath As String, PutKey As String, PutVariable As String, PutValue As String)

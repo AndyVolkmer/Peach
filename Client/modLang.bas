@@ -2,7 +2,7 @@ Attribute VB_Name = "modLang"
 Option Explicit
 
 Public CURRENT_LANG                     As Long
-'Start variable support for languages
+
 'MDI form ..
 Public MDI_COMMAND_CHAT                 As String
 Public MDI_COMMAND_SENDFILE             As String
@@ -82,7 +82,6 @@ Public SOC_FRIEND_LIST                  As String
 Public SOC_ONLINE_LIST                  As String
 Public SOC_IGNORE_LIST                  As String
 
-Public SOC_COMMAND_ADD                  As String
 Public SOC_COMMAND_REMOVE               As String
 Public SOC_COMMAND_FRIEND               As String
 Public SOC_COMMAND_IGNORE               As String
@@ -264,7 +263,6 @@ SOC_FRIEND_LIST = "Freundesliste"
 SOC_ONLINE_LIST = "Online-Liste"
 SOC_IGNORE_LIST = "Ignorier-Liste"
 
-SOC_COMMAND_ADD = "&Hinzufügen"
 SOC_COMMAND_REMOVE = "&Entfernen"
 SOC_COMMAND_FRIEND = "&Als Freund hinzufügen"
 SOC_COMMAND_IGNORE = "&Benutzer ignorieren"
@@ -374,8 +372,8 @@ MDI_COMMAND_SENDFILE = "&Send File"
 MDI_COMMAND_SOCIETY = "&Society"
 
 'MDImsgbox_errorHandlerFormLoad
-MDI_MSG_NAME_TAKEN = "This name is already taken."
-MDI_MSG_WRONG_ACCOUNT = "The account does not exist or is wrong."
+MDI_MSG_NAME_TAKEN = "This username is already taken."
+MDI_MSG_WRONG_ACCOUNT = "This username does not exist."
 MDI_MSG_WRONG_PASSWORD = "The password is wrong."
 MDI_MSG_BANNED = "This account is banned."
 MDI_MSG_UNLOAD = "Are you sure you want to close Peach?"
@@ -388,15 +386,15 @@ MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' does not exist."
 MDI_MENU = "Menu"
 
 'Configuration form ..
-CONFIG_LABEL_ACCOUNT = "Account"
+CONFIG_LABEL_ACCOUNT = "Username"
 CONFIG_LABEL_PASSWORD = "Password"
 
-CONFIG_COMMAND_CONNECT = "&Connect"
-CONFIG_COMMAND_DISCONNECT = "&Disconnect"
-CONFIG_COMMAND_SETTINGS = "&Settings"
+CONFIG_COMMAND_CONNECT = "&Login"
+CONFIG_COMMAND_DISCONNECT = "&Logout"
+CONFIG_COMMAND_SETTINGS = "&Preferences"
 CONFIG_COMMAND_UPDATE = "&Update"
-CONFIG_COMMAND_REGISTER = "&Create an account"
-CONFIG_COMMAND_FORGOT_PASSWORD = "&Forgot Password"
+CONFIG_COMMAND_REGISTER = "&Create Account"
+CONFIG_COMMAND_FORGOT_PASSWORD = "&Forgot My Password"
 
 CONFIG_CHECK_SAVE_PASSWORD = "&Save Password"
 
@@ -412,11 +410,11 @@ LANG_DUTCH = "Dutch"
 LANG_FRENCH = "French"
 LANG_NORWEGIAN = "Norwegian"
 
-CONFIG_MSG_ACCOUNT = "You didn't enter an account."
-CONFIG_MSG_PASSWORD = "You didn't enter a password."
-CONFIG_MSG_NUMERIC = "You can't take numeric names."
-CONFIG_MSG_PORT = "You didn't introduce a port."
-CONFIG_MSG_IP = "You didn't introduce a IP."
+CONFIG_MSG_ACCOUNT = "You did not enter an account."
+CONFIG_MSG_PASSWORD = "You did not enter a password."
+CONFIG_MSG_NUMERIC = "You can not take numeric usernames."
+CONFIG_MSG_PORT = "You did not introduce a port."
+CONFIG_MSG_IP = "You did not introduce a IP."
 CONFIG_MSG_UPDATE_FILE = "You need the peach updater to be able to upgrade your peach." & vbCrLf & vbCrLf & "Download it here: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
 
 ' Chat form ..
@@ -448,10 +446,9 @@ SOC_FRIEND_LIST = "Friend List"
 SOC_ONLINE_LIST = "Online List"
 SOC_IGNORE_LIST = "Ignore List"
 
-SOC_COMMAND_ADD = "&Add"
 SOC_COMMAND_REMOVE = "&Remove"
-SOC_COMMAND_FRIEND = "&Add to Friends"
-SOC_COMMAND_IGNORE = "&Ignore user"
+SOC_COMMAND_FRIEND = "&Add Friend"
+SOC_COMMAND_IGNORE = "&Ignore User"
 SOC_COMMAND_WHISPER = "&Whisper"
 
 SOC_ASK_DEL = "Do you want to delete '%u' from the list?"
@@ -461,7 +458,7 @@ SOC_ASK_FRIEND_TITLE = "Adding a friend"
 SOC_ASK_FRIEND_DEFAULT = "Enter account here"
 
 SOC_ASK_IGNORE_TEXT = "Enter the account name of the user you want to ignore in the text box below."
-SOC_ASK_IGNORE_TITLE = "Ignore a user"
+SOC_ASK_IGNORE_TITLE = "Ignore"
 SOC_ASK_IGNORE_DEFAULT = "Enter account here"
 
 SOC_FRIEND_LIST_STATUS = "Status"
@@ -472,7 +469,7 @@ REG_CAPTION = "Peach - Registration"
 
 REG_FRAME_DETAIL = "Enter your details"
 
-REG_LABEL_ACCOUNT_NAME = "Account Name"
+REG_LABEL_ACCOUNT_NAME = "Username"
 REG_LABEL_PASSWORD = "Password"
 REG_LABEL_PASSWORD_CONFIRM = "Confirm the Password"
 REG_LABEL_PASSWORD_WEAK = "The password is weak."
@@ -486,22 +483,22 @@ REG_COMMAND_CLOSE = "&Close"
 
 REG_CHECK_PASSWORD_SHOW = "&Show Password."
 
-REG_MSG_ACCOUNT_EXIST = "The account name already exists."
-REG_MSG_ACCOUNT_INVALID = "Invalid account name."
-REG_MSG_ACCOUNT_NUMERIC = "Account can not be composed of numeric characters."
-REG_MSG_ACCOUNT_EMPTY = "No account entered."
-REG_MSG_ACCOUNT_SHORT = "Account name to short, it requieres at least 4 characters."
+REG_MSG_ACCOUNT_EXIST = "The username is already in use."
+REG_MSG_ACCOUNT_INVALID = "Invalid username."
+REG_MSG_ACCOUNT_NUMERIC = "Username can not be composed of numeric characters."
+REG_MSG_ACCOUNT_EMPTY = "No username entered."
+REG_MSG_ACCOUNT_SHORT = "The username is too short, it requieres at least 4 characters."
 
 REG_MSG_PASSWORD_MATCH = "The passwords don't match."
-REG_MSG_PASSWORD_SHORT = "Password to short, it requieres at least 6 characters."
-REG_MSG_PASSWORD_EMPTY = "No Password entered."
+REG_MSG_PASSWORD_SHORT = "The password is too short, it requieres at least 6 characters."
+REG_MSG_PASSWORD_EMPTY = "No password entered."
 
 REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
 
 REG_MSG_EMAIL_EMPTY = "No email adress entered."
-REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgot your password?"
+REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgotten your password?"
 
-REG_MSG_SUCCESSFULLY = "The account was successfully registered."
+REG_MSG_SUCCESSFULLY = "The username was successfully registered."
 REG_MSG_ERROR = "An error has occured please try later again."
 REG_MSG_ERROR_OCCURED = "Error has occured ..."
 REG_MSG_LOADING = " Loading .."
@@ -526,8 +523,8 @@ SET_FRAME_STYLE = "Style"
 SET_FRAME_OPTIONS = "Options"
 SET_FRAME_CONNECTION = "Connection Settings"
 
-SET_CHECK_SAVE_ACCOUNT = "Save Account"
-SET_CHECK_SAVE_PASSWORD = "Save Password"
+SET_CHECK_SAVE_ACCOUNT = "Remember Username"
+SET_CHECK_SAVE_PASSWORD = "Remember Password"
 SET_CHECK_AUTO_LOGIN = "Login automatically"
 SET_CHECK_ASK_CLOSING = "Ask before closing"
 SET_CHECK_MINIMIZE = "Minimize Peach window to system tray"
@@ -544,7 +541,7 @@ FP_LABEL_SECRET_ANSWER = "Secret Answer"
 FP_COMMAND_REQUEST = "&Request"
 FP_CAPTION = "Peach - Forgot Password"
 
-FP_MSG_SUCCESSFULL = "Your account name is '%u'." & vbCrLf & "Your password is '%p'."
+FP_MSG_SUCCESSFULL = "Your username is '%u'." & vbCrLf & "Your password is '%p'."
 FP_MSG_WRONG_ANSWER = "The answer is wrong."
 FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
 End Sub
@@ -627,7 +624,6 @@ SOC_FRIEND_LIST = "Lista de contactos"
 SOC_ONLINE_LIST = "Lista de online"
 SOC_IGNORE_LIST = "Lista de ignorados"
 
-SOC_COMMAND_ADD = "&Añadir"
 SOC_COMMAND_REMOVE = "&Quitar"
 SOC_COMMAND_FRIEND = "&Añardir a amigos"
 SOC_COMMAND_IGNORE = "&Ignorar al usuario"
@@ -723,7 +719,7 @@ FP_LABEL_SECRET_ANSWER = "Respuesta secreta"
 FP_COMMAND_REQUEST = "&Solicitar"
 FP_CAPTION = "Peach - Recuperar contraseña"
 
-FP_MSG_SUCCESSFULL = "Su nombre de cuenta es '%u'." & vbCrLf & "Su contraseña es '%p'."
+FP_MSG_SUCCESSFULL = "El nombre de su cuenta es '%u'." & vbCrLf & "Su contraseña es '%p'."
 FP_MSG_WRONG_ANSWER = "La respuesta es incorrecta."
 FP_MSG_WRONG_EMAIL = "El correo electronico no se ha encontrado."
 End Sub
@@ -808,7 +804,6 @@ SOC_FRIEND_LIST = "Kompis Lista"
 SOC_ONLINE_LIST = "Online Lista"
 SOC_IGNORE_LIST = "Ignorerings Lista"
 
-SOC_COMMAND_ADD = "&Tillägg"
 SOC_COMMAND_REMOVE = "&Ta bort"
 SOC_COMMAND_FRIEND = "&Lägg till vänner"
 SOC_COMMAND_IGNORE = "&Ignorera user"
@@ -902,7 +897,7 @@ FP_LABEL_SECRET_ANSWER = "Säkerhet besvara"
 FP_COMMAND_REQUEST = "&Begära"
 FP_CAPTION = "Peach - Glömt lösenord"
 
-FP_MSG_SUCCESSFULL = "Your account name is '%u'." & vbCrLf & "Your password is '%p'."
+FP_MSG_SUCCESSFULL = "Your username is '%u'." & vbCrLf & "Your password is '%p'."
 FP_MSG_WRONG_ANSWER = "Svaret är fel."
 FP_MSG_WRONG_EMAIL = "Den angivna e-postadressen kunde inte hittas."
 End Sub
@@ -988,7 +983,6 @@ SOC_FRIEND_LIST = "Lista di amici"
 SOC_ONLINE_LIST = "Elenco di persone online"
 SOC_IGNORE_LIST = "Elenco degli utenti ignorati"
 
-SOC_COMMAND_ADD = "&Aggiungere"
 SOC_COMMAND_REMOVE = "&Rimuovere"
 SOC_COMMAND_FRIEND = "&Aggiungi ai tuoi amici"
 SOC_COMMAND_IGNORE = "&Ignora utente"
@@ -1084,7 +1078,7 @@ FP_LABEL_SECRET_ANSWER = "Risposta segreta"
 FP_COMMAND_REQUEST = "&Richiesta"
 FP_CAPTION = "Peach - Dimenticato la password"
 
-FP_MSG_SUCCESSFULL = "Il tuo nome account è '%u'. La password è '%p'."
+FP_MSG_SUCCESSFULL = "Il tuo nome account è '%u'." & vbCrLf & " La password è '%p'."
 FP_MSG_WRONG_ANSWER = "La risposta è sbagliata."
 FP_MSG_WRONG_EMAIL = "L'indirizzo email inserito non è stato trovato."
 End Sub
@@ -1166,7 +1160,6 @@ SOC_FRIEND_LIST = "Vriendenlijst"
 SOC_ONLINE_LIST = "Onlinelijst"
 SOC_IGNORE_LIST = "Negeerlijst"
 
-SOC_COMMAND_ADD = "&Toevoegen"
 SOC_COMMAND_REMOVE = "&Verwijderen"
 SOC_COMMAND_FRIEND = "&Voeg toe aan vrienden"
 SOC_COMMAND_IGNORE = "&Gebruiker negeren"
@@ -1354,7 +1347,6 @@ LANG_QUIT = "In order to change the language you need to restart Peach, do you w
 SOC_FRIEND_LIST = "Lista prijatelja"
 SOC_ONLINE_LIST = "Lista onlajn"
 
-SOC_COMMAND_ADD = "&Dodati"
 SOC_COMMAND_REMOVE = "&Ukloni"
 SOC_COMMAND_FRIEND = "&Dodaj u Prijatelje"
 SOC_COMMAND_IGNORE = "&Ignorishi korisnika"
@@ -1529,7 +1521,6 @@ SOC_FRIEND_LIST = "Liste D'amis"
 SOC_ONLINE_LIST = "Liste des onlines"
 SOC_IGNORE_LIST = "Stop-Liste"
 
-SOC_COMMAND_ADD = "&Ajouter"
 SOC_COMMAND_REMOVE = "&Supprimer"
 SOC_COMMAND_FRIEND = "&Ajouter aux amis"
 SOC_COMMAND_IGNORE = "&Ignore user"
@@ -1625,187 +1616,7 @@ FP_LABEL_SECRET_ANSWER = "Réponse secrète"
 FP_COMMAND_REQUEST = "&Demande"
 FP_CAPTION = "Peach - Mot de passe oublié"
 
-FP_MSG_SUCCESSFULL = "Votre mot de passe est '%p'."
+FP_MSG_SUCCESSFULL = "Votre compte est '%u'." & vbCrLf & "Votre mot de passe est '%p'."
 FP_MSG_WRONG_ANSWER = "La réponse est fausse."
 FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
-End Sub
-
-Public Sub SET_LANG_NORWEGIAN()
-CURRENT_LANG = 8
-
-' MDI form ..
-MDI_COMMAND_CHAT = "Ch&at"
-MDI_COMMAND_SENDFILE = "&Send fil"
-MDI_COMMAND_SOCIETY = "&Samfunn"
-
-MDI_MSG_NAME_TAKEN = "Navnet er allerede tatt."
-MDI_MSG_WRONG_ACCOUNT = "Denne kontoen navn mangler eller er feil."
-MDI_MSG_WRONG_PASSWORD = "Passordet er feil."
-MDI_MSG_BANNED = "Denne kontoen har vært forbudt."
-MDI_MSG_UNLOAD = "Er du sikker på at du vil lukke Peach?"
-
-MDI_MSG_CANT_ADD_YOU = "Du kan ikke legge til deg selv."
-MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' er allerede i din ignoreringslisten."
-MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' ist bereits in deiner Freundesliste."
-MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' existiert nicht."
-
-MDI_MENU = "Menü"
-
-CONFIG_LABEL_ACCOUNT = "Kontoen"
-CONFIG_LABEL_PASSWORD = "Passwort"
-
-CONFIG_COMMAND_CONNECT = "&Verbinden"
-CONFIG_COMMAND_DISCONNECT = "&Verbindung trenn."
-CONFIG_COMMAND_SETTINGS = "&Einstellungen"
-CONFIG_COMMAND_UPDATE = "&Aktualisieren"
-CONFIG_COMMAND_REGISTER = "&Konto erstellen"
-CONFIG_COMMAND_FORGOT_PASSWORD = "&Passwort vergessen"
-
-CONFIG_CHECK_SAVE_PASSWORD = "&Passwort speichern"
-
-CONFIG_FRAME_CONNECTION = "Verbindungsinformationen"
-
-LANG_GERMAN = "Tysk"
-LANG_ENGLISH = "Engelsk"
-LANG_SPANISH = "Spansk"
-LANG_SWEDISH = "Svensk"
-LANG_ITALIAN = "Italiensk"
-LANG_SERBIAN = "Serbisk"
-LANG_DUTCH = "Nederlandsk"
-LANG_FRENCH = "Fransk"
-LANG_NORWEGIAN = "Norsk"
-
-CONFIG_MSG_ACCOUNT = "Sie haben keinen Konto-Namen eingegeben."
-CONFIG_MSG_PASSWORD = "Sie haben kein Passwort eingegeben."
-CONFIG_MSG_NUMERIC = "Sie können keine Ziffern in ihrem Namen haben."
-CONFIG_MSG_PORT = "Sie haben keinen Port eingegeben."
-CONFIG_MSG_IP = "Sie haben keine IP eingegeben."
-CONFIG_MSG_UPDATE_FILE = "Sie brauchen den Peach Updater um ihr Peach zu updaten." & vbCrLf & vbCrLf & "Sie können es hier downloaden:  http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
-
-CHAT_COMMAND_SEND = "&Senden"
-CHAT_COMMAND_CLEAR = "&Löschen"
-
-SF_LABEL_FILENAME = "Datei Name"
-SF_LABEL_SEND_TO = "Sende an"
-SF_LABEL_TIME = "Verbleibende Zeit: "
-SF_LABEL_KBS = " Kb/Sek, "
-SF_LABEL_KBSS = " KBytes gesendet, "
-
-SF_MSG_USER = "Kein Benutzer ausgewählt."
-SF_MSG_FILE = "Keine Datei ausgewählt."
-SF_MSG_INCOMMING_FILE = "Sie empfangen gerade '%f' von '%u'. Wollen Sie die Datei annehmen?"
-SF_MSG_DECILINED = "Der Benutzer hat die Datei abgelehnt."
-
-SF_COMMAND_BROWSE = "&Suchen .."
-SF_COMMAND_SENDFILE = "Senden"
-SF_COMMAND_CANCEL = "Abbrechen .."
-
-LANG_COMMAND_ENTER = "&Auswählen"
-LANG_LABEL_SELLANG = "Wählen Sie Ihre Sprache aus"
-
-LANG_QUIT = "Um die Sprache zu ändern müssen Sie Peach neu starten, möchten Sie dies jetzt tun?"
-
-SOC_FRIEND_LIST = "Freundesliste"
-SOC_ONLINE_LIST = "Online-Liste"
-SOC_IGNORE_LIST = "Ignorier-Liste"
-
-SOC_COMMAND_ADD = "&Hinzufügen"
-SOC_COMMAND_REMOVE = "&Entfernen"
-SOC_COMMAND_FRIEND = "&Als Freund hinzufügen"
-SOC_COMMAND_IGNORE = "&Benutzer ignorieren"
-SOC_COMMAND_WHISPER = "&Anflüstern"
-
-SOC_ASK_DEL = "Möchten Sie '%u' von der Liste löschen?"
-
-SOC_ASK_FRIEND_TEXT = "Geben Sie bitte den Konto-Namen Ihres Freundes ein."
-SOC_ASK_FRIEND_TITLE = "Freund hinzufügen"
-SOC_ASK_FRIEND_DEFAULT = "Konto hier eingeben"
-
-SOC_ASK_IGNORE_TEXT = "Geben Sie bitte den Konto-Namen des Benutzer ein den Sie ignorieren möchten."
-SOC_ASK_IGNORE_TITLE = "Benutzer ignorieren"
-SOC_ASK_IGNORE_DEFAULT = "Konto hier eingeben"
-
-SOC_FRIEND_LIST_STATUS = "Status"
-
-SOC_MSG_CANT_WHISPER = "Sie können diesen Benutzer nicht anflüstern."
-
-REG_CAPTION = "Peach - Registration"
-
-REG_FRAME_DETAIL = "Geben Sie Ihre Daten an"
-
-REG_LABEL_ACCOUNT_NAME = "Konto-Name"
-REG_LABEL_PASSWORD = "Passwort"
-REG_LABEL_PASSWORD_CONFIRM = "Passwort bestätigen"
-REG_LABEL_PASSWORD_WEAK = "Das Passwort ist schwach."
-REG_LABEL_PASSWORD_NORMAL = "Das Passwort ist gut."
-REG_LABEL_PASSWORD_STRONG = "Das Passwort ist stark."
-REG_LABEL_SECRET_QUESTION = "Geheime Frage"
-REG_LABEL_SECRET_ANSWER = "Geheime Antwort"
-
-REG_COMMAND_SUBMIT = "&Registrieren"
-REG_COMMAND_CLOSE = "&Schließen"
-
-REG_CHECK_PASSWORD_SHOW = "&Passwort anzeigen"
-
-REG_MSG_ACCOUNT_EXIST = "Dieser Konto-Name ist bereits vergeben."
-REG_MSG_ACCOUNT_INVALID = "Ungültiger Konto-Name."
-REG_MSG_ACCOUNT_NUMERIC = "Dieser Konto-Name darf nicht aus Ziffern bestehen."
-REG_MSG_ACCOUNT_EMPTY = "Kein Konto angegeben."
-REG_MSG_ACCOUNT_SHORT = "Dieser Konto-Name ist zu kurz, muss aus wenigstens 4 Zeichen bestehen."
-
-REG_MSG_PASSWORD_MATCH = "Die Passwörter stimmen nicht überein."
-REG_MSG_PASSWORD_SHORT = "Das Passwort ist zu kurz, muss aus wenigstens 6 Zeichen bestehen."
-REG_MSG_PASSWORD_EMPTY = "Kein Passwort angegeben."
-
-REG_MSG_SECRET_ANSWER_EMPTY = "Keine geheime Antwort angegeben."
-
-REG_MSG_EMAIL_EMPTY = "Keine Email angegeben."
-REG_MSG_EMAIL_TAKEN = "Die Email-Adresse wird bereits genutzt, haben Sie Ihr Passwort vergessen?"
-
-REG_MSG_SUCCESSFULLY = "Ihr Konto wurde erfolgreich erstellt."
-REG_MSG_ERROR = "Ein Fehler ist aufgetreten bitte versuchen Sie es später nochmal."
-REG_MSG_ERROR_OCCURED = "Fehler aufgetreten ..."
-REG_MSG_LOADING = "Lädt .."
-REG_MSG_CONNECTION_BROKEN = "Die Verbindung wurde unterbrochen bitte versuchen Sie es später nochmal."
-
-REG_CMB_SECRET_QUESTION_0 = "Wie heißt Ihr Haustier?"
-REG_CMB_SECRET_QUESTION_1 = "Ihr Lieblings-Buch?"
-REG_CMB_SECRET_QUESTION_2 = "Ihr Lieblings-Film?"
-REG_CMB_SECRET_QUESTION_3 = "Ihr Lieblings-Spiel?"
-REG_CMB_SECRET_QUESTION_4 = "Ihr Lieblings-Sänger?"
-REG_CMB_SECRET_QUESTION_5 = "Geburtsort Ihrer Mutter?"
-
-REG_LABEL_GENDER = "Geschlecht"
-
-REG_CMB_GENDER_MALE = "Männlich"
-REG_CMB_GENDER_FEMALE = "Weiblich"
-
-SET_LABEL_COLOR = "Jetzige Farbe"
-SET_LABEL_FONT = "Schriftart"
-
-SET_FRAME_STYLE = "Stil"
-SET_FRAME_OPTIONS = "Optionen"
-SET_FRAME_CONNECTION = "Verbindungseinstellungen"
-
-SET_CHECK_SAVE_ACCOUNT = "Konto-Namen speichern"
-SET_CHECK_SAVE_PASSWORD = "Passwort speichern"
-SET_CHECK_AUTO_LOGIN = "Automatisch einloggen"
-SET_CHECK_ASK_CLOSING = "Abfragen bevor schließen"
-SET_CHECK_MINIMIZE = "Peach-Fenster in die Taskleiste minimieren"
-
-SET_COMMAND_LANGUAGE = "&Sprache"
-SET_COMMAND_SAVE = "&Speichern"
-
-SF2_COMMAND_OPEN_FILE = "&Datei Ordner öffnen"
-
-FP_FRAME_FORGOT_PASSWORD = "Passwort vergessen"
-FP_LABEL_EMAIL = "Gebe deine Email ein"
-FP_LABEL_SECRET_QUESTION = "Geheime Frage"
-FP_LABEL_SECRET_ANSWER = "Geheime Antwort"
-FP_COMMAND_REQUEST = "&Abfragen"
-FP_CAPTION = "Peach - Passwort vergessen"
-
-FP_MSG_SUCCESSFULL = "Ihr Account-Name lautet '%u'." & vbCrLf & "Ihr Passwort lautet '%p'."
-FP_MSG_WRONG_ANSWER = "Die Antwort ist falsch."
-FP_MSG_WRONG_EMAIL = "Die angegebene Email-Adresse konnte nicht gefunden werden."
 End Sub

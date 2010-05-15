@@ -523,21 +523,27 @@ End Sub
 
 Private Sub txtPassword1_Change()
 Select Case Len(txtPassword1)
-    Case Is < 5
+    Case 0
+        Picture1.BackColor = Setting.SCHEME_COLOR
+        Picture1.BorderStyle = 0
+        Label5.Caption = vbNullString
+        Label5.BackColor = Setting.SCHEME_COLOR
+
+    Case 1 To 5
         Picture1.BackColor = vbRed
         Picture1.BorderStyle = 1
         Label5.BackColor = vbRed
         Label5.ForeColor = vbWhite
         Label5.Caption = REG_LABEL_PASSWORD_WEAK
 
-    Case 5, 6, 7
+    Case 5 To 8
         Picture1.BackColor = vbYellow
         Picture1.BorderStyle = 1
         Label5.BackColor = vbYellow
         Label5.ForeColor = vbBlack
         Label5.Caption = REG_LABEL_PASSWORD_NORMAL
 
-    Case Is > 8
+    Case Else
         Picture1.BackColor = vbGreen
         Picture1.BorderStyle = 1
         Label5.BackColor = vbGreen

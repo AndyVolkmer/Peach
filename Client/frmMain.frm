@@ -19,6 +19,7 @@ Begin VB.Form frmMain
    EndProperty
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MaxButton       =   0   'False
    ScaleHeight     =   6915
    ScaleWidth      =   5955
@@ -289,28 +290,28 @@ Public Sub cmdConnect_Click()
 If cmdConnect.Caption = CONFIG_COMMAND_CONNECT Then
     If CheckTx(txtAccount, CONFIG_MSG_ACCOUNT) Then Exit Sub
     If CheckTx(txtPassword, CONFIG_MSG_PASSWORD) Then Exit Sub
-    
+
     'Connect winsocks
     With frmMain.Winsock1
         .RemotePort = Setting.SERVER_PORT
         .RemoteHost = Setting.SERVER_IP
         .Connect
     End With
-    
+
     If Not Right$(App.EXEName, 5) = "DEBUG" Then
         'Set Recieve-Request-Winsock to listen
         With frmMain.FSocket2(0)
             .LocalPort = aPort
             .Listen
         End With
-        
+
         'Set Recieve-File-Winsock to listen
         With frmSendFile2.SckReceiveFile(0)
             .LocalPort = bPort
             .Listen
         End With
     End If
-    
+
     SwitchButtons False, True
 Else
     Disconnect

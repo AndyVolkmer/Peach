@@ -7,8 +7,11 @@ Sub Main()
 Dim pStartTime      As Long
 Dim pConnectResult  As String
 
-InitCommonControls
+'Capture start time
 pStartTime = timeGetTime
+
+'Load windows own style
+InitCommonControls
 
 'Load registry values
 LoadRegistry

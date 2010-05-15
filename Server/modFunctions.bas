@@ -174,13 +174,20 @@ With frmConfig
 End With
 End Sub
 
-Public Function IsIgnoring(pUser As String, pTarget As String) As Boolean
+Public Sub WriteText(pData As String)
+With frmChat.txtConver
+    .Text = .Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & pData
+    .SelStart = Len(.Text)
+End With
+End Sub
+
+Public Function IsIgnoring(User As String, Target As String) As Boolean
 Dim i As Long
 
 With frmFriendIgnoreList.ListView2.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(1) = pUser Then
-            If .Item(i).SubItems(2) = pTarget Then
+        If .Item(i).SubItems(1) = User Then
+            If .Item(i).SubItems(2) = Target Then
                 IsIgnoring = True
                 Exit For
             End If
@@ -211,36 +218,36 @@ With frmChannel.lvUsers.ListItems
 End With
 End Sub
 
-Public Sub SendProtectedMessage(pAccount As String, pMessage As String)
+Public Sub SendProtectedMessage(User As String, Message As String)
 Dim i As Long
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If IsIgnoring(.Item(i), pAccount) = False Then
-            SendSingle pMessage, .Item(i).SubItems(INDEX_WINSOCK_ID)
+        If IsIgnoring(.Item(i), User) = False Then
+            SendSingle Message, .Item(i).SubItems(INDEX_WINSOCK_ID)
             DoEvents
         End If
     Next i
 End With
 End Sub
 
-Public Sub SendMessage(pMessage As String)
+Public Sub SendMessage(Message As String)
 Dim WinSk As Winsock
 For Each WinSk In frmMain.Winsock1
     With WinSk
         If .State = 7 Then
-            .SendData pMessage & Chr(24) & Chr(25)
+            .SendData Message & Chr(24) & Chr(25)
             DoEvents
         End If
     End With
 Next
 End Sub
 
-Public Sub SendSingle(pMessage As String, pIndex As Integer)
+Public Sub SendSingle(Message As String, Index As Integer)
 On Error GoTo hLC
-With frmMain.Winsock1(pIndex)
+With frmMain.Winsock1(Index)
     If .State = 7 Then
-        .SendData pMessage & Chr(24) & Chr(25)
+        .SendData Message & Chr(24) & Chr(25)
         DoEvents
     End If
 End With
@@ -264,14 +271,14 @@ End With
 If LenB(GetList) <> 0 Then SendMessage GetList
 End Sub
 
-Public Sub UPDATE_FRIEND(pName As String, pIndex As Integer)
+Public Sub UPDATE_FRIEND(Name As String, Index As Integer)
 Dim buffer      As String
 Dim i           As Long
 
 buffer = "!update_friends#"
 With frmFriendIgnoreList.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(1) = pName Then
+        If .Item(i).SubItems(1) = Name Then
             If GetAccountStatus(.Item(i).SubItems(2)) = 1 Then
                 buffer = buffer & .Item(i).SubItems(2) & "$Online#"
             Else
@@ -281,35 +288,35 @@ With frmFriendIgnoreList.ListView1.ListItems
     Next i
 End With
 
-SendSingle buffer, pIndex
+SendSingle buffer, Index
 End Sub
 
-Public Sub UPDATE_IGNORE(pName As String, pIndex As Integer)
+Public Sub UPDATE_IGNORE(Name As String, Index As Integer)
 Dim buffer As String
 Dim i      As Long
 
 buffer = "!update_ignore#"
 With frmFriendIgnoreList.ListView2.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(1) = pName Then
+        If .Item(i).SubItems(1) = Name Then
             buffer = buffer & .Item(i).SubItems(2) & "#"
         End If
     Next i
 End With
 
-SendSingle buffer, pIndex
+SendSingle buffer, Index
 End Sub
 
 Public Sub UPDATE_STATUS_BAR()
 frmMain.StatusBar1.Panels(1).Text = "Status: " & frmMain.Winsock1.Count - 1 & " User(s) online."
 End Sub
 
-Private Function GetAccountStatus(pAccount As String) As Long
+Private Function GetAccountStatus(Account As String) As Long
 Dim i As Long
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i) = pAccount Then
+        If .Item(i) = Account Then
             GetAccountStatus = 1
             Exit For
         Else
@@ -319,15 +326,8 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Public Sub WriteText(pData As String)
-With frmChat.txtConver
-    .Text = .Text & vbCrLf & "[" & Format(Time, "hh:nn:ss") & "] " & pData
-    .SelStart = Len(.Text)
-End With
-End Sub
-
-Public Function IsAlphaCharacter(pChar As String) As Boolean
-IsAlphaCharacter = (Not (UCase(pChar) = LCase(pChar))) Or (pChar = " ")
+Public Function IsAlphaCharacter(Char As String) As Boolean
+IsAlphaCharacter = (Not (UCase(Char) = LCase(Char))) Or (Char = " ")
 End Function
 
 Public Function GetRandomNumber(Optional ByVal MIN As Long = 1, Optional ByVal MAX As Long = 100) As Long
@@ -474,8 +474,8 @@ frm.Width = frm.Width - 1
 frm.Width = frm.Width + 1
 End Sub
 
-Public Sub SetButtons(Args As Boolean)
-If Args Then
+Public Sub SetButtons(args As Boolean)
+If args Then
     With frmConfig
         .START_TIME = Time
         .txtPort.Enabled = False

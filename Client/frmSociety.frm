@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "tabctl32.ocx"
 Begin VB.Form frmSociety 
    BorderStyle     =   0  'None
    Caption         =   "frmSociety"
@@ -19,7 +19,6 @@ Begin VB.Form frmSociety
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
@@ -59,16 +58,19 @@ Begin VB.Form frmSociety
       TabCaption(1)   =   "Online List"
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "cmdAddToIgnore"
+      Tab(1).Control(0)=   "lvOnlineList"
       Tab(1).Control(1)=   "cmdAddToFriend"
-      Tab(1).Control(2)=   "lvOnlineList"
+      Tab(1).Control(2)=   "cmdAddToIgnore"
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "lvIgnoreList"
+      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "cmdAddIgnore"
+      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "cmdRemoveIgnore"
+      Tab(2).Control(2).Enabled=   0   'False
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToIgnore 
          Caption         =   "&Add to Ignore"
@@ -89,34 +91,34 @@ Begin VB.Form frmSociety
       Begin VB.CommandButton cmdRemoveIgnore 
          Caption         =   "&Remove"
          Height          =   375
-         Left            =   -69600
+         Left            =   -69960
          TabIndex        =   6
          Top             =   3360
-         Width           =   1695
+         Width           =   2055
       End
       Begin VB.CommandButton cmdAddIgnore 
          Caption         =   "&Add"
          Height          =   375
-         Left            =   -71280
+         Left            =   -72000
          TabIndex        =   5
          Top             =   3360
-         Width           =   1695
+         Width           =   2055
       End
       Begin VB.CommandButton cmdRemoveFriend 
          Caption         =   "&Remove"
          Height          =   375
-         Left            =   5400
+         Left            =   5040
          TabIndex        =   2
          Top             =   3360
-         Width           =   1695
+         Width           =   2055
       End
       Begin VB.CommandButton cmdAddFriend 
          Caption         =   "&Add"
          Height          =   375
-         Left            =   3720
+         Left            =   3000
          TabIndex        =   1
          Top             =   3360
-         Width           =   1695
+         Width           =   2055
       End
       Begin MSComctlLib.ListView lvFriendList 
          Height          =   2775
@@ -408,9 +410,9 @@ SSTab1.TabCaption(0) = SOC_FRIEND_LIST
 SSTab1.TabCaption(1) = SOC_ONLINE_LIST
 SSTab1.TabCaption(2) = SOC_IGNORE_LIST
 
-cmdAddFriend.Caption = SOC_COMMAND_ADD
+cmdAddFriend.Caption = SOC_COMMAND_FRIEND
 cmdRemoveFriend.Caption = SOC_COMMAND_REMOVE
-cmdAddIgnore.Caption = SOC_COMMAND_ADD
+cmdAddIgnore.Caption = SOC_COMMAND_IGNORE
 cmdRemoveIgnore.Caption = SOC_COMMAND_REMOVE
 cmdAddToFriend.Caption = SOC_COMMAND_FRIEND
 cmdAddToIgnore.Caption = SOC_COMMAND_IGNORE
@@ -506,3 +508,4 @@ With frmChat.txtToSend
     .SetFocus
 End With
 End Sub
+

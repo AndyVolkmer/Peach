@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmAccountPanel 
    BackColor       =   &H00F4F4F4&
@@ -321,24 +321,24 @@ End With
 pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & lngID
 End Sub
 
-Private Sub DoButtons(Args As Boolean)
-ListView1.Enabled = Not Args
-cmdAdd.Enabled = Not Args
-cmdDel.Enabled = Not Args
-cmdMod.Enabled = Not Args
-cmdSave.Enabled = Args
-cmdCancel.Enabled = Args
-txtName.Enabled = Args
-txtPassword.Enabled = Args
-cmbBanned.Enabled = Args
-cmbLevel.Enabled = Args
-cmbGender.Enabled = Args
-lblName.Enabled = Args
-lblPassword.Enabled = Args
-lblBanned.Enabled = Args
-lblLevel.Enabled = Args
-lblGender.Enabled = Args
-Frame1.Enabled = Args
+Private Sub DoButtons(args As Boolean)
+ListView1.Enabled = Not args
+cmdAdd.Enabled = Not args
+cmdDel.Enabled = Not args
+cmdMod.Enabled = Not args
+cmdSave.Enabled = args
+cmdCancel.Enabled = args
+txtName.Enabled = args
+txtPassword.Enabled = args
+cmbBanned.Enabled = args
+cmbLevel.Enabled = args
+cmbGender.Enabled = args
+lblName.Enabled = args
+lblPassword.Enabled = args
+lblBanned.Enabled = args
+lblLevel.Enabled = args
+lblGender.Enabled = args
+Frame1.Enabled = args
 End Sub
 
 Private Sub ClearTxBoxes()
@@ -379,14 +379,16 @@ If Switch Then
         Exit Sub
     End If
 
-    For i = 1 To ListView1.ListItems.Count
-        If txtName.Text = ListView1.ListItems.Item(i).SubItems(INDEX_NAME) Then
-            MsgBox "Name already given.", vbInformation
-            ClearTxBoxes
-            txtName.SetFocus
-            Exit Sub
-        End If
-    Next i
+    With ListView1.ListItems
+        For i = 1 To .Count
+            If LCase$(txtName) = LCase$(.Item(i).SubItems(INDEX_NAME)) Then
+                MsgBox "Name already taken.", vbInformation
+                ClearTxBoxes
+                txtName.SetFocus
+                Exit Sub
+            End If
+        Next i
+    End With
 
     RegisterAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, vbNullString, vbNullString, cmbGender.Text, vbNullString
 Else

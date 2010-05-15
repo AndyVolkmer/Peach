@@ -3,7 +3,7 @@ Begin VB.Form frmSettings
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Peach Settings"
-   ClientHeight    =   6300
+   ClientHeight    =   6150
    ClientLeft      =   45
    ClientTop       =   375
    ClientWidth     =   4455
@@ -18,10 +18,9 @@ Begin VB.Form frmSettings
    EndProperty
    Icon            =   "frmSettings.frx":0000
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   6300
+   ScaleHeight     =   6150
    ScaleWidth      =   4455
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
@@ -38,13 +37,13 @@ Begin VB.Form frmSettings
       Height          =   285
       Left            =   240
       TabIndex        =   12
-      Top             =   2520
+      Top             =   2400
       Width           =   1575
    End
    Begin VB.Frame Frame3 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Connection Setting"
-      Height          =   1695
+      Height          =   1575
       Left            =   120
       TabIndex        =   9
       Top             =   1320
@@ -54,7 +53,7 @@ Begin VB.Form frmSettings
          Height          =   255
          Left            =   120
          TabIndex        =   11
-         Top             =   960
+         Top             =   840
          Width           =   975
       End
       Begin VB.Label Label2 
@@ -72,7 +71,7 @@ Begin VB.Form frmSettings
       Height          =   2535
       Left            =   120
       TabIndex        =   8
-      Top             =   3120
+      Top             =   3000
       Width           =   4215
       Begin VB.CheckBox chkAutoLogin 
          Caption         =   "Login automatically"
@@ -130,7 +129,7 @@ Begin VB.Form frmSettings
       Height          =   375
       Left            =   2880
       TabIndex        =   5
-      Top             =   5760
+      Top             =   5640
       Width           =   1455
    End
    Begin VB.CommandButton Command1 
@@ -138,7 +137,7 @@ Begin VB.Form frmSettings
       Height          =   375
       Left            =   120
       TabIndex        =   4
-      Top             =   5760
+      Top             =   5640
       Width           =   1455
    End
    Begin VB.Frame Frame1 
