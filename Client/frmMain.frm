@@ -784,6 +784,9 @@ For k = 0 To UBound(p_PreArray) - 1
 
             End Select
 
+        Case "!channel_password"
+            SendMessage "!channel_password#" & InputBox("CH_MSG_PASSWORD", "CH_MSG_PASSWORD_TITLE") & "#" & StrArr(1)
+
         Case Else
             If Not Screen.ActiveForm.Name = frmChat.Name Then
                 ChatNotifyTimer.Enabled = True

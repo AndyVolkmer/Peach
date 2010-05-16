@@ -125,7 +125,7 @@ Private Sub Form_Load()
 Me.Top = 0: Me.Left = 0
 End Sub
 
-Public Sub JoinChannel(Channel As String, User As String)
+Public Sub JoinChannel(Channel As String, User As String, Index As Integer)
 Dim i As Long
 Dim j As Long
 
@@ -133,14 +133,12 @@ Dim j As Long
 With lvChannels.ListItems
     For i = 1 To .Count
         If LCase$(.Item(i)) = LCase$(Channel) Then
-            'Join Channel
-            With lvUsers.ListItems
-                .Add , , User
-                .Item(.Count).SubItems(CHANNEL_USER_CHANNEL) = lvChannels.ListItems.Item(i)
-                .Item(.Count).SubItems(CHANNEL_USER_IS_OWNER) = "0"
-            End With
-
-            If .Item(i).SubItems(CHANNEL_JOIN_ANNOUNCE) = "1" Then SendMessageToChannel Channel, User, "[" & .Item(i) & "] " & User & " has joined the channel."
+            'If channel has a password then ask for it, else just join
+            If LenB(.Item(i).SubItems(CHANNEL_PASSWORD)) = 0 Then
+                JoinChannelReal Channel, User
+            Else
+                SendSingle "!channel_password#" & Channel & "#", Index
+            End If
             Exit Sub
         End If
     Next i
@@ -160,11 +158,23 @@ With lvUsers.ListItems
     .Item(.Count).SubItems(CHANNEL_USER_IS_OWNER) = "1"
 End With
 
-With frmPanel.ListView1.ListItems
+SendSingle "[" & Channel & "] You joined the channel.", Index
+End Sub
+
+Public Sub JoinChannelReal(Channel As String, User As String)
+Dim i As Long
+
+With lvChannels.ListItems
     For i = 1 To .Count
-        If .Item(i) = User Then
-            SendSingle "[" & Channel & "] You joined the channel.", .Item(i).SubItems(INDEX_WINSOCK_ID)
-            Exit For
+        If LCase$(.Item(i)) = LCase$(Channel) Then
+            With lvUsers.ListItems
+                .Add , , User
+                .Item(.Count).SubItems(CHANNEL_USER_CHANNEL) = lvChannels.ListItems.Item(i)
+                .Item(.Count).SubItems(CHANNEL_USER_IS_OWNER) = "0"
+            End With
+
+            If .Item(i).SubItems(CHANNEL_JOIN_ANNOUNCE) = "1" Then SendMessageToChannel Channel, User, "[" & .Item(i) & "] " & User & " has joined the channel."
+            Exit Sub
         End If
     Next i
 End With

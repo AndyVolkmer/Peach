@@ -483,6 +483,18 @@ Select Case p_Command
             Next i
         End With
 
+    Case "!channel_password"
+        With frmChannel.lvChannels.ListItems
+            For i = 1 To .Count
+                If LCase$(.Item(i)) = LCase$(p_MainArray(2)) And .Item(i).SubItems(CHANNEL_PASSWORD) = p_MainArray(1) Then
+                    frmChannel.JoinChannelReal .Item(i), GetAccountByIndex(Index)
+                    Exit For
+                Else
+                    If i = .Count Then SendSingle "Wrong password for channel '" & p_MainArray(2) & "'.", Index
+                End If
+            Next i
+        End With
+
     Case "!message"
         Dim p_CHAT_ARRAY() As String
         Dim p_TEXT_FIRST   As String
@@ -606,8 +618,7 @@ Select Case p_Command
                     Else
                         Select Case LCase$(p_CHAT_ARRAY(0))
                             Case ".announce", ".ann"
-                                Reason = GetAccountByIndex(Index) '//Temp variable used to not load account twice
-                                SendMessage GetGMFlag(Reason) & GetAFKFlag(Reason) & "[" & Reason & " announces]: " & p_ANN_MSG
+                                SendMessage GetGMFlag(Reason) & GetAFKFlag(Reason) & "[" & GetAccountByIndex(Index) & " announces]: " & p_ANN_MSG
 
                             Case ".notify"
                                 SendMessage "!msgbox#" & GetAccountByIndex(Index) & ": " & p_ANN_MSG & "#"
@@ -1157,7 +1168,7 @@ Select Case p_Command
                     Else
                         With frmChannel.lvUsers.ListItems
                             If .Count = 0 Then
-                                frmChannel.JoinChannel p_TEXT_FIRST, GetAccountByIndex(Index)
+                                frmChannel.JoinChannel p_TEXT_FIRST, GetAccountByIndex(Index), Index
                             Else
                                 properAccount = GetAccountByIndex(Index)
 
@@ -1166,7 +1177,7 @@ Select Case p_Command
                                         SendSingle "You are already in '" & .Item(i).SubItems(CHANNEL_USER_CHANNEL) & "'.", Index
                                         Exit For
                                     Else
-                                        If i = .Count Then frmChannel.JoinChannel p_TEXT_FIRST, properAccount
+                                        If i = .Count Then frmChannel.JoinChannel p_TEXT_FIRST, properAccount, Index
                                     End If
                                 Next i
 
@@ -1204,6 +1215,7 @@ Select Case p_Command
                                                     For f = 1 To .Count
                                                         If LCase$(.Item(f)) = LCase$(p_TEXT_FIRST) Then
                                                             .Item(f).SubItems(CHANNEL_PASSWORD) = p_TEXT_SECOND
+                                                            SendSingle "Successfully changed password of '" & .Item(f) & "' to '" & p_TEXT_SECOND & "'.", Index
                                                             Exit For
                                                         End If
                                                     Next f
