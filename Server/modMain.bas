@@ -147,7 +147,7 @@ With Database
             End If
             eFlag = True
         Else
-            .Password = DeCode(ReadIniValue(p_Path, "Database", "Password"))
+            .Password = Decode(ReadIniValue(p_Path, "Database", "Password"))
         End If
 
         If LenB(ReadIniValue(p_Path, "Database", "Host")) = 0 Then

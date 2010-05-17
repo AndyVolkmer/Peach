@@ -442,7 +442,7 @@ Select Case p_Command
                         End If
 
                         'Password Check
-                        If Not .Item(i).SubItems(INDEX_PASSWORD) = p_MainArray(2) Then
+                        If Not GetMD5(.Item(i).SubItems(INDEX_PASSWORD)) = p_MainArray(2) Then
                             SendSingle "!login#Password#", Index
                             Exit Sub
                         End If
@@ -594,16 +594,16 @@ Select Case p_Command
                     End With
 
                 Case ".ban"
-                    Ban GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 1, Index, Trim$(Reason)
+                    Ban GetProperAccountName(p_TEXT_FIRST), 1, Index, Trim$(Reason)
 
                 Case ".unban"
-                    Ban GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 0, Index, Trim$(Reason)
+                    Ban GetProperAccountName(p_TEXT_FIRST), 0, Index, Trim$(Reason)
 
                 Case ".mute"
-                    MuteUser GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 1, Index, Trim$(Reason)
+                    MuteUser GetProperAccountName(p_TEXT_FIRST), 1, Index, Trim$(Reason)
 
                 Case ".unmute"
-                    MuteUser GetProperAccountName(p_TEXT_FIRST), GetAccountByIndex(Index), 0, Index, Trim$(Reason)
+                    MuteUser GetProperAccountName(p_TEXT_FIRST), 0, Index, Trim$(Reason)
 
                 Case ".announce", ".ann", ".notify"
                     Dim p_ANN_MSG As String
@@ -1304,7 +1304,7 @@ Select Case p_Command
 
                                             For f = 1 To .Count
                                                 If .Item(f) = tempA And LCase$(.Item(f).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then
-                                                    SendMessageToChannel Channel, tempA, "[" & .Item(f).SubItems(CHANNEL_USER_CHANNEL) & "][" & tempA & "]: " & Right$(p_MainArray(1), Len(p_MainArray(1)) - Len(Channel) - 1)
+                                                    SendMessageToChannel Channel, tempA, "[" & .Item(f).SubItems(CHANNEL_USER_CHANNEL) & "]" & GetGMFlag(tempA) & GetAFKFlag(tempA) & "[" & tempA & "]: " & Right$(p_MainArray(1), Len(p_MainArray(1)) - Len(Channel) - 1)
                                                     Exit For
                                                 Else
                                                     If f = .Count Then SendSingle "You are not in channel '" & Channel & "'.", Index
@@ -1361,26 +1361,26 @@ End Select
 Next k
 End Sub
 
-Private Sub SetLastMessage(pUser As String, pMessage As String)
+Private Sub SetLastMessage(User As String, Message As String)
 Dim i As Long
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i) = pUser Then
-            .Item(i).SubItems(INDEX_LAST_MESSAGE) = pMessage
+        If .Item(i) = User Then
+            .Item(i).SubItems(INDEX_LAST_MESSAGE) = Message
             Exit For
         End If
     Next i
 End With
 End Sub
 
-Private Function IsRepeating(pUser As String, pMessage As String) As Boolean
+Private Function IsRepeating(User As String, Message As String) As Boolean
 Dim i As Long
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i) = pUser Then
-            If .Item(i).SubItems(INDEX_LAST_MESSAGE) = pMessage Then
+        If .Item(i) = User Then
+            If .Item(i).SubItems(INDEX_LAST_MESSAGE) = Message Then
                  IsRepeating = True
             End If
             Exit For
@@ -1389,11 +1389,11 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Private Function IsPartOf(pPart As String, pCommand As String) As Boolean
+Private Function IsPartOf(Part As String, Command As String) As Boolean
 Dim i As Long
 
-For i = 1 To Len(pPart)
-    If LCase$(Mid(pPart, 1, i)) = LCase$(Left$(pCommand, Len(Mid(pPart, 1, i)))) Then
+For i = 1 To Len(Part)
+    If LCase$(Mid(Part, 1, i)) = LCase$(Left$(Command, Len(Mid(Part, 1, i)))) Then
         IsPartOf = True
     Else
         IsPartOf = False
@@ -1402,7 +1402,7 @@ For i = 1 To Len(pPart)
 Next i
 End Function
 
-Private Function GetOnlineTime(pUser As String) As String
+Private Function GetOnlineTime(User As String) As String
 Dim TD      As String
 Dim TD1()   As String
 Dim i       As Long
@@ -1410,7 +1410,7 @@ Dim j       As Long
 
 With frmPanel.ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i) = pUser Then
+        If .Item(i) = User Then
             TD = TimeSerial(0, 0, DateDiff("s", .Item(i).SubItems(INDEX_LOGIN_TIME), Time))
 
             TD1 = Split(TD, ":")
@@ -1503,7 +1503,7 @@ With frmPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub MuteUser(User As String, AdminName As String, IsMuted As Long, Index As Integer, Reason As String)
+Private Sub MuteUser(User As String, IsMuted As Long, Index As Integer, Reason As String)
 Dim i As Long
 
 With frmPanel.ListView1.ListItems
@@ -1531,9 +1531,9 @@ With frmPanel.ListView1.ListItems
                 End If
             Else
                 If IsMuted = 1 Then
-                    SendMessage User & " got muted by " & AdminName & ". (" & Reason & ")"
+                    SendMessage User & " got muted by " & GetAccountByIndex(Index) & ". (" & Reason & ")"
                 Else
-                    SendMessage User & " got unmuted by " & AdminName & ". (" & Reason & ")"
+                    SendMessage User & " got unmuted by " & GetAccountByIndex(Index) & ". (" & Reason & ")"
                 End If
             End If
             Exit For
@@ -1576,7 +1576,7 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Private Sub Ban(Account As String, AdminName As String, Ban As Long, Index As Integer, Reason As String)
+Private Sub Ban(Account As String, Ban As Long, Index As Integer, Reason As String)
 Dim i As Long
 
 With frmAccountPanel.ListView1.ListItems
@@ -1602,15 +1602,15 @@ With frmAccountPanel.ListView1.ListItems
             'Announce the action
             If LenB(Reason) = 0 Then
                 If Ban = 1 Then
-                    SendMessage Account & " was account banned by " & AdminName & "."
+                    SendMessage Account & " was account banned by " & GetAccountByIndex(Index) & "."
                 Else
-                    SendMessage Account & " was account unbanned by " & AdminName & "."
+                    SendMessage Account & " was account unbanned by " & GetAccountByIndex(Index) & "."
                 End If
             Else
                 If Ban = 1 Then
-                    SendMessage Account & " was account banned by " & AdminName & ". (" & Reason & ")"
+                    SendMessage Account & " was account banned by " & GetAccountByIndex(Index) & ". (" & Reason & ")"
                 Else
-                    SendMessage Account & " was account unbanned by " & AdminName & ". (" & Reason & ")"
+                    SendMessage Account & " was account unbanned by " & GetAccountByIndex(Index) & ". (" & Reason & ")"
                 End If
             End If
             Exit For

@@ -588,7 +588,7 @@ End Sub
 
 Private Sub Winsock1_Connect()
 With frmMain
-    SendMessage "!login#" & .txtAccount.Text & "#" & .txtPassword.Text & "#" & CURRENT_LANG & "#"
+    SendMessage "!login#" & .txtAccount.Text & "#" & GetMD5(.txtPassword.Text) & "#" & CURRENT_LANG & "#"
 End With
 End Sub
 

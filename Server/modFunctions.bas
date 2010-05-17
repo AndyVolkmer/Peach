@@ -111,7 +111,7 @@ Public Commands()                           As GC
 Public Emotes()                             As EMT
 Public DeclinedNames()                      As String
 Public Options                              As OPT
-Public pDB                                  As New DatabaseClass
+Public pDB                                  As New clsDB
 
 Global VarTime                              As Long     'Time counter variable
 
