@@ -634,17 +634,6 @@ For k = 0 To UBound(p_PreArray) - 1
         Case "!namechange"
             txtAccount.Text = StrArr(1)
 
-        'Show server information
-        Case "!server_info"
-            For i = 1 To UBound(StrArr)
-                Buffer = Buffer & vbCrLf & " " & StrArr(i)
-            Next i
-            With frmChat.txtConver
-                .SelStart = Len(.Text)
-                .SelRTF = Buffer
-            End With
-            SendMessage "!ignore#-get#"
-
         'We can't login
         Case "!decilined"
             Disconnect
@@ -662,6 +651,8 @@ For k = 0 To UBound(p_PreArray) - 1
             SetupChildForm frmChat
             txtAccount.Text = StrArr(1)
             SendMessage "!connected#"
+            SendMessage "!friend#-get#"
+            SendMessage "!ignore#-get#"
 
         'Wipe out current ignore list and insert new values
         Case "!update_ignore"
@@ -697,12 +688,6 @@ For k = 0 To UBound(p_PreArray) - 1
                         .Item(j).ListSubItems(1).ForeColor = RGB(132, 0, 0)
                     End If
                 Next i
-
-                'Ask for server information
-                If RunOnce = False Then
-                    RunOnce = True
-                    SendMessage "!server_info#"
-                End If
             End With
 
         'Wipe out current list and insert new values
@@ -716,9 +701,6 @@ For k = 0 To UBound(p_PreArray) - 1
                 frmSociety.lvOnlineList.ListItems.Add , , StrArr(i)
                 frmSendFile.Combo1.AddItem StrArr(i)
             Next i
-
-            'Ask for friendlist
-            SendMessage "!friend#-get#"
 
         'We get login answer here
         Case "!login"

@@ -420,9 +420,12 @@ Select Case p_Command
 
         properAccount = vbNullString
 
-    'Send Server information
-    Case "!server_info"
-        SendSingle "!server_info#" & GetServerInformation, Index
+        'Send Server information
+        SendSingle vbCrLf & _
+                   " Welcome to Peach Servers." & vbCrLf & _
+                   " Server: Peach r" & pRev & "/" & GetOS & vbCrLf & _
+                   " Online User: " & frmMain.Winsock1.Count - 1 & vbCrLf & _
+                   " Server Uptime: " & TimeSerial(0, 0, DateDiff("s", frmConfig.START_TIME, Time)), Index
 
     Case "!login"
         With frmAccountPanel.ListView1.ListItems
@@ -1462,14 +1465,6 @@ With frmAccountPanel.ListView1.ListItems
         End If
     Next i
 End With
-End Function
-
-Private Function GetServerInformation() As String
-GetServerInformation = _
-"Welcome to Peach Servers." & "#" & _
-"Server: Peach r" & pRev & "/" & GetOS & "#" & _
-"Online User: " & frmMain.Winsock1.Count - 1 & "#" & _
-"Server Uptime: " & TimeSerial(0, 0, DateDiff("s", frmConfig.START_TIME, Time))
 End Function
 
 Private Sub Whisper(User As String, Target As String, Message As String, Index As Integer)

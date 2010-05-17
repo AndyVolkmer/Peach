@@ -1,7 +1,7 @@
 Attribute VB_Name = "modCrypt"
 Option Explicit
 
-Public Function DeCode(vText As String) As String
+Public Function Decode(vText As String) As String
 On Error GoTo ErrHandler
 Dim CurSpc As Integer
 Dim varLen As Integer
@@ -122,7 +122,7 @@ Do While CurSpc <= varLen
     CurSpc = CurSpc + 3
     DoEvents
 Loop
-DeCode = varFin
+Decode = varFin
 Exit Function
 ErrHandler:
     MsgBox "Error# = " & Err.Number & vbCrLf & "Description = " & Err.Description & vbCrLf & "Source = " & Err.Source, vbCritical + vbOKOnly
