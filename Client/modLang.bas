@@ -184,6 +184,8 @@ Public FP_MSG_SUCCESSFULL               As String
 Public FP_MSG_WRONG_ANSWER              As String
 Public FP_MSG_WRONG_EMAIL               As String
 
+Public CH_MSG_PASSWORD                  As String
+
 Public Sub SET_LANG_GERMAN()
 CURRENT_LANG = 0
 
@@ -361,6 +363,8 @@ FP_CAPTION = "Peach - Kennwort vergessen"
 FP_MSG_SUCCESSFULL = "Ihr Account-Name lautet '%u'." & vbCrLf & "Ihr Kennwort lautet '%p'."
 FP_MSG_WRONG_ANSWER = "Die Antwort ist falsch."
 FP_MSG_WRONG_EMAIL = "Die angegebene Email-Adresse konnte nicht gefunden werden."
+
+CH_MSG_PASSWORD = "Bitte geben Sie das Passwort für den Channel '%c' an."
 End Sub
 
 Public Sub SET_LANG_ENGLISH()
@@ -544,6 +548,8 @@ FP_CAPTION = "Peach - Forgot Password"
 FP_MSG_SUCCESSFULL = "Your username is '%u'." & vbCrLf & "Your password is '%p'."
 FP_MSG_WRONG_ANSWER = "The answer is wrong."
 FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
+
+CH_MSG_PASSWORD = "Please enter the password of channel '%c'."
 End Sub
 
 Public Sub SET_LANG_SPANISH()
@@ -722,6 +728,8 @@ FP_CAPTION = "Peach - Recuperar contraseña"
 FP_MSG_SUCCESSFULL = "El nombre de su cuenta es '%u'." & vbCrLf & "Su contraseña es '%p'."
 FP_MSG_WRONG_ANSWER = "La respuesta es incorrecta."
 FP_MSG_WRONG_EMAIL = "El correo electronico no se ha encontrado."
+
+CH_MSG_PASSWORD = "Por favor introduzca la contraseña del canal '%c'."""
 End Sub
 
 Public Sub SET_LANG_SWEDISH()
@@ -900,6 +908,8 @@ FP_CAPTION = "Peach - Glömt lösenord"
 FP_MSG_SUCCESSFULL = "Your username is '%u'." & vbCrLf & "Your password is '%p'."
 FP_MSG_WRONG_ANSWER = "Svaret är fel."
 FP_MSG_WRONG_EMAIL = "Den angivna e-postadressen kunde inte hittas."
+
+CH_MSG_PASSWORD = "Please enter the password of channel '%c'."
 End Sub
 
 Public Sub SET_LANG_ITALIAN()
@@ -1081,6 +1091,8 @@ FP_CAPTION = "Peach - Dimenticato la password"
 FP_MSG_SUCCESSFULL = "Il tuo nome account è '%u'." & vbCrLf & " La password è '%p'."
 FP_MSG_WRONG_ANSWER = "La risposta è sbagliata."
 FP_MSG_WRONG_EMAIL = "L'indirizzo email inserito non è stato trovato."
+
+CH_MSG_PASSWORD = "Please enter the password of channel '%c'."
 End Sub
 
 Public Sub SET_LANG_DUTCH()
@@ -1265,6 +1277,8 @@ FP_CAPTION = "Peach - Wachtwoord vergeten"
 FP_MSG_SUCCESSFULL = "Your account name is '%u'." & vbCrLf & "Your password is '%p'."
 FP_MSG_WRONG_ANSWER = "Het antwoord is fout."
 FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
+
+CH_MSG_PASSWORD = "Please enter the password of channel '%c'."
 End Sub
 
 Public Sub SET_LANG_SERBIAN()
@@ -1445,6 +1459,8 @@ FP_CAPTION = "Peach - Forgot Password"
 FP_MSG_SUCCESSFULL = "Your account name is '%u'." & vbCrLf & "Your password is '%p'."
 FP_MSG_WRONG_ANSWER = "The answer is wrong."
 FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
+
+CH_MSG_PASSWORD = "Please enter the password of channel '%c'."
 End Sub
 
 Public Sub SET_LANG_FRENCH()
@@ -1570,7 +1586,7 @@ REG_MSG_PASSWORD_EMPTY = "Aucun mot de passe soumis."
 
 REG_MSG_SECRET_ANSWER_EMPTY = "Pas de secret répondu ajouté."
 
-REG_MSG_EMAIL_EMPTY = "No email entered."
+REG_MSG_EMAIL_EMPTY = "Aucun e-mail est entré."
 REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgot your password?"
 
 REG_MSG_SUCCESSFULLY = "Le compte a été enregistré avec succès."
@@ -1586,10 +1602,10 @@ REG_CMB_SECRET_QUESTION_3 = "Quel est votre jeu préféré?"
 REG_CMB_SECRET_QUESTION_4 = "Quel est votre chanteur préféré?"
 REG_CMB_SECRET_QUESTION_5 = "Quel est l'endroit où votre mère est née?"
 
-REG_LABEL_GENDER = "Gender"
+REG_LABEL_GENDER = "Sexe"
 
-REG_CMB_GENDER_MALE = "Male"
-REG_CMB_GENDER_FEMALE = "Female"
+REG_CMB_GENDER_MALE = "Mâle"
+REG_CMB_GENDER_FEMALE = "Femelle"
 
 SET_LABEL_COLOR = "Couleur Courante"
 SET_LABEL_FONT = "Fonte"
@@ -1619,4 +1635,6 @@ FP_CAPTION = "Peach - Mot de passe oublié"
 FP_MSG_SUCCESSFULL = "Votre compte est '%u'." & vbCrLf & "Votre mot de passe est '%p'."
 FP_MSG_WRONG_ANSWER = "La réponse est fausse."
 FP_MSG_WRONG_EMAIL = "The entered email adress could not be found."
+
+CH_MSG_PASSWORD = "Please enter the password of channel '%c'."
 End Sub

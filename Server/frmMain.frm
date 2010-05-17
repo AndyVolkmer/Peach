@@ -408,18 +408,15 @@ Select Case p_Command
     Case "!connected"
         UPDATE_ONLINE
 
-        Dim pSocket As Winsock
-
         properAccount = GetAccountByIndex(Index)
 
-        For Each pSocket In frmMain.Winsock1
-            With pSocket
-                If .State = 7 And Not .Index = Index Then
-                    .SendData properAccount & " has come online." & Chr(24) & Chr(25)
-                    DoEvents
+        With frmPanel.ListView1.ListItems
+            For i = 1 To .Count
+                If Not .Item(i) = properAccount Then
+                    SendSingle properAccount & " has come online.", .Item(i).SubItems(INDEX_WINSOCK_ID)
                 End If
-            End With
-        Next
+            Next i
+        End With
 
         properAccount = vbNullString
 
@@ -1194,8 +1191,6 @@ Select Case p_Command
                     End If
 
                 Case "/setpassword"
-                    'p_text_first = channel
-                    'p_text_second = password
                     If LenB(p_TEXT_FIRST) = 0 Then
                         SendSingle "Please enter a valid channel name.", Index
                     Else
@@ -1525,9 +1520,9 @@ With frmPanel.ListView1.ListItems
             'Announce the action
             If LenB(Reason) = 0 Then
                 If IsMuted = 1 Then
-                    SendMessage User & " got muted by " & AdminName & "."
+                    SendMessage User & " got muted by " & GetAccountByIndex(Index) & "."
                 Else
-                    SendMessage User & " got unmuted by " & AdminName & "."
+                    SendMessage User & " got unmuted by " & GetAccountByIndex(Index) & "."
                 End If
             Else
                 If IsMuted = 1 Then
@@ -1583,7 +1578,7 @@ With frmAccountPanel.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(INDEX_NAME) = Account Then
 
-            'If the account is already banned send feedback
+            'If the account is already un/banned send feedback
             If Ban = 1 Then
                 If .Item(i).SubItems(INDEX_BANNED) = "1" Then
                     SendSingle "Account '" & Account & "' is already banned.", Index
