@@ -420,10 +420,10 @@ End Sub
 
 Private Sub showAbout()
 MsgBox "Author: " & pAuthor & vbCrLf _
-    & "Version: " & pRev & vbCrLf & vbCrLf _
-    & "Peach is beeing developed by " & pAuthor & _
-    " Do not publish this anywhere without " & _
-    "permissions of the author.", vbInformation
+     & "Version: " & pRev & vbCrLf & vbCrLf _
+     & "Peach is beeing developed by " & pAuthor _
+     & " Do not publish this anywhere without " _
+     & "permissions of the author.", vbInformation
 End Sub
 
 Private Sub menuUpdate_Click()

@@ -594,16 +594,16 @@ Select Case p_Command
                     End With
 
                 Case ".ban"
-                    Ban GetProperAccountName(p_TEXT_FIRST), 1, Index, Trim$(Reason)
+                    Ban GetProperAccountName(p_TEXT_FIRST), 1, Trim$(Reason), Index
 
                 Case ".unban"
-                    Ban GetProperAccountName(p_TEXT_FIRST), 0, Index, Trim$(Reason)
+                    Ban GetProperAccountName(p_TEXT_FIRST), 0, Trim$(Reason), Index
 
                 Case ".mute"
-                    MuteUser GetProperAccountName(p_TEXT_FIRST), 1, Index, Trim$(Reason)
+                    MuteUser GetProperAccountName(p_TEXT_FIRST), 1, Trim$(Reason), Index
 
                 Case ".unmute"
-                    MuteUser GetProperAccountName(p_TEXT_FIRST), 0, Index, Trim$(Reason)
+                    MuteUser GetProperAccountName(p_TEXT_FIRST), 0, Trim$(Reason), Index
 
                 Case ".announce", ".ann", ".notify"
                     Dim p_ANN_MSG As String
@@ -1193,6 +1193,47 @@ Select Case p_Command
                         frmChannel.LeaveChannel p_TEXT_FIRST, GetAccountByIndex(Index)
                     End If
 
+                Case "/announce"
+                    If LenB(p_TEXT_FIRST) = 0 Then
+                        SendSingle "Please enter a valid channel name.", Index
+                    Else
+                        If frmChannel.lvChannels.ListItems.Count = 0 Then
+                            SendSingle "You are not in channel '" & p_TEXT_FIRST & "'.", Index
+                        Else
+                            With frmChannel.lvUsers.ListItems
+                                properAccount = GetAccountByIndex(Index)
+
+                                For i = 1 To .Count
+                                    If .Item(i) = properAccount And LCase$(.Item(i).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(p_TEXT_FIRST) Then
+                                        If .Item(i).SubItems(CHANNEL_USER_IS_OWNER) = "1" Then
+                                            With frmChannel.lvChannels.ListItems
+                                                For f = 1 To .Count
+                                                    If LCase$(.Item(f)) = LCase$(p_TEXT_FIRST) Then
+                                                        If .Item(f).SubItems(CHANNEL_JOIN_ANNOUNCE) = "1" Then
+                                                            .Item(f).SubItems(CHANNEL_JOIN_ANNOUNCE) = "0"
+                                                        Else
+                                                            .Item(f).SubItems(CHANNEL_JOIN_ANNOUNCE) = "1"
+                                                        End If
+
+                                                        SendMessageToChannel .Item(f), properAccount, "[" & .Item(f) & "] Channel announcements got disabled by " & properAccount & "."
+                                                        Exit For
+                                                    End If
+                                                Next f
+                                            End With
+                                        Else
+                                            SendSingle "You are not the leader of this channel.", Index
+                                        End If
+                                        Exit For
+                                    Else
+                                        If i = .Count Then SendSingle "You are not in channel '" & p_TEXT_FIRST & "'.", Index
+                                    End If
+                                Next i
+
+                                properAccount = vbNullString
+                            End With
+                        End If
+                    End If
+
                 Case "/setpassword"
                     If LenB(p_TEXT_FIRST) = 0 Then
                         SendSingle "Please enter a valid channel name.", Index
@@ -1493,7 +1534,7 @@ With frmPanel.ListView1.ListItems
 End With
 End Sub
 
-Private Sub MuteUser(User As String, IsMuted As Long, Index As Integer, Reason As String)
+Private Sub MuteUser(User As String, IsMuted As Long, Reason As String, Index As Integer)
 Dim i As Long
 
 With frmPanel.ListView1.ListItems
@@ -1566,7 +1607,7 @@ With frmPanel.ListView1.ListItems
 End With
 End Function
 
-Private Sub Ban(Account As String, Ban As Long, Index As Integer, Reason As String)
+Private Sub Ban(Account As String, Ban As Long, Reason As String, Index As Integer)
 Dim i As Long
 
 With frmAccountPanel.ListView1.ListItems
