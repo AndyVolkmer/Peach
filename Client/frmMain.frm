@@ -616,7 +616,9 @@ For k = 0 To UBound(p_PreArray) - 1
     StrArr = Split(p_PreArray(k), "#")
 
     'Assign the variables to the array
-    GetCommand = StrArr(0)
+    If UBound(StrArr) > -1 Then
+        GetCommand = StrArr(0)
+    End If
 
     Select Case GetCommand
         Case "!clear"

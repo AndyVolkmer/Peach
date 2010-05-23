@@ -113,8 +113,6 @@ Public DeclinedNames()                      As String
 Public Options                              As OPT
 Public pDB                                  As New clsDB
 
-Global VarTime                              As Long     'Time counter variable
-
 'Tray constants
 Public Const NIM_ADD                        As Long = &H0
 Public Const NIM_MODIFY                     As Long = &H1
@@ -204,7 +202,7 @@ With frmChannel.lvUsers.ListItems
     For i = 1 To .Count
         If LCase$(.Item(i).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then
             If IsIgnoring(.Item(i), User) = False Then
-                With frmPanel.ListView1.ListItems
+                With frmPanel.lvUsers.ListItems
                     For j = 1 To .Count
                         If .Item(j) = frmChannel.lvUsers.ListItems.Item(i) Then
                             SendSingle Message, .Item(j).SubItems(INDEX_WINSOCK_ID)
@@ -221,7 +219,7 @@ End Sub
 Public Sub SendProtectedMessage(User As String, Message As String)
 Dim i As Long
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If IsIgnoring(.Item(i), User) = False Then
             SendSingle Message, .Item(i).SubItems(INDEX_WINSOCK_ID)
@@ -261,7 +259,7 @@ Public Sub UPDATE_ONLINE()
 Dim i       As Long
 Dim GetList As String
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         GetList = GetList & .Item(i) & "#"
         If i = .Count Then GetList = "!update_online#" & GetList
@@ -272,39 +270,39 @@ If LenB(GetList) <> 0 Then SendMessage GetList
 End Sub
 
 Public Sub UPDATE_FRIEND(Name As String, Index As Integer)
-Dim buffer      As String
+Dim Buffer      As String
 Dim i           As Long
 
-buffer = "!update_friends#"
+Buffer = "!update_friends#"
 With frmFriendIgnoreList.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = Name Then
             If GetAccountStatus(.Item(i).SubItems(2)) = 1 Then
-                buffer = buffer & .Item(i).SubItems(2) & "$Online#"
+                Buffer = Buffer & .Item(i).SubItems(2) & "$Online#"
             Else
-                buffer = buffer & .Item(i).SubItems(2) & "$Offline#"
+                Buffer = Buffer & .Item(i).SubItems(2) & "$Offline#"
             End If
         End If
     Next i
 End With
 
-SendSingle buffer, Index
+SendSingle Buffer, Index
 End Sub
 
 Public Sub UPDATE_IGNORE(Name As String, Index As Integer)
-Dim buffer As String
+Dim Buffer As String
 Dim i      As Long
 
-buffer = "!update_ignore#"
+Buffer = "!update_ignore#"
 With frmFriendIgnoreList.ListView2.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = Name Then
-            buffer = buffer & .Item(i).SubItems(2) & "#"
+            Buffer = Buffer & .Item(i).SubItems(2) & "#"
         End If
     Next i
 End With
 
-SendSingle buffer, Index
+SendSingle Buffer, Index
 End Sub
 
 Public Sub UPDATE_STATUS_BAR()
@@ -314,7 +312,7 @@ End Sub
 Private Function GetAccountStatus(Account As String) As Long
 Dim i As Long
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = Account Then
             GetAccountStatus = 1
@@ -491,6 +489,5 @@ Else
         .Command2.Enabled = False
     End With
     frmMain.StatusBar1.Panels(1).Text = "Status: Disconnected"
-    VarTime = 0
 End If
 End Sub

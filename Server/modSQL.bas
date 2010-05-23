@@ -223,7 +223,7 @@ End With
 
 With .pRecordSet
     Do Until .EOF
-        Set LItem = frmAccountPanel.ListView1.ListItems.Add(, , !ID)
+        Set LItem = frmAccountPanel.lvAccounts.ListItems.Add(, , !ID)
         LItem.SubItems(INDEX_NAME) = !Name1
         LItem.SubItems(INDEX_PASSWORD) = !Password1
         LItem.SubItems(INDEX_TIME) = Format$(!Time1, "hh:nn:ss")

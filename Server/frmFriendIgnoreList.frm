@@ -150,7 +150,7 @@ If LCase$(pUser) = LCase$(pFriend) Then
 End If
 
 'Check if friends account exist
-With frmAccountPanel.ListView1.ListItems
+With frmAccountPanel.lvAccounts.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(INDEX_NAME)) = LCase(pFriend) Then
             pFriend = .Item(i).SubItems(1)
@@ -246,7 +246,7 @@ If LCase$(pUser) = LCase$(pIgnore) Then
 End If
 
 'Check if friends account exist
-With frmAccountPanel.ListView1.ListItems
+With frmAccountPanel.lvAccounts.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(1)) = LCase(pIgnore) Then
             pIgnore = .Item(i).SubItems(1)

@@ -256,16 +256,16 @@ Unload Winsock1(Index)
 
 If LenB(User) <> 0 Then SendMessage User & " has gone offline."
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             If Len(User) <> 0 Then
                 Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'")
 
-                With frmAccountPanel.ListView1.ListItems
+                With frmAccountPanel.lvAccounts.ListItems
                     For j = 1 To .Count
                         If .Item(j).SubItems(INDEX_NAME) = User Then
-                            .Item(j).SubItems(INDEX_LAST_IP) = frmPanel.ListView1.ListItems.Item(i).SubItems(INDEX_IP)
+                            .Item(j).SubItems(INDEX_LAST_IP) = frmPanel.lvUsers.ListItems.Item(i).SubItems(INDEX_IP)
                             Exit For
                         End If
                     Next j
@@ -295,7 +295,7 @@ With Winsock1(j)
 End With
 
 'Add new user to panel without account and name
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     .Add
     i = .Count
     If Winsock1(j).RemoteHostIP = "127.0.0.1" Then
@@ -410,7 +410,7 @@ Select Case p_Command
 
         properAccount = GetAccountByIndex(Index)
 
-        With frmPanel.ListView1.ListItems
+        With frmPanel.lvUsers.ListItems
             For i = 1 To .Count
                 If Not .Item(i) = properAccount Then
                     SendSingle properAccount & " has come online.", .Item(i).SubItems(INDEX_WINSOCK_ID)
@@ -428,7 +428,7 @@ Select Case p_Command
                    " Server Uptime: " & TimeSerial(0, 0, DateDiff("s", frmConfig.START_TIME, Time)), Index
 
     Case "!login"
-        With frmAccountPanel.ListView1.ListItems
+        With frmAccountPanel.lvAccounts.ListItems
             If .Count = 0 Then
                 SendSingle "!login#Account#", Index
             Else
@@ -455,7 +455,7 @@ Select Case p_Command
                     End If
                 Next i
 
-                With frmPanel.ListView1.ListItems
+                With frmPanel.lvUsers.ListItems
                     'If the account is already beeing used kick first instance
                     For i = 1 To .Count
                         If LCase$(.Item(i)) = LCase$(p_MainArray(1)) Then
@@ -474,7 +474,7 @@ Select Case p_Command
 
     'We get ip request and send ip back
     Case "!iprequest"
-        With frmPanel.ListView1.ListItems
+        With frmPanel.lvUsers.ListItems
             For i = 1 To .Count
                 If .Item(i) = p_MainArray(1) Then
                     SendSingle "!iprequest#" & .Item(i).SubItems(INDEX_IP) & "#", Index
@@ -526,7 +526,7 @@ Select Case p_Command
         End If
 
         'Check if user is muted
-        With frmPanel.ListView1.ListItems
+        With frmPanel.lvUsers.ListItems
             properAccount = GetAccountByIndex(Index)
 
             For i = 1 To .Count
@@ -572,7 +572,7 @@ Select Case p_Command
                     GetAccountInfo GetProperAccountName(p_TEXT_FIRST), p_CHAT_ARRAY(0), Index
 
                 Case ".kick"
-                    With frmPanel.ListView1.ListItems
+                    With frmPanel.lvUsers.ListItems
                         properAccount = GetProperAccountName(p_TEXT_FIRST)
 
                         For i = 1 To .Count
@@ -637,7 +637,7 @@ Select Case p_Command
                             'Check if there are enough parameters
                             If UBound(p_CHAT_ARRAY) > 2 Then
                                 'Check if the account you want to modify exist
-                                With frmAccountPanel.ListView1.ListItems
+                                With frmAccountPanel.lvAccounts.ListItems
                                     For i = 1 To .Count
                                         If .Item(i).SubItems(INDEX_NAME) = properAccount Then
                                             'Check if change name is already given out
@@ -654,7 +654,7 @@ Select Case p_Command
                                                         SendSingle "Successfully renamed '" & properAccount & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
 
                                                         'Check if player is online and directly rename it, also tell user that he got renamed
-                                                        With frmPanel.ListView1.ListItems
+                                                        With frmPanel.lvUsers.ListItems
                                                             For m = 1 To .Count
                                                                 If .Item(m) = properAccount Then
                                                                     .Item(m) = p_CHAT_ARRAY(3)
@@ -727,7 +727,7 @@ Select Case p_Command
                                     Exit Sub
                                 End If
 
-                                With frmAccountPanel.ListView1.ListItems
+                                With frmAccountPanel.lvAccounts.ListItems
                                     properAccount = GetProperAccountName(p_TEXT_SECOND)
 
                                     For i = 1 To .Count
@@ -738,7 +738,7 @@ Select Case p_Command
                                             'Feedback to the person who modified the level
                                             SendSingle "Successfully changed level of '" & .Item(i).SubItems(INDEX_NAME) & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
 
-                                            With frmPanel.ListView1.ListItems
+                                            With frmPanel.lvUsers.ListItems
                                                 For n = 1 To .Count
                                                     If .Item(n) = properAccount Then
                                                         SendSingle GetAccountByIndex(Index) & " changed your level to '" & p_CHAT_ARRAY(3) & "'.", .Item(n).SubItems(INDEX_WINSOCK_ID)
@@ -774,7 +774,7 @@ Select Case p_Command
                                 If LenB(pGender) = 0 Then
                                     SendSingle "Incorrect gender format use 'male' or 'female'.", Index
                                 Else
-                                    With frmAccountPanel.ListView1.ListItems
+                                    With frmAccountPanel.lvAccounts.ListItems
                                         properAccount = GetProperAccountName(p_TEXT_SECOND)
 
                                         For i = 1 To .Count
@@ -786,7 +786,7 @@ Select Case p_Command
                                                 SendSingle "Successfully changed gender of '" & properAccount & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
 
                                                 'Notify user that gender got changed
-                                                With frmPanel.ListView1.ListItems
+                                                With frmPanel.lvUsers.ListItems
                                                     For n = 1 To .Count
                                                         If .Item(n) = properAccount Then
                                                             SendSingle GetAccountByIndex(Index) & " changed your gender to '" & p_CHAT_ARRAY(3) & "'.", .Item(n).SubItems(INDEX_WINSOCK_ID)
@@ -809,7 +809,7 @@ Select Case p_Command
 
                         Case "password"
                             If UBound(p_CHAT_ARRAY) > 2 Then
-                                With frmAccountPanel.ListView1.ListItems
+                                With frmAccountPanel.lvAccounts.ListItems
                                     properAccount = GetProperAccountName(p_TEXT_SECOND)
 
                                     For i = 1 To .Count
@@ -821,7 +821,7 @@ Select Case p_Command
                                             SendSingle "Successfully changed password of '" & properAccount & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
 
                                             'Notify user that password got changed
-                                            With frmPanel.ListView1.ListItems
+                                            With frmPanel.lvUsers.ListItems
                                                 For n = 1 To .Count
                                                     If .Item(n) = properAccount Then
                                                         SendSingle GetAccountByIndex(Index) & " changed your password to '" & p_CHAT_ARRAY(3) & "'.", .Item(n).SubItems(INDEX_WINSOCK_ID)
@@ -843,7 +843,7 @@ Select Case p_Command
 
                         Case "email"
                             If UBound(p_CHAT_ARRAY) > 2 Then
-                                With frmAccountPanel.ListView1.ListItems
+                                With frmAccountPanel.lvAccounts.ListItems
                                     properAccount = GetProperAccountName(p_TEXT_SECOND)
 
                                     For i = 1 To .Count
@@ -855,7 +855,7 @@ Select Case p_Command
                                             SendSingle "Successfully changed email of '" & properAccount & "' to ' " & p_CHAT_ARRAY(3) & " '.", Index
 
                                             'Notify user that password got changed
-                                            With frmPanel.ListView1.ListItems
+                                            With frmPanel.lvUsers.ListItems
                                                 For n = 1 To .Count
                                                     If .Item(n) = properAccount Then
                                                         SendSingle GetAccountByIndex(Index) & " changed your email to ' " & p_CHAT_ARRAY(3) & " '.", .Item(n).SubItems(INDEX_WINSOCK_ID)
@@ -946,7 +946,7 @@ Select Case p_Command
 
                         End If
 
-                        With frmPanel.ListView1.ListItems
+                        With frmPanel.lvUsers.ListItems
                             properAccount = GetProperAccountName(p_TEXT_FIRST)
 
                             For i = 1 To .Count
@@ -963,12 +963,12 @@ Select Case p_Command
                     End If
 
                 Case ".delete", ".del"
-                    With frmAccountPanel.ListView1.ListItems
+                    With frmAccountPanel.lvAccounts.ListItems
                         properAccount = GetProperAccountName(p_TEXT_FIRST)
 
                         For i = 1 To .Count
                             If .Item(i).SubItems(INDEX_NAME) = properAccount Then
-                                With frmPanel.ListView1.ListItems
+                                With frmPanel.lvUsers.ListItems
                                     For m = 1 To .Count
                                         If .Item(m) = properAccount Then
                                             KickUser properAccount
@@ -1000,7 +1000,7 @@ Select Case p_Command
                     End With
 
                 Case ".gm"
-                    With frmPanel.ListView1.ListItems
+                    With frmPanel.lvUsers.ListItems
                         Select Case LCase$(p_TEXT_FIRST)
                             Case "on"
                                 For i = 1 To .Count
@@ -1051,7 +1051,7 @@ Select Case p_Command
             Dim IsUser  As Boolean
 
             'IsUser variable determines if the first part of the text is an user and exist or not
-            With frmPanel.ListView1.ListItems
+            With frmPanel.lvUsers.ListItems
                 properAccount = GetProperAccountName(p_TEXT_FIRST)
 
                 For i = 1 To .Count
@@ -1141,7 +1141,7 @@ Select Case p_Command
                     End If
 
                 Case "/afk"
-                    With frmPanel.ListView1.ListItems
+                    With frmPanel.lvUsers.ListItems
                         For i = 1 To .Count
                             If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
                                 If .Item(i).SubItems(INDEX_AFK_FLAG) = "1" Then
@@ -1274,6 +1274,12 @@ Select Case p_Command
                         End If
                     End If
 
+                Case "/help"
+                    If LenB(p_TEXT_FIRST) = 0 Then
+                    Else
+                        SendSingle "No help yet.", Index
+                    End If
+
                 Case Else
                     'Emotes
                     properAccount = GetAccountByIndex(Index)
@@ -1288,7 +1294,7 @@ Select Case p_Command
                             Dim Gen   As String
                             Dim j     As Long
 
-                            With frmAccountPanel.ListView1.ListItems
+                            With frmAccountPanel.lvAccounts.ListItems
 
                                 For j = 1 To .Count
                                     If .Item(j).SubItems(INDEX_NAME) = properAccount Then
@@ -1403,7 +1409,7 @@ End Sub
 Private Sub SetLastMessage(User As String, Message As String)
 Dim i As Long
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             .Item(i).SubItems(INDEX_LAST_MESSAGE) = Message
@@ -1416,7 +1422,7 @@ End Sub
 Private Function IsRepeating(User As String, Message As String) As Boolean
 Dim i As Long
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             If .Item(i).SubItems(INDEX_LAST_MESSAGE) = Message Then
@@ -1447,7 +1453,7 @@ Dim TD1()   As String
 Dim i       As Long
 Dim j       As Long
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             TD = TimeSerial(0, 0, DateDiff("s", .Item(i).SubItems(INDEX_LOGIN_TIME), Time))
@@ -1496,7 +1502,7 @@ End Function
 Private Function GetProperAccountName(Account As String) As String
 Dim i As Long
 
-With frmAccountPanel.ListView1.ListItems
+With frmAccountPanel.lvAccounts.ListItems
     For i = 1 To .Count
         If LCase$(.Item(i).SubItems(INDEX_NAME)) = LCase$(Account) Then
             GetProperAccountName = .Item(i).SubItems(INDEX_NAME)
@@ -1517,7 +1523,7 @@ If User = Target Then
     Exit Sub
 End If
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     'Search target in list and send message
     For i = 1 To .Count
         If .Item(i) = Target Then
@@ -1537,7 +1543,7 @@ End Sub
 Private Sub MuteUser(User As String, IsMuted As Long, Reason As String, Index As Integer)
 Dim i As Long
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             If IsMuted = 1 And .Item(i).SubItems(INDEX_MUTED) = "1" Then
@@ -1588,7 +1594,7 @@ End Sub
 Private Function GetAccountList() As String
 Dim i As Long
 
-With frmAccountPanel.ListView1.ListItems
+With frmAccountPanel.lvAccounts.ListItems
     GetAccountList = "Account List:#"
     For i = 1 To .Count
         GetAccountList = GetAccountList & .Item(i).SubItems(INDEX_NAME) & "#"
@@ -1599,7 +1605,7 @@ End Function
 Private Function GetOnlineList() As String
 Dim i As Long
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     GetOnlineList = "User List:#"
     For i = 1 To .Count
         GetOnlineList = GetOnlineList & .Item(i) & "#"
@@ -1610,7 +1616,7 @@ End Function
 Private Sub Ban(Account As String, Ban As Long, Reason As String, Index As Integer)
 Dim i As Long
 
-With frmAccountPanel.ListView1.ListItems
+With frmAccountPanel.lvAccounts.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(INDEX_NAME) = Account Then
 
@@ -1665,7 +1671,7 @@ End Sub
 Private Sub KickUser(User As String)
 Dim i As Long
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             Unload frmMain.Winsock1(.Item(i).SubItems(INDEX_WINSOCK_ID))
@@ -1686,7 +1692,7 @@ End Sub
 Private Sub GetAccountInfo(Account As String, UsedSyntax As String, Index As Integer)
 Dim i As Long
 
-With frmAccountPanel.ListView1.ListItems
+With frmAccountPanel.lvAccounts.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(INDEX_NAME)) = LCase(Account) Then
             SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " ID: " & .Item(i) & vbCrLf & " Password: " & .Item(i).SubItems(INDEX_PASSWORD) & vbCrLf & " Registration Time: " & .Item(i).SubItems(INDEX_TIME) & vbCrLf & " Registration Date: " & .Item(i).SubItems(INDEX_DATE) & vbCrLf & " Banned: " & .Item(i).SubItems(INDEX_BANNED) & vbCrLf & " Level: " & .Item(i).SubItems(INDEX_LEVEL) & vbCrLf & " Gender: " & .Item(i).SubItems(INDEX_GENDER) & vbCrLf & " Email: " & .Item(i).SubItems(INDEX_EMAIL) & vbCrLf & " Last IP:  " & .Item(i).SubItems(INDEX_LAST_IP), Index
@@ -1707,7 +1713,7 @@ End Sub
 Private Sub GetUserInfo(User As String, UsedSyntax As String, Index As Integer)
 Dim i As Long
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             SendSingle vbCrLf & "User information about '" & .Item(i) & "'" & vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & vbCrLf & " Muted: " & .Item(i).SubItems(INDEX_MUTED) & vbCrLf & " Login Time: " & .Item(i).SubItems(INDEX_LOGIN_TIME) & " GM Flag: " & .Item(i).SubItems(INDEX_GM_FLAG) & " AFK Flag: " & .Item(i).SubItems(INDEX_AFK_FLAG), Index
@@ -1738,7 +1744,7 @@ End Function
 Private Function GetLevel(User As String) As Long
 Dim i As Long
 
-With frmAccountPanel.ListView1.ListItems
+With frmAccountPanel.lvAccounts.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(INDEX_NAME) = User Then
             GetLevel = .Item(i).SubItems(INDEX_LEVEL)
@@ -1758,16 +1764,16 @@ Unload Winsock1(Index)
 
 If LenB(User) <> 0 Then SendMessage User & " has gone offline."
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             If Len(User) <> 0 Then
                 Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'")
 
-                With frmAccountPanel.ListView1.ListItems
+                With frmAccountPanel.lvAccounts.ListItems
                     For j = 1 To .Count
                         If .Item(j).SubItems(INDEX_NAME) = User Then
-                            .Item(j).SubItems(INDEX_LAST_IP) = frmPanel.ListView1.ListItems.Item(i).SubItems(INDEX_IP)
+                            .Item(j).SubItems(INDEX_LAST_IP) = frmPanel.lvUsers.ListItems.Item(i).SubItems(INDEX_IP)
                             Exit For
                         End If
                     Next j
@@ -1800,7 +1806,7 @@ End Sub
 Private Function GetAccountByIndex(Index As Integer) As String
 Dim i As Long
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
             GetAccountByIndex = .Item(i)
@@ -1813,7 +1819,7 @@ End Function
 Private Function GetGMFlag(User As String) As String
 Dim i As Long
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             If .Item(i).SubItems(INDEX_GM_FLAG) = "1" Then GetGMFlag = "<GM>"
@@ -1826,7 +1832,7 @@ End Function
 Private Function GetAFKFlag(User As String) As String
 Dim i As Long
 
-With frmPanel.ListView1.ListItems
+With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             If .Item(i).SubItems(INDEX_AFK_FLAG) = "1" Then GetAFKFlag = "<AFK>"

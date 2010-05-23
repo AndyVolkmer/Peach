@@ -179,7 +179,7 @@ Begin VB.Form frmAccountPanel
       Top             =   3600
       Width           =   1215
    End
-   Begin MSComctlLib.ListView ListView1 
+   Begin MSComctlLib.ListView lvAccounts 
       Height          =   2220
       Left            =   120
       TabIndex        =   11
@@ -276,53 +276,33 @@ End Sub
 
 Private Sub cmdCancel_Click()
 DoButtons False
-SetData ListView1.SelectedItem
+SetData lvAccounts.SelectedItem
 End Sub
 
 Private Sub cmdDel_Click()
-Dim strName     As String
-Dim lngID       As Long
-Dim NewIndex    As Long
+Dim Account  As String
+Dim ID       As Long
 
-If ListView1.ListItems.Count = 0 Then
-    MsgBox "No accounts avaible to delete.", vbInformation, "Delete"
-    Exit Sub
-End If
+If lvAccounts.ListItems.Count = 0 Then Exit Sub
 
-With ListView1.SelectedItem
-    strName = .SubItems(INDEX_NAME)
-    lngID = CLng(.Text)
-End With
+Account = lvAccounts.SelectedItem.SubItems(INDEX_NAME)
 
-If MsgBox("Are you sure that you want to delete account '" & strName & "' ?", vbYesNo + vbQuestion, "Confirm Delete") = vbNo Then Exit Sub
+If MsgBox("Are you sure that you want to delete account '" & Account & "' ?", vbYesNo + vbQuestion, "Confirm Delete") = vbNo Then Exit Sub
 
 With frmFriendIgnoreList
-    .RemoveAllFriendsFromUser strName
-    .RemoveAllIgnoresFromUser strName
+    .RemoveAllFriendsFromUser Account
+    .RemoveAllIgnoresFromUser Account
 End With
 
-With ListView1
-    If .SelectedItem.Index = .ListItems.Count Then
-        NewIndex = .ListItems.Count - 1
-    Else
-        NewIndex = .SelectedItem.Index
-    End If
-
+With lvAccounts
     .ListItems.Remove .SelectedItem.Index
-
-    If .ListItems.Count > 0 Then
-        Set .SelectedItem = .ListItems(NewIndex)
-        ListView1_ItemClick .SelectedItem
-    Else
-        ClearTxBoxes
-    End If
 End With
 
-pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & lngID
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE Name1 = '" & Account & "'"
 End Sub
 
 Private Sub DoButtons(args As Boolean)
-ListView1.Enabled = Not args
+lvAccounts.Enabled = Not args
 cmdAdd.Enabled = Not args
 cmdDel.Enabled = Not args
 cmdMod.Enabled = Not args
@@ -351,10 +331,7 @@ End Sub
 
 Private Sub cmdMod_Click()
 'If there is no account selected give the message
-If ListView1.ListItems.Count = 0 Then
-    MsgBox "No account selected to modify.", vbInformation, "Modify"
-    Exit Sub
-End If
+If lvAccounts.ListItems.Count = 0 Then Exit Sub
 
 'Set switch to modify
 Switch = False
@@ -367,22 +344,22 @@ Dim i As Long
 If Switch Then
     'Name can't be added if there is none
     If LenB(Trim$(txtName.Text)) = 0 Then
-        MsgBox "The name can't be empty.", vbInformation
+        MsgBox "No name entered.", vbInformation
         txtName.SetFocus
         Exit Sub
     End If
 
     'Password can't be added if there is none
     If LenB(Trim$(txtPassword.Text)) = 0 Then
-        MsgBox "The password can't be empty.", vbInformation
+        MsgBox "No password entered.", vbInformation
         txtPassword.SetFocus
         Exit Sub
     End If
 
-    With ListView1.ListItems
+    With lvAccounts.ListItems
         For i = 1 To .Count
             If LCase$(txtName) = LCase$(.Item(i).SubItems(INDEX_NAME)) Then
-                MsgBox "Name already taken.", vbInformation
+                MsgBox "Name is already beeing used.", vbInformation
                 ClearTxBoxes
                 txtName.SetFocus
                 Exit Sub
@@ -394,42 +371,42 @@ If Switch Then
 Else
     'Name can't be modified to nothing
     If LenB(Trim$(txtName.Text)) = 0 Then
-        MsgBox "The name can't be empty.", vbInformation
+        MsgBox "No name entered.", vbInformation
         txtName.SetFocus
         Exit Sub
     End If
 
     'Password can't be modified to nothing
     If LenB(Trim$(txtPassword.Text)) = 0 Then
-        MsgBox "The password can't be empty.", vbInformation
+        MsgBox "No password entered.", vbInformation
         txtPassword.SetFocus
         Exit Sub
     End If
 
-    ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, ListView1.SelectedItem.Text, ListView1.SelectedItem.Index, cmbGender.Text, vbNullString
+    ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, lvAccounts.SelectedItem.Text, lvAccounts.SelectedItem.Index, cmbGender.Text, vbNullString
 
 End If
 
-SetData ListView1.SelectedItem
+SetData lvAccounts.SelectedItem
 DoButtons False
 End Sub
 
-Public Sub ModifyAccount(pName As String, pPassword As String, pBanned As Long, pLevel As String, MOD_ID As Long, LST_ID As Long, pGender As String, pEmail As String)
+Public Sub ModifyAccount(Name As String, Password As String, Banned As Long, Level As String, MOD_ID As Long, LST_ID As Long, Gender As String, Email As String)
 'Modify listview values
-With ListView1.ListItems.Item(LST_ID)
-    .SubItems(INDEX_NAME) = pName
-    .SubItems(INDEX_PASSWORD) = pPassword
-    .SubItems(INDEX_BANNED) = pBanned
-    .SubItems(INDEX_LEVEL) = pLevel
-    .SubItems(INDEX_GENDER) = pGender
-    .SubItems(INDEX_EMAIL) = pEmail
+With lvAccounts.ListItems.Item(LST_ID)
+    .SubItems(INDEX_NAME) = Name
+    .SubItems(INDEX_PASSWORD) = Password
+    .SubItems(INDEX_BANNED) = Banned
+    .SubItems(INDEX_LEVEL) = Level
+    .SubItems(INDEX_GENDER) = Gender
+    .SubItems(INDEX_EMAIL) = Email
 End With
 
 'Modify database values
-pDB.ExecuteCommand "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & pName & "', Password1 = '" & pPassword & "', Banned1 = '" & pBanned & "', Level1 = '" & pLevel & "', Gender1 = '" & pGender & "', Email1 ='" & pEmail & "' WHERE ID = " & MOD_ID
+pDB.ExecuteCommand "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET Name1 = '" & Name & "', Password1 = '" & Password & "', Banned1 = '" & Banned & "', Level1 = '" & Level & "', Gender1 = '" & Gender & "', Email1 ='" & Email & "' WHERE ID = " & MOD_ID
 End Sub
 
-Private Sub RegisterAccount(pName As String, pPassword As String, pBanned As String, pLevel As String, pSecretQuestion As String, pSecretAnswer As String, pGender As String, pEmail As String)
+Private Sub RegisterAccount(Name As String, Password As String, Banned As String, Level As String, SecretQuestion As String, SecretAnswer As String, Gender As String, Email As String)
 Dim i As Long
 Dim j As Long
 
@@ -437,29 +414,29 @@ Dim j As Long
 j = pDB.GetMaxID("ID", DATABASE_TABLE_ACCOUNTS)
 
 'Save index in variable
-i = ListView1.ListItems.Count + 1
+i = lvAccounts.ListItems.Count + 1
 
 'Add account to the listview
-With ListView1.ListItems
+With lvAccounts.ListItems
     .Add , , j
-    .Item(i).SubItems(INDEX_NAME) = pName
-    .Item(i).SubItems(INDEX_PASSWORD) = pPassword
+    .Item(i).SubItems(INDEX_NAME) = Name
+    .Item(i).SubItems(INDEX_PASSWORD) = Password
     .Item(i).SubItems(INDEX_TIME) = Format(Time, "hh:nn:ss")
     .Item(i).SubItems(INDEX_DATE) = Format(Date, "dd/mm/yyyy")
-    .Item(i).SubItems(INDEX_BANNED) = pBanned
-    .Item(i).SubItems(INDEX_LEVEL) = pLevel
-    .Item(i).SubItems(INDEX_SECRET_QUESTION) = pSecretQuestion
-    .Item(i).SubItems(INDEX_SECRET_ANSWER) = pSecretAnswer
-    .Item(i).SubItems(INDEX_GENDER) = pGender
-    .Item(i).SubItems(INDEX_EMAIL) = pEmail
+    .Item(i).SubItems(INDEX_BANNED) = Banned
+    .Item(i).SubItems(INDEX_LEVEL) = Level
+    .Item(i).SubItems(INDEX_SECRET_QUESTION) = SecretQuestion
+    .Item(i).SubItems(INDEX_SECRET_ANSWER) = SecretAnswer
+    .Item(i).SubItems(INDEX_GENDER) = Gender
+    .Item(i).SubItems(INDEX_EMAIL) = Email
 End With
 
 'Add account to database
-pDB.ExecuteCommand "INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1, Email1) VALUES(" & j & ", '" & pName & "', '" & pPassword & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & pBanned & "', '" & pLevel & "', '" & pSecretQuestion & "', '" & pSecretAnswer & "', '" & pGender & "', '" & pEmail & "')"
+pDB.ExecuteCommand "INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1, Email1) VALUES(" & j & ", '" & Name & "', '" & Password & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & Banned & "', '" & Level & "', '" & SecretQuestion & "', '" & SecretAnswer & "', '" & Gender & "', '" & Email & "')"
 End Sub
 
 Private Sub Form_Activate()
-SetData ListView1.SelectedItem
+SetData lvAccounts.SelectedItem
 End Sub
 
 Private Sub Form_Load()
@@ -483,9 +460,9 @@ RegSock(i).LocalPort = rPort
 RegSock(i).Accept requestID
 End Sub
 
-Private Sub SetData(pItem As ListItem)
-If ListView1.ListItems.Count <> 0 Then
-    With pItem
+Private Sub SetData(Item As ListItem)
+If lvAccounts.ListItems.Count <> 0 Then
+    With Item
         txtName.Text = .SubItems(INDEX_NAME)
         txtPassword.Text = .SubItems(INDEX_PASSWORD)
         cmbBanned.Text = .SubItems(INDEX_BANNED)
@@ -538,7 +515,7 @@ End If
 Select Case pCommand
     'Regster an account
     Case "!register"
-        With ListView1.ListItems
+        With lvAccounts.ListItems
             'Check if the account already exists
             For i = 1 To .Count
                 If LCase$(.Item(i).SubItems(INDEX_NAME)) = LCase$(array1(1)) Then
@@ -561,7 +538,7 @@ Select Case pCommand
 
     'Check the secret question and send password
     Case "!request_password"
-        With ListView1.ListItems
+        With lvAccounts.ListItems
             For i = 1 To .Count
                 'Check if the email exists
                 If UCase$(.Item(i).SubItems(INDEX_EMAIL)) = UCase$(array1(1)) Then

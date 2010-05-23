@@ -34,7 +34,6 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -187,7 +186,7 @@ For Each WiSk In frmAccountPanel.RegSock
 Next
 
 frmAccountPanel.RegSock(0).Close
-frmPanel.ListView1.ListItems.Clear
+frmPanel.lvUsers.ListItems.Clear
 frmChannel.lvChannels.ListItems.Clear
 frmChannel.lvUsers.ListItems.Clear
 frmMain.SetupForms frmConfig

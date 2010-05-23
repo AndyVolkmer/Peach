@@ -25,7 +25,7 @@ Begin VB.Form frmPanel
    ScaleHeight     =   5220
    ScaleWidth      =   7635
    ShowInTaskbar   =   0   'False
-   Begin MSComctlLib.ListView ListView1 
+   Begin MSComctlLib.ListView lvUsers 
       Height          =   3975
       Left            =   120
       TabIndex        =   0
