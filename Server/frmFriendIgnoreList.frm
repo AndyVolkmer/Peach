@@ -139,13 +139,13 @@ Private Sub Form_Load()
 Me.Top = 0: Me.Left = 0
 End Sub
 
-Public Sub AddFriend(pUser As String, pFriend As String, pIndex As Integer)
+Public Sub AddFriend(User As String, pFriend As String, Index As Integer)
 Dim i As Long
 Dim j As Long
 
 'Check if you are trying to add urself
-If LCase$(pUser) = LCase$(pFriend) Then
-    SendSingle "!msgbox#MSG_CANT_ADD_YOU#", pIndex
+If LCase$(User) = LCase$(pFriend) Then
+    SendSingle "!msgbox#MSG_CANT_ADD_YOU#", Index
     Exit Sub
 End If
 
@@ -157,7 +157,7 @@ With frmAccountPanel.lvAccounts.ListItems
             Exit For
         Else
             If i = .Count Then
-                SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#" & pFriend & "#", pIndex
+                SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#" & pFriend & "#", Index
                 Exit Sub
             End If
         End If
@@ -167,9 +167,9 @@ End With
 'Check if the account is already added
 With ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(1) = pUser Then
+        If .Item(i).SubItems(1) = User Then
             If .Item(i).SubItems(2) = pFriend Then
-                SendSingle "!msgbox#MSG_ALREADY_IN_FRIEND_LIST#" & pFriend & "#", pIndex
+                SendSingle "!msgbox#MSG_ALREADY_IN_FRIEND_LIST#" & pFriend & "#", Index
                 Exit Sub
             End If
         End If
@@ -182,40 +182,40 @@ j = pDB.GetMaxID("ID", DATABASE_TABLE_FRIENDS)
 With ListView1.ListItems
     .Add , , j
     i = .Count
-    .Item(i).SubItems(1) = pUser
+    .Item(i).SubItems(1) = User
     .Item(i).SubItems(2) = pFriend
 End With
 
-pDB.ExecuteCommand "INSERT INTO " & DATABASE_TABLE_FRIENDS & " (ID, Name, Friend) VALUES('" & j & "', '" & pUser & "', '" & pFriend & "')"
-UPDATE_FRIEND pUser, pIndex
+pDB.ExecuteCommand "INSERT INTO " & DATABASE_TABLE_FRIENDS & " (ID, Name, Friend) VALUES('" & j & "', '" & User & "', '" & pFriend & "')"
+UPDATE_FRIEND User, Index
 End Sub
 
-Public Sub RemoveFriend(pUser As String, pFriend As String, pIndex As Integer)
-Dim pID As Integer
-Dim i   As Long
+Public Sub RemoveFriend(User As String, pFriend As String, Index As Integer)
+Dim ID As Integer
+Dim i  As Long
 
 With ListView1.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(1) = pUser And .Item(i).SubItems(2) = pFriend Then
-            pID = .Item(i)
+        If .Item(i).SubItems(1) = User And .Item(i).SubItems(2) = pFriend Then
+            ID = .Item(i)
             .Remove (i)
             Exit For
         End If
     Next i
 End With
 
-pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE ID = " & pID
-UPDATE_FRIEND pUser, pIndex
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE ID = " & ID
+UPDATE_FRIEND User, Index
 End Sub
 
-Public Sub RemoveAllFriendsFromUser(pUser As String)
+Public Sub RemoveAllFriendsFromUser(User As String)
 Dim i As Long
 
 With ListView1.ListItems
     'Search for the user in Name row
     For i = 1 To .Count
         If i > .Count Then Exit For
-        If .Item(i).SubItems(1) = pUser Then
+        If .Item(i).SubItems(1) = User Then
             .Remove (i)
             i = i - 1
         End If
@@ -224,15 +224,15 @@ With ListView1.ListItems
     'Search for the user in Friend row
     For i = 1 To .Count
         If i > .Count Then Exit For
-        If .Item(i).SubItems(2) = pUser Then
+        If .Item(i).SubItems(2) = User Then
             .Remove (i)
             i = i - 1
         End If
     Next i
 End With
 
-pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Name = '" & pUser & "'"
-pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Friend = '" & pUser & "'"
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Name = '" & User & "'"
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Friend = '" & User & "'"
 End Sub
 
 Public Sub AddIgnore(pUser As String, pIgnore As String, pIndex As Integer)
@@ -287,15 +287,15 @@ pDB.ExecuteCommand "INSERT INTO " & DATABASE_TABLE_IGNORES & " (ID, Name, Ignore
 UPDATE_IGNORE pUser, pIndex
 End Sub
 
-Public Sub RemoveIgnore(pUser As String, pIgnore As String, pIndex As Integer)
-Dim pID As Long
-Dim i   As Long
+Public Sub RemoveIgnore(User As String, Ignore As String, Index As Integer)
+Dim ID As Long
+Dim i  As Long
 
 With ListView2.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(1) = pUser Then
-            If .Item(i).SubItems(2) = pIgnore Then
-                pID = .Item(i)
+        If .Item(i).SubItems(1) = User Then
+            If .Item(i).SubItems(2) = Ignore Then
+                ID = .Item(i)
                 .Remove (i)
                 Exit For
             End If
@@ -303,18 +303,18 @@ With ListView2.ListItems
     Next i
 End With
 
-pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE ID = " & pID
-UPDATE_IGNORE pUser, pIndex
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE ID = " & ID
+UPDATE_IGNORE User, Index
 End Sub
 
-Public Sub RemoveAllIgnoresFromUser(pUser As String)
+Public Sub RemoveAllIgnoresFromUser(User As String)
 Dim i As Long
 
 With ListView2.ListItems
     'Search for the user in Name row
     For i = 1 To .Count
         If i > .Count Then Exit For
-        If .Item(i).SubItems(1) = pUser Then
+        If .Item(i).SubItems(1) = User Then
             .Remove (i)
             i = i - 1
         End If
@@ -323,13 +323,13 @@ With ListView2.ListItems
     'Search for the user in Ignore row
     For i = 1 To .Count
         If i > .Count Then Exit For
-        If .Item(i).SubItems(2) = pUser Then
+        If .Item(i).SubItems(2) = User Then
             .Remove (i)
             i = i - 1
         End If
     Next i
 End With
 
-pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE Name = '" & pUser & "'"
-pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE IgnoredName = '" & pUser & "'"
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE Name = '" & User & "'"
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_IGNORES & " WHERE IgnoredName = '" & User & "'"
 End Sub

@@ -224,15 +224,12 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Vali   As Boolean
-Public RunOnce As Boolean
+Private Vali As Boolean
 
 Private Sub ChatNotifyTimer_Timer()
 Static onORoff As Boolean
 
-If ChatNotifyTimer.Interval <> 500 Then
-    ChatNotifyTimer.Interval = 500
-End If
+If ChatNotifyTimer.Interval <> 500 Then ChatNotifyTimer.Interval = 500
 
 With frmContainer.cmdChat
     If onORoff Then

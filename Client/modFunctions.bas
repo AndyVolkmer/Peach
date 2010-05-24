@@ -132,9 +132,6 @@ With frmMain
 
     .FSocket2(0).Close
     .Winsock1.Close
-
-    'Reset RunOnce variable
-    .RunOnce = False
 End With
 
 SetupForm frmMain

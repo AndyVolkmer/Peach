@@ -76,7 +76,6 @@ Public LANG_ITALIAN                     As String
 Public LANG_SERBIAN                     As String
 Public LANG_DUTCH                       As String
 Public LANG_FRENCH                      As String
-Public LANG_NORWEGIAN                   As String
 
 Public SOC_FRIEND_LIST                  As String
 Public SOC_ONLINE_LIST                  As String
@@ -229,7 +228,6 @@ LANG_ITALIAN = "Italienisch"
 LANG_SERBIAN = "Serbisch"
 LANG_DUTCH = "Niederländisch"
 LANG_FRENCH = "Französisch"
-LANG_NORWEGIAN = "Norwegisch"
 
 CONFIG_MSG_ACCOUNT = "Sie haben keinen Konto-Namen eingegeben."
 CONFIG_MSG_PASSWORD = "Sie haben kein Kennwort eingegeben."
@@ -412,7 +410,6 @@ LANG_ITALIAN = "Italian"
 LANG_SERBIAN = "Serbian"
 LANG_DUTCH = "Dutch"
 LANG_FRENCH = "French"
-LANG_NORWEGIAN = "Norwegian"
 
 CONFIG_MSG_ACCOUNT = "You did not enter an account."
 CONFIG_MSG_PASSWORD = "You did not enter a password."
@@ -594,7 +591,6 @@ LANG_ITALIAN = "Italiano"
 LANG_DUTCH = "Holandés"
 LANG_SERBIAN = "Serbio"
 LANG_FRENCH = "Frances"
-LANG_NORWEGIAN = "Noruego"
 
 CONFIG_MSG_ACCOUNT = "No has introducido una cuenta."
 CONFIG_MSG_PASSWORD = "No has introducido una contraseña."
@@ -773,7 +769,6 @@ LANG_ITALIAN = "Italienska"
 LANG_SERBIAN = "Serbiska"
 LANG_DUTCH = "Holländska"
 LANG_FRENCH = "Franska"
-LANG_NORWEGIAN = "Norska"
 
 CONFIG_MSG_ACCOUNT = "Du skrev inte in en användare."
 CONFIG_MSG_PASSWORD = "Du skrev inte in ett lösenord."
@@ -955,7 +950,6 @@ LANG_ITALIAN = "Italiano"
 LANG_SERBIAN = "Serbo"
 LANG_DUTCH = "Olandese"
 LANG_FRENCH = "Francese"
-LANG_NORWEGIAN = "Norvegese"
 
 CONFIG_MSG_ACCOUNT = "Non hai inserito un account."
 CONFIG_MSG_PASSWORD = "Non hai inserito una password."
@@ -1136,7 +1130,6 @@ LANG_ITALIAN = "Italiaans"
 LANG_SERBIAN = "Serbisch"
 LANG_DUTCH = "Nederlands"
 LANG_FRENCH = "Frans"
-LANG_NORWEGIAN = "Noors"
 
 CONFIG_MSG_ACCOUNT = "Je hebt geen gebruikersnaam ingevuld."
 CONFIG_MSG_PASSWORD = "Je hebt geen wachtwoord ingevuld."
@@ -1324,7 +1317,6 @@ LANG_ITALIAN = "Italijanski"
 LANG_SERBIAN = "Srpski"
 LANG_DUTCH = "Holandski"
 LANG_FRENCH = "Francuski"
-LANG_NORWEGIAN = "Norwegian"
 
 CONFIG_MSG_ACCOUNT = "Nisi ukucao lozinku."
 CONFIG_MSG_PASSWORD = "Nisi ukucao sifru."
@@ -1503,7 +1495,6 @@ LANG_ITALIAN = "Italien"
 LANG_SERBIAN = "Serbois"
 LANG_DUTCH = "Hollandais"
 LANG_FRENCH = "Français"
-LANG_NORWEGIAN = "Norvégien"
 
 CONFIG_MSG_ACCOUNT = "Vous n'avez pas introduit un compte."
 CONFIG_MSG_PASSWORD = "Vous n'avez pas introduit un mot de passe."

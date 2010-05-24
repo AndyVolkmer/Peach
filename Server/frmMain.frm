@@ -206,10 +206,8 @@ SetupForms frmChannel
 End Sub
 
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Dim MSG         As Long
-Dim sFilter     As String
-
-MSG = X / Screen.TwipsPerPixelX
+Dim MSG As Long
+    MSG = X / Screen.TwipsPerPixelX
 
 Select Case MSG
     Case WM_LBUTTONDOWN
@@ -247,8 +245,8 @@ InsertIntoRegistry "Server\Configuration", "Left", Me.Left
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
-Dim i As Long
-Dim j As Long
+Dim i    As Long
+Dim j    As Long
 Dim User As String
 
 User = GetAccountByIndex(Index)
@@ -700,8 +698,8 @@ Select Case p_Command
                                                             Next m
                                                         End With
 
-                                                        Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_FRIENDS & " SET Name = '" & p_CHAT_ARRAY(3) & "' WHERE Name = '" & properAccount & "'")
-                                                        Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_FRIENDS & " SET Friend = '" & p_CHAT_ARRAY(3) & "' WHERE Friend = '" & properAccount & "'")
+                                                        pDB.ExecuteCommand "UPDATE " & DATABASE_TABLE_FRIENDS & " SET Name = '" & p_CHAT_ARRAY(3) & "' WHERE Name = '" & properAccount & "'"
+                                                        pDB.ExecuteCommand "UPDATE " & DATABASE_TABLE_FRIENDS & " SET Friend = '" & p_CHAT_ARRAY(3) & "' WHERE Friend = '" & properAccount & "'"
 
                                                         UPDATE_ONLINE
                                                     End If
@@ -759,19 +757,20 @@ Select Case p_Command
                             End If
 
                         Case "gender"
-                            Dim pGender As String
+                            Dim Gender As String
+
                             If UBound(p_CHAT_ARRAY) > 2 Then
                                 p_CHAT_ARRAY(3) = LCase$(p_CHAT_ARRAY(3))
 
                                 If p_CHAT_ARRAY(3) = "male" Then
-                                    pGender = "0"
+                                    Gender = "0"
 
                                 ElseIf p_CHAT_ARRAY(3) = "female" Then
-                                    pGender = "1"
+                                    Gender = "1"
 
                                 End If
 
-                                If LenB(pGender) = 0 Then
+                                If LenB(Gender) = 0 Then
                                     SendSingle "Incorrect gender format use 'male' or 'female'.", Index
                                 Else
                                     With frmAccountPanel.lvAccounts.ListItems
@@ -780,7 +779,7 @@ Select Case p_Command
                                         For i = 1 To .Count
                                             If .Item(i).SubItems(INDEX_NAME) = properAccount Then
                                                 'Modify gender in database and panel
-                                                frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, pGender, .Item(i).SubItems(INDEX_EMAIL)
+                                                frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, Gender, .Item(i).SubItems(INDEX_EMAIL)
 
                                                 'Feedback to the person who modified the gender
                                                 SendSingle "Successfully changed gender of '" & properAccount & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
@@ -894,6 +893,7 @@ Select Case p_Command
 
                 Case ".reload"
                     Dim loadTime As Long
+
                     With Database
                         Select Case LCase$(p_TEXT_FIRST)
                             Case LCase$(DATABASE_TABLE_ACCOUNTS), LCase$(DATABASE_TABLE_FRIENDS), LCase$(DATABASE_TABLE_IGNORES)
@@ -1117,7 +1117,11 @@ Select Case p_Command
 
                     Roll = GetRandomNumber(MinRoll, MaxRoll)
 
-                    SendProtectedMessage GetAccountByIndex(Index), GetAccountByIndex(Index) & " rolls " & Roll & ". (" & MinRoll & " - " & MaxRoll & ")"
+                    properAccount = GetAccountByIndex(Index)
+
+                    SendProtectedMessage properAccount, properAccount & " rolls " & Roll & ". (" & MinRoll & " - " & MaxRoll & ")"
+
+                    properAccount = vbNullString
 
                 'Whisper X to Z from Y
                 Case "/w", "/whisper"
@@ -1129,7 +1133,11 @@ Select Case p_Command
                                 Message = Message & p_CHAT_ARRAY(i) & " "
                             Next i
 
-                            Whisper GetAccountByIndex(Index), GetProperAccountName(p_TEXT_FIRST), Trim$(Message), Index
+                            properAccount = GetAccountByIndex(Index)
+
+                            Whisper properAccount, properAccount, Trim$(Message), Index
+
+                            properAccount = vbNullString
                         End If
                     Else
                         If LenB(p_TEXT_FIRST) = 0 Then
@@ -1274,12 +1282,6 @@ Select Case p_Command
                         End If
                     End If
 
-                Case "/help"
-                    If LenB(p_TEXT_FIRST) = 0 Then
-                    Else
-                        SendSingle "No help yet.", Index
-                    End If
-
                 Case Else
                     'Emotes
                     properAccount = GetAccountByIndex(Index)
@@ -1290,44 +1292,38 @@ Select Case p_Command
                                 IsUser = False
                             End If
 
-                            Dim pTemp As String
-                            Dim Gen   As String
-                            Dim j     As Long
+                            Dim Gender As String
+                            Dim Temp   As String
+                            Dim j      As Long
 
                             With frmAccountPanel.lvAccounts.ListItems
-
                                 For j = 1 To .Count
                                     If .Item(j).SubItems(INDEX_NAME) = properAccount Then
                                         Select Case .Item(j).SubItems(INDEX_GENDER)
-                                            Case "0": Gen = "his"
-                                            Case "1": Gen = "her"
+                                            Case "0": Gender = "his"
+                                            Case "1": Gender = "her"
                                         End Select
                                         Exit For
                                     End If
                                 Next j
-
                             End With
 
                             If IsUser Then
-                                pTemp = Replace(Emotes(i).TargetEmote, "%u", properAccount)
-                                pTemp = Replace(pTemp, "%g", Gen)
-                                pTemp = Replace(pTemp, "%t", GetProperAccountName(p_TEXT_FIRST))
+                                Temp = Replace(Emotes(i).TargetEmote, "%u", properAccount)
+                                Temp = Replace(Temp, "%g", Gender)
+                                Temp = Replace(Temp, "%t", GetProperAccountName(p_TEXT_FIRST))
                             Else
-                                pTemp = Replace(Emotes(i).SingleEmote, "%u", properAccount)
-                                pTemp = Replace(pTemp, "%g", Gen)
+                                Temp = Replace(Emotes(i).SingleEmote, "%u", properAccount)
+                                Temp = Replace(Temp, "%g", Gender)
                             End If
 
-                            SendProtectedMessage properAccount, pTemp
+                            SendProtectedMessage properAccount, Temp
                             SetLastMessage properAccount, p_MainArray(1)
                             Exit Sub
                         End If
-
                     Next i
 
                     properAccount = vbNullString
-
-                    Dim tempA   As String
-                    Dim Channel As String
 
                     With frmChannel.lvChannels.ListItems
                         If .Count = 0 Then
@@ -1340,25 +1336,29 @@ Select Case p_Command
                             If LenB(p_TEXT_FIRST) = 0 Then
                                 SendSingle "Please enter a valid channel name.", Index
                             Else
-                                Channel = Right$(p_CHAT_ARRAY(0), Len(p_CHAT_ARRAY(0)) - 1)
+                                properAccount = Right$(p_CHAT_ARRAY(0), Len(p_CHAT_ARRAY(0)) - 1)
 
                                 For i = 1 To .Count
-                                    If LCase$(.Item(i)) = LCase$(Channel) Then
+                                    If LCase$(.Item(i)) = LCase$(properAccount) Then
                                         With frmChannel.lvUsers.ListItems
-                                            tempA = GetAccountByIndex(Index)
+                                            Temp = GetAccountByIndex(Index)
 
                                             For f = 1 To .Count
-                                                If .Item(f) = tempA And LCase$(.Item(f).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then
-                                                    SendMessageToChannel Channel, tempA, "[" & .Item(f).SubItems(CHANNEL_USER_CHANNEL) & "]" & GetGMFlag(tempA) & GetAFKFlag(tempA) & "[" & tempA & "]: " & Right$(p_MainArray(1), Len(p_MainArray(1)) - Len(Channel) - 1)
+                                                If .Item(f) = Temp And LCase$(.Item(f).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(properAccount) Then
+                                                    SendMessageToChannel properAccount, Temp, "[" & .Item(f).SubItems(CHANNEL_USER_CHANNEL) & "]" & GetGMFlag(Temp) & GetAFKFlag(Temp) & "[" & Temp & "]: " & Right$(p_MainArray(1), Len(p_MainArray(1)) - Len(properAccount) - 1)
                                                     Exit For
                                                 Else
-                                                    If f = .Count Then SendSingle "You are not in channel '" & Channel & "'.", Index
+                                                    If f = .Count Then SendSingle "You are not in channel '" & properAccount & "'.", Index
                                                 End If
                                             Next f
+
+                                            Temp = vbNullString
                                         End With
                                         Exit Sub
                                     End If
                                 Next i
+
+                                properAccount = vbNullString
                             End If
                         End If
                     End With
@@ -1368,8 +1368,8 @@ Select Case p_Command
             Exit Sub
         End If
 
-        Dim S1  As Long
-        Dim E   As String
+        Dim S1 As Long
+        Dim E  As String
 
         'We just bother checking if the text is longer then 5 characters
         If Len(p_MainArray(1)) > 5 Then
@@ -1425,9 +1425,7 @@ Dim i As Long
 With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            If .Item(i).SubItems(INDEX_LAST_MESSAGE) = Message Then
-                 IsRepeating = True
-            End If
+            If .Item(i).SubItems(INDEX_LAST_MESSAGE) = Message Then IsRepeating = True
             Exit For
         End If
     Next i
@@ -1448,10 +1446,10 @@ Next i
 End Function
 
 Private Function GetOnlineTime(User As String) As String
-Dim TD      As String
-Dim TD1()   As String
-Dim i       As Long
-Dim j       As Long
+Dim TD    As String
+Dim TD1() As String
+Dim i     As Long
+Dim j     As Long
 
 With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
@@ -1755,8 +1753,8 @@ End With
 End Function
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-Dim i As Long
-Dim j As Long
+Dim i    As Long
+Dim j    As Long
 Dim User As String
 
 User = GetAccountByIndex(Index)
@@ -1768,7 +1766,7 @@ With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             If Len(User) <> 0 Then
-                Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'")
+                pDB.ExecuteCommand "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'"
 
                 With frmAccountPanel.lvAccounts.ListItems
                     For j = 1 To .Count
@@ -1808,7 +1806,7 @@ Dim i As Long
 
 With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
+        If CInt(.Item(i).SubItems(INDEX_WINSOCK_ID)) = Index Then
             GetAccountByIndex = .Item(i)
             Exit For
         End If
@@ -1822,7 +1820,7 @@ Dim i As Long
 With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            If .Item(i).SubItems(INDEX_GM_FLAG) = "1" Then GetGMFlag = "<GM>"
+            If CInt(.Item(i).SubItems(INDEX_GM_FLAG)) = 1 Then GetGMFlag = "<GM>"
             Exit For
         End If
     Next i
@@ -1835,7 +1833,7 @@ Dim i As Long
 With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            If .Item(i).SubItems(INDEX_AFK_FLAG) = "1" Then GetAFKFlag = "<AFK>"
+            If CInt(.Item(i).SubItems(INDEX_AFK_FLAG)) = 1 Then GetAFKFlag = "<AFK>"
             Exit For
         End If
     Next i
