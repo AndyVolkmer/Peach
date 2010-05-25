@@ -213,8 +213,8 @@ Select Case MSG
     Case WM_LBUTTONDOWN
     Case WM_LBUTTONUP
         Vali = True
-        frmMain.Show
-        frmMain.WindowState = 0
+        Show
+        WindowState = 0
 
     Case WM_LBUTTONDBLCLK
     Case WM_RBUTTONDOWN
@@ -224,7 +224,7 @@ End Select
 End Sub
 
 Private Sub MDIForm_Resize()
-If Me.WindowState = 1 Then
+If WindowState = 1 Then
     If Vali = False Then
         MinimizeToTray
     End If
@@ -240,8 +240,8 @@ Shell_NotifyIcon NIM_DELETE, NID
 pDB.CloseDatabase
 
 '== Position ==
-InsertIntoRegistry "Server\Configuration", "Top", Me.Top
-InsertIntoRegistry "Server\Configuration", "Left", Me.Left
+InsertIntoRegistry "Server\Configuration", "Top", Top
+InsertIntoRegistry "Server\Configuration", "Left", Left
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
@@ -337,23 +337,24 @@ LoadSocket = i
 End Function
 
 Private Sub Winsock1_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-Dim p_PreArray()    As String
 Dim k               As Long
 Dim i               As Long
-
-Dim p_Message       As String
+Dim p_Message       As String   'All data send
+Dim p_PreArray()    As String   'All data send split by chr(24) & chr(25) to not allow stack of wrong information
 Dim p_MainArray()   As String   'Whole message string is saved here and split up by # sign
 Dim p_Command       As String   'First part of main array ( always the command )
 Dim IsMuted         As Boolean  'Mute explains itself
 Dim properAccount   As String   'Used to save account to avoid multiply loading in loops
 
-'Get Message
-frmMain.Winsock1(Index).GetData p_Message
-DoEvents
+'Get data from socket
+Winsock1(Index).GetData p_Message
 
 'Do first array to avoid incorrect package reading
 'Chr(24) and Chr(25) are the delimeters for each packet
 p_PreArray = Split(p_Message, Chr(24) & Chr(25))
+
+'No more use for p_Message variable so we clear
+p_Message = vbNullString
 
 'Start looping through
 For k = 0 To UBound(p_PreArray) - 1
@@ -422,7 +423,7 @@ Select Case p_Command
         SendSingle vbCrLf & _
                    " Welcome to Peach Servers." & vbCrLf & _
                    " Server: Peach r" & pRev & "/" & GetOS & vbCrLf & _
-                   " Online User: " & frmMain.Winsock1.Count - 1 & vbCrLf & _
+                   " Online User: " & Winsock1.Count - 1 & vbCrLf & _
                    " Server Uptime: " & TimeSerial(0, 0, DateDiff("s", frmConfig.START_TIME, Time)), Index
 
     Case "!login"
@@ -757,20 +758,20 @@ Select Case p_Command
                             End If
 
                         Case "gender"
-                            Dim Gender As String
+                            Dim GenderInNumeric As String
 
                             If UBound(p_CHAT_ARRAY) > 2 Then
                                 p_CHAT_ARRAY(3) = LCase$(p_CHAT_ARRAY(3))
 
                                 If p_CHAT_ARRAY(3) = "male" Then
-                                    Gender = "0"
+                                    GenderInNumeric = "0"
 
                                 ElseIf p_CHAT_ARRAY(3) = "female" Then
-                                    Gender = "1"
+                                    GenderInNumeric = "1"
 
                                 End If
 
-                                If LenB(Gender) = 0 Then
+                                If LenB(GenderInNumeric) = 0 Then
                                     SendSingle "Incorrect gender format use 'male' or 'female'.", Index
                                 Else
                                     With frmAccountPanel.lvAccounts.ListItems
@@ -779,7 +780,7 @@ Select Case p_Command
                                         For i = 1 To .Count
                                             If .Item(i).SubItems(INDEX_NAME) = properAccount Then
                                                 'Modify gender in database and panel
-                                                frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, Gender, .Item(i).SubItems(INDEX_EMAIL)
+                                                frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, GenderInNumeric, .Item(i).SubItems(INDEX_EMAIL)
 
                                                 'Feedback to the person who modified the gender
                                                 SendSingle "Successfully changed gender of '" & properAccount & "' to '" & p_CHAT_ARRAY(3) & "'.", Index
@@ -1133,11 +1134,7 @@ Select Case p_Command
                                 Message = Message & p_CHAT_ARRAY(i) & " "
                             Next i
 
-                            properAccount = GetAccountByIndex(Index)
-
-                            Whisper properAccount, properAccount, Trim$(Message), Index
-
-                            properAccount = vbNullString
+                            Whisper GetAccountByIndex(Index), GetProperAccountName(p_TEXT_FIRST), Trim$(Message), Index
                         End If
                     Else
                         If LenB(p_TEXT_FIRST) = 0 Then
@@ -1672,7 +1669,7 @@ Dim i As Long
 With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            Unload frmMain.Winsock1(.Item(i).SubItems(INDEX_WINSOCK_ID))
+            Unload Winsock1(.Item(i).SubItems(INDEX_WINSOCK_ID))
 
             .Remove (i)
 
@@ -1794,7 +1791,7 @@ Public Sub SetupForms(NewForm As Form)
 Dim pForm As Form
 
 For Each pForm In Forms
-    If Not pForm.Name = frmMain.Name Then
+    If Not pForm.Name = Name Then
         pForm.Hide
     End If
 Next

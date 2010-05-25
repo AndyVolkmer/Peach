@@ -108,22 +108,21 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Type tClient
-    FileName As String
-    FileSize As Long
-    BytesReceived As Long
-    
-    FileNum As Integer
+Private Type Client
+    FileName        As String
+    FileSize        As Long
+    BytesReceived   As Long
+    FileNum         As Integer
 End Type
 
-Private Clients() As tClient
+Private Clients() As Client
 
 Private Sub Command1_Click()
 Shell "Explorer.exe " & App.Path, vbNormalFocus
 End Sub
 
 Private Sub Form_Activate()
-frmSendFile2.BackColor = Setting.SCHEME_COLOR
+BackColor = Setting.SCHEME_COLOR
 End Sub
 
 Private Sub Form_Load()
@@ -139,11 +138,14 @@ Close Clients(Index).FileNum
 
 If Clients(Index).BytesReceived < Clients(Index).FileSize Then
     Kill App.Path & "\" & Clients(Index).FileName
-    Me.lstConnections.ListItems(Index + 1).SubItems(4) = "Incomplete, File Deleted"
+    lstConnections.ListItems(Index + 1).SubItems(4) = "Incomplete, File deleted"
+    frmChat.WriteText "File transfer incomplete, File deleted."
 Else
-    Me.lstConnections.ListItems(Index + 1).SubItems(4) = "Transfer Complete"
+    lstConnections.ListItems(Index + 1).SubItems(4) = "Transfer Complete"
+    frmChat.WriteText "File transfer finished."
 End If
-FitTextInListView Me.lstConnections, 4, , Index + 1
+
+FitTextInListView lstConnections, 4, , Index + 1
 
 Clients(Index).FileNum = 0
 Clients(Index).BytesReceived = 0
@@ -152,18 +154,19 @@ Clients(Index).FileName = vbNullString
 End Sub
 
 Private Sub FitTextInListView(LV As ListView, ByVal Column As Integer, Optional ByVal Text As String, Optional ByVal ItemIndex As Long = -1)
-Dim TLen As Single, CapLen As Single
+Dim TLen   As Single
+Dim CapLen As Single
 
-CapLen = Me.TextWidth(LV.ColumnHeaders(Column + 1).Text) + 195
+CapLen = TextWidth(LV.ColumnHeaders(Column + 1).Text) + 195
 
 If ItemIndex >= 0 Then
     If ItemIndex = 0 Then
-        TLen = Me.TextWidth(LV.ListItems(ItemIndex).Text)
+        TLen = TextWidth(LV.ListItems(ItemIndex).Text)
     Else
-        TLen = Me.TextWidth(LV.ListItems(ItemIndex).SubItems(Column))
+        TLen = TextWidth(LV.ListItems(ItemIndex).SubItems(Column))
     End If
 Else
-    TLen = Me.TextWidth(Text)
+    TLen = TextWidth(Text)
 End If
 
 TLen = TLen + 195
@@ -192,42 +195,44 @@ End If
 SckReceiveFile(i).Accept requestID
 
 If LenB(SckReceiveFile(i).RemoteHost) = 0 Then
-    Me.lstConnections.ListItems(i + 1).SubItems(2) = SckReceiveFile(i).RemoteHostIP
+    lstConnections.ListItems(i + 1).SubItems(2) = SckReceiveFile(i).RemoteHostIP
 Else
-    Me.lstConnections.ListItems(i + 1).SubItems(2) = SckReceiveFile(i).RemoteHost
+    lstConnections.ListItems(i + 1).SubItems(2) = SckReceiveFile(i).RemoteHost
 End If
 
-FitTextInListView Me.lstConnections, 2, , i + 1
+FitTextInListView lstConnections, 2, , i + 1
 End Sub
 
 Private Sub SckReceiveFile_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-Dim sData As String, Pos As Long, Pos2 As Long
+Dim Data As String
+Dim Pos  As Long
+Dim Pos2 As Long
 
-SckReceiveFile(Index).GetData sData, vbString
+SckReceiveFile(Index).GetData Data, vbString
 
-If Clients(Index).FileSize = 0 And InStr(1, sData, ":") > 0 Then
-    Pos = InStr(1, sData, ",")
+If Clients(Index).FileSize = 0 And InStr(1, Data, ":") > 0 Then
+    Pos = InStr(1, Data, ",")
 
-    Clients(Index).FileSize = Val(Left(sData, Pos - 1))
-    Pos2 = InStr(Pos, sData, ":")
-    Clients(Index).FileName = Mid(sData, Pos + 1, (Pos2 - Pos) - 1)
+    Clients(Index).FileSize = Val(Left(Data, Pos - 1))
+    Pos2 = InStr(Pos, Data, ":")
+    Clients(Index).FileName = Mid(Data, Pos + 1, (Pos2 - Pos) - 1)
 
     Clients(Index).FileNum = FreeFile
     On Error GoTo handleErrorSendFile:
     Open App.Path & "\" & Clients(Index).FileName For Binary Access Write Lock Write As Clients(Index).FileNum
 
-    sData = Mid(sData, Pos2 + 1)
+    Data = Mid(Data, Pos2 + 1)
 
-    Me.lstConnections.ListItems(Index + 1).SubItems(3) = Clients(Index).FileName
-    FitTextInListView Me.lstConnections, 3, , Index + 1
+    lstConnections.ListItems(Index + 1).SubItems(3) = Clients(Index).FileName
+    FitTextInListView lstConnections, 3, , Index + 1
 End If
 
 If LenB(sData) > 0 Then
-    Clients(Index).BytesReceived = Clients(Index).BytesReceived + Len(sData)
-    Put Clients(Index).FileNum, , sData
+    Clients(Index).BytesReceived = Clients(Index).BytesReceived + Len(Data)
+    Put Clients(Index).FileNum, , Data
 
-    Me.lstConnections.ListItems(Index + 1).SubItems(4) = Format$(Clients(Index).BytesReceived / Clients(Index).FileSize * 100#, "#0.00") & " %"
-    FitTextInListView Me.lstConnections, 4, , Index + 1
+    lstConnections.ListItems(Index + 1).SubItems(4) = Format$(Clients(Index).BytesReceived / Clients(Index).FileSize * 100#, "#0.00") & " %"
+    FitTextInListView lstConnections, 4, , Index + 1
 
     If Clients(Index).BytesReceived >= Clients(Index).FileSize Then
         SckReceiveFile_Close Index
@@ -248,15 +253,15 @@ End Select
 End Sub
 
 Private Sub tmrStatus_Timer()
-Dim i       As Long
-Dim TmpStr  As String
+Dim i      As Long
+Dim TmpStr As String
 
 For i = 0 To SckReceiveFile.UBound
     TmpStr = Choose(SckReceiveFile(i).State + 1, "Closed", "Open", "Listening", "Connection pending", "Resolving host", "Host resolved", "Connecting", "Connected", "Server is disconnecting", "Error")
 
-    If Me.lstConnections.ListItems(i + 1).SubItems(1) <> TmpStr Then
-        Me.lstConnections.ListItems(i + 1).SubItems(1) = TmpStr
-        FitTextInListView Me.lstConnections, 1, , i + 1
+    If lstConnections.ListItems(i + 1).SubItems(1) <> TmpStr Then
+        lstConnections.ListItems(i + 1).SubItems(1) = TmpStr
+        FitTextInListView lstConnections, 1, , i + 1
     End If
 Next i
 End Sub

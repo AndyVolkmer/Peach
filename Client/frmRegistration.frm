@@ -489,7 +489,7 @@ End With
 
 Label7.Caption = REG_LABEL_SECRET_QUESTION
 Label8.Caption = REG_LABEL_SECRET_ANSWER
-Me.Caption = REG_MSG_LOADING
+Caption = REG_MSG_LOADING
 Label9.Caption = REG_LABEL_GENDER
 
 With cmbGender

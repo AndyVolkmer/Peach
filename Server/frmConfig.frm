@@ -189,7 +189,6 @@ frmAccountPanel.RegSock(0).Close
 frmPanel.lvUsers.ListItems.Clear
 frmChannel.lvChannels.ListItems.Clear
 frmChannel.lvUsers.ListItems.Clear
-frmMain.SetupForms frmConfig
 End Sub
 
 Private Function CheckTx(TB As TextBox, MB As String) As Boolean
@@ -201,7 +200,7 @@ End If
 End Function
 
 Private Sub Form_Load()
-Me.Top = 0: Me.Left = 0
+Top = 0: Left = 0
 
 Label5.Caption = "IP: " & frmMain.Winsock1(0).LocalIP
 Label7.Caption = "Author: " & pAuthor

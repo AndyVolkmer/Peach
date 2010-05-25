@@ -67,7 +67,7 @@ Private Sub cmdEnter_Click()
 SET_LANG_1 Combo1.ListIndex
 
 InsertIntoRegistry "Client\Configuration", "Validate", "0"
-InsertIntoRegistry "Client\Configuration", "Language", frmLanguage.Combo1.ListIndex
+InsertIntoRegistry "Client\Configuration", "Language", Combo1.ListIndex
 
 If Setting.VALIDATE = 0 Then
     If MsgBox(LANG_QUIT, vbQuestion + vbYesNo) = vbYes Then
@@ -97,13 +97,12 @@ Combo1.List(4) = LANG_ITALIAN
 Combo1.List(5) = LANG_DUTCH
 Combo1.List(6) = LANG_SERBIAN
 Combo1.List(7) = LANG_FRENCH
-'Combo1.List(8) = LANG_NORWEGIAN
 End Sub
 
 Private Sub Form_Activate()
 SET_LANG
 FIRST_LANG = CURRENT_LANG
-Me.BackColor = Setting.SCHEME_COLOR
+BackColor = Setting.SCHEME_COLOR
 Label1.BackColor = Setting.SCHEME_COLOR
 End Sub
 
@@ -121,6 +120,5 @@ Select Case Lang
     Case 5: SET_LANG_DUTCH
     Case 6: SET_LANG_SERBIAN
     Case 7: SET_LANG_FRENCH
-    'Case 8: SET_LANG_NORWEGIAN
 End Select
 End Sub

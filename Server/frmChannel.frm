@@ -122,7 +122,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Form_Load()
-Me.Top = 0: Me.Left = 0
+Top = 0: Left = 0
 End Sub
 
 Public Sub JoinChannel(Channel As String, User As String, Index As Integer)
@@ -237,7 +237,7 @@ Public Sub LeaveAllChannels(User As String)
 Dim i As Long
 
 'Just search user in channel and use LeaveChannel function
-With frmChannel.lvUsers.ListItems
+With lvUsers.ListItems
     For i = 1 To .Count
         If i > .Count Then Exit Sub
         If .Item(i) = User Then

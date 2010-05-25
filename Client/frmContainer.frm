@@ -161,12 +161,11 @@ SetupForm frmMain
 End Sub
 
 Private Sub MDIForm_Activate()
-Me.Top = frmMain.Top
-Me.Left = frmMain.Left
+Top = frmMain.Top: Left = frmMain.Left
 End Sub
 
 Private Sub MDIForm_Load()
-Me.Caption = pCaption
+Caption = pCaption
 cmdChat.Caption = MDI_COMMAND_CHAT
 cmdSendFile.Caption = MDI_COMMAND_SENDFILE
 cmdSociety.Caption = MDI_COMMAND_SOCIETY
@@ -229,8 +228,8 @@ Select Case MSG
     Case WM_LBUTTONDOWN
     Case WM_LBUTTONUP
         Vali = True
-        frmContainer.Show
-        frmContainer.WindowState = 0
+        Show
+        WindowState = 0
         Shell_NotifyIcon NIM_DELETE, NID    'Del tray icon
 
     Case WM_LBUTTONDBLCLK
@@ -242,15 +241,14 @@ End Sub
 
 Private Sub MDIForm_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 Cancel = 1
-frmContainer.Hide
 SetupForm frmMain
 End Sub
 
 Private Sub MDIForm_Resize()
-If Me.WindowState = 1 Then
+If WindowState = 1 Then
     If Vali = False Then
         If Setting.MIN_TICK Then
-            MinimizeToTray frmContainer
+            MinimizeToTray Me
         End If
     End If
     Vali = False

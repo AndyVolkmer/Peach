@@ -223,7 +223,6 @@ With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If IsIgnoring(.Item(i), User) = False Then
             SendSingle Message, .Item(i).SubItems(INDEX_WINSOCK_ID)
-            DoEvents
         End If
     Next i
 End With

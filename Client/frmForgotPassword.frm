@@ -133,7 +133,7 @@ Private Sub Form_Activate()
 Dim SC As String
     SC = Setting.SCHEME_COLOR
 
-Me.BackColor = SC
+BackColor = SC
 Frame1.BackColor = SC
 lblEmail.BackColor = SC
 lblSecretQuestion.BackColor = SC
@@ -166,7 +166,7 @@ With frmMain.RegSock
 End With
 
 Screen.MousePointer = vbArrowHourglass
-Me.Caption = REG_MSG_LOADING
+Caption = REG_MSG_LOADING
 ACC_SWITCH = "FP"
 End Sub
 

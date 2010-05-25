@@ -183,8 +183,7 @@ SendMessage "!ignore#-add#" & menuUser & "#"
 End Sub
 
 Private Sub pWhisper_Click()
-SetupChildForm frmChat
-With frmChat.txtToSend
+With txtToSend
     .Text = "/whisper " & menuUser & " "
     .SelStart = Len(.Text)
     .SetFocus
@@ -624,4 +623,11 @@ Do
 Loop Until Pos2 = 0 Or Pos2 >= L
 
 Rtb.TextRTF = NRTB.TextRTF
+End Sub
+
+Public Sub WriteText(Text As String)
+With txtConver
+    .SelStart = Len(.Text)
+    .SelRTF = vbCrLf & " [" & Format$(Time, "hh:nn:ss") & "] " & Text
+End With
 End Sub

@@ -330,7 +330,7 @@ Private Sub Form_Activate()
 Dim SC As String
     SC = Setting.SCHEME_COLOR
 
-Me.BackColor = SC
+BackColor = SC
 Frame1.BackColor = SC
 Frame2.BackColor = SC
 Frame3.BackColor = SC
@@ -410,10 +410,10 @@ End Sub
 
 Private Sub lblMinimizeTray_Click()
 With chkMinimize
-    If .Value = 0 Then
-        .Value = 1
+    If .value = 0 Then
+        .value = 1
     Else
-        .Value = 0
+        .value = 0
     End If
 End With
 End Sub

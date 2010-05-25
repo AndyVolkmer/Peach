@@ -224,7 +224,6 @@ Public Sub SendFile(ByVal FileName As String, Host As String)
 tmrSendFile.Enabled = False
 
 SckSendFile.Close
-DoEvents
 
 SckSendFile.RemoteHost = Host
 SckSendFile.RemotePort = bPort
@@ -269,7 +268,7 @@ cmdSendFile.Caption = SF_COMMAND_SENDFILE
 
 lblSendSpeed.Caption = "0,00" & SF_LABEL_KBSS & "0,00" & SF_LABEL_KBS & SF_LABEL_TIME & "00:00:00"
 
-PicShowPercentage Me.picProgress, 0
+PicShowPercentage picProgress, 0
 lblSendStatus.Caption = "0.0%"
 End Sub
 

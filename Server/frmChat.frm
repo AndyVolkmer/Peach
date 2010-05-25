@@ -74,7 +74,7 @@ txtToSend = vbNullString
 End Sub
 
 Private Sub Form_Load()
-Me.Top = 0: Me.Left = 0
+Top = 0: Left = 0
 End Sub
 
 Private Sub txtClear_Click()

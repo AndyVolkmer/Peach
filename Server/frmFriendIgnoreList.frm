@@ -136,7 +136,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Form_Load()
-Me.Top = 0: Me.Left = 0
+Top = 0: Left = 0
 End Sub
 
 Public Sub AddFriend(User As String, pFriend As String, Index As Integer)
