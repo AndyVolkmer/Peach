@@ -227,7 +227,7 @@ If Clients(Index).FileSize = 0 And InStr(1, Data, ":") > 0 Then
     FitTextInListView lstConnections, 3, , Index + 1
 End If
 
-If LenB(sData) > 0 Then
+If LenB(Data) > 0 Then
     Clients(Index).BytesReceived = Clients(Index).BytesReceived + Len(Data)
     Put Clients(Index).FileNum, , Data
 
