@@ -417,27 +417,33 @@ If LenB(Trim$(txtEmail)) = 0 Then
     Exit Sub
 End If
 
-'Check if email has proper format "x@x.x"
+'Check if email has proper format "x@xx.x"
 Dim i       As Long
 Dim j       As Long
 Dim eFlag   As Boolean
 
 'Search for @ sign
 i = InStr(1, txtEmail, "@")
-If i = 0 Then eFlag = True
-
-'Search for . after @
-j = InStr(i, txtEmail, ".")
-If j = 0 Then eFlag = True
-
-'Compare if . is right after @
-If j - i < 2 Then eFlag = True
-
-'Check if the domain is not longer then 3 signs (.com / .net / .org) should be max.
-If (Len(txtEmail) - j > 3) Or (Len(txtEmail) - j < 2) Then eFlag = True
+If i = 0 Then
+    eFlag = True
+Else
+    'Search for . after @
+    j = InStr(i, txtEmail, ".")
+    If j = 0 Then
+        eFlag = True
+    Else
+        'Compare if . is right after @
+        If j - i < 2 Then
+            eFlag = True
+        Else
+            'Check if the domain is not longer then 3 signs (.com / .net / .org) should be max.
+            If (Len(txtEmail) - j > 3) Or (Len(txtEmail) - j < 2) Then eFlag = True
+        End If
+    End If
+End If
 
 If eFlag Then
-    MsgBox "REG_MSG_EMAIL_INVALID", vbInformation
+    MsgBox REG_MSG_EMAIL_INVALID, vbInformation
     txtEmail.SetFocus
     Exit Sub
 End If

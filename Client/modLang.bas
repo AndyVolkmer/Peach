@@ -140,6 +140,7 @@ Public REG_MSG_SECRET_ANSWER_EMPTY      As String
 
 Public REG_MSG_EMAIL_EMPTY              As String
 Public REG_MSG_EMAIL_TAKEN              As String
+Public REG_MSG_EMAIL_INVALID            As String
 
 Public REG_CMB_SECRET_QUESTION_0        As String
 Public REG_CMB_SECRET_QUESTION_1        As String
@@ -314,6 +315,7 @@ REG_MSG_SECRET_ANSWER_EMPTY = "Keine geheime Antwort angegeben."
 
 REG_MSG_EMAIL_EMPTY = "Keine Email angegeben."
 REG_MSG_EMAIL_TAKEN = "Die Email-Adresse wird bereits genutzt, haben Sie Ihr Kennwort vergessen?"
+REG_MSG_EMAIL_INVALID = "Die Email-Adresse verfügt nicht über das korrekte Format."
 
 REG_MSG_SUCCESSFULLY = "Ihr Konto wurde erfolgreich erstellt."
 REG_MSG_ERROR = "Ein Fehler ist aufgetreten bitte versuchen Sie es später nochmal."
@@ -498,6 +500,7 @@ REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
 
 REG_MSG_EMAIL_EMPTY = "No email adress entered."
 REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgotten your password?"
+REG_MSG_EMAIL_INVALID = "The email adress you have entered is invalid."
 
 REG_MSG_SUCCESSFULLY = "The username was successfully registered."
 REG_MSG_ERROR = "An error has occured please try later again."
@@ -677,6 +680,7 @@ REG_MSG_SECRET_ANSWER_EMPTY = "No ha introducido una respuesta secreta."
 
 REG_MSG_EMAIL_EMPTY = "No ha introducido un correo electronico."
 REG_MSG_EMAIL_TAKEN = "El correo electronico ya esta usado, ha olvidado su contraseña?"
+REG_MSG_EMAIL_INVALID = "El correo electronico que ha introducido es incorrecto."
 
 REG_MSG_SUCCESSFULLY = "La cuenta ha sido registrada con exito."
 REG_MSG_ERROR = "Un error ha occurido intenten de nuevo despues."
@@ -858,6 +862,7 @@ REG_MSG_SECRET_ANSWER_EMPTY = "Inga hemliga svaret infördes."
 
 REG_MSG_EMAIL_EMPTY = "Inga hemliga email."
 REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgot your password?"
+REG_MSG_EMAIL_INVALID = "The email adress you have entered is invalid."
 
 REG_MSG_SUCCESSFULLY = "Kontot har skapats."
 REG_MSG_ERROR = "Ett fel har uppstått var snäll och försök igen."
@@ -1038,6 +1043,7 @@ REG_MSG_SECRET_ANSWER_EMPTY = "Risposta segreta non è stato iscritto."
 
 REG_MSG_EMAIL_EMPTY = "Email non è stato iscritto."
 REG_MSG_EMAIL_TAKEN = "L'indirizzo e-mail che hai inserito è già utilizzato beeing, hai dimenticato la parola d'ordine?"
+REG_MSG_EMAIL_INVALID = "The email adress you have entered is invalid."
 
 REG_MSG_SUCCESSFULLY = "L'account è stato registrato con successo."
 REG_MSG_ERROR = "Un errore si è verificato per favore riprova più tardi di nuovo."
@@ -1216,6 +1222,7 @@ REG_MSG_SECRET_ANSWER_EMPTY = "Geen geheim beantwoord opgenomen."
 
 REG_MSG_EMAIL_EMPTY = "Geen email opgenomen."
 REG_MSG_EMAIL_TAKEN = "De email adres die je ingevoerd hebt wordt al gebruikt, ben je je passwoord vergeten?"
+REG_MSG_EMAIL_INVALID = "The email adress you have entered is invalid."
 
 REG_MSG_SUCCESSFULLY = "Account succesvol aangemaakt."
 REG_MSG_ERROR = "Er is een fout opgetreden, probeer het later opnieuw."
@@ -1404,6 +1411,7 @@ REG_MSG_SECRET_ANSWER_EMPTY = "No secret answered entered."
 
 REG_MSG_EMAIL_EMPTY = "No email entered."
 REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgot your password?"
+REG_MSG_EMAIL_INVALID = "The email adress you have entered is invalid."
 
 REG_MSG_SUCCESSFULLY = "The account was successfully registered."
 REG_MSG_ERROR = "An error has occured please try later again."
@@ -1579,6 +1587,7 @@ REG_MSG_SECRET_ANSWER_EMPTY = "Pas de secret répondu ajouté."
 
 REG_MSG_EMAIL_EMPTY = "Aucun e-mail est entré."
 REG_MSG_EMAIL_TAKEN = "The email adress you have entered is already beeing used, have you forgot your password?"
+REG_MSG_EMAIL_INVALID = "The email adress you have entered is invalid."
 
 REG_MSG_SUCCESSFULLY = "Le compte a été enregistré avec succès."
 REG_MSG_ERROR = "Une erreur s'est produite, s'il vous plaît essayer à nouveau plus tard.."
