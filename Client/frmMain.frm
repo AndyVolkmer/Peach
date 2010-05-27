@@ -763,6 +763,273 @@ Select Case Command
     Case "!channel_password"
         SendMessage "!channel_password#" & InputBox(Replace(CH_MSG_PASSWORD, "%c", StrArr(1))) & "#" & StrArr(1)
 
+    Case "!pmessage"
+        Dim temp As String
+
+        Select Case StrArr(1)
+            Case "online"
+                frmChat.WriteText Replace(MSG_USER_ONLINE, "%u", StrArr(2))
+
+            Case "offline"
+                frmChat.WriteText Replace(MSG_USER_OFFLINE, "%u", StrArr(2))
+
+            Case "announce"
+                temp = Replace(MSG_ANNOUNCE, "%f", StrArr(2))
+                temp = Replace(temp, "%u", StrArr(3))
+                temp = Replace(temp, "%m", StrArr(4))
+
+                frmChat.WriteText temp
+
+            Case "table_reload"
+                temp = Replace(MSG_TABLE_RELOAD, "%u", StrArr(2))
+                temp = Replace(temp, "%t", StrArr(3))
+                temp = Replace(temp, "%ti", StrArr(4))
+
+                frmChat.WriteText temp
+
+            Case "config_reload"
+                temp = Replace(MSG_CONFIG_RELOAD, "%u", StrArr(2))
+                temp = Replace(temp, "%t", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "incorrect_syntax"
+                frmChat.WriteText Replace(MSG_INCORRECT_SYNTAX, "%s", StrArr(2))
+
+            Case "table_not_exist"
+                frmChat.WriteText MSG_TABLE_NOT_EXIST
+
+            Case "table_cant_reload"
+                frmChat.WriteText MSG_TABLE_CANT_RELOAD
+
+            Case "user_not_found"
+                frmChat.WriteText Replace(MSG_USER_NOT_FOUND, "%u", StrArr(2))
+
+            Case "deleted_account"
+                temp = Replace(MSG_DELETED_ACCOUNT, "%u", StrArr(2))
+                temp = Replace(temp, "%id", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "gm_flag_enable"
+                frmChat.WriteText MSG_GM_FLAG_ENABLE
+
+            Case "gm_flag_disable"
+                frmChat.WriteText MSG_GM_FLAG_DISABLE
+
+            Case "unknown_command"
+                frmChat.WriteText MSG_UNKNOWN_COMMAND
+
+            Case "muted"
+                frmChat.WriteText MSG_MUTED
+
+            Case "flood_protection"
+                frmChat.WriteText MSG_FLOOD_PROTECTION
+
+            Case "roll"
+                temp = Replace(MSG_ROLL, "%u", StrArr(2))
+                temp = Replace(temp, "%r", StrArr(3))
+                temp = Replace(temp, "%minR", StrArr(4))
+                temp = Replace(temp, "%maxR", StrArr(5))
+
+                frmChat.WriteText temp
+
+            Case "not_afk"
+                frmChat.WriteText MSG_NOT_AFK
+
+            Case "afk"
+                frmChat.WriteText MSG_AFK
+
+            Case "online_time"
+                frmChat.WriteText Replace(MSG_ONLINE_TIME, "%t", StrArr(2))
+
+            Case "valid_channel"
+                frmChat.WriteText MSG_VALID_CHANNEL
+
+            Case "already_in_channel"
+                frmChat.WriteText Replace(MSG_ALREADY_IN_CHANNEL, "%c", StrArr(2))
+
+            Case "not_in_channel"
+                frmChat.WriteText Replace(MSG_NOT_IN_CHANNEL, "%c", StrArr(2))
+
+            Case "channel_announcements"
+                temp = Replace(MSG_CHANNEL_ANNOUNCEMENTS, "%c", StrArr(2))
+                temp = Replace(temp, "%u", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "channel_password"
+                temp = Replace(MSG_CHANNEL_PASSWORD, "%c", StrArr(2))
+                temp = Replace(temp, "%p", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "channel_wrong_password"
+                frmChat.WriteText Replace(MSG_CHANNEL_WRONG_PASSWORD, "%c", StrArr(2))
+
+            Case "not_channel_leader"
+                frmChat.WriteText MSG_NOT_CHANNEL_LEADER
+
+            Case "message_blocked"
+                frmChat.WriteText MSG_MESSAGE_BLOCKED
+
+            Case "cant_whisper_self"
+                frmChat.WriteText MSG_CANT_WHISPER_SELF
+
+            Case "is_ignoring_you"
+                frmChat.WriteText Replace(MSG_IS_IGNORING_YOU, "%t", StrArr(2))
+
+            Case "you_whisper_to"
+                temp = Replace(MSG_YOU_WHISPER_TO, "%t", StrArr(2))
+                temp = Replace(temp, "%m", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "target_is_afk"
+                frmChat.WriteText Replace(MSG_TARGET_IS_AFK, "%t", StrArr(2))
+
+            Case "whisper"
+                temp = Replace(MSG_WHISPER, "%f", StrArr(2))
+                temp = Replace(temp, "%u", StrArr(3))
+                temp = Replace(temp, "%m", StrArr(4))
+
+                frmChat.WriteText temp
+
+            Case "user_already_muted"
+                frmChat.WriteText Replace(MSG_USER_ALREADY_MUTED, "%u", StrArr(2))
+
+            Case "user_is_not_muted"
+                frmChat.WriteText Replace(MSG_IS_NOT_MUTED, "%u", StrArr(2))
+
+            Case "muted_by"
+                temp = Replace(MSG_MUTED_BY, "%t", StrArr(2))
+                temp = Replace(temp, "%u", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "unmuted_by"
+                temp = Replace(MSG_UNMUTED_BY, "%t", StrArr(2))
+                temp = Replace(temp, "%u", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "muted_by_reason"
+                temp = Replace(MSG_MUTED_BY_REASON, "%t", StrArr(2))
+                temp = Replace(temp, "%u", StrArr(3))
+                temp = Replace(temp, "%r", StrArr(4))
+
+                frmChat.WriteText temp
+            
+            Case "unmuted_by_reason"
+                temp = Replace(MSG_UNMUTED_BY_REASON, "%t", StrArr(2))
+                temp = Replace(temp, "%u", StrArr(3))
+                temp = Replace(temp, "%r", StrArr(4))
+
+                frmChat.WriteText temp
+
+            Case "already_banned"
+                frmChat.WriteText Replace(MSG_ALREADY_BANNED, "%u", StrArr(2))
+
+            Case "already_unbanned"
+                frmChat.WriteText Replace(MSG_ALREADY_UNBANNED, "%u", StrArr(2))
+
+            Case "banned_by"
+                temp = Replace(MSG_BANNED_BY, "%t", StrArr(2))
+                temp = Replace(temp, "%u", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "unbanned_by"
+                temp = Replace(MSG_UNBANNED_BY, "%t", StrArr(2))
+                temp = Replace(temp, "%u", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "banned_by_reason"
+                temp = Replace(MSG_BANNED_BY_REASON, "%t", StrArr(2))
+                temp = Replace(temp, "%u", StrArr(3))
+                temp = Replace(temp, "%r", StrArr(4))
+
+                frmChat.WriteText temp
+
+            Case "unbanned_by_reason"
+                temp = Replace(MSG_UNBANNED_BY_REASON, "%t", StrArr(2))
+                temp = Replace(temp, "%u", StrArr(3))
+                temp = Replace(temp, "%r", StrArr(4))
+
+                frmChat.WriteText temp
+
+            Case "successfull_rename"
+                temp = Replace(MSG_SUCCESSFULL_RENAME, "%u", StrArr(2))
+                temp = Replace(temp, "%t", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "renamed_you_to"
+                temp = Replace(MSG_RENAMED_YOU_TO, "%u", StrArr(2))
+                temp = Replace(temp, "%t", StrArr(2))
+
+                frmChat.WriteText temp
+
+            Case "user_already_used"
+                frmChat.WriteText Replace(MSG_USER_ALREADY_USED, "%u", StrArr(2))
+
+            Case "level_incorrect_value"
+                frmChat.WriteText MSG_LEVEL_INCORRECT_VALUE
+
+            Case "successfull_level"
+                temp = Replace(MSG_SUCCESSFULL_LEVEL, "%u", StrArr(2))
+                temp = Replace(temp, "%l", StrArr(3))
+                
+                frmChat.WriteText temp
+
+            Case "changed_your_level"
+                temp = Replace(MSG_CHANGED_YOUR_LEVEL, "%u", StrArr(2))
+                temp = Replace(temp, "%l", StrArr(2))
+
+                frmChat.WriteText temp
+
+            Case "gender_incorrect_value"
+                frmChat.WriteText MSG_GENDER_INCORRECT_VALUE
+
+            Case "successfull_gender"
+                temp = Replace(MSG_SUCCESSFULL_GENDER, "%u", StrArr(2))
+                temp = Replace(temp, "%g", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "changed_your_gender"
+                temp = Replace(MSG_CHANGED_YOUR_GENDER, "%u", StrArr(2))
+                temp = Replace(temp, "%g", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "successfull_password"
+                temp = Replace(MSG_SUCCESSFULL_PASSWORD, "%u", StrArr(2))
+                temp = Replace(temp, "%p", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "changed_your_password"
+                temp = Replace(MSG_CHANGED_YOUR_PASSWORD, "%u", StrArr(2))
+                temp = Replace(temp, "%p", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "successfull_email"
+                temp = Replace(MSG_SUCCESSFULL_EMAIL, "%u", StrArr(2))
+                temp = Replace(temp, "%e", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "changed_your_email"
+                temp = Replace(MSG_CHANGED_YOUR_EMAIL, "%u", StrArr(2))
+                temp = Replace(temp, "%e", StrArr(3))
+
+                frmChat.WriteText temp
+
+        End Select
+
     Case Else
         If Not Screen.ActiveForm.Name = frmChat.Name Then
             ChatNotifyTimer.Enabled = True

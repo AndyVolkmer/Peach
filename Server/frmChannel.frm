@@ -158,7 +158,7 @@ With lvUsers.ListItems
     .Item(.Count).SubItems(CHANNEL_USER_IS_OWNER) = "1"
 End With
 
-SendSingle "[" & Channel & "] You joined the channel.", Index
+SendSingle "!pmessage#joined_channel#" & Channel & "#", Index
 End Sub
 
 Public Sub JoinChannelReal(Channel As String, User As String)
@@ -173,7 +173,7 @@ With lvChannels.ListItems
                 .Item(.Count).SubItems(CHANNEL_USER_IS_OWNER) = "0"
             End With
 
-            If .Item(i).SubItems(CHANNEL_JOIN_ANNOUNCE) = "1" Then SendMessageToChannel Channel, User, "[" & .Item(i) & "] " & User & " has joined the channel."
+            If .Item(i).SubItems(CHANNEL_JOIN_ANNOUNCE) = "1" Then SendMessageToChannel Channel, User, "!pmessage#channel_user_join#" & .Item(i) & "#" & User & "#"
             Exit Sub
         End If
     Next i
@@ -198,7 +198,7 @@ With lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User And LCase$(.Item(i).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then
             'If announce is enabled then tell channel that user left
-            If JoinAnnounce Then SendMessageToChannel Channel, User, "[" & .Item(i).SubItems(CHANNEL_USER_CHANNEL) & "] " & User & " left channel."
+            If JoinAnnounce Then SendMessageToChannel Channel, User, "!pmessage#channel_user_leave#" & .Item(i).SubItems(CHANNEL_USER_CHANNEL) & "#" & User & "#"
 
             'Set owner to someone else when owner is leaving
             If .Item(i).SubItems(CHANNEL_USER_IS_OWNER) = "1" And .Count > 1 Then
