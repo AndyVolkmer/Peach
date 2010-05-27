@@ -97,6 +97,7 @@ Combo1.List(4) = LANG_ITALIAN
 Combo1.List(5) = LANG_DUTCH
 Combo1.List(6) = LANG_SERBIAN
 Combo1.List(7) = LANG_FRENCH
+Combo1.List(8) = LANG_BULGARIAN_LATIN
 End Sub
 
 Private Sub Form_Activate()
@@ -120,5 +121,6 @@ Select Case Lang
     Case 5: SET_LANG_DUTCH
     Case 6: SET_LANG_SERBIAN
     Case 7: SET_LANG_FRENCH
+    Case 8: SET_LANG_BULGARIAN_LATIN
 End Select
 End Sub

@@ -30,7 +30,7 @@ If Setting.VALIDATE = 0 Then
         Case 5: SET_LANG_DUTCH
         Case 6: SET_LANG_SERBIAN
         Case 7: SET_LANG_FRENCH
-        'Case 8: SET_LANG_NORWEGIAN
+        Case 8: SET_LANG_BULGARIAN_LATIN
     End Select
 
     SetScheme

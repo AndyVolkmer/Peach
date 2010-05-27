@@ -76,6 +76,7 @@ Public LANG_ITALIAN                     As String
 Public LANG_SERBIAN                     As String
 Public LANG_DUTCH                       As String
 Public LANG_FRENCH                      As String
+Public LANG_BULGARIAN_LATIN             As String
 
 Public SOC_FRIEND_LIST                  As String
 Public SOC_ONLINE_LIST                  As String
@@ -287,6 +288,7 @@ LANG_ITALIAN = "Italienisch"
 LANG_SERBIAN = "Serbisch"
 LANG_DUTCH = "Niederländisch"
 LANG_FRENCH = "Französisch"
+LANG_BULGARIAN_LATIN = "Bulgarisch (Latin)"
 
 CONFIG_MSG_ACCOUNT = "Sie haben keinen Konto-Namen eingegeben."
 CONFIG_MSG_PASSWORD = "Sie haben kein Kennwort eingegeben."
@@ -528,6 +530,7 @@ LANG_ITALIAN = "Italian"
 LANG_SERBIAN = "Serbian"
 LANG_DUTCH = "Dutch"
 LANG_FRENCH = "French"
+LANG_BULGARIAN_LATIN = "Bulgarian (Latin)"
 
 CONFIG_MSG_ACCOUNT = "You did not enter an account."
 CONFIG_MSG_PASSWORD = "You did not enter a password."
@@ -768,6 +771,7 @@ LANG_ITALIAN = "Italiano"
 LANG_DUTCH = "Holandés"
 LANG_SERBIAN = "Serbio"
 LANG_FRENCH = "Frances"
+LANG_BULGARIAN_LATIN = "Bulgaro (Latin)"
 
 CONFIG_MSG_ACCOUNT = "No has introducido una cuenta."
 CONFIG_MSG_PASSWORD = "No has introducido una contraseña."
@@ -949,19 +953,19 @@ MSG_BANNED_BY = "%t ha sido baneado/a por %u."
 MSG_UNBANNED_BY = "%t ha sido desbaneado/a por %u."
 MSG_BANNED_BY_REASON = "%t ha sido baneado/a by %u. (%r)"
 MSG_UNBANNED_BY_REASON = "%t ha sido desbaneado/a %u. (%r)"
-MSG_SUCCESSFULL_RENAME = "Successfully renamed '%u' to '%t'."
-MSG_RENAMED_YOU_TO = "%u renamed you to '%t'."
-MSG_USER_ALREADY_USED = "Username '%u' is already beeing used."
-MSG_LEVEL_INCORRECT_VALUE = "Level contains incorrect values, must be in range of 0-2."
-MSG_SUCCESSFULL_LEVEL = "Successfully changed level of '%u' to '%l'."
-MSG_CHANGED_YOUR_LEVEL = "%u changed your level to '%l'."
-MSG_GENDER_INCORRECT_VALUE = "Incorrect gender format use 'male' or 'female'."
-MSG_SUCCESSFULL_GENDER = "Successfully changed gender of '%u' to '%g'."
-MSG_CHANGED_YOUR_GENDER = "%u changed your gender to '%g'."
-MSG_SUCCESSFULL_PASSWORD = "Sucessfully changed password of '%u' to '%p'."
-MSG_CHANGED_YOUR_PASSWORD = "%u changed your password to '%p'."
-MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
-MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
+MSG_SUCCESSFULL_RENAME = "Has renombrado '%u' a '%t' con éxito."
+MSG_RENAMED_YOU_TO = "%u te ha cambiado el nombre a '%t'."
+MSG_USER_ALREADY_USED = "El nombre '%u' ya esta cogido."
+MSG_LEVEL_INCORRECT_VALUE = "El nivel contiene valores incorrectos, tienen que estar entre 0-2."
+MSG_SUCCESSFULL_LEVEL = "Has cambiado el nivel de '%u' a '%l' con éxito."
+MSG_CHANGED_YOUR_LEVEL = "%u ha cambiado tu nivel a '%l'."
+MSG_GENDER_INCORRECT_VALUE = "Formato de sexo incorrecto, por favor use 'male' o 'female'."
+MSG_SUCCESSFULL_GENDER = "Has cambiado el sexo de '%u' a '%g' con éxito."
+MSG_CHANGED_YOUR_GENDER = "%u ha cambiado tu sexo a '%g'."
+MSG_SUCCESSFULL_PASSWORD = "Has cambiado la contraseña de '%u' a '%p' con éxito."
+MSG_CHANGED_YOUR_PASSWORD = "%u ha cambiado tu contraseña a '%p'."
+MSG_SUCCESSFULL_EMAIL = "Has cambiado el correo electronico de '%u' a '%e' con éxito."
+MSG_CHANGED_YOUR_EMAIL = "%u ha cambiado tu correo electronico a '%e'."
 End Sub
 
 Public Sub SET_LANG_SWEDISH()
@@ -1005,6 +1009,7 @@ LANG_ITALIAN = "Italienska"
 LANG_SERBIAN = "Serbiska"
 LANG_DUTCH = "Holländska"
 LANG_FRENCH = "Franska"
+LANG_BULGARIAN_LATIN = "Bulgarian (Latin)"
 
 CONFIG_MSG_ACCOUNT = "Du skrev inte in en användare."
 CONFIG_MSG_PASSWORD = "Du skrev inte in ett lösenord."
@@ -1245,6 +1250,7 @@ LANG_ITALIAN = "Italiano"
 LANG_SERBIAN = "Serbo"
 LANG_DUTCH = "Olandese"
 LANG_FRENCH = "Francese"
+LANG_BULGARIAN_LATIN = "Bulgarian (Latin)"
 
 CONFIG_MSG_ACCOUNT = "Non hai inserito un account."
 CONFIG_MSG_PASSWORD = "Non hai inserito una password."
@@ -1484,6 +1490,7 @@ LANG_ITALIAN = "Italiaans"
 LANG_SERBIAN = "Serbisch"
 LANG_DUTCH = "Nederlands"
 LANG_FRENCH = "Frans"
+LANG_BULGARIAN_LATIN = "Bulgarian (Latin)"
 
 CONFIG_MSG_ACCOUNT = "Je hebt geen gebruikersnaam ingevuld."
 CONFIG_MSG_PASSWORD = "Je hebt geen wachtwoord ingevuld."
@@ -1730,6 +1737,7 @@ LANG_ITALIAN = "Italijanski"
 LANG_SERBIAN = "Srpski"
 LANG_DUTCH = "Holandski"
 LANG_FRENCH = "Francuski"
+LANG_BULGARIAN_LATIN = "Bulgarian (Latin)"
 
 CONFIG_MSG_ACCOUNT = "Nisi ukucao lozinku."
 CONFIG_MSG_PASSWORD = "Nisi ukucao sifru."
@@ -1967,6 +1975,7 @@ LANG_ITALIAN = "Italien"
 LANG_SERBIAN = "Serbois"
 LANG_DUTCH = "Hollandais"
 LANG_FRENCH = "Français"
+LANG_BULGARIAN_LATIN = "Bulgarian (Latin)"
 
 CONFIG_MSG_ACCOUNT = "Vous n'avez pas introduit un compte."
 CONFIG_MSG_PASSWORD = "Vous n'avez pas introduit un mot de passe."
@@ -2159,4 +2168,248 @@ MSG_SUCCESSFULL_PASSWORD = "Sucessfully changed password of '%u' to '%p'."
 MSG_CHANGED_YOUR_PASSWORD = "%u changed your password to '%p'."
 MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
+End Sub
+
+Public Sub SET_LANG_BULGARIAN_LATIN()
+CURRENT_LANG = 8
+
+'MDI form
+MDI_COMMAND_CHAT = "Razgovor"
+MDI_COMMAND_SENDFILE = "Izprati File"
+MDI_COMMAND_SOCIETY = "Grupa"
+
+'MDImsgbox_errorHandlerFormLoad
+MDI_MSG_NAME_TAKEN = "Tova potrebitelsko ime e veche zaeto."
+MDI_MSG_WRONG_ACCOUNT = "Tova potrebitelsko ime ne sashtestvuva."
+MDI_MSG_WRONG_PASSWORD = "The password is wrong."
+MDI_MSG_BANNED = "Tozi account e blokiran."
+MDI_MSG_UNLOAD = "Sigurni li ste che iskate da zatvorite Peach"
+
+MDI_MSG_CANT_ADD_YOU = "Ne moje da dobavish sebe si."
+MDI_MSG_ALREADY_IN_IGNORE_LIST = "'%u' e veche ignoriran."
+MDI_MSG_ALREADY_IN_FRIEND_LIST = "'%u' e veche v tvoq friend list."
+MDI_MSG_ACCOUNT_NOT_EXIST = "'%u' ne sashtestvuva."
+
+MDI_MENU = "Menu"
+
+'Configuration form ..
+CONFIG_LABEL_ACCOUNT = "Ime na potrebitel"
+CONFIG_LABEL_PASSWORD = "Parola"
+
+CONFIG_COMMAND_CONNECT = "Vhod"
+CONFIG_COMMAND_DISCONNECT = "Izhod"
+CONFIG_COMMAND_SETTINGS = "Predpochitani"
+CONFIG_COMMAND_UPDATE = "&Update"
+CONFIG_COMMAND_REGISTER = "Sazdavane na account"
+CONFIG_COMMAND_FORGOT_PASSWORD = "Zabravena parola"
+
+CONFIG_CHECK_SAVE_PASSWORD = "Zapazi parola."
+
+CONFIG_FRAME_CONNECTION = "Informaiq za vrazkata"
+
+LANG_GERMAN = "Nemski"
+LANG_ENGLISH = "Angliiski"
+LANG_SPANISH = "Ispanski"
+LANG_SWEDISH = "Shvedski"
+LANG_ITALIAN = "Italianski"
+LANG_SERBIAN = "Srabski"
+LANG_DUTCH = "Holandski"
+LANG_FRENCH = "Frenski"
+LANG_BULGARIAN_LATIN = "Bulgarski (Latinski)"
+
+CONFIG_MSG_ACCOUNT = "Ne ste vaveli account."
+CONFIG_MSG_PASSWORD = "Ne ste vavale parola."
+CONFIG_MSG_NUMERIC = "Bez cifri f potrebitelskoto ime."
+CONFIG_MSG_PORT = "Ne ste predstavili port."
+CONFIG_MSG_IP = "Ne ste predstavili IP adres."
+CONFIG_MSG_UPDATE_FILE = "Nujdaete se ot Peach updater za da updatnete Peach." & vbCrLf & vbCrLf & "Svalete ot tuk: http://riplegion.ri.funpic.de/Peach/peachUpdater.exe"
+
+' Chat form ..
+CHAT_COMMAND_SEND = "Izprati"
+CHAT_COMMAND_CLEAR = "Izchisti"
+
+' Send File form ..
+SF_LABEL_FILENAME = "Ime na file"
+SF_LABEL_SEND_TO = "Izprati do:"
+SF_LABEL_TIME = " Ostavashto vreme: "
+SF_LABEL_KBS = " Kb/Sec, "
+SF_LABEL_KBSS = " KBytes izprteni, "
+
+SF_MSG_USER = "Nqma izbran potrebitel."
+SF_MSG_FILE = "Nqma izbran file."
+SF_MSG_INCOMMING_FILE = "Poluchavate '%f' ot '%u'. Iskate li da priemete?"
+SF_MSG_DECILINED = "Transferat na file beshe otkazan."
+
+SF_COMMAND_BROWSE = "Tarsene .."
+SF_COMMAND_SENDFILE = "Izprati"
+SF_COMMAND_CANCEL = "Spri .."
+
+LANG_COMMAND_ENTER = "Izberi"
+LANG_LABEL_SELLANG = "Izberete ezik"
+
+LANG_QUIT = "Za da smenite ezika trqbva da restartirate Peach. Iskate li tova da stane sega ?"
+
+SOC_FRIEND_LIST = "List s priqteli"
+SOC_ONLINE_LIST = "Online List"
+SOC_IGNORE_LIST = "List s ignorirani"
+
+SOC_COMMAND_REMOVE = "Premahni"
+SOC_COMMAND_FRIEND = "Dobavi priqtel"
+SOC_COMMAND_IGNORE = "Ignorirai potrebitel"
+SOC_COMMAND_WHISPER = "Lichno saubshtenie"
+
+SOC_ASK_DEL = "Iskate li da iztriete '%u' ot lista ?"
+
+SOC_ASK_FRIEND_TEXT = "Napishete imeto na vashiq priqtel v poleto."
+SOC_ASK_FRIEND_TITLE = "Dobavqne na priqtel"
+SOC_ASK_FRIEND_DEFAULT = "Napish account tuk"
+
+SOC_ASK_IGNORE_TEXT = "Napishete imeto na potrebitelq koito iskate da ignorirate."
+SOC_ASK_IGNORE_TITLE = "Ignorirane"
+SOC_ASK_IGNORE_DEFAULT = "Napishi account tuk"
+
+SOC_FRIEND_LIST_STATUS = "Status"
+
+SOC_MSG_CANT_WHISPER = "Ne mojete da izprashtate lichno saobshtenie do tozi potrebitel."
+
+REG_CAPTION = "Peach - registraciq"
+
+REG_FRAME_DETAIL = "Zapishete svoite danni"
+
+REG_LABEL_ACCOUNT_NAME = "Ime na potrebitel"
+REG_LABEL_PASSWORD = "Parola"
+REG_LABEL_PASSWORD_CONFIRM = "Potvardi parola"
+REG_LABEL_PASSWORD_WEAK = "Parolata e slaba."
+REG_LABEL_PASSWORD_NORMAL = "Parolata e sredna."
+REG_LABEL_PASSWORD_STRONG = "Parolata e silna."
+REG_LABEL_SECRET_QUESTION = "Taen vapros"
+REG_LABEL_SECRET_ANSWER = "Taen otgovor"
+
+REG_COMMAND_SUBMIT = "Predstavi"
+REG_COMMAND_CLOSE = "Zatvori"
+
+REG_CHECK_PASSWORD_SHOW = "Pokaji parola."
+
+REG_MSG_ACCOUNT_EXIST = "Potrebitelskoto ime veche se izpolzva."
+REG_MSG_ACCOUNT_INVALID = "Nepravilno potrebitelsko ime."
+REG_MSG_ACCOUNT_NUMERIC = "Potrebitelskoto ime ne moje da bade sastaveno ot cifri."
+REG_MSG_ACCOUNT_EMPTY = "No username entered."
+REG_MSG_ACCOUNT_SHORT = "Potrebitelskoto ime e tvarde kratko, trqbva da e pone 4 bukvi."
+
+REG_MSG_PASSWORD_MATCH = "Parolata ne savpada."
+REG_MSG_PASSWORD_SHORT = "Parolata e tvarde kratka, tqbva da e pone 6 simvola."
+REG_MSG_PASSWORD_EMPTY = "Ne e vavedena parola."
+
+REG_MSG_SECRET_ANSWER_EMPTY = "Ne e vaveden taen otgovor."
+
+REG_MSG_EMAIL_EMPTY = "Ne e vaveden e-mail adres."
+REG_MSG_EMAIL_TAKEN = "E-mail adresat e veche izpolzvan. Zabravili li ste parolata si ?"
+REG_MSG_EMAIL_INVALID = "E-mail adresat e nevaliden."
+
+REG_MSG_SUCCESSFULLY = "Registraciqta uspeshna."
+REG_MSG_ERROR = "Greshka. Opitaite pak po kasno."
+REG_MSG_ERROR_OCCURED = "Greshka.."
+REG_MSG_LOADING = " Zarejdane .."
+REG_MSG_CONNECTION_BROKEN = "Vrazkata e povredena."
+
+REG_CMB_SECRET_QUESTION_0 = "Kakvo e imeto na domashniq vi lubimec?"
+REG_CMB_SECRET_QUESTION_1 = "Vashata lubima kniga?"
+REG_CMB_SECRET_QUESTION_2 = "Lubimiq vi film?"
+REG_CMB_SECRET_QUESTION_3 = "Lubimata vi igra?"
+REG_CMB_SECRET_QUESTION_4 = "Lubim pevec?"
+REG_CMB_SECRET_QUESTION_5 = "Mqstoto kadeto maika vi e rodena ?"
+
+REG_LABEL_GENDER = "Pol"
+
+REG_CMB_GENDER_MALE = "Majki"
+REG_CMB_GENDER_FEMALE = "Jenski"
+
+SET_LABEL_COLOR = "Tekusht cvqt"
+SET_LABEL_FONT = "Fon"
+
+SET_FRAME_STYLE = "Stil"
+SET_FRAME_OPTIONS = "Opcii"
+SET_FRAME_CONNECTION = "Nastroiki na vrazkata"
+
+SET_CHECK_SAVE_ACCOUNT = "Zapomni potrebitelskoto ime."
+SET_CHECK_SAVE_PASSWORD = "Zapomni parola."
+SET_CHECK_AUTO_LOGIN = "Vlizai avtomatichno."
+SET_CHECK_ASK_CLOSING = "Ask before closing"
+SET_CHECK_MINIMIZE = "Minimize Peach window to system tray"
+
+SET_COMMAND_LANGUAGE = "Ezik"
+SET_COMMAND_SAVE = "Zapazi"
+
+SF2_COMMAND_OPEN_FILE = "Otvori papka."
+
+FP_FRAME_FORGOT_PASSWORD = "Zabravena parola"
+FP_LABEL_EMAIL = "Vavedete e-mail adres."
+FP_LABEL_SECRET_QUESTION = "Taen vapros"
+FP_LABEL_SECRET_ANSWER = "Taen otgovor."
+FP_COMMAND_REQUEST = "Iskane za pozvolenie"
+FP_CAPTION = "Peach - zabravena parola"
+
+FP_MSG_SUCCESSFULL = "Vasheto potrebitelsko ime e '%u'." & vbCrLf & "Vashata parola e '%p'."
+FP_MSG_WRONG_ANSWER = "Otgovorat e greshen."
+FP_MSG_WRONG_EMAIL = "Vavedeniqt e-mail adres ne moje da bade nameren."
+
+CH_MSG_PASSWORD = "Vavedete parolata na kanala '%c'."
+
+MSG_USER_ONLINE = "%u doide na liniq."
+MSG_USER_OFFLINE = "%u izleze offline."
+MSG_ANNOUNCE = "%f[%u announces]: %m"
+MSG_TABLE_RELOAD = "%u zapochna prezarejdaneto na '%t' table. ( %ti ) "
+MSG_TABLE_CANT_RELOAD = "Tazi funkciq ne moje da bade prezaredena."
+MSG_CONFIG_RELOAD = "%u zapochna prezarejdaneto na tozi file. ( %t )"
+MSG_INCORRECT_SYNTAX = " Nepravilen sintaksis %s."
+MSG_TABLE_NOT_EXIST = "Tozi file ne sashtestvuva."
+MSG_USER_NOT_FOUND = "Potrebitelqt '%u' ne beshe nameren."
+MSG_DELETED_ACCOUNT = "Uspeshno iztrivane na account '%u' (%id)."
+MSG_GM_FLAG_ENABLE = "Vkluchi[GM] flag. Izpolzvai .gm off za da izkluchish."
+MSG_GM_FLAG_DISABLE = "Izkluchi [GM] flag. Izpolzvai .gm on za da vkluchish."
+MSG_UNKNOWN_COMMAND = "Izpolzvana e nepoznata komanda. Izpolzvai .help za poveche informaciq."
+MSG_MUTED = "You are muted."
+MSG_FLOOD_PROTECTION = "Vasheto saobshtenie beshe blokirano. Molq ne se povtarqite."
+MSG_ROLL = "%u rolls %r. (%minR - %maxR)"
+MSG_NOT_AFK = "Veche ne ste AFK."
+MSG_AFK = "Sega ste AFK."
+MSG_ONLINE_TIME = "Vie ste online za %t."
+MSG_VALID_CHANNEL = "Molq vavedete pravilno ime na kanal."
+MSG_ALREADY_IN_CHANNEL = "Vie veche ste v '%c'."
+MSG_NOT_IN_CHANNEL = "Vie ne ste v kanal '%c'."
+MSG_CHANNEL_ANNOUNCEMENTS = "[%c] saobshteniqta ot tozi kanal sa izklucheni. %u."
+MSG_CHANNEL_PASSWORD = "Uspeshno promenihte parolata ot '%c' na '%p'."
+MSG_CHANNEL_WRONG_PASSWORD = "Greshna parola za '%c'."
+MSG_NOT_CHANNEL_LEADER = "Vie ne ste liderat na tozi kanal."
+MSG_MESSAGE_BLOCKED = "Saobshtenieto blokirano. Povech ot 75% glavni bukvi."
+MSG_CANT_WHISPER_SELF = "Vie ne moje da izprashtate lichno saobshtenie do sebe si."
+MSG_IS_IGNORING_YOU = "%t vi ignorira."
+MSG_YOU_WHISPER_TO = "[vie kazahte na '%t']: %m"
+MSG_TARGET_IS_AFK = "%t e AFK."
+MSG_WHISPER = "%f[%u kaza ]: %m"
+MSG_USER_ALREADY_MUTED = "%u veche e zaglushen."
+MSG_IS_NOT_MUTED = "%u ne e zaglushen."
+MSG_MUTED_BY = "%t beshe zaglushen ot %u."
+MSG_UNMUTED_BY = "%t veche ne e zaglushen ot %u."
+MSG_MUTED_BY_REASON = "%t beshe zaglushen ot %u. (%r)"
+MSG_UNMUTED_BY_REASON = "%t veche ne e zaglushen ot %u. (%r)"
+MSG_ALREADY_BANNED = "Account '%u' veche e blokiran."
+MSG_ALREADY_UNBANNED = "Account '%u' ne e blokiran."
+MSG_BANNED_BY = "%t beshe blokiran ot %u."
+MSG_UNBANNED_BY = "%t beshe otbloiran ot %u."
+MSG_BANNED_BY_REASON = "%t beshe blokiran ot %u. (%r)"
+MSG_UNBANNED_BY_REASON = "%t beshe otblokiran ot %u. (%r)"
+MSG_SUCCESSFULL_RENAME = "Uspeshna smqna na ime ot '%u' na '%t'."
+MSG_RENAMED_YOU_TO = "%u vi preimenuva na'%t'."
+MSG_USER_ALREADY_USED = "Potrebitelskoto ime  '%u' e veche izpolzvano."
+MSG_LEVEL_INCORRECT_VALUE = "Nivoto e nepravilno. Trqbva da e ot 0-2."
+MSG_SUCCESSFULL_LEVEL = "Uspeshno promeneno nivoto na  '%u' do '%l'."
+MSG_CHANGED_YOUR_LEVEL = "%u promeni nivoto vi na '%l'."
+MSG_GENDER_INCORRECT_VALUE = "Nepravilen format za pol. Izpolzvaite 'Majki' ili 'Jenski'."
+MSG_SUCCESSFULL_GENDER = "Uspeshno promeni pola na  '%u' na '%g'."
+MSG_CHANGED_YOUR_GENDER = "%u Promeni pola vi na '%g'."
+MSG_SUCCESSFULL_PASSWORD = "Uspeshno promeni parolata na  '%u'  na '%p'."
+MSG_CHANGED_YOUR_PASSWORD = "%u promeni parolata vi na '%p'."
+MSG_SUCCESSFULL_EMAIL = "Uspeshno promeni e-maila na  '%u' sega toi e  '%e'."
+MSG_CHANGED_YOUR_EMAIL = "%u promeni e-maila vi. Sega toi e '%e'."
 End Sub
