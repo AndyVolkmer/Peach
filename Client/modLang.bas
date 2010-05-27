@@ -2181,7 +2181,7 @@ MDI_COMMAND_SOCIETY = "Grupa"
 'MDImsgbox_errorHandlerFormLoad
 MDI_MSG_NAME_TAKEN = "Tova potrebitelsko ime e veche zaeto."
 MDI_MSG_WRONG_ACCOUNT = "Tova potrebitelsko ime ne sashtestvuva."
-MDI_MSG_WRONG_PASSWORD = "The password is wrong."
+MDI_MSG_WRONG_PASSWORD = "Greshna parola."
 MDI_MSG_BANNED = "Tozi account e blokiran."
 MDI_MSG_UNLOAD = "Sigurni li ste che iskate da zatvorite Peach"
 
@@ -2258,7 +2258,7 @@ SOC_COMMAND_FRIEND = "Dobavi priqtel"
 SOC_COMMAND_IGNORE = "Ignorirai potrebitel"
 SOC_COMMAND_WHISPER = "Lichno saubshtenie"
 
-SOC_ASK_DEL = "Iskate li da iztriete '%u' ot lista ?"
+SOC_ASK_DEL = "Iskate li da iztriete '%u' ot lista?"
 
 SOC_ASK_FRIEND_TEXT = "Napishete imeto na vashiq priqtel v poleto."
 SOC_ASK_FRIEND_TITLE = "Dobavqne na priqtel"
@@ -2288,12 +2288,12 @@ REG_LABEL_SECRET_ANSWER = "Taen otgovor"
 REG_COMMAND_SUBMIT = "Predstavi"
 REG_COMMAND_CLOSE = "Zatvori"
 
-REG_CHECK_PASSWORD_SHOW = "Pokaji parola."
+REG_CHECK_PASSWORD_SHOW = "Pokaji parola"
 
 REG_MSG_ACCOUNT_EXIST = "Potrebitelskoto ime veche se izpolzva."
 REG_MSG_ACCOUNT_INVALID = "Nepravilno potrebitelsko ime."
 REG_MSG_ACCOUNT_NUMERIC = "Potrebitelskoto ime ne moje da bade sastaveno ot cifri."
-REG_MSG_ACCOUNT_EMPTY = "No username entered."
+REG_MSG_ACCOUNT_EMPTY = "Ne e vavedeno potrebitelsko ime."
 REG_MSG_ACCOUNT_SHORT = "Potrebitelskoto ime e tvarde kratko, trqbva da e pone 4 bukvi."
 
 REG_MSG_PASSWORD_MATCH = "Parolata ne savpada."
@@ -2381,7 +2381,7 @@ MSG_CHANNEL_ANNOUNCEMENTS = "[%c] saobshteniqta ot tozi kanal sa izklucheni. %u.
 MSG_CHANNEL_PASSWORD = "Uspeshno promenihte parolata ot '%c' na '%p'."
 MSG_CHANNEL_WRONG_PASSWORD = "Greshna parola za '%c'."
 MSG_NOT_CHANNEL_LEADER = "Vie ne ste liderat na tozi kanal."
-MSG_MESSAGE_BLOCKED = "Saobshtenieto blokirano. Povech ot 75% glavni bukvi."
+MSG_MESSAGE_BLOCKED = "Saobshtenieto blokirano. Poveche ot 75% glavni bukvi."
 MSG_CANT_WHISPER_SELF = "Vie ne moje da izprashtate lichno saobshtenie do sebe si."
 MSG_IS_IGNORING_YOU = "%t vi ignorira."
 MSG_YOU_WHISPER_TO = "[vie kazahte na '%t']: %m"
