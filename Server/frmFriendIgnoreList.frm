@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.Form frmFriendIgnoreList 
    BorderStyle     =   0  'None
    Caption         =   "Friend List Overview"
@@ -235,12 +235,12 @@ pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Name = '" &
 pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_FRIENDS & " WHERE Friend = '" & User & "'"
 End Sub
 
-Public Sub AddIgnore(pUser As String, pIgnore As String, pIndex As Integer)
+Public Sub AddIgnore(User As String, Ignore As String, Index As Integer)
 Dim i As Long
 Dim j As Long
 
 'Check if you are trying to add urself
-If LCase$(pUser) = LCase$(pIgnore) Then
+If LCase$(User) = LCase$(Ignore) Then
     SendSingle "!msgbox#MSG_CANT_ADD_YOU#", pIndex
     Exit Sub
 End If
@@ -248,13 +248,13 @@ End If
 'Check if friends account exist
 With frmAccountPanel.lvAccounts.ListItems
     For i = 1 To .Count
-        If LCase(.Item(i).SubItems(1)) = LCase(pIgnore) Then
-            pIgnore = .Item(i).SubItems(1)
+        If LCase(.Item(i).SubItems(1)) = LCase(Ignore) Then
+            Ignore = .Item(i).SubItems(1)
             Exit For
         Else
             If i = .Count Then
                 'Send message that the account doesn't exist
-                SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#" & pIgnore & "#", pIndex
+                SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#" & Ignore & "#", pIndex
                 Exit Sub
             End If
         End If
@@ -264,9 +264,9 @@ End With
 'Check if the account is already added
 With ListView2.ListItems
     For i = 1 To .Count
-        If .Item(i).SubItems(1) = pUser Then
-            If .Item(i).SubItems(2) = pIgnore Then
-                SendSingle "!msgbox#MSG_ALREADY_IN_IGNORE_LIST#" & pIgnore & "#", pIndex
+        If .Item(i).SubItems(1) = User Then
+            If .Item(i).SubItems(2) = Ignore Then
+                SendSingle "!msgbox#MSG_ALREADY_IN_IGNORE_LIST#" & Ignore & "#", Index
                 Exit Sub
             End If
         End If
@@ -279,12 +279,12 @@ j = pDB.GetMaxID("ID", DATABASE_TABLE_IGNORES)
 With ListView2.ListItems
     .Add , , j
     i = .Count
-    .Item(i).SubItems(1) = pUser
-    .Item(i).SubItems(2) = pIgnore
+    .Item(i).SubItems(1) = User
+    .Item(i).SubItems(2) = Ignore
 End With
 
-pDB.ExecuteCommand "INSERT INTO " & DATABASE_TABLE_IGNORES & " (ID, Name, IgnoredName) VALUES('" & j & "', '" & pUser & "', '" & pIgnore & "')"
-UPDATE_IGNORE pUser, pIndex
+pDB.ExecuteCommand "INSERT INTO " & DATABASE_TABLE_IGNORES & " (ID, Name, IgnoredName) VALUES('" & j & "', '" & User & "', '" & Ignore & "')"
+UPDATE_IGNORE User, Index
 End Sub
 
 Public Sub RemoveIgnore(User As String, Ignore As String, Index As Integer)

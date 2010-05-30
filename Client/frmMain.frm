@@ -599,6 +599,7 @@ Dim Buffer       As String
 
 'Get data from socket
 Winsock1.GetData Message
+DoEvents
 
 'Do first array to avoid incorrect package reading
 'Chr(24) and Chr(25) are the delimeters for each packet
@@ -783,7 +784,7 @@ Select Case Command
             Case "table_reload"
                 temp = Replace(MSG_TABLE_RELOAD, "%u", StrArr(2))
                 temp = Replace(temp, "%t", StrArr(3))
-                temp = Replace(temp, "%ti", StrArr(4))
+                temp = Replace(temp, "%i", StrArr(4))
 
                 frmChat.WriteText temp
 
@@ -1027,6 +1028,14 @@ Select Case Command
                 temp = Replace(temp, "%e", StrArr(3))
 
                 frmChat.WriteText temp
+
+            Case "channel_user_join"
+                temp = Replace(MSG_CHANNEL_USER_JOIN, "%c", StrArr(2))
+                temp = Replace(temp, "%u", StrArr(3))
+
+            Case "channel_user_leave"
+                temp = Replace(MSG_CHANNEL_USER_LEAVE, "%c", StrArr(2))
+                temp = Replace(temp, "%u", StrArr(3))
 
         End Select
 

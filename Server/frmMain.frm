@@ -348,6 +348,7 @@ Dim properAccount   As String   'Used to save account to avoid multiply loading 
 
 'Get data from socket
 Winsock1(Index).GetData p_Message
+DoEvents
 
 'Do first array to avoid incorrect package reading
 'Chr(24) and Chr(25) are the delimeters for each packet
@@ -542,9 +543,9 @@ Select Case p_Command
 
         'If a command is used check out which
         If IsCommand Then
-            Dim Reason As String
-            Dim m As Long
-            Dim n As Long
+            Dim m       As Long
+            Dim n       As Long
+            Dim Reason  As String
 
             'Save the reason
             For i = 2 To UBound(p_CHAT_ARRAY)
@@ -878,8 +879,7 @@ Select Case p_Command
 
                         Case Else
                             SendSingle _
-                                vbCrLf & Space(2) & _
-                            "Incorrect syntax, use the following format:" & _
+                            "!pmessage#incorrect_syntax#" & _
                                 vbCrLf & Space(2) & _
                             p_CHAT_ARRAY(0) & " name [Oldname] [Newname]" & _
                                 vbCrLf & Space(2) & _
@@ -889,7 +889,7 @@ Select Case p_Command
                                 vbCrLf & Space(2) & _
                             p_CHAT_ARRAY(0) & " password [Name] [Password]" & _
                                 vbCrLf & Space(2) & _
-                            p_CHAT_ARRAY(0) & " email [Name] [Email]", Index
+                            p_CHAT_ARRAY(0) & " email [Name] [Email]#", Index
 
                     End Select
 

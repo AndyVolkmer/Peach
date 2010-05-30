@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "tabctl32.ocx"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Begin VB.Form frmSociety 
    BorderStyle     =   0  'None
    Caption         =   "frmSociety"
@@ -65,12 +65,9 @@ Begin VB.Form frmSociety
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "cmdRemoveIgnore"
-      Tab(2).Control(0).Enabled=   0   'False
+      Tab(2).Control(0)=   "lvIgnoreList"
       Tab(2).Control(1)=   "cmdAddIgnore"
-      Tab(2).Control(1).Enabled=   0   'False
-      Tab(2).Control(2)=   "lvIgnoreList"
-      Tab(2).Control(2).Enabled=   0   'False
+      Tab(2).Control(2)=   "cmdRemoveIgnore"
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToIgnore 
          Caption         =   "&Add to Ignore"
@@ -371,6 +368,8 @@ SendMessage "!ignore#-add#" & uString & "#"
 End Sub
 
 Private Sub TriggerOnlineEvent()
+Dim i As Long
+
 If lvOnlineList.ListItems.Count = 0 Then Exit Sub
 
 If lvOnlineList.SelectedItem.Text = frmMain.txtAccount.Text Then
@@ -475,6 +474,16 @@ Private Sub lvOnlineList_KeyDown(KeyCode As Integer, Shift As Integer)
 If KeyCode <> 93 Then Exit Sub
 
 TriggerOnlineEvent
+End Sub
+
+Private Sub lvOnlineList_Click()
+If lvOnlineList.SelectedItem.Text = frmMain.txtAccount.Text Then
+    cmdAddToFriend.Enabled = False
+    cmdAddToIgnore.Enabled = False
+Else
+    cmdAddToFriend.Enabled = True
+    cmdAddToIgnore.Enabled = True
+End If
 End Sub
 
 '==== Ignore List ===='
