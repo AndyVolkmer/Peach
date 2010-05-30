@@ -241,7 +241,7 @@ Dim j As Long
 
 'Check if you are trying to add urself
 If LCase$(User) = LCase$(Ignore) Then
-    SendSingle "!msgbox#MSG_CANT_ADD_YOU#", pIndex
+    SendSingle "!msgbox#MSG_CANT_ADD_YOU#", Index
     Exit Sub
 End If
 
@@ -254,7 +254,7 @@ With frmAccountPanel.lvAccounts.ListItems
         Else
             If i = .Count Then
                 'Send message that the account doesn't exist
-                SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#" & Ignore & "#", pIndex
+                SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#" & Ignore & "#", Index
                 Exit Sub
             End If
         End If
