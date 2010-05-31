@@ -245,41 +245,7 @@ InsertIntoRegistry "Server\Configuration", "Left", Left
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
-Dim i    As Long
-Dim j    As Long
-Dim User As String
-
-User = GetAccountByIndex(Index)
-Unload Winsock1(Index)
-
-If LenB(User) <> 0 Then SendMessage "!pmessage#offline#" & User & "#"
-
-With frmPanel.lvUsers.ListItems
-    For i = 1 To .Count
-        If .Item(i) = User Then
-            If Len(User) <> 0 Then
-                Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'")
-
-                With frmAccountPanel.lvAccounts.ListItems
-                    For j = 1 To .Count
-                        If .Item(j).SubItems(INDEX_NAME) = User Then
-                            .Item(j).SubItems(INDEX_LAST_IP) = frmPanel.lvUsers.ListItems.Item(i).SubItems(INDEX_IP)
-                            Exit For
-                        End If
-                    Next j
-                End With
-            End If
-
-            .Remove i
-            Exit For
-        End If
-    Next i
-End With
-
-frmChannel.LeaveAllChannels User
-
-UPDATE_ONLINE
-UPDATE_STATUS_BAR
+KickUser GetAccountByIndex(Index)
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
@@ -1527,7 +1493,9 @@ With frmPanel.lvUsers.ListItems
                 SendSingle "!pmessage#is_ignoring_you#" & Target & "#", Index
             Else
                 SendSingle "!pmessage#you_whisper_to#" & Target & "#" & Message & "#", Index
-                If LenB(GetAFKFlag(Target)) <> 0 Then SendSingle "!pmessage#target_is_afk#" & Target & "#", Index
+                If LenB(GetAFKFlag(Target)) <> 0 Then
+                    SendSingle "!pmessage#target_is_afk#" & Target & "#", Index
+                End If
                 SendSingle "!pmessage#whisper#" & GetGMFlag(User) & GetAFKFlag(User) & "#" & User & "#" & Message & "#", .Item(i).SubItems(INDEX_WINSOCK_ID)
             End If
             Exit For
@@ -1666,11 +1634,23 @@ End Sub
 
 Private Sub KickUser(User As String)
 Dim i As Long
+Dim j As Long
 
 With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             Unload Winsock1(.Item(i).SubItems(INDEX_WINSOCK_ID))
+
+            Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'")
+
+            With frmAccountPanel.lvAccounts.ListItems
+                For j = 1 To .Count
+                    If .Item(j).SubItems(INDEX_NAME) = User Then
+                        .Item(j).SubItems(INDEX_LAST_IP) = frmPanel.lvUsers.ListItems.Item(i).SubItems(INDEX_IP)
+                        Exit For
+                    End If
+                Next j
+            End With
 
             .Remove (i)
 
@@ -1751,41 +1731,7 @@ End With
 End Function
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-Dim i    As Long
-Dim j    As Long
-Dim User As String
-
-User = GetAccountByIndex(Index)
-Unload Winsock1(Index)
-
-If LenB(User) <> 0 Then SendMessage "!pmessage#offline#" & User & "#"
-
-With frmPanel.lvUsers.ListItems
-    For i = 1 To .Count
-        If .Item(i) = User Then
-            If Len(User) <> 0 Then
-                pDB.ExecuteCommand "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'"
-
-                With frmAccountPanel.lvAccounts.ListItems
-                    For j = 1 To .Count
-                        If .Item(j).SubItems(INDEX_NAME) = User Then
-                            .Item(j).SubItems(INDEX_LAST_IP) = frmPanel.lvUsers.ListItems.Item(i).SubItems(INDEX_IP)
-                            Exit For
-                        End If
-                    Next j
-                End With
-            End If
-
-            .Remove i
-            Exit For
-        End If
-    Next i
-End With
-
-frmChannel.LeaveAllChannels User
-
-UPDATE_ONLINE
-UPDATE_STATUS_BAR
+KickUser GetAccountByIndex(Index)
 End Sub
 
 Public Sub SetupForms(NewForm As Form)
