@@ -5,15 +5,15 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `accounts`;
 CREATE TABLE `accounts` (
   `ID` int(11) NOT NULL DEFAULT '0',
-  `Name1` varchar(255) DEFAULT NULL,
-  `Password1` varchar(255) DEFAULT NULL,
+  `Name1` varchar(255) DEFAULT '',
+  `Password1` varchar(255) DEFAULT '',
   `Time1` time DEFAULT NULL,
   `Date1` date DEFAULT NULL,
-  `Banned1` varchar(255) DEFAULT NULL,
-  `Level1` int(11) DEFAULT NULL,
-  `SecretQuestion1` varchar(255) DEFAULT '',
+  `Banned1` int(1) DEFAULT NULL,
+  `Level1` int(1) DEFAULT NULL,
+  `SecretQuestion1` int(1) DEFAULT NULL,
   `SecretAnswer1` varchar(255) DEFAULT '',
-  `Gender1` varchar(10) DEFAULT '',
+  `Gender1` int(1) DEFAULT NULL,
   `Email1` varchar(255) DEFAULT '',
   `LastIP1` varchar(255) DEFAULT '',
   PRIMARY KEY (`ID`)

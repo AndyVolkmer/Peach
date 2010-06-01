@@ -946,9 +946,9 @@ Select Case p_Command
                                 End With
 
                                 'If account exist delete it
-                                pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE ID = " & .Item(i)
-                                frmFriendIgnoreList.RemoveAllFriendsFromUser .Item(i).SubItems(INDEX_NAME)
-                                frmFriendIgnoreList.RemoveAllIgnoresFromUser .Item(i).SubItems(INDEX_NAME)
+                                pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE Name1 = '" & properAccount & "'"
+                                frmFriendIgnoreList.RemoveAllFriendsFromUser properAccount
+                                frmFriendIgnoreList.RemoveAllIgnoresFromUser properAccount
 
                                 SendSingle "!pmessage#deleted_account#" & properAccount & "#" & .Item(i) & "#", Index
                                 .Remove i
@@ -1692,7 +1692,7 @@ Dim i As Long
 With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            SendSingle vbCrLf & "User information about '" & .Item(i) & "'" & vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & vbCrLf & " Muted: " & .Item(i).SubItems(INDEX_MUTED) & vbCrLf & " Login Time: " & .Item(i).SubItems(INDEX_LOGIN_TIME) & " GM Flag: " & .Item(i).SubItems(INDEX_GM_FLAG) & " AFK Flag: " & .Item(i).SubItems(INDEX_AFK_FLAG), Index
+            SendSingle vbCrLf & "User information about '" & .Item(i) & "'" & vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & vbCrLf & " Muted: " & .Item(i).SubItems(INDEX_MUTED) & vbCrLf & " Login Time: " & .Item(i).SubItems(INDEX_LOGIN_TIME) & vbCrLf & " GM Flag: " & .Item(i).SubItems(INDEX_GM_FLAG) & vbCrLf & " AFK Flag: " & .Item(i).SubItems(INDEX_AFK_FLAG), Index
             Exit For
         Else
             If i = .Count Then
