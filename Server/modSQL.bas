@@ -253,3 +253,41 @@ Exit Function
 HandleErrorTable:
     WriteLog Err.Description
 End Function
+
+Public Function LoadOfflineMessages() As Boolean
+Dim SQL     As String
+Dim LItem   As ListItem
+Dim Counter As Long
+
+With pDB
+
+SQL = "SELECT * FROM " & DATABASE_TABLE_OFFLINE_MESSAGES
+
+On Error GoTo HandleErrorTable
+
+.pCommand.CommandText = SQL
+Set .pRecordSet = .pCommand.Execute
+
+With .pRecordSet
+    Do Until .EOF
+        Set LItem = frmOfflineMessages.lvOfflineMessages.ListItems.Add(, , !From)
+        LItem.SubItems(INDEX_TO) = !to
+        LItem.SubItems(INDEX_MESSAGE) = !Message
+        .MoveNext
+        Counter = Counter + 1
+    Loop
+End With
+
+Set LItem = Nothing
+Set .pRecordSet = Nothing
+
+End With
+
+WriteLog "Loaded " & Counter & " offline message(s)."
+
+LoadOfflineMessages = True
+
+Exit Function
+HandleErrorTable:
+    WriteLog Err.Description
+End Function

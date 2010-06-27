@@ -2,7 +2,6 @@ VERSION 5.00
 Begin VB.Form frmChat 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
-   Caption         =   "frmChat"
    ClientHeight    =   5220
    ClientLeft      =   0
    ClientTop       =   0

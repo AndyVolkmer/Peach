@@ -2,7 +2,6 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.Form frmFriendIgnoreList 
    BorderStyle     =   0  'None
-   Caption         =   "Friend List Overview"
    ClientHeight    =   5220
    ClientLeft      =   0
    ClientTop       =   0

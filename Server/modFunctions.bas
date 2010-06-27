@@ -1,17 +1,18 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Global Const rPort                          As Long = 6222
-Global Const MAX_INT_VALUE                  As Long = 2147483647
-Global Const MIN_INT_VALUE                  As Long = -2147483647
+Global Const rPort                            As Long = 6222
+Global Const MAX_INT_VALUE                    As Long = 2147483647
+Global Const MIN_INT_VALUE                    As Long = -2147483647
 
 'Table names
-Global Const DATABASE_TABLE_ACCOUNTS        As String = "accounts"
-Global Const DATABASE_TABLE_EMOTES          As String = "emotes"
-Global Const DATABASE_TABLE_COMMANDS        As String = "commands"
-Global Const DATABASE_TABLE_DECLINED_NAMES  As String = "declinednames"
-Global Const DATABASE_TABLE_FRIENDS         As String = "friends"
-Global Const DATABASE_TABLE_IGNORES         As String = "ignores"
+Global Const DATABASE_TABLE_ACCOUNTS           As String = "accounts"
+Global Const DATABASE_TABLE_EMOTES             As String = "emotes"
+Global Const DATABASE_TABLE_COMMANDS           As String = "commands"
+Global Const DATABASE_TABLE_DECLINED_NAMES     As String = "declinednames"
+Global Const DATABASE_TABLE_FRIENDS            As String = "friends"
+Global Const DATABASE_TABLE_IGNORES            As String = "ignores"
+Global Const DATABASE_TABLE_OFFLINE_MESSAGES   As String = "offline_messages"
 
 Public Enum ACCOUNT_PANEL_INDEX
     INDEX_NAME = 1
@@ -35,6 +36,11 @@ Public Enum USER_PANEL_INDEX
     INDEX_LOGIN_TIME = 5
     INDEX_GM_FLAG = 6
     INDEX_AFK_FLAG = 7
+End Enum
+
+Public Enum OM_PANEL_INDEX
+    INDEX_TO = 1
+    INDEX_MESSAGE = 2
 End Enum
 
 Public Enum CHANNEL_INDEX
@@ -327,7 +333,7 @@ Public Function IsAlphaCharacter(Char As String) As Boolean
 IsAlphaCharacter = (Not (UCase(Char) = LCase(Char))) Or (Char = " ")
 End Function
 
-Public Function GetRandomNumber(Optional ByVal MIN As Long = 1, Optional ByVal MAX As Long = 100) As Long
+Public Function GetRandomNumber(MIN As Long, MAX As Long) As Long
 Randomize
 Do
     GetRandomNumber = Int(Rnd * MAX) + MIN

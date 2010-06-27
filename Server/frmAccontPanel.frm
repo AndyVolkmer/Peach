@@ -4,7 +4,6 @@ Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmAccountPanel 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
-   Caption         =   "frmSendFile"
    ClientHeight    =   5220
    ClientLeft      =   0
    ClientTop       =   0

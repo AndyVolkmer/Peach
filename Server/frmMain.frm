@@ -68,10 +68,10 @@ Begin VB.MDIForm frmMain
       TabIndex        =   0
       Top             =   0
       Width           =   7395
-      Begin VB.CommandButton Command6 
-         Caption         =   "C&HANNELS"
+      Begin VB.CommandButton Command7 
+         Caption         =   "OFF-M"
          BeginProperty Font 
-            Name            =   "Tahoma"
+            Name            =   "Segoe UI"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -80,15 +80,32 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   5850
+         Left            =   6090
+         TabIndex        =   8
+         Top             =   120
+         Width           =   975
+      End
+      Begin VB.CommandButton Command6 
+         Caption         =   "CHAN"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   5130
          TabIndex        =   7
          Top             =   120
-         Width           =   1095
+         Width           =   975
       End
       Begin VB.CommandButton Command5 
-         Caption         =   "&FL / IL"
+         Caption         =   "FL / IL"
          BeginProperty Font 
-            Name            =   "Tahoma"
+            Name            =   "Segoe UI"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -97,15 +114,15 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   4770
+         Left            =   4170
          TabIndex        =   6
          Top             =   120
-         Width           =   1095
+         Width           =   975
       End
       Begin VB.CommandButton Command4 
-         Caption         =   "&USERS"
+         Caption         =   "USER"
          BeginProperty Font 
-            Name            =   "Tahoma"
+            Name            =   "Segoe UI"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -114,15 +131,15 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   3690
+         Left            =   3210
          TabIndex        =   4
          Top             =   120
-         Width           =   1095
+         Width           =   975
       End
       Begin VB.CommandButton Command3 
-         Caption         =   "A&CCOUNTS"
+         Caption         =   "ACC"
          BeginProperty Font 
-            Name            =   "Tahoma"
+            Name            =   "Segoe UI"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -131,15 +148,15 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   2610
+         Left            =   2250
          TabIndex        =   3
          Top             =   120
-         Width           =   1095
+         Width           =   975
       End
       Begin VB.CommandButton Command2 
-         Caption         =   "CH&AT"
+         Caption         =   "CHAT"
          BeginProperty Font 
-            Name            =   "Tahoma"
+            Name            =   "Segoe UI"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -148,15 +165,15 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   1530
+         Left            =   1290
          TabIndex        =   2
          Top             =   120
-         Width           =   1095
+         Width           =   975
       End
       Begin VB.CommandButton Command1 
-         Caption         =   "&CONF"
+         Caption         =   "CONF"
          BeginProperty Font 
-            Name            =   "Tahoma"
+            Name            =   "Segoe UI"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -165,10 +182,10 @@ Begin VB.MDIForm frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   450
+         Left            =   330
          TabIndex        =   1
          Top             =   120
-         Width           =   1095
+         Width           =   975
       End
    End
 End
@@ -203,6 +220,10 @@ End Sub
 
 Private Sub Command6_Click()
 SetupForms frmChannel
+End Sub
+
+Private Sub Command7_Click()
+SetupForms frmOfflineMessages
 End Sub
 
 Private Sub MDIForm_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -1641,7 +1662,7 @@ With frmPanel.lvUsers.ListItems
         If .Item(i) = User Then
             Unload Winsock1(.Item(i).SubItems(INDEX_WINSOCK_ID))
 
-            Call pDB.ExecuteCommand("UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'")
+            pDB.ExecuteCommand "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'"
 
             With frmAccountPanel.lvAccounts.ListItems
                 For j = 1 To .Count

@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
-Begin VB.Form frmPanel 
+Begin VB.Form frmOfflineMessages 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
    ClientHeight    =   5220
@@ -17,14 +17,12 @@ Begin VB.Form frmPanel
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
-   MinButton       =   0   'False
    ScaleHeight     =   5220
    ScaleWidth      =   7635
    ShowInTaskbar   =   0   'False
-   Begin MSComctlLib.ListView lvUsers 
+   Begin MSComctlLib.ListView lvOfflineMessages 
       Height          =   3975
       Left            =   120
       TabIndex        =   0
@@ -51,49 +49,24 @@ Begin VB.Form frmPanel
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      NumItems        =   8
+      NumItems        =   3
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Text            =   "Name"
+         Text            =   "from"
          Object.Width           =   2540
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
-         Text            =   "IP"
+         Text            =   "to"
          Object.Width           =   2540
       EndProperty
       BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   2
-         Text            =   "Winsock ID"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   3
-         Text            =   "Last Message"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   4
-         Text            =   "Muted"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   5
-         Text            =   "Login Time"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   6
-         Text            =   "GM Flag"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   7
-         Text            =   "AFK Flag"
+         Text            =   "message"
          Object.Width           =   2540
       EndProperty
    End
 End
-Attribute VB_Name = "frmPanel"
+Attribute VB_Name = "frmOfflineMessages"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True

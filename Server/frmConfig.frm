@@ -3,7 +3,6 @@ Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmConfig 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
-   Caption         =   "frmConfig"
    ClientHeight    =   5220
    ClientLeft      =   0
    ClientTop       =   0
@@ -34,6 +33,7 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000

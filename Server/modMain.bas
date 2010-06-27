@@ -55,6 +55,11 @@ If LenB(pConnectResult) = 0 Then
         MsgBox frmConfig.txt_log.Text, vbInformation
         End
     End If
+
+    If Not LoadOfflineMessages Then
+        MsgBox frmConfig.txt_log.Text, vbInformation
+        End
+    End If
 Else
     MsgBox pConnectResult, vbInformation
     End

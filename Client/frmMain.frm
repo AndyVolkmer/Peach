@@ -588,14 +588,14 @@ SendMessage "!login#" & txtAccount.Text & "#" & GetMD5(txtPassword.Text) & "#"
 End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
-Dim k            As Long
-Dim i            As Long
-Dim Message      As String
-Dim PreArray()   As String
-Dim Command      As String
-Dim StrArr()     As String
-Dim StrArr2()    As String
-Dim Buffer       As String
+Dim k          As Long
+Dim i          As Long
+Dim Message    As String
+Dim PreArray() As String
+Dim Command    As String
+Dim StrArr()   As String
+Dim StrArr2()  As String
+Dim Buffer     As String
 
 'Get data from socket
 Winsock1.GetData Message
@@ -664,8 +664,8 @@ Select Case Command
 
     'Wipe out current friend list and insert new values
     Case "!update_friends"
-        Dim f_array() As String
-        Dim j As Long
+        Dim f_array()   As String
+        Dim j           As Long
 
         With frmSociety.lvFriendList.ListItems
             .Clear
