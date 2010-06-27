@@ -273,6 +273,7 @@ With .pRecordSet
         Set LItem = frmOfflineMessages.lvOfflineMessages.ListItems.Add(, , !From)
         LItem.SubItems(INDEX_TO) = !to
         LItem.SubItems(INDEX_MESSAGE) = !Message
+        LItem.SubItems(INDEX_TIME_SENT) = !time_sent
         .MoveNext
         Counter = Counter + 1
     Loop

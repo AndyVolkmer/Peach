@@ -49,7 +49,7 @@ Begin VB.Form frmOfflineMessages
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      NumItems        =   3
+      NumItems        =   4
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "from"
          Object.Width           =   2540
@@ -64,6 +64,11 @@ Begin VB.Form frmOfflineMessages
          Text            =   "message"
          Object.Width           =   2540
       EndProperty
+      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   3
+         Text            =   "time"
+         Object.Width           =   2540
+      EndProperty
    End
 End
 Attribute VB_Name = "frmOfflineMessages"
@@ -76,3 +81,4 @@ Option Explicit
 Private Sub Form_Load()
 Top = 0: Left = 0
 End Sub
+

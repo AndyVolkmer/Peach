@@ -96,3 +96,14 @@ CREATE TABLE `ignores` (
   `IgnoredName` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `offline_messages`
+-- ----------------------------
+DROP TABLE IF EXISTS `offline_messages`;
+CREATE TABLE `offline_messages` (
+  `from` varchar(255) DEFAULT '',
+  `to` varchar(255) DEFAULT '',
+  `message` varchar(255) DEFAULT '',
+  `time_sent` varchar(255) DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

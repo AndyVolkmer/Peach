@@ -41,6 +41,7 @@ End Enum
 Public Enum OM_PANEL_INDEX
     INDEX_TO = 1
     INDEX_MESSAGE = 2
+    INDEX_TIME_SENT = 3
 End Enum
 
 Public Enum CHANNEL_INDEX
