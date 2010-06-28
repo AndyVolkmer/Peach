@@ -1,5 +1,5 @@
 Attribute VB_Name = "modShared"
 Option Explicit
 
-Global Const pRev       As String = "392"
+Global Const pRev       As String = "393"
 Global Const pAuthor    As String = "Andy V."

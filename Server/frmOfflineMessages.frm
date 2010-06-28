@@ -107,6 +107,8 @@ With lvOfflineMessages.ListItems
         End If
     Next i
 End With
+
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_OFFLINE_MESSAGES & " WHERE to1 = '" & User & "'"
 End Sub
 
 Public Sub RemoveAllOfflineMessagesFromAndToUser(User As String)
