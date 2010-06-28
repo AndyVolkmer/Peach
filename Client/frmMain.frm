@@ -1033,9 +1033,25 @@ Select Case Command
                 temp = Replace(MSG_CHANNEL_USER_JOIN, "%c", StrArr(2))
                 temp = Replace(temp, "%u", StrArr(3))
 
+                frmChat.WriteText temp
+
             Case "channel_user_leave"
                 temp = Replace(MSG_CHANNEL_USER_LEAVE, "%c", StrArr(2))
                 temp = Replace(temp, "%u", StrArr(3))
+
+                frmChat.WriteText temp
+
+            Case "message_sent_offline"
+                temp = Replace(MSG_MESSAGE_SENT_OFFLINE, "%t", StrArr(2))
+
+                frmChat.WriteText temp
+
+            Case "offline_message"
+                temp = Replace(MSG_OFFLINE_MESSAGE, "%from", StrArr(2))
+                temp = Replace(temp, "%message", StrArr(3))
+                temp = Replace(temp, "%time", StrArr(4))
+
+                frmChat.WriteText temp
 
         End Select
 

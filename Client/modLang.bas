@@ -246,6 +246,8 @@ Public MSG_SUCCESSFULL_EMAIL            As String
 Public MSG_CHANGED_YOUR_EMAIL           As String
 Public MSG_CHANNEL_USER_JOIN            As String
 Public MSG_CHANNEL_USER_LEAVE           As String
+Public MSG_MESSAGE_SENT_OFFLINE         As String
+Public MSG_OFFLINE_MESSAGE              As String
 
 Public Sub SET_LANG_GERMAN()
 CURRENT_LANG = 0
@@ -487,6 +489,8 @@ MSG_SUCCESSFULL_EMAIL = "Sie haben die Email-Adresse von '%u' erfolgreich zu '%e
 MSG_CHANGED_YOUR_EMAIL = "%u hat Ihre Emil-Adresse zu '%e' geändert."
 MSG_CHANNEL_USER_JOIN = "[%c] %u ist dem Channel beigetreten."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u hat den Channel verlassen."
+MSG_MESSAGE_SENT_OFFLINE = "Nachricht gesendet. %t ist offline, die Nachricht wird ausgerichtet sobald %t sich einloggt hat."
+MSG_OFFLINE_MESSAGE = "(%time)[%from flüstert]: %message"
 End Sub
 
 Public Sub SET_LANG_ENGLISH()
@@ -733,6 +737,8 @@ MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
+MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
+MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
 End Sub
 
 Public Sub SET_LANG_SPANISH()
@@ -974,6 +980,8 @@ MSG_SUCCESSFULL_EMAIL = "Has cambiado el correo electronico de '%u' a '%e' con é
 MSG_CHANGED_YOUR_EMAIL = "%u ha cambiado tu correo electronico a '%e'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u ha entrado en el canal."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u ha salido del canal."
+MSG_MESSAGE_SENT_OFFLINE = "Mensaje enviado. %t esta desconectado, su mensaje sera enviado encuanto se conecte."
+MSG_OFFLINE_MESSAGE = "(%time)[%from sussura]: %message"
 End Sub
 
 Public Sub SET_LANG_SWEDISH()
@@ -1215,6 +1223,8 @@ MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
+MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
+MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
 End Sub
 
 Public Sub SET_LANG_ITALIAN()
@@ -1459,6 +1469,8 @@ MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
+MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
+MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
 End Sub
 
 Public Sub SET_LANG_DUTCH()
@@ -1706,6 +1718,8 @@ MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
+MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
+MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
 End Sub
 
 Public Sub SET_LANG_SERBIAN()
@@ -1949,6 +1963,8 @@ MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
+MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
+MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
 End Sub
 
 Public Sub SET_LANG_FRENCH()
@@ -2186,6 +2202,8 @@ MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
+MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
+MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
 End Sub
 
 Public Sub SET_LANG_BULGARIAN_LATIN()
@@ -2432,4 +2450,6 @@ MSG_SUCCESSFULL_EMAIL = "Uspeshno promeni e-maila na  '%u' sega toi e  '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u promeni e-maila vi. Sega toi e '%e'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u se prisaedini kam tozi kanal."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u napusna tozi kanal."
+MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
+MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
 End Sub

@@ -17,6 +17,7 @@ Begin VB.Form frmOfflineMessages
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    ScaleHeight     =   5220
@@ -82,3 +83,55 @@ Private Sub Form_Load()
 Top = 0: Left = 0
 End Sub
 
+Public Sub AddOfflineMessage(fromUser As String, toUser As String, Message As String, Time As String)
+With lvOfflineMessages.ListItems
+    .Add , , fromUser
+    .Item(.Count).SubItems(INDEX_TO) = toUser
+    .Item(.Count).SubItems(INDEX_MESSAGE) = Message
+    .Item(.Count).SubItems(INDEX_TIME_SENT) = Time
+End With
+
+pDB.ExecuteCommand "INSERT INTO " & DATABASE_TABLE_OFFLINE_MESSAGES & " (from1, to1, message1, time_sent1) VALUES ('" & fromUser & "', '" & toUser & "', '" & Replace(Message, "'", "\'") & "', '" & Time & "') "
+End Sub
+
+Public Sub SendAllOfflineMessages(User As String, Index As Integer)
+Dim i As Long
+
+With lvOfflineMessages.ListItems
+    For i = 1 To .Count
+        If i > .Count Then Exit For
+        If .Item(i).SubItems(INDEX_TO) = User Then
+            SendSingle "!pmessage#offline_message#" & .Item(i) & "#" & .Item(i).SubItems(INDEX_MESSAGE) & "#" & .Item(i).SubItems(INDEX_TIME_SENT) & "#", Index
+            .Remove i
+            i = i - 1
+        End If
+    Next i
+End With
+End Sub
+
+Public Sub RemoveAllOfflineMessagesFromAndToUser(User As String)
+Dim i As Long
+
+With lvOfflineMessages.ListItems
+    'Search for the user in from row
+    For i = 1 To .Count
+        If i > .Count Then Exit For
+        If .Item(i) = User Then
+            .Remove (i)
+            i = i - 1
+        End If
+    Next i
+
+    'Search for the user in to row
+    For i = 1 To .Count
+        If i > .Count Then Exit For
+        If .Item(i).SubItems(INDEX_TO) = User Then
+            .Remove (i)
+            i = i - 1
+        End If
+    Next i
+End With
+
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_OFFLINE_MESSAGES & " WHERE from1 = '" & User & "'"
+pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_OFFLINE_MESSAGES & " WHERE to1 = '" & User & "'"
+End Sub

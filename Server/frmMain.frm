@@ -405,14 +405,16 @@ Select Case p_Command
             Next i
         End With
 
-        properAccount = vbNullString
-
         'Send Server information
         SendSingle vbCrLf & _
                    " Welcome to Peach Servers." & vbCrLf & _
                    " Server: Peach r" & pRev & "/" & GetOS & vbCrLf & _
                    " Online User: " & Winsock1.Count - 1 & vbCrLf & _
                    " Server Uptime: " & TimeSerial(0, 0, DateDiff("s", frmConfig.START_TIME, Time)), Index
+
+        frmOfflineMessages.SendAllOfflineMessages properAccount, Index
+
+        properAccount = vbNullString
 
     Case "!login"
         With frmAccountPanel.lvAccounts.ListItems
@@ -970,6 +972,7 @@ Select Case p_Command
                                 pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE Name1 = '" & properAccount & "'"
                                 frmFriendIgnoreList.RemoveAllFriendsFromUser properAccount
                                 frmFriendIgnoreList.RemoveAllIgnoresFromUser properAccount
+                                frmOfflineMessages.RemoveAllOfflineMessagesFromAndToUser properAccount
 
                                 SendSingle "!pmessage#deleted_account#" & properAccount & "#" & .Item(i) & "#", Index
                                 .Remove i
@@ -1114,23 +1117,16 @@ Select Case p_Command
 
                 'Whisper X to Z from Y
                 Case "/w", "/whisper"
-                    If IsUser Then
-                        Dim Message As String
+                    Dim Message As String
 
-                        If UBound(p_CHAT_ARRAY) > 1 Then
-                            For i = 2 To UBound(p_CHAT_ARRAY)
-                                Message = Message & p_CHAT_ARRAY(i) & " "
-                            Next i
+                    If UBound(p_CHAT_ARRAY) > 1 Then
+                        For i = 2 To UBound(p_CHAT_ARRAY)
+                            Message = Message & p_CHAT_ARRAY(i) & " "
+                        Next i
 
-                            Whisper GetAccountByIndex(Index), GetProperAccountName(p_TEXT_FIRST), Trim$(Message), Index
-                        End If
+                        Whisper GetAccountByIndex(Index), GetProperAccountName(p_TEXT_FIRST), Trim$(Message), Index
                     Else
-                        If LenB(p_TEXT_FIRST) = 0 Then
-                            SendSingle "!pmessage#incorrect_syntax#/whisper [Name] [Text]#", Index
-                            Exit Sub
-                        Else
-                            SendSingle "!pmessage#user_not_found#" & p_TEXT_FIRST & "#", Index
-                        End If
+                        SendSingle "!pmessage#incorrect_syntax#/whisper [Name] [Text]#", Index
                     End If
 
                 Case "/afk"
@@ -1499,6 +1495,7 @@ End Function
 
 Private Sub Whisper(User As String, Target As String, Message As String, Index As Integer)
 Dim i As Long
+Dim j As Long
 
 'Check if user is whispering itself
 If User = Target Then
@@ -1506,20 +1503,36 @@ If User = Target Then
     Exit Sub
 End If
 
-With frmPanel.lvUsers.ListItems
-    'Search target in list and send message
+With frmAccountPanel.lvAccounts.ListItems
     For i = 1 To .Count
-        If .Item(i) = Target Then
-            If IsIgnoring(.Item(i), User) Then
+        'Check if user exist
+        If .Item(i).SubItems(INDEX_NAME) = Target Then
+            'Check if target is ignoring user
+            If IsIgnoring(Target, User) Then
                 SendSingle "!pmessage#is_ignoring_you#" & Target & "#", Index
             Else
-                SendSingle "!pmessage#you_whisper_to#" & Target & "#" & Message & "#", Index
-                If LenB(GetAFKFlag(Target)) <> 0 Then
-                    SendSingle "!pmessage#target_is_afk#" & Target & "#", Index
-                End If
-                SendSingle "!pmessage#whisper#" & GetGMFlag(User) & GetAFKFlag(User) & "#" & User & "#" & Message & "#", .Item(i).SubItems(INDEX_WINSOCK_ID)
+                With frmPanel.lvUsers.ListItems
+                    For j = 1 To .Count
+                        'Check if target is online
+                        If .Item(j) = Target Then
+                            SendSingle "!pmessage#you_whisper_to#" & Target & "#" & Message & "#", Index
+                            If LenB(GetAFKFlag(Target)) <> 0 Then
+                                SendSingle "!pmessage#target_is_afk#" & Target & "#", Index
+                            End If
+                            SendSingle "!pmessage#whisper#" & GetGMFlag(User) & GetAFKFlag(User) & "#" & User & "#" & Message & "#", .Item(i).SubItems(INDEX_WINSOCK_ID)
+                            Exit For
+                        Else
+                            If j = .Count Then
+                                SendSingle "!pmessage#message_sent_offline#" & Target & "#", Index
+                                frmOfflineMessages.AddOfflineMessage User, Target, Message, Time
+                            End If
+                        End If
+                    Next j
+                End With
             End If
             Exit For
+        Else
+            If i = .Count Then SendSingle "!pmessage#user_not_found#" & Target & "#", Index
         End If
     Next i
 End With

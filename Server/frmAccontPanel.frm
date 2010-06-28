@@ -293,6 +293,8 @@ With frmFriendIgnoreList
     .RemoveAllIgnoresFromUser Account
 End With
 
+frmOfflineMessages.RemoveAllOfflineMessagesFromAndToUser Account
+
 With lvAccounts
     .ListItems.Remove .SelectedItem.Index
 End With
@@ -366,7 +368,7 @@ If Switch Then
         Next i
     End With
 
-    RegisterAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, vbNullString, vbNullString, cmbGender.Text, vbNullString
+    RegisterAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, "0", "0", cmbGender.Text, vbNullString
 Else
     'Name can't be modified to nothing
     If LenB(Trim$(txtName.Text)) = 0 Then

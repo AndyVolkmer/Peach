@@ -102,8 +102,8 @@ CREATE TABLE `ignores` (
 -- ----------------------------
 DROP TABLE IF EXISTS `offline_messages`;
 CREATE TABLE `offline_messages` (
-  `from` varchar(255) DEFAULT '',
-  `to` varchar(255) DEFAULT '',
-  `message` varchar(255) DEFAULT '',
-  `time_sent` varchar(255) DEFAULT ''
+  `from1` varchar(255) DEFAULT '',
+  `to1` varchar(255) DEFAULT '',
+  `message1` varchar(255) DEFAULT '',
+  `time_sent1` varchar(255) DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

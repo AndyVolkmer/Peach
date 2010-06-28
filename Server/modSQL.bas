@@ -270,10 +270,10 @@ Set .pRecordSet = .pCommand.Execute
 
 With .pRecordSet
     Do Until .EOF
-        Set LItem = frmOfflineMessages.lvOfflineMessages.ListItems.Add(, , !From)
-        LItem.SubItems(INDEX_TO) = !to
-        LItem.SubItems(INDEX_MESSAGE) = !Message
-        LItem.SubItems(INDEX_TIME_SENT) = !time_sent
+        Set LItem = frmOfflineMessages.lvOfflineMessages.ListItems.Add(, , !from1)
+        LItem.SubItems(INDEX_TO) = !to1
+        LItem.SubItems(INDEX_MESSAGE) = !message1
+        LItem.SubItems(INDEX_TIME_SENT) = !time_sent1
         .MoveNext
         Counter = Counter + 1
     Loop
