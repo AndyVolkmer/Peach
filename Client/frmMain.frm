@@ -968,7 +968,7 @@ Select Case Command
 
             Case "renamed_you_to"
                 temp = Replace(MSG_RENAMED_YOU_TO, "%u", StrArr(2))
-                temp = Replace(temp, "%t", StrArr(2))
+                temp = Replace(temp, "%t", StrArr(3))
 
                 frmChat.WriteText temp
 
@@ -986,7 +986,7 @@ Select Case Command
 
             Case "changed_your_level"
                 temp = Replace(MSG_CHANGED_YOUR_LEVEL, "%u", StrArr(2))
-                temp = Replace(temp, "%l", StrArr(2))
+                temp = Replace(temp, "%l", StrArr(3))
 
                 frmChat.WriteText temp
 
