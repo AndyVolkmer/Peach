@@ -1535,7 +1535,7 @@ With frmAccountPanel.lvAccounts.ListItems
                             If LenB(GetAFKFlag(Target)) <> 0 Then
                                 SendSingle "!pmessage#target_is_afk#" & Target & "#", Index
                             End If
-                            SendSingle "!pmessage#whisper#" & GetGMFlag(User) & GetAFKFlag(User) & "#" & User & "#" & Message & "#", .Item(i).SubItems(INDEX_WINSOCK_ID)
+                            SendSingle "!pmessage#whisper#" & GetGMFlag(User) & GetAFKFlag(User) & "#" & User & "#" & Message & "#", .Item(j).SubItems(INDEX_WINSOCK_ID)
                             Exit For
                         Else
                             If j = .Count Then
