@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmAccountPanel 
    BackColor       =   &H00F4F4F4&
@@ -23,69 +23,6 @@ Begin VB.Form frmAccountPanel
    ScaleHeight     =   5220
    ScaleWidth      =   7635
    ShowInTaskbar   =   0   'False
-   Begin VB.ComboBox cmbGender 
-      Enabled         =   0   'False
-      Height          =   315
-      Left            =   5520
-      Style           =   2  'Dropdown List
-      TabIndex        =   9
-      Top             =   2880
-      Width           =   975
-   End
-   Begin VB.CommandButton cmdCancel 
-      Caption         =   "&Cancel"
-      Enabled         =   0   'False
-      Height          =   350
-      Left            =   5160
-      TabIndex        =   4
-      Top             =   3600
-      Width           =   1215
-   End
-   Begin VB.CommandButton cmdSave 
-      Caption         =   "&Save"
-      Enabled         =   0   'False
-      Height          =   350
-      Left            =   3960
-      TabIndex        =   3
-      Top             =   3600
-      Width           =   1215
-   End
-   Begin VB.TextBox txtName 
-      Alignment       =   2  'Center
-      Enabled         =   0   'False
-      Height          =   315
-      Left            =   240
-      TabIndex        =   5
-      Top             =   2880
-      Width           =   1215
-   End
-   Begin VB.TextBox txtPassword 
-      Alignment       =   2  'Center
-      Enabled         =   0   'False
-      Height          =   315
-      Left            =   1680
-      TabIndex        =   6
-      Top             =   2880
-      Width           =   1215
-   End
-   Begin VB.ComboBox cmbBanned 
-      Enabled         =   0   'False
-      Height          =   315
-      Left            =   3120
-      Style           =   2  'Dropdown List
-      TabIndex        =   7
-      Top             =   2880
-      Width           =   975
-   End
-   Begin VB.ComboBox cmbLevel 
-      Enabled         =   0   'False
-      Height          =   315
-      Left            =   4320
-      Style           =   2  'Dropdown List
-      TabIndex        =   8
-      Top             =   2880
-      Width           =   975
-   End
    Begin MSWinsockLib.Winsock RegSock 
       Index           =   0
       Left            =   6480
@@ -94,98 +31,14 @@ Begin VB.Form frmAccountPanel
       _ExtentY        =   741
       _Version        =   393216
    End
-   Begin VB.Frame Frame1 
-      BackColor       =   &H00F4F4F4&
-      Caption         =   "Configuration :"
-      Enabled         =   0   'False
-      Height          =   1095
-      Left            =   120
-      TabIndex        =   10
-      Top             =   2400
-      Width           =   7215
-      Begin VB.Label lblGender 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   " Gender:"
-         Enabled         =   0   'False
-         Height          =   255
-         Left            =   5400
-         TabIndex        =   16
-         Top             =   240
-         Width           =   975
-      End
-      Begin VB.Label lblLevel 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   " Level:"
-         Enabled         =   0   'False
-         Height          =   255
-         Left            =   4200
-         TabIndex        =   15
-         Top             =   240
-         Width           =   975
-      End
-      Begin VB.Label lblBanned 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   " Banned:"
-         Enabled         =   0   'False
-         Height          =   255
-         Left            =   3000
-         TabIndex        =   14
-         Top             =   240
-         Width           =   1215
-      End
-      Begin VB.Label lblPassword 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   " Password:"
-         Enabled         =   0   'False
-         Height          =   255
-         Left            =   1560
-         TabIndex        =   13
-         Top             =   240
-         Width           =   1215
-      End
-      Begin VB.Label lblName 
-         BackColor       =   &H00F4F4F4&
-         Caption         =   " Name:"
-         Enabled         =   0   'False
-         Height          =   255
-         Left            =   120
-         TabIndex        =   12
-         Top             =   240
-         Width           =   1215
-      End
-   End
-   Begin VB.CommandButton cmdMod 
-      Caption         =   "&Modify"
-      Height          =   350
-      Left            =   2520
-      TabIndex        =   2
-      Top             =   3600
-      Width           =   1215
-   End
-   Begin VB.CommandButton cmdDel 
-      Caption         =   "&Delete"
-      Height          =   350
-      Left            =   1320
-      TabIndex        =   1
-      Top             =   3600
-      Width           =   1215
-   End
-   Begin VB.CommandButton cmdAdd 
-      Caption         =   "&Add"
-      Height          =   350
+   Begin MSComctlLib.ListView lvAccounts 
+      Height          =   3975
       Left            =   120
       TabIndex        =   0
-      Top             =   3600
-      Width           =   1215
-   End
-   Begin MSComctlLib.ListView lvAccounts 
-      Height          =   2220
-      Left            =   120
-      TabIndex        =   11
       Top             =   120
       Width           =   7215
       _ExtentX        =   12726
-      _ExtentY        =   3916
+      _ExtentY        =   7011
       View            =   3
       LabelEdit       =   1
       LabelWrap       =   -1  'True
@@ -265,133 +118,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim Switch As Boolean
-
-Private Sub cmdAdd_Click()
-Switch = True
-DoButtons True
-ClearTxBoxes
-End Sub
-
-Private Sub cmdCancel_Click()
-DoButtons False
-SetData lvAccounts.SelectedItem
-End Sub
-
-Private Sub cmdDel_Click()
-Dim Account  As String
-Dim ID       As Long
-
-If lvAccounts.ListItems.Count = 0 Then Exit Sub
-
-Account = lvAccounts.SelectedItem.SubItems(INDEX_NAME)
-
-If MsgBox("Are you sure that you want to delete account '" & Account & "' ?", vbYesNo + vbQuestion, "Confirm Delete") = vbNo Then Exit Sub
-
-With frmFriendIgnoreList
-    .RemoveAllFriendsFromUser Account
-    .RemoveAllIgnoresFromUser Account
-End With
-
-frmOfflineMessages.RemoveAllOfflineMessagesFromAndToUser Account
-
-With lvAccounts
-    .ListItems.Remove .SelectedItem.Index
-End With
-
-pDB.ExecuteCommand "DELETE FROM " & DATABASE_TABLE_ACCOUNTS & " WHERE Name1 = '" & Account & "'"
-End Sub
-
-Private Sub DoButtons(args As Boolean)
-lvAccounts.Enabled = Not args
-cmdAdd.Enabled = Not args
-cmdDel.Enabled = Not args
-cmdMod.Enabled = Not args
-cmdSave.Enabled = args
-cmdCancel.Enabled = args
-txtName.Enabled = args
-txtPassword.Enabled = args
-cmbBanned.Enabled = args
-cmbLevel.Enabled = args
-cmbGender.Enabled = args
-lblName.Enabled = args
-lblPassword.Enabled = args
-lblBanned.Enabled = args
-lblLevel.Enabled = args
-lblGender.Enabled = args
-Frame1.Enabled = args
-End Sub
-
-Private Sub ClearTxBoxes()
-txtName.Text = vbNullString
-txtPassword.Text = vbNullString
-cmbBanned.ListIndex = 0
-cmbLevel.ListIndex = 0
-cmbGender.ListIndex = 0
-End Sub
-
-Private Sub cmdMod_Click()
-'If there is no account selected give the message
-If lvAccounts.ListItems.Count = 0 Then Exit Sub
-
-'Set switch to modify
-Switch = False
-DoButtons True
-End Sub
-
-Private Sub cmdSave_Click()
-Dim i As Long
-
-If Switch Then
-    'Name can't be added if there is none
-    If LenB(Trim$(txtName.Text)) = 0 Then
-        MsgBox "No name entered.", vbInformation
-        txtName.SetFocus
-        Exit Sub
-    End If
-
-    'Password can't be added if there is none
-    If LenB(Trim$(txtPassword.Text)) = 0 Then
-        MsgBox "No password entered.", vbInformation
-        txtPassword.SetFocus
-        Exit Sub
-    End If
-
-    With lvAccounts.ListItems
-        For i = 1 To .Count
-            If LCase$(txtName) = LCase$(.Item(i).SubItems(INDEX_NAME)) Then
-                MsgBox "Name is already beeing used.", vbInformation
-                ClearTxBoxes
-                txtName.SetFocus
-                Exit Sub
-            End If
-        Next i
-    End With
-
-    RegisterAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, "0", "0", cmbGender.Text, vbNullString
-Else
-    'Name can't be modified to nothing
-    If LenB(Trim$(txtName.Text)) = 0 Then
-        MsgBox "No name entered.", vbInformation
-        txtName.SetFocus
-        Exit Sub
-    End If
-
-    'Password can't be modified to nothing
-    If LenB(Trim$(txtPassword.Text)) = 0 Then
-        MsgBox "No password entered.", vbInformation
-        txtPassword.SetFocus
-        Exit Sub
-    End If
-
-    ModifyAccount txtName.Text, txtPassword.Text, cmbBanned.Text, cmbLevel.Text, lvAccounts.SelectedItem.Text, lvAccounts.SelectedItem.Index, cmbGender.Text, vbNullString
-
-End If
-
-SetData lvAccounts.SelectedItem
-DoButtons False
-End Sub
-
 Public Sub ModifyAccount(Name As String, Password As String, Banned As Long, Level As String, MOD_ID As Long, LST_ID As Long, Gender As String, Email As String)
 'Modify listview values
 With lvAccounts.ListItems.Item(LST_ID)
@@ -436,16 +162,8 @@ End With
 pDB.ExecuteCommand "INSERT INTO " & DATABASE_TABLE_ACCOUNTS & " (ID, Name1, Password1, Time1, Date1, Banned1, Level1, SecretQuestion1, SecretAnswer1, Gender1, Email1) VALUES(" & j & ", '" & Name & "', '" & Password & "', '" & Format(Time, "hh:nn:ss") & "', '" & Format(Date, "yyyy-mm-dd") & "', '" & Banned & "', '" & Level & "', '" & SecretQuestion & "', '" & SecretAnswer & "', '" & Gender & "', '" & Email & "')"
 End Sub
 
-Private Sub Form_Activate()
-SetData lvAccounts.SelectedItem
-End Sub
-
 Private Sub Form_Load()
 Top = 0: Left = 0
-End Sub
-
-Private Sub ListView1_ItemClick(ByVal Item As MSComctlLib.ListItem)
-SetData Item
 End Sub
 
 Private Sub RegSock_Close(Index As Integer)
@@ -459,18 +177,6 @@ Dim i As Long
 
 RegSock(i).LocalPort = rPort
 RegSock(i).Accept requestID
-End Sub
-
-Private Sub SetData(Item As ListItem)
-If lvAccounts.ListItems.Count <> 0 Then
-    With Item
-        txtName.Text = .SubItems(INDEX_NAME)
-        txtPassword.Text = .SubItems(INDEX_PASSWORD)
-        cmbBanned.Text = .SubItems(INDEX_BANNED)
-        cmbLevel.ListIndex = .SubItems(INDEX_LEVEL)
-        cmbGender.Text = .SubItems(INDEX_GENDER)
-    End With
-End If
 End Sub
 
 Private Function GetFreeSocket() As Long

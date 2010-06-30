@@ -490,7 +490,7 @@ If args Then
 Else
     With frmConfig
         .START_TIME = vbNullString
-        .txtPort.Enabled = False
+        .txtPort.Enabled = True
         .Command1.Enabled = True
         .Command2.Enabled = False
     End With

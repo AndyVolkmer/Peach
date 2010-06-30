@@ -33,7 +33,6 @@ Begin VB.Form frmConfig
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -85,7 +84,7 @@ Begin VB.Form frmConfig
       End
       Begin VB.Label Label5 
          BackColor       =   &H00F4F4F4&
-         Caption         =   "IP : "
+         Caption         =   "IP:"
          ForeColor       =   &H00000040&
          Height          =   255
          Left            =   1320

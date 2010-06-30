@@ -205,22 +205,6 @@ On Error GoTo HandleErrorTable
 .pCommand.CommandText = SQL
 Set .pRecordSet = .pCommand.Execute
 
-With frmAccountPanel
-    With .cmbBanned
-        .AddItem "0"
-        .AddItem "1"
-    End With
-    With .cmbLevel
-        .AddItem "0"
-        .AddItem "1"
-        .AddItem "2"
-    End With
-    With .cmbGender
-        .AddItem "0"
-        .AddItem "1"
-    End With
-End With
-
 With .pRecordSet
     Do Until .EOF
         Set LItem = frmAccountPanel.lvAccounts.ListItems.Add(, , !ID)

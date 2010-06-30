@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.MDIForm frmMain 
    Appearance      =   0  'Flat
@@ -686,6 +686,22 @@ Select Case p_Command
                                                             For m = 1 To .Count
                                                                 If .Item(m).SubItems(2) = properAccount Then
                                                                     .Item(m).SubItems(2) = p_CHAT_ARRAY(3)
+                                                                End If
+                                                            Next m
+                                                        End With
+
+                                                        'Rename it in offline message list
+                                                        With frmOfflineMessages.lvOfflineMessages.ListItems
+                                                            'First column
+                                                            For m = 1 To .Count
+                                                                If .Item(m) = properAccount Then
+                                                                    .Item(m) = p_CHAT_ARRAY(3)
+                                                                End If
+                                                            Next m
+
+                                                            For m = 1 To .Count
+                                                                If .Item(m).SubItems(INDEX_TO) = properAccount Then
+                                                                    .Item(m).SubItems(INDEX_TO) = p_CHAT_ARRAY(3)
                                                                 End If
                                                             Next m
                                                         End With
