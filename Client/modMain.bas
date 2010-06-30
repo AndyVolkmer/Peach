@@ -4,8 +4,18 @@ Option Explicit
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Sub Main()
+Dim regResult As String
+
 'If the application is already open then close it
 If App.PrevInstance And Not Right$(App.EXEName, 5) = "DEBUG" Then End
+
+''Register dependencies
+'regResult = RegisterDependency
+'
+'If Len(regResult) <> 0 Then
+'    MsgBox regResult, vbInformation
+'    End
+'End If
 
 'Set the caption for proper identifying on frmMain
 If Right$(App.EXEName, 5) = "DEBUG" Then

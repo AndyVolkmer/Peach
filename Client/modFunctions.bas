@@ -67,10 +67,13 @@ Public Const WM_RBUTTONDBLCLK   As Long = &H206 'Double-click
 Public Const WM_RBUTTONDOWN     As Long = &H204 'Button down
 Public Const WM_RBUTTONUP       As Long = &H205 'Button up
 
+Private Const MAX_PATH          As Long = 255
+
 Public Declare Function SendMessage2 Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Public Declare Function Shell_NotifyIcon Lib "shell32" Alias "Shell_NotifyIconA" (ByVal dwMessage As Long, pnid As NOTIFYICONDATA) As Boolean
 Public Declare Function GetActiveWindow Lib "user32" () As Long
 
+Private Declare Function GetWindowsDirectory Lib "kernel32" Alias "GetWindowsDirectoryA" (ByVal lpBuffer As String, ByVal nSize As Long) As Long
 Private Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal binvert As Long) As Long
 
 Public Sub SendMessage(pMessage As String)
@@ -290,3 +293,12 @@ Next
 
 pForm.Show
 End Sub
+
+Public Function GetWindowsDir() As String
+Dim lngRet  As Long
+Dim sRet    As String
+    sRet = String$(MAX_PATH, 0)
+
+lngRet = GetWindowsDirectory(sRet, MAX_PATH)
+GetWindowsDir = Left(sRet, lngRet)
+End Function
