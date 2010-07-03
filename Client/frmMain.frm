@@ -1029,6 +1029,11 @@ Select Case Command
 
                 frmChat.WriteText temp
 
+            Case "joined_channel"
+                temp = Replace("MSG_JOINED_CHANNEL", "%c", StrArr(2))
+
+                frmChat.WriteText temp
+
             Case "channel_user_join"
                 temp = Replace(MSG_CHANNEL_USER_JOIN, "%c", StrArr(2))
                 temp = Replace(temp, "%u", StrArr(3))

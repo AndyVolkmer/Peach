@@ -13,6 +13,15 @@ pStartTime = timeGetTime
 'Load windows own style
 InitCommonControls
 
+'TRYING SOMETHING OUT
+Load frmAccountPanel
+Load frmChannel
+Load frmChat
+Load frmConfig
+Load frmFriendIgnoreList
+Load frmOfflineMessages
+Load frmPanel
+
 'Load registry values
 LoadRegistry
 

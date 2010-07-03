@@ -244,6 +244,7 @@ Public MSG_SUCCESSFULL_PASSWORD         As String
 Public MSG_CHANGED_YOUR_PASSWORD        As String
 Public MSG_SUCCESSFULL_EMAIL            As String
 Public MSG_CHANGED_YOUR_EMAIL           As String
+Public MSG_JOINED_CHANNEL               As String
 Public MSG_CHANNEL_USER_JOIN            As String
 Public MSG_CHANNEL_USER_LEAVE           As String
 Public MSG_MESSAGE_SENT_OFFLINE         As String
@@ -487,6 +488,7 @@ MSG_SUCCESSFULL_PASSWORD = "Sie haben das Passwort von '%u' erfolgreich zu '%p' 
 MSG_CHANGED_YOUR_PASSWORD = "%u hat Ihr Passwort zu '%p' geändert."
 MSG_SUCCESSFULL_EMAIL = "Sie haben die Email-Adresse von '%u' erfolgreich zu '%e' geändert."
 MSG_CHANGED_YOUR_EMAIL = "%u hat Ihre Emil-Adresse zu '%e' geändert."
+MSG_JOINED_CHANNEL = "Sie sind dem Channel '%c' beigetreten."
 MSG_CHANNEL_USER_JOIN = "[%c] %u ist dem Channel beigetreten."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u hat den Channel verlassen."
 MSG_MESSAGE_SENT_OFFLINE = "Nachricht gesendet. %t ist offline, die Nachricht wird ausgerichtet sobald %t sich einloggt hat."
@@ -735,9 +737,10 @@ MSG_SUCCESSFULL_PASSWORD = "Sucessfully changed password of '%u' to '%p'."
 MSG_CHANGED_YOUR_PASSWORD = "%u changed your password to '%p'."
 MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
+MSG_JOINED_CHANNEL = "You joined channel '%c'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
-MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
+MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t will recieve the message upon login."
 MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
 End Sub
 
@@ -978,6 +981,7 @@ MSG_SUCCESSFULL_PASSWORD = "Has cambiado la contraseña de '%u' a '%p' con éxito.
 MSG_CHANGED_YOUR_PASSWORD = "%u ha cambiado tu contraseña a '%p'."
 MSG_SUCCESSFULL_EMAIL = "Has cambiado el correo electronico de '%u' a '%e' con éxito."
 MSG_CHANGED_YOUR_EMAIL = "%u ha cambiado tu correo electronico a '%e'."
+MSG_JOINED_CHANNEL = "Has entrado en el canal '%c'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u ha entrado en el canal."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u ha salido del canal."
 MSG_MESSAGE_SENT_OFFLINE = "Mensaje enviado. %t esta desconectado, su mensaje sera enviado encuanto se conecte."
@@ -1221,9 +1225,10 @@ MSG_SUCCESSFULL_PASSWORD = "Sucessfully changed password of '%u' to '%p'."
 MSG_CHANGED_YOUR_PASSWORD = "%u changed your password to '%p'."
 MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
+MSG_JOINED_CHANNEL = "You joined channel '%c'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
-MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
+MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t will recieve the message upon login."
 MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
 End Sub
 
@@ -1466,10 +1471,12 @@ MSG_CHANGED_YOUR_GENDER = "%u changed your gender to '%g'."
 MSG_SUCCESSFULL_PASSWORD = "Sucessfully changed password of '%u' to '%p'."
 MSG_CHANGED_YOUR_PASSWORD = "%u changed your password to '%p'."
 MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
+MSG_JOINED_CHANNEL = "You joined channel '%c'."
 MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
+MSG_JOINED_CHANNEL = "You joined channel '%c'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
-MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
+MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t will recieve the message upon login."
 MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
 End Sub
 
@@ -1716,9 +1723,10 @@ MSG_SUCCESSFULL_PASSWORD = "Sucessfully changed password of '%u' to '%p'."
 MSG_CHANGED_YOUR_PASSWORD = "%u changed your password to '%p'."
 MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
+MSG_JOINED_CHANNEL = "You joined channel '%c'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
-MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
+MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t will recieve the message upon login."
 MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
 End Sub
 
@@ -1961,9 +1969,10 @@ MSG_SUCCESSFULL_PASSWORD = "Sucessfully changed password of '%u' to '%p'."
 MSG_CHANGED_YOUR_PASSWORD = "%u changed your password to '%p'."
 MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
+MSG_JOINED_CHANNEL = "You joined channel '%c'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
-MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
+MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t will recieve the message upon login."
 MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
 End Sub
 
@@ -2200,9 +2209,10 @@ MSG_SUCCESSFULL_PASSWORD = "Sucessfully changed password of '%u' to '%p'."
 MSG_CHANGED_YOUR_PASSWORD = "%u changed your password to '%p'."
 MSG_SUCCESSFULL_EMAIL = "Successfully changed email of '%u' to '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u changed your email to '%e'."
+MSG_JOINED_CHANNEL = "You joined channel '%c'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
-MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
+MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t will recieve the message upon login."
 MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
 End Sub
 
@@ -2448,8 +2458,9 @@ MSG_SUCCESSFULL_PASSWORD = "Uspeshno promeni parolata na  '%u'  na '%p'."
 MSG_CHANGED_YOUR_PASSWORD = "%u promeni parolata vi na '%p'."
 MSG_SUCCESSFULL_EMAIL = "Uspeshno promeni e-maila na  '%u' sega toi e  '%e'."
 MSG_CHANGED_YOUR_EMAIL = "%u promeni e-maila vi. Sega toi e '%e'."
+MSG_JOINED_CHANNEL = "Ti se prisaedini kam kanal '%c'."
 MSG_CHANNEL_USER_JOIN = "[%c] %u se prisaedini kam tozi kanal."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u napusna tozi kanal."
-MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t is offline, he'll receive the message when he logs in."
-MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
+MSG_MESSAGE_SENT_OFFLINE = "Saobshtenieto izprateno. %t e offline, toi shte go poluchi kogato doide na liniya."
+MSG_OFFLINE_MESSAGE = "(%time)[%from kaza]: %message"
 End Sub
