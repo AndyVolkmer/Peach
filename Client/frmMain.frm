@@ -1030,7 +1030,7 @@ Select Case Command
                 frmChat.WriteText temp
 
             Case "joined_channel"
-                temp = Replace("MSG_JOINED_CHANNEL", "%c", StrArr(2))
+                temp = Replace(MSG_JOINED_CHANNEL, "%c", StrArr(2))
 
                 frmChat.WriteText temp
 
