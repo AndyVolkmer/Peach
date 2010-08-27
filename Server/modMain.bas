@@ -106,7 +106,7 @@ End With
 End Sub
 
 Private Sub LoadIniValue()
-Dim eFlag  As Boolean
+Dim eCheck As String
 Dim p_Path As String
     p_Path = App.Path & "\peachConfig.conf"
 
@@ -114,32 +114,43 @@ With Database
     If LenB(ReadIniValue(p_Path, "Database", "Type")) = 0 Then
         WriteIniValue p_Path, "Database", "Type", vbNullString
         If MsgBox("Database type not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
-            .Type = InputBox("Enter a database type." & vbCrLf & "1 - Access Database" & vbCrLf & "2 - MySQL Database", "Database type ..")
-            WriteIniValue p_Path, "Database", "Type", .Type
+            eCheck = InputBox("Enter a database type." & vbCrLf & "0 - Access Database" & vbCrLf & "1 - MySQL Database", "Database type ..")
+            If IsNumeric(eCheck) And eCheck < 2 Then
+                .Type = eCheck
+                WriteIniValue p_Path, "Database", "Type", eCheck
+            Else
+                MsgBox "Database type is incorrect.", vbError
+                End
+            End If
+        Else
+            End
         End If
-        eFlag = True
     Else
         .Type = ReadIniValue(p_Path, "Database", "Type")
     End If
 
-    If .Type = "1" Then
+    If .Type = "0" Then
         If LenB(ReadIniValue(p_Path, "Database", "File")) = 0 Then
             WriteIniValue p_Path, "Database", "File", vbNullString
             If MsgBox("Database file name not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
                 WriteIniValue p_Path, "Database", "File", InputBox("Enter a database file name.", "Database file name ..")
+            Else
+                End
             End If
-            eFlag = True
         Else
             .File = ReadIniValue(p_Path, "Database", "File")
         End If
 
-    ElseIf .Type = "2" Then
+    ElseIf .Type = "1" Then
         If LenB(ReadIniValue(p_Path, "Database", "Name")) = 0 Then
             WriteIniValue p_Path, "Database", "Name", vbNullString
             If MsgBox("Database name not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
-                WriteIniValue p_Path, "Database", "Name", InputBox("Enter a database name.", "Database name ..")
+                eCheck = InputBox("Enter a database name.", "Database name ..")
+                .Database = eCheck
+                WriteIniValue p_Path, "Database", "Name", eCheck
+            Else
+                End
             End If
-            eFlag = True
         Else
             .Database = ReadIniValue(p_Path, "Database", "Name")
         End If
@@ -147,9 +158,12 @@ With Database
         If LenB(ReadIniValue(p_Path, "Database", "User")) = 0 Then
             WriteIniValue p_Path, "Database", "User", vbNullString
             If MsgBox("Database user not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
-                WriteIniValue p_Path, "Database", "User", InputBox("Enter a database user.", "Database user ..")
+                eCheck = InputBox("Enter a database user.", "Database user ..")
+                .User = eCheck
+                WriteIniValue p_Path, "Database", "User", eCheck
+            Else
+                End
             End If
-            eFlag = True
         Else
             .User = ReadIniValue(p_Path, "Database", "User")
         End If
@@ -157,9 +171,12 @@ With Database
         If LenB(ReadIniValue(p_Path, "Database", "Password")) = 0 Then
             WriteIniValue p_Path, "Database", "Password", vbNullString
             If MsgBox("Database password not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
-                WriteIniValue p_Path, "Database", "Password", InputBox("Enter a database password.", "Database password ..")
+                eCheck = InputBox("Enter a database password.", "Database password ..")
+                .Password = eCheck
+                WriteIniValue p_Path, "Database", "Password", eCheck
+            Else
+                End
             End If
-            eFlag = True
         Else
             .Password = Decode(ReadIniValue(p_Path, "Database", "Password"))
         End If
@@ -167,21 +184,16 @@ With Database
         If LenB(ReadIniValue(p_Path, "Database", "Host")) = 0 Then
             WriteIniValue p_Path, "Database", "Host", vbNullString
             If MsgBox("Database host not found, please check configuration file. Do you want to enter a value?", vbQuestion + vbYesNo) = vbYes Then
-                WriteIniValue p_Path, "Database", "Host", InputBox("Enter a database host.", "Database host ..")
+                eCheck = InputBox("Enter a database host.", "Database host ..")
+                .Host = eCheck
+                WriteIniValue p_Path, "Database", "Host", eCheck
+            Else
+                End
             End If
-            eFlag = True
         Else
             .Host = ReadIniValue(p_Path, "Database", "Host")
         End If
-
-    Else
-        If MsgBox("Invalid database type, please check configuration file. Do you want to enter a value now?", vbQuestion + vbYesNo) = vbYes Then
-            WriteIniValue p_Path, "Database", "Type", InputBox("Enter a valid database type." & vbCrLf & "1 - Access Database" & vbCrLf & "2 - MySQL Database", "Invalid database type ..")
-        End If
-        eFlag = True
     End If
-
-    If eFlag Then End
 End With
 End Sub
 
@@ -192,7 +204,7 @@ Dim p_Path As String
 If LenB(ReadIniValue(p_Path, "Options", "CapsCheck")) = 0 Then
     WriteIniValue p_Path, "Options", "CapsCheck", "1"
     MsgBox "Option caps check value not found, default set.", vbInformation
-    End
+    Options.CAPS_CHECK = 1
 Else
     Options.CAPS_CHECK = ReadIniValue(p_Path, "Options", "CapsCheck")
 End If
@@ -200,8 +212,16 @@ End If
 If LenB(ReadIniValue(p_Path, "Options", "RepeatCheck")) = 0 Then
     WriteIniValue p_Path, "Options", "RepeatCheck", "1"
     MsgBox "Option repeat check vlaue not found, default set.", vbInformation
-    End
+    Options.CAPS_CHECK = 1
 Else
     Options.REPEAT_CHECK = ReadIniValue(p_Path, "Options", "RepeatCheck")
+End If
+
+If LenB(ReadIniValue(p_Path, "Options", "RootPass")) = 0 Then
+    WriteIniValue p_Path, "Options", "RootPass", "alpine"
+    MsgBox "Root password value not found, default set.", vbInformation
+    Options.ROOT_PASSWORD = "alpine"
+Else
+    Options.ROOT_PASSWORD = ReadIniValue(p_Path, "Options", "RootPass")
 End If
 End Sub

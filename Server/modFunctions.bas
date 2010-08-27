@@ -111,6 +111,7 @@ End Type
 Type OPT
     CAPS_CHECK                              As Long
     REPEAT_CHECK                            As Long
+    ROOT_PASSWORD                           As String
 End Type
 
 Public Database                             As DB

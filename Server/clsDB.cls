@@ -36,7 +36,7 @@ Public pRecordSet     As New ADODB.Recordset
 Public Function ConnectDatabase(pType As String, pHost As String, pDatabase As String, pUser As String, pPassword As String, pDatabaseFile As String) As String
 On Error GoTo hCD
 Select Case pType
-    Case "1" 'Access Database
+    Case "0" 'Access Database
         If InStr(1, pDatabaseFile, ".") = 0 Then
             pDatabaseFile = pDatabaseFile & ".mdb"
         End If
@@ -46,7 +46,7 @@ Select Case pType
             & App.Path & "\" _
             & pDatabaseFile
 
-    Case "2" 'MySQL Database 3.51
+    Case "1" 'MySQL Database 3.51
         pConnection.ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver};" _
             & "SERVER=" & pHost & ";" _
             & "DATABASE=" & pDatabase & ";" _
