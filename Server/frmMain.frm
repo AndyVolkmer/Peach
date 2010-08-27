@@ -293,6 +293,7 @@ With frmPanel.lvUsers.ListItems
     .Item(i).SubItems(INDEX_LOGIN_TIME) = Format$(Time, "hh:mm:ss")
     .Item(i).SubItems(INDEX_GM_FLAG) = "0"
     .Item(i).SubItems(INDEX_AFK_FLAG) = "0"
+    .Item(i).SubItems(INDEX_IS_ROOT) = "0"
 End With
 
 UPDATE_STATUS_BAR
@@ -1167,6 +1168,25 @@ Select Case p_Command
                 Case "/logout"
                     KickUser GetAccountByIndex(Index)
 
+                Case "/sudo"
+                    If LenB(p_TEXT_FIRST) = 0 Then
+                        SendSingle "!pmessage#incorrect_syntax#/sudo [Password]#", Index
+                    Else
+                        If p_TEXT_FIRST = Options.ROOT_PASSWORD Then
+                            With frmPanel.lvUsers.ListItems
+                                For i = 1 To .Count
+                                    If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
+                                        .Item(i).SubItems(INDEX_IS_ROOT) = 1
+                                        SendSingle "!pmessage#successfull_sudo#", Index
+                                        Exit For
+                                    End If
+                                Next i
+                            End With
+                        Else
+                            SendSingle "!pmessage#incorrect_password#", Index
+                        End If
+                    End If
+
                 Case "/join"
                     If LenB(p_TEXT_FIRST) = 0 Then
                         SendSingle "!pmessage#valid_channel#", Index
@@ -1769,11 +1789,25 @@ End Function
 
 Private Function GetLevel(User As String) As Long
 Dim i As Long
+Dim j As Long
 
 With frmAccountPanel.lvAccounts.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(INDEX_NAME) = User Then
-            GetLevel = .Item(i).SubItems(INDEX_LEVEL)
+            If .Item(i).SubItems(INDEX_LEVEL) = "0" Then
+                With frmPanel.lvUsers.ListItems
+                    For j = 1 To .Count
+                        If .Item(j) = User Then
+                            If .Item(j).SubItems(INDEX_IS_ROOT) = "1" Then
+                                GetLevel = 1
+                            End If
+                            Exit For
+                        End If
+                    Next j
+                End With
+            Else
+                GetLevel = .Item(i).SubItems(INDEX_LEVEL)
+            End If
             Exit For
         End If
     Next i
@@ -1788,9 +1822,7 @@ Public Sub SetupForms(NewForm As Form)
 Dim pForm As Form
 
 For Each pForm In Forms
-    If Not pForm.Name = Name Then
-        pForm.Hide
-    End If
+    If Not pForm.Name = Name Then pForm.Hide
 Next
 NewForm.Show
 End Sub

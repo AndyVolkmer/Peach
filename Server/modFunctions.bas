@@ -36,6 +36,7 @@ Public Enum USER_PANEL_INDEX
     INDEX_LOGIN_TIME = 5
     INDEX_GM_FLAG = 6
     INDEX_AFK_FLAG = 7
+    INDEX_IS_ROOT = 8
 End Enum
 
 Public Enum OM_PANEL_INDEX

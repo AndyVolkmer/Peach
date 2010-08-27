@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmPanel 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
@@ -51,7 +51,7 @@ Begin VB.Form frmPanel
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      NumItems        =   8
+      NumItems        =   9
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "Name"
          Object.Width           =   2540
@@ -89,6 +89,11 @@ Begin VB.Form frmPanel
       BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   7
          Text            =   "AFK Flag"
+         Object.Width           =   2540
+      EndProperty
+      BeginProperty ColumnHeader(9) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   8
+         Text            =   "IsRoot"
          Object.Width           =   2540
       EndProperty
    End

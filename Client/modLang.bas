@@ -249,6 +249,7 @@ Public MSG_CHANNEL_USER_JOIN            As String
 Public MSG_CHANNEL_USER_LEAVE           As String
 Public MSG_MESSAGE_SENT_OFFLINE         As String
 Public MSG_OFFLINE_MESSAGE              As String
+Public MSG_SUCCESSFULL_SUDO_LOGIN       As String
 
 Public Sub SET_LANG_GERMAN()
 CURRENT_LANG = 0
@@ -493,6 +494,7 @@ MSG_CHANNEL_USER_JOIN = "[%c] %u ist dem Channel beigetreten."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u hat den Channel verlassen."
 MSG_MESSAGE_SENT_OFFLINE = "Nachricht gesendet. %t ist offline, die Nachricht wird ausgerichtet sobald %t sich einloggt hat."
 MSG_OFFLINE_MESSAGE = "(%time)[%from flüstert]: %message"
+MSG_SUCCESSFULL_SUDO_LOGIN = "Sie haben sich erfolgreich als Administrator eingeloggt."
 End Sub
 
 Public Sub SET_LANG_ENGLISH()
@@ -742,6 +744,7 @@ MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
 MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t will recieve the message upon login."
 MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
+MSG_SUCCESSFULL_SUDO_LOGIN = "You have successfully logged in as administrator."
 End Sub
 
 Public Sub SET_LANG_SPANISH()
@@ -986,6 +989,7 @@ MSG_CHANNEL_USER_JOIN = "[%c] %u ha entrado en el canal."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u ha salido del canal."
 MSG_MESSAGE_SENT_OFFLINE = "Mensaje enviado. %t esta desconectado, su mensaje sera enviado encuanto se conecte."
 MSG_OFFLINE_MESSAGE = "(%time)[%from sussura]: %message"
+MSG_SUCCESSFULL_SUDO_LOGIN = "Te has conectaco con exito como administrador."
 End Sub
 
 Public Sub SET_LANG_SWEDISH()
@@ -1230,6 +1234,7 @@ MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
 MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t will recieve the message upon login."
 MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
+MSG_SUCCESSFULL_SUDO_LOGIN = "You have successfully logged in as administrator."
 End Sub
 
 Public Sub SET_LANG_ITALIAN()
@@ -1478,6 +1483,7 @@ MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
 MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t will recieve the message upon login."
 MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
+MSG_SUCCESSFULL_SUDO_LOGIN = "You have successfully logged in as administrator."
 End Sub
 
 Public Sub SET_LANG_DUTCH()
@@ -1728,6 +1734,7 @@ MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
 MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t will recieve the message upon login."
 MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
+MSG_SUCCESSFULL_SUDO_LOGIN = "You have successfully logged in as administrator."
 End Sub
 
 Public Sub SET_LANG_SERBIAN()
@@ -1974,6 +1981,7 @@ MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
 MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t will recieve the message upon login."
 MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
+MSG_SUCCESSFULL_SUDO_LOGIN = "You have successfully logged in as administrator."
 End Sub
 
 Public Sub SET_LANG_FRENCH()
@@ -2214,6 +2222,7 @@ MSG_CHANNEL_USER_JOIN = "[%c] %u joined channel."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u left channel."
 MSG_MESSAGE_SENT_OFFLINE = "Message sent. %t will recieve the message upon login."
 MSG_OFFLINE_MESSAGE = "(%time)[%from whispers]: %message"
+MSG_SUCCESSFULL_SUDO_LOGIN = "You have successfully logged in as administrator."
 End Sub
 
 Public Sub SET_LANG_BULGARIAN_LATIN()
@@ -2463,4 +2472,5 @@ MSG_CHANNEL_USER_JOIN = "[%c] %u se prisaedini kam tozi kanal."
 MSG_CHANNEL_USER_LEAVE = "[%c] %u napusna tozi kanal."
 MSG_MESSAGE_SENT_OFFLINE = "Saobshtenieto izprateno. %t e offline, toi shte go poluchi kogato doide na liniya."
 MSG_OFFLINE_MESSAGE = "(%time)[%from kaza]: %message"
+MSG_SUCCESSFULL_SUDO_LOGIN = "You have successfully logged in as administrator."
 End Sub

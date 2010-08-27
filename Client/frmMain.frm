@@ -1058,6 +1058,12 @@ Select Case Command
 
                 frmChat.WriteText temp
 
+            Case "incorrect_password"
+                frmChat.WriteText MDI_MSG_WRONG_PASSWORD
+
+            Case "successfull_sudo"
+                frmChat.WriteText MSG_SUCCESSFULL_SUDO_LOGIN
+
         End Select
 
     Case Else
