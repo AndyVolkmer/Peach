@@ -1771,7 +1771,7 @@ With frmPanel.lvUsers.ListItems
                 If LenB(User) = 0 Then
                     SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & UsedSyntax & " [User]" & pSplit, Index
                 Else
-                    SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & Account & pSplit, Index
+                    SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & User & pSplit, Index
                 End If
             End If
         End If
