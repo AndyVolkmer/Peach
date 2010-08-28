@@ -269,8 +269,8 @@ Dim GetList As String
 
 With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
-        GetList = GetList & .Item(i) & "#"
-        If i = .Count Then GetList = "!update_online#" & GetList
+        GetList = GetList & .Item(i) & pSplit
+        If i = .Count Then GetList = "!update_online" & pSplit & GetList
     Next i
 End With
 
@@ -281,14 +281,14 @@ Public Sub UPDATE_FRIEND(Name As String, Index As Integer)
 Dim Buffer      As String
 Dim i           As Long
 
-Buffer = "!update_friends#"
+Buffer = "!update_friends" & pSplit
 With frmFriendIgnoreList.ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = Name Then
             If GetAccountStatus(.Item(i).SubItems(2)) = 1 Then
-                Buffer = Buffer & .Item(i).SubItems(2) & "$Online#"
+                Buffer = Buffer & .Item(i).SubItems(2) & "$Online" & pSplit
             Else
-                Buffer = Buffer & .Item(i).SubItems(2) & "$Offline#"
+                Buffer = Buffer & .Item(i).SubItems(2) & "$Offline" & pSplit
             End If
         End If
     Next i
@@ -301,11 +301,11 @@ Public Sub UPDATE_IGNORE(Name As String, Index As Integer)
 Dim Buffer As String
 Dim i      As Long
 
-Buffer = "!update_ignore#"
+Buffer = "!update_ignore" & pSplit
 With frmFriendIgnoreList.ListView2.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = Name Then
-            Buffer = Buffer & .Item(i).SubItems(2) & "#"
+            Buffer = Buffer & .Item(i).SubItems(2) & pSplit
         End If
     Next i
 End With

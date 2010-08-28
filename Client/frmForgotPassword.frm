@@ -121,7 +121,7 @@ If cmdRequest.Caption = FP_COMMAND_REQUEST Then
         Exit Sub
     End If
     
-    frmMain.RegSock.SendData "!request_password#" & Trim$(txtEmail) & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#"
+    frmMain.RegSock.SendData "!request_password" & pSplit & Trim$(txtEmail) & pSplit & cmbSecretQuestion.ListIndex & pSplit & txtSecretAnswer & pSplit
 Else
     Unload Me
 End If

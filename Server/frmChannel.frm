@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmChannel 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
@@ -136,7 +136,7 @@ With lvChannels.ListItems
             If LenB(.Item(i).SubItems(CHANNEL_PASSWORD)) = 0 Then
                 JoinChannelReal Channel, User
             Else
-                SendSingle "!channel_password#" & Channel & "#", Index
+                SendSingle "!channel_password" & pSplit & Channel & pSplit, Index
             End If
             Exit Sub
         End If
@@ -157,7 +157,7 @@ With lvUsers.ListItems
     .Item(.Count).SubItems(CHANNEL_USER_IS_OWNER) = "1"
 End With
 
-SendSingle "!pmessage#joined_channel#" & Channel & "#", Index
+SendSingle "!pmessage" & pSplit & "joined_channel" & pSplit & Channel & pSplit, Index
 End Sub
 
 Public Sub JoinChannelReal(Channel As String, User As String)
@@ -172,7 +172,7 @@ With lvChannels.ListItems
                 .Item(.Count).SubItems(CHANNEL_USER_IS_OWNER) = "0"
             End With
 
-            If .Item(i).SubItems(CHANNEL_JOIN_ANNOUNCE) = "1" Then SendMessageToChannel Channel, User, "!pmessage#channel_user_join#" & .Item(i) & "#" & User & "#"
+            If .Item(i).SubItems(CHANNEL_JOIN_ANNOUNCE) = "1" Then SendMessageToChannel Channel, User, "!pmessage" & pSplit & "channel_user_join" & pSplit & .Item(i) & pSplit & User & pSplit
             Exit Sub
         End If
     Next i
@@ -197,7 +197,7 @@ With lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User And LCase$(.Item(i).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(Channel) Then
             'If announce is enabled then tell channel that user left
-            If JoinAnnounce Then SendMessageToChannel Channel, User, "!pmessage#channel_user_leave#" & .Item(i).SubItems(CHANNEL_USER_CHANNEL) & "#" & User & "#"
+            If JoinAnnounce Then SendMessageToChannel Channel, User, "!pmessage" & pSplit & "channel_user_leave" & pSplit & .Item(i).SubItems(CHANNEL_USER_CHANNEL) & pSplit & User & pSplit
 
             'Set owner to someone else when owner is leaving
             If .Item(i).SubItems(CHANNEL_USER_IS_OWNER) = "1" And .Count > 1 Then

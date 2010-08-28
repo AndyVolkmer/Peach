@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Begin VB.Form frmSociety 
    BorderStyle     =   0  'None
@@ -267,7 +267,7 @@ Dim pVal As String
 pVal = InputBox(SOC_ASK_FRIEND_TEXT, SOC_ASK_FRIEND_DEFAULT, SOC_ASK_FRIEND_DEFAULT)
 
 If LenB(Trim$(pVal)) = 0 Then Exit Sub
-SendMessage "!friend#-add#" & pVal & "#"
+SendMessage "!friend" & pSplit & "-add" & pSplit & pVal & pSplit
 End Sub
 
 Private Sub cmdRemoveFriend_Click()
@@ -320,7 +320,7 @@ Dim pVal As String
 pVal = InputBox(SOC_ASK_IGNORE_TEXT, SOC_ASK_IGNORE_TITLE, SOC_ASK_IGNORE_DEFAULT)
 
 If LenB(Trim$(pVal)) = 0 Then Exit Sub
-SendMessage "!ignore#-add#" & pVal & "#"
+SendMessage "!ignore" & pSplit & "-add" & pSplit & pVal & pSplit
 End Sub
 
 Private Sub cmdRemoveIgnore_Click()
@@ -342,7 +342,7 @@ End Sub
 '=== Friend List Tab ==='
 Private Sub pRemoveFriend(uString As String)
 If MsgBox(Replace$(SOC_ASK_DEL, "%u", uString), vbQuestion + vbYesNo) = vbYes Then
-    SendMessage "!friend#-remove#" & uString & "#"
+    SendMessage "!friend" & pSplit & "-remove" & pSplit & uString & pSplit
 End If
 End Sub
 
@@ -360,11 +360,11 @@ End Sub
 
 '=== Online List Tab ==='
 Private Sub pAddToFriend(uString As String)
-SendMessage "!friend#-add#" & uString & "#"
+SendMessage "!friend" & pSplit & "-add" & pSplit & uString & pSplit
 End Sub
 
 Private Sub pAddToIgnore(uString As String)
-SendMessage "!ignore#-add#" & uString & "#"
+SendMessage "!ignore" & pSplit & "-add" & pSplit & uString & pSplit
 End Sub
 
 Private Sub TriggerOnlineEvent()
@@ -393,7 +393,7 @@ End Sub
 
 Private Sub pRemoveIgnore(uString As String)
 If MsgBox(Replace$(SOC_ASK_DEL, "%u", uString), vbQuestion + vbYesNo) = vbYes Then
-    SendMessage "!ignore#-remove#" & uString & "#"
+    SendMessage "!ignore" & pSplit & "-remove" & pSplit & uString & pSplit
 End If
 End Sub
 

@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmFriendIgnoreList 
    BorderStyle     =   0  'None
    ClientHeight    =   5220
@@ -144,7 +144,7 @@ Dim j As Long
 
 'Check if you are trying to add urself
 If LCase$(User) = LCase$(pFriend) Then
-    SendSingle "!msgbox#MSG_CANT_ADD_YOU#", Index
+    SendSingle "!msgbox" & pSplit & "MSG_CANT_ADD_YOU" & pSplit, Index
     Exit Sub
 End If
 
@@ -156,7 +156,7 @@ With frmAccountPanel.lvAccounts.ListItems
             Exit For
         Else
             If i = .Count Then
-                SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#" & pFriend & "#", Index
+                SendSingle "!msgbox" & pSplit & "MSG_ACCOUNT_NOT_EXIST" & pSplit & pFriend & pSplit, Index
                 Exit Sub
             End If
         End If
@@ -168,7 +168,7 @@ With ListView1.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = User Then
             If .Item(i).SubItems(2) = pFriend Then
-                SendSingle "!msgbox#MSG_ALREADY_IN_FRIEND_LIST#" & pFriend & "#", Index
+                SendSingle "!msgbox" & pSplit & "MSG_ALREADY_IN_FRIEND_LIST" & pSplit & pFriend & pSplit, Index
                 Exit Sub
             End If
         End If
@@ -240,7 +240,7 @@ Dim j As Long
 
 'Check if you are trying to add urself
 If LCase$(User) = LCase$(Ignore) Then
-    SendSingle "!msgbox#MSG_CANT_ADD_YOU#", Index
+    SendSingle "!msgbox" & pSplit & "MSG_CANT_ADD_YOU" & pSplit, Index
     Exit Sub
 End If
 
@@ -253,7 +253,7 @@ With frmAccountPanel.lvAccounts.ListItems
         Else
             If i = .Count Then
                 'Send message that the account doesn't exist
-                SendSingle "!msgbox#MSG_ACCOUNT_NOT_EXIST#" & Ignore & "#", Index
+                SendSingle "!msgbox" & pSplit & "MSG_ACCOUNT_NOT_EXIST" & pSplit & Ignore & pSplit, Index
                 Exit Sub
             End If
         End If
@@ -265,7 +265,7 @@ With ListView2.ListItems
     For i = 1 To .Count
         If .Item(i).SubItems(1) = User Then
             If .Item(i).SubItems(2) = Ignore Then
-                SendSingle "!msgbox#MSG_ALREADY_IN_IGNORE_LIST#" & Ignore & "#", Index
+                SendSingle "!msgbox" & pSplit & "MSG_ALREADY_IN_IGNORE_LIST" & pSplit & Ignore & pSplit, Index
                 Exit Sub
             End If
         End If

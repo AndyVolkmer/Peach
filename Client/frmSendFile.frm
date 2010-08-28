@@ -196,7 +196,7 @@ If cmdSendFile.Caption = SF_COMMAND_SENDFILE Then
     End If
     
     'Request IP
-    SendMessage "!iprequest#" & Combo1.Text & "#"
+    SendMessage "!iprequest" & pSplit & Combo1.Text & pSplit
 Else
     tmrCalcSpeed.Enabled = False
     SckSendFile.Close

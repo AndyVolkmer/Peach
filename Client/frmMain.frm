@@ -497,7 +497,7 @@ Dim Text     As String
 
 RegSock.GetData Message
 
-pArray = Split(Message, "#")
+pArray = Split(Message, pSplit)
 
 Select Case pArray(0)
     Case "!nameexist"
@@ -584,7 +584,7 @@ Disconnect
 End Sub
 
 Private Sub Winsock1_Connect()
-SendMessage "!login#" & txtAccount.Text & "#" & GetMD5(txtPassword.Text) & "#"
+SendMessage "!login" & pSplit & txtAccount.Text & pSplit & GetMD5(txtPassword.Text) & pSplit
 End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
@@ -609,7 +609,7 @@ PreArray = Split(Message, Chr(24) & Chr(25))
 For k = 0 To UBound(PreArray) - 1
 
 'We split the message into an array
-StrArr = Split(PreArray(k), "#")
+StrArr = Split(PreArray(k), pSplit)
 
 'Assign the variables to the array
 If UBound(StrArr) > -1 Then
@@ -649,9 +649,9 @@ Select Case Command
 
         txtAccount.Text = StrArr(1)
         SetupChildForm frmChat
-        SendMessage "!connected#"
-        SendMessage "!friend#-get#"
-        SendMessage "!ignore#-get#"
+        SendMessage "!connected" & pSplit
+        SendMessage "!friend" & pSplit & "-get" & pSplit
+        SendMessage "!ignore" & pSplit & "-get" & pSplit
 
     'Wipe out current ignore list and insert new values
     Case "!update_ignore"
@@ -762,7 +762,7 @@ Select Case Command
         End Select
 
     Case "!channel_password"
-        SendMessage "!channel_password#" & InputBox(Replace(CH_MSG_PASSWORD, "%c", StrArr(1))) & "#" & StrArr(1)
+        SendMessage "!channel_password" & pSplit & InputBox(Replace(CH_MSG_PASSWORD, "%c", StrArr(1))) & pSplit & StrArr(1)
 
     Case "!pmessage"
         Dim temp As String
@@ -1084,7 +1084,7 @@ Private Sub STimer_Timer()
 With FSocket
     If .State = 7 Then
         STimer.Enabled = False
-        .SendData "!filerequest#" & CDialog.FileTitle & "#" & txtAccount & "#"
+        .SendData "!filerequest" & pSplit & CDialog.FileTitle & pSplit & txtAccount & pSplit
     End If
 End With
 End Sub
@@ -1096,7 +1096,7 @@ Dim Text     As String
 
 FSocket2(Index).GetData Message
 
-pArray = Split(Message, "#")
+pArray = Split(Message, pSplit)
 
 If pArray(0) = "!filerequest" Then
     Text = Replace$(SF_MSG_INCOMMING_FILE, "%f", pArray(1))

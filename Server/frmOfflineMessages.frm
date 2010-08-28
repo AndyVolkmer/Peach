@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOfflineMessages 
    BackColor       =   &H00F4F4F4&
    BorderStyle     =   0  'None
@@ -101,7 +101,7 @@ With lvOfflineMessages.ListItems
     For i = 1 To .Count
         If i > .Count Then Exit For
         If .Item(i).SubItems(INDEX_TO) = User Then
-            SendSingle "!pmessage#offline_message#" & .Item(i) & "#" & .Item(i).SubItems(INDEX_MESSAGE) & "#" & .Item(i).SubItems(INDEX_TIME_SENT) & "#", Index
+            SendSingle "!pmessage" & pSplit & "offline_message" & pSplit & .Item(i) & pSplit & .Item(i).SubItems(INDEX_MESSAGE) & pSplit & .Item(i).SubItems(INDEX_TIME_SENT) & pSplit, Index
             .Remove i
             i = i - 1
         End If

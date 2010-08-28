@@ -329,7 +329,7 @@ Dim k               As Long
 Dim i               As Long
 Dim p_Message       As String   'All data send
 Dim p_PreArray()    As String   'All data send split by chr(24) & chr(25) to not allow stack of wrong information
-Dim p_MainArray()   As String   'Whole message string is saved here and split up by # sign
+Dim p_MainArray()   As String   'Whole message string is saved here and split up by Chr(3) & Chr(4) sign
 Dim p_Command       As String   'First part of main array ( always the command )
 Dim IsMuted         As Boolean  'Mute explains itself
 Dim properAccount   As String   'Used to save account to avoid multiply loading in loops
@@ -352,7 +352,7 @@ For k = 0 To UBound(p_PreArray) - 1
 WriteText p_PreArray(k) & " | Index: " & Index
 
 'We decode (split) the message into an array
-p_MainArray = Split(p_PreArray(k), "#")
+p_MainArray = Split(p_PreArray(k), pSplit)
 
 'Assign the variable to the array
 If UBound(p_MainArray) > -1 Then
@@ -401,7 +401,7 @@ Select Case p_Command
         With frmPanel.lvUsers.ListItems
             For i = 1 To .Count
                 If Not .Item(i) = properAccount Then
-                    SendSingle "!pmessage#online#" & properAccount & "#", .Item(i).SubItems(INDEX_WINSOCK_ID)
+                    SendSingle "!pmessage" & pSplit & "online" & pSplit & properAccount & pSplit, .Item(i).SubItems(INDEX_WINSOCK_ID)
                 End If
             Next i
         End With
@@ -420,26 +420,26 @@ Select Case p_Command
     Case "!login"
         With frmAccountPanel.lvAccounts.ListItems
             If .Count = 0 Then
-                SendSingle "!login#Account#", Index
+                SendSingle "!login" & pSplit & "Account" & pSplit, Index
             Else
                 'Authentication; password, is banned?, account etc ..
                 For i = 1 To .Count
                     If LCase$(.Item(i).SubItems(INDEX_NAME)) = LCase$(p_MainArray(1)) Then
                         'Ban Check
                         If .Item(i).SubItems(INDEX_BANNED) = "1" Then
-                            SendSingle "!login#Banned#", Index
+                            SendSingle "!login" & pSplit & "Banned" & pSplit, Index
                             Exit Sub
                         End If
 
                         'Password Check
                         If Not GetMD5(.Item(i).SubItems(INDEX_PASSWORD)) = p_MainArray(2) Then
-                            SendSingle "!login#Password#", Index
+                            SendSingle "!login" & pSplit & "Password" & pSplit, Index
                             Exit Sub
                         End If
                         Exit For
                     Else
                         If i = .Count Then
-                            SendSingle "!login#Account#", Index
+                            SendSingle "!login" & pSplit & "Account" & pSplit, Index
                             Exit Sub
                         End If
                     End If
@@ -457,7 +457,7 @@ Select Case p_Command
                     .Item(.Count).Text = GetProperAccountName(p_MainArray(1))
 
                     UPDATE_STATUS_BAR
-                    SendSingle "!accepted#" & .Item(.Count).Text & "#", Index
+                    SendSingle "!accepted" & pSplit & .Item(.Count).Text & pSplit, Index
                 End With
             End If
         End With
@@ -467,7 +467,7 @@ Select Case p_Command
         With frmPanel.lvUsers.ListItems
             For i = 1 To .Count
                 If .Item(i) = p_MainArray(1) Then
-                    SendSingle "!iprequest#" & .Item(i).SubItems(INDEX_IP) & "#", Index
+                    SendSingle "!iprequest" & pSplit & .Item(i).SubItems(INDEX_IP) & pSplit, Index
                     Exit For
                 End If
             Next i
@@ -480,7 +480,7 @@ Select Case p_Command
                     frmChannel.JoinChannelReal .Item(i), GetAccountByIndex(Index)
                     Exit For
                 Else
-                    If i = .Count Then SendSingle "!pmessage#channel_wrong_password#" & p_MainArray(2) & "#", Index
+                    If i = .Count Then SendSingle "!pmessage" & pSplit & "channel_wrong_password" & pSplit & p_MainArray(2) & pSplit, Index
                 End If
             Next i
         End With
@@ -496,14 +496,16 @@ Select Case p_Command
         p_CHAT_ARRAY = Split(p_MainArray(1), " ")
 
         'Check first position of the text for a point indicating command or emote
-        Select Case Left$(p_CHAT_ARRAY(0), 1)
-            Case Chr(46)
-                If GetLevel(GetAccountByIndex(Index)) > 0 Then IsCommand = True
-
-            Case Chr(47)
-                IsSlash = True
-
-        End Select
+        If UBound(p_CHAT_ARRAY) > -1 Then
+            Select Case Left$(p_CHAT_ARRAY(0), 1)
+                Case Chr(46)
+                    If GetLevel(GetAccountByIndex(Index)) > 0 Then IsCommand = True
+    
+                Case Chr(47)
+                    IsSlash = True
+    
+            End Select
+        End If
 
         'Capture first part of the text
         If UBound(p_CHAT_ARRAY) > 0 Then
@@ -545,13 +547,13 @@ Select Case p_Command
             Select Case LCase$(p_CHAT_ARRAY(0))
                 Case ".show"
                     If IsPartOf(p_TEXT_FIRST, "accounts") Then
-                        SendSingle "!split_text#" & GetAccountList, Index
+                        SendSingle "!split_text" & pSplit & GetAccountList, Index
 
                     ElseIf IsPartOf(p_TEXT_FIRST, "onliners") Then
-                        SendSingle "!split_text#" & GetOnlineList, Index
+                        SendSingle "!split_text" & pSplit & GetOnlineList, Index
 
                     Else
-                        SendSingle "!pmessage#incorrect_syntax#.show [accounts, onliners]", Index
+                        SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & ".show [accounts, onliners]", Index
 
                     End If
 
@@ -572,9 +574,9 @@ Select Case p_Command
                             Else
                                 If i = .Count Then
                                     If LenB(p_TEXT_FIRST) = 0 Then
-                                        SendSingle "!pmessage#incorrect_syntax#.kick [User]#", Index
+                                        SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & ".kick [User]" & pSplit, Index
                                     Else
-                                        SendSingle "!pmessage#user_not_found#" & p_TEXT_FIRST & "#", Index
+                                        SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & p_TEXT_FIRST & pSplit, Index
                                     End If
                                 End If
                             End If
@@ -604,15 +606,15 @@ Select Case p_Command
                     End If
 
                     If LenB(p_ANN_MSG) = 0 Then
-                        SendSingle "!pmessage#incorrect_syntax#" & p_CHAT_ARRAY(0) & " [Text]#", Index
+                        SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & p_CHAT_ARRAY(0) & " [Text]" & pSplit, Index
                     Else
                         Select Case LCase$(p_CHAT_ARRAY(0))
                             Case ".announce", ".ann"
                                 Reason = GetAccountByIndex(Index)
-                                SendMessage "!pmessage#announce#" & GetGMFlag(Reason) & GetAFKFlag(Reason) & "#" & Reason & "#" & p_ANN_MSG & "#"
+                                SendMessage "!pmessage" & pSplit & "announce" & pSplit & GetGMFlag(Reason) & GetAFKFlag(Reason) & pSplit & Reason & pSplit & p_ANN_MSG & pSplit
 
                             Case ".notify"
-                                SendMessage "!msgbox#" & GetAccountByIndex(Index) & ": " & p_ANN_MSG & "#"
+                                SendMessage "!msgbox" & pSplit & GetAccountByIndex(Index) & " - " & p_ANN_MSG & pSplit
 
                         End Select
                     End If
@@ -634,7 +636,7 @@ Select Case p_Command
                                             'Check if change name is already given out
                                             For n = 1 To .Count
                                                 If LCase$(.Item(n).SubItems(INDEX_NAME)) = LCase$(p_CHAT_ARRAY(3)) Then
-                                                    SendSingle "!pmessage#user_already_used#" & p_CHAT_ARRAY(3) & "#", Index
+                                                    SendSingle "!pmessage" & pSplit & "user_already_used" & pSplit & p_CHAT_ARRAY(3) & pSplit, Index
                                                     Exit For
                                                 Else
                                                     If n = .Count Then
@@ -642,7 +644,7 @@ Select Case p_Command
                                                         frmAccountPanel.ModifyAccount p_CHAT_ARRAY(3), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, .Item(i).SubItems(INDEX_GENDER), .Item(i).SubItems(INDEX_EMAIL)
 
                                                         'Send feedback to person who changed name
-                                                        SendSingle "!pmessage#successfull_rename#" & properAccount & "#" & p_CHAT_ARRAY(3) & "#", Index
+                                                        SendSingle "!pmessage" & pSplit & "successfull_rename" & pSplit & properAccount & pSplit & p_CHAT_ARRAY(3) & pSplit, Index
 
                                                         'Check if player is online and directly rename it, also tell user that he got renamed
                                                         With frmPanel.lvUsers.ListItems
@@ -650,8 +652,8 @@ Select Case p_Command
                                                                 If .Item(m) = properAccount Then
                                                                     .Item(m) = p_CHAT_ARRAY(3)
 
-                                                                    SendSingle "!pmessage#renamed_you_to#" & GetAccountByIndex(Index) & "#" & p_CHAT_ARRAY(3) & "#", .Item(m).SubItems(INDEX_WINSOCK_ID)
-                                                                    SendSingle "!namechange#" & p_CHAT_ARRAY(3) & "#", .Item(m).SubItems(INDEX_WINSOCK_ID)
+                                                                    SendSingle "!pmessage" & pSplit & "renamed_you_to" & pSplit & GetAccountByIndex(Index) & pSplit & p_CHAT_ARRAY(3) & pSplit, .Item(m).SubItems(INDEX_WINSOCK_ID)
+                                                                    SendSingle "!namechange" & pSplit & p_CHAT_ARRAY(3) & pSplit, .Item(m).SubItems(INDEX_WINSOCK_ID)
                                                                     Exit For
                                                                 End If
                                                             Next m
@@ -716,21 +718,21 @@ Select Case p_Command
                                             Next n
                                             Exit For
                                         Else
-                                            If i = .Count Then SendSingle "!pmessage#user_not_found#" & properAccount & "#", Index
+                                            If i = .Count Then SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & properAccount & pSplit, Index
                                         End If
                                     Next i
                                 End With
 
                                 properAccount = vbNullString
                             Else
-                                SendSingle "!pmessage#incorrect_syntax#" & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Oldname] [Newname]#", Index
+                                SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Oldname] [Newname]" & pSplit, Index
                             End If
 
                         Case "level"
                             If UBound(p_CHAT_ARRAY) > 2 Then
                                 'Level must be numeric and in range of 0-2
                                 If (Not IsNumeric(p_CHAT_ARRAY(3))) Or (p_CHAT_ARRAY(3) > 2 Or p_CHAT_ARRAY(3) < 0) Then
-                                    SendSingle "!pmessage#level_incorrect_value#", Index
+                                    SendSingle "!pmessage" & pSplit & "level_incorrect_value" & pSplit, Index
                                     Exit Sub
                                 End If
 
@@ -743,26 +745,26 @@ Select Case p_Command
                                             frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), p_CHAT_ARRAY(3), .Item(i), i, .Item(i).SubItems(INDEX_GENDER), .Item(i).SubItems(INDEX_EMAIL)
 
                                             'Feedback to the person who modified the level
-                                            SendSingle "!pmessage#successfull_level#" & .Item(i).SubItems(INDEX_NAME) & "#" & p_CHAT_ARRAY(3) & "#", Index
+                                            SendSingle "!pmessage" & pSplit & "successfull_level" & pSplit & .Item(i).SubItems(INDEX_NAME) & pSplit & p_CHAT_ARRAY(3) & pSplit, Index
 
                                             With frmPanel.lvUsers.ListItems
                                                 For n = 1 To .Count
                                                     If .Item(n) = properAccount Then
-                                                        SendSingle "!pmessage#changed_your_level#" & GetAccountByIndex(Index) & "#" & p_CHAT_ARRAY(3) & "#", .Item(n).SubItems(INDEX_WINSOCK_ID)
+                                                        SendSingle "!pmessage" & pSplit & "changed_your_level" & pSplit & GetAccountByIndex(Index) & pSplit & p_CHAT_ARRAY(3) & pSplit, .Item(n).SubItems(INDEX_WINSOCK_ID)
                                                         Exit For
                                                     End If
                                                 Next n
                                             End With
                                             Exit For
                                         Else
-                                            If i = .Count Then SendSingle "!pmessage#user_not_found#" & p_TEXT_SECOND & "#", Index
+                                            If i = .Count Then SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & p_TEXT_SECOND & pSplit, Index
                                         End If
                                     Next i
 
                                     properAccount = vbNullString
                                 End With
                             Else
-                                SendSingle "!pmessage#incorrect_syntax#" & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Level]#", Index
+                                SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Level]" & pSplit, Index
                             End If
 
                         Case "gender"
@@ -780,7 +782,7 @@ Select Case p_Command
                                 End If
 
                                 If LenB(GenderInNumeric) = 0 Then
-                                    SendSingle "!pmessage#gender_incorrect_value#", Index
+                                    SendSingle "!pmessage" & pSplit & "gender_incorrect_value" & pSplit, Index
                                 Else
                                     With frmAccountPanel.lvAccounts.ListItems
                                         properAccount = GetProperAccountName(p_TEXT_SECOND)
@@ -791,20 +793,20 @@ Select Case p_Command
                                                 frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, GenderInNumeric, .Item(i).SubItems(INDEX_EMAIL)
 
                                                 'Feedback to the person who modified the gender
-                                                SendSingle "!pmessage#successfull_gender#" & properAccount & "#" & GenderInNumeric & "#", Index
+                                                SendSingle "!pmessage" & pSplit & "successfull_gender" & pSplit & properAccount & pSplit & GenderInNumeric & pSplit, Index
 
                                                 'Notify user that gender got changed
                                                 With frmPanel.lvUsers.ListItems
                                                     For n = 1 To .Count
                                                         If .Item(n) = properAccount Then
-                                                            SendSingle "!pmessage#changed_your_gender#" & GetAccountByIndex(Index) & "#" & GenderInNumeric & "#", .Item(n).SubItems(INDEX_WINSOCK_ID)
+                                                            SendSingle "!pmessage" & pSplit & "changed_your_gender" & pSplit & GetAccountByIndex(Index) & pSplit & GenderInNumeric & pSplit, .Item(n).SubItems(INDEX_WINSOCK_ID)
                                                             Exit For
                                                         End If
                                                     Next n
                                                 End With
                                                 Exit For
                                             Else
-                                                If i = .Count Then SendSingle "!pmessage#user_not_found#" & p_TEXT_SECOND & "#", Index
+                                                If i = .Count Then SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & p_TEXT_SECOND & pSplit, Index
                                             End If
                                         Next i
 
@@ -812,7 +814,7 @@ Select Case p_Command
                                     End With
                                 End If
                             Else
-                                SendSingle "!pmessage#incorrect_syntax#" & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Gender]#", Index
+                                SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Gender]" & pSplit, Index
                             End If
 
                         Case "password"
@@ -826,27 +828,27 @@ Select Case p_Command
                                             frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), p_CHAT_ARRAY(3), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, .Item(i).SubItems(INDEX_GENDER), .Item(i).SubItems(INDEX_EMAIL)
 
                                             'Feedback to the person who modified the password
-                                            SendSingle "!pmessage#successfull_password#" & properAccount & "#" & p_CHAT_ARRAY(3) & "#", Index
+                                            SendSingle "!pmessage" & pSplit & "successfull_password" & pSplit & properAccount & pSplit & p_CHAT_ARRAY(3) & pSplit, Index
 
                                             'Notify user that password got changed
                                             With frmPanel.lvUsers.ListItems
                                                 For n = 1 To .Count
                                                     If .Item(n) = properAccount Then
-                                                        SendSingle "!pmessage#changed_your_password#" & GetAccountByIndex(Index) & "#" & p_CHAT_ARRAY(3) & "#", .Item(n).SubItems(INDEX_WINSOCK_ID)
+                                                        SendSingle "!pmessage" & pSplit & "changed_your_password" & pSplit & GetAccountByIndex(Index) & pSplit & p_CHAT_ARRAY(3) & pSplit, .Item(n).SubItems(INDEX_WINSOCK_ID)
                                                         Exit For
                                                     End If
                                                 Next n
                                             End With
                                             Exit For
                                         Else
-                                            If i = .Count Then SendSingle "!pmessage#user_not_found#" & p_TEXT_SECOND & "#", Index
+                                            If i = .Count Then SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & p_TEXT_SECOND & pSplit, Index
                                         End If
                                     Next i
 
                                     properAccount = vbNullString
                                 End With
                             Else
-                                SendSingle "!pmessage#incorrect_syntax#" & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Password]#", Index
+                                SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Password]" & pSplit, Index
                             End If
 
                         Case "email"
@@ -860,32 +862,32 @@ Select Case p_Command
                                             frmAccountPanel.ModifyAccount .Item(i).SubItems(INDEX_NAME), .Item(i).SubItems(INDEX_PASSWORD), .Item(i).SubItems(INDEX_BANNED), .Item(i).SubItems(INDEX_LEVEL), .Item(i), i, .Item(i).SubItems(INDEX_GENDER), p_CHAT_ARRAY(3)
 
                                             'Feedback to the person who modified the email
-                                            SendSingle "!pmessage#successfull_email#" & properAccount & "#" & p_CHAT_ARRAY(3) & "#", Index
+                                            SendSingle "!pmessage" & pSplit & "successfull_email" & pSplit & properAccount & pSplit & p_CHAT_ARRAY(3) & pSplit, Index
 
                                             'Notify user that password got changed
                                             With frmPanel.lvUsers.ListItems
                                                 For n = 1 To .Count
                                                     If .Item(n) = properAccount Then
-                                                        SendSingle "!pmessage#changed_your_email#" & GetAccountByIndex(Index) & "#" & p_CHAT_ARRAY(3) & "#", .Item(n).SubItems(INDEX_WINSOCK_ID)
+                                                        SendSingle "!pmessage" & pSplit & "changed_your_email" & pSplit & GetAccountByIndex(Index) & pSplit & p_CHAT_ARRAY(3) & pSplit, .Item(n).SubItems(INDEX_WINSOCK_ID)
                                                         Exit For
                                                     End If
                                                 Next n
                                             End With
                                             Exit For
                                         Else
-                                            If i = .Count Then SendSingle "!pmessage#user_not_found#" & p_TEXT_SECOND & "#", Index
+                                            If i = .Count Then SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & p_TEXT_SECOND & pSplit, Index
                                         End If
                                     Next i
 
                                     properAccount = vbNullString
                                 End With
                             Else
-                                SendSingle "!pmessage#incorrect_syntax#" & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Email]#", Index
+                                SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & p_CHAT_ARRAY(0) & Space(1) & p_TEXT_FIRST & " [Name] [Email]" & pSplit, Index
                             End If
 
                         Case Else
                             SendSingle _
-                            "!pmessage#incorrect_syntax#" & _
+                            "!pmessage" & pSplit & "incorrect_syntax" & pSplit & _
                                 vbCrLf & Space(2) & _
                             p_CHAT_ARRAY(0) & " name [Oldname] [Newname]" & _
                                 vbCrLf & Space(2) & _
@@ -895,7 +897,7 @@ Select Case p_Command
                                 vbCrLf & Space(2) & _
                             p_CHAT_ARRAY(0) & " password [Name] [Password]" & _
                                 vbCrLf & Space(2) & _
-                            p_CHAT_ARRAY(0) & " email [Name] [Email]#", Index
+                            p_CHAT_ARRAY(0) & " email [Name] [Email]" & pSplit, Index
 
                     End Select
 
@@ -905,36 +907,36 @@ Select Case p_Command
                     With Database
                         Select Case LCase$(p_TEXT_FIRST)
                             Case LCase$(DATABASE_TABLE_ACCOUNTS), LCase$(DATABASE_TABLE_FRIENDS), LCase$(DATABASE_TABLE_IGNORES)
-                                SendSingle "!pmessage#table_cant_reload#", Index
+                                SendSingle "!pmessage" & pSplit & "table_cant_reload" & pSplit, Index
 
                             Case LCase$(DATABASE_TABLE_COMMANDS)
                                 loadTime = timeGetTime
                                 Erase Commands
                                 LoadCommands
-                                SendMessage "!pmessage#table_reload#" & GetAccountByIndex(Index) & "#" & DATABASE_TABLE_COMMANDS & "#" & timeGetTime - loadTime & "#"
+                                SendMessage "!pmessage" & pSplit & "table_reload" & pSplit & GetAccountByIndex(Index) & pSplit & DATABASE_TABLE_COMMANDS & pSplit & timeGetTime - loadTime & pSplit
 
                             Case LCase$(DATABASE_TABLE_DECLINED_NAMES)
                                 loadTime = timeGetTime
                                 Erase DeclinedNames
                                 LoadDeclinedNames
-                                SendMessage "!pmessage#table_reload#" & GetAccountByIndex(Index) & "#" & DATABASE_TABLE_DECLINED_NAMES & "#" & timeGetTime - loadTime & "#"
+                                SendMessage "!pmessage" & pSplit & "table_reload" & pSplit & GetAccountByIndex(Index) & pSplit & DATABASE_TABLE_DECLINED_NAMES & pSplit & timeGetTime - loadTime & pSplit
 
                             Case LCase$(DATABASE_TABLE_EMOTES)
                                 loadTime = timeGetTime
                                 Erase Emotes
                                 LoadEmotes
-                                SendMessage "!pmessage#table_reload#" & GetAccountByIndex(Index) & "#" & DATABASE_TABLE_EMOTES & "#" & timeGetTime - loadTime & "#"
+                                SendMessage "!pmessage" & pSplit & "table_reload" & pSplit & GetAccountByIndex(Index) & pSplit & DATABASE_TABLE_EMOTES & pSplit & timeGetTime - loadTime & pSplit
 
                             Case LCase$("config"), LCase$("c")
                                 loadTime = timeGetTime
                                 LoadConfigValue
-                                SendMessage "!pmessage#config_reload#" & GetAccountByIndex(Index) & "#" & timeGetTime - loadTime & "#"
+                                SendMessage "!pmessage" & pSplit & "config_reload" & pSplit & GetAccountByIndex(Index) & pSplit & timeGetTime - loadTime & pSplit
 
                             Case Else
                                 If LenB(p_TEXT_FIRST) = 0 Then
-                                    SendSingle "!pmessage#incorrect_syntax#.reload Table#", Index
+                                    SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & ".reload Table" & pSplit, Index
                                 Else
-                                    SendSingle "!pmessage#table_not_exist#.", Index
+                                    SendSingle "!pmessage" & pSplit & "table_not_exist" & pSplit, Index
                                 End If
 
                         End Select
@@ -942,14 +944,14 @@ Select Case p_Command
 
                 Case ".clear"
                     If LenB(p_TEXT_FIRST) = 0 Then
-                        SendSingle "!pmessage#incorrect_syntax#.clear [User]#", Index
+                        SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & ".clear [User]" & pSplit, Index
                     Else
                         If LCase$(p_TEXT_FIRST) = "this" Or LCase$(p_TEXT_FIRST) = "me" Then
-                            SendSingle "!clear#", Index
+                            SendSingle "!clear" & pSplit, Index
                             Exit Sub
 
                         ElseIf LCase$(p_TEXT_FIRST) = "all" Then
-                            SendMessage "!clear#"
+                            SendMessage "!clear" & pSplit
                             Exit Sub
 
                         End If
@@ -959,10 +961,10 @@ Select Case p_Command
 
                             For i = 1 To .Count
                                 If .Item(i) = properAccount Then
-                                    SendSingle "!clear#", .Item(i).SubItems(INDEX_WINSOCK_ID)
+                                    SendSingle "!clear" & pSplit, .Item(i).SubItems(INDEX_WINSOCK_ID)
                                     Exit For
                                 Else
-                                    If i = .Count Then SendSingle "!pmessage#user_not_found#" & p_TEXT_FIRST & "#", Index
+                                    If i = .Count Then SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & p_TEXT_FIRST & pSplit, Index
                                 End If
                             Next i
 
@@ -991,15 +993,15 @@ Select Case p_Command
                                 frmFriendIgnoreList.RemoveAllIgnoresFromUser properAccount
                                 frmOfflineMessages.RemoveAllOfflineMessagesFromAndToUser properAccount
 
-                                SendSingle "!pmessage#deleted_account#" & properAccount & "#" & .Item(i) & "#", Index
+                                SendSingle "!pmessage" & pSplit & "deleted_account" & pSplit & properAccount & pSplit & .Item(i) & pSplit, Index
                                 .Remove i
                                 Exit For
                             Else
                                 If i = .Count Then
                                     If LenB(properAccount) = 0 Then
-                                        SendSingle "!pmessage#incorrect_syntax#.delete [Account]#", Index
+                                        SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & ".delete [Account]" & pSplit, Index
                                     Else
-                                        SendSingle "!pmessage#user_not_found#" & p_TEXT_FIRST & "#", Index
+                                        SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & p_TEXT_FIRST & pSplit, Index
                                     End If
                                 End If
                             End If
@@ -1015,7 +1017,7 @@ Select Case p_Command
                                 For i = 1 To .Count
                                     If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
                                         .Item(i).SubItems(INDEX_GM_FLAG) = "1"
-                                        SendSingle "!pmessage#gm_flag_enable#", Index
+                                        SendSingle "!pmessage" & pSplit & "gm_flag_enable" & pSplit, Index
                                         Exit For
                                     End If
                                 Next i
@@ -1024,19 +1026,19 @@ Select Case p_Command
                                 For i = 1 To .Count
                                     If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
                                         .Item(i).SubItems(INDEX_GM_FLAG) = "0"
-                                        SendSingle "!pmessage#gm_flag_disable#", Index
+                                        SendSingle "!pmessage" & pSplit & "gm_flag_disable" & pSplit, Index
                                         Exit For
                                     End If
                                 Next i
 
                             Case Else
-                                SendSingle "!pmessage#incorrect_syntax#.gm [on / off]#", Index
+                                SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & ".gm [on / off]" & pSplit, Index
 
                         End Select
                     End With
 
                 Case Else
-                    SendSingle "!pmessage#unknown_command#", Index
+                    SendSingle "!pmessage" & pSplit & "unknown_command" & pSplit, Index
 
             End Select
             Exit Sub 'Always exit after any command used or else it will be written for everyone
@@ -1044,13 +1046,13 @@ Select Case p_Command
 
         'Check if user is muted for emotes and normal text
         If IsMuted Then
-            SendSingle "!pmessage#muted#", Index
+            SendSingle "!pmessage" & "muted" & pSplit, Index
             Exit Sub
         End If
 
         If Options.REPEAT_CHECK = 1 Then
             If IsRepeating(GetAccountByIndex(Index), p_MainArray(1)) Then
-                SendSingle "!pmessage#flood_protection#", Index
+                SendSingle "!pmessage" & pSplit & "flood_protection" & pSplit, Index
                 Exit Sub
             End If
         End If
@@ -1128,7 +1130,7 @@ Select Case p_Command
 
                     properAccount = GetAccountByIndex(Index)
 
-                    SendProtectedMessage properAccount, "!pmessage#roll#" & properAccount & "#" & Roll & "#" & MinRoll & "#" & MaxRoll & "#"
+                    SendProtectedMessage properAccount, "!pmessage" & pSplit & "roll" & pSplit & properAccount & pSplit & Roll & pSplit & MinRoll & pSplit & MaxRoll & pSplit
 
                     properAccount = vbNullString
 
@@ -1143,7 +1145,7 @@ Select Case p_Command
 
                         Whisper GetAccountByIndex(Index), GetProperAccountName(p_TEXT_FIRST), Trim$(Message), Index
                     Else
-                        SendSingle "!pmessage#incorrect_syntax#/whisper [Name] [Text]#", Index
+                        SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & "/whisper [Name] [Text]" & pSplit, Index
                     End If
 
                 Case "/afk"
@@ -1152,10 +1154,10 @@ Select Case p_Command
                             If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
                                 If .Item(i).SubItems(INDEX_AFK_FLAG) = "1" Then
                                     .Item(i).SubItems(INDEX_AFK_FLAG) = "0"
-                                    SendSingle "!pmessage#not_afk#", Index
+                                    SendSingle "!pmessage" & pSplit & "not_afk" & pSplit, Index
                                 Else
                                     .Item(i).SubItems(INDEX_AFK_FLAG) = "1"
-                                    SendSingle "!pmessage#afk#", Index
+                                    SendSingle "!pmessage" & pSplit & "afk" & pSplit, Index
                                 End If
                                 Exit For
                             End If
@@ -1163,33 +1165,33 @@ Select Case p_Command
                     End With
 
                 Case "/online"
-                    SendSingle "!pmessage#online_time#" & Trim$(GetOnlineTime(GetAccountByIndex(Index))) & "#", Index
+                    SendSingle "!pmessage" & pSplit & "online_time" & pSplit & Trim$(GetOnlineTime(GetAccountByIndex(Index))) & pSplit, Index
 
                 Case "/logout"
                     KickUser GetAccountByIndex(Index)
 
                 Case "/sudo"
                     If LenB(p_TEXT_FIRST) = 0 Then
-                        SendSingle "!pmessage#incorrect_syntax#/sudo [Password]#", Index
+                        SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & "/sudo [Password]" & pSplit, Index
                     Else
                         If p_TEXT_FIRST = Options.ROOT_PASSWORD Then
                             With frmPanel.lvUsers.ListItems
                                 For i = 1 To .Count
                                     If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
                                         .Item(i).SubItems(INDEX_IS_ROOT) = 1
-                                        SendSingle "!pmessage#successfull_sudo#", Index
+                                        SendSingle "!pmessage" & pSplit & "successfull_sudo" & pSplit, Index
                                         Exit For
                                     End If
                                 Next i
                             End With
                         Else
-                            SendSingle "!pmessage#incorrect_password#", Index
+                            SendSingle "!pmessage" & pSplit & "incorrect_password" & pSplit, Index
                         End If
                     End If
 
                 Case "/join"
                     If LenB(p_TEXT_FIRST) = 0 Then
-                        SendSingle "!pmessage#valid_channel#", Index
+                        SendSingle "!pmessage" & pSplit & "valid_channel" & pSplit, Index
                     Else
                         With frmChannel.lvUsers.ListItems
                             If .Count = 0 Then
@@ -1199,7 +1201,7 @@ Select Case p_Command
 
                                 For i = 1 To .Count
                                     If .Item(i) = properAccount And LCase$(.Item(i).SubItems(CHANNEL_USER_CHANNEL)) = LCase$(p_TEXT_FIRST) Then
-                                        SendSingle "!pmessage#already_in_channel#" & .Item(i).SubItems(CHANNEL_USER_CHANNEL) & "#", Index
+                                        SendSingle "!pmessage" & pSplit & "already_in_channel" & pSplit & .Item(i).SubItems(CHANNEL_USER_CHANNEL) & pSplit, Index
                                         Exit For
                                     Else
                                         If i = .Count Then frmChannel.JoinChannel p_TEXT_FIRST, properAccount, Index
@@ -1213,17 +1215,17 @@ Select Case p_Command
 
                 Case "/leave"
                     If LenB(p_TEXT_FIRST) = 0 Then
-                        SendSingle "!pmessage#valid_channel#", Index
+                        SendSingle "!pmessage" & pSplit & "valid_channel" & pSplit, Index
                     Else
                         frmChannel.LeaveChannel p_TEXT_FIRST, GetAccountByIndex(Index)
                     End If
 
                 Case "/announce"
                     If LenB(p_TEXT_FIRST) = 0 Then
-                        SendSingle "!pmessage#valid_channel#", Index
+                        SendSingle "!pmessage" & pSplit & "valid_channel" & pSplit, Index
                     Else
                         If frmChannel.lvChannels.ListItems.Count = 0 Then
-                            SendSingle "!pmessage#not_in_channel" & p_TEXT_FIRST & "#", Index
+                            SendSingle "!pmessage" & pSplit & "not_in_channel" & pSplit & p_TEXT_FIRST & pSplit, Index
                         Else
                             With frmChannel.lvUsers.ListItems
                                 properAccount = GetAccountByIndex(Index)
@@ -1240,17 +1242,17 @@ Select Case p_Command
                                                             .Item(f).SubItems(CHANNEL_JOIN_ANNOUNCE) = "1"
                                                         End If
 
-                                                        SendMessageToChannel .Item(f), properAccount, "!pmessage#channel_announcements#" & .Item(f) & "#" & properAccount & "#"
+                                                        SendMessageToChannel .Item(f), properAccount, "!pmessage" & pSplit & "channel_announcements" & pSplit & .Item(f) & pSplit & properAccount & pSplit
                                                         Exit For
                                                     End If
                                                 Next f
                                             End With
                                         Else
-                                            SendSingle "!pmessage#not_channel_leader#", Index
+                                            SendSingle "!pmessage" & pSplit & "not_channel_leader" & pSplit, Index
                                         End If
                                         Exit For
                                     Else
-                                        If i = .Count Then SendSingle "!pmessage#not_in_channel#" & p_TEXT_FIRST & "#", Index
+                                        If i = .Count Then SendSingle "!pmessage" & pSplit & "not_in_channel" & pSplit & p_TEXT_FIRST & pSplit, Index
                                     End If
                                 Next i
 
@@ -1261,13 +1263,13 @@ Select Case p_Command
 
                 Case "/setpassword"
                     If LenB(p_TEXT_FIRST) = 0 Then
-                        SendSingle "!pmessage#valid_channel#", Index
+                        SendSingle "!pmessage" & pSplit & "valid_channel" & pSplit, Index
                     Else
                         If LenB(p_TEXT_SECOND) = 0 Then
-                            SendSingle "!pmessage#incorrect_syntax#/setpassword [Channel] [Password]#", Index
+                            SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & "/setpassword [Channel] [Password]" & pSplit, Index
                         Else
                             If frmChannel.lvChannels.ListItems.Count = 0 Then
-                                SendSingle "!pmessage#not_in_channel#" & p_TEXT_FIRST & "#", Index
+                                SendSingle "!pmessage" & pSplit & "not_in_channel" & pSplit & p_TEXT_FIRST & pSplit, Index
                             Else
                                 With frmChannel.lvUsers.ListItems
                                     properAccount = GetAccountByIndex(Index)
@@ -1279,17 +1281,17 @@ Select Case p_Command
                                                     For f = 1 To .Count
                                                         If LCase$(.Item(f)) = LCase$(p_TEXT_FIRST) Then
                                                             .Item(f).SubItems(CHANNEL_PASSWORD) = p_TEXT_SECOND
-                                                            SendSingle "!pmessage#channel_password" & .Item(f) & "#" & p_TEXT_SECOND & "#", Index
+                                                            SendSingle "!pmessage" & pSplit & "channel_password" & .Item(f) & pSplit & p_TEXT_SECOND & pSplit, Index
                                                             Exit For
                                                         End If
                                                     Next f
                                                 End With
                                             Else
-                                                SendSingle "!pmessage#not_channel_leader#", Index
+                                                SendSingle "!pmessage" & pSplit & "not_channel_leader" & pSplit, Index
                                             End If
                                             Exit For
                                         Else
-                                            If i = .Count Then SendSingle "!pmessage#not_in_channel#" & p_TEXT_FIRST & "#", Index
+                                            If i = .Count Then SendSingle "!pmessage" & pSplit & "not_in_channel" & pSplit & p_TEXT_FIRST & pSplit, Index
                                         End If
                                     Next i
 
@@ -1345,13 +1347,13 @@ Select Case p_Command
                     With frmChannel.lvChannels.ListItems
                         If .Count = 0 Then
                             If LenB(p_TEXT_FIRST) = 0 Then
-                                SendSingle "!pmessage#valid_channel#", Index
+                                SendSingle "!pmessage" & pSplit & "valid_channel" & pSplit, Index
                             Else
-                                SendSingle "!pmessage#not_in_channel#" & Right$(p_CHAT_ARRAY(0), Len(p_CHAT_ARRAY(0)) - 1) & "#", Index
+                                SendSingle "!pmessage" & pSplit & "not_in_channel" & pSplit & Right$(p_CHAT_ARRAY(0), Len(p_CHAT_ARRAY(0)) - 1) & pSplit, Index
                             End If
                         Else
                             If LenB(p_TEXT_FIRST) = 0 Then
-                                SendSingle "!pmessage#valid_channel#", Index
+                                SendSingle "!pmessage" & pSplit & "valid_channel" & pSplit, Index
                             Else
                                 properAccount = Right$(p_CHAT_ARRAY(0), Len(p_CHAT_ARRAY(0)) - 1)
 
@@ -1365,7 +1367,7 @@ Select Case p_Command
                                                     SendMessageToChannel properAccount, Temp, "[" & .Item(f).SubItems(CHANNEL_USER_CHANNEL) & "]" & GetGMFlag(Temp) & GetAFKFlag(Temp) & "[" & Temp & "]: " & Right$(p_MainArray(1), Len(p_MainArray(1)) - Len(properAccount) - 1)
                                                     Exit For
                                                 Else
-                                                    If f = .Count Then SendSingle "!pmessage#not_in_channel#" & properAccount & "#", Index
+                                                    If f = .Count Then SendSingle "!pmessage" & pSplit & "not_in_channel" & pSplit & properAccount & pSplit, Index
                                                 End If
                                             Next f
 
@@ -1402,7 +1404,7 @@ Select Case p_Command
 
                     'Exit if there are more then 75% of caps
                     If Format$(100 * S1 / Len(p_MainArray(1)), "0") > 75 And Options.CAPS_CHECK = 1 Then
-                        SendSingle "!pmessage#message_blocked#", Index
+                        SendSingle "!pmessage" & pSplit & "message_blocked" & pSplit, Index
                         Exit Sub
                     End If
                 End If
@@ -1535,7 +1537,7 @@ Dim j As Long
 
 'Check if user is whispering itself
 If User = Target Then
-    SendSingle "!pmessage#cant_whisper_self#", Index
+    SendSingle "!pmessage" & pSplit & "cant_whisper_self" & pSplit, Index
     Exit Sub
 End If
 
@@ -1545,21 +1547,21 @@ With frmAccountPanel.lvAccounts.ListItems
         If .Item(i).SubItems(INDEX_NAME) = Target Then
             'Check if target is ignoring user
             If IsIgnoring(Target, User) Then
-                SendSingle "!pmessage#is_ignoring_you#" & Target & "#", Index
+                SendSingle "!pmessage" & pSplit & "is_ignoring_you" & pSplit & Target & pSplit, Index
             Else
                 With frmPanel.lvUsers.ListItems
                     For j = 1 To .Count
                         'Check if target is online
                         If .Item(j) = Target Then
-                            SendSingle "!pmessage#you_whisper_to#" & Target & "#" & Message & "#", Index
+                            SendSingle "!pmessage" & pSplit & "you_whisper_to" & pSplit & Target & pSplit & Message & pSplit, Index
                             If LenB(GetAFKFlag(Target)) <> 0 Then
-                                SendSingle "!pmessage#target_is_afk#" & Target & "#", Index
+                                SendSingle "!pmessage" & pSplit & "target_is_afk" & pSplit & Target & pSplit, Index
                             End If
-                            SendSingle "!pmessage#whisper#" & GetGMFlag(User) & GetAFKFlag(User) & "#" & User & "#" & Message & "#", .Item(j).SubItems(INDEX_WINSOCK_ID)
+                            SendSingle "!pmessage" & pSplit & "whisper" & pSplit & GetGMFlag(User) & GetAFKFlag(User) & pSplit & User & pSplit & Message & pSplit, .Item(j).SubItems(INDEX_WINSOCK_ID)
                             Exit For
                         Else
                             If j = .Count Then
-                                SendSingle "!pmessage#message_sent_offline#" & Target & "#", Index
+                                SendSingle "!pmessage" & pSplit & "message_sent_offline" & pSplit & Target & pSplit, Index
                                 frmOfflineMessages.AddOfflineMessage User, Target, Message, Time
                             End If
                         End If
@@ -1568,7 +1570,7 @@ With frmAccountPanel.lvAccounts.ListItems
             End If
             Exit For
         Else
-            If i = .Count Then SendSingle "!pmessage#user_not_found#" & Target & "#", Index
+            If i = .Count Then SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & Target & pSplit, Index
         End If
     Next i
 End With
@@ -1581,11 +1583,11 @@ With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
             If IsMuted = 1 And .Item(i).SubItems(INDEX_MUTED) = "1" Then
-                SendSingle "!pmessage#user_already_muted#" & User & "#", Index
+                SendSingle "!pmessage" & pSplit & "user_already_muted" & pSplit & User & pSplit, Index
                 Exit Sub
 
             ElseIf IsMuted = 0 And .Item(i).SubItems(INDEX_MUTED) = "0" Then
-                SendSingle "!pmessage#user_is_not_muted#" & User & "#", Index
+                SendSingle "!pmessage" & pSplit & "user_is_not_muted" & pSplit & User & pSplit, Index
                 Exit Sub
 
             End If
@@ -1596,15 +1598,15 @@ With frmPanel.lvUsers.ListItems
             'Announce the action
             If LenB(Reason) = 0 Then
                 If IsMuted = 1 Then
-                    SendMessage "!pmessage#muted_by#" & User & "#" & GetAccountByIndex(Index) & "#"
+                    SendMessage "!pmessage" & pSplit & "muted_by" & pSplit & User & pSplit & GetAccountByIndex(Index) & pSplit
                 Else
-                    SendMessage "!pmessage#unmuted_by#" & User & "#" & GetAccountByIndex(Index) & "#"
+                    SendMessage "!pmessage" & pSplit & "unmuted_by" & pSplit & User & pSplit & GetAccountByIndex(Index) & pSplit
                 End If
             Else
                 If IsMuted = 1 Then
-                    SendMessage "!pmessage#muted_by_reason#" & User & "#" & GetAccountByIndex(Index) & "#" & Reason & "#"
+                    SendMessage "!pmessage" & pSplit & "muted_by_reason" & pSplit & User & pSplit & GetAccountByIndex(Index) & pSplit & Reason & pSplit
                 Else
-                    SendMessage "!pmessage#unmuted_by_reason#" & User & "#" & GetAccountByIndex(Index) & "#" & Reason & "#"
+                    SendMessage "!pmessage" & pSplit & "unmuted_by_reason" & pSplit & User & pSplit & GetAccountByIndex(Index) & pSplit & Reason & pSplit
                 End If
             End If
             Exit For
@@ -1612,12 +1614,12 @@ With frmPanel.lvUsers.ListItems
             If i = .Count Then
                 If LenB(Trim$(User)) = 0 Then
                     If IsMuted = 1 Then
-                        SendSingle "!pmessage#incorrect_syntax#.mute [User] [Reason]#", Index
+                        SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & ".mute [User] [Reason]" & pSplit, Index
                     Else
-                        SendSingle "!pmessage#incorrect_syntax#.unmute [User] [Reason]#", Index
+                        SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & ".unmute [User] [Reason]" & pSplit, Index
                     End If
                 Else
-                    SendSingle "!pmessage#user_not_found#" & User & "#", Index
+                    SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & User & pSplit, Index
                 End If
             End If
         End If
@@ -1629,9 +1631,9 @@ Private Function GetAccountList() As String
 Dim i As Long
 
 With frmAccountPanel.lvAccounts.ListItems
-    GetAccountList = "Account List:#"
+    GetAccountList = "Account List:" & pSplit
     For i = 1 To .Count
-        GetAccountList = GetAccountList & .Item(i).SubItems(INDEX_NAME) & "#"
+        GetAccountList = GetAccountList & .Item(i).SubItems(INDEX_NAME) & pSplit
     Next i
 End With
 End Function
@@ -1640,9 +1642,9 @@ Private Function GetOnlineList() As String
 Dim i As Long
 
 With frmPanel.lvUsers.ListItems
-    GetOnlineList = "User List:#"
+    GetOnlineList = "User List:" & pSplit
     For i = 1 To .Count
-        GetOnlineList = GetOnlineList & .Item(i) & "#"
+        GetOnlineList = GetOnlineList & .Item(i) & pSplit
     Next i
 End With
 End Function
@@ -1657,12 +1659,12 @@ With frmAccountPanel.lvAccounts.ListItems
             'If the account is already un/banned send feedback
             If Ban = 1 Then
                 If .Item(i).SubItems(INDEX_BANNED) = "1" Then
-                    SendSingle "!pmessage#already_banned#" & Account & "#", Index
+                    SendSingle "!pmessage" & pSplit & "already_banned" & pSplit & Account & pSplit, Index
                     Exit Sub
                 End If
             Else
                 If .Item(i).SubItems(INDEX_BANNED) = "0" Then
-                    SendSingle "!pmesssage#already_unbanned#" & Account & "#", Index
+                    SendSingle "!pmesssage" & pSplit & "already_unbanned" & pSplit & Account & pSplit, Index
                     Exit Sub
                 End If
             End If
@@ -1673,15 +1675,15 @@ With frmAccountPanel.lvAccounts.ListItems
             'Announce the action
             If LenB(Reason) = 0 Then
                 If Ban = 1 Then
-                    SendMessage "!pmessage#banned_by#" & Account & "#" & GetAccountByIndex(Index) & "#"
+                    SendMessage "!pmessage" & pSplit & "banned_by" & pSplit & Account & pSplit & GetAccountByIndex(Index) & pSplit
                 Else
-                    SendMessage "!pmessage#unbanned_by#" & Account & "#" & GetAccountByIndex(Index) & "#"
+                    SendMessage "!pmessage" & pSplit & "unbanned_by" & pSplit & Account & pSplit & GetAccountByIndex(Index) & pSplit
                 End If
             Else
                 If Ban = 1 Then
-                    SendMessage "!pmessage#banned_by_reason#" & Account & "#" & GetAccountByIndex(Index) & "#" & Reason & "#"
+                    SendMessage "!pmessage" & pSplit & "banned_by_reason" & pSplit & Account & pSplit & GetAccountByIndex(Index) & pSplit & Reason & pSplit
                 Else
-                    SendMessage "!pmessage#unbanned_by_reason#" & Account & "#" & GetAccountByIndex(Index) & "#" & Reason & "#"
+                    SendMessage "!pmessage" & pSplit & "unbanned_by_reason" & pSplit & Account & pSplit & GetAccountByIndex(Index) & pSplit & Reason & pSplit
                 End If
             End If
             Exit For
@@ -1689,12 +1691,12 @@ With frmAccountPanel.lvAccounts.ListItems
             If i = .Count Then
                 If LenB(Trim$(Account)) = 0 Then
                     If Ban = 1 Then
-                        SendSingle "!pmessage#incorrect_syntax#.ban [Name] [Reason]", Index
+                        SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & ".ban [Name] [Reason]" & pSplit, Index
                     Else
-                        SendSingle "!pmessage#incorrect_syntax#.unban [Name] [Reason]", Index
+                        SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & ".unban [Name] [Reason]" & pSplit, Index
                     End If
                 Else
-                    SendSingle "!pmessage#user_not_found" & Account & "#", Index
+                    SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & Account & pSplit, Index
                 End If
             End If
         End If
@@ -1727,7 +1729,7 @@ With frmPanel.lvUsers.ListItems
             UPDATE_ONLINE
             UPDATE_STATUS_BAR
 
-            SendMessage "!pmessage#offline#" & User & "#"
+            SendMessage "!pmessage" & pSplit & "offline" & pSplit & User & pSplit
             frmChannel.LeaveAllChannels User
             Exit For
         End If
@@ -1746,9 +1748,9 @@ With frmAccountPanel.lvAccounts.ListItems
         Else
             If i = .Count Then
                 If LenB(Trim$(Account)) = 0 Then
-                    SendSingle "!pmessage#incorrect_syntax#" & UsedSyntax & " [User]", Index
+                    SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & UsedSyntax & " [User]" & pSplit, Index
                 Else
-                    SendSingle "!pmessage#user_not_found#" & Account & "#", Index
+                    SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & Account & pSplit, Index
                 End If
             End If
         End If
@@ -1767,9 +1769,9 @@ With frmPanel.lvUsers.ListItems
         Else
             If i = .Count Then
                 If LenB(User) = 0 Then
-                    SendSingle "!pmessage#incorrect_syntax#" & UsedSyntax & " [User]", Index
+                    SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & UsedSyntax & " [User]" & pSplit, Index
                 Else
-                    SendSingle "!pmessage#user_not_found#" & User & "#", Index
+                    SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & Account & pSplit, Index
                 End If
             End If
         End If

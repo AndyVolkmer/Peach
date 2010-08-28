@@ -149,7 +149,7 @@ txtToSend.Text = vbNullString
 If LenB(Trim$(TTS)) = 0 Then Exit Sub
 
 'Send public message
-SendMessage "!message#" & RTrim$(TTS) & "#"
+SendMessage "!message" & pSplit & RTrim$(TTS) & pSplit
 End Sub
 
 Private Sub Form_Activate()
@@ -175,11 +175,11 @@ txtToSend.Text = vbNullString
 End Sub
 
 Private Sub pAddToFriendlist_Click()
-SendMessage "!friend#-add#" & menuUser & "#"
+SendMessage "!friend" & pSplit & "-add" & pSplit & menuUser & pSplit
 End Sub
 
 Private Sub pIgnoreUser_Click()
-SendMessage "!ignore#-add#" & menuUser & "#"
+SendMessage "!ignore" & pSplit & "-add" & pSplit & menuUser & pSplit
 End Sub
 
 Private Sub pWhisper_Click()

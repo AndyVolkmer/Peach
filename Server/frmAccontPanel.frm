@@ -213,7 +213,7 @@ Dim pMessage            As String
 On Error GoTo HandleError
 
 RegSock(Index).GetData pMessage
-array1 = Split(pMessage, "#")
+array1 = Split(pMessage, pSplit)
 
 If UBound(array1) > -1 Then
     pCommand = array1(0)
@@ -226,7 +226,7 @@ Select Case pCommand
             'Check if the account already exists
             For i = 1 To .Count
                 If LCase$(.Item(i).SubItems(INDEX_NAME)) = LCase$(array1(1)) Then
-                    If RegSock(Index).State = 7 Then RegSock(Index).SendData "!nameexist#"
+                    If RegSock(Index).State = 7 Then RegSock(Index).SendData "!nameexist" & pSplit
                     Exit Sub
                 End If
             Next i
@@ -234,14 +234,14 @@ Select Case pCommand
             'Check if the email is already used
             For i = 1 To .Count
                 If LCase$(.Item(i).SubItems(INDEX_EMAIL)) = LCase$(array1(6)) Then
-                    If RegSock(Index).State = 7 Then RegSock(Index).SendData "!emailtaken#"
+                    If RegSock(Index).State = 7 Then RegSock(Index).SendData "!emailtaken" & pSplit
                     Exit Sub
                 End If
             Next i
         End With
 
         RegisterAccount array1(1), array1(2), "0", "0", array1(3), array1(4), array1(5), array1(6)
-        RegSock(Index).SendData "!done#"
+        RegSock(Index).SendData "!done" & pSplit
 
     'Check the secret question and send password
     Case "!request_password"
@@ -253,16 +253,16 @@ Select Case pCommand
                     If .Item(i).SubItems(INDEX_SECRET_QUESTION) = array1(2) Then
                         'Check if the answer is the same
                         If .Item(i).SubItems(INDEX_SECRET_ANSWER) = array1(3) Then
-                            If RegSock(Index).State = 7 Then RegSock(Index).SendData "!successfull#" & .Item(i).SubItems(INDEX_PASSWORD) & "#" & .Item(i).SubItems(INDEX_NAME) & "#"
+                            If RegSock(Index).State = 7 Then RegSock(Index).SendData "!successfull" & pSplit & .Item(i).SubItems(INDEX_PASSWORD) & pSplit & .Item(i).SubItems(INDEX_NAME) & pSplit
                         Else
-                            If RegSock(Index).State = 7 Then RegSock(Index).SendData "!error_fp#"
+                            If RegSock(Index).State = 7 Then RegSock(Index).SendData "!error_fp" & pSplit
                         End If
                     Else
-                        If RegSock(Index).State = 7 Then RegSock(Index).SendData "!error_fp#"
+                        If RegSock(Index).State = 7 Then RegSock(Index).SendData "!error_fp" & pSplit
                     End If
                     Exit For
                 Else
-                    If i = .Count Then If RegSock(Index).State = 7 Then RegSock(Index).SendData "!email_not_exist#"
+                    If i = .Count Then If RegSock(Index).State = 7 Then RegSock(Index).SendData "!email_not_exist" & pSplit
                 End If
             Next i
         End With
@@ -271,5 +271,5 @@ End Select
 Exit Sub
 
 HandleError:
-    If RegSock(Index).State = 7 Then RegSock(Index).SendData "!error#"
+    If RegSock(Index).State = 7 Then RegSock(Index).SendData "!error" & pSplit
 End Sub

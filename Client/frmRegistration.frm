@@ -454,7 +454,7 @@ If frmMain.RegSock.State <> 7 Then
     Exit Sub
 End If
 
-frmMain.RegSock.SendData "!register#" & Trim$(txtAccount) & "#" & txtPassword1 & "#" & cmbSecretQuestion.ListIndex & "#" & txtSecretAnswer & "#" & cmbGender.ListIndex & "#" & Trim$(txtEmail.Text) & "#"
+frmMain.RegSock.SendData "!register" & pSplit & Trim$(txtAccount) & pSplit & txtPassword1 & pSplit & cmbSecretQuestion.ListIndex & pSplit & txtSecretAnswer & pSplit & cmbGender.ListIndex & pSplit & Trim$(txtEmail.Text) & pSplit
 End Sub
 
 Private Sub Form_Activate()
