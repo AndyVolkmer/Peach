@@ -1483,7 +1483,7 @@ With frmPanel.lvUsers.ListItems
                     Case 0
                         If TD1(j) <> 0 Then
                             If Left$(TD1(j), 1) = 0 Then
-                                TD = TD & Left$(TD1(j), 1) & " hours"
+                                TD = TD & Right$(TD1(j), 1) & " hours "
                             Else
                                 TD = TD & TD1(j) & " hours "
                             End If
