@@ -351,7 +351,7 @@ NID.uId = vbNull
 NID.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
 NID.uCallBackMessage = WM_MOUSEMOVE
 NID.hIcon = frmMain.Icon        'the icon will be your frmMain project icon
-NID.szTip = "Peach" & vbNullChar
+NID.szTip = "Peach - Server" & vbNullChar
 Shell_NotifyIcon NIM_ADD, NID
 End Sub
 

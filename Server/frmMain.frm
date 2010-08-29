@@ -266,7 +266,7 @@ InsertIntoRegistry "Server\Configuration", "Left", Left
 End Sub
 
 Private Sub Winsock1_Close(Index As Integer)
-KickUser GetAccountByIndex(Index)
+RemoveUserByIndex Index
 End Sub
 
 Private Sub Winsock1_ConnectionRequest(Index As Integer, ByVal requestID As Long)
@@ -449,7 +449,7 @@ Select Case p_Command
                     'If the account is already beeing used kick first instance
                     For i = 1 To .Count
                         If LCase$(.Item(i)) = LCase$(p_MainArray(1)) Then
-                            KickUser .Item(i)
+                            RemoveUserByIndex .Item(i).SubItems(INDEX_WINSOCK_ID)
                             Exit For
                         End If
                     Next i
@@ -569,7 +569,7 @@ Select Case p_Command
 
                         For i = 1 To .Count
                             If .Item(i) = properAccount Then
-                                KickUser .Item(i)
+                                RemoveUserByIndex .Item(i).SubItems(INDEX_WINSOCK_ID)
                                 Exit For
                             Else
                                 If i = .Count Then
@@ -981,7 +981,7 @@ Select Case p_Command
                                 With frmPanel.lvUsers.ListItems
                                     For m = 1 To .Count
                                         If .Item(m) = properAccount Then
-                                            KickUser properAccount
+                                            RemoveUserByIndex GetIndexByAccount(properAccount)
                                             Exit For
                                         End If
                                     Next m
@@ -1168,7 +1168,7 @@ Select Case p_Command
                     SendSingle "!pmessage" & pSplit & "online_time" & pSplit & Trim$(GetOnlineTime(GetAccountByIndex(Index))) & pSplit, Index
 
                 Case "/logout"
-                    KickUser GetAccountByIndex(Index)
+                    RemoveUserByIndex Index
 
                 Case "/sudo"
                     If LenB(p_TEXT_FIRST) = 0 Then
@@ -1419,7 +1419,7 @@ Select Case p_Command
         SetLastMessage E, p_MainArray(1)
 
     Case Else
-        SendSingle "ERROR", Index
+        RemoveUserByIndex Index
 
 End Select
 Next k
@@ -1704,33 +1704,35 @@ With frmAccountPanel.lvAccounts.ListItems
 End With
 End Sub
 
-Private Sub KickUser(User As String)
-Dim i As Long
-Dim j As Long
+Public Sub RemoveUserByIndex(Index As Integer)
+Dim i    As Long
+Dim j    As Long
 
 With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
-        If .Item(i) = User Then
-            Unload Winsock1(.Item(i).SubItems(INDEX_WINSOCK_ID))
+        If .Item(i).SubItems(INDEX_WINSOCK_ID) = Index Then
+            Unload Winsock1(Index)
 
-            pDB.ExecuteCommand "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & User & "'"
+            If LenB(.Item(i)) > 0 Then
+                pDB.ExecuteCommand "UPDATE " & DATABASE_TABLE_ACCOUNTS & " SET LastIP1 = '" & .Item(i).SubItems(INDEX_IP) & "' WHERE Name1 = '" & .Item(i) & "'"
 
-            With frmAccountPanel.lvAccounts.ListItems
-                For j = 1 To .Count
-                    If .Item(j).SubItems(INDEX_NAME) = User Then
-                        .Item(j).SubItems(INDEX_LAST_IP) = frmPanel.lvUsers.ListItems.Item(i).SubItems(INDEX_IP)
-                        Exit For
-                    End If
-                Next j
-            End With
-
+                With frmAccountPanel.lvAccounts.ListItems
+                    For j = 1 To .Count
+                        If .Item(j).SubItems(INDEX_NAME) = frmPanel.lvUsers.ListItems.Item(i) Then
+                            .Item(j).SubItems(INDEX_LAST_IP) = frmPanel.lvUsers.ListItems.Item(i).SubItems(INDEX_IP)
+                            Exit For
+                        End If
+                    Next j
+                End With
+                
+                SendMessage "!pmessage" & pSplit & "offline" & pSplit & .Item(i) & pSplit
+                frmChannel.LeaveAllChannels .Item(i)
+            End If
+            
             .Remove (i)
-
+            
             UPDATE_ONLINE
             UPDATE_STATUS_BAR
-
-            SendMessage "!pmessage" & pSplit & "offline" & pSplit & User & pSplit
-            frmChannel.LeaveAllChannels User
             Exit For
         End If
     Next i
@@ -1817,7 +1819,7 @@ End With
 End Function
 
 Private Sub Winsock1_Error(Index As Integer, ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-KickUser GetAccountByIndex(Index)
+RemoveUserByIndex Index
 End Sub
 
 Public Sub SetupForms(NewForm As Form)
@@ -1836,6 +1838,19 @@ With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If CInt(.Item(i).SubItems(INDEX_WINSOCK_ID)) = Index Then
             GetAccountByIndex = .Item(i)
+            Exit For
+        End If
+    Next i
+End With
+End Function
+
+Private Function GetIndexByAccount(Account As String) As Long
+Dim i As Long
+
+With frmPanel.lvUsers.ListItems
+    For i = 1 To .Count
+        If .Item(i) = Account Then
+            GetIndexByAccount = .Item(i).SubItems(INDEX_WINSOCK_ID)
             Exit For
         End If
     Next i

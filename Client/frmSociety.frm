@@ -58,9 +58,12 @@ Begin VB.Form frmSociety
       TabCaption(1)   =   "Online List"
       TabPicture(1)   =   "frmSociety.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "cmdAddToIgnore"
+      Tab(1).Control(0)=   "lvOnlineList"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdAddToFriend"
-      Tab(1).Control(2)=   "lvOnlineList"
+      Tab(1).Control(1).Enabled=   0   'False
+      Tab(1).Control(2)=   "cmdAddToIgnore"
+      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Ignore List"
       TabPicture(2)   =   "frmSociety.frx":0038
@@ -71,6 +74,7 @@ Begin VB.Form frmSociety
       Tab(2).ControlCount=   3
       Begin VB.CommandButton cmdAddToIgnore 
          Caption         =   "&Add to Ignore"
+         Enabled         =   0   'False
          Height          =   375
          Left            =   -69960
          TabIndex        =   9
@@ -79,6 +83,7 @@ Begin VB.Form frmSociety
       End
       Begin VB.CommandButton cmdAddToFriend 
          Caption         =   "&Add to Friends"
+         Enabled         =   0   'False
          Height          =   375
          Left            =   -72000
          TabIndex        =   8
@@ -368,8 +373,6 @@ SendMessage "!ignore" & pSplit & "-add" & pSplit & uString & pSplit
 End Sub
 
 Private Sub TriggerOnlineEvent()
-Dim i As Long
-
 If lvOnlineList.ListItems.Count = 0 Then Exit Sub
 
 If lvOnlineList.SelectedItem.Text = frmMain.txtAccount.Text Then

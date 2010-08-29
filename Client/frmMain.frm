@@ -594,7 +594,6 @@ Dim Message    As String
 Dim PreArray() As String
 Dim Command    As String
 Dim StrArr()   As String
-Dim StrArr2()  As String
 Dim Buffer     As String
 
 'Get data from socket
