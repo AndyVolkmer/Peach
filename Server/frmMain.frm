@@ -422,7 +422,7 @@ Select Case p_Command
             If .Count = 0 Then
                 SendSingle "!login" & pSplit & "Account" & pSplit, Index
             Else
-                'Authentication; password, is banned?, account etc ..
+                'Authentication: password, is banned?, account etc ..
                 For i = 1 To .Count
                     If LCase$(.Item(i).SubItems(INDEX_NAME)) = LCase$(p_MainArray(1)) Then
                         'Ban Check
@@ -500,10 +500,10 @@ Select Case p_Command
             Select Case Left$(p_CHAT_ARRAY(0), 1)
                 Case Chr(46)
                     If GetLevel(GetAccountByIndex(Index)) > 0 Then IsCommand = True
-    
+
                 Case Chr(47)
                     IsSlash = True
-    
+
             End Select
         End If
 
@@ -981,7 +981,7 @@ Select Case p_Command
                                 With frmPanel.lvUsers.ListItems
                                     For m = 1 To .Count
                                         If .Item(m) = properAccount Then
-                                            RemoveUserByIndex GetIndexByAccount(properAccount)
+                                            RemoveUserByIndex .Item(m).SubItems(INDEX_WINSOCK_ID)
                                             Exit For
                                         End If
                                     Next m
@@ -1128,11 +1128,7 @@ Select Case p_Command
 
                     Roll = GetRandomNumber(MinRoll, MaxRoll)
 
-                    properAccount = GetAccountByIndex(Index)
-
-                    SendProtectedMessage properAccount, "!pmessage" & pSplit & "roll" & pSplit & properAccount & pSplit & Roll & pSplit & MinRoll & pSplit & MaxRoll & pSplit
-
-                    properAccount = vbNullString
+                    SendProtectedMessage properAccount, "!pmessage" & pSplit & "roll" & pSplit & GetAccountByIndex(Index) & pSplit & Roll & pSplit & MinRoll & pSplit & MaxRoll & pSplit
 
                 'Whisper X to Z from Y
                 Case "/w", "/whisper"
@@ -1766,7 +1762,7 @@ Dim i As Long
 With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            SendSingle vbCrLf & "User information about '" & .Item(i) & "'" & vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & vbCrLf & " Muted: " & .Item(i).SubItems(INDEX_MUTED) & vbCrLf & " Login Time: " & .Item(i).SubItems(INDEX_LOGIN_TIME) & vbCrLf & " GM Flag: " & .Item(i).SubItems(INDEX_GM_FLAG) & vbCrLf & " AFK Flag: " & .Item(i).SubItems(INDEX_AFK_FLAG), Index
+            SendSingle vbCrLf & "User information about '" & .Item(i) & "'" & vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & vbCrLf & " Muted: " & .Item(i).SubItems(INDEX_MUTED) & vbCrLf & " Login Time: " & .Item(i).SubItems(INDEX_LOGIN_TIME) & vbCrLf & " GM Flag: " & .Item(i).SubItems(INDEX_GM_FLAG) & vbCrLf & " AFK Flag: " & .Item(i).SubItems(INDEX_AFK_FLAG) & vbCrLf & " Is Root: " & .Item(i).SubItems(INDEX_IS_ROOT), Index
             Exit For
         Else
             If i = .Count Then
