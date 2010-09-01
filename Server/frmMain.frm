@@ -1741,7 +1741,17 @@ Dim i As Long
 With frmAccountPanel.lvAccounts.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(INDEX_NAME)) = LCase(Account) Then
-            SendSingle vbCrLf & " Account information about '" & Account & "'" & vbCrLf & " ID: " & .Item(i) & vbCrLf & " Password: " & .Item(i).SubItems(INDEX_PASSWORD) & vbCrLf & " Registration Time: " & .Item(i).SubItems(INDEX_TIME) & vbCrLf & " Registration Date: " & .Item(i).SubItems(INDEX_DATE) & vbCrLf & " Banned: " & .Item(i).SubItems(INDEX_BANNED) & vbCrLf & " Level: " & .Item(i).SubItems(INDEX_LEVEL) & vbCrLf & " Gender: " & .Item(i).SubItems(INDEX_GENDER) & vbCrLf & " Email: " & .Item(i).SubItems(INDEX_EMAIL) & vbCrLf & " Last IP:  " & .Item(i).SubItems(INDEX_LAST_IP), Index
+            SendSingle vbCrLf & _
+                " Account information about '" & Account & "'" & _
+                vbCrLf & " ID: " & .Item(i) & _
+                vbCrLf & " Password: " & .Item(i).SubItems(INDEX_PASSWORD) & _
+                vbCrLf & " Registration Time: " & .Item(i).SubItems(INDEX_TIME) & _
+                vbCrLf & " Registration Date: " & .Item(i).SubItems(INDEX_DATE) & _
+                vbCrLf & " Banned: " & .Item(i).SubItems(INDEX_BANNED) & _
+                vbCrLf & " Level: " & .Item(i).SubItems(INDEX_LEVEL) & _
+                vbCrLf & " Gender: " & .Item(i).SubItems(INDEX_GENDER) & _
+                vbCrLf & " Email: " & .Item(i).SubItems(INDEX_EMAIL) & _
+                vbCrLf & " Last IP:  " & .Item(i).SubItems(INDEX_LAST_IP), Index
             Exit For
         Else
             If i = .Count Then
@@ -1762,7 +1772,15 @@ Dim i As Long
 With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            SendSingle vbCrLf & "User information about '" & .Item(i) & "'" & vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & vbCrLf & " Muted: " & .Item(i).SubItems(INDEX_MUTED) & vbCrLf & " Login Time: " & .Item(i).SubItems(INDEX_LOGIN_TIME) & vbCrLf & " GM Flag: " & .Item(i).SubItems(INDEX_GM_FLAG) & vbCrLf & " AFK Flag: " & .Item(i).SubItems(INDEX_AFK_FLAG) & vbCrLf & " Is Root: " & .Item(i).SubItems(INDEX_IS_ROOT), Index
+            SendSingle vbCrLf & "User information about '" & .Item(i) & "'" & _
+                vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & _
+                vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & _
+                vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & _
+                vbCrLf & " Muted: " & .Item(i).SubItems(INDEX_MUTED) & _
+                vbCrLf & " Login Time: " & .Item(i).SubItems(INDEX_LOGIN_TIME) & _
+                vbCrLf & " GM Flag: " & .Item(i).SubItems(INDEX_GM_FLAG) & _
+                vbCrLf & " AFK Flag: " & .Item(i).SubItems(INDEX_AFK_FLAG) & _
+                vbCrLf & " Is Root: " & .Item(i).SubItems(INDEX_IS_ROOT), Index
             Exit For
         Else
             If i = .Count Then

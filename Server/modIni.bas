@@ -47,7 +47,6 @@ Dim KEYLEN          As Integer
 Dim VAR             As Integer
 Dim VARENDOFLINE    As Integer
 Dim NF              As Integer
-Dim X               As Integer
 
 AssignVariables:
     NF = FreeFile

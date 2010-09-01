@@ -126,7 +126,6 @@ End Sub
 
 Public Sub JoinChannel(Channel As String, User As String, Index As Integer)
 Dim i As Long
-Dim j As Long
 
 'If channel exist join else create new one
 With lvChannels.ListItems
