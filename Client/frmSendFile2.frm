@@ -177,8 +177,7 @@ If LV.ColumnHeaders(Column + 1).Width < TLen Then LV.ColumnHeaders(Column + 1).W
 End Sub
 
 Private Sub SckReceiveFile_ConnectionRequest(Index As Integer, ByVal requestID As Long)
-Dim i   As Long
-Dim LI  As ListItem
+Dim i As Long
 
 For i = 1 To SckReceiveFile.UBound
     If SckReceiveFile(i).State = sckClosed Then Exit For

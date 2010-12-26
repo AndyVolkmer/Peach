@@ -544,8 +544,8 @@ Select Case p_Command
                 Reason = Reason & p_CHAT_ARRAY(i) & " "
             Next i
 
-            Select Case LCase$(p_CHAT_ARRAY(0))
-                Case ".show"
+            Select Case LCase$(Right(p_CHAT_ARRAY(0), Len(p_CHAT_ARRAY(0)) - 1))
+                Case "show"
                     If IsPartOf(p_TEXT_FIRST, "accounts") Then
                         SendSingle "!split_text" & pSplit & GetAccountList, Index
 
@@ -557,13 +557,13 @@ Select Case p_Command
 
                     End If
 
-                Case ".userinfo", ".uinfo"
+                Case "userinfo", "uinfo"
                     GetUserInfo GetProperAccountName(p_TEXT_FIRST), p_CHAT_ARRAY(0), Index
 
-                Case ".accountinfo", ".accinfo", ".ainfo"
+                Case "accountinfo", "accinfo", "ainfo"
                     GetAccountInfo GetProperAccountName(p_TEXT_FIRST), p_CHAT_ARRAY(0), Index
 
-                Case ".kick"
+                Case "kick"
                     With frmPanel.lvUsers.ListItems
                         properAccount = GetProperAccountName(p_TEXT_FIRST)
 
@@ -585,19 +585,19 @@ Select Case p_Command
                         properAccount = vbNullString
                     End With
 
-                Case ".ban"
+                Case "ban"
                     Ban GetProperAccountName(p_TEXT_FIRST), 1, Trim$(Reason), Index
 
-                Case ".unban"
+                Case "unban"
                     Ban GetProperAccountName(p_TEXT_FIRST), 0, Trim$(Reason), Index
 
-                Case ".mute"
+                Case "mute"
                     MuteUser GetProperAccountName(p_TEXT_FIRST), 1, Trim$(Reason), Index
 
-                Case ".unmute"
+                Case "unmute"
                     MuteUser GetProperAccountName(p_TEXT_FIRST), 0, Trim$(Reason), Index
 
-                Case ".announce", ".ann", ".notify"
+                Case "announce", "ann", "notify"
                     Dim p_ANN_MSG As String
 
                     'Capture announce message
@@ -609,20 +609,20 @@ Select Case p_Command
                         SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & p_CHAT_ARRAY(0) & " [Text]" & pSplit, Index
                     Else
                         Select Case LCase$(p_CHAT_ARRAY(0))
-                            Case ".announce", ".ann"
+                            Case "announce", "ann"
                                 Reason = GetAccountByIndex(Index)
                                 SendMessage "!pmessage" & pSplit & "announce" & pSplit & GetGMFlag(Reason) & GetAFKFlag(Reason) & pSplit & Reason & pSplit & p_ANN_MSG & pSplit
 
-                            Case ".notify"
+                            Case "notify"
                                 SendMessage "!msgbox" & pSplit & GetAccountByIndex(Index) & " - " & p_ANN_MSG & pSplit
 
                         End Select
                     End If
 
-                Case ".help", ".command", ".commands"
+                Case "help", "command", "commands"
                     SendSingle GetCommands, Index
-
-                Case ".change", ".modify", ".mod"
+ 
+                Case "change", "modify", "mod"
                     Select Case LCase$(p_TEXT_FIRST)
                         Case "name"
                             properAccount = GetProperAccountName(p_TEXT_SECOND)
@@ -901,7 +901,7 @@ Select Case p_Command
 
                     End Select
 
-                Case ".reload"
+                Case "reload"
                     Dim loadTime As Long
 
                     With Database
@@ -942,7 +942,7 @@ Select Case p_Command
                         End Select
                     End With
 
-                Case ".clear"
+                Case "clear"
                     If LenB(p_TEXT_FIRST) = 0 Then
                         SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & ".clear [User]" & pSplit, Index
                     Else
@@ -972,7 +972,7 @@ Select Case p_Command
                         End With
                     End If
 
-                Case ".delete", ".del"
+                Case "delete", "del"
                     With frmAccountPanel.lvAccounts.ListItems
                         properAccount = GetProperAccountName(p_TEXT_FIRST)
 
@@ -1010,7 +1010,7 @@ Select Case p_Command
                         properAccount = vbNullString
                     End With
 
-                Case ".gm"
+                Case "gm"
                     With frmPanel.lvUsers.ListItems
                         Select Case LCase$(p_TEXT_FIRST)
                             Case "on"
@@ -1756,7 +1756,7 @@ With frmAccountPanel.lvAccounts.ListItems
         Else
             If i = .Count Then
                 If LenB(Trim$(Account)) = 0 Then
-                    SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & UsedSyntax & " [User]" & pSplit, Index
+                    SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & "." & UsedSyntax & " [User]" & pSplit, Index
                 Else
                     SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & Account & pSplit, Index
                 End If
@@ -1785,7 +1785,7 @@ With frmPanel.lvUsers.ListItems
         Else
             If i = .Count Then
                 If LenB(User) = 0 Then
-                    SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & UsedSyntax & " [User]" & pSplit, Index
+                    SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & "." & UsedSyntax & " [User]" & pSplit, Index
                 Else
                     SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & User & pSplit, Index
                 End If
