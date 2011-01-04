@@ -13,15 +13,6 @@ pStartTime = timeGetTime
 'Load windows own style
 InitCommonControls
 
-'TRYING SOMETHING OUT
-Load frmAccountPanel
-Load frmChannel
-Load frmChat
-Load frmConfig
-Load frmFriendIgnoreList
-Load frmOfflineMessages
-Load frmPanel
-
 'Load registry values
 LoadRegistry
 
@@ -85,7 +76,7 @@ Dim L As Long
     L = SetWindowLong(frmMain.hwnd, GWL_STYLE, L)
 
 frmMain.SetupForms frmConfig
-WriteLog "Loaded in " & timeGetTime - pStartTime & " ms."
+WriteLog "Finished loading in " & timeGetTime - pStartTime & " ms."
 End Sub
 
 Private Sub LoadRegistry()

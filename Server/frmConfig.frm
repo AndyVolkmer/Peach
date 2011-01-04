@@ -27,12 +27,13 @@ Begin VB.Form frmConfig
       Height          =   1815
       Left            =   120
       TabIndex        =   8
-      Top             =   1440
+      Top             =   1200
       Width           =   7215
       _ExtentX        =   12726
       _ExtentY        =   3201
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmConfig.frx":0000
@@ -52,7 +53,7 @@ Begin VB.Form frmConfig
       Height          =   375
       Left            =   5760
       TabIndex        =   3
-      Top             =   3360
+      Top             =   3120
       Width           =   1575
    End
    Begin VB.CommandButton Command1 
@@ -60,14 +61,14 @@ Begin VB.Form frmConfig
       Height          =   375
       Left            =   4200
       TabIndex        =   4
-      Top             =   3360
+      Top             =   3120
       Width           =   1575
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00F4F4F4&
       Caption         =   "Connection Settings"
       ForeColor       =   &H00000000&
-      Height          =   1215
+      Height          =   975
       Left            =   120
       TabIndex        =   0
       Top             =   120
@@ -79,7 +80,7 @@ Begin VB.Form frmConfig
          MaxLength       =   5
          TabIndex        =   2
          Text            =   "4728"
-         Top             =   600
+         Top             =   480
          Width           =   855
       End
       Begin VB.Label Label5 
@@ -87,9 +88,9 @@ Begin VB.Form frmConfig
          Caption         =   "IP:"
          ForeColor       =   &H00000040&
          Height          =   255
-         Left            =   1320
+         Left            =   1200
          TabIndex        =   5
-         Top             =   600
+         Top             =   480
          Width           =   1695
       End
       Begin VB.Label Label1 
@@ -99,7 +100,7 @@ Begin VB.Form frmConfig
          Height          =   255
          Left            =   240
          TabIndex        =   1
-         Top             =   360
+         Top             =   240
          Width           =   975
       End
    End
@@ -109,7 +110,7 @@ Begin VB.Form frmConfig
       Height          =   255
       Left            =   120
       TabIndex        =   7
-      Top             =   3480
+      Top             =   3120
       Width           =   1335
    End
    Begin VB.Label Label8 
@@ -118,7 +119,7 @@ Begin VB.Form frmConfig
       Height          =   255
       Left            =   120
       TabIndex        =   6
-      Top             =   3720
+      Top             =   3360
       Width           =   1335
    End
 End

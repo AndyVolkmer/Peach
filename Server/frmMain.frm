@@ -378,6 +378,7 @@ Select Case p_Command
         End Select
 
     Case "!ignore"
+Ignore:
         Select Case p_MainArray(1)
             'Update Ignore list
             Case "-get"
@@ -608,7 +609,7 @@ Select Case p_Command
                     If LenB(p_ANN_MSG) = 0 Then
                         SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & p_CHAT_ARRAY(0) & " [Text]" & pSplit, Index
                     Else
-                        Select Case LCase$(p_CHAT_ARRAY(0))
+                        Select Case LCase$(Right(p_CHAT_ARRAY(0), Len(p_CHAT_ARRAY(0)) - 1))
                             Case "announce", "ann"
                                 Reason = GetAccountByIndex(Index)
                                 SendMessage "!pmessage" & pSplit & "announce" & pSplit & GetGMFlag(Reason) & GetAFKFlag(Reason) & pSplit & Reason & pSplit & p_ANN_MSG & pSplit
@@ -1297,6 +1298,24 @@ Select Case p_Command
                         End If
                     End If
 
+                Case "/ignore"
+                    If UBound(p_CHAT_ARRAY) > 0 Then
+                        p_MainArray(1) = "-add"
+                        p_MainArray(2) = p_CHAT_ARRAY(1)
+                        GoTo Ignore
+                    Else
+                        SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & "/ignore [Name]", Index
+                    End If
+
+                Case "/unignore"
+                    If UBound(p_CHAT_ARRAY) > 0 Then
+                        p_MainArray(1) = "-remove"
+                        p_MainArray(2) = p_CHAT_ARRAY(1)
+                        GoTo Ignore
+                    Else
+                        SendSingle "!pmessage" & pSplit & "incorrect_syntax" & pSplit & "/unignore [Name]", Index
+                    End If
+
                 Case Else
                     'Emotes
                     properAccount = GetAccountByIndex(Index)
@@ -1342,11 +1361,7 @@ Select Case p_Command
 
                     With frmChannel.lvChannels.ListItems
                         If .Count = 0 Then
-                            If LenB(p_TEXT_FIRST) = 0 Then
-                                SendSingle "!pmessage" & pSplit & "valid_channel" & pSplit, Index
-                            Else
-                                SendSingle "!pmessage" & pSplit & "not_in_channel" & pSplit & Right$(p_CHAT_ARRAY(0), Len(p_CHAT_ARRAY(0)) - 1) & pSplit, Index
-                            End If
+                            SendSingle "!pmessage" & pSplit & "unknown_command" & pSplit, Index
                         Else
                             If LenB(p_TEXT_FIRST) = 0 Then
                                 SendSingle "!pmessage" & pSplit & "valid_channel" & pSplit, Index
@@ -1532,38 +1547,47 @@ Dim i As Long
 Dim j As Long
 
 'Check if user is whispering itself
-If User = Target Then
-    SendSingle "!pmessage" & pSplit & "cant_whisper_self" & pSplit, Index
-    Exit Sub
-End If
+'If User = Target Then
+'    SendSingle "!pmessage" & pSplit & "cant_whisper_self" & pSplit, Index
+'    Exit Sub
+'End If
 
 With frmAccountPanel.lvAccounts.ListItems
     For i = 1 To .Count
         'Check if user exist
         If .Item(i).SubItems(INDEX_NAME) = Target Then
+
             'Check if target is ignoring user
             If IsIgnoring(Target, User) Then
+                'Send message to user that target is ignoring
                 SendSingle "!pmessage" & pSplit & "is_ignoring_you" & pSplit & Target & pSplit, Index
-            Else
-                With frmPanel.lvUsers.ListItems
-                    For j = 1 To .Count
-                        'Check if target is online
-                        If .Item(j) = Target Then
-                            SendSingle "!pmessage" & pSplit & "you_whisper_to" & pSplit & Target & pSplit & Message & pSplit, Index
-                            If LenB(GetAFKFlag(Target)) <> 0 Then
-                                SendSingle "!pmessage" & pSplit & "target_is_afk" & pSplit & Target & pSplit, Index
-                            End If
-                            SendSingle "!pmessage" & pSplit & "whisper" & pSplit & GetGMFlag(User) & GetAFKFlag(User) & pSplit & User & pSplit & Message & pSplit, .Item(j).SubItems(INDEX_WINSOCK_ID)
-                            Exit For
-                        Else
-                            If j = .Count Then
-                                SendSingle "!pmessage" & pSplit & "message_sent_offline" & pSplit & Target & pSplit, Index
-                                frmOfflineMessages.AddOfflineMessage User, Target, Message, Time
-                            End If
-                        End If
-                    Next j
-                End With
+                Exit Sub
             End If
+
+            'Check if target is online
+            With frmPanel.lvUsers.ListItems
+                For j = 1 To .Count
+                    If .Item(j) = Target Then
+                        'Send message to user that he is whispering target
+                        SendSingle "!pmessage" & pSplit & "you_whisper_to" & pSplit & Target & pSplit & Message & pSplit, Index
+
+                        'Check if target is afk
+                        If LenB(GetAFKFlag(Target)) <> 0 Then SendSingle "!pmessage" & pSplit & "target_is_afk" & pSplit & Target & pSplit, Index
+
+                        'Send message to target
+                        SendSingle "!pmessage" & pSplit & "whisper" & pSplit & GetGMFlag(User) & GetAFKFlag(User) & pSplit & User & pSplit & Message & pSplit, .Item(j).SubItems(INDEX_WINSOCK_ID)
+                        Exit For
+                    Else
+                        If j = .Count Then
+                            'Send message to user that message has been sent to offline target
+                            SendSingle "!pmessage" & pSplit & "message_sent_offline" & pSplit & Target & pSplit, Index
+
+                            'Add message to offline messages list
+                            frmOfflineMessages.AddOfflineMessage User, Target, Message, Time
+                        End If
+                    End If
+                Next j
+            End With
             Exit For
         Else
             If i = .Count Then SendSingle "!pmessage" & pSplit & "user_not_found" & pSplit & Target & pSplit, Index
@@ -1629,7 +1653,7 @@ Dim i As Long
 With frmAccountPanel.lvAccounts.ListItems
     GetAccountList = "Account List:" & pSplit
     For i = 1 To .Count
-        GetAccountList = GetAccountList & .Item(i).SubItems(INDEX_NAME) & pSplit
+        GetAccountList = GetAccountList & .Item(i) & ": " & .Item(i).SubItems(INDEX_NAME) & ": " & .Item(i).SubItems(INDEX_LEVEL) & pSplit
     Next i
 End With
 End Function
@@ -1720,13 +1744,13 @@ With frmPanel.lvUsers.ListItems
                         End If
                     Next j
                 End With
-                
+
                 SendMessage "!pmessage" & pSplit & "offline" & pSplit & .Item(i) & pSplit
                 frmChannel.LeaveAllChannels .Item(i)
             End If
-            
+
             .Remove (i)
-            
+
             UPDATE_ONLINE
             UPDATE_STATUS_BAR
             Exit For
@@ -1852,19 +1876,6 @@ With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If CInt(.Item(i).SubItems(INDEX_WINSOCK_ID)) = Index Then
             GetAccountByIndex = .Item(i)
-            Exit For
-        End If
-    Next i
-End With
-End Function
-
-Private Function GetIndexByAccount(Account As String) As Long
-Dim i As Long
-
-With frmPanel.lvUsers.ListItems
-    For i = 1 To .Count
-        If .Item(i) = Account Then
-            GetIndexByAccount = .Item(i).SubItems(INDEX_WINSOCK_ID)
             Exit For
         End If
     Next i

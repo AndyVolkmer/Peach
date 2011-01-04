@@ -472,6 +472,7 @@ Label5.BackColor = SC
 Label7.BackColor = SC
 Label8.BackColor = SC
 Label9.BackColor = SC
+lblEmail.BackColor = SC
 Picture1.BackColor = SC
 End Sub
 
