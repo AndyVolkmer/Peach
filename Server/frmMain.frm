@@ -1766,7 +1766,7 @@ With frmAccountPanel.lvAccounts.ListItems
     For i = 1 To .Count
         If LCase(.Item(i).SubItems(INDEX_NAME)) = LCase(Account) Then
             SendSingle vbCrLf & _
-                " Account information about '" & Account & "'" & _
+                " Account information for '" & Account & "'" & _
                 vbCrLf & " ID: " & .Item(i) & _
                 vbCrLf & " Password: " & .Item(i).SubItems(INDEX_PASSWORD) & _
                 vbCrLf & " Registration Time: " & .Item(i).SubItems(INDEX_TIME) & _
@@ -1796,7 +1796,7 @@ Dim i As Long
 With frmPanel.lvUsers.ListItems
     For i = 1 To .Count
         If .Item(i) = User Then
-            SendSingle vbCrLf & "User information about '" & .Item(i) & "'" & _
+            SendSingle vbCrLf & "User information for '" & .Item(i) & "'" & _
                 vbCrLf & " IP : " & .Item(i).SubItems(INDEX_IP) & _
                 vbCrLf & " Winsock ID: " & .Item(i).SubItems(INDEX_WINSOCK_ID) & _
                 vbCrLf & " Last Message: " & .Item(i).SubItems(INDEX_LAST_MESSAGE) & _

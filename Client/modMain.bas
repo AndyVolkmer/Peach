@@ -4,18 +4,8 @@ Option Explicit
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Sub Main()
-Dim regResult As String
-
 'If the application is already open then close it
 If App.PrevInstance And Not Right$(App.EXEName, 5) = "DEBUG" Then End
-
-'Register dependencies
-regResult = RegisterDependency
-
-If Len(regResult) <> 0 Then
-    MsgBox regResult, vbInformation
-    End
-End If
 
 'Set the caption for proper identifying on frmMain
 If Right$(App.EXEName, 5) = "DEBUG" Then
@@ -35,15 +25,7 @@ If Setting.VALIDATE = 0 Then
         Case 0: SET_LANG_GERMAN
         Case 1: SET_LANG_ENGLISH
         Case 2: SET_LANG_SPANISH
-        Case 3: SET_LANG_SWEDISH
-        Case 4: SET_LANG_ITALIAN
-        Case 5: SET_LANG_DUTCH
-        Case 6: SET_LANG_SERBIAN
-        Case 7: SET_LANG_FRENCH
-        Case 8: SET_LANG_BULGARIAN_LATIN
     End Select
-
-    SetScheme
 
     'Temp hackfix for auto login
     If Setting.AUTO_LOGIN Then
@@ -56,6 +38,8 @@ Else
     SET_LANG_ENGLISH
     frmLanguage.Show
 End If
+
+SetScheme
 
 InsertIntoRegistry "Client\Revision", "Number", pRev
 End Sub

@@ -92,12 +92,6 @@ cmdEnter.Caption = LANG_COMMAND_ENTER
 Combo1.List(0) = LANG_GERMAN
 Combo1.List(1) = LANG_ENGLISH
 Combo1.List(2) = LANG_SPANISH
-'Combo1.List(3) = LANG_SWEDISH
-'Combo1.List(4) = LANG_ITALIAN
-'Combo1.List(5) = LANG_DUTCH
-'Combo1.List(6) = LANG_SERBIAN
-'Combo1.List(7) = LANG_FRENCH
-'Combo1.List(8) = LANG_BULGARIAN_LATIN
 End Sub
 
 Private Sub Form_Activate()
@@ -116,11 +110,5 @@ Select Case Lang
     Case 0: SET_LANG_GERMAN
     Case 1: SET_LANG_ENGLISH
     Case 2: SET_LANG_SPANISH
-'    Case 3: SET_LANG_SWEDISH
-'    Case 4: SET_LANG_ITALIAN
-'    Case 5: SET_LANG_DUTCH
-'    Case 6: SET_LANG_SERBIAN
-'    Case 7: SET_LANG_FRENCH
-'    Case 8: SET_LANG_BULGARIAN_LATIN
 End Select
 End Sub

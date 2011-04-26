@@ -212,7 +212,7 @@ b = State(2)
 c = State(3)
 d = State(4)
 
-Decode 64, X, Buffer
+DeCode 64, X, Buffer
 
 ' Round 1
 FF a, b, c, d, X(0), S11, -680876936
@@ -293,7 +293,7 @@ State(3) = LongOverflowAdd(State(3), c)
 State(4) = LongOverflowAdd(State(4), d)
 End Sub
 
-Private Sub Decode(Length As Integer, OutputBuffer() As Long, InputBuffer() As Byte)
+Private Sub DeCode(Length As Integer, OutputBuffer() As Long, InputBuffer() As Byte)
 Dim dblSum       As Double
 Dim intByteIndex As Integer
 Dim intDblIndex  As Integer
@@ -330,20 +330,20 @@ a = LongLeftRotate(a, s)
 a = LongOverflowAdd(a, b)
 End Function
 
-Private Function LongLeftRotate(value As Long, bits As Long) As Long
+Private Function LongLeftRotate(Value As Long, bits As Long) As Long
 Dim lngSign As Long
 Dim lngI    As Long
 
 bits = bits Mod 32
-If bits = 0 Then LongLeftRotate = value: Exit Function
+If bits = 0 Then LongLeftRotate = Value: Exit Function
 
 For lngI = 1 To bits
-    lngSign = value And &HC0000000
-    value = (value And &H3FFFFFFF) * 2
-    value = value Or ((lngSign < 0) And 1) Or (CBool(lngSign And &H40000000) And &H80000000)
+    lngSign = Value And &HC0000000
+    Value = (Value And &H3FFFFFFF) * 2
+    Value = Value Or ((lngSign < 0) And 1) Or (CBool(lngSign And &H40000000) And &H80000000)
 Next lngI
 
-LongLeftRotate = value
+LongLeftRotate = Value
 End Function
 
 Private Function LongOverflowAdd(Val1 As Long, Val2 As Long) As Long
@@ -372,20 +372,20 @@ lngHighWord = (((Val1 And &HFFFF0000) \ 65536) + _
 LongOverflowAdd4 = UnsignedToLong((lngHighWord * 65536#) + (lngLowWord And &HFFFF&))
 End Function
 
-Private Function UnsignedToLong(value As Double) As Long
-If value < 0 Or value >= OFFSET_4 Then Error 6
-If value <= MAXINT_4 Then
-  UnsignedToLong = value
+Private Function UnsignedToLong(Value As Double) As Long
+If Value < 0 Or Value >= OFFSET_4 Then Error 6
+If Value <= MAXINT_4 Then
+  UnsignedToLong = Value
 Else
-  UnsignedToLong = value - OFFSET_4
+  UnsignedToLong = Value - OFFSET_4
 End If
 End Function
 
-Private Function LongToUnsigned(value As Long) As Double
-If value < 0 Then
-  LongToUnsigned = value + OFFSET_4
+Private Function LongToUnsigned(Value As Long) As Double
+If Value < 0 Then
+  LongToUnsigned = Value + OFFSET_4
 Else
-  LongToUnsigned = value
+  LongToUnsigned = Value
 End If
 End Function
 

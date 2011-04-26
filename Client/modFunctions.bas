@@ -1,6 +1,5 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
-
 Public Const aPort              As Long = 6123
 Public Const bPort              As Long = 6124
 Public Const rPort              As Long = 6222
