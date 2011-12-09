@@ -124,7 +124,7 @@ Begin VB.Form frmMain
       Left            =   120
       TabIndex        =   8
       Top             =   6360
-      Width           =   1455
+      Width           =   2775
    End
    Begin VB.Label lblVersion 
       BackColor       =   &H00F4F4F4&
@@ -142,7 +142,7 @@ Begin VB.Form frmMain
       Left            =   120
       TabIndex        =   7
       Top             =   6600
-      Width           =   1455
+      Width           =   2895
    End
    Begin VB.Label lblPassword 
       BackColor       =   &H00F4F4F4&
@@ -589,7 +589,7 @@ End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
 Dim K          As Long
-Dim I          As Long
+Dim i          As Long
 Dim Message    As String
 Dim PreArray() As String
 Dim Command    As String
@@ -620,9 +620,9 @@ Select Case Command
         frmChat.txtConver.Text = vbNullString
 
     Case "!split_text"
-        For I = 1 To UBound(StrArr)
-            Buffer = Buffer & vbCrLf & " " & StrArr(I)
-        Next I
+        For i = 1 To UBound(StrArr)
+            Buffer = Buffer & vbCrLf & " " & StrArr(i)
+        Next i
 
         With frmChat.txtConver
             .SelStart = Len(.Text)
@@ -656,9 +656,9 @@ Select Case Command
     Case "!update_ignore"
         With frmSociety.lvIgnoreList.ListItems
             .Clear
-            For I = 1 To UBound(StrArr) - 1
-                .Add , , StrArr(I)
-            Next I
+            For i = 1 To UBound(StrArr) - 1
+                .Add , , StrArr(i)
+            Next i
         End With
 
     'Wipe out current friend list and insert new values
@@ -668,8 +668,8 @@ Select Case Command
 
         With frmSociety.lvFriendList.ListItems
             .Clear
-            For I = LBound(StrArr) + 1 To UBound(StrArr) - 1
-                f_array = Split(StrArr(I), "$")
+            For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
+                f_array = Split(StrArr(i), "$")
 
                 'Add account name of friend
                 .Add , , f_array(0)
@@ -685,7 +685,7 @@ Select Case Command
                 Else
                     .Item(j).ListSubItems(1).ForeColor = RGB(132, 0, 0)
                 End If
-            Next I
+            Next i
         End With
 
     'Wipe out current list and insert new values
@@ -695,10 +695,10 @@ Select Case Command
         frmSendFile.Combo1.Clear
 
         'Go through array and add users
-        For I = LBound(StrArr) + 1 To UBound(StrArr) - 1
-            frmSociety.lvOnlineList.ListItems.Add , , StrArr(I)
-            frmSendFile.Combo1.AddItem StrArr(I)
-        Next I
+        For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
+            frmSociety.lvOnlineList.ListItems.Add , , StrArr(i)
+            frmSendFile.Combo1.AddItem StrArr(i)
+        Next i
 
     'We get login answer here
     Case "!login"
@@ -1111,35 +1111,35 @@ End If
 End Sub
 
 Private Sub FSocket2_ConnectionRequest(Index As Integer, ByVal requestID As Long)
-Dim I As Long
-    I = LoadSocket
+Dim i As Long
+    i = LoadSocket
 
-FSocket2(I).LocalPort = aPort
-FSocket2(I).Accept requestID
+FSocket2(i).LocalPort = aPort
+FSocket2(i).Accept requestID
 End Sub
 
 Private Function GetFreeSocket() As Long
-Dim I As Long
+Dim i As Long
 Dim j As Long
 
 On Error GoTo HandleErrorFreeSocket
-For I = FSocket2.LBound + 1 To FSocket2.UBound
-    j = FSocket2(I).LocalIP
-Next I
+For i = FSocket2.LBound + 1 To FSocket2.UBound
+    j = FSocket2(i).LocalIP
+Next i
 
 GetFreeSocket = FSocket2.UBound + 1
 
 Exit Function
 HandleErrorFreeSocket:
-    GetFreeSocket = I
+    GetFreeSocket = i
 End Function
 
 Private Function LoadSocket() As Integer
-Dim I As Long
-    I = GetFreeSocket
+Dim i As Long
+    i = GetFreeSocket
 
-Load FSocket2(I)
-LoadSocket = I
+Load FSocket2(i)
+LoadSocket = i
 End Function
 
 Private Function CheckTx(txtBox As TextBox, mBox As String) As Boolean

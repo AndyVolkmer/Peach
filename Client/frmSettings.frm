@@ -297,11 +297,11 @@ Command2.Enabled = False
 InsertIntoRegistry "Client\Configuration", "IP", txtIP
 InsertIntoRegistry "Client\Configuration", "Port", txtPort
 InsertIntoRegistry "Client\Configuration", "SchemeColor", txtColor.BackColor
-InsertIntoRegistry "Client\Configuration", "PasswordTick", chkSavePassword.value
-InsertIntoRegistry "Client\Configuration", "AutoLogin", chkAutoLogin.value
-InsertIntoRegistry "Client\Configuration", "AccountTick", chkSaveAccount.value
-InsertIntoRegistry "Client\Configuration", "AskTick", chkAskClosing.value
-InsertIntoRegistry "Client\Configuration", "MinimizeTray", chkMinimize.value
+InsertIntoRegistry "Client\Configuration", "PasswordTick", chkSavePassword.Value
+InsertIntoRegistry "Client\Configuration", "AutoLogin", chkAutoLogin.Value
+InsertIntoRegistry "Client\Configuration", "AccountTick", chkSaveAccount.Value
+InsertIntoRegistry "Client\Configuration", "AskTick", chkAskClosing.Value
+InsertIntoRegistry "Client\Configuration", "MinimizeTray", chkMinimize.Value
 
 With txtFont
     InsertIntoRegistry "Client\Font", "FontName", .Font
@@ -316,11 +316,11 @@ With Setting
     .SERVER_IP = txtIP
     .SERVER_PORT = txtPort
     .SCHEME_COLOR = txtColor.BackColor
-    .PASSWORD_TICK = chkSavePassword.value
-    .ACCOUNT_TICK = chkSaveAccount.value
-    .AUTO_LOGIN = chkAutoLogin.value
-    .ASK_TICK = chkAskClosing.value
-    .MIN_TICK = chkMinimize.value
+    .PASSWORD_TICK = chkSavePassword.Value
+    .ACCOUNT_TICK = chkSaveAccount.Value
+    .AUTO_LOGIN = chkAutoLogin.Value
+    .ASK_TICK = chkAskClosing.Value
+    .MIN_TICK = chkMinimize.Value
 End With
 
 SetScheme
@@ -365,33 +365,33 @@ With Setting
     txtColor.BackColor = .SCHEME_COLOR
 
     If .ACCOUNT_TICK Then
-        chkSaveAccount.value = 1
+        chkSaveAccount.Value = 1
     Else
-        chkSaveAccount.value = 0
+        chkSaveAccount.Value = 0
     End If
 
     If .PASSWORD_TICK Then
-        chkSavePassword.value = 1
+        chkSavePassword.Value = 1
     Else
-        chkSavePassword.value = 0
+        chkSavePassword.Value = 0
     End If
 
     If .AUTO_LOGIN Then
-        chkAutoLogin.value = 1
+        chkAutoLogin.Value = 1
     Else
-        chkAutoLogin.value = 0
+        chkAutoLogin.Value = 0
     End If
 
     If .ASK_TICK Then
-        chkAskClosing.value = 1
+        chkAskClosing.Value = 1
     Else
-        chkAskClosing.value = 0
+        chkAskClosing.Value = 0
     End If
 
     If .MIN_TICK Then
-        chkMinimize.value = 1
+        chkMinimize.Value = 1
     Else
-        chkMinimize.value = 0
+        chkMinimize.Value = 0
     End If
 
     txtIP = .SERVER_IP
@@ -410,10 +410,10 @@ End Sub
 
 Private Sub lblMinimizeTray_Click()
 With chkMinimize
-    If .value = 0 Then
-        .value = 1
+    If .Value = 0 Then
+        .Value = 1
     Else
-        .value = 0
+        .Value = 0
     End If
 End With
 End Sub

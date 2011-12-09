@@ -71,12 +71,6 @@ Public LANG_QUIT                        As String
 Public LANG_GERMAN                      As String
 Public LANG_ENGLISH                     As String
 Public LANG_SPANISH                     As String
-Public LANG_SWEDISH                     As String
-Public LANG_ITALIAN                     As String
-Public LANG_SERBIAN                     As String
-Public LANG_DUTCH                       As String
-Public LANG_FRENCH                      As String
-Public LANG_BULGARIAN_LATIN             As String
 
 Public SOC_FRIEND_LIST                  As String
 Public SOC_ONLINE_LIST                  As String
@@ -289,12 +283,6 @@ CONFIG_FRAME_CONNECTION = "Verbindungsinformationen"
 LANG_GERMAN = "Deutsch"
 LANG_ENGLISH = "Englisch"
 LANG_SPANISH = "Spanisch"
-LANG_SWEDISH = "Schwedisch"
-LANG_ITALIAN = "Italienisch"
-LANG_SERBIAN = "Serbisch"
-LANG_DUTCH = "Niederländisch"
-LANG_FRENCH = "Französisch"
-LANG_BULGARIAN_LATIN = "Bulgarisch (Latin)"
 
 CONFIG_MSG_ACCOUNT = "Sie haben keinen Konto-Namen eingegeben."
 CONFIG_MSG_PASSWORD = "Sie haben kein Kennwort eingegeben."
@@ -537,12 +525,6 @@ CONFIG_FRAME_CONNECTION = "Connection Informeation"
 LANG_GERMAN = "German"
 LANG_ENGLISH = "English"
 LANG_SPANISH = "Spanish"
-LANG_SWEDISH = "Swedish"
-LANG_ITALIAN = "Italian"
-LANG_SERBIAN = "Serbian"
-LANG_DUTCH = "Dutch"
-LANG_FRENCH = "French"
-LANG_BULGARIAN_LATIN = "Bulgarian (Latin)"
 
 CONFIG_MSG_ACCOUNT = "You did not enter an account."
 CONFIG_MSG_PASSWORD = "You did not enter a password."
@@ -784,12 +766,6 @@ CONFIG_FRAME_CONNECTION = "Informaciónes de conexión"
 LANG_GERMAN = "Aleman"
 LANG_ENGLISH = "Inglés"
 LANG_SPANISH = "Español"
-LANG_SWEDISH = "Sueco"
-LANG_ITALIAN = "Italiano"
-LANG_DUTCH = "Holandés"
-LANG_SERBIAN = "Serbio"
-LANG_FRENCH = "Frances"
-LANG_BULGARIAN_LATIN = "Bulgaro (Latin)"
 
 CONFIG_MSG_ACCOUNT = "No has introducido una cuenta."
 CONFIG_MSG_PASSWORD = "No has introducido una contraseña."
