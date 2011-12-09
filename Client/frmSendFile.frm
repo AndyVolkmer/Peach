@@ -47,6 +47,7 @@ Begin VB.Form frmSendFile
       Top             =   0
    End
    Begin VB.Timer tmrCalcSpeed 
+      Enabled         =   0   'False
       Interval        =   1000
       Left            =   2295
       Top             =   0
@@ -273,7 +274,7 @@ lblSendStatus.Caption = "0.0%"
 End Sub
 
 Private Sub SckSendFile_Connect()
-Dim i        As Long
+Dim I        As Long
 Dim Buffer() As Byte
 
 iFileNum = FreeFile
@@ -283,8 +284,8 @@ ReDim Buffer(lngMIN(LOF(iFileNum), PacketSize) - 1)
 Get iFileNum, , Buffer  ' read data
 
 SckSendFile.SendData CStr(LOF(iFileNum)) & ","   ' send the file size
-i = InStrRev(sFileName, "\")
-SckSendFile.SendData Mid(sFileName, i + 1) & ":" ' send the file name
+I = InStrRev(sFileName, "\")
+SckSendFile.SendData Mid(sFileName, I + 1) & ":" ' send the file name
 SckSendFile.SendData Buffer                      ' send first packet
 End Sub
 

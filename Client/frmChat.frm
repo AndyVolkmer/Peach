@@ -44,7 +44,6 @@ Begin VB.Form frmChat
       _ExtentY        =   873
       _Version        =   393217
       BorderStyle     =   0
-      Enabled         =   -1  'True
       TextRTF         =   $"frmChat.frx":0000
    End
    Begin VB.PictureBox Picture1 
@@ -94,6 +93,7 @@ Begin VB.Form frmChat
       _ExtentY        =   4471
       _Version        =   393217
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"frmChat.frx":007D
@@ -137,19 +137,14 @@ Private Sign(255)               As Integer
 Private menuUser                As String
 
 Private Sub cmdSend_Click()
-Dim TTS As String
+'No whitespaces
+If LenB(Trim$(txtToSend.Text)) = 0 Then Exit Sub
 
-'Save textbox in variabel
-TTS = txtToSend.Text
+'Send public message
+SendMessage "!message" & pSplit & RTrim$(txtToSend.Text) & pSplit
 
 'Wipeout textbox
 txtToSend.Text = vbNullString
-
-'No whitespaces
-If LenB(Trim$(TTS)) = 0 Then Exit Sub
-
-'Send public message
-SendMessage "!message" & pSplit & RTrim$(TTS) & pSplit
 End Sub
 
 Private Sub Form_Activate()
@@ -554,19 +549,19 @@ End Function
 
 Private Sub InitSigns()
 Dim i    As Long
-Dim k    As Long
+Dim K    As Long
 Dim Test As String
 
 Test = ".,;:?!"
 For i = 1 To 6
-    k = Asc(Mid$(Test, i, 1))
-    Sign(k) = 1
+    K = Asc(Mid$(Test, i, 1))
+    Sign(K) = 1
 Next i
 
 Test = " " + vbCrLf + Chr$(160)
 For i = 1 To Len(Test)
-    k = Asc(Mid$(Test, i, 1))
-    Sign(k) = 2
+    K = Asc(Mid$(Test, i, 1))
+    Sign(K) = 2
 Next i
 End Sub
 

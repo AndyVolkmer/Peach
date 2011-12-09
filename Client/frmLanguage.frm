@@ -45,7 +45,7 @@ Begin VB.Form frmLanguage
    End
    Begin VB.Label Label1 
       BackColor       =   &H00F4F4F4&
-      Caption         =   "Select your language :"
+      Caption         =   "Select your language"
       ForeColor       =   &H00000000&
       Height          =   255
       Left            =   240

@@ -4,11 +4,15 @@ Option Explicit
 Private Declare Sub InitCommonControls Lib "comctl32" ()
 
 Sub Main()
+Dim isDebug As Boolean
+
+If Command = "DEBUG" Then isDebug = True
+
 'If the application is already open then close it
-If App.PrevInstance And Not Right$(App.EXEName, 5) = "DEBUG" Then End
+If App.PrevInstance And isDebug = False Then End
 
 'Set the caption for proper identifying on frmMain
-If Right$(App.EXEName, 5) = "DEBUG" Then
+If isDebug Then
     pCaption = "Peach - Debug"
 Else
     pCaption = "Peach"
@@ -75,7 +79,7 @@ With Setting
     End If
 
     If .PASSWORD_TICK Then
-        .PASSWORD = DeCode(DeCode(ReadFromRegistry("Client\Configuration", "Password")))
+        .PASSWORD = Decode(Decode(ReadFromRegistry("Client\Configuration", "Password")))
     End If
 
     If LenB(ReadFromRegistry("Client\Configuration", "AskTick")) = 0 Then

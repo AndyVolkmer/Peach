@@ -584,12 +584,12 @@ Disconnect
 End Sub
 
 Private Sub Winsock1_Connect()
-SendMessage "!login" & pSplit & txtAccount.Text & pSplit & GetMD5(txtPassword.Text) & pSplit
+SendMessage "!login" & pSplit & txtAccount.Text & pSplit & SHA1(txtPassword.Text) & pSplit
 End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
-Dim k          As Long
-Dim i          As Long
+Dim K          As Long
+Dim I          As Long
 Dim Message    As String
 Dim PreArray() As String
 Dim Command    As String
@@ -605,10 +605,10 @@ DoEvents
 PreArray = Split(Message, Chr(24) & Chr(25))
 
 'Start looping through
-For k = 0 To UBound(PreArray) - 1
+For K = 0 To UBound(PreArray) - 1
 
 'We split the message into an array
-StrArr = Split(PreArray(k), pSplit)
+StrArr = Split(PreArray(K), pSplit)
 
 'Assign the variables to the array
 If UBound(StrArr) > -1 Then
@@ -620,9 +620,9 @@ Select Case Command
         frmChat.txtConver.Text = vbNullString
 
     Case "!split_text"
-        For i = 1 To UBound(StrArr)
-            Buffer = Buffer & vbCrLf & " " & StrArr(i)
-        Next i
+        For I = 1 To UBound(StrArr)
+            Buffer = Buffer & vbCrLf & " " & StrArr(I)
+        Next I
 
         With frmChat.txtConver
             .SelStart = Len(.Text)
@@ -656,9 +656,9 @@ Select Case Command
     Case "!update_ignore"
         With frmSociety.lvIgnoreList.ListItems
             .Clear
-            For i = 1 To UBound(StrArr) - 1
-                .Add , , StrArr(i)
-            Next i
+            For I = 1 To UBound(StrArr) - 1
+                .Add , , StrArr(I)
+            Next I
         End With
 
     'Wipe out current friend list and insert new values
@@ -668,8 +668,8 @@ Select Case Command
 
         With frmSociety.lvFriendList.ListItems
             .Clear
-            For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
-                f_array = Split(StrArr(i), "$")
+            For I = LBound(StrArr) + 1 To UBound(StrArr) - 1
+                f_array = Split(StrArr(I), "$")
 
                 'Add account name of friend
                 .Add , , f_array(0)
@@ -685,7 +685,7 @@ Select Case Command
                 Else
                     .Item(j).ListSubItems(1).ForeColor = RGB(132, 0, 0)
                 End If
-            Next i
+            Next I
         End With
 
     'Wipe out current list and insert new values
@@ -695,10 +695,10 @@ Select Case Command
         frmSendFile.Combo1.Clear
 
         'Go through array and add users
-        For i = LBound(StrArr) + 1 To UBound(StrArr) - 1
-            frmSociety.lvOnlineList.ListItems.Add , , StrArr(i)
-            frmSendFile.Combo1.AddItem StrArr(i)
-        Next i
+        For I = LBound(StrArr) + 1 To UBound(StrArr) - 1
+            frmSociety.lvOnlineList.ListItems.Add , , StrArr(I)
+            frmSendFile.Combo1.AddItem StrArr(I)
+        Next I
 
     'We get login answer here
     Case "!login"
@@ -1069,10 +1069,10 @@ Select Case Command
         If Not Screen.ActiveForm.Name = frmChat.Name Then
             ChatNotifyTimer.Enabled = True
         End If
-        frmChat.WriteText PreArray(k)
+        frmChat.WriteText PreArray(K)
 
 End Select
-Next k
+Next K
 End Sub
 
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
@@ -1111,35 +1111,35 @@ End If
 End Sub
 
 Private Sub FSocket2_ConnectionRequest(Index As Integer, ByVal requestID As Long)
-Dim i As Long
-    i = LoadSocket
+Dim I As Long
+    I = LoadSocket
 
-FSocket2(i).LocalPort = aPort
-FSocket2(i).Accept requestID
+FSocket2(I).LocalPort = aPort
+FSocket2(I).Accept requestID
 End Sub
 
 Private Function GetFreeSocket() As Long
-Dim i As Long
+Dim I As Long
 Dim j As Long
 
 On Error GoTo HandleErrorFreeSocket
-For i = FSocket2.LBound + 1 To FSocket2.UBound
-    j = FSocket2(i).LocalIP
-Next i
+For I = FSocket2.LBound + 1 To FSocket2.UBound
+    j = FSocket2(I).LocalIP
+Next I
 
 GetFreeSocket = FSocket2.UBound + 1
 
 Exit Function
 HandleErrorFreeSocket:
-    GetFreeSocket = i
+    GetFreeSocket = I
 End Function
 
 Private Function LoadSocket() As Integer
-Dim i As Long
-    i = GetFreeSocket
+Dim I As Long
+    I = GetFreeSocket
 
-Load FSocket2(i)
-LoadSocket = i
+Load FSocket2(I)
+LoadSocket = I
 End Function
 
 Private Function CheckTx(txtBox As TextBox, mBox As String) As Boolean
